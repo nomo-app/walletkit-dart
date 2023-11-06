@@ -1,0 +1,35 @@
+name: walletkit_dart
+description: A starting point for Dart libraries or applications.
+version: 1.0.0
+# repository: https://github.com/my_org/my_repo
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ^3.0.0
+
+dependencies:
+  bip32: ^2.0.0
+  equatable: ^2.0.5
+  collection: ^1.17.2
+  bs58check: ^1.0.2
+  dart_bech32: ^2.0.0
+  convert: ^3.1.1
+  pointycastle: ^3.7.3
+  crypto: ^3.0.1
+  http: ^1.1.0
+  web3dart: ^2.7.0
+  hive: ^2.2.3
+  bip39:
+    path: packages/bip39
+  nomo_common:
+    path: packages/nomo-common
+
+
+
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.21.0
+  build_runner: ^2.1.4
+  hive_generator: ^2.0.0
