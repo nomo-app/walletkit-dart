@@ -5,7 +5,7 @@ If needed, it is easy to expand WalletKit-Dart with other chains.
 
 ## Features
 
-- Sending transactions, including legacy/Segwit/P2SH/EVM
+- Sending transactions, including legacy/SegWit/P2SH/EVM
 - Fetching transactions and balances, including xPub/zPub/ERC20
 - Functions on Smart Contracts (EVM)
 - Deriving addresses from mnemonics (HD-Wallet)
@@ -13,10 +13,10 @@ If needed, it is easy to expand WalletKit-Dart with other chains.
 
 ## Why WalletKit-Dart?
 
-WalletKit-Dart has been inspired by the [C-WalletKit](https://github.com/blockset-corp/walletkit) from blockset-corp and by [bitcoin_flutter](https://github.com/dart-bitcoin/bitcoin_flutter) from the dart-bitcoin-project.
+WalletKit-Dart has been inspired by the [WalletKit-C](https://github.com/blockset-corp/walletkit) from blockset-corp and by [bitcoin_flutter](https://github.com/dart-bitcoin/bitcoin_flutter) from the dart-bitcoin-project.
 
-The C-WalletKit was one of the first WalletKits that combined UTXO-chains and EVM-chains under a unified class-hierarchy.
-However, the C-WalletKit was plagued by race conditions and memory corruptions, and the C-language did not provide a good support for object-oriented programming.
+The WalletKit-C was one of the first WalletKits that combined UTXO-chains and EVM-chains under a unified class-hierarchy.
+However, the WalletKit-C was plagued by race conditions and memory corruptions, and the C-language did not provide a good support for object-oriented programming.
 
 bitcoin_flutter worked reasonably well, but bitcoin_flutter did not support modern null-safe Dart and it was difficult to expand for multiple chains.
 
