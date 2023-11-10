@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/utils/bigint_utils.dart';
 import 'package:web3dart/web3dart.dart';
 
 class DecodedRLP {
@@ -111,14 +112,6 @@ DecodedRLP decodeRLP(Uint8List data, int offset) {
  * @returns {Transaction}
  */
 Transaction getTransactionFromMessageHash(String messageHex) {
-  BigInt _parseBigInt(String value) {
-    BigInt result = value.startsWith("0x")
-        ? BigInt.parse(value.substring(2), radix: 16)
-        : BigInt.parse(value, radix: 16);
-
-    return result;
-  }
-
   final message = Uint8List.fromList(
     hex.decode(
       messageHex.replaceFirst("0x", ""),
@@ -127,11 +120,11 @@ Transaction getTransactionFromMessageHash(String messageHex) {
 
   DecodedRLP en = decodeRLP(message, 0);
 
-  BigInt nonce = _parseBigInt(en.result[0]);
-  BigInt gasPrice = _parseBigInt(en.result[1]);
-  BigInt gasLimit = _parseBigInt(en.result[2]);
+  BigInt nonce = parseAsHexBigInt(en.result[0]);
+  BigInt gasPrice = parseAsHexBigInt(en.result[1]);
+  BigInt gasLimit = parseAsHexBigInt(en.result[2]);
   String evmAddress = en.result[3];
-  BigInt value = _parseBigInt(en.result[4]);
+  BigInt value = parseAsHexBigInt(en.result[4]);
 
   return Transaction(
     nonce: nonce.toInt(),
