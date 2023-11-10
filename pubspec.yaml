@@ -24,7 +24,6 @@ dependencies:
     path: packages/bip39
   nomo_common:
     path: packages/nomo-common
-  rlp: ^2.0.0
 
 
 
