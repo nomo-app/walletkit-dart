@@ -22,6 +22,7 @@ void main() {
     );
 
     DecodedRLP en = decodeRLP(message, 0);
+    print(en.result);
 
     BigInt nonceFromTx = BigInt.parse(en.result[0], radix: 16);
     BigInt gasPriceFromTx = BigInt.parse(en.result[1], radix: 16);
@@ -29,8 +30,16 @@ void main() {
     String evmAddressFromTx = en.result[3];
     BigInt valueFromTx = BigInt.parse(en.result[4], radix: 16);
 
-    Transaction tx = getTransactionFromMessageHash(messageHex);
+    Uint8List data = Uint8List.fromList(hex.decode(en.result[6]));
 
+    print(data);
+    String functionSignature = hex.encode(data.sublist(0, 4));
+
+    if (functionSignature == "59454e49") {
+      print("ERC 20 Token detected!");
+    }
+
+    Transaction tx = getTransactionFromMessageHash(messageHex);
     expect(nonceFromTx, nonce);
     expect(gasPriceFromTx, gasPrice);
     expect(gasLimitFromTx, gasLimit);
