@@ -111,6 +111,14 @@ DecodedRLP decodeRLP(Uint8List data, int offset) {
  * @returns {Transaction}
  */
 Transaction getTransactionFromMessageHash(String messageHex) {
+  BigInt _parseBigInt(String value) {
+    BigInt result = value.startsWith("0x")
+        ? BigInt.parse(value.substring(2), radix: 16)
+        : BigInt.parse(value, radix: 16);
+
+    return result;
+  }
+
   final message = Uint8List.fromList(
     hex.decode(
       messageHex.replaceFirst("0x", ""),
@@ -119,11 +127,11 @@ Transaction getTransactionFromMessageHash(String messageHex) {
 
   DecodedRLP en = decodeRLP(message, 0);
 
-  BigInt nonce = BigInt.parse(en.result[0], radix: 16);
-  BigInt gasPrice = BigInt.parse(en.result[1], radix: 16);
-  BigInt gasLimit = BigInt.parse(en.result[2], radix: 16);
+  BigInt nonce = _parseBigInt(en.result[0]);
+  BigInt gasPrice = _parseBigInt(en.result[1]);
+  BigInt gasLimit = _parseBigInt(en.result[2]);
   String evmAddress = en.result[3];
-  BigInt value = BigInt.parse(en.result[4], radix: 16);
+  BigInt value = _parseBigInt(en.result[4]);
 
   return Transaction(
     nonce: nonce.toInt(),
