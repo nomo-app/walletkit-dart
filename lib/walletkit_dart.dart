@@ -50,3 +50,5 @@ export 'src/domain/entities/node.dart';
 export 'src/domain/entities/hd_wallet_type.dart';
 
 export 'src/domain/entities/address_type.dart';
+
+export 'src/crypto/evm/rlp.dart';
