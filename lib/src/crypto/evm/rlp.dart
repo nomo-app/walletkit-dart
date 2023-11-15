@@ -125,6 +125,7 @@ Transaction getTransactionFromMessageHash(String messageHex) {
   BigInt gasLimit = parseAsHexBigInt(en.result[2]);
   String evmAddress = en.result[3];
   BigInt value = parseAsHexBigInt(en.result[4]);
+  final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
   return Transaction(
     nonce: nonce.toInt(),
@@ -132,5 +133,6 @@ Transaction getTransactionFromMessageHash(String messageHex) {
     maxGas: gasLimit.toInt(),
     to: EthereumAddress.fromHex(evmAddress),
     value: EtherAmount.inWei(value),
+    data: data,
   );
 }

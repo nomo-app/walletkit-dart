@@ -37,7 +37,7 @@ export 'src/domain/entities/asset/token_info.dart';
 
 export 'src/domain/entities/transactions/amount.dart';
 
-export 'src/crypto/evm/erc20_contract.dart';
+export 'src/crypto/evm/abi/erc20_contract.dart';
 
 export 'src/crypto/utxo/utils/eurocoin_signing.dart';
 
