@@ -10,7 +10,7 @@ import 'package:web3dart/web3dart.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
 
-export 'package:walletkit_dart/src/crypto/utxo/derivation.dart';
+export './utxo/derivation.dart';
 
 // const _rpcUrlGoerli =
 //     "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
