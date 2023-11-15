@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 7.0.2">
+  <meta name="description" content="walletkit_dart API docs, for the Dart programming language.">
+  <title>walletkit_dart - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">walletkit_dart package</li>
+  </ol>
+  <div class="self-name">walletkit_dart</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="walletkit-dart">WalletKit-Dart</h1>
+<p>WalletKit-Dart provides features for interacting with Bitcoin/Ethereum/ZENIQ/ZENIQ Smartchain/Binance Smartchain/Litecoin/Bitcoin Cash.
+If needed, it is easy to expand WalletKit-Dart with other chains.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Sending transactions, including legacy/SegWit/P2SH/EVM</li>
+<li>Fetching transactions and balances, including xPub/zPub/ERC20</li>
+<li>Functions on Smart Contracts (EVM)</li>
+<li>Deriving addresses from mnemonics (HD-Wallet)</li>
+<li>A large suite of Unit-tests</li>
+</ul>
+<h2 id="why-walletkit-dart">Why WalletKit-Dart?</h2>
+<p>WalletKit-Dart has been inspired by the <a href="https://github.com/blockset-corp/walletkit">WalletKit-C</a> from blockset-corp and by <a href="https://github.com/dart-bitcoin/bitcoin_flutter">bitcoin_flutter</a> from the dart-bitcoin-project.</p>
+<p>The WalletKit-C was one of the first WalletKits that combined UTXO-chains and EVM-chains under a unified class-hierarchy.
+However, the WalletKit-C was plagued by race conditions and memory corruptions, and the C-language did not provide a good support for object-oriented programming.</p>
+<p>bitcoin_flutter worked reasonably well, but bitcoin_flutter did not support modern null-safe Dart and it was difficult to expand for multiple chains.</p>
+<p>WalletKit-Dart has been developed to solve all those problems.
+WalletKit-Dart works with modern Dart-versions and provides a class-hierarchy that is easy to expand for multiple chains.</p>
+<h2 id="how-to-integrate">How to integrate</h2>
+<p>First, add this package as a Git-submodule by using Git-commands:</p>
+<pre class="language-dart"><code>git submodule add https://github.com/nomo-app/walletkit-dart.git packages/walletkit-dart
+</code></pre>
+<p>Next, expand your pubspec.yaml accordingly:</p>
+<pre class="language-dart"><code>dependencies:
+    walletkit_dart:
+        path: packages/walletkit-dart
+</code></pre>
+<p>Afterwards, clone submodules with:</p>
+<pre class="language-dart"><code>git submodule update --init --recursive
+</code></pre>
+<p>The <code>--recursive</code> is important because WalletKit-Dart depends on other grandchild-submodules.</p>
+<h2 id="architecture">Architecture</h2>
+<p>WalletKit-Dart is built for both <em>UTXO-chains</em> and <em>EVM-chains</em>.</p>
+<p>For UTXO-chains, most of the functionality is implemented by WalletKit-Dart itself.
+For EVM-chains, most of the functionality is implemented by <a href="https://pub.dev/packages/web3dart">https://pub.dev/packages/web3dart</a>.</p>
+<p>WalletKit-Dart provides a class-hierarchy where both <code>UTXOTransaction</code> and <code>EVMTransaction</code> inherit from a <code>GenericTransaction</code> base class.</p>
+<p>Here is a quick summary if you do not yet understand the difference between UTXO and EVM:</p>
+<pre class="language-dart"><code>UTXO-based chains and EVM-based chains are two different architectures for blockchain systems.
+UTXO (Unspent Transaction Output) is a concept used in Bitcoin and some other cryptocurrencies.
+In this architecture, each transaction spends one or more previously unspent outputs and creates new outputs.
+The sum of the inputs must be equal to or greater than the sum of the outputs.
+EVM (Ethereum Virtual Machine) is used in Ethereum and some other blockchain platforms that support smart contracts.
+In this architecture, each transaction is executed in the EVM as a smart contract, which can modify the state of the blockchain and create new contracts.
+The state is stored in a database, rather than as a set of unspent outputs.
+In summary, UTXO-based chains focus on tracking ownership of tokens, while EVM-based chains focus on executing arbitrary code in the form of smart contracts.
+</code></pre>
+<h2 id="api-philosophy">API Philosophy</h2>
+<p>WalletKit-Dart provides a <em>stateless API</em>.
+Neither does it store seed phrases, nor does it store transactions.
+It is the users responsibility to store any needed data.</p>
+<p>By design, WalletKit-Dart does not have any persistent databases.
+Instead, WalletKit-Dart only has a few in-memory-caches to improve performance of repeated calls.
+This design helps to simplify the API.</p>
+<p>Moreover, WalletKit-Dart provides different APIs for UTXO-chains and EVM-chains.
+Although every chain is part of a unified class hierarchy, we want to provide APIs that are specifically targeted for the architecture of a chain.</p>
+<p>In other words, while we aim to reuse code between chains, we do not want to create broken abstraction layers by abstracting too much complexity away.</p>
+<h2 id="backend-apis">Backend APIs</h2>
+<p>Depending on the chain, WalletKit-Dart depends on multiple backend APIs.
+For UTXO-chains, WalletKit-Dart depends on the <a href="https://electrumx.readthedocs.io/en/latest/protocol-methods.html">ElectrumX Protocol</a>.</p>
+<p>For EVM-chains, WalletKit-Dart depends on several JSON-RPC-providers as well as etherscan-styled APIs.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="address_type">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type-library.html">address_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="address_validation">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation-library.html">address_validation</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="amount">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">amount</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="constants">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library.html">constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="derivation">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation-library.html">derivation</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="erc20_contract">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract-library.html">erc20_contract</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="erc721_entity">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_erc721_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_erc721_entity-library.html">erc721_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="etherscan_repository">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="etherscan_transaction">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction-library.html">etherscan_transaction</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="eurocoin_signing">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utils_eurocoin_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utils_eurocoin_signing-library.html">eurocoin_signing</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="evm_client">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">evm_client</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="evm_rpc_interface">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface-library.html">evm_rpc_interface</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="evm_transaction">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction-library.html">evm_transaction</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="extensions">
+  <span class="name"><a href="extensions/extensions-library.html">extensions</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="fee">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee-library.html">fee</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="generic_transaction">
+  <span class="name"><a href="generic_transaction/generic_transaction-library.html">generic_transaction</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="hd_wallet_type">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type-library.html">hd_wallet_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="network_type">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type-library.html">network_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="node">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node-library.html">node</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="predefined_assets">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_predefined_assets/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_predefined_assets-library.html">predefined_assets</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="rlp">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">rlp</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="send">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send-library.html">send</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="signing">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">signing</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="staking_nft_entity">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity-library.html">staking_nft_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="token_entity">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">token_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="token_info">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_info/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_info-library.html">token_info</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="transfer_intent">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">transfer_intent</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="tx_gasFee_entity">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity-library.html">tx_gasFee_entity</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="utxo_analyzer">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library.html">utxo_analyzer</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="utxo_receive_addresses">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_receive_addresses/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_receive_addresses-library.html">utxo_receive_addresses</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="utxo_transaction">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction-library.html">utxo_transaction</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="web3_client">
+  <span class="name"><a href="web3_client/web3_client-library.html">web3_client</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="web3_kit">
+  <span class="name"><a href="web3_kit/web3_kit-library.html">web3_kit</a></span> 
+
+</dt>
+<dd>Support for doing something awesome.
+</dd>
+
+          <dt id="zsc_transaction">
+  <span class="name"><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_zsc_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_zsc_transaction-library.html">zsc_transaction</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">walletkit_dart package</li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">walletkit_dart</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type-library.html">address_type</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation-library.html">address_validation</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">amount</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library.html">constants</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation-library.html">derivation</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract-library.html">erc20_contract</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_erc721_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_erc721_entity-library.html">erc721_entity</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction-library.html">etherscan_transaction</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utils_eurocoin_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utils_eurocoin_signing-library.html">eurocoin_signing</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">evm_client</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface-library.html">evm_rpc_interface</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction-library.html">evm_transaction</a></li>
+      <li><a href="extensions/extensions-library.html">extensions</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee-library.html">fee</a></li>
+      <li><a href="generic_transaction/generic_transaction-library.html">generic_transaction</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type-library.html">hd_wallet_type</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type-library.html">network_type</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node-library.html">node</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_predefined_assets/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_predefined_assets-library.html">predefined_assets</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">rlp</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send-library.html">send</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">signing</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity-library.html">staking_nft_entity</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">token_entity</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_info/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_info-library.html">token_info</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">transfer_intent</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity-library.html">tx_gasFee_entity</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library.html">utxo_analyzer</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_receive_addresses/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_receive_addresses-library.html">utxo_receive_addresses</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction-library.html">utxo_transaction</a></li>
+      <li><a href="web3_client/web3_client-library.html">web3_client</a></li>
+      <li><a href="web3_kit/web3_kit-library.html">web3_kit</a></li>
+      <li><a href="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_zsc_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_zsc_transaction-library.html">zsc_transaction</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
