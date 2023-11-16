@@ -1,6 +1,5 @@
 // Generated code, do not modify. Run `build_runner build` to re-generate!
 
-import 'package:convert/convert.dart';
 import 'package:web3dart/web3dart.dart';
 
 final contractAbiErc20 = ContractAbi.fromJson(
