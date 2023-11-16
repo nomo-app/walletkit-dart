@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:hive/hive.dart';
+import 'package:walletkit_dart/src/crypto/evm/function_signature.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract base class EVMTransaction extends GenericTransaction {
@@ -110,4 +111,8 @@ abstract base class EVMTransaction extends GenericTransaction {
     required super.status,
     required this.input,
   });
+
+  FunctionSignature get getFunctionSignature {
+    return FunctionSignature.fromData(input);
+  }
 }

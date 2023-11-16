@@ -25,15 +25,15 @@ typedef FunctionArg = ({
 class FunctionSignature {
   final String name;
   final Map<String, String>? parameters;
+  final List<FunctionArg>? args;
 
-  FunctionSignature(this.name, this.parameters);
+  FunctionSignature(this.name, this.parameters, this.args);
 
-  List<FunctionArg> decodeDataValues(Uint8List data) {
-    final FunctionSignature functionSignature = this;
-
+  static List<FunctionArg> decodeDataValues(
+      Uint8List data, Map<String, String> parameters) {
     final args = <FunctionArg>[];
     int offset = 4;
-    functionSignature.parameters!.forEach((key, value) {
+    parameters.forEach((key, value) {
       final sublist = data.sublist(offset, offset + 32).toHex;
 
       final arg = switch (value) {
@@ -70,8 +70,7 @@ class FunctionSignature {
             return values;
           }.call(),
         "bool" => sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
-        "string" => throw Exception("not implemented"),
-        _ => throw Exception("unknown type: $value"),
+        _ => "Not implemented type: $value",
       };
 
       offset += 32;
@@ -86,7 +85,7 @@ class FunctionSignature {
     return args;
   }
 
-  static FunctionSignature decodeFunctionSignature(Uint8List data) {
+  factory FunctionSignature.fromData(Uint8List data) {
     if (data.length < 4) {
       throw Exception("data length must be at least 4");
     }
@@ -113,13 +112,23 @@ class FunctionSignature {
     });
 
     if (contractFunction == null) {
-      throw Exception("function signature not found: $functionSignature");
+      return FunctionSignature(
+        "unknown",
+        null,
+        decodeDataValues(data, {}),
+      );
     }
+
+    final params = Map<String, String>.fromIterable(
+      contractFunction.parameters,
+      key: (e) => e.name,
+      value: (e) => e.type.name,
+    );
 
     return FunctionSignature(
       contractFunction.name,
-      Map.fromIterable(contractFunction.parameters,
-          key: (e) => e.name, value: (e) => e.type.name),
+      params,
+      decodeDataValues(data, params),
     );
   }
 }

@@ -20,9 +20,7 @@ void main() {
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
     final FunctionSignature functionSignature =
-        FunctionSignature.decodeFunctionSignature(data);
-
-    final values = functionSignature.decodeDataValues(data);
+        FunctionSignature.fromData(data);
 
     print(functionSignature.parameters);
 
@@ -32,8 +30,9 @@ void main() {
       "amount": "uint256",
     });
 
-    expect(values[0].value, "05870f1507d820212e921e1f39f14660336231d1");
-    expect(values[1].value, BigInt.from(15942468));
+    expect(functionSignature.args?[0].value,
+        "05870f1507d820212e921e1f39f14660336231d1");
+    expect(functionSignature.args?[1].value, BigInt.from(15942468));
   });
 
   test('Test for data field with claim event', () {
@@ -43,12 +42,10 @@ void main() {
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
     final FunctionSignature functionSignature =
-        FunctionSignature.decodeFunctionSignature(data);
-
-    final values = functionSignature.decodeDataValues(data);
+        FunctionSignature.fromData(data);
 
     expect(
-        values[0].value,
+        functionSignature.args?[0].value,
         [
           8644,
           8717,
