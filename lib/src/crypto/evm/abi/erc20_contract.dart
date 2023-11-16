@@ -253,6 +253,7 @@ class ERC20Contract extends GeneratedContract {
     BlockNum? atBlock,
   }) async {
     final function = self.abi.functions[5];
+
     assert(checkSignature(function, '70a08231'));
     final params = [EthereumAddress.fromHex(addr)];
 

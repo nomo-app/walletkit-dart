@@ -2,7 +2,7 @@ library web3_client;
 
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/erc20_contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_info.dart';
 import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
