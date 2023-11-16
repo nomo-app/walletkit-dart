@@ -31,6 +31,8 @@ extension IntListUtil on List<int> {
   BigInt get toBigInt => BigInt.parse(hex.encode(this), radix: 16);
 
   Uint8List get toUint8List => Uint8List.fromList(this);
+
+  List<BigInt> get toBigIntList => map((e) => BigInt.from(e)).toList();
 }
 
 extension BufferUtil on Uint8List {

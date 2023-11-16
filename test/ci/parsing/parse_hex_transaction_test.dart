@@ -12,7 +12,7 @@ void main() {
     final Transaction tx = getTransactionFromMessageHash(unsignedTxFromNomo);
 
     final FunctionSignature functionSignature =
-        FunctionSignature.decodeDataField(tx.data!);
+        FunctionSignature.decodeFunctionSignature(tx.data!);
 
     expect(tx.nonce, 1864);
     expect(tx.gasPrice!.getInWei, BigInt.from(10000000000));

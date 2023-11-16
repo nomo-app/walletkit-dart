@@ -1,15 +1,26 @@
 import 'dart:typed_data';
+import 'package:collection/collection.dart';
 import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/crypto/evm/abi/avinoc_staking_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/abi/erc721_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
+import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
 List<ContractAbi> abiList = [
   contractAbiNomoDevToken,
   contractAbiErc20,
-  contractAbiErc20,
+  contractAbiErc721,
+  avinocStakingAbi,
 ];
+
+typedef FunctionArg = ({
+  String name,
+  String type,
+  dynamic value,
+});
 
 class FunctionSignature {
   final String name;
@@ -17,9 +28,67 @@ class FunctionSignature {
 
   FunctionSignature(this.name, this.parameters);
 
-  static FunctionSignature decodeDataField(Uint8List data) {
+  List<FunctionArg> decodeDataValues(Uint8List data) {
+    final FunctionSignature functionSignature = this;
+
+    final args = <FunctionArg>[];
+    int offset = 4;
+    functionSignature.parameters!.forEach((key, value) {
+      final sublist = data.sublist(offset, offset + 32).toHex;
+
+      final arg = switch (value) {
+        "address" => sublist.substring(24),
+        "uint256" => sublist.toBigIntFromHex,
+        "uint256[]" => () {
+            final field_length = data
+                .sublist(offset, offset + 32)
+                .toHex
+                .substring(56)
+                .toBigIntFromHex
+                .toInt();
+
+            offset += 32;
+
+            final length = data
+                .sublist(offset, offset + 32)
+                .toHex
+                .substring(56)
+                .toBigIntFromHex
+                .toInt();
+
+            offset += 32;
+
+            final values = [
+              for (int i = 0; i < length; i++)
+                data
+                    .sublist(offset + i * field_length,
+                        offset + (i + 1) * field_length)
+                    .toHex
+                    .toBigIntFromHex
+            ];
+
+            return values;
+          }.call(),
+        "bool" => sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
+        "string" => throw Exception("not implemented"),
+        _ => throw Exception("unknown type: $value"),
+      };
+
+      offset += 32;
+
+      args.add((
+        name: key,
+        type: value,
+        value: arg,
+      ));
+    });
+
+    return args;
+  }
+
+  static FunctionSignature decodeFunctionSignature(Uint8List data) {
     if (data.length < 4) {
-      return FunctionSignature("no contractSignature found!", {});
+      throw Exception("data length must be at least 4");
     }
 
     final String functionSignature = hex.encode(data.sublist(0, 4));
@@ -27,7 +96,7 @@ class FunctionSignature {
     final contractFunctions =
         abiList.expand((element) => element.functions).toList();
 
-    final contractFunction = contractFunctions.firstWhere((element) {
+    final contractFunction = contractFunctions.firstWhereOrNull((element) {
       String readableFunctionSignature = element.name +
           "(${element.parameters.map((e) => e.type.name).join(",")})";
 
@@ -42,6 +111,10 @@ class FunctionSignature {
         return false;
       }
     });
+
+    if (contractFunction == null) {
+      throw Exception("function signature not found: $functionSignature");
+    }
 
     return FunctionSignature(
       contractFunction.name,
