@@ -21,9 +21,9 @@ jobs:
      - run: cd ..
      - run: cd ..
      - name: Lint analysis
-     - run: flutter analyze
+       run: flutter analyze
      - name: ci tests
-     - run: dart test test/ci
+       run: dart test test/ci
   
   generate-docs:
     runs-on: ubuntu-latest
