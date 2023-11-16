@@ -110,6 +110,8 @@ DecodedRLP decodeRLP(Uint8List data, int offset) {
  * This function takes a message hex string and returns a Transaction object.
  * 
  * @returns {Transaction}
+ * 
+ * @throws {Exception}  If the message hash is invalid or the result length is less than 5
  */
 Transaction getTransactionFromMessageHash(String messageHex) {
   final message = Uint8List.fromList(
@@ -119,6 +121,14 @@ Transaction getTransactionFromMessageHash(String messageHex) {
   );
 
   DecodedRLP en = decodeRLP(message, 0);
+
+  if (en.result! is List<String>) {
+    throw Exception("Invalid message hash");
+  }
+
+  if (en.result.length < 5) {
+    throw Exception("Result length is less than 5");
+  }
 
   BigInt nonce = parseAsHexBigInt(en.result[0]);
   BigInt gasPrice = parseAsHexBigInt(en.result[1]);
