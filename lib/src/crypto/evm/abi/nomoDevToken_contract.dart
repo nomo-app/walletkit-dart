@@ -1,6 +1,6 @@
 import 'package:web3dart/web3dart.dart';
 
-final contractNomoDevToken = ContractAbi.fromJson('''
+final contractAbiNomoDevToken = ContractAbi.fromJson('''
  [
     {
       "inputs": [],
