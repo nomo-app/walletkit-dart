@@ -113,6 +113,11 @@ abstract base class EVMTransaction extends GenericTransaction {
   });
 
   FunctionSignature get getFunctionSignature {
-    return FunctionSignature.fromData(input);
+    if (!_cachedFunctionSigs.containsKey(hash)) {
+      _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
+    }
+    return _cachedFunctionSigs[hash]!;
   }
 }
+
+Map<String, FunctionSignature> _cachedFunctionSigs = {};
