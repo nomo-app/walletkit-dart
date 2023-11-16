@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the ERC20Contract constructor from Class ERC20Contract from the erc20_contract library, for the Dart programming language.">
-  <title>ERC20Contract constructor - ERC20Contract - erc20_contract library - Dart API</title>
+  <meta name="description" content="API docs for the getSymbol method from the ERC20Contract class, for the Dart programming language.">
+  <title>getSymbol method - ERC20Contract class - erc20_contract library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract-library.html">erc20_contract</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
-    <li class="self-crumb">ERC20Contract constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract-library.html">erc20_contract</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
+    <li class="self-crumb">getSymbol method</li>
   </ol>
-  <div class="self-name">ERC20Contract</div>
+  <div class="self-name">getSymbol</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,31 +54,33 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract&#47;ERC20Contract-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract&#47;ERC20Contract-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">ERC20Contract</span> constructor 
+<h1><span class="kind-method">getSymbol</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">ERC20Contract</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-address">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">address</span>, </span></li>
-<li><span class="parameter" id="-param-client"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">client</span>, </span></li>
-<li><span class="parameter" id="-param-chainId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainId</span>}</span></li>
-</ol>)
-    </section>
 
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+<span class="name ">getSymbol</span>(<wbr>)
+
+      
+
+    </section>
     
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ERC20Contract({
-  required EthereumAddress address,
-  required Web3Client client,
-  int? chainId,
-}) : super(DeployedContract(contractAbiErc20, address), client, chainId);</code></pre>
+  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; getSymbol() async {
+  final function = self.abi.functions[6];
+  assert(checkSignature(function, &#39;95d89b41&#39;));
+  final response = await read(function, [], null);
+  return (response[0] as String);
+}</code></pre>
 </section>
 
 
@@ -94,15 +96,15 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract-library.html">erc20_contract</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
-    <li class="self-crumb">ERC20Contract constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract-library.html">erc20_contract</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
+    <li class="self-crumb">getSymbol method</li>
 </ol>
 
 
     <h5>ERC20Contract class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-left-->
+  </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
