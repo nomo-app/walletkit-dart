@@ -60,17 +60,19 @@ If needed, it is easy to expand WalletKit-Dart with other chains.</p>
 <ul>
 <li>Sending transactions, including legacy/SegWit/P2SH/EVM</li>
 <li>Fetching transactions and balances, including xPub/zPub/ERC20</li>
-<li>Functions on Smart Contracts (EVM)</li>
+<li>Advanced parsing for making smart contract calls readable for humans (EVM)</li>
 <li>Deriving addresses from mnemonics (HD-Wallet)</li>
+<li>Performance by default: Immutable data will be cached in-memory</li>
 <li>A large suite of Unit-tests</li>
 </ul>
 <h2 id="why-walletkit-dart">Why WalletKit-Dart?</h2>
 <p>WalletKit-Dart has been inspired by the <a href="https://github.com/blockset-corp/walletkit">WalletKit-C</a> from blockset-corp and by <a href="https://github.com/dart-bitcoin/bitcoin_flutter">bitcoin_flutter</a> from the dart-bitcoin-project.</p>
-<p>The WalletKit-C was one of the first WalletKits that combined UTXO-chains and EVM-chains under a unified class-hierarchy.
-However, the WalletKit-C was plagued by race conditions and memory corruptions, and the C-language did not provide a good support for object-oriented programming.</p>
-<p>bitcoin_flutter worked reasonably well, but bitcoin_flutter did not support modern null-safe Dart and it was difficult to expand for multiple chains.</p>
+<p>The WalletKit-C was one of the first WalletKits that combined UTXO-chains and EVM-chains under a unified class hierarchy.
+However, the WalletKit-C was plagued by race conditions and memory corruptions.
+Also, the WalletKit-C had an "object oriented architecture" that was poorly supported by the C-language.</p>
+<p>bitcoin_flutter worked well, but bitcoin_flutter did not support modern null-safe Dart and it was difficult to expand for multiple chains.</p>
 <p>WalletKit-Dart has been developed to solve all those problems.
-WalletKit-Dart works with modern Dart-versions and provides a class-hierarchy that is easy to expand for multiple chains.</p>
+WalletKit-Dart works with modern Dart-versions and is easy to expand for multiple chains.</p>
 <h2 id="how-to-integrate">How to integrate</h2>
 <p>First, add this package as a Git-submodule by using Git-commands:</p>
 <pre class="language-dart"><code>git submodule add https://github.com/nomo-app/walletkit-dart.git packages/walletkit-dart
@@ -85,10 +87,8 @@ WalletKit-Dart works with modern Dart-versions and provides a class-hierarchy th
 </code></pre>
 <p>The <code>--recursive</code> is important because WalletKit-Dart depends on other grandchild-submodules.</p>
 <h2 id="architecture">Architecture</h2>
-<p>WalletKit-Dart is built for both <em>UTXO-chains</em> and <em>EVM-chains</em>.</p>
-<p>For UTXO-chains, most of the functionality is implemented by WalletKit-Dart itself.
-For EVM-chains, most of the functionality is implemented by <a href="https://pub.dev/packages/web3dart">https://pub.dev/packages/web3dart</a>.</p>
-<p>WalletKit-Dart provides a class-hierarchy where both <code>UTXOTransaction</code> and <code>EVMTransaction</code> inherit from a <code>GenericTransaction</code> base class.</p>
+<p>WalletKit-Dart is built for both <em>UTXO-chains</em> and <em>EVM-chains</em>.
+WalletKit-Dart provides a class hierarchy where both <code>UTXOTransaction</code> and <code>EVMTransaction</code> inherit from a <code>GenericTransaction</code> base class.</p>
 <p>Here is a quick summary if you do not yet understand the difference between UTXO and EVM:</p>
 <pre class="language-dart"><code>UTXO-based chains and EVM-based chains are two different architectures for blockchain systems.
 UTXO (Unspent Transaction Output) is a concept used in Bitcoin and some other cryptocurrencies.
@@ -107,7 +107,8 @@ It is the users responsibility to store any needed data.</p>
 Instead, WalletKit-Dart only has a few in-memory-caches to improve performance of repeated calls.
 This design helps to simplify the API.</p>
 <p>Moreover, WalletKit-Dart provides different APIs for UTXO-chains and EVM-chains.
-Although every chain is part of a unified class hierarchy, we want to provide APIs that are specifically targeted for the architecture of a chain.</p>
+Although every transaction inherits from a generic base transaction, we want to provide APIs that are specifically targeted for the architecture of a chain.
+In that sense, we deviate from a traditional object oriented approach.</p>
 <p>In other words, while we aim to reuse code between chains, we do not want to create broken abstraction layers by abstracting too much complexity away.</p>
 <h2 id="backend-apis">Backend APIs</h2>
 <p>Depending on the chain, WalletKit-Dart depends on multiple backend APIs.
