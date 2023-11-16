@@ -75,6 +75,7 @@
   <p>@param {String} messageHex</p>
 <p>This function takes a message hex string and returns a Transaction object.</p>
 <p>@returns {Transaction}</p>
+<p>@throws {Exception}  If the message hash is invalid or the result length is less than 5</p>
 </section>
 
 
@@ -89,6 +90,14 @@
   );
 
   DecodedRLP en = decodeRLP(message, 0);
+
+  if (en.result! is List&lt;String&gt;) {
+    throw Exception(&quot;Invalid message hash&quot;);
+  }
+
+  if (en.result.length &lt; 5) {
+    throw Exception(&quot;Result length is less than 5&quot;);
+  }
 
   BigInt nonce = parseAsHexBigInt(en.result[0]);
   BigInt gasPrice = parseAsHexBigInt(en.result[1]);
