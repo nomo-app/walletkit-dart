@@ -9,21 +9,23 @@ If needed, it is easy to expand WalletKit-Dart with other chains.
 
 - Sending transactions, including legacy/SegWit/P2SH/EVM
 - Fetching transactions and balances, including xPub/zPub/ERC20
-- Functions on Smart Contracts (EVM)
+- Advanced parsing for making smart contract calls readable for humans (EVM)
 - Deriving addresses from mnemonics (HD-Wallet)
+- Performance by default: Immutable data will be cached in-memory
 - A large suite of Unit-tests
 
 ## Why WalletKit-Dart?
 
 WalletKit-Dart has been inspired by the [WalletKit-C](https://github.com/blockset-corp/walletkit) from blockset-corp and by [bitcoin_flutter](https://github.com/dart-bitcoin/bitcoin_flutter) from the dart-bitcoin-project.
 
-The WalletKit-C was one of the first WalletKits that combined UTXO-chains and EVM-chains under a unified class-hierarchy.
-However, the WalletKit-C was plagued by race conditions and memory corruptions, and the C-language did not provide a good support for object-oriented programming.
+The WalletKit-C was one of the first WalletKits that combined UTXO-chains and EVM-chains under a unified class hierarchy.
+However, the WalletKit-C was plagued by race conditions and memory corruptions.
+Also, the WalletKit-C had an "object oriented architecture" that was poorly supported by the C-language.
 
-bitcoin_flutter worked reasonably well, but bitcoin_flutter did not support modern null-safe Dart and it was difficult to expand for multiple chains.
+bitcoin_flutter worked well, but bitcoin_flutter did not support modern null-safe Dart and it was difficult to expand for multiple chains.
 
 WalletKit-Dart has been developed to solve all those problems.
-WalletKit-Dart works with modern Dart-versions and provides a class-hierarchy that is easy to expand for multiple chains.
+WalletKit-Dart works with modern Dart-versions and is easy to expand for multiple chains.
 
 ## How to integrate
 
@@ -52,11 +54,7 @@ The `--recursive` is important because WalletKit-Dart depends on other grandchil
 ## Architecture
 
 WalletKit-Dart is built for both _UTXO-chains_ and _EVM-chains_.
-
-For UTXO-chains, most of the functionality is implemented by WalletKit-Dart itself.
-For EVM-chains, most of the functionality is implemented by https://pub.dev/packages/web3dart.
-
-WalletKit-Dart provides a class-hierarchy where both `UTXOTransaction` and `EVMTransaction` inherit from a `GenericTransaction` base class.
+WalletKit-Dart provides a class hierarchy where both `UTXOTransaction` and `EVMTransaction` inherit from a `GenericTransaction` base class.
 
 Here is a quick summary if you do not yet understand the difference between UTXO and EVM:
 
@@ -82,7 +80,8 @@ Instead, WalletKit-Dart only has a few in-memory-caches to improve performance o
 This design helps to simplify the API.
 
 Moreover, WalletKit-Dart provides different APIs for UTXO-chains and EVM-chains.
-Although every chain is part of a unified class hierarchy, we want to provide APIs that are specifically targeted for the architecture of a chain.
+Although every transaction inherits from a generic base transaction, we want to provide APIs that are specifically targeted for the architecture of a chain.
+In that sense, we deviate from a traditional object oriented approach.
 
 In other words, while we aim to reuse code between chains, we do not want to create broken abstraction layers by abstracting too much complexity away.
 
