@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint:
-   name: Static code analysis
+   name: Static code analysis and run unit tests
    runs-on: ubuntu-latest
    steps:
      - uses: actions/checkout@v3
@@ -21,14 +21,8 @@ jobs:
      - run: cd ..
      - run: cd ..
      - name: Lint analysis
-       run: flutter analyze
-       
-  run-test:
-    name: Run CI test for walletkit-dart
-    runs-on: unbuntu-latest
-    steps:
-     - uses: actions/checkout@v3
-     - uses: subosito/flutter-action@v1
+     - run: flutter analyze
+     - name: ci tests
      - run: dart test test/ci
   
   generate-docs:
