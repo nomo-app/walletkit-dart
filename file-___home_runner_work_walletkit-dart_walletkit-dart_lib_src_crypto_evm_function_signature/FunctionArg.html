@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getTransactionFromMessageHash function from the rlp library, for the Dart programming language.">
-  <title>getTransactionFromMessageHash function - rlp library - Dart API</title>
+  <meta name="description" content="API docs for the FunctionArg typedef from the function_signature library, for the Dart programming language.">
+  <title>FunctionArg typedef - function_signature library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">rlp</a></li>
-    <li class="self-crumb">getTransactionFromMessageHash function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">function_signature</a></li>
+    <li class="self-crumb">FunctionArg typedef</li>
   </ol>
-  <div class="self-name">getTransactionFromMessageHash</div>
+  <div class="self-name">FunctionArg</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,69 +53,31 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">getTransactionFromMessageHash</span> function 
+<h1><span class="kind-typedef">FunctionArg</span> typedef 
  
 </h1></div>
 
     <section class="multi-line-signature">
         
+  
+<span class="name ">FunctionArg</span> = (<span class="field">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="field-name">name</span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="field-name">type</span>, </span><span class="field"><span class="type-annotation">dynamic</span> <span class="field-name">value</span>}</span>)</span>
 
-<span class="returntype">dynamic</span>
-<span class="name ">getTransactionFromMessageHash</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getTransactionFromMessageHash-param-messageHex"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">messageHex</span></span></li>
-</ol>)
-
-        
 
     </section>
-    
-<section class="desc markdown">
-  <p>@param {String} messageHex</p>
-<p>This function takes a message hex string and returns a Transaction object.</p>
-<p>@returns {Transaction}</p>
-<p>@throws {Exception}  If the message hash is invalid or the result length is less than 5</p>
-</section>
 
+    
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Transaction getTransactionFromMessageHash(String messageHex) {
-  final message = Uint8List.fromList(
-    hex.decode(
-      messageHex.replaceFirst(&quot;0x&quot;, &quot;&quot;),
-    ),
-  );
-
-  DecodedRLP en = decodeRLP(message, 0);
-
-  if (en.result! is List&lt;String&gt;) {
-    throw Exception(&quot;Invalid message hash&quot;);
-  }
-
-  if (en.result.length &lt; 5) {
-    throw Exception(&quot;Result length is less than 5&quot;);
-  }
-
-  BigInt nonce = parseAsHexBigInt(en.result[0]);
-  BigInt gasPrice = parseAsHexBigInt(en.result[1]);
-  BigInt gasLimit = parseAsHexBigInt(en.result[2]);
-  String evmAddress = en.result[3];
-
-  BigInt value = parseAsHexBigInt(en.result[4] == &quot;&quot; ? &quot;0x0&quot; : en.result[4]);
-  final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
-
-  return Transaction(
-    nonce: nonce.toInt(),
-    gasPrice: EtherAmount.inWei(gasPrice),
-    maxGas: gasLimit.toInt(),
-    to: EthereumAddress.fromHex(evmAddress),
-    value: EtherAmount.inWei(value),
-    data: data,
-  );
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">typedef FunctionArg = ({
+  String name,
+  String type,
+  dynamic value,
+});</code></pre>
 </section>
 
 
@@ -131,12 +93,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">rlp</a></li>
-    <li class="self-crumb">getTransactionFromMessageHash function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">function_signature</a></li>
+    <li class="self-crumb">FunctionArg typedef</li>
 </ol>
 
 
-    <h5>rlp library</h5>
+    <h5>function_signature library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
