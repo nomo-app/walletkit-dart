@@ -134,7 +134,8 @@ Transaction getTransactionFromMessageHash(String messageHex) {
   BigInt gasPrice = parseAsHexBigInt(en.result[1]);
   BigInt gasLimit = parseAsHexBigInt(en.result[2]);
   String evmAddress = en.result[3];
-  BigInt value = parseAsHexBigInt(en.result[4]);
+
+  BigInt value = parseAsHexBigInt(en.result[4] == "" ? "0x0" : en.result[4]);
   final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
   return Transaction(
