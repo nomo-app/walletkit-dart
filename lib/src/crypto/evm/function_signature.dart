@@ -38,6 +38,7 @@ class FunctionSignature {
 
       final arg = switch (value) {
         "address" => "0x" + sublist.substring(24),
+        "uint8" => sublist.toInt,
         "int" => sublist.toBigIntFromHex,
         "uint" => sublist.toBigIntFromHex,
         "uint256" => sublist.toBigIntFromHex,
