@@ -77,9 +77,13 @@
 
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">FunctionSignature get getFunctionSignature {
+  <pre class="language-dart"><code class="language-dart">FunctionSignature? get getFunctionSignature {
   if (!_cachedFunctionSigs.containsKey(hash)) {
-    _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
+    try {
+      _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
+    } catch (e) {
+      return null;
+    }
   }
   return _cachedFunctionSigs[hash]!;
 }</code></pre>
