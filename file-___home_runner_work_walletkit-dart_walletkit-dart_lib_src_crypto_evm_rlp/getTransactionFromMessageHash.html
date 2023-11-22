@@ -29,7 +29,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">rlp</a></li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">src&#47;crypto&#47;evm&#47;rlp.dart</a></li>
     <li class="self-crumb">getTransactionFromMessageHash function</li>
   </ol>
   <div class="self-name">getTransactionFromMessageHash</div>
@@ -73,8 +73,8 @@
     
 <section class="desc markdown">
   <p>@param {String} messageHex</p>
-<p>This function takes a message hex string and returns a Transaction object.</p>
-<p>@returns {Transaction}</p>
+<p>This function takes a message hex string and returns a RawEVMTransaction object.</p>
+<p>@returns {RawEVMTransaction}</p>
 <p>@throws {Exception}  If the message hash is invalid or the result length is less than 5</p>
 </section>
 
@@ -82,7 +82,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Transaction getTransactionFromMessageHash(String messageHex) {
+  <pre class="language-dart"><code class="language-dart">RawEVMTransaction getTransactionFromMessageHash(String messageHex) {
   final message = Uint8List.fromList(
     hex.decode(
       messageHex.replaceFirst(&quot;0x&quot;, &quot;&quot;),
@@ -107,12 +107,25 @@
   BigInt value = parseAsHexBigInt(en.result[4] == &quot;&quot; ? &quot;0x0&quot; : en.result[4]);
   final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-  return Transaction(
-    nonce: nonce.toInt(),
-    gasPrice: EtherAmount.inWei(gasPrice),
-    maxGas: gasLimit.toInt(),
-    to: EthereumAddress.fromHex(evmAddress),
-    value: EtherAmount.inWei(value),
+  if (en.result.length &gt;= 7) {
+    BigInt chainId = parseAsHexBigInt(en.result[6]);
+    return RawEVMTransaction(
+      nonce: nonce,
+      gasPrice: gasPrice,
+      gasLimit: gasLimit,
+      to: evmAddress,
+      value: value,
+      data: data,
+      chainId: chainId,
+    );
+  }
+
+  return RawEVMTransaction(
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gasLimit,
+    to: evmAddress,
+    value: value,
     data: data,
   );
 }</code></pre>
