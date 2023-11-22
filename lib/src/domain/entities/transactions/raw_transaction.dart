@@ -218,10 +218,6 @@ class RawTransaction {
 
     final hash = sha256Sha256Hash(buffer);
 
-    final hexHash = hex.encode(hash);
-
-    print("Hash: $hexHash");
-
     return hash;
   }
 

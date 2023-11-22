@@ -1,8 +1,7 @@
 import 'dart:typed_data';
-
 import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/raw_evm_transaction.dart';
 import 'package:walletkit_dart/src/utils/bigint_utils.dart';
-import 'package:web3dart/web3dart.dart';
 
 class DecodedRLP {
   final int consumed;
@@ -107,13 +106,13 @@ DecodedRLP decodeRLP(Uint8List data, int offset) {
 /**
  * @param {String} messageHex
  * 
- * This function takes a message hex string and returns a Transaction object.
+ * This function takes a message hex string and returns a RawEVMTransaction object.
  * 
- * @returns {Transaction}
+ * @returns {RawEVMTransaction}
  * 
  * @throws {Exception}  If the message hash is invalid or the result length is less than 5
  */
-Transaction getTransactionFromMessageHash(String messageHex) {
+RawEVMTransaction getTransactionFromMessageHash(String messageHex) {
   final message = Uint8List.fromList(
     hex.decode(
       messageHex.replaceFirst("0x", ""),
@@ -137,13 +136,15 @@ Transaction getTransactionFromMessageHash(String messageHex) {
 
   BigInt value = parseAsHexBigInt(en.result[4] == "" ? "0x0" : en.result[4]);
   final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
+  BigInt chainId = parseAsHexBigInt(en.result[6]);
 
-  return Transaction(
-    nonce: nonce.toInt(),
-    gasPrice: EtherAmount.inWei(gasPrice),
-    maxGas: gasLimit.toInt(),
-    to: EthereumAddress.fromHex(evmAddress),
-    value: EtherAmount.inWei(value),
+  return RawEVMTransaction(
+    nonce: nonce,
+    gasPrice: gasPrice,
+    gasLimit: gasLimit,
+    to: evmAddress,
+    value: value,
     data: data,
+    chainId: chainId,
   );
 }
