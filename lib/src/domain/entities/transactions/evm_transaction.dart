@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -111,9 +110,13 @@ abstract base class EVMTransaction extends GenericTransaction {
     required this.input,
   });
 
-  FunctionSignature get getFunctionSignature {
+  FunctionSignature? get getFunctionSignature {
     if (!_cachedFunctionSigs.containsKey(hash)) {
-      _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
+      try {
+        _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
+      } catch (e) {
+        return null;
+      }
     }
     return _cachedFunctionSigs[hash]!;
   }

@@ -113,7 +113,7 @@ class FunctionSignature {
 
     if (contractFunction == null) {
       return FunctionSignature(
-        "function not found",
+        "unknown",
         null,
         decodeDataValues(data, {}),
       );
