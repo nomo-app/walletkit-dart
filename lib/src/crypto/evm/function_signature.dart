@@ -38,7 +38,10 @@ class FunctionSignature {
 
       final arg = switch (value) {
         "address" => "0x" + sublist.substring(24),
+        "int" => sublist.toBigIntFromHex,
+        "uint" => sublist.toBigIntFromHex,
         "uint256" => sublist.toBigIntFromHex,
+        "string" => sublist,
         "uint256[]" => () {
             final field_length = data
                 .sublist(offset, offset + 32)
