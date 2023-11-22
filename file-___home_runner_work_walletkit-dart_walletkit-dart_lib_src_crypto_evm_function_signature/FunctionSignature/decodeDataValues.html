@@ -85,7 +85,7 @@
     final sublist = data.sublist(offset, offset + 32).toHex;
 
     final arg = switch (value) {
-      &quot;address&quot; =&gt; sublist.substring(24),
+      &quot;address&quot; =&gt; &quot;0x&quot; + sublist.substring(24),
       &quot;uint256&quot; =&gt; sublist.toBigIntFromHex,
       &quot;uint256[]&quot; =&gt; () {
           final field_length = data
