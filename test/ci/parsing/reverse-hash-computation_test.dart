@@ -21,8 +21,6 @@ void main() {
     final FunctionSignature functionSignature =
         FunctionSignature.fromData(data);
 
-    print(functionSignature.parameters);
-
     expect(functionSignature.name, "mint");
     expect(functionSignature.parameters, {
       "to": "address",

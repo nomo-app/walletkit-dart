@@ -54,3 +54,5 @@ export 'src/domain/entities/address_type.dart';
 export 'src/crypto/evm/rlp.dart';
 
 export 'src/crypto/evm/function_signature.dart';
+
+export 'src/crypto/evm/transaction/raw_evm_transaction.dart';
