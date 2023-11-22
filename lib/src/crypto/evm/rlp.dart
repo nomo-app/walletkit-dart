@@ -136,7 +136,19 @@ RawEVMTransaction getTransactionFromMessageHash(String messageHex) {
 
   BigInt value = parseAsHexBigInt(en.result[4] == "" ? "0x0" : en.result[4]);
   final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
-  BigInt chainId = parseAsHexBigInt(en.result[6]);
+
+  if (en.result.length >= 7) {
+    BigInt chainId = parseAsHexBigInt(en.result[6]);
+    return RawEVMTransaction(
+      nonce: nonce,
+      gasPrice: gasPrice,
+      gasLimit: gasLimit,
+      to: evmAddress,
+      value: value,
+      data: data,
+      chainId: chainId,
+    );
+  }
 
   return RawEVMTransaction(
     nonce: nonce,
@@ -145,6 +157,5 @@ RawEVMTransaction getTransactionFromMessageHash(String messageHex) {
     to: evmAddress,
     value: value,
     data: data,
-    chainId: chainId,
   );
 }

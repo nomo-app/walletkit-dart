@@ -7,7 +7,7 @@ class RawEVMTransaction {
   final String to;
   final BigInt value;
   final Uint8List? data;
-  final BigInt chainId;
+  final BigInt? chainId;
 
   RawEVMTransaction({
     required this.nonce,
@@ -16,6 +16,6 @@ class RawEVMTransaction {
     required String to,
     required this.value,
     required this.data,
-    required this.chainId,
+    this.chainId,
   }) : to = to.startsWith("0x") ? to : "0x${to}";
 }
