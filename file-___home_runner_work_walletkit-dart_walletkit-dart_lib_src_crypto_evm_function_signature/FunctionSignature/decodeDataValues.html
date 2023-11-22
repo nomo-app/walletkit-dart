@@ -86,6 +86,7 @@
 
     final arg = switch (value) {
       &quot;address&quot; =&gt; &quot;0x&quot; + sublist.substring(24),
+      &quot;uint8&quot; =&gt; sublist.toInt,
       &quot;int&quot; =&gt; sublist.toBigIntFromHex,
       &quot;uint&quot; =&gt; sublist.toBigIntFromHex,
       &quot;uint256&quot; =&gt; sublist.toBigIntFromHex,
