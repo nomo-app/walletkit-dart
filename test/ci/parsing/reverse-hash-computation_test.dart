@@ -28,7 +28,7 @@ void main() {
     });
 
     expect(functionSignature.args?[0].value,
-        "05870f1507d820212e921e1f39f14660336231d1");
+        "0x05870f1507d820212e921e1f39f14660336231d1");
     expect(functionSignature.args?[1].value, BigInt.from(15942468));
   });
 

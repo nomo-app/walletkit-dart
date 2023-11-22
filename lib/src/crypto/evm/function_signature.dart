@@ -37,7 +37,7 @@ class FunctionSignature {
       final sublist = data.sublist(offset, offset + 32).toHex;
 
       final arg = switch (value) {
-        "address" => sublist.substring(24),
+        "address" => "0x" + sublist.substring(24),
         "uint256" => sublist.toBigIntFromHex,
         "uint256[]" => () {
             final field_length = data
@@ -113,7 +113,7 @@ class FunctionSignature {
 
     if (contractFunction == null) {
       return FunctionSignature(
-        "function not found",
+        "unknown",
         null,
         decodeDataValues(data, {}),
       );
