@@ -107,17 +107,10 @@
   BigInt value = parseAsHexBigInt(en.result[4] == &quot;&quot; ? &quot;0x0&quot; : en.result[4]);
   final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
+  BigInt? chainId;
   if (en.result.length &gt;= 7) {
-    BigInt chainId = parseAsHexBigInt(en.result[6]);
-    return RawEVMTransaction(
-      nonce: nonce,
-      gasPrice: gasPrice,
-      gasLimit: gasLimit,
-      to: evmAddress,
-      value: value,
-      data: data,
-      chainId: chainId,
-    );
+    &#47;&#47; chainId might be optional if a transaction still goes through without chainId
+    chainId = parseAsHexBigInt(en.result[6]);
   }
 
   return RawEVMTransaction(
@@ -127,6 +120,7 @@
     to: evmAddress,
     value: value,
     data: data,
+    chainId: chainId,
   );
 }</code></pre>
 </section>
