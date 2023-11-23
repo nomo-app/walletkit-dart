@@ -8,6 +8,8 @@ import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 List<ContractAbi> abiList = [
   contractAbiNomoDevToken,
@@ -135,4 +137,21 @@ class FunctionSignature {
       decodeDataValues(data, params),
     );
   }
+}
+
+Future<Map<String, dynamic>> fetchFunctionSignature(String url) async {
+  final response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    final responseData = jsonDecode(response.body);
+    final functionSignature = getLowestIdSignature(responseData["results"]);
+
+    return functionSignature;
+  } else {
+    throw Exception('Failed to fetch function signature');
+  }
+}
+
+Map<String, dynamic> getLowestIdSignature(List<dynamic> results) {
+  results.sort((a, b) => a["id"].compareTo(b["id"]));
+  return results.first;
 }
