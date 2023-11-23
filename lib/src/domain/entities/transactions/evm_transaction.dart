@@ -29,7 +29,7 @@ abstract base class EVMTransaction extends GenericTransaction {
         return null;
       }
     }
-    return _cachedFunctionSigs[hash]!;
+    return _cachedFunctionSigs[hash];
   }
 }
 
