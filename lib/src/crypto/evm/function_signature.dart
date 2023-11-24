@@ -118,11 +118,7 @@ class FunctionSignature {
     });
 
     if (contractFunction == null) {
-      return FunctionSignature(
-        "unknown",
-        null,
-        decodeDataValues(data, {}),
-      );
+      throw Exception("No contract function found");
     }
 
     final params = Map<String, String>.fromIterable(
@@ -137,17 +133,43 @@ class FunctionSignature {
       decodeDataValues(data, params),
     );
   }
-}
 
-Future<Map<String, dynamic>> fetchFunctionSignature(String url) async {
-  final response = await http.get(Uri.parse(url));
-  if (response.statusCode == 200) {
-    final responseData = jsonDecode(response.body);
-    final functionSignature = getLowestIdSignature(responseData["results"]);
+  static Future<FunctionSignature> fetchFunctionSignature(
+      Uint8List data) async {
+    final response = await http.get(Uri.parse(
+        "https://www.4byte.directory/api/v1/signatures/?hex_signature=0x${data.sublist(0, 4).toHex}"));
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
 
-    return functionSignature;
-  } else {
-    throw Exception('Failed to fetch function signature');
+      final fetchedFunctionSignatures =
+          getLowestIdSignature(responseData["results"]);
+
+      final fetchedFunctionSignature =
+          fetchedFunctionSignatures["text_signature"];
+
+      RegExp regex = RegExp(r"^[^(]*\(([^)]*)\)");
+
+      String match = regex.firstMatch(fetchedFunctionSignature)?.group(1) ?? "";
+
+      List<String> types = match.split(",");
+
+      final params = Map<String, String>.fromIterables(
+        types.asMap().entries.map((entry) => entry.key.toString()),
+        types,
+      );
+
+      regex = RegExp(r"\(([^)]*)\)");
+
+      final functionSignature = FunctionSignature(
+        fetchedFunctionSignature.replaceAll(regex, ""),
+        params,
+        FunctionSignature.decodeDataValues(data, params),
+      );
+
+      return functionSignature;
+    } else {
+      throw Exception('Failed to fetch function signature');
+    }
   }
 }
 
