@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the FunctionSignature.fromData constructor from Class FunctionSignature from the function_signature library, for the Dart programming language.">
-  <title>FunctionSignature.fromData constructor - FunctionSignature - function_signature library - Dart API</title>
+  <meta name="description" content="API docs for the fetchFunctionSignature method from the FunctionSignature class, for the Dart programming language.">
+  <title>fetchFunctionSignature method - FunctionSignature class - function_signature library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">src&#47;crypto&#47;evm&#47;function_signature.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></li>
-    <li class="self-crumb">FunctionSignature.fromData factory constructor</li>
+    <li class="self-crumb">fetchFunctionSignature static method</li>
   </ol>
-  <div class="self-name">FunctionSignature.fromData</div>
+  <div class="self-name">fetchFunctionSignature</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,62 +57,61 @@
       data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature&#47;FunctionSignature-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">FunctionSignature.fromData</span> constructor 
+<h1><span class="kind-method">fetchFunctionSignature</span> static method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">FunctionSignature.fromData</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromData-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span></span></li>
-</ol>)
-    </section>
 
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></span>&gt;</span></span>
+<span class="name ">fetchFunctionSignature</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fetchFunctionSignature-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span></span></li>
+</ol>)
+
+      
+
+    </section>
     
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory FunctionSignature.fromData(Uint8List data) {
-  if (data.length &lt; 4) {
-    throw Exception(&quot;data length must be at least 4&quot;);
+  <pre class="language-dart"><code class="language-dart">static Future&lt;FunctionSignature&gt; fetchFunctionSignature(
+    Uint8List data) async {
+  final response = await http.get(Uri.parse(
+      &quot;https:&#47;&#47;www.4byte.directory&#47;api&#47;v1&#47;signatures&#47;?hex_signature=0x${data.sublist(0, 4).toHex}&quot;));
+  if (response.statusCode == 200) {
+    final responseData = jsonDecode(response.body);
+
+    final fetchedFunctionSignatures =
+        getLowestIdSignature(responseData[&quot;results&quot;]);
+
+    final fetchedFunctionSignature =
+        fetchedFunctionSignatures[&quot;text_signature&quot;];
+
+    RegExp regex = RegExp(r&quot;^[^(]*\(([^)]*)\)&quot;);
+
+    String match = regex.firstMatch(fetchedFunctionSignature)?.group(1) ?? &quot;&quot;;
+
+    List&lt;String&gt; types = match.split(&quot;,&quot;);
+
+    final params = Map&lt;String, String&gt;.fromIterables(
+      types.asMap().entries.map((entry) =&gt; entry.key.toString()),
+      types,
+    );
+
+    regex = RegExp(r&quot;\(([^)]*)\)&quot;);
+
+    final functionSignature = FunctionSignature(
+      fetchedFunctionSignature.replaceAll(regex, &quot;&quot;),
+      params,
+      FunctionSignature.decodeDataValues(data, params),
+    );
+
+    return functionSignature;
+  } else {
+    throw Exception(&#39;Failed to fetch function signature&#39;);
   }
-
-  final String functionSignature = hex.encode(data.sublist(0, 4));
-
-  final contractFunctions =
-      abiList.expand((element) =&gt; element.functions).toList();
-
-  final contractFunction = contractFunctions.firstWhereOrNull((element) {
-    String readableFunctionSignature = element.name +
-        &quot;(${element.parameters.map((e) =&gt; e.type.name).join(&quot;,&quot;)})&quot;;
-
-    Uint8List bytes = Uint8List.fromList(
-        hex.decode(hex.encode(readableFunctionSignature.codeUnits)));
-
-    String functionSignatureHash = hex.encode(keccak256(bytes));
-
-    if (functionSignatureHash.substring(0, 8) == functionSignature) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-
-  if (contractFunction == null) {
-    throw Exception(&quot;No contract function found&quot;);
-  }
-
-  final params = Map&lt;String, String&gt;.fromIterable(
-    contractFunction.parameters,
-    key: (e) =&gt; e.name,
-    value: (e) =&gt; e.type.name,
-  );
-
-  return FunctionSignature(
-    contractFunction.name,
-    params,
-    decodeDataValues(data, params),
-  );
 }</code></pre>
 </section>
 
@@ -131,13 +130,13 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">function_signature</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></li>
-    <li class="self-crumb">FunctionSignature.fromData factory constructor</li>
+    <li class="self-crumb">fetchFunctionSignature static method</li>
 </ol>
 
 
     <h5>FunctionSignature class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-left-->
+  </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
