@@ -22,11 +22,6 @@ dependencies:
   hive: ^2.2.3
   bip39:
     path: packages/bip39
-  nomo_common:
-    path: packages/nomo-common
-
-
-
 
 dev_dependencies:
   lints: ^2.0.0
