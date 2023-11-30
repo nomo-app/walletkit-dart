@@ -1,6 +1,7 @@
+import 'package:walletkit_dart/src/common/http_client.dart';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
-import 'package:nomo_common/nomo_common.dart';
 import 'package:web3dart/json_rpc.dart';
 import 'package:web3dart/web3dart.dart';
 

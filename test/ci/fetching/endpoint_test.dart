@@ -1,8 +1,8 @@
 @Timeout(Duration(minutes: 5))
 
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
-import 'package:nomo_common/nomo_common.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {

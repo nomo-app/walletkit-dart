@@ -1,3 +1,4 @@
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/address_validation.dart';
 import 'package:walletkit_dart/src/crypto/evm/evm_client.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
@@ -13,7 +14,6 @@ import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/domain/entities/erc721_entity.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/zsc_transaction.dart';
-import 'package:nomo_common/nomo_common.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:web3dart/web3dart.dart';
 

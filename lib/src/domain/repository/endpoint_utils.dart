@@ -1,6 +1,6 @@
 library endpoint_utils;
 
-import 'package:nomo_common/nomo_common.dart';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/src/domain/entities/predefined_assets.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';

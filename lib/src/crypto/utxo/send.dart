@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bip32/bip32.dart';
 import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/input_selection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/input.dart';
@@ -10,7 +11,6 @@ import 'package:walletkit_dart/src/domain/entities/transactions/output.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/raw_transaction.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
-import 'package:nomo_common/nomo_common.dart';
 import 'package:walletkit_dart/src/utils/der.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
