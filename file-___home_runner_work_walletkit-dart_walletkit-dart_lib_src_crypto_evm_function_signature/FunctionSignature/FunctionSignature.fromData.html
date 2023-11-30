@@ -99,7 +99,11 @@
   });
 
   if (contractFunction == null) {
-    throw Exception(&quot;No contract function found&quot;);
+    return FunctionSignature(
+      &quot;unknown&quot;,
+      null,
+      decodeDataValues(data, {}),
+    );
   }
 
   final params = Map&lt;String, String&gt;.fromIterable(
