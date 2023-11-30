@@ -81,7 +81,6 @@
     Uint8List data, Map&lt;String, String&gt; parameters) {
   final args = &lt;FunctionArg&gt;[];
   int offset = 4;
-  int max_offset = 4;
   parameters.forEach((key, value) {
     final sublist = data.sublist(offset, offset + 32).toHex;
 
@@ -91,20 +90,36 @@
       &quot;int&quot; =&gt; sublist.toBigIntFromHex,
       &quot;uint&quot; =&gt; sublist.toBigIntFromHex,
       &quot;uint256&quot; =&gt; sublist.toBigIntFromHex,
-      &quot;bytes&quot; =&gt; () {
-          final result = decodeByte(offset, data, max_offset);
-          max_offset = result.offset;
-          return result.value;
-        }.call(),
-      &quot;bytes[]&quot; =&gt; () {
-          final result = decodeBytesArray(offset, max_offset, data);
-          max_offset = result.offset;
-          return result.value;
-        }.call(),
+      &quot;string&quot; =&gt; sublist,
       &quot;uint256[]&quot; =&gt; () {
-          final result = decodeUint256Array(offset, data);
-          offset = result.offset;
-          return result.value;
+          final field_length = data
+              .sublist(offset, offset + 32)
+              .toHex
+              .substring(56)
+              .toBigIntFromHex
+              .toInt();
+
+          offset += 32;
+
+          final length = data
+              .sublist(offset, offset + 32)
+              .toHex
+              .substring(56)
+              .toBigIntFromHex
+              .toInt();
+
+          offset += 32;
+
+          final values = [
+            for (int i = 0; i &lt; length; i++)
+              data
+                  .sublist(offset + i * field_length,
+                      offset + (i + 1) * field_length)
+                  .toHex
+                  .toBigIntFromHex
+          ];
+
+          return values;
         }.call(),
       &quot;bool&quot; =&gt; sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
       _ =&gt; &quot;Not implemented type: $value&quot;,
@@ -118,12 +133,6 @@
       value: arg,
     ));
   });
-
-  max_offset = max(max_offset, offset);
-
-  if (max_offset != data.length) {
-    throw Exception(&quot;offset is not equal to data length&quot;);
-  }
 
   return args;
 }</code></pre>
