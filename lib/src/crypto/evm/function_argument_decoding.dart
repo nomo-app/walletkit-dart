@@ -1,10 +1,5 @@
 import 'dart:typed_data';
-import 'package:collection/collection.dart';
-import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
-import 'package:web3dart/crypto.dart';
-import 'package:web3dart/web3dart.dart';
-import 'dart:convert';
 import 'dart:math';
 
 class DecodedFunctionValue {

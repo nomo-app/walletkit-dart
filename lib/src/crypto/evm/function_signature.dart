@@ -189,4 +189,5 @@ FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
 
     throw Exception("No function signature found");
   }
+  return null;
 }
