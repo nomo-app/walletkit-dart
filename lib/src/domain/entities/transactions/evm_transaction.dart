@@ -21,12 +21,17 @@ abstract base class EVMTransaction extends GenericTransaction {
     required this.input,
   });
 
-  FunctionSignature? get getFunctionSignature {
+  Future<FunctionSignature?> get getFunctionSignature async {
     if (!_cachedFunctionSigs.containsKey(hash)) {
       try {
         _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
       } catch (e) {
-        return null;
+        try {
+          _cachedFunctionSigs[hash] =
+              await FunctionSignature.fetchFunctionSignature(input);
+        } catch (e) {
+          return null;
+        }
       }
     }
     return _cachedFunctionSigs[hash];

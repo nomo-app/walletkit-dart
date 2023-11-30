@@ -6,8 +6,13 @@ import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc721_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
+import 'package:walletkit_dart/src/crypto/evm/function_argument_decoding.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:equatable/equatable.dart';
+import 'dart:math';
 
 List<ContractAbi> abiList = [
   contractAbiNomoDevToken,
@@ -22,17 +27,21 @@ typedef FunctionArg = ({
   dynamic value,
 });
 
-class FunctionSignature {
+class FunctionSignature extends Equatable {
   final String name;
   final Map<String, String>? parameters;
   final List<FunctionArg>? args;
 
   FunctionSignature(this.name, this.parameters, this.args);
 
+  @override
+  List<Object?> get props => [name, parameters, args];
+
   static List<FunctionArg> decodeDataValues(
       Uint8List data, Map<String, String> parameters) {
     final args = <FunctionArg>[];
     int offset = 4;
+    int max_offset = 4;
     parameters.forEach((key, value) {
       final sublist = data.sublist(offset, offset + 32).toHex;
 
@@ -42,36 +51,20 @@ class FunctionSignature {
         "int" => sublist.toBigIntFromHex,
         "uint" => sublist.toBigIntFromHex,
         "uint256" => sublist.toBigIntFromHex,
-        "string" => sublist,
+        "bytes" => () {
+            final result = decodeByte(offset, data, max_offset);
+            max_offset = result.offset;
+            return result.value;
+          }.call(),
+        "bytes[]" => () {
+            final result = decodeBytesArray(offset, max_offset, data);
+            max_offset = result.offset;
+            return result.value;
+          }.call(),
         "uint256[]" => () {
-            final field_length = data
-                .sublist(offset, offset + 32)
-                .toHex
-                .substring(56)
-                .toBigIntFromHex
-                .toInt();
-
-            offset += 32;
-
-            final length = data
-                .sublist(offset, offset + 32)
-                .toHex
-                .substring(56)
-                .toBigIntFromHex
-                .toInt();
-
-            offset += 32;
-
-            final values = [
-              for (int i = 0; i < length; i++)
-                data
-                    .sublist(offset + i * field_length,
-                        offset + (i + 1) * field_length)
-                    .toHex
-                    .toBigIntFromHex
-            ];
-
-            return values;
+            final result = decodeUint256Array(offset, data);
+            offset = result.offset;
+            return result.value;
           }.call(),
         "bool" => sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
         _ => "Not implemented type: $value",
@@ -85,6 +78,12 @@ class FunctionSignature {
         value: arg,
       ));
     });
+
+    max_offset = max(max_offset, offset);
+
+    if (max_offset != data.length) {
+      throw Exception("offset is not equal to data length");
+    }
 
     return args;
   }
@@ -116,11 +115,7 @@ class FunctionSignature {
     });
 
     if (contractFunction == null) {
-      return FunctionSignature(
-        "unknown",
-        null,
-        decodeDataValues(data, {}),
-      );
+      throw Exception("No contract function found");
     }
 
     final params = Map<String, String>.fromIterable(
@@ -135,4 +130,64 @@ class FunctionSignature {
       decodeDataValues(data, params),
     );
   }
+
+  static Future<FunctionSignature> fetchFunctionSignature(
+      Uint8List data) async {
+    final response = await http.get(Uri.parse(
+        "https://www.4byte.directory/api/v1/signatures/?hex_signature=0x${hex.encode(data.sublist(0, 4))}"));
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+
+      final fetchedFunctionSignature =
+          getLowestIdSignature(responseData["results"], data);
+
+      if (fetchedFunctionSignature == null) {
+        throw Exception("No function signature found");
+      }
+
+      return fetchedFunctionSignature;
+    } else {
+      throw Exception('Failed to fetch function signature');
+    }
+  }
+}
+
+FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
+  results.sort((a, b) => a["id"].compareTo(b["id"]));
+
+  for (final value in results) {
+    final fetchedFunctionSignature = value["text_signature"];
+
+    RegExp regex = RegExp(r"^[^(]*\(([^)]*)\)");
+
+    String match = regex.firstMatch(fetchedFunctionSignature)?.group(1) ?? "";
+
+    List<String> types = match.split(",");
+
+    final params = Map<String, String>.fromIterables(
+      types.asMap().entries.map((entry) => entry.key.toString()),
+      types,
+    );
+
+    regex = RegExp(r"\(([^)]*)\)");
+
+    List<FunctionArg> args = <FunctionArg>[];
+
+    try {
+      args = FunctionSignature.decodeDataValues(data, params);
+
+      final functionSignature = FunctionSignature(
+        fetchedFunctionSignature.replaceAll(regex, ""),
+        params,
+        args,
+      );
+
+      return functionSignature;
+    } catch (e) {
+      print(e);
+    }
+
+    throw Exception("No function signature found");
+  }
+  return null;
 }

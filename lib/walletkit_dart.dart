@@ -56,3 +56,5 @@ export 'src/crypto/evm/rlp.dart';
 export 'src/crypto/evm/function_signature.dart';
 
 export 'src/crypto/evm/transaction/raw_evm_transaction.dart';
+
+export 'src/crypto/evm/function_argument_decoding.dart';
