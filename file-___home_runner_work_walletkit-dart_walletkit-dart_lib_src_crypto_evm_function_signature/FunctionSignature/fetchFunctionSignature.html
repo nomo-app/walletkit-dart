@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the decodeDataValues method from the FunctionSignature class, for the Dart programming language.">
-  <title>decodeDataValues method - FunctionSignature class - function_signature library - Dart API</title>
+  <meta name="description" content="API docs for the fetchFunctionSignature method from the FunctionSignature class, for the Dart programming language.">
+  <title>fetchFunctionSignature method - FunctionSignature class - function_signature library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">src&#47;crypto&#47;evm&#47;function_signature.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></li>
-    <li class="self-crumb">decodeDataValues static method</li>
+    <li class="self-crumb">fetchFunctionSignature static method</li>
   </ol>
-  <div class="self-name">decodeDataValues</div>
+  <div class="self-name">fetchFunctionSignature</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,15 +57,14 @@
       data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature&#47;FunctionSignature-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-method">decodeDataValues</span> static method 
+<h1><span class="kind-method">fetchFunctionSignature</span> static method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionArg.html">FunctionArg</a></span>&gt;</span></span>
-<span class="name ">decodeDataValues</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="decodeDataValues-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span></li>
-<li><span class="parameter" id="decodeDataValues-param-parameters"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">parameters</span></span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></span>&gt;</span></span>
+<span class="name ">fetchFunctionSignature</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fetchFunctionSignature-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span></span></li>
 </ol>)
 
       
@@ -77,55 +76,24 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static List&lt;FunctionArg&gt; decodeDataValues(
-    Uint8List data, Map&lt;String, String&gt; parameters) {
-  final args = &lt;FunctionArg&gt;[];
-  int offset = 4;
-  int max_offset = 4;
-  parameters.forEach((key, value) {
-    final sublist = data.sublist(offset, offset + 32).toHex;
+  <pre class="language-dart"><code class="language-dart">static Future&lt;FunctionSignature&gt; fetchFunctionSignature(
+    Uint8List data) async {
+  final response = await http.get(Uri.parse(
+      &quot;https:&#47;&#47;www.4byte.directory&#47;api&#47;v1&#47;signatures&#47;?hex_signature=0x${hex.encode(data.sublist(0, 4))}&quot;));
+  if (response.statusCode == 200) {
+    final responseData = jsonDecode(response.body);
 
-    final arg = switch (value) {
-      &quot;address&quot; =&gt; &quot;0x&quot; + sublist.substring(24),
-      &quot;uint8&quot; =&gt; sublist.toInt,
-      &quot;int&quot; =&gt; sublist.toBigIntFromHex,
-      &quot;uint&quot; =&gt; sublist.toBigIntFromHex,
-      &quot;uint256&quot; =&gt; sublist.toBigIntFromHex,
-      &quot;bytes&quot; =&gt; () {
-          final result = decodeByte(offset, data, max_offset);
-          max_offset = result.offset;
-          return result.value;
-        }.call(),
-      &quot;bytes[]&quot; =&gt; () {
-          final result = decodeBytesArray(offset, max_offset, data);
-          max_offset = result.offset;
-          return result.value;
-        }.call(),
-      &quot;uint256[]&quot; =&gt; () {
-          final result = decodeUint256Array(offset, data);
-          offset = result.offset;
-          return result.value;
-        }.call(),
-      &quot;bool&quot; =&gt; sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
-      _ =&gt; &quot;Not implemented type: $value&quot;,
-    };
+    final fetchedFunctionSignature =
+        getLowestIdSignature(responseData[&quot;results&quot;], data);
 
-    offset += 32;
+    if (fetchedFunctionSignature == null) {
+      throw Exception(&quot;No function signature found&quot;);
+    }
 
-    args.add((
-      name: key,
-      type: value,
-      value: arg,
-    ));
-  });
-
-  max_offset = max(max_offset, offset);
-
-  if (max_offset != data.length) {
-    throw Exception(&quot;offset is not equal to data length&quot;);
+    return fetchedFunctionSignature;
+  } else {
+    throw Exception(&#39;Failed to fetch function signature&#39;);
   }
-
-  return args;
 }</code></pre>
 </section>
 
@@ -144,7 +112,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">function_signature</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></li>
-    <li class="self-crumb">decodeDataValues static method</li>
+    <li class="self-crumb">fetchFunctionSignature static method</li>
 </ol>
 
 

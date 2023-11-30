@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getFunctionSignature property from the EVMTransaction class, for the Dart programming language.">
-  <title>getFunctionSignature property - EVMTransaction class - evm_transaction library - Dart API</title>
+  <meta name="description" content="API docs for the DecodedFunctionValue constructor from Class DecodedFunctionValue from the function_argument_decoding library, for the Dart programming language.">
+  <title>DecodedFunctionValue constructor - DecodedFunctionValue - function_argument_decoding library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction-library.html">src&#47;domain&#47;entities&#47;transactions&#47;evm_transaction.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction/EVMTransaction-class.html">EVMTransaction</a></li>
-    <li class="self-crumb">getFunctionSignature property</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_argument_decoding/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_argument_decoding-library.html">src&#47;crypto&#47;evm&#47;function_argument_decoding.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_argument_decoding/DecodedFunctionValue-class.html">DecodedFunctionValue</a></li>
+    <li class="self-crumb">DecodedFunctionValue constructor</li>
   </ol>
-  <div class="self-name">getFunctionSignature</div>
+  <div class="self-name">DecodedFunctionValue</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,46 +54,26 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction&#47;EVMTransaction-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_argument_decoding&#47;DecodedFunctionValue-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-property">getFunctionSignature</span> property 
+<h1><span class="kind-constructor">DecodedFunctionValue</span> constructor 
 </h1></div>
 
+    <section class="multi-line-signature">
+      
+      <span class="name ">DecodedFunctionValue</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-value">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">value</span>, </span></li>
+<li><span class="parameter" id="-param-offset"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">offset</span>}</span></li>
+</ol>)
+    </section>
 
-        
-<section id="getter">
-
-<section class="multi-line-signature">
-  
-  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
-  <span class="name ">getFunctionSignature</span>
-  
-
-</section>
+    
 
 
-
-
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;FunctionSignature?&gt; get getFunctionSignature async {
-  if (!_cachedFunctionSigs.containsKey(hash)) {
-    try {
-      _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
-    } catch (e) {
-      try {
-        _cachedFunctionSigs[hash] =
-            await FunctionSignature.fetchFunctionSignature(input);
-      } catch (e) {
-        return null;
-      }
-    }
-  }
-  return _cachedFunctionSigs[hash];
-}</code></pre>
-</section>
-
+  <pre class="language-dart"><code class="language-dart">DecodedFunctionValue({required this.value, required this.offset});</code></pre>
 </section>
 
 
@@ -109,15 +89,15 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction-library.html">evm_transaction</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_evm_transaction/EVMTransaction-class.html">EVMTransaction</a></li>
-    <li class="self-crumb">getFunctionSignature property</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_argument_decoding/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_argument_decoding-library.html">function_argument_decoding</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_argument_decoding/DecodedFunctionValue-class.html">DecodedFunctionValue</a></li>
+    <li class="self-crumb">DecodedFunctionValue constructor</li>
 </ol>
 
 
-    <h5>EVMTransaction class</h5>
+    <h5>DecodedFunctionValue class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-->
+  </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
