@@ -1,6 +1,3 @@
 [submodule "packages/bip39"]
 	path = packages/bip39
 	url = https://github.com/nomo-app/bip39.git
-[submodule "packages/nomo-common"]
-	path = packages/nomo-common
-	url = https://github.com/nomo-app/nomo-common.git

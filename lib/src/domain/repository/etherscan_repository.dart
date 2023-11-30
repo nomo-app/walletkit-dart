@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:nomo_common/nomo_common.dart';
 
+import 'package:walletkit_dart/src/common/http_client.dart';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/generic_transaction.dart';
