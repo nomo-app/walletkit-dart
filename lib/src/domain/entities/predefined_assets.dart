@@ -118,6 +118,18 @@ const regardlessToken = EthBasedTokenEntity(
   contractAddress: "0xAf4f8cE05AF30bb8e06a8AFec762609d2394BCd7",
   decimals: 18,
 );
+const tDroneToken = EthBasedTokenEntity(
+  name: "TDrone Token",
+  symbol: "TDRONE",
+  contractAddress: "0x4cb0550c8b6765c15E77ad8b65189D4B865B4cb0",
+  decimals: 18,
+);
+const vooToken = EthBasedTokenEntity(
+  name: "Voo Token",
+  symbol: "VOO",
+  contractAddress: "0x12466A65aac83FE1B10F43e43ed21FC81BEF4bb8",
+  decimals: 18,
+);
 
 ///
 /// Binance Chain Assets
