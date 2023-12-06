@@ -16,11 +16,11 @@ import 'package:equatable/equatable.dart';
 import 'dart:math';
 
 List<ContractAbi> abiList = [
+  contractAbiDemoContract,
   contractAbiNomoDevToken,
   contractAbiErc20,
   contractAbiErc721,
-  avinocStakingAbi,
-  contractAbiDemoContract,
+  avinocStakingAbi
 ];
 
 typedef FunctionArg = ({
@@ -46,11 +46,13 @@ class FunctionSignature extends Equatable {
     int max_offset = 4;
     parameters.forEach((key, value) {
       final sublist = data.sublist(offset, offset + 32).toHex;
+      final sublistLength = sublist.length;
 
       final arg = switch (value) {
         "address" => "0x" + sublist.substring(24),
         "uint8" => sublist.toInt,
         "int" => sublist.toBigIntFromHex,
+        "int256" => sublist.toBigIntFromHex,
         "uint" => sublist.toBigIntFromHex,
         "uint256" => sublist.toBigIntFromHex,
         "bytes" => () {
@@ -68,8 +70,18 @@ class FunctionSignature extends Equatable {
             offset = result.offset;
             return result.value;
           }.call(),
+        "address[]" => () {
+            final restult = decodeAddressArray(offset, max_offset, data);
+            max_offset = restult.offset;
+            return restult.value;
+          }.call(),
         "bool" => sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
-        _ => "Not implemented type: $value",
+        _ => () {
+            if (value.contains("[]")) {
+              max_offset += offset - 17;
+            }
+            return "Not implemented type: $value";
+          }.call(),
       };
 
       offset += 32;

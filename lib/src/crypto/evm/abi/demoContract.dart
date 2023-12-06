@@ -275,6 +275,26 @@ final contractAbiDemoContract = ContractAbi.fromJson('''
           "internalType": "uint256",
           "name": "_amount",
           "type": "uint256"
+        },
+        {
+          "internalType": "bytes[]",
+          "name": "_amounts",
+          "type": "bytes[]"
+        },
+        {
+          "internalType": "bool",
+          "name": "_collect",
+          "type": "bool"
+        },
+        {
+          "internalType": "address[]",
+          "name": "_addresses",
+          "type": "address[]"
+        },
+        {
+          "internalType": "int256",
+          "name": "_intParam",
+          "type": "int256"
         }
       ],
       "name": "mint",
@@ -562,6 +582,6 @@ final contractAbiDemoContract = ContractAbi.fromJson('''
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    }
+    } 
 ]
 ''', 'Token');
