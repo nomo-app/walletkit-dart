@@ -5,6 +5,7 @@ import 'package:walletkit_dart/src/crypto/evm/abi/avinoc_staking_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc721_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/abi/demoContract.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/crypto/evm/function_argument_decoding.dart';
 import 'package:web3dart/crypto.dart';
@@ -19,6 +20,7 @@ List<ContractAbi> abiList = [
   contractAbiErc20,
   contractAbiErc721,
   avinocStakingAbi,
+  contractAbiDemoContract,
 ];
 
 typedef FunctionArg = ({
