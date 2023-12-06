@@ -77,9 +77,6 @@ class FunctionSignature extends Equatable {
           }.call(),
         "bool" => sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
         _ => () {
-            if (value.contains("[]")) {
-              max_offset += offset - 17;
-            }
             return "Not implemented type: $value";
           }.call(),
       };
