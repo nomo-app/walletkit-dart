@@ -5,6 +5,7 @@ import 'package:walletkit_dart/src/crypto/evm/abi/avinoc_staking_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc721_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/abi/demoContract.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/crypto/evm/function_argument_decoding.dart';
 import 'package:web3dart/crypto.dart';
@@ -15,10 +16,11 @@ import 'package:equatable/equatable.dart';
 import 'dart:math';
 
 List<ContractAbi> abiList = [
+  contractAbiDemoContract,
   contractAbiNomoDevToken,
   contractAbiErc20,
   contractAbiErc721,
-  avinocStakingAbi,
+  avinocStakingAbi
 ];
 
 typedef FunctionArg = ({
@@ -49,6 +51,7 @@ class FunctionSignature extends Equatable {
         "address" => "0x" + sublist.substring(24),
         "uint8" => sublist.toInt,
         "int" => sublist.toBigIntFromHex,
+        "int256" => sublist.toBigIntFromHex,
         "uint" => sublist.toBigIntFromHex,
         "uint256" => sublist.toBigIntFromHex,
         "bytes" => () {
@@ -66,8 +69,15 @@ class FunctionSignature extends Equatable {
             offset = result.offset;
             return result.value;
           }.call(),
+        "address[]" => () {
+            final restult = decodeAddressArray(offset, max_offset, data);
+            max_offset = restult.offset;
+            return restult.value;
+          }.call(),
         "bool" => sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
-        _ => "Not implemented type: $value",
+        _ => () {
+            return "Not implemented type: $value";
+          }.call(),
       };
 
       offset += 32;

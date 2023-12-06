@@ -130,3 +130,35 @@ DecodedFunctionValue decodeBytesArray(
     offset: max_offset,
   );
 }
+
+DecodedFunctionValue decodeAddressArray(
+    int offset, int max_offset, Uint8List data) {
+  final subList = data.sublist(offset, offset + 32);
+  final subListHex = subList.toHex;
+  final subListHex56 = subListHex.substring(56);
+  final arrayLengthBigInt = subListHex56.toBigIntFromHex;
+  var arrayOffset = arrayLengthBigInt.toInt() + 4;
+
+  final arrayLength = data
+      .sublist(arrayOffset, arrayOffset + 32)
+      .toHex
+      .substring(56)
+      .toBigIntFromHex
+      .toInt();
+
+  arrayOffset += 32;
+  var addresses = [];
+
+  for (int i = 0; i < arrayLength; i++) {
+    var address = data.sublist(arrayOffset, arrayOffset + 32).toHex;
+    addresses.add("0x" + address.substring(24));
+    arrayOffset += 32;
+  }
+
+  max_offset = max(max_offset, arrayOffset);
+
+  return DecodedFunctionValue(
+    value: addresses,
+    offset: max_offset,
+  );
+}
