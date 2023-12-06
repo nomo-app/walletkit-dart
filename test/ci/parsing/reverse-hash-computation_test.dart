@@ -108,9 +108,27 @@ void main() {
       "_addresses": "address[]",
       "_intParam": "int256"
     });
+    expect(functionSignature.args?[0].name, "_to");
+    expect(functionSignature.args?[0].value,
+        "0x05870f1507d820212e921e1f39f14660336231d1");
+
+    expect(functionSignature.args?[1].name, "_amount");
+    expect(functionSignature.args?[1].value, BigInt.from(15942468));
+
+    expect(functionSignature.args?[2].name, "_amounts");
+    expect(functionSignature.args?[2].value,
+        ["0x4172726179456c656d656e7431", "0x4172726179456c656d656e7432"]);
+
+    expect(functionSignature.args?[3].name, "_collect");
+    expect(functionSignature.args?[3].value, true);
+
+    expect(functionSignature.args?[4].name, "_addresses");
     expect(functionSignature.args?[4].value, [
       '0x742d35cc6634c0532925a3b844bc454e4438f44e',
       '0x742d35cc6634c0532925a3b844bc454e4438f44e'
     ]);
+
+    expect(functionSignature.args?[5].name, "_intParam");
+    expect(functionSignature.args?[5].value, BigInt.from(23));
   });
 }

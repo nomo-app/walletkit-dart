@@ -46,7 +46,6 @@ class FunctionSignature extends Equatable {
     int max_offset = 4;
     parameters.forEach((key, value) {
       final sublist = data.sublist(offset, offset + 32).toHex;
-      final sublistLength = sublist.length;
 
       final arg = switch (value) {
         "address" => "0x" + sublist.substring(24),
