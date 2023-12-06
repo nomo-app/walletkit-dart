@@ -84,11 +84,13 @@
   int max_offset = 4;
   parameters.forEach((key, value) {
     final sublist = data.sublist(offset, offset + 32).toHex;
+    final sublistLength = sublist.length;
 
     final arg = switch (value) {
       &quot;address&quot; =&gt; &quot;0x&quot; + sublist.substring(24),
       &quot;uint8&quot; =&gt; sublist.toInt,
       &quot;int&quot; =&gt; sublist.toBigIntFromHex,
+      &quot;int256&quot; =&gt; sublist.toBigIntFromHex,
       &quot;uint&quot; =&gt; sublist.toBigIntFromHex,
       &quot;uint256&quot; =&gt; sublist.toBigIntFromHex,
       &quot;bytes&quot; =&gt; () {
@@ -106,8 +108,18 @@
           offset = result.offset;
           return result.value;
         }.call(),
+      &quot;address[]&quot; =&gt; () {
+          final restult = decodeAddressArray(offset, max_offset, data);
+          max_offset = restult.offset;
+          return restult.value;
+        }.call(),
       &quot;bool&quot; =&gt; sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
-      _ =&gt; &quot;Not implemented type: $value&quot;,
+      _ =&gt; () {
+          if (value.contains(&quot;[]&quot;)) {
+            max_offset += offset - 17;
+          }
+          return &quot;Not implemented type: $value&quot;;
+        }.call(),
     };
 
     offset += 32;
