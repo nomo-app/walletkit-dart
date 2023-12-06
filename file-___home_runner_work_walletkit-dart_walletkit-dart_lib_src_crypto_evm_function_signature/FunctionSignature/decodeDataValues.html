@@ -115,9 +115,6 @@
         }.call(),
       &quot;bool&quot; =&gt; sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
       _ =&gt; () {
-          if (value.contains(&quot;[]&quot;)) {
-            max_offset += offset - 17;
-          }
           return &quot;Not implemented type: $value&quot;;
         }.call(),
     };
