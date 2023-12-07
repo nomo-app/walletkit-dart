@@ -91,3 +91,33 @@ Depending on the chain, WalletKit-Dart depends on multiple backend APIs.
 For UTXO-chains, WalletKit-Dart depends on the [ElectrumX Protocol](https://electrumx.readthedocs.io/en/latest/protocol-methods.html).
 
 For EVM-chains, WalletKit-Dart depends on several JSON-RPC-providers as well as etherscan-styled APIs.
+
+## The following Unit-tests show how to use WalletKit-Dart
+
+[Get Token Info for a ERC20 Token](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/erc20_test.dart)
+
+[Fetch  EVM Transaction from Explorer](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/evm_explorer_test.dart)
+
+[Walletkit Json RPC Interface](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/evm_rcp_test.dart)
+
+[Fetch Bitcoin Transactions](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/assets/bitcoin_fetch_test.dart)
+
+[Get best health endpoints utxo](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/endpoint_test.dart)
+
+[EPubKey Derivation](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/epubkey_test.dart)
+
+[Fetch UTXO Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/fetch_utxo_transactions_test.dart)
+
+[Parse MessageHex into EVM Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/parsing/parse_hex_transaction_test.dart)
+
+[Decode datafield from EVM Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/parsing/reverse-hash-computation_test.dart)
+
+[Address Validation](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/sending/address_validation_test.dart)
+
+[Estimate Fee](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/gasfees_test.dart)
+
+[Send EVM Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/send_evm_test.dart)
+
+[Fetch Peers from ElectrumX](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/peers_test.dart)
+
+[Broadcast UTXO Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/wallet_test.dart)
