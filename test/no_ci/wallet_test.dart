@@ -4,45 +4,8 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
-  // test('Test Any Tx', () async {
-  //   final (_, nodes) = await fetchUTXOTransactions(
-  //     seed: helloSeed,
-  //     walletTypes: [HDWalletType.NO_STRUCTURE],
-  //     addressTypes: [AddressType.legacy],
-  //     networkType: ZeniqNetwork,
-  //   );
-  //   final tx = await fetchUTXOTXByHash(
-  //     "6e1228f048c590062399a4fbaf4eab2f445935874fa56fa3ab54bcd02d278715",
-  //     ZeniqNetwork,
-  //     nodes,
-  //     [AddressType.legacy],
-  //   );
 
-  //   print(tx);
-  // });
-
-  // test('Simulate Any Zeniq Tx', () async {
-  //   final (_, nodes) = await fetchUTXOTransactions(
-  //     seed: helloSeed,
-  //     walletTypes: [HDWalletType.NO_STRUCTURE],
-  //     addressTypes: [AddressType.legacy],
-  //     networkType: ZeniqNetwork,
-  //   );
-
-  //   final result = await simulateTx(
-  //     hash: "6e1228f048c590062399a4fbaf4eab2f445935874fa56fa3ab54bcd02d278715",
-  //     nodes: nodes,
-  //     writeToFile: true,
-  //     seed: helloSeed,
-  //     networkType: ZeniqNetwork,
-  //     addressTypes: [AddressType.legacy],
-  //   );
-
-  //   print(result);
-  //   expect(result.$2, true);
-  // });
-
-  test('Send to own Receive', () async {
+  test('Send ZENIQ-UTXO to ourselve', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: helloSeed,
       walletTypes: [HDWalletType.NO_STRUCTURE],
