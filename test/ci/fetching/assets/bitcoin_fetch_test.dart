@@ -7,24 +7,8 @@ import '../expected_utxo_tx_hashes.dart';
 import '../fetch_utxo_transactions_test.dart';
 
 void main() {
-  // test('Test Bitcoin Derivation', () async {
-  //   final (nsTxList, nsNodes) = await fetchUTXOTransactions(
-  //     networkType: BitcoinNetwork,
-  //     seed: helloSeed,
-  //     walletTypes: [
-  //       HDWalletType.NO_STRUCTURE,
-  //       HDWalletType.BIP84,
-  //       HDWalletType.BIP44,
-  //     ],
-  //     addressTypes: [AddressType.legacy, AddressType.segwit],
-  //   );
-  //   TODO: Either remove this test or replace the "print" statements with "expect" statements. Unit-testing with "print" is worthless if nobody knows the expected result.
-  //   print(nsNodes.length);
-  //   reportAddresses(txList: nsTxList, nodesWithAdress: nsNodes);
-  //   reportCoinsAndAddresses(txList: nsTxList, type: BitcoinNetwork);
-  // });
 
-  test('No Structure Transaction with Xpub', () async {
+  test('No Structure Transaction with Xpub reject wallet', () async {
     final (legacyTxList, _) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
