@@ -72,7 +72,7 @@ String recoverEthMessageSigner({
 
 Uint8List _createEthStyleMessageHash(String message) {
   List<int> messageBytes;
-  if (message.startsWith("0x")) {
+  if (message.startsWith("0x") && !message.contains('_')) {
     messageBytes = HEX.decode(message.substring(2));
   } else {
     messageBytes = utf8.encode(message);
