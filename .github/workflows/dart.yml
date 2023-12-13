@@ -21,8 +21,6 @@ jobs:
      - run: cd packages/bip39 && flutter pub get
      - run: cd ..
      - run: cd ..
-     - name: activate dotenv
-     - run: flutter pub global activate dotenv
      - name: Lint analysis
        run: flutter analyze
      - name: ci tests
