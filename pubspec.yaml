@@ -22,6 +22,7 @@ dependencies:
   hive: ^2.2.3
   bip39:
     path: packages/bip39
+  dotenv: ^4.2.0
 
 dev_dependencies:
   lints: ^2.0.0
