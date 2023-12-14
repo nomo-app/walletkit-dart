@@ -1,9 +1,7 @@
 @Timeout(Duration(seconds: 600))
-
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-
-import 'simulation_test.dart';
+import '../../no_ci/input_simulation_test.dart';
 
 void main() {
   const ePubKeyNS =
