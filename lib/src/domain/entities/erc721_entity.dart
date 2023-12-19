@@ -10,7 +10,6 @@ class ERC721Entity {
   final String tokenName;
   final DateTime dateTime;
 
-
   const ERC721Entity({
     required this.blockNumber,
     required this.hash,
@@ -21,6 +20,19 @@ class ERC721Entity {
     required this.tokenName,
     required this.dateTime,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'blockNumber': blockNumber,
+      'hash': hash,
+      'tokenID': tokenID.toString(),
+      'contractAddress': contractAddress,
+      'to': to,
+      'from': from,
+      'tokenName': tokenName,
+      'dateTime': dateTime.millisecondsSinceEpoch ~/ 1000,
+    };
+  }
 
   factory ERC721Entity.fromJson(Map<String, dynamic> json) {
     if (json
