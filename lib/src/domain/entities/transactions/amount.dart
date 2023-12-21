@@ -56,4 +56,11 @@ class Amount extends Equatable {
   String toString() {
     return 'Amount{value: $value, decimals: $decimals}: $displayValue';
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'value': value.toString(),
+      'decimals': decimals,
+    };
+  }
 }

@@ -73,6 +73,21 @@ base class GenericTransaction extends Equatable
 
   @override
   List<Object?> get props => [hash, token.symbol, block];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'hash': hash,
+      'block': block,
+      'confirmations': confirmations,
+      'timeMilli': timeMilli,
+      'amount': amount.toJson(),
+      'fee': fee.toJson(),
+      'sender': sender,
+      'recipient': recipient,
+      'transferMethod': transferMethod.displayName,
+      'status': status.displayName,
+    };
+  }
 }
 
 @HiveType(typeId: 18)
