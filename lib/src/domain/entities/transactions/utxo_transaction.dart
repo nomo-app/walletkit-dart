@@ -156,10 +156,23 @@ final class UTXOTransaction extends GenericTransaction {
     );
   }
 
-  // @override
-  // Uri getBlockchainExplorerURL() {
-  //   throw UnimplementedError();
-  // }
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'hash': hash,
+      'block': block,
+      'confirmations': confirmations,
+      'timeMilli': timeMilli,
+      'amount': amount.toJson(),
+      'fee': fee.toJson(),
+      'sender': sender,
+      'recipient': recipient,
+      'transferMethod': transferMethod.toString(),
+      'status': status.toString(),
+      'id': id,
+      'version': version,
+    };
+  }
 }
 
 @HiveType(typeId: 4)

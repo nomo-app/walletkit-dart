@@ -36,6 +36,23 @@ abstract base class EVMTransaction extends GenericTransaction {
     }
     return _cachedFunctionSigs[hash];
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'hash': hash,
+      'block': block,
+      'confirmations': confirmations,
+      'timeMilli': timeMilli,
+      'amount': amount.toJson(),
+      'fee': fee.toJson(),
+      'sender': sender,
+      'recipient': recipient,
+      'transferMethod': transferMethod.toString(),
+      'status': status.toString(),
+      'input': input.toHex,
+    };
+  }
 }
 
 Map<String, FunctionSignature> _cachedFunctionSigs = {};
