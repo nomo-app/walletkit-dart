@@ -383,3 +383,16 @@ class BNB_NETWORK extends EVMNetworkType {
           messagePrefix: "\x19Binance Chain Signed Message:\n",
         );
 }
+
+const ArbitrumNetwork = ARBITRUM_NETWORK();
+
+class ARBITRUM_NETWORK extends EVMNetworkType {
+  const ARBITRUM_NETWORK()
+      : super(
+          chainId: 42161,
+          rpcUrl: "https://arbitrum.llamarpc.com",
+          coin: ethNative,
+          messagePrefix: "\x19Arbitrum Signed Message:\n",
+          blockExplorer: (arbiScanBaseEndpoint, const [arbiscanApiKey]),
+        );
+}

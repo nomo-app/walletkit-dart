@@ -105,4 +105,20 @@ void main() {
 
     expect(gasLimit, greaterThanOrEqualTo(GasLimits.ethSend.value.toBigInt));
   });
+
+  test('Arbitrum Test', () async {
+    final rpcInterface = EvmRpcInterface(ArbitrumNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final txs = await rpcInterface.fetchAllTransactionsZSC(
+      address: arbitrumTestWallet,
+    );
+
+    expect(txs.length, greaterThanOrEqualTo(1));
+  });
 }

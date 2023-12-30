@@ -132,14 +132,18 @@ const rejectLTUB =
 const rejectEVM = "0x05870f1507d820212E921e1f39f14660336231D1";
 const spoilEVM = "0x1464935f48CA992D1a0bEAA2358471D7Cb6374E5";
 
+const arbitrumTestWallet = "0x67a24CE4321aB3aF51c2D0a4801c3E111D88C9d9";
+
 ///
 /// EVM
 ///
 const bnbScanApiKey = "YTQ49EUC6SHSKUA5KE9MDRUZ1IFJVQFQXG";
 const etherscanApiKey = "AC72N833U9MKUNXS44MV27T3HKEN4WYYT3";
+const arbiscanApiKey = "58IPEBUU3KI8ACFHY7NW19FIR9YXE2QWDG";
 
 const bnbScanBaseEndpoint = "https://api.bscscan.com/api";
 const etherscanBaseEndpoint = "https://api.etherscan.io/api";
+const arbiScanBaseEndpoint = "https://api.arbiscan.io/api";
 
 const zeniqSmartRPCEndpoint = "https://smart.zeniq.network:9545";
 

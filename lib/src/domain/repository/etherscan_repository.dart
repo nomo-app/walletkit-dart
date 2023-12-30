@@ -30,7 +30,7 @@ abstract class EtherscanRepository {
 
   Duration get randomWaitTime {
     Random random = Random();
-    int index = random.nextInt(3) + 2;
+    int index = random.nextInt(5) + 2;
     return Duration(seconds: index);
   }
 
@@ -71,7 +71,9 @@ abstract class EtherscanRepository {
 
           switch (message) {
             case "NOTOK":
-              if (result.contains("API Key") && !useApiKey) {
+              if (result.contains("API Key") &&
+                  !useApiKey &&
+                  apiKeys.isNotEmpty) {
                 useApiKey = true;
               } else {
                 useApiKey = false;
