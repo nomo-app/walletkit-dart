@@ -1,5 +1,7 @@
 @Timeout(Duration(seconds: 600))
 
+import 'dart:math';
+
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/entities/predefined_assets.dart';
@@ -8,6 +10,7 @@ import 'package:walletkit_dart/src/domain/repository/etherscan_repository.dart';
 void main() {
   final etherscan = EVMExplorer(etherscanBaseEndpoint, [etherscanApiKey]);
   final bnbScan = EVMExplorer(bnbScanBaseEndpoint, [bnbScanApiKey]);
+  final arbiScan = EVMExplorer(arbiScanBaseEndpoint, [arbiscanApiKey]);
 
   test('Test Ethereum Etherscan Fetching', () async {
     ///
@@ -101,5 +104,34 @@ void main() {
     final result = await etherscan.fetchGasPrice();
 
     print(result);
+  });
+
+  test('Arbiscan ', () async {
+    final balance = await arbiScan.fetchBalance(arbitrumTestWallet, ethNative);
+
+    print('ETH Balance: $balance');
+
+    final transactions = await arbiScan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: ethNative,
+    );
+
+    expect(transactions, isNotEmpty);
+
+    final balanceUsdT = await arbiScan.fetchBalance(
+      arbitrumTestWallet,
+      usdtArbitrumToken,
+    );
+
+    print('USDT Balance: $balanceUsdT');
+
+    expect(balanceUsdT, greaterThan(0));
+
+    final transactionsUsdT = await arbiScan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: usdtArbitrumToken,
+    );
+
+    expect(transactionsUsdT, isNotEmpty);
   });
 }
