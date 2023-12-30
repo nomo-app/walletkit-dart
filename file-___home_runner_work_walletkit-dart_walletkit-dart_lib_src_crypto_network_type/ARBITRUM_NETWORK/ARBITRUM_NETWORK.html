@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the randomWaitTime property from the EtherscanRepository class, for the Dart programming language.">
-  <title>randomWaitTime property - EtherscanRepository class - etherscan_repository library - Dart API</title>
+  <meta name="description" content="API docs for the ARBITRUM_NETWORK constructor from Class ARBITRUM_NETWORK from the network_type library, for the Dart programming language.">
+  <title>ARBITRUM_NETWORK constructor - ARBITRUM_NETWORK - network_type library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src&#47;domain&#47;repository&#47;etherscan_repository.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanRepository-class.html">EtherscanRepository</a></li>
-    <li class="self-crumb">randomWaitTime property</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type-library.html">src&#47;crypto&#47;network_type.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/ARBITRUM_NETWORK-class.html">ARBITRUM_NETWORK</a></li>
+    <li class="self-crumb">ARBITRUM_NETWORK const constructor</li>
   </ol>
-  <div class="self-name">randomWaitTime</div>
+  <div class="self-name">ARBITRUM_NETWORK</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,36 +54,31 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EtherscanRepository-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type&#47;ARBITRUM_NETWORK-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-property">randomWaitTime</span> property 
+<h1><span class="kind-constructor">ARBITRUM_NETWORK</span> constructor 
 </h1></div>
 
+    <section class="multi-line-signature">
+      const
+      <span class="name ">ARBITRUM_NETWORK</span>(<wbr>)
+    </section>
 
-        
-<section id="getter">
-
-<section class="multi-line-signature">
-  
-  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span>
-  <span class="name ">randomWaitTime</span>
-  
-
-</section>
+    
 
 
-
-
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Duration get randomWaitTime {
-  Random random = Random();
-  int index = random.nextInt(5) + 2;
-  return Duration(seconds: index);
-}</code></pre>
-</section>
-
+  <pre class="language-dart"><code class="language-dart">const ARBITRUM_NETWORK()
+    : super(
+        chainId: 42161,
+        rpcUrl: &quot;https:&#47;&#47;arbitrum.llamarpc.com&quot;,
+        coin: ethNative,
+        messagePrefix: &quot;\x19Arbitrum Signed Message:\n&quot;,
+        blockExplorer: (arbiScanBaseEndpoint, const [arbiscanApiKey]),
+      );</code></pre>
 </section>
 
 
@@ -99,15 +94,15 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanRepository-class.html">EtherscanRepository</a></li>
-    <li class="self-crumb">randomWaitTime property</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type-library.html">network_type</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/ARBITRUM_NETWORK-class.html">ARBITRUM_NETWORK</a></li>
+    <li class="self-crumb">ARBITRUM_NETWORK const constructor</li>
 </ol>
 
 
-    <h5>EtherscanRepository class</h5>
+    <h5>ARBITRUM_NETWORK class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-->
+  </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
