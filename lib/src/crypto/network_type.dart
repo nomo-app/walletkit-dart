@@ -396,3 +396,16 @@ class ARBITRUM_NETWORK extends EVMNetworkType {
           blockExplorer: (arbiScanBaseEndpoint, const [arbiscanApiKey]),
         );
 }
+
+const OasisEmeraldNetwork = OASIS_EMERALD_NETWORK();
+
+class OASIS_EMERALD_NETWORK extends EVMNetworkType {
+  const OASIS_EMERALD_NETWORK()
+      : super(
+          chainId: 42262,
+          rpcUrl: "https://explorer.emerald.oasis.dev/api/eth-rpc",
+          coin: roseCoin,
+          messagePrefix: "\x19Oasis Signed Message:\n",
+          //   blockExplorer: (oasisScanBaseEndpoint, const [oasisScanApiKey]),
+        );
+}

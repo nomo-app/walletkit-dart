@@ -121,4 +121,20 @@ void main() {
 
     expect(txs.length, greaterThanOrEqualTo(1));
   });
+
+  test('OasisEmerald Test', () async {
+    final rpcInterface = EvmRpcInterface(OasisEmeraldNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: "0x5209DB95e47EB90829db7Eb17E71a8f34A502d48",
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final txs = await rpcInterface.fetchAllTransactionsZSC(
+      address: "0x5209DB95e47EB90829db7Eb17E71a8f34A502d48",
+    );
+
+    expect(txs.length, greaterThanOrEqualTo(1));
+  });
 }
