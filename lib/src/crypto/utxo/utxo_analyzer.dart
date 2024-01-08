@@ -421,6 +421,7 @@ Future<double?> estimateFeeForPriority({
   if (fee < 0) throw Exception("Fee estimation failed");
 
   print("Fee per KB: $fee");
+  print("Fee per Byte: ${fee / 1024}");
   return fee;
 }
 

@@ -348,14 +348,7 @@ class ETHEREUM_NETWORK extends EVMNetworkType {
           messagePrefix: "\x19Ethereum Signed Message:\n",
           rpcUrl:
               "https://mainnet.infura.io/v3/b6bf7d3508c941499b10025c0776eaf8",
-          blockExplorer: (
-            etherscanBaseEndpoint,
-            const [
-              "RD46SK1466WA991RZ9NZ8ASECAC2GS2YKM",
-              "DPN46Q23SK62Q135FWJ8VHH9MGN7VGJ166",
-              "AC72N833U9MKUNXS44MV27T3HKEN4WYYT3"
-            ]
-          ),
+          blockExplorer: (etherscanBaseEndpoint, const []),
         );
 }
 
@@ -378,7 +371,7 @@ class BNB_NETWORK extends EVMNetworkType {
       : super(
           chainId: 56,
           rpcUrl: "https://bsc-dataseed.binance.org/",
-          blockExplorer: (bnbScanBaseEndpoint, const [bnbScanApiKey]),
+          blockExplorer: (bnbScanBaseEndpoint, const []),
           coin: binanceSmart,
           messagePrefix: "\x19Binance Chain Signed Message:\n",
         );

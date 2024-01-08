@@ -6,8 +6,8 @@ import 'package:walletkit_dart/src/domain/entities/predefined_assets.dart';
 import 'package:walletkit_dart/src/domain/repository/etherscan_repository.dart';
 
 void main() {
-  final etherscan = EVMExplorer(etherscanBaseEndpoint, [etherscanApiKey]);
-  final bnbScan = EVMExplorer(bnbScanBaseEndpoint, [bnbScanApiKey]);
+  final etherscan = EVMExplorer(etherscanBaseEndpoint, []);
+  final bnbScan = EVMExplorer(bnbScanBaseEndpoint, []);
 
   test('Test Ethereum Etherscan Fetching', () async {
     ///

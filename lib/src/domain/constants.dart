@@ -135,12 +135,8 @@ const spoilEVM = "0x1464935f48CA992D1a0bEAA2358471D7Cb6374E5";
 ///
 /// EVM
 ///
-const bnbScanApiKey = "YTQ49EUC6SHSKUA5KE9MDRUZ1IFJVQFQXG";
-const etherscanApiKey = "AC72N833U9MKUNXS44MV27T3HKEN4WYYT3";
-
 const bnbScanBaseEndpoint = "https://api.bscscan.com/api";
 const etherscanBaseEndpoint = "https://api.etherscan.io/api";
-
 const zeniqSmartRPCEndpoint = "https://smart.zeniq.network:9545";
 
 ///
