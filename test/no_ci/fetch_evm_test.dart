@@ -3,7 +3,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
   test('Test EVM Wallet', () async {
-    final etherscan = EVMExplorer(etherscanBaseEndpoint, [etherscanApiKey]);
+    final etherscan = EVMExplorer(etherscanBaseEndpoint, []);
 
     final rpc = EvmRpcInterface(ZeniqSmartNetwork);
 
