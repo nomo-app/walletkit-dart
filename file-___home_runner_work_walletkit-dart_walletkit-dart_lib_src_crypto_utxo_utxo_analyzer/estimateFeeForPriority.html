@@ -93,6 +93,7 @@
   if (fee &lt; 0) throw Exception(&quot;Fee estimation failed&quot;);
 
   print(&quot;Fee per KB: $fee&quot;);
+  print(&quot;Fee per Byte: ${fee &#47; 1024}&quot;);
   return fee;
 }</code></pre>
 </section>
