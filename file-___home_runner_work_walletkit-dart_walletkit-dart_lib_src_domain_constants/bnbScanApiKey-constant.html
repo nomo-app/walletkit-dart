@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the estimateFeeForPriority function from the utxo_analyzer library, for the Dart programming language.">
-  <title>estimateFeeForPriority function - utxo_analyzer library - Dart API</title>
+  <meta name="description" content="API docs for the bnbScanApiKey constant from the constants library, for the Dart programming language.">
+  <title>bnbScanApiKey constant - constants library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library.html">src&#47;crypto&#47;utxo&#47;utxo_analyzer.dart</a></li>
-    <li class="self-crumb">estimateFeeForPriority function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library.html">src&#47;domain&#47;constants.dart</a></li>
+    <li class="self-crumb">bnbScanApiKey constant</li>
   </ol>
-  <div class="self-name">estimateFeeForPriority</div>
+  <div class="self-name">bnbScanApiKey</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,49 +53,31 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">estimateFeeForPriority</span> function 
+<h1><span class="kind-top-level-property">bnbScanApiKey</span> top-level constant 
  
 </h1></div>
 
-    <section class="multi-line-signature">
+        <section class="multi-line-signature">
+          
+          <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>
+          const <span class="name ">bnbScanApiKey</span>
+          
+
+        </section>
         
-
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span>&gt;</span></span>
-<span class="name ">estimateFeeForPriority</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="estimateFeeForPriority-param-priority">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">priority</span>, </span></li>
-<li><span class="parameter" id="estimateFeeForPriority-param-network"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">network</span>}</span></li>
-</ol>)
+<section class="desc markdown">
+  <p>EVM</p>
+</section>
 
         
-
-    </section>
-    
-
-
-    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;double?&gt; estimateFeeForPriority({
-  required FeePriority priority,
-  required UTXONetworkType network,
-}) async {
-  final (fee, _, _) = await fetchFromRandomElectrumXNode(
-    (client) =&gt; client.estimateFee(blocks: priority.blocks),
-    client: null,
-    endpoints: network.endpoints,
-    token: network.coin,
-  );
-
-  if (fee == null) return null;
-
-  if (fee &lt; 0) throw Exception(&quot;Fee estimation failed&quot;);
-
-  print(&quot;Fee per KB: $fee&quot;);
-  return fee;
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">const bnbScanApiKey = &quot;YTQ49EUC6SHSKUA5KE9MDRUZ1IFJVQFQXG&quot;;</code></pre>
 </section>
+
 
 
   </div> <!-- /.main-content -->
@@ -110,12 +92,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library.html">utxo_analyzer</a></li>
-    <li class="self-crumb">estimateFeeForPriority function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library.html">constants</a></li>
+    <li class="self-crumb">bnbScanApiKey constant</li>
 </ol>
 
 
-    <h5>utxo_analyzer library</h5>
+    <h5>constants library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
