@@ -121,7 +121,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
   final feePerByte = feePerKB &#47; 1024;
 
   const lockTime = 0;
-  const version = 2;
+  final version = networkType.txVersion;
 
   final chosenUTXOs = singleRandomDrawUTXOSelection(
     allUTXOs.keys.toList(),
