@@ -151,13 +151,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
   &#47;&#47;&#47;
   &#47;&#47;&#47; Build Dummy TX
   &#47;&#47;&#47;
-
-  final watch = Stopwatch()..start();
-
   final dummySeed = helloSeed;
-
-  watch.stop();
-  Logger.log(&quot;Dummy Seed took ${watch.elapsedMilliseconds}ms&quot;);
 
   final dummyOutputs = buildOutputs(
     recipient: intent.recipient,
