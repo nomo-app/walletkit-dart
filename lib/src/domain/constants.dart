@@ -1,8 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:typed_data';
-
-import 'package:bip39/bip39.dart';
 import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 
@@ -101,7 +99,72 @@ const publicTestMnemonicHello = // this mnemonic should be never used for real f
     "hello upon mirror situate cradle execute cute negative sudden city mean square";
 
 Uint8List get helloSeed {
-  return mnemonicToSeed(publicTestMnemonicHello);
+  return Uint8List.fromList([
+    93,
+    37,
+    243,
+    36,
+    240,
+    76,
+    115,
+    228,
+    64,
+    229,
+    10,
+    179,
+    172,
+    124,
+    11,
+    81,
+    118,
+    191,
+    159,
+    146,
+    181,
+    53,
+    122,
+    123,
+    79,
+    222,
+    13,
+    15,
+    123,
+    239,
+    231,
+    251,
+    113,
+    198,
+    32,
+    189,
+    145,
+    38,
+    116,
+    17,
+    138,
+    110,
+    174,
+    197,
+    113,
+    100,
+    145,
+    118,
+    205,
+    162,
+    109,
+    208,
+    161,
+    231,
+    52,
+    27,
+    203,
+    63,
+    140,
+    145,
+    228,
+    193,
+    46,
+    58
+  ]);
 }
 
 const helloXpub =

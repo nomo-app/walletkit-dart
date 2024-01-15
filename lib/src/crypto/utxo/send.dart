@@ -86,13 +86,7 @@ RawTransaction buildUnsignedTransaction({
   ///
   /// Build Dummy TX
   ///
-
-  final watch = Stopwatch()..start();
-
   final dummySeed = helloSeed;
-
-  watch.stop();
-  Logger.log("Dummy Seed took ${watch.elapsedMilliseconds}ms");
 
   final dummyOutputs = buildOutputs(
     recipient: intent.recipient,
