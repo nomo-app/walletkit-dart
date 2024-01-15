@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the P2PKH_PREFIX_EC8 constant from the constants library, for the Dart programming language.">
-  <title>P2PKH_PREFIX_EC8 constant - constants library - Dart API</title>
+  <meta name="description" content="API docs for the signRawTransaction function from the send library, for the Dart programming language.">
+  <title>signRawTransaction function - send library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library.html">src&#47;domain&#47;constants.dart</a></li>
-    <li class="self-crumb">P2PKH_PREFIX_EC8 constant</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send-library.html">src&#47;crypto&#47;utxo&#47;send.dart</a></li>
+    <li class="self-crumb">signRawTransaction function</li>
   </ol>
-  <div class="self-name">P2PKH_PREFIX_EC8</div>
+  <div class="self-name">signRawTransaction</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,28 +53,58 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-top-level-property">P2PKH_PREFIX_EC8</span> top-level constant 
+<h1><span class="kind-function">signRawTransaction</span> function 
  
 </h1></div>
 
-        <section class="multi-line-signature">
-          
-          <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>
-          const <span class="name ">P2PKH_PREFIX_EC8</span>
-          
-
-        </section>
+    <section class="multi-line-signature">
         
 
+<span class="returntype">dynamic</span>
+<span class="name ">signRawTransaction</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="signRawTransaction-param-tx">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tx</span>, </span></li>
+<li><span class="parameter" id="signRawTransaction-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
+<li><span class="parameter" id="signRawTransaction-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
+<li><span class="parameter" id="signRawTransaction-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>}</span></li>
+</ol>)
+
         
+
+    </section>
+    
+
+
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">const String P2PKH_PREFIX_EC8 = &#39;c&#39;;</code></pre>
-</section>
+  <pre class="language-dart"><code class="language-dart">RawTransaction signRawTransaction({
+  required RawTransaction tx,
+  required UTXONetworkType networkType,
+  required HDWalletType walletType,
+  required Uint8List seed,
+}) {
+  assert(
+    tx.inputMap != null,
+    &#39;Cant sign transaction without inputs&#39;,
+  );
 
+  final signedInputs = signInputs(
+    inputs: tx.inputMap!,
+    walletType: walletType,
+    tx: tx,
+    networkType: networkType,
+    seed: seed,
+  );
+
+  final signedTx = tx.copyWith(
+    inputs: signedInputs,
+  );
+
+  return signedTx;
+}</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -89,12 +119,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library.html">constants</a></li>
-    <li class="self-crumb">P2PKH_PREFIX_EC8 constant</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send-library.html">send</a></li>
+    <li class="self-crumb">signRawTransaction function</li>
 </ol>
 
 
-    <h5>constants library</h5>
+    <h5>send library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 

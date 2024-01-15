@@ -97,7 +97,6 @@
 
     if (bip32Node == null || bip32Node.isNeutered()) {
       if (output.belongsToUs) {
-        print(output.node.bip32Node?.publicKey.toHex);
         bip32Node = deriveChildNodeFromPath(
           seed: seed,
           childDerivationPath: output.node.derivationPath,

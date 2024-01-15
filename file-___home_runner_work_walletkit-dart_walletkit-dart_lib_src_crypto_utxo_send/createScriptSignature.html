@@ -99,15 +99,12 @@
         output: output,
         hashType: hashType,
       ),
-    LITECOIN_NETWORK() ||
-    BITCOIN_NETWORK() ||
-    EUROCOIN_NETWORK() =&gt;
-      tx.legacySigHash(
+    LITECOIN_NETWORK() || BITCOIN_NETWORK() =&gt; tx.legacySigHash(
         index: i,
         prevScriptPubKey: prevScriptPubKey,
         hashType: hashType,
       ),
-    &#47;&#47;  EUROCOIN_NETWORK() =&gt; throw UnimplementedError(),
+    EUROCOIN_NETWORK() =&gt; throw UnimplementedError(),
   };
 
   final sig = signInput(bip32: node, sigHash: sigHash);
