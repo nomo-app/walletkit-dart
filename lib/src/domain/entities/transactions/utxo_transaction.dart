@@ -122,7 +122,9 @@ final class UTXOTransaction extends GenericTransaction {
       (prev, spentOutput) => prev + spentOutput.value,
     );
 
-    final fee = spentOutputs.isEmpty
+    final fee_int = json['fee_int'] as int?;
+    var fee = fee_int != null ? BigInt.from(fee_int) : null;
+    fee ??= spentOutputs.isEmpty
         ? BigInt.from(-1)
         : totalInputValue - totalOutputValue;
 
@@ -318,6 +320,8 @@ class ElectrumOutput {
   @HiveField(5)
   final NodeWithAddress node;
 
+  final int? weight;
+
   const ElectrumOutput({
     required this.scriptPubKey,
     required this.value,
@@ -325,6 +329,7 @@ class ElectrumOutput {
     this.belongsToUs = false,
     this.spent = false,
     required this.node,
+    this.weight,
   });
 
   /// Zeniq: { value_coin || value_satoshi: int, ... }
@@ -340,6 +345,8 @@ class ElectrumOutput {
 
     final n = json['n'] ?? -1;
 
+    final weight = json['weight'];
+
     return ElectrumOutput(
       value: value,
       n: n,
@@ -347,6 +354,7 @@ class ElectrumOutput {
         json['scriptPubKey'] as Map<String, dynamic>,
       ),
       node: EmptyNode(),
+      weight: weight,
     );
   }
 

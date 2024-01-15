@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:dotenv/dotenv.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/output.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/raw_transaction.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -237,17 +237,18 @@ String buildTestTransactionWithOutputs({
 }) {
   const lockTime = 0;
 
-  final (_, inputMap) = buildInputs(chosenUTXOs);
+  final (_, inputMap) = buildInputs(chosenUTXOs, networkType);
 
   ///
   /// Build final transaction
   ///
 
-  var tx = RawTransaction(
+  var tx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
     inputs: inputMap.values.toList(),
     outputs: outputs,
+    fee: fees,
   );
   final signedInputs = signInputs(
     inputs: inputMap,
@@ -258,7 +259,7 @@ String buildTestTransactionWithOutputs({
   );
   tx = tx.copyWith(inputs: signedInputs);
 
-  final serializedTx = tx.toHex();
+  final serializedTx = tx.asHex;
   return serializedTx;
 }
 
@@ -298,8 +299,21 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
     };
 
     final outputs = expectedTx.outputs
-        .map((out) => Output(
-            value: out.value, scriptPubKey: out.scriptPubKey.lockingScript))
+        .map((out) => switch (networkType) {
+              BITCOIN_NETWORK() ||
+              BITCOINCASH_NETWORK() ||
+              LITECOIN_NETWORK() ||
+              ZENIQ_NETWORK() =>
+                BTCOutput(
+                  value: out.value,
+                  scriptPubKey: out.scriptPubKey.lockingScript,
+                ),
+              EUROCOIN_NETWORK() => EC8Output(
+                  value: out.value,
+                  scriptPubKey: out.scriptPubKey.lockingScript,
+                  weight: out.weight ?? 0,
+                ),
+            })
         .toList();
 
     final fees = expectedTx.fee.value.toInt();

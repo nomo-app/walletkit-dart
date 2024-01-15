@@ -6,9 +6,9 @@ import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/input_selection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/input.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/output.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/raw_transaction.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/src/utils/der.dart';
@@ -68,7 +68,7 @@ String buildTransaction({
     for (final utxo in chosenUTXOs) utxo: allUTXOs[utxo]!,
   };
 
-  var (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap);
+  var (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
 
   if (totalInputValue < targetValue) {
     throw SendFailure("Not enough funds to pay targetValue $targetValue");
@@ -93,10 +93,11 @@ String buildTransaction({
     value: targetValue,
     changeAddress: changeAdress,
     changeValue: BigInt.one,
+    networkType: networkType,
   );
 
-  var dummyTx = RawTransaction(
-    version: networkType.txVersion,
+  var dummyTx = RawTransaction.build(
+    version: version,
     lockTime: lockTime,
     inputs: inputMap.values.toList(),
     outputs: dummyOutputs,
@@ -135,7 +136,7 @@ String buildTransaction({
         for (final utxo in additionalUTXO) utxo: allUTXOs[utxo]!,
       };
 
-      (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap);
+      (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
 
       dummyTx = dummyTx.copyWith(inputs: inputMap.values.toList());
 
@@ -170,13 +171,14 @@ String buildTransaction({
     value: targetValue,
     changeAddress: changeAdress,
     changeValue: changeValue,
+    networkType: networkType,
   );
 
   ///
   /// Build final transaction
   ///
 
-  var tx = RawTransaction(
+  var tx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
     inputs: inputMap.values.toList(),
@@ -197,10 +199,7 @@ String buildTransaction({
     );
   }
 
-  final serializedTx = tx.toHex();
-
-  print("Trying to broadcast tx: $serializedTx ");
-  print("Outputs: ${tx.outputs.length}");
+  final serializedTx = tx.asHex;
 
   return serializedTx;
 }
@@ -222,7 +221,6 @@ List<Input> signInputs({
 
     if (bip32Node == null || bip32Node.isNeutered()) {
       if (output.belongsToUs) {
-        print(output.node.bip32Node?.publicKey.toHex);
         bip32Node = deriveChildNodeFromPath(
           seed: seed,
           childDerivationPath: output.node.derivationPath,
@@ -233,7 +231,9 @@ List<Input> signInputs({
         throw SendFailure("Can't sign input without node");
     }
 
-    if (output.scriptPubKey.isSegwit) {
+    if (output.scriptPubKey.isSegwit &&
+        input is BTCInput &&
+        tx is BTCRawTransaction) {
       final scriptWitness = createScriptWitness(
         tx: tx,
         i: i,
@@ -273,7 +273,9 @@ Uint8List createScriptSignature({
   final prevScriptPubKey = output.scriptPubKey.lockingScript;
 
   final sigHash = switch (networkType) {
-    BITCOINCASH_NETWORK() || ZENIQ_NETWORK() => tx.bip143sigHash(
+    BITCOINCASH_NETWORK() ||
+    ZENIQ_NETWORK() when tx is BTCRawTransaction =>
+      tx.bip143sigHash(
         index: i,
         prevScriptPubKey: prevScriptPubKey,
         output: output,
@@ -287,7 +289,8 @@ Uint8List createScriptSignature({
         prevScriptPubKey: prevScriptPubKey,
         hashType: hashType,
       ),
-    //  EUROCOIN_NETWORK() => throw UnimplementedError(),
+    _ =>
+      throw SendFailure("Could not find sigHash for networkType $networkType"),
   };
 
   final sig = signInput(bip32: node, sigHash: sigHash);
@@ -304,7 +307,7 @@ Uint8List createScriptSignature({
 }
 
 Uint8List createScriptWitness({
-  required RawTransaction tx,
+  required BTCRawTransaction tx,
   required int i,
   required ElectrumOutput output,
   required UTXONetworkType networkType,
@@ -339,6 +342,7 @@ Uint8List createScriptWitness({
 
 (BigInt, Map<ElectrumOutput, Input>) buildInputs(
   Map<ElectrumOutput, UTXOTransaction> utxos,
+  UTXONetworkType networkType,
 ) {
   final usedUTXO = <String>{};
   final inputs = <ElectrumOutput, Input>{};
@@ -350,7 +354,12 @@ Uint8List createScriptWitness({
 
     final hash = uTXOTx.id;
 
-    inputs[uTXO] = buildInput(hash, usedUTXO, uTXO);
+    inputs[uTXO] = buildInput(
+      txidHex: hash,
+      usedUTXO: usedUTXO,
+      utxo: uTXO,
+      networkType: networkType,
+    );
 
     totalInputValue += uTXO.value;
   }
@@ -363,19 +372,21 @@ List<Output> buildOutputs({
   required BigInt value,
   required String? changeAddress,
   required BigInt changeValue,
+  required UTXONetworkType networkType,
 }) {
   return [
-    buildOutput(recipient, value),
+    buildOutput(recipient, value, networkType),
     if (changeAddress != null && changeValue != BigInt.zero)
-      buildOutput(changeAddress, changeValue),
+      buildOutput(changeAddress, changeValue, networkType),
   ];
 }
 
-Input buildInput(
-  String txidHex,
-  Set<String> usedUTXO,
-  ElectrumOutput utxo,
-) {
+Input buildInput({
+  required String txidHex,
+  required Set<String> usedUTXO,
+  required ElectrumOutput utxo,
+  required UTXONetworkType networkType,
+}) {
   final vout = utxo.n;
   final txid = Uint8List.fromList(
     hex.decode(txidHex).reversed.toList(),
@@ -390,20 +401,43 @@ Input buildInput(
   /// Check if utxo has a ScriptSig => Input should also have a ScriptSig
   /// Check if utxo has a WitnessScript => Input should also have a WitnessScript
   ///
-  return Input(
-    txid: txid,
-    vout: vout,
-    sequence: 0xffffffff,
-  );
+
+  return switch (networkType) {
+    BITCOIN_NETWORK() ||
+    BITCOINCASH_NETWORK() ||
+    ZENIQ_NETWORK() ||
+    LITECOIN_NETWORK() =>
+      BTCInput(
+        txid: txid,
+        vout: vout,
+      ),
+    EUROCOIN_NETWORK() => EC8Input(
+        txid: txid,
+        vout: vout,
+        weight: 0, // TODO: Calculate weight
+        value: utxo.value,
+      ),
+  };
 }
 
-Output buildOutput(String address, BigInt value) {
+Output buildOutput(String address, BigInt value, UTXONetworkType networkType) {
   final lockingScript = P2Hash(address).publicKeyScript;
 
-  return Output(
-    value: value,
-    scriptPubKey: lockingScript,
-  );
+  return switch (networkType) {
+    BITCOIN_NETWORK() ||
+    BITCOINCASH_NETWORK() ||
+    ZENIQ_NETWORK() ||
+    LITECOIN_NETWORK() =>
+      BTCOutput(
+        value: value,
+        scriptPubKey: lockingScript,
+      ),
+    EUROCOIN_NETWORK() => EC8Output(
+        value: value,
+        scriptPubKey: lockingScript,
+        weight: 0, // TODO: Calculate weight
+      ),
+  };
 }
 
 Future<String> broadcastTransaction({

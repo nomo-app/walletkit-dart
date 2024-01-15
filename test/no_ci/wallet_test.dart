@@ -3,11 +3,14 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
+import 'utils_test.dart';
+
 void main() {
+  final devSeed = loadDevSeedFromEnv();
 
   test('Send ZENIQ-UTXO to ourselve', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
-      seed: helloSeed,
+      seed: devSeed,
       walletTypes: [HDWalletType.NO_STRUCTURE],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
@@ -30,7 +33,7 @@ void main() {
       networkType: ZeniqNetwork,
       walletType: HDWalletType.NO_STRUCTURE,
       txList: txList,
-      seed: helloSeed,
+      seed: devSeed,
       changeAddresses: nodes.changeNodes.addresses,
       feePerKB: 0.0001,
     );

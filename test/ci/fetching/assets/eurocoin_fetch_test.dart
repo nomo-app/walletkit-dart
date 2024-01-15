@@ -1,10 +1,12 @@
 import 'package:bip39/bip39.dart';
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../../no_ci/input_simulation_test.dart';
 import '../../../no_ci/utils_test.dart';
 import '../fetch_utxo_transactions_test.dart';
+import '../serialization_test.dart';
 
 void main() {
   final rejectSeed = loadDevSeedFromEnv();
@@ -21,12 +23,25 @@ void main() {
     reportCoinsAndAddresses(txList: txList, type: EurocoinNetwork);
   });
 
-  test('Simulate All Send EC8 Tx', () async {
-    final reject =
-        "reject tomato wrap average lunch fame breeze task clump network answer else";
+  test('Parse Raw Tx', () async {
+    final hash =
+        "854eb05f31883e6745be567bf98d46d566945a65f536af4f5cb4a5a80e83756f";
 
-    final rejectSeed = mnemonicToSeed(reject);
-    print("Reject Seed: $rejectSeed");
+    final (utxoTx, raw) = await fetchUTXOTXByHash(
+      hash,
+      EurocoinNetwork,
+      [],
+      [AddressType.legacy],
+    );
+
+    expect(raw, isNotNull);
+
+    final tx = EC8RawTransaction.fromHex(raw!);
+
+    print(tx);
+  });
+
+  test('Simulate All Send EC8 Tx', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: rejectSeed,
       walletTypes: [HDWalletType.NO_STRUCTURE],
