@@ -55,7 +55,7 @@ String buildTransaction({
   final feePerByte = feePerKB / 1024;
 
   const lockTime = 0;
-  const version = 2;
+  final version = networkType.txVersion;
 
   final chosenUTXOs = singleRandomDrawUTXOSelection(
     allUTXOs.keys.toList(),
@@ -279,12 +279,15 @@ Uint8List createScriptSignature({
         output: output,
         hashType: hashType,
       ),
-    LITECOIN_NETWORK() || BITCOIN_NETWORK() => tx.legacySigHash(
+    LITECOIN_NETWORK() ||
+    BITCOIN_NETWORK() ||
+    EUROCOIN_NETWORK() =>
+      tx.legacySigHash(
         index: i,
         prevScriptPubKey: prevScriptPubKey,
         hashType: hashType,
       ),
-    EUROCOIN_NETWORK() => throw UnimplementedError(),
+    //  EUROCOIN_NETWORK() => throw UnimplementedError(),
   };
 
   final sig = signInput(bip32: node, sigHash: sigHash);

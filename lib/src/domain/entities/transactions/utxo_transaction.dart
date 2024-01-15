@@ -189,6 +189,8 @@ class ElectrumInput {
   final List<String>? txinwitness;
   @HiveField(5)
   final String? coinbase;
+  @HiveField(6)
+  final int? value;
 
   bool get isCoinbase => coinbase != null;
 
@@ -199,6 +201,7 @@ class ElectrumInput {
     this.vout,
     this.txinwitness,
     this.coinbase,
+    this.value,
   });
 
   String getAddress(UTXONetworkType type) {
@@ -273,6 +276,23 @@ class ElectrumInput {
         ElectrumInput(
           coinbase: coinbase,
           sequence: sequence,
+        ),
+      {
+        "scriptSig": {
+          "asm": _,
+          "hex": String hex,
+        },
+        "txid": String txid,
+        "vout": int vout,
+        "value_int": int value,
+        "weight": int weight,
+      } =>
+        ElectrumInput(
+          scriptSig: hex,
+          txid: txid,
+          vout: vout,
+          value: value,
+          sequence: weight,
         ),
       _ => throw Exception("Could not parse ElectrumInput from $json"),
     };

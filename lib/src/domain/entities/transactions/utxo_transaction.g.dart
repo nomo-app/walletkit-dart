@@ -99,13 +99,14 @@ class ElectrumInputAdapter extends TypeAdapter<ElectrumInput> {
       vout: fields[3] as int?,
       txinwitness: (fields[4] as List?)?.cast<String>(),
       coinbase: fields[5] as String?,
+      value: fields[6] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ElectrumInput obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.scriptSig)
       ..writeByte(1)
@@ -117,7 +118,9 @@ class ElectrumInputAdapter extends TypeAdapter<ElectrumInput> {
       ..writeByte(4)
       ..write(obj.txinwitness)
       ..writeByte(5)
-      ..write(obj.coinbase);
+      ..write(obj.coinbase)
+      ..writeByte(6)
+      ..write(obj.value);
   }
 
   @override

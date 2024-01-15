@@ -41,6 +41,7 @@ const List<String> P2WPKH_PREFIXES_BCH = [
   "1q",
   "qq"
 ]; // Native SegWit Bitcoin Cash
+const String P2PKH_PREFIX_EC8 = 'c';
 
 const BITCOIN_NETWORK_BIP = NetworkBIP(
   bip32XpubPrefix: 0x0488b21e,
