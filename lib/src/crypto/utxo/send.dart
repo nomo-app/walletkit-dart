@@ -20,11 +20,10 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 /// https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki
 ///
 
-String buildTransaction({
+RawTransaction buildUnsignedTransaction({
   required TransferIntent intent,
   required UTXONetworkType networkType,
   required HDWalletType walletType,
-  required Uint8List seed,
   required Iterable<UTXOTransaction> txList,
   required double feePerKB,
   required Iterable<String> changeAddresses,
@@ -88,6 +87,13 @@ String buildTransaction({
   /// Build Dummy TX
   ///
 
+  final watch = Stopwatch()..start();
+
+  final dummySeed = helloSeed;
+
+  watch.stop();
+  Logger.log("Dummy Seed took ${watch.elapsedMilliseconds}ms");
+
   final dummyOutputs = buildOutputs(
     recipient: intent.recipient,
     value: targetValue,
@@ -107,7 +113,7 @@ String buildTransaction({
     walletType: walletType,
     tx: dummyTx,
     networkType: networkType,
-    seed: seed,
+    seed: dummySeed,
   );
 
   dummyTx = dummyTx.copyWith(inputs: dummyInputs);
@@ -144,7 +150,7 @@ String buildTransaction({
         walletType: walletType,
         tx: dummyTx,
         networkType: networkType,
-        seed: seed,
+        seed: dummySeed,
       );
 
       dummyTx = dummyTx.copyWith(inputs: dummyInputs);
@@ -176,20 +182,12 @@ String buildTransaction({
   /// Build final transaction
   ///
 
-  var tx = RawTransaction(
+  var tx = RawTransaction.fromInputMap(
     version: version,
     lockTime: lockTime,
-    inputs: inputMap.values.toList(),
+    inputMap: inputMap,
     outputs: outputs,
   );
-  final signedInputs = signInputs(
-    inputs: inputMap,
-    walletType: walletType,
-    tx: tx,
-    networkType: networkType,
-    seed: seed,
-  );
-  tx = tx.copyWith(inputs: signedInputs);
 
   if (tx.totalOutputValue + estimatedFee != totalInputValue) {
     throw SendFailure(
@@ -197,12 +195,33 @@ String buildTransaction({
     );
   }
 
-  final serializedTx = tx.toHex();
+  return tx;
+}
 
-  print("Trying to broadcast tx: $serializedTx ");
-  print("Outputs: ${tx.outputs.length}");
+RawTransaction signRawTransaction({
+  required RawTransaction tx,
+  required UTXONetworkType networkType,
+  required HDWalletType walletType,
+  required Uint8List seed,
+}) {
+  assert(
+    tx.inputMap != null,
+    'Cant sign transaction without inputs',
+  );
 
-  return serializedTx;
+  final signedInputs = signInputs(
+    inputs: tx.inputMap!,
+    walletType: walletType,
+    tx: tx,
+    networkType: networkType,
+    seed: seed,
+  );
+
+  final signedTx = tx.copyWith(
+    inputs: signedInputs,
+  );
+
+  return signedTx;
 }
 
 List<Input> signInputs({
@@ -222,7 +241,6 @@ List<Input> signInputs({
 
     if (bip32Node == null || bip32Node.isNeutered()) {
       if (output.belongsToUs) {
-        print(output.node.bip32Node?.publicKey.toHex);
         bip32Node = deriveChildNodeFromPath(
           seed: seed,
           childDerivationPath: output.node.derivationPath,

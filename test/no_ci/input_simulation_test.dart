@@ -243,23 +243,19 @@ String buildTestTransactionWithOutputs({
   /// Build final transaction
   ///
 
-  var tx = RawTransaction(
+  var tx = RawTransaction.fromInputMap(
     version: version,
     lockTime: lockTime,
-    inputs: inputMap.values.toList(),
+    inputMap: inputMap,
     outputs: outputs,
   );
-  final signedInputs = signInputs(
-    inputs: inputMap,
-    walletType: walletType,
+
+  return signRawTransaction(
     tx: tx,
     networkType: networkType,
+    walletType: walletType,
     seed: seed,
-  );
-  tx = tx.copyWith(inputs: signedInputs);
-
-  final serializedTx = tx.toHex();
-  return serializedTx;
+  ).asHex;
 }
 
 Future<(UTXOTransaction, bool, String?)> simulateTx({

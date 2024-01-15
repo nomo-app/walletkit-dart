@@ -19,12 +19,24 @@ class RawTransaction {
   final List<Input> inputs;
   final List<Output> outputs;
 
+  /// Mapping of UTXOs to generated inputs
+  /// Non Null if returned from [buildUnsignedTransaction]
+  final Map<ElectrumOutput, Input>? inputMap;
+
   const RawTransaction({
     required this.version,
     required this.lockTime,
     required this.inputs,
     required this.outputs,
-  });
+  }) : inputMap = null;
+
+  RawTransaction.fromInputMap({
+    required Map<ElectrumOutput, Input> inputMap,
+    required this.version,
+    required this.lockTime,
+    required this.outputs,
+  })  : inputMap = inputMap,
+        inputs = inputMap.values.toList();
 
   bool get isSegwit {
     return inputs.any((input) => input.scriptWitness != null);
@@ -300,7 +312,7 @@ class RawTransaction {
     return hash;
   }
 
-  String toHex() {
+  String get asHex {
     return hex.encode(bytes);
   }
 
