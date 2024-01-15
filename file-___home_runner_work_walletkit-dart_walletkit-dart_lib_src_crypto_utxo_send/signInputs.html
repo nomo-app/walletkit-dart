@@ -107,7 +107,9 @@
         throw SendFailure(&quot;Can&#39;t sign input without node&quot;);
     }
 
-    if (output.scriptPubKey.isSegwit) {
+    if (output.scriptPubKey.isSegwit &amp;&amp;
+        input is BTCInput &amp;&amp;
+        tx is BTCRawTransaction) {
       final scriptWitness = createScriptWitness(
         tx: tx,
         i: i,

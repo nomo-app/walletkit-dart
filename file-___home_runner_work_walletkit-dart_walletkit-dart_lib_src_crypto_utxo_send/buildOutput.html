@@ -65,7 +65,8 @@
 
 <span class="returntype">dynamic</span>
 <span class="name ">buildOutput</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="buildOutput-param-address"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
-<li><span class="parameter" id="buildOutput-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span></span></li>
+<li><span class="parameter" id="buildOutput-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span>, </span></li>
+<li><span class="parameter" id="buildOutput-param-networkType"><span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span></span></li>
 </ol>)
 
         
@@ -77,13 +78,24 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Output buildOutput(String address, BigInt value) {
+  <pre class="language-dart"><code class="language-dart">Output buildOutput(String address, BigInt value, UTXONetworkType networkType) {
   final lockingScript = P2Hash(address).publicKeyScript;
 
-  return Output(
-    value: value,
-    scriptPubKey: lockingScript,
-  );
+  return switch (networkType) {
+    BITCOIN_NETWORK() ||
+    BITCOINCASH_NETWORK() ||
+    ZENIQ_NETWORK() ||
+    LITECOIN_NETWORK() =&gt;
+      BTCOutput(
+        value: value,
+        scriptPubKey: lockingScript,
+      ),
+    EUROCOIN_NETWORK() =&gt; EC8Output(
+        value: value,
+        scriptPubKey: lockingScript,
+        weight: 0, &#47;&#47; TODO: Calculate weight
+      ),
+  };
 }</code></pre>
 </section>
 
