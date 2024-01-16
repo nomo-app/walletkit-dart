@@ -86,8 +86,6 @@ Bitcoin: { value: float, ... }</p>
 
   final n = json[&#39;n&#39;] ?? -1;
 
-  final weight = json[&#39;weight&#39;];
-
   return ElectrumOutput(
     value: value,
     n: n,
@@ -95,7 +93,6 @@ Bitcoin: { value: float, ... }</p>
       json[&#39;scriptPubKey&#39;] as Map&lt;String, dynamic&gt;,
     ),
     node: EmptyNode(),
-    weight: weight,
   );
 }</code></pre>
 </section>
