@@ -6,6 +6,8 @@ import 'package:bip39/bip39.dart';
 import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 
+const MAX_PUBKEYS_PER_MULTISIG = 20;
+
 const PUBKEY_SCRIPT_HASH_LENGTH_HEX = "14"; // 20 bytes
 
 const DUST_THRESHOLD = 546;

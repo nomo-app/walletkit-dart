@@ -16,7 +16,7 @@ void main() {
       networkType: ZeniqNetwork,
       minEndpoints: 1,
     );
-    expect(txList.length, greaterThanOrEqualTo(2));
+    expect(txList.length, greaterThanOrEqualTo(348));
 
     final sendTxs = txList
         .where((tx) =>
@@ -35,10 +35,10 @@ void main() {
         ),
     ]);
 
-    //  final validSimulations = results.where((result) => result.$2).toList();
+    final validSimulations = results.where((result) => result.$2).toList();
     final invalidSimulations = results.where((result) => !result.$2).toList();
 
-    //  expect(validSimulations.length, greaterThanOrEqualTo(250));
+    expect(validSimulations.length, greaterThanOrEqualTo(250));
     expect(invalidSimulations, isEmpty);
   });
 }

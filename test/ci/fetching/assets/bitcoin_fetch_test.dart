@@ -1,6 +1,7 @@
 @Timeout(Duration(minutes: 5))
 
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../../no_ci/input_simulation_test.dart';
@@ -160,7 +161,7 @@ void main() {
       networkType: BitcoinNetwork,
       minEndpoints: 1,
     );
-    expect(txList.length, greaterThanOrEqualTo(2));
+    expect(txList.length, greaterThanOrEqualTo(87));
 
     final sendTxs = txList
         .where((tx) =>

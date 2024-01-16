@@ -348,7 +348,7 @@ Future<String> buildTestTransaction({
     networkType: networkType,
     seed: seed,
   );
-  tx = tx.copyWith(inputs: signedInputs);
+  tx = tx.signInputs(signedInputs);
 
   final serializedTx = tx.asHex;
   return serializedTx;

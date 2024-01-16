@@ -4,6 +4,7 @@ import 'package:convert/convert.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
+import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 part "utxo_transaction.g.dart";
@@ -320,7 +321,7 @@ class ElectrumOutput {
   @HiveField(5)
   final NodeWithAddress node;
 
-  final int? weight;
+  final BigInt? weight;
 
   const ElectrumOutput({
     required this.scriptPubKey,
@@ -345,7 +346,7 @@ class ElectrumOutput {
 
     final n = json['n'] ?? -1;
 
-    final weight = json['weight'];
+    final weight = json['weight'] as int?;
 
     return ElectrumOutput(
       value: value,
@@ -354,7 +355,7 @@ class ElectrumOutput {
         json['scriptPubKey'] as Map<String, dynamic>,
       ),
       node: EmptyNode(),
-      weight: weight,
+      weight: weight.toBI,
     );
   }
 
@@ -395,6 +396,7 @@ class ElectrumOutput {
       spent: spent ?? this.spent,
       belongsToUs: belongsToUs ?? this.belongsToUs,
       node: node ?? this.node,
+      weight: weight,
     );
   }
 

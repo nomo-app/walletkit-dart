@@ -111,7 +111,7 @@ String buildTransaction({
     seed: seed,
   );
 
-  dummyTx = dummyTx.copyWith(inputs: dummyInputs);
+  dummyTx = dummyTx.signInputs(dummyInputs);
 
   ///
   /// Build Outputs again with the estimated size
@@ -138,7 +138,7 @@ String buildTransaction({
 
       (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
 
-      dummyTx = dummyTx.copyWith(inputs: inputMap.values.toList());
+      dummyTx = dummyTx.signInputs(inputMap.values.toList());
 
       dummyInputs = signInputs(
         inputs: inputMap,
@@ -148,7 +148,7 @@ String buildTransaction({
         seed: seed,
       );
 
-      dummyTx = dummyTx.copyWith(inputs: dummyInputs);
+      dummyTx = dummyTx.signInputs(dummyInputs);
 
       estimatedSize = BigInt.from(dummyTx.size);
       estimatedFee = estimatedSize * feePerByte.toSatoshi;
@@ -191,7 +191,7 @@ String buildTransaction({
     networkType: networkType,
     seed: seed,
   );
-  tx = tx.copyWith(inputs: signedInputs);
+  tx = tx.signInputs(signedInputs);
 
   if (tx.totalOutputValue + estimatedFee != totalInputValue) {
     throw SendFailure(
@@ -231,10 +231,8 @@ List<Input> signInputs({
         throw SendFailure("Can't sign input without node");
     }
 
-    if (output.scriptPubKey.isSegwit &&
-        input is BTCInput &&
-        tx is BTCRawTransaction) {
-      final scriptWitness = createScriptWitness(
+    if (tx is BTCRawTransaction && output.scriptPubKey.isSegwit) {
+      final witnessSript = createScriptWitness(
         tx: tx,
         i: i,
         output: output,
@@ -242,7 +240,7 @@ List<Input> signInputs({
         node: bip32Node,
       );
 
-      signedInputs.add(input.copyWith(scriptWitness: scriptWitness));
+      signedInputs.add(input.addScript(wittnessScript: witnessSript));
       continue;
     }
 
@@ -255,7 +253,7 @@ List<Input> signInputs({
       node: bip32Node,
     );
 
-    signedInputs.add(input.copyWith(scriptSig: scriptSig));
+    signedInputs.add(input.addScript(scriptSig: scriptSig));
   }
 
   return signedInputs;
@@ -410,12 +408,15 @@ Input buildInput({
       BTCInput(
         txid: txid,
         vout: vout,
+        weight: BigInt.from(-1),
+        prevScriptPubKey: utxo.scriptPubKey.lockingScript,
       ),
     EUROCOIN_NETWORK() => EC8Input(
         txid: txid,
         vout: vout,
-        weight: 0, // TODO: Calculate weight
+        weight: BigInt.from(-1),
         value: utxo.value,
+        prevScriptPubKey: utxo.scriptPubKey.lockingScript,
       ),
   };
 }
@@ -435,7 +436,6 @@ Output buildOutput(String address, BigInt value, UTXONetworkType networkType) {
     EUROCOIN_NETWORK() => EC8Output(
         value: value,
         scriptPubKey: lockingScript,
-        weight: 0, // TODO: Calculate weight
       ),
   };
 }

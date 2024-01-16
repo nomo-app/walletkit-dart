@@ -6,6 +6,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
+import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
 
 const SEGWIT_FLAG = 0x01;
@@ -13,6 +14,8 @@ const SEGWIT_MARKER = 0x00;
 
 abstract class RawTransaction {
   final int version;
+  final BigInt
+      weight; // TODO: Could be a Getter (but EC8 actually includes it in the serialized tx )
   final List<Input> inputs;
   final List<Output> outputs;
 
@@ -44,17 +47,21 @@ abstract class RawTransaction {
 
     // clear all scriptSigs
     for (int i = 0; i < copy.inputs.length; i++) {
-      copy.inputs[i] =
-          copy.inputs[i].copyWith(scriptSig: Uint8List.fromList([]));
+      copy.inputs[i] = copy.inputs[i].addScript(
+        scriptSig: Uint8List.fromList([]),
+      );
     }
 
     // set scriptSig for inputIndex to prevScriptPubKeyHex
-    copy.inputs[index] =
-        copy.inputs[index].copyWith(scriptSig: prevScriptPubKey);
+    copy.inputs[index] = copy.inputs[index].addScript(
+      scriptSig: prevScriptPubKey,
+    );
 
-    final buffer = Uint8List(copy.bytes.length + 4);
+    final bytes = copy.bytes;
+
+    final buffer = Uint8List(bytes.length + 4);
     var offset = 0;
-    offset += buffer.writeSlice(0, copy.bytes);
+    offset += buffer.writeSlice(0, bytes);
     offset += buffer.bytes.writeUint32(offset, hashType);
 
     final hash = sha256Sha256Hash(buffer);
@@ -66,15 +73,12 @@ abstract class RawTransaction {
     required this.version,
     required this.inputs,
     required this.outputs,
+    required this.weight,
   });
 
   RawTransaction createCopy();
 
-  RawTransaction copyWith({
-    int? version,
-    List<Input>? inputs,
-    List<Output>? outputs,
-  });
+  RawTransaction signInputs(List<Input>? inputs);
 
   static RawTransaction build({
     required int version,
@@ -83,7 +87,7 @@ abstract class RawTransaction {
     int? lockTime,
     int? validFrom,
     int? validUntil,
-    int? fee,
+    BigInt? fee,
   }) {
     final btcInputs = inputs.whereType<BTCInput>();
     final btcOutputs = outputs.whereType<BTCOutput>();
@@ -94,6 +98,7 @@ abstract class RawTransaction {
         inputs: btcInputs.toList(),
         outputs: btcOutputs.toList(),
         lockTime: lockTime,
+        weight: -1.toBI,
       );
     }
 
@@ -106,9 +111,9 @@ abstract class RawTransaction {
         inputs: ec8Inputs.toList(),
         outputs: ec8Outputs.toList(),
         fee: fee,
-        weight: 0, // TODO: Calculate Weight
         validFrom: validFrom ?? 0,
         validUntil: validUntil ?? 0,
+        weight: -1.toBI,
       );
     }
 
@@ -121,11 +126,16 @@ abstract class RawTransaction {
 ///
 class BTCRawTransaction extends RawTransaction {
   final int lockTime;
+
+  @override
   final List<BTCInput> inputs;
+
+  @override
   final List<BTCOutput> outputs;
 
   const BTCRawTransaction({
     required super.version,
+    required super.weight,
     required this.lockTime,
     required this.inputs,
     required this.outputs,
@@ -134,16 +144,16 @@ class BTCRawTransaction extends RawTransaction {
           outputs: outputs,
         );
 
-  bool get isSegwit {
-    return inputs.any((input) => input.scriptWitness != null);
+  bool get hasWitness {
+    return inputs.any((input) => input.hasWitness);
   }
 
   Iterable<BTCInput> get segwitInputs {
-    return inputs.where((input) => input.scriptWitness != null);
+    return inputs.where((input) => input.hasWitness);
   }
 
   Iterable<BTCInput> get nonSegwitInputs {
-    return inputs.where((input) => input.scriptWitness == null);
+    return inputs.where((input) => input.hasWitness == false);
   }
 
   BTCRawTransaction createCopy() {
@@ -152,20 +162,31 @@ class BTCRawTransaction extends RawTransaction {
       lockTime: lockTime,
       inputs: inputs,
       outputs: outputs,
+      weight: weight,
     );
   }
 
-  BTCRawTransaction copyWith({
-    int? version,
-    int? lockTime,
+  BTCRawTransaction signInputs(
     List<Input>? inputs,
-    List<Output>? outputs,
-  }) {
+  ) {
+    final signedInputs = inputs?.whereType<BTCInput>().toList() ?? this.inputs;
+
+    var weight = signedInputs.fold(
+      0.toBI,
+      (prev, input) => prev + input.weight,
+    );
+
+    weight += outputs.fold(
+      0.toBI,
+      (prev, output) => prev + output.weight,
+    );
+
     return BTCRawTransaction(
-      version: version ?? this.version,
-      lockTime: lockTime ?? this.lockTime,
-      inputs: inputs?.whereType<BTCInput>().toList() ?? this.inputs,
-      outputs: outputs?.whereType<BTCOutput>().toList() ?? this.outputs,
+      version: version,
+      lockTime: lockTime,
+      inputs: signedInputs,
+      outputs: outputs,
+      weight: weight,
     );
   }
 
@@ -223,6 +244,7 @@ class BTCRawTransaction extends RawTransaction {
       lockTime: lockTime,
       inputs: inputs,
       outputs: outputs,
+      weight: BigInt.from(-1), // TODO: Calculate weight
     );
   }
 
@@ -248,12 +270,16 @@ class BTCRawTransaction extends RawTransaction {
         outputsByteLength +
         4;
 
-    if (isSegwit) {
+    if (hasWitness) {
       txByteLength += 1; // Segwit Flag
       txByteLength += 1; // Segwit Marker
+
       txByteLength += segwitInputs.fold(
         0,
-        (prev, input) => prev + input.scriptWitness!.length,
+        (prev, input) {
+          assert(input.isSegwit);
+          return prev + input.wittnessScript.length;
+        }, // TODO: Should be witness
       );
       txByteLength += nonSegwitInputs.length; // Empty Script
     }
@@ -268,7 +294,7 @@ class BTCRawTransaction extends RawTransaction {
     offset += buffer.bytes.writeUint32(offset, version);
 
     /// Segwit Flag
-    if (isSegwit) {
+    if (hasWitness) {
       offset += buffer.bytes.writeUint8(offset, SEGWIT_MARKER);
       offset += buffer.bytes.writeUint8(offset, SEGWIT_FLAG);
     }
@@ -286,10 +312,10 @@ class BTCRawTransaction extends RawTransaction {
     }
 
     /// Witness
-    if (isSegwit)
+    if (hasWitness)
       for (final input in inputs) {
         if (input.isSegwit) {
-          offset += buffer.writeSlice(offset, input.scriptWitness!);
+          offset += buffer.writeSlice(offset, input.wittnessScript);
           continue;
         }
 
@@ -389,23 +415,31 @@ class EC8RawTransaction extends RawTransaction {
   final List<EC8Input> inputs;
   final List<EC8Output> outputs;
 
-  final int fee;
-  final int weight;
+  final BigInt
+      fee; // TODO: Could be a Getter (but EC8 actually includes it in the serialized tx )
+
   final int validFrom;
   final int validUntil;
 
   const EC8RawTransaction({
     required super.version,
+    required super.weight,
     required this.inputs,
     required this.outputs,
     required this.fee,
-    required this.weight,
     required this.validFrom,
     required this.validUntil,
   }) : super(
           inputs: inputs,
           outputs: outputs,
         );
+
+  // TODO: Implement
+  // String get txid {
+  //   final buffer = bytes;
+  //   final hash = sha256Sha256Hash(buffer);
+  //   return hash.rev.toHex;
+  // }
 
   @override
   Uint8List get bytes {
@@ -455,10 +489,10 @@ class EC8RawTransaction extends RawTransaction {
     }
 
     /// Fee
-    offset += buffer.bytes.writeUint64(offset, fee);
+    offset += buffer.bytes.writeUint64(offset, fee.toInt());
 
     /// Weight
-    offset += buffer.bytes.writeUint32(offset, weight);
+    offset += buffer.bytes.writeUint32(offset, weight.toInt());
 
     /// ValidFrom
     offset += buffer.bytes.writeUint64(offset, validFrom);
@@ -475,29 +509,34 @@ class EC8RawTransaction extends RawTransaction {
       inputs: inputs,
       outputs: outputs,
       fee: fee,
-      weight: weight,
       validFrom: validFrom,
       validUntil: validUntil,
+      weight: weight,
     );
   }
 
-  EC8RawTransaction copyWith({
-    int? version,
+  EC8RawTransaction signInputs(
     List<Input>? inputs,
-    List<Output>? outputs,
-    int? fee,
-    int? weight,
-    int? validFrom,
-    int? validUntil,
-  }) {
+  ) {
+    final signedInputs = inputs?.whereType<EC8Input>().toList() ?? this.inputs;
+
+    var weight = signedInputs.fold(
+      0.toBI,
+      (prev, input) => prev + input.weight,
+    );
+
+    weight += outputs.fold(
+      0.toBI,
+      (prev, output) => prev + output.weight,
+    );
     return EC8RawTransaction(
-      version: version ?? this.version,
-      inputs: inputs?.whereType<EC8Input>().toList() ?? this.inputs,
-      outputs: outputs?.whereType<EC8Output>().toList() ?? this.outputs,
-      fee: fee ?? this.fee,
-      weight: weight ?? this.weight,
-      validFrom: validFrom ?? this.validFrom,
-      validUntil: validUntil ?? this.validUntil,
+      version: version,
+      inputs: signedInputs,
+      outputs: outputs,
+      fee: fee,
+      weight: weight,
+      validFrom: validFrom,
+      validUntil: validUntil,
     );
   }
 
@@ -518,7 +557,7 @@ class EC8RawTransaction extends RawTransaction {
     final inputs = <EC8Input>[];
     for (int i = 0; i < inputLength; i++) {
       final input = EC8Input.fromBuffer(buffer.sublist(offset));
-      offset += input.size + 8;
+      offset += input.size;
       inputs.add(input);
     }
 
@@ -531,7 +570,7 @@ class EC8RawTransaction extends RawTransaction {
 
     for (int i = 0; i < outputLength; i++) {
       final output = EC8Output.fromBuffer(buffer.sublist(offset));
-      offset += output.size + 4;
+      offset += output.size;
       outputs.add(output);
     }
 
@@ -555,8 +594,8 @@ class EC8RawTransaction extends RawTransaction {
       version: version,
       inputs: inputs,
       outputs: outputs,
-      fee: fee,
-      weight: weight,
+      fee: fee.toBI,
+      weight: weight.toBI,
       validFrom: validFrom,
       validUntil: validUntil,
     );

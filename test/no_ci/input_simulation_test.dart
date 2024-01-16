@@ -219,6 +219,7 @@ Future<(UTXOTransaction, String?)> fetchUTXOTXByHash(
     client: null,
     endpoints: networkType.endpoints,
     token: networkType.coin,
+    timeout: Duration(seconds: 10),
   );
 
   expect(result, isNotNull, reason: "Result is null for $hash");
@@ -248,7 +249,7 @@ String buildTestTransactionWithOutputs({
     lockTime: lockTime,
     inputs: inputMap.values.toList(),
     outputs: outputs,
-    fee: fees,
+    fee: BigInt.from(fees),
   );
   final signedInputs = signInputs(
     inputs: inputMap,
@@ -257,7 +258,7 @@ String buildTestTransactionWithOutputs({
     networkType: networkType,
     seed: seed,
   );
-  tx = tx.copyWith(inputs: signedInputs);
+  tx = tx.signInputs(signedInputs);
 
   final serializedTx = tx.asHex;
   return serializedTx;
@@ -308,10 +309,10 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
                   value: out.value,
                   scriptPubKey: out.scriptPubKey.lockingScript,
                 ),
-              EUROCOIN_NETWORK() => EC8Output(
+              EUROCOIN_NETWORK() => EC8Output.withWeight(
                   value: out.value,
                   scriptPubKey: out.scriptPubKey.lockingScript,
-                  weight: out.weight ?? 0,
+                  weight: out.weight ?? BigInt.zero,
                 ),
             })
         .toList();
