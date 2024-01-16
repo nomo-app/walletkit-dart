@@ -119,7 +119,9 @@
     (prev, spentOutput) =&gt; prev + spentOutput.value,
   );
 
-  final fee = spentOutputs.isEmpty
+  final fee_int = json[&#39;fee_int&#39;] as int?;
+  var fee = fee_int != null ? BigInt.from(fee_int) : null;
+  fee ??= spentOutputs.isEmpty
       ? BigInt.from(-1)
       : totalInputValue - totalOutputValue;
 

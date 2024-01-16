@@ -67,7 +67,8 @@
 <span class="name ">buildOutputs</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="buildOutputs-param-recipient">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span></li>
 <li><span class="parameter" id="buildOutputs-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span>, </span></li>
 <li><span class="parameter" id="buildOutputs-param-changeAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">changeAddress</span>, </span></li>
-<li><span class="parameter" id="buildOutputs-param-changeValue"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">changeValue</span>}</span></li>
+<li><span class="parameter" id="buildOutputs-param-changeValue"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">changeValue</span>, </span></li>
+<li><span class="parameter" id="buildOutputs-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>}</span></li>
 </ol>)
 
         
@@ -84,11 +85,12 @@
   required BigInt value,
   required String? changeAddress,
   required BigInt changeValue,
+  required UTXONetworkType networkType,
 }) {
   return [
-    buildOutput(recipient, value),
+    buildOutput(recipient, value, networkType),
     if (changeAddress != null &amp;&amp; changeValue != BigInt.zero)
-      buildOutput(changeAddress, changeValue),
+      buildOutput(changeAddress, changeValue, networkType),
   ];
 }</code></pre>
 </section>
