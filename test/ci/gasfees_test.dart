@@ -109,4 +109,31 @@ void main() {
     print('LTC Low Priority: $ltcLowPriority');
     print('LTC Tommorow: $ltcTommorow');
   });
+
+  test('Estimate Fees EC8', () async {
+    final ec8HighPriority = await estimateFeeForPriority(
+      network: EurocoinNetwork,
+      priority: FeePriority.high,
+    );
+
+    final ec8LowPriority = await estimateFeeForPriority(
+      network: EurocoinNetwork,
+      priority: FeePriority.low,
+    );
+
+    final ec8MediumPriority = await estimateFeeForPriority(
+      network: EurocoinNetwork,
+      priority: FeePriority.medium,
+    );
+
+    final ec8Tommorow = await estimateFeeForPriority(
+      network: EurocoinNetwork,
+      priority: FeePriority.tommorow,
+    );
+
+    print('EC8 High Priority: $ec8HighPriority');
+    print('EC8 Medium Priority: $ec8MediumPriority');
+    print('EC8 Low Priority: $ec8LowPriority');
+    print('EC8 Tommorow: $ec8Tommorow');
+  });
 }

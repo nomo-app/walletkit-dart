@@ -55,6 +55,8 @@ String buildTransaction({
   final feePerByte = feePerKB / 1024;
 
   const lockTime = 0;
+  const validFrom = 0; // EC8 specific
+  const validUntil = 0; // EC8 specific
   final version = networkType.txVersion;
 
   final chosenUTXOs = singleRandomDrawUTXOSelection(
@@ -99,6 +101,8 @@ String buildTransaction({
   var dummyTx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
     inputs: inputMap.values.toList(),
     outputs: dummyOutputs,
   );
@@ -181,6 +185,8 @@ String buildTransaction({
   var tx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
     inputs: inputMap.values.toList(),
     outputs: outputs,
   );

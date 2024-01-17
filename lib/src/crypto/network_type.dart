@@ -330,7 +330,7 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
           messagePrefix: "\x18Eurocoin Signed Message:\n",
           networkBIP: BITCOIN_NETWORK_BIP,
           sighash: BITCOIN_SIGHASH_INFO,
-          txVersion: 1,
+          txVersion: 2,
           addressPrefixes: const {
             AddressType.legacy: "c",
           },

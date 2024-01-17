@@ -81,7 +81,7 @@ void main() {
     final validSimulations = results.where((result) => result.$2).toList();
     final invalidSimulations = results.where((result) => !result.$2).toList();
 
-    // expect(validSimulations.length, greaterThanOrEqualTo(1));
+    expect(validSimulations.length, greaterThanOrEqualTo(1));
     expect(invalidSimulations, isEmpty);
   });
 
@@ -105,7 +105,7 @@ void main() {
 
     final intent = TransferIntent(
       recipient: receive,
-      amount: Amount.num(value: 1, decimals: 5),
+      amount: Amount.num(value: 1.2, decimals: 5),
       feePriority: FeePriority.high,
       token: ec8Coin,
     );
@@ -117,7 +117,7 @@ void main() {
       txList: txList,
       seed: rejectSeed,
       changeAddresses: nodes.changeNodes.addresses,
-      feePerKB: 0.0001,
+      feePerKB: 0.00008, // Minimum 0.00004; Max 0.00008
     );
 
     expect(serializedTx, isNotNull);
