@@ -121,6 +121,8 @@
   final feePerByte = feePerKB &#47; 1024;
 
   const lockTime = 0;
+  const validFrom = 0; &#47;&#47; EC8 specific
+  const validUntil = 0; &#47;&#47; EC8 specific
   final version = networkType.txVersion;
 
   final chosenUTXOs = singleRandomDrawUTXOSelection(
@@ -165,6 +167,8 @@
   var dummyTx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
     inputs: inputMap.values.toList(),
     outputs: dummyOutputs,
   );
@@ -247,6 +251,8 @@
   var tx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
     inputs: inputMap.values.toList(),
     outputs: outputs,
   );
