@@ -77,14 +77,18 @@ Bitcoin: { value: float, ... }</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory ElectrumOutput.fromJson(Map&lt;String, dynamic&gt; json) {
-  final valIsSatoshi = json.containsKey(&#39;value_satoshi&#39;);
+  final valIsSatoshi =
+      json.containsKey(&#39;value_satoshi&#39;) || json.containsKey(&#39;value_int&#39;);
 
-  var value = json[&#39;value&#39;] ?? json[&#39;value_satoshi&#39;] ?? 0;
+  var value =
+      json[&#39;value_int&#39;] ?? json[&#39;value&#39;] ?? json[&#39;value_satoshi&#39;] ?? 0;
 
   value =
       valIsSatoshi ? BigInt.from(value) : BigInt.from(toSatoshiValue(value));
 
   final n = json[&#39;n&#39;] ?? -1;
+
+  final weight = json[&#39;weight&#39;] as int?;
 
   return ElectrumOutput(
     value: value,
@@ -93,6 +97,7 @@ Bitcoin: { value: float, ... }</p>
       json[&#39;scriptPubKey&#39;] as Map&lt;String, dynamic&gt;,
     ),
     node: EmptyNode(),
+    weight: weight.toBI,
   );
 }</code></pre>
 </section>

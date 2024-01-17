@@ -64,9 +64,10 @@
         
 
 <span class="returntype">dynamic</span>
-<span class="name ">buildInput</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="buildInput-param-txidHex"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">txidHex</span>, </span></li>
-<li><span class="parameter" id="buildInput-param-usedUTXO"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">usedUTXO</span>, </span></li>
-<li><span class="parameter" id="buildInput-param-utxo"><span class="type-annotation">dynamic</span> <span class="parameter-name">utxo</span></span></li>
+<span class="name ">buildInput</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="buildInput-param-txidHex">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">txidHex</span>, </span></li>
+<li><span class="parameter" id="buildInput-param-usedUTXO"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">usedUTXO</span>, </span></li>
+<li><span class="parameter" id="buildInput-param-utxo"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">utxo</span>, </span></li>
+<li><span class="parameter" id="buildInput-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>}</span></li>
 </ol>)
 
         
@@ -78,11 +79,12 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Input buildInput(
-  String txidHex,
-  Set&lt;String&gt; usedUTXO,
-  ElectrumOutput utxo,
-) {
+  <pre class="language-dart"><code class="language-dart">Input buildInput({
+  required String txidHex,
+  required Set&lt;String&gt; usedUTXO,
+  required ElectrumOutput utxo,
+  required UTXONetworkType networkType,
+}) {
   final vout = utxo.n;
   final txid = Uint8List.fromList(
     hex.decode(txidHex).reversed.toList(),
@@ -97,11 +99,26 @@
   &#47;&#47;&#47; Check if utxo has a ScriptSig =&gt; Input should also have a ScriptSig
   &#47;&#47;&#47; Check if utxo has a WitnessScript =&gt; Input should also have a WitnessScript
   &#47;&#47;&#47;
-  return Input(
-    txid: txid,
-    vout: vout,
-    sequence: 0xffffffff,
-  );
+
+  return switch (networkType) {
+    BITCOIN_NETWORK() ||
+    BITCOINCASH_NETWORK() ||
+    ZENIQ_NETWORK() ||
+    LITECOIN_NETWORK() =&gt;
+      BTCInput(
+        txid: txid,
+        vout: vout,
+        weight: BigInt.from(-1),
+        prevScriptPubKey: utxo.scriptPubKey.lockingScript,
+      ),
+    EUROCOIN_NETWORK() =&gt; EC8Input(
+        txid: txid,
+        vout: vout,
+        weight: BigInt.from(-1),
+        value: utxo.value,
+        prevScriptPubKey: utxo.scriptPubKey.lockingScript,
+      ),
+  };
 }</code></pre>
 </section>
 

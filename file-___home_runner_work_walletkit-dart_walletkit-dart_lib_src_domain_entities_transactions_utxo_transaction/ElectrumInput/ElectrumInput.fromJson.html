@@ -114,6 +114,23 @@
         coinbase: coinbase,
         sequence: sequence,
       ),
+    {
+      &quot;scriptSig&quot;: {
+        &quot;asm&quot;: _,
+        &quot;hex&quot;: String hex,
+      },
+      &quot;txid&quot;: String txid,
+      &quot;vout&quot;: int vout,
+      &quot;value_int&quot;: int value,
+      &quot;weight&quot;: int weight,
+    } =&gt;
+      ElectrumInput(
+        scriptSig: hex,
+        txid: txid,
+        vout: vout,
+        value: value,
+        sequence: weight,
+      ),
     _ =&gt; throw Exception(&quot;Could not parse ElectrumInput from $json&quot;),
   };
 }</code></pre>
