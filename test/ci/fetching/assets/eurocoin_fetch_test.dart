@@ -78,19 +78,14 @@ void main() {
         ),
     ]);
 
-    //  final validSimulations = results.where((result) => result.$2).toList();
+    final validSimulations = results.where((result) => result.$2).toList();
     final invalidSimulations = results.where((result) => !result.$2).toList();
 
-    //  expect(validSimulations.length, greaterThanOrEqualTo(250));
+    expect(validSimulations.length, greaterThanOrEqualTo(1));
     expect(invalidSimulations, isEmpty);
   });
 
   test('Send to own Address', () async {
-    final reject =
-        "reject tomato wrap average lunch fame breeze task clump network answer else";
-
-    final rejectSeed = mnemonicToSeed(reject);
-
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: EurocoinNetwork,
       seed: rejectSeed,
@@ -110,7 +105,7 @@ void main() {
 
     final intent = TransferIntent(
       recipient: receive,
-      amount: Amount(value: BigInt.from(100000000), decimals: 8),
+      amount: Amount.num(value: 1, decimals: 5),
       feePriority: FeePriority.high,
       token: ec8Coin,
     );

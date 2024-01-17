@@ -267,6 +267,39 @@ class EC8Input extends Input {
     return buffer;
   }
 
+  Uint8List bytesForSigning({
+    required bool withWeight,
+    required bool withScript,
+  }) {
+    final buffer = Uint8List(
+      txid.length +
+          output_index_length +
+          value_length +
+          (withWeight ? weight_length : 0) +
+          (withScript ? scriptSig.length + 1 : 0),
+    );
+
+    var offset = 0;
+    // Write TXID
+    offset += buffer.writeSlice(offset, txid);
+    // Write Vout
+    offset += buffer.bytes.writeUint32(offset, vout);
+    // Write Value
+    offset += buffer.bytes.writeUint64(offset, intValue);
+
+    // Write Weight
+    if (withWeight) {
+      offset +=
+          buffer.bytes.writeUint32(offset, weight.toInt()); // Should be 146
+    }
+
+    if (withScript) {
+      // Write ScriptSig
+      offset += buffer.writeVarSlice(offset, scriptSig);
+    }
+    return buffer;
+  }
+
   factory EC8Input.fromBuffer(Uint8List buffer) {
     var offset = 0;
 

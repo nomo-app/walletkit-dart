@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/pk_script_converter.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
@@ -57,7 +58,7 @@ abstract class RawTransaction {
       scriptSig: prevScriptPubKey,
     );
 
-    final bytes = copy.bytes;
+    final bytes = copy is EC8RawTransaction ? copy.bytesForSigning : copy.bytes;
 
     final buffer = Uint8List(bytes.length + 4);
     var offset = 0;
@@ -434,6 +435,17 @@ class EC8RawTransaction extends RawTransaction {
           outputs: outputs,
         );
 
+  BigInt get calcFee {
+    return inputs.fold(
+          BigInt.zero,
+          (prev, input) => prev + input.value,
+        ) -
+        outputs.fold(
+          BigInt.zero,
+          (prev, output) => prev + output.value,
+        );
+  }
+
   // TODO: Implement
   // String get txid {
   //   final buffer = bytes;
@@ -493,6 +505,88 @@ class EC8RawTransaction extends RawTransaction {
 
     /// Weight
     offset += buffer.bytes.writeUint32(offset, weight.toInt());
+
+    /// ValidFrom
+    offset += buffer.bytes.writeUint64(offset, validFrom);
+
+    /// ValidUntil
+    offset += buffer.bytes.writeUint32(offset, validUntil);
+
+    return buffer;
+  }
+
+  ///
+  /// Doesnt include weight
+  ///
+  Uint8List get bytesForSigning {
+    /// Double SHA256 Hash of all inputs
+    final inputBuffers = inputs.map(
+      (input) => input.bytesForSigning(
+        withWeight: true,
+        withScript: false,
+      ),
+    );
+    final combinedInputBuffers = inputBuffers.fold(
+      Uint8List(0),
+      (prev, buffer) => Uint8List.fromList(prev + buffer),
+    );
+    final hashInputs = sha256Sha256Hash(combinedInputBuffers);
+
+    /// Double SHA256 Hash of all outputs
+    final outputBuffers = outputs.map((output) => output.bytes);
+    final combinedOutputBuffers = outputBuffers.fold(
+      Uint8List(0),
+      (prev, buffer) => Uint8List.fromList(prev + buffer),
+    );
+    final hashOutputs = sha256Sha256Hash(combinedOutputBuffers);
+
+    ///
+    /// Input to be signed
+    ///
+
+    /// Input to be signed has a scriptSig all other inputs have empty scriptSigs
+    final input = inputs.singleWhereOrNull(
+      (input) => input.scriptSig.length != 0,
+    );
+    if (input == null) {
+      throw Exception('No input to be signed');
+    }
+
+    final inputBytes = input.bytesForSigning(
+      withWeight: false,
+      withScript: true,
+    );
+
+    ///
+    /// Construct Buffer
+    ///
+    final txByteLength = 4 +
+        hashInputs.length +
+        hashOutputs.length +
+        inputBytes.length +
+        8 +
+        8 +
+        4;
+    final buffer = Uint8List(txByteLength);
+    var offset = 0;
+
+    /// Version
+    offset += buffer.bytes.writeUint32(offset, version);
+
+    /// HashInputs
+    offset += buffer.writeSlice(offset, hashInputs);
+
+    /// Input to be signed
+    offset += buffer.writeSlice(
+      offset,
+      inputBytes,
+    );
+
+    /// HashOutputs
+    offset += buffer.writeSlice(offset, hashOutputs);
+
+    /// Fee
+    offset += buffer.bytes.writeUint64(offset, calcFee.toInt());
 
     /// ValidFrom
     offset += buffer.bytes.writeUint64(offset, validFrom);

@@ -93,7 +93,7 @@ class EC8Output extends Output {
     offset += buffer.bytes.writeUint64(offset, intValue);
 
     // Write Weight
-    offset += buffer.bytes.writeUint32(offset, weight.toInt());
+    offset += buffer.bytes.writeUint32(offset, weight.toInt()); // Should be 146
 
     // Write ScriptPubKey
     offset += buffer.writeVarSlice(offset, scriptPubKey);

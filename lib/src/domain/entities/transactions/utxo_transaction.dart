@@ -337,9 +337,11 @@ class ElectrumOutput {
   /// Bitcoin: { value: float, ... }
 
   factory ElectrumOutput.fromJson(Map<String, dynamic> json) {
-    final valIsSatoshi = json.containsKey('value_satoshi');
+    final valIsSatoshi =
+        json.containsKey('value_satoshi') || json.containsKey('value_int');
 
-    var value = json['value'] ?? json['value_satoshi'] ?? 0;
+    var value =
+        json['value_int'] ?? json['value'] ?? json['value_satoshi'] ?? 0;
 
     value =
         valIsSatoshi ? BigInt.from(value) : BigInt.from(toSatoshiValue(value));
