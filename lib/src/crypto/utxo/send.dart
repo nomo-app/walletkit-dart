@@ -408,14 +408,12 @@ Input buildInput({
       BTCInput(
         txid: txid,
         vout: vout,
-        weight: BigInt.from(-1),
         value: utxo.value,
         prevScriptPubKey: utxo.scriptPubKey.lockingScript,
       ),
     EUROCOIN_NETWORK() => EC8Input(
         txid: txid,
         vout: vout,
-        weight: BigInt.from(-1),
         value: utxo.value,
         prevScriptPubKey: utxo.scriptPubKey.lockingScript,
       ),

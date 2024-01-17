@@ -236,6 +236,8 @@ String buildTestTransactionWithOutputs({
   required List<Output> outputs,
 }) {
   const lockTime = 0;
+  const validFrom = 0;
+  const validUntil = 0;
 
   final (_, inputMap) = buildInputs(chosenUTXOs, networkType);
 
@@ -245,9 +247,11 @@ String buildTestTransactionWithOutputs({
 
   var tx = RawTransaction.build(
     version: version,
-    lockTime: lockTime,
     inputs: inputMap.values.toList(),
     outputs: outputs,
+    lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
   );
   final signedInputs = signInputs(
     inputs: inputMap,
@@ -307,10 +311,9 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
                   value: out.value,
                   scriptPubKey: out.scriptPubKey.lockingScript,
                 ),
-              EUROCOIN_NETWORK() => EC8Output.withWeight(
+              EUROCOIN_NETWORK() => EC8Output(
                   value: out.value,
                   scriptPubKey: out.scriptPubKey.lockingScript,
-                  weight: out.weight ?? BigInt.zero,
                 ),
             })
         .toList();

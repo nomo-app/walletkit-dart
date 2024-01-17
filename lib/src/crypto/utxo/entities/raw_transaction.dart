@@ -15,10 +15,19 @@ const SEGWIT_MARKER = 0x00;
 
 abstract class RawTransaction {
   final int version;
-  final BigInt
-      weight; // TODO: Could be a Getter (but EC8 actually includes it in the serialized tx )
   final List<Input> inputs;
   final List<Output> outputs;
+
+  BigInt get weight {
+    return inputs.fold(
+          0.toBI,
+          (prev, input) => prev + input.weight,
+        ) +
+        outputs.fold(
+          0.toBI,
+          (prev, output) => prev + output.weight,
+        );
+  }
 
   Uint8List get bytes;
 
@@ -83,7 +92,6 @@ abstract class RawTransaction {
     required this.version,
     required this.inputs,
     required this.outputs,
-    required this.weight,
   });
 
   RawTransaction createCopy();
@@ -107,21 +115,22 @@ abstract class RawTransaction {
         inputs: btcInputs.toList(),
         outputs: btcOutputs.toList(),
         lockTime: lockTime,
-        weight: -1.toBI,
       );
     }
 
     final ec8Inputs = inputs.whereType<EC8Input>();
     final ec8Outputs = outputs.whereType<EC8Output>();
 
-    if (ec8Inputs.isNotEmpty && ec8Outputs.isNotEmpty) {
+    if (ec8Inputs.isNotEmpty &&
+        ec8Outputs.isNotEmpty &&
+        validFrom != null &&
+        validUntil != null) {
       return EC8RawTransaction(
         version: version,
         inputs: ec8Inputs.toList(),
         outputs: ec8Outputs.toList(),
-        validFrom: validFrom ?? 0,
-        validUntil: validUntil ?? 0,
-        weight: -1.toBI,
+        validFrom: validFrom,
+        validUntil: validUntil,
       );
     }
 
@@ -143,7 +152,6 @@ class BTCRawTransaction extends RawTransaction {
 
   const BTCRawTransaction({
     required super.version,
-    required super.weight,
     required this.lockTime,
     required this.inputs,
     required this.outputs,
@@ -170,7 +178,6 @@ class BTCRawTransaction extends RawTransaction {
       lockTime: lockTime,
       inputs: inputs,
       outputs: outputs,
-      weight: weight,
     );
   }
 
@@ -179,22 +186,11 @@ class BTCRawTransaction extends RawTransaction {
   ) {
     final signedInputs = inputs?.whereType<BTCInput>().toList() ?? this.inputs;
 
-    var weight = signedInputs.fold(
-      0.toBI,
-      (prev, input) => prev + input.weight,
-    );
-
-    weight += outputs.fold(
-      0.toBI,
-      (prev, output) => prev + output.weight,
-    );
-
     return BTCRawTransaction(
       version: version,
       lockTime: lockTime,
       inputs: signedInputs,
       outputs: outputs,
-      weight: weight,
     );
   }
 
@@ -252,7 +248,6 @@ class BTCRawTransaction extends RawTransaction {
       lockTime: lockTime,
       inputs: inputs,
       outputs: outputs,
-      weight: BigInt.from(-1), // TODO: Calculate weight
     );
   }
 
@@ -287,7 +282,7 @@ class BTCRawTransaction extends RawTransaction {
         (prev, input) {
           assert(input.isSegwit);
           return prev + input.wittnessScript.length;
-        }, // TODO: Should be witness
+        },
       );
       txByteLength += nonSegwitInputs.length; // Empty Script
     }
@@ -428,7 +423,6 @@ class EC8RawTransaction extends RawTransaction {
 
   const EC8RawTransaction({
     required super.version,
-    required super.weight,
     required this.inputs,
     required this.outputs,
     required this.validFrom,
@@ -596,7 +590,6 @@ class EC8RawTransaction extends RawTransaction {
       outputs: outputs,
       validFrom: validFrom,
       validUntil: validUntil,
-      weight: weight,
     );
   }
 
@@ -605,20 +598,10 @@ class EC8RawTransaction extends RawTransaction {
   ) {
     final signedInputs = inputs?.whereType<EC8Input>().toList() ?? this.inputs;
 
-    var weight = signedInputs.fold(
-      0.toBI,
-      (prev, input) => prev + input.weight,
-    );
-
-    weight += outputs.fold(
-      0.toBI,
-      (prev, output) => prev + output.weight,
-    );
     return EC8RawTransaction(
       version: version,
       inputs: signedInputs,
       outputs: outputs,
-      weight: weight,
       validFrom: validFrom,
       validUntil: validUntil,
     );
@@ -662,8 +645,8 @@ class EC8RawTransaction extends RawTransaction {
     final (_, feeOffset) = buffer.bytes.readUint64(offset);
     offset += feeOffset;
 
-    /// Weight
-    final (weight, weightOffset) = buffer.bytes.readUint32(offset);
+    /// Weight (is ignored since it is calculated)
+    final (_, weightOffset) = buffer.bytes.readUint32(offset);
     offset += weightOffset;
 
     /// ValidFrom
@@ -678,7 +661,6 @@ class EC8RawTransaction extends RawTransaction {
       version: version,
       inputs: inputs,
       outputs: outputs,
-      weight: weight.toBI,
       validFrom: validFrom,
       validUntil: validUntil,
     );

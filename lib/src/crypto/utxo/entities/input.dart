@@ -15,14 +15,12 @@ abstract class Input {
   final int vout;
   final Uint8List? _scriptSig;
   final Uint8List? _wittnessScript;
-  final BigInt weight;
   final BigInt? value;
   final Uint8List? _prevScriptPubKey;
 
   const Input({
     required this.txid,
     required this.vout,
-    required this.weight,
     this.value,
     Uint8List? prevScriptPubKey,
     Uint8List? scriptSig,
@@ -30,6 +28,11 @@ abstract class Input {
   })  : _scriptSig = scriptSig,
         _prevScriptPubKey = prevScriptPubKey,
         _wittnessScript = wittnessScript;
+
+  BigInt get weight {
+    if (_scriptSig == null || _prevScriptPubKey == null) return -1.toBI;
+    return calculateWeight(_prevScriptPubKey!, _scriptSig!);
+  }
 
   int get intValue => value != null ? value!.toInt() : 0;
 
@@ -121,7 +124,6 @@ class BTCInput extends Input {
   const BTCInput({
     required super.txid,
     required super.vout,
-    required super.weight,
     required super.value,
     super.scriptSig,
     super.prevScriptPubKey,
@@ -154,7 +156,6 @@ class BTCInput extends Input {
       sequence: sequence,
       scriptSig: script,
       value: null,
-      weight: BigInt.from(-1), // TODO: Calculate weight
     );
   }
 
@@ -164,13 +165,11 @@ class BTCInput extends Input {
   }) {
     final _scriptSig = scriptSig ?? this._scriptSig;
     final _witnessScript = wittnessScript ?? this._wittnessScript;
-    final weight = calculateWeight(previousScriptPubKey, _scriptSig);
 
     return BTCInput(
       txid: txid,
       vout: vout,
       scriptSig: _scriptSig,
-      weight: weight,
       prevScriptPubKey: previousScriptPubKey,
       wittnessScript: _witnessScript,
       value: value,
@@ -211,7 +210,6 @@ class EC8Input extends Input {
   const EC8Input({
     required super.txid,
     required super.vout,
-    required super.weight,
     required super.value,
     super.prevScriptPubKey,
     super.scriptSig,
@@ -224,14 +222,12 @@ class EC8Input extends Input {
   }) {
     final _scriptSig = scriptSig ?? this._scriptSig;
     final _witnessScript = wittnessScript ?? this._wittnessScript;
-    final weight = calculateWeight(previousScriptPubKey, scriptSig);
 
     return EC8Input(
       txid: txid,
       vout: vout,
       scriptSig: _scriptSig,
       value: value,
-      weight: weight,
       prevScriptPubKey: previousScriptPubKey,
       wittnessScript: _witnessScript,
     );
@@ -314,8 +310,8 @@ class EC8Input extends Input {
     final (value, off3) = buffer.bytes.readUint64(offset);
     offset += off3;
 
-    /// Weight
-    final (weight, off4) = buffer.bytes.readUint32(offset);
+    /// Weight (is ignored since it is calculated)
+    final (_, off4) = buffer.bytes.readUint32(offset);
     offset += off4;
 
     /// ScriptSig
@@ -327,7 +323,6 @@ class EC8Input extends Input {
       vout: vout,
       scriptSig: scriptSig,
       value: BigInt.from(value),
-      weight: weight.toBI,
     );
   }
 }
