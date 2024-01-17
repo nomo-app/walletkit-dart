@@ -97,6 +97,7 @@
 
     if (bip32Node == null || bip32Node.isNeutered()) {
       if (output.belongsToUs) {
+        print(output.node.bip32Node?.publicKey.toHex);
         bip32Node = deriveChildNodeFromPath(
           seed: seed,
           childDerivationPath: output.node.derivationPath,
@@ -107,8 +108,8 @@
         throw SendFailure(&quot;Can&#39;t sign input without node&quot;);
     }
 
-    if (tx is BTCRawTransaction &amp;&amp; output.scriptPubKey.isSegwit) {
-      final witnessSript = createScriptWitness(
+    if (output.scriptPubKey.isSegwit) {
+      final scriptWitness = createScriptWitness(
         tx: tx,
         i: i,
         output: output,
@@ -116,7 +117,7 @@
         node: bip32Node,
       );
 
-      signedInputs.add(input.addScript(wittnessScript: witnessSript));
+      signedInputs.add(input.copyWith(scriptWitness: scriptWitness));
       continue;
     }
 
@@ -129,7 +130,7 @@
       node: bip32Node,
     );
 
-    signedInputs.add(input.addScript(scriptSig: scriptSig));
+    signedInputs.add(input.copyWith(scriptSig: scriptSig));
   }
 
   return signedInputs;

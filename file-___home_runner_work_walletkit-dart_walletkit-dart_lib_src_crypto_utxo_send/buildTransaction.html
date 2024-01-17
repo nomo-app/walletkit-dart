@@ -121,7 +121,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
   final feePerByte = feePerKB &#47; 1024;
 
   const lockTime = 0;
-  final version = networkType.txVersion;
+  const version = 2;
 
   final chosenUTXOs = singleRandomDrawUTXOSelection(
     allUTXOs.keys.toList(),
@@ -134,7 +134,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
     for (final utxo in chosenUTXOs) utxo: allUTXOs[utxo]!,
   };
 
-  var (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
+  var (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap);
 
   if (totalInputValue &lt; targetValue) {
     throw SendFailure(&quot;Not enough funds to pay targetValue $targetValue&quot;);
@@ -159,11 +159,10 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
     value: targetValue,
     changeAddress: changeAdress,
     changeValue: BigInt.one,
-    networkType: networkType,
   );
 
-  var dummyTx = RawTransaction.build(
-    version: version,
+  var dummyTx = RawTransaction(
+    version: networkType.txVersion,
     lockTime: lockTime,
     inputs: inputMap.values.toList(),
     outputs: dummyOutputs,
@@ -177,7 +176,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
     seed: seed,
   );
 
-  dummyTx = dummyTx.signInputs(dummyInputs);
+  dummyTx = dummyTx.copyWith(inputs: dummyInputs);
 
   &#47;&#47;&#47;
   &#47;&#47;&#47; Build Outputs again with the estimated size
@@ -202,9 +201,9 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
         for (final utxo in additionalUTXO) utxo: allUTXOs[utxo]!,
       };
 
-      (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
+      (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap);
 
-      dummyTx = dummyTx.signInputs(inputMap.values.toList());
+      dummyTx = dummyTx.copyWith(inputs: inputMap.values.toList());
 
       dummyInputs = signInputs(
         inputs: inputMap,
@@ -214,7 +213,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
         seed: seed,
       );
 
-      dummyTx = dummyTx.signInputs(dummyInputs);
+      dummyTx = dummyTx.copyWith(inputs: dummyInputs);
 
       estimatedSize = BigInt.from(dummyTx.size);
       estimatedFee = estimatedSize * feePerByte.toSatoshi;
@@ -237,14 +236,13 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
     value: targetValue,
     changeAddress: changeAdress,
     changeValue: changeValue,
-    networkType: networkType,
   );
 
   &#47;&#47;&#47;
   &#47;&#47;&#47; Build final transaction
   &#47;&#47;&#47;
 
-  var tx = RawTransaction.build(
+  var tx = RawTransaction(
     version: version,
     lockTime: lockTime,
     inputs: inputMap.values.toList(),
@@ -257,7 +255,7 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
     networkType: networkType,
     seed: seed,
   );
-  tx = tx.signInputs(signedInputs);
+  tx = tx.copyWith(inputs: signedInputs);
 
   if (tx.totalOutputValue + estimatedFee != totalInputValue) {
     throw SendFailure(
@@ -265,7 +263,10 @@ https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki</p>
     );
   }
 
-  final serializedTx = tx.asHex;
+  final serializedTx = tx.toHex();
+
+  print(&quot;Trying to broadcast tx: $serializedTx &quot;);
+  print(&quot;Outputs: ${tx.outputs.length}&quot;);
 
   return serializedTx;
 }</code></pre>

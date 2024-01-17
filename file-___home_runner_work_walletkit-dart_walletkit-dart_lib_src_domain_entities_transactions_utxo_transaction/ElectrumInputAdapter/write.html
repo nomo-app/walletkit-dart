@@ -85,7 +85,7 @@
   <pre class="language-dart"><code class="language-dart">@override
 void write(BinaryWriter writer, ElectrumInput obj) {
   writer
-    ..writeByte(7)
+    ..writeByte(6)
     ..writeByte(0)
     ..write(obj.scriptSig)
     ..writeByte(1)
@@ -97,9 +97,7 @@ void write(BinaryWriter writer, ElectrumInput obj) {
     ..writeByte(4)
     ..write(obj.txinwitness)
     ..writeByte(5)
-    ..write(obj.coinbase)
-    ..writeByte(6)
-    ..write(obj.value);
+    ..write(obj.coinbase);
 }</code></pre>
 </section>
 
