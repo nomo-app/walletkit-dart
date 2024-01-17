@@ -13,25 +13,25 @@ const sequence_length = 4;
 abstract class Input {
   final Uint8List txid;
   final int vout;
-
   final Uint8List? _scriptSig;
-
   final Uint8List? _wittnessScript;
-
   final BigInt weight;
-
+  final BigInt? value;
   final Uint8List? _prevScriptPubKey;
 
   const Input({
     required this.txid,
     required this.vout,
     required this.weight,
+    this.value,
     Uint8List? prevScriptPubKey,
     Uint8List? scriptSig,
     Uint8List? wittnessScript,
   })  : _scriptSig = scriptSig,
         _prevScriptPubKey = prevScriptPubKey,
         _wittnessScript = wittnessScript;
+
+  int get intValue => value != null ? value!.toInt() : 0;
 
   String? get scriptSigHex => _scriptSig != null ? _scriptSig!.toHex : null;
 
@@ -122,6 +122,7 @@ class BTCInput extends Input {
     required super.txid,
     required super.vout,
     required super.weight,
+    required super.value,
     super.scriptSig,
     super.prevScriptPubKey,
     super.wittnessScript,
@@ -152,6 +153,7 @@ class BTCInput extends Input {
       vout: vout,
       sequence: sequence,
       scriptSig: script,
+      value: null,
       weight: BigInt.from(-1), // TODO: Calculate weight
     );
   }
@@ -171,6 +173,8 @@ class BTCInput extends Input {
       weight: weight,
       prevScriptPubKey: previousScriptPubKey,
       wittnessScript: _witnessScript,
+      value: value,
+      sequence: sequence,
     );
   }
 
@@ -204,20 +208,15 @@ const value_length = 8;
 const weight_length = 4;
 
 class EC8Input extends Input {
-  final BigInt
-      value; // TODO: Could also be part of Input since when building the tx we know the value
-
   const EC8Input({
     required super.txid,
     required super.vout,
     required super.weight,
+    required super.value,
     super.prevScriptPubKey,
     super.scriptSig,
     super.wittnessScript,
-    required this.value,
   });
-
-  int get intValue => value.toInt();
 
   EC8Input addScript({
     Uint8List? scriptSig,

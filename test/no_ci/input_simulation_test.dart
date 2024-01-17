@@ -233,7 +233,6 @@ String buildTestTransactionWithOutputs({
   required Map<ElectrumOutput, UTXOTransaction> chosenUTXOs,
   required Uint8List seed,
   required int version,
-  int fees = 1000,
   required List<Output> outputs,
 }) {
   const lockTime = 0;
@@ -249,7 +248,6 @@ String buildTestTransactionWithOutputs({
     lockTime: lockTime,
     inputs: inputMap.values.toList(),
     outputs: outputs,
-    fee: BigInt.from(fees),
   );
   final signedInputs = signInputs(
     inputs: inputMap,
@@ -329,7 +327,6 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
       chosenUTXOs: chosenUtxosMap,
       seed: seed,
       version: expectedTx.version,
-      fees: fees,
       outputs: outputs,
     );
 

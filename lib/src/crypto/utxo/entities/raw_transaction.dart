@@ -26,6 +26,15 @@ abstract class RawTransaction {
 
   int get size => bytes.length;
 
+  BigInt get fee => totalInputValue - totalOutputValue;
+
+  BigInt get totalInputValue {
+    return inputs.fold(
+      BigInt.zero,
+      (prev, element) => prev + (element.value ?? BigInt.zero),
+    );
+  }
+
   BigInt get totalOutputValue {
     return outputs.fold(
       BigInt.zero,
@@ -88,7 +97,6 @@ abstract class RawTransaction {
     int? lockTime,
     int? validFrom,
     int? validUntil,
-    BigInt? fee,
   }) {
     final btcInputs = inputs.whereType<BTCInput>();
     final btcOutputs = outputs.whereType<BTCOutput>();
@@ -106,12 +114,11 @@ abstract class RawTransaction {
     final ec8Inputs = inputs.whereType<EC8Input>();
     final ec8Outputs = outputs.whereType<EC8Output>();
 
-    if (ec8Inputs.isNotEmpty && ec8Outputs.isNotEmpty && fee != null) {
+    if (ec8Inputs.isNotEmpty && ec8Outputs.isNotEmpty) {
       return EC8RawTransaction(
         version: version,
         inputs: ec8Inputs.toList(),
         outputs: ec8Outputs.toList(),
-        fee: fee,
         validFrom: validFrom ?? 0,
         validUntil: validUntil ?? 0,
         weight: -1.toBI,
@@ -416,9 +423,6 @@ class EC8RawTransaction extends RawTransaction {
   final List<EC8Input> inputs;
   final List<EC8Output> outputs;
 
-  final BigInt
-      fee; // TODO: Could be a Getter (but EC8 actually includes it in the serialized tx )
-
   final int validFrom;
   final int validUntil;
 
@@ -427,24 +431,12 @@ class EC8RawTransaction extends RawTransaction {
     required super.weight,
     required this.inputs,
     required this.outputs,
-    required this.fee,
     required this.validFrom,
     required this.validUntil,
   }) : super(
           inputs: inputs,
           outputs: outputs,
         );
-
-  BigInt get calcFee {
-    return inputs.fold(
-          BigInt.zero,
-          (prev, input) => prev + input.value,
-        ) -
-        outputs.fold(
-          BigInt.zero,
-          (prev, output) => prev + output.value,
-        );
-  }
 
   // TODO: Implement
   // String get txid {
@@ -586,7 +578,7 @@ class EC8RawTransaction extends RawTransaction {
     offset += buffer.writeSlice(offset, hashOutputs);
 
     /// Fee
-    offset += buffer.bytes.writeUint64(offset, calcFee.toInt());
+    offset += buffer.bytes.writeUint64(offset, fee.toInt());
 
     /// ValidFrom
     offset += buffer.bytes.writeUint64(offset, validFrom);
@@ -602,7 +594,6 @@ class EC8RawTransaction extends RawTransaction {
       version: version,
       inputs: inputs,
       outputs: outputs,
-      fee: fee,
       validFrom: validFrom,
       validUntil: validUntil,
       weight: weight,
@@ -627,7 +618,6 @@ class EC8RawTransaction extends RawTransaction {
       version: version,
       inputs: signedInputs,
       outputs: outputs,
-      fee: fee,
       weight: weight,
       validFrom: validFrom,
       validUntil: validUntil,
@@ -668,8 +658,8 @@ class EC8RawTransaction extends RawTransaction {
       outputs.add(output);
     }
 
-    /// Fee
-    final (fee, feeOffset) = buffer.bytes.readUint64(offset);
+    /// Fee (is ignored since it is calculated from inputs and outputs)
+    final (_, feeOffset) = buffer.bytes.readUint64(offset);
     offset += feeOffset;
 
     /// Weight
@@ -688,7 +678,6 @@ class EC8RawTransaction extends RawTransaction {
       version: version,
       inputs: inputs,
       outputs: outputs,
-      fee: fee.toBI,
       weight: weight.toBI,
       validFrom: validFrom,
       validUntil: validUntil,
