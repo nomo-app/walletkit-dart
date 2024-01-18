@@ -94,6 +94,7 @@ ElectrumInput read(BinaryReader reader) {
     vout: fields[3] as int?,
     txinwitness: (fields[4] as List?)?.cast&lt;String&gt;(),
     coinbase: fields[5] as String?,
+    value: fields[6] as int?,
   );
 }</code></pre>
 </section>

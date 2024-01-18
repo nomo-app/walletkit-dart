@@ -121,7 +121,9 @@
   final feePerByte = feePerKB &#47; 1024;
 
   const lockTime = 0;
-  const version = 2;
+  const validFrom = 0; &#47;&#47; EC8 specific
+  const validUntil = 0; &#47;&#47; EC8 specific
+  final version = networkType.txVersion;
 
   final chosenUTXOs = singleRandomDrawUTXOSelection(
     allUTXOs.keys.toList(),
@@ -134,7 +136,7 @@
     for (final utxo in chosenUTXOs) utxo: allUTXOs[utxo]!,
   };
 
-  var (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap);
+  var (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
 
   if (totalInputValue &lt; targetValue) {
     throw SendFailure(&quot;Not enough funds to pay targetValue $targetValue&quot;);
@@ -159,11 +161,14 @@
     value: targetValue,
     changeAddress: changeAdress,
     changeValue: BigInt.one,
+    networkType: networkType,
   );
 
-  var dummyTx = RawTransaction(
-    version: networkType.txVersion,
+  var dummyTx = RawTransaction.build(
+    version: version,
     lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
     inputs: inputMap.values.toList(),
     outputs: dummyOutputs,
   );
@@ -176,7 +181,7 @@
     seed: seed,
   );
 
-  dummyTx = dummyTx.copyWith(inputs: dummyInputs);
+  dummyTx = dummyTx.signInputs(dummyInputs);
 
   &#47;&#47;&#47;
   &#47;&#47;&#47; Build Outputs again with the estimated size
@@ -201,9 +206,9 @@
         for (final utxo in additionalUTXO) utxo: allUTXOs[utxo]!,
       };
 
-      (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap);
+      (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
 
-      dummyTx = dummyTx.copyWith(inputs: inputMap.values.toList());
+      dummyTx = dummyTx.signInputs(inputMap.values.toList());
 
       dummyInputs = signInputs(
         inputs: inputMap,
@@ -213,7 +218,7 @@
         seed: seed,
       );
 
-      dummyTx = dummyTx.copyWith(inputs: dummyInputs);
+      dummyTx = dummyTx.signInputs(dummyInputs);
 
       estimatedSize = BigInt.from(dummyTx.size);
       estimatedFee = estimatedSize * feePerByte.toSatoshi;
@@ -236,15 +241,18 @@
     value: targetValue,
     changeAddress: changeAdress,
     changeValue: changeValue,
+    networkType: networkType,
   );
 
   &#47;&#47;&#47;
   &#47;&#47;&#47; Build final transaction
   &#47;&#47;&#47;
 
-  var tx = RawTransaction(
+  var tx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
     inputs: inputMap.values.toList(),
     outputs: outputs,
   );
@@ -255,7 +263,7 @@
     networkType: networkType,
     seed: seed,
   );
-  tx = tx.copyWith(inputs: signedInputs);
+  tx = tx.signInputs(signedInputs);
 
   if (tx.totalOutputValue + estimatedFee != totalInputValue) {
     throw SendFailure(
@@ -263,10 +271,7 @@
     );
   }
 
-  final serializedTx = tx.toHex();
-
-  print(&quot;Trying to broadcast tx: $serializedTx &quot;);
-  print(&quot;Outputs: ${tx.outputs.length}&quot;);
+  final serializedTx = tx.asHex;
 
   return serializedTx;
 }</code></pre>
