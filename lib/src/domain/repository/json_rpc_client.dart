@@ -82,9 +82,6 @@ class TcpJsonRpcClient extends JsonRpcClient {
 
     try {
       final rawResult = await sendRawRequest(procedure);
-      // print(
-      //   "Received Result from $host:$port in ${watch.elapsedMilliseconds}ms",
-      // );
       final json = jsonDecode(rawResult);
       final result = json['result'];
       if (result == null) {
@@ -96,10 +93,10 @@ class TcpJsonRpcClient extends JsonRpcClient {
         return null;
       }
       return result;
-    } catch (e) {
-      // print(
-      //   "error: $e Error from $host:$port in ${watch.elapsedMilliseconds}ms",
-      // );
+    } catch (e, s) {
+      print(
+        "error: $e $s Error from $host:$port in ${watch.elapsedMilliseconds}ms",
+      );
       return null;
     }
   }
@@ -122,13 +119,10 @@ class TcpJsonRpcClient extends JsonRpcClient {
       await socket.flush();
     }
     await socket.flush();
-    //Logger.logFetch("Sent: $procedure_json");
 
     var txJson = "";
     await for (final uIntList in stream!) {
       txJson += String.fromCharCodes(uIntList);
-      //  Logger.log("Received await for: $txJson");
-
       if (!isCompleteJson(txJson)) continue;
       return txJson;
     }
