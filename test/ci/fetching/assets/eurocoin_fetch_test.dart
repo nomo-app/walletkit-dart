@@ -1,4 +1,3 @@
-import 'package:bip39/bip39.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -6,7 +5,6 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../../../no_ci/input_simulation_test.dart';
 import '../../../no_ci/utils_test.dart';
 import '../fetch_utxo_transactions_test.dart';
-import '../serialization_test.dart';
 
 void main() {
   final rejectSeed = loadDevSeedFromEnv();
