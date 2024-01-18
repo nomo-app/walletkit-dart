@@ -6,13 +6,15 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../utils.dart';
 
+import '../ci/fetching/fetch_utxo_transactions_test.dart';
+
 void main() {
-  final seed = loadDevSeedFromEnv();
+  final devSeed = loadDevSeedFromEnv();
   final zeniqSmartRpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
 
   test('Test ZeniqSmart Sending: 1 Zeniq to Spoil Wallet', () async {
     final credentials = getETHCredentials(
-      seed: seed,
+      seed: devSeed,
       wipeCache: true,
     );
 
@@ -31,7 +33,7 @@ void main() {
 
   test('Test ZeniqSmart Sending: 0.001 Avinoc ZSC to Spoil Wallet', () async {
     final credentials = getETHCredentials(
-      seed: seed,
+      seed: devSeed,
       wipeCache: true,
     );
 
@@ -49,7 +51,7 @@ void main() {
   });
   test('Send ZENIQ-UTXO to ourselves', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
-      seed: seed,
+      seed: devSeed,
       walletTypes: [HDWalletType.NO_STRUCTURE],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
@@ -78,7 +80,7 @@ void main() {
 
     final signedTx = signRawTransaction(
       tx: unsignedTx,
-      seed: seed,
+      seed: devSeed,
       networkType: ZeniqNetwork,
       walletType: HDWalletType.NO_STRUCTURE,
     ).asHex;
@@ -90,6 +92,63 @@ void main() {
     final hash = await broadcastTransaction(
       rawTxHex: signedTx,
       type: ZeniqNetwork,
+    );
+
+    print(hash);
+
+    expect(hash, isNotEmpty);
+  });
+
+  test('Send to own Address', () async {
+    final (txList, nodes) = await fetchUTXOTransactions(
+      networkType: EurocoinNetwork,
+      seed: devSeed,
+      minEndpoints: 1,
+      walletTypes: [HDWalletType.NO_STRUCTURE],
+      addressTypes: [AddressType.legacy],
+    );
+
+    reportCoinsAndAddresses(txList: txList, type: EurocoinNetwork);
+
+    final receive = findUnusedAddress(
+      addresses: nodes.receiveNodes.addresses,
+      txs: txList,
+    );
+
+    print("Receive Address: $receive");
+
+    final intent = TransferIntent(
+      recipient: receive,
+      amount: Amount.num(value: 1.2, decimals: 5),
+      feePriority: FeePriority.high,
+      token: ec8Coin,
+    );
+
+    final unsignedTx = buildUnsignedTransaction(
+      intent: intent,
+      networkType: EurocoinNetwork,
+      walletType: HDWalletType.NO_STRUCTURE,
+      txList: txList,
+      changeAddresses: nodes.changeNodes.addresses,
+      feePerKB: 0.00008, // Minimum 0.00004; Max 0.00008
+    );
+
+    final signedTx = signRawTransaction(
+      tx: unsignedTx,
+      seed: devSeed,
+      networkType: EurocoinNetwork,
+      walletType: HDWalletType.NO_STRUCTURE,
+    );
+
+    final serializedTx = signedTx.asHex;
+
+    expect(serializedTx, isNotNull);
+
+    print("Serialized Tx: $serializedTx");
+
+    final hash = await broadcastTransaction(
+      rawTxHex: serializedTx,
+      type: EurocoinNetwork,
     );
 
     print(hash);

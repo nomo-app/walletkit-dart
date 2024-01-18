@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:dotenv/dotenv.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/output.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/raw_transaction.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -219,6 +219,7 @@ Future<(UTXOTransaction, String?)> fetchUTXOTXByHash(
     client: null,
     endpoints: networkType.endpoints,
     token: networkType.coin,
+    timeout: Duration(seconds: 10),
   );
 
   expect(result, isNotNull, reason: "Result is null for $hash");
@@ -232,22 +233,25 @@ String buildTestTransactionWithOutputs({
   required Map<ElectrumOutput, UTXOTransaction> chosenUTXOs,
   required Uint8List seed,
   required int version,
-  int fees = 1000,
   required List<Output> outputs,
 }) {
   const lockTime = 0;
+  const validFrom = 0;
+  const validUntil = 0;
 
-  final (_, inputMap) = buildInputs(chosenUTXOs);
+  final (_, inputMap) = buildInputs(chosenUTXOs, networkType);
 
   ///
   /// Build final transaction
   ///
 
-  var tx = RawTransaction.fromInputMap(
+  var tx = RawTransaction.build(
     version: version,
-    lockTime: lockTime,
     inputMap: inputMap,
     outputs: outputs,
+    lockTime: lockTime,
+    validFrom: validFrom,
+    validUntil: validUntil,
   );
 
   return signRawTransaction(
@@ -294,8 +298,20 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
     };
 
     final outputs = expectedTx.outputs
-        .map((out) => Output(
-            value: out.value, scriptPubKey: out.scriptPubKey.lockingScript))
+        .map((out) => switch (networkType) {
+              BITCOIN_NETWORK() ||
+              BITCOINCASH_NETWORK() ||
+              LITECOIN_NETWORK() ||
+              ZENIQ_NETWORK() =>
+                BTCOutput(
+                  value: out.value,
+                  scriptPubKey: out.scriptPubKey.lockingScript,
+                ),
+              EUROCOIN_NETWORK() => EC8Output(
+                  value: out.value,
+                  scriptPubKey: out.scriptPubKey.lockingScript,
+                ),
+            })
         .toList();
 
     final fees = expectedTx.fee.value.toInt();
@@ -310,7 +326,6 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
       chosenUTXOs: chosenUtxosMap,
       seed: seed,
       version: expectedTx.version,
-      fees: fees,
       outputs: outputs,
     );
 

@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 
+const MAX_PUBKEYS_PER_MULTISIG = 20;
+
 const PUBKEY_SCRIPT_HASH_LENGTH_HEX = "14"; // 20 bytes
 
 const DUST_THRESHOLD = 546;
@@ -39,6 +41,7 @@ const List<String> P2WPKH_PREFIXES_BCH = [
   "1q",
   "qq"
 ]; // Native SegWit Bitcoin Cash
+const String P2PKH_PREFIX_EC8 = 'c';
 
 const BITCOIN_NETWORK_BIP = NetworkBIP(
   bip32XpubPrefix: 0x0488b21e,

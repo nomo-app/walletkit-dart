@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dotenv/dotenv.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/raw_transaction.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -312,7 +312,7 @@ Future<String> buildTestTransaction({
 
   const lockTime = 0;
 
-  final (totalInputValue, inputMap) = buildInputs(chosenUTXOs);
+  final (totalInputValue, inputMap) = buildInputs(chosenUTXOs, networkType);
 
   final targetAddress = intent.recipient;
 
@@ -328,13 +328,14 @@ Future<String> buildTestTransaction({
     value: targetValue,
     changeAddress: changeAddress,
     changeValue: changeValue,
+    networkType: networkType,
   );
 
   ///
   /// Build final transaction
   ///
 
-  var tx = RawTransaction.fromInputMap(
+  var tx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
     inputMap: inputMap,

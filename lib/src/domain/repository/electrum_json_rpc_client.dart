@@ -210,7 +210,6 @@ class ElectrumXClient {
         "params": [blocks]
       },
     );
-    print("estimateFee response: $response");
     return response;
   }
 

@@ -3,11 +3,12 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
+import '../../../no_ci/input_simulation_test.dart';
+import '../../../utils.dart';
 import '../expected_utxo_tx_hashes.dart';
 import '../fetch_utxo_transactions_test.dart';
 
 void main() {
-
   test('No Structure Transaction with Xpub reject wallet', () async {
     final (legacyTxList, _) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
@@ -148,5 +149,40 @@ void main() {
 
     expect(bip44TxList.length, greaterThanOrEqualTo(0));
     reportCoinsAndAddresses(txList: bip44TxList, type: BitcoinNetwork);
+  });
+
+  test('Simulate BTC Wallet', () async {
+    final devSeed = loadDevSeedFromEnv();
+    final (txList, nodes) = await fetchUTXOTransactions(
+      seed: devSeed,
+      walletTypes: [HDWalletType.NO_STRUCTURE],
+      addressTypes: [AddressType.legacy, AddressType.segwit],
+      networkType: BitcoinNetwork,
+      minEndpoints: 1,
+    );
+    expect(txList.length, greaterThanOrEqualTo(87));
+
+    final sendTxs = txList
+        .where((tx) =>
+            tx.transferMethod == TransactionTransferMethod.send ||
+            tx.transferMethod == TransactionTransferMethod.own)
+        .map((tx) => tx.id);
+
+    final results = await Future.wait([
+      for (final tx in sendTxs)
+        simulateTx(
+          hash: tx,
+          nodes: nodes,
+          seed: devSeed,
+          networkType: BitcoinNetwork,
+          addressTypes: [AddressType.legacy, AddressType.segwit],
+        ),
+    ]);
+
+    //  final validSimulations = results.where((result) => result.$2).toList();
+    final invalidSimulations = results.where((result) => !result.$2).toList();
+
+    //  expect(validSimulations.length, greaterThanOrEqualTo(250));
+    expect(invalidSimulations, isEmpty);
   });
 }

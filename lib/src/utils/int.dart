@@ -13,3 +13,12 @@ extension SatoshiUtils on num {
     return (this >= 0 && this <= pow(2, bit) - 1);
   }
 }
+
+extension SatoshiUtilsNullable on num? {
+  BigInt? get toBI {
+    if (this == null) {
+      return null;
+    }
+    return BigInt.from(this!);
+  }
+}
