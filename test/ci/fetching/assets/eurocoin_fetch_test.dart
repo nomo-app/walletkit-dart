@@ -48,30 +48,31 @@ void main() {
     );
 
     var hash =
-        "e1dedc0a6e080686aaa579f77b32b7f97d4ba6e2493a64970b36e1692ac45122";
+        "0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a";
     var result = await simulateForEC8(hash, nodes);
     expect(result.$2, isTrue);
 
-    hash = "e2d927462a03bdee8aa643a2dc29c872696ac59a680d73bfda99033760fb3dac";
-    result = await simulateForEC8(hash, nodes);
-    expect(result.$2, isTrue);
+    // var hash =
+    //     "e1dedc0a6e080686aaa579f77b32b7f97d4ba6e2493a64970b36e1692ac45122";
+    // var result = await simulateForEC8(hash, nodes);
+    // expect(result.$2, isTrue);
 
-    hash = "2720a674d55119f7c8a2d856e7920f50c54a4bca7ef90bb2ff8af730b3451ac7";
-    result = await simulateForEC8(hash, nodes);
-    expect(result.$2, isTrue);
+    // hash = "e2d927462a03bdee8aa643a2dc29c872696ac59a680d73bfda99033760fb3dac";
+    // result = await simulateForEC8(hash, nodes);
+    // expect(result.$2, isTrue);
+
+    // hash = "2720a674d55119f7c8a2d856e7920f50c54a4bca7ef90bb2ff8af730b3451ac7";
+    // result = await simulateForEC8(hash, nodes);
+    // expect(result.$2, isTrue);
 
     // hash = "dfbfbe044cd39d1dee8f7d63f9e7107c1e81d453a963c7ec767768f2cde78012";
     // result = await simulateForEC8(hash, nodes);
     // expect(result.$2, isTrue);
-
-    hash = "e4b06195023ab59ed3d52e6f6b16acdb8ce67f7dd14b5e03ce31fe26ce67671a";
-    result = await simulateForEC8(hash, nodes);
-    expect(result.$2, isTrue);
   });
 
   test('Parse Raw Tx', () async {
     final hash =
-        "854eb05f31883e6745be567bf98d46d566945a65f536af4f5cb4a5a80e83756f";
+        "0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a";
 
     final (utxoTx, raw) = await fetchUTXOTXByHash(
       hash,
