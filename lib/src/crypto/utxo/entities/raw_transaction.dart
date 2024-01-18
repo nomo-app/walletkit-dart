@@ -5,8 +5,6 @@ import 'package:walletkit_dart/src/crypto/utxo/payments/pk_script_converter.dart
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
