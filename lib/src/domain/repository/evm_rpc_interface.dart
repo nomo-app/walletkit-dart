@@ -4,7 +4,7 @@ import 'package:walletkit_dart/src/crypto/evm/evm_client.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/predefined_assets.dart';
+import 'package:walletkit_dart/src/domain/predefined_assets.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/generic_transaction.dart';

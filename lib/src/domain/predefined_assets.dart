@@ -25,7 +25,7 @@ const ltcCoin = TokenEntity(
 );
 const ec8Coin = TokenEntity(
   name: 'Eurocoin',
-  symbol: 'EC8',
+  symbol: 'EURO',
   decimals: 5,
 );
 

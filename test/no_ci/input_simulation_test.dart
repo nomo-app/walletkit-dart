@@ -252,14 +252,13 @@ String buildTestTransactionWithOutputs({
     lockTime: lockTime,
     validFrom: validFrom,
     validUntil: validUntil,
+  ).sign(
+    seed: seed,
+    walletType: walletType,
+    networkType: networkType,
   );
 
-  return signRawTransaction(
-    tx: tx,
-    networkType: networkType,
-    walletType: walletType,
-    seed: seed,
-  ).asHex;
+  return tx.asHex;
 }
 
 Future<(UTXOTransaction, bool, String?)> simulateTx({
