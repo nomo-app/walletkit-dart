@@ -93,6 +93,25 @@ class EC8Output extends Output {
     return buffer;
   }
 
+  Uint8List get bytesForTxId {
+    final buffer = Uint8List(
+      value_length + weight_length + scriptPubKey.length + 1,
+    );
+
+    var offset = 0;
+
+    // Write Value
+    offset += buffer.bytes.writeUint64(offset, intValue);
+
+    // Write Weight
+    offset += buffer.bytes.writeUint32(offset, 0);
+
+    // Write ScriptPubKey
+    offset += buffer.writeVarSlice(offset, scriptPubKey);
+
+    return buffer;
+  }
+
   factory EC8Output.fromBuffer(Uint8List buffer) {
     var offset = 0;
 

@@ -262,6 +262,30 @@ class EC8Input extends Input {
     return buffer;
   }
 
+  Uint8List get bytesForTxId {
+    final buffer = Uint8List(
+      txid.length + output_index_length + value_length + weight_length + 1,
+    );
+
+    var offset = 0;
+    // Write TXID
+    offset += buffer.writeSlice(offset, txid); // Or TXID ?
+
+    // Write Vout
+    offset += buffer.bytes.writeUint32(offset, vout);
+
+    // Write Value
+    offset += buffer.bytes.writeUint64(offset, intValue);
+
+    // Write Weight
+    offset += buffer.bytes.writeUint32(offset, 0);
+
+    // Write ScriptSig
+    offset += buffer.writeVarSlice(offset, Uint8List(0));
+
+    return buffer;
+  }
+
   Uint8List bytesForSigning({
     required bool withWeight,
     required bool withScript,

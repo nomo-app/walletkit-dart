@@ -432,12 +432,11 @@ class EC8RawTransaction extends RawTransaction {
           outputs: outputs,
         );
 
-  // TODO: Implement
-  // String get txid {
-  //   final buffer = bytes;
-  //   final hash = sha256Sha256Hash(buffer);
-  //   return hash.rev.toHex;
-  // }
+  String get txid {
+    final buffer = bytesForTxId;
+    final hash = sha256Sha256Hash(buffer);
+    return hash.rev.toHex;
+  }
 
   @override
   Uint8List get bytes {
@@ -491,6 +490,67 @@ class EC8RawTransaction extends RawTransaction {
 
     /// Weight
     offset += buffer.bytes.writeUint32(offset, weight.toInt());
+
+    /// ValidFrom
+    offset += buffer.bytes.writeUint64(offset, validFrom);
+
+    /// ValidUntil
+    offset += buffer.bytes.writeUint32(offset, validUntil);
+
+    return buffer;
+  }
+
+  Uint8List get bytesForTxId {
+    final inputBuffers = inputs.map((input) => input.bytesForTxId);
+    const inputLengthByte = 1;
+    final inputsByteLength = inputBuffers.fold(
+      0,
+      (prev, buffer) => prev + buffer.length,
+    );
+
+    final outputBuffers = outputs.map((output) => output.bytesForTxId);
+    const outputLengthByte = 1;
+    final outputsByteLength = outputBuffers.fold(
+      0,
+      (prev, buffer) => prev + buffer.length,
+    );
+
+    var txByteLength = 4 +
+        inputLengthByte +
+        inputsByteLength +
+        outputLengthByte +
+        outputsByteLength +
+        8 +
+        4 +
+        8 +
+        4;
+
+    ///
+    /// Construct Buffer
+    ///
+    final buffer = Uint8List(txByteLength);
+    var offset = 0;
+
+    /// Version
+    offset += buffer.bytes.writeUint32(offset, version);
+
+    /// Inputs
+    offset += buffer.bytes.writeVarInt(offset, inputs.length);
+    for (final input in inputs) {
+      offset += buffer.writeSlice(offset, input.bytesForTxId);
+    }
+
+    /// Outputs
+    offset += buffer.bytes.writeVarInt(offset, outputs.length);
+    for (final output in outputs) {
+      offset += buffer.writeSlice(offset, output.bytesForTxId);
+    }
+
+    /// Fee
+    offset += buffer.bytes.writeUint64(offset, fee.toInt());
+
+    /// Weight
+    offset += buffer.bytes.writeUint32(offset, 0);
 
     /// ValidFrom
     offset += buffer.bytes.writeUint64(offset, validFrom);
