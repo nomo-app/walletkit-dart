@@ -157,6 +157,7 @@ const UTXO_Network_List = [
   LitecoinNetwork,
   BitcoincashNetwork,
   ZeniqNetwork,
+  EurocoinNetwork,
 ];
 
 const BitcoinNetwork = BITCOIN_NETWORK();
