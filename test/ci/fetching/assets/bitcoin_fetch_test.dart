@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../../no_ci/input_simulation_test.dart';
-import '../../../no_ci/utils_test.dart';
+import '../../../utils.dart';
 import '../expected_utxo_tx_hashes.dart';
 import '../fetch_utxo_transactions_test.dart';
 

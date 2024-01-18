@@ -18,6 +18,10 @@ abstract class RawTransaction {
   final List<Input> inputs;
   final List<Output> outputs;
 
+  /// Mapping of UTXOs to generated inputs
+  /// Non Null if returned from [buildUnsignedTransaction]
+  final Map<ElectrumOutput, Input>? inputMap;
+
   BigInt get weight {
     return inputs.fold(
           0.toBI,
@@ -92,6 +96,7 @@ abstract class RawTransaction {
     required this.version,
     required this.inputs,
     required this.outputs,
+    this.inputMap,
   });
 
   RawTransaction createCopy();
@@ -100,12 +105,13 @@ abstract class RawTransaction {
 
   static RawTransaction build({
     required int version,
-    required List<Input> inputs,
     required List<Output> outputs,
+    required Map<ElectrumOutput, Input> inputMap,
     int? lockTime,
     int? validFrom,
     int? validUntil,
   }) {
+    final inputs = inputMap.values;
     final btcInputs = inputs.whereType<BTCInput>();
     final btcOutputs = outputs.whereType<BTCOutput>();
 
@@ -114,6 +120,7 @@ abstract class RawTransaction {
         version: version,
         inputs: btcInputs.toList(),
         outputs: btcOutputs.toList(),
+        inputMap: inputMap,
         lockTime: lockTime,
       );
     }
@@ -129,6 +136,7 @@ abstract class RawTransaction {
         version: version,
         inputs: ec8Inputs.toList(),
         outputs: ec8Outputs.toList(),
+        inputMap: inputMap,
         validFrom: validFrom,
         validUntil: validUntil,
       );
@@ -155,6 +163,7 @@ class BTCRawTransaction extends RawTransaction {
     required this.lockTime,
     required this.inputs,
     required this.outputs,
+    super.inputMap,
   }) : super(
           inputs: inputs,
           outputs: outputs,
@@ -427,6 +436,7 @@ class EC8RawTransaction extends RawTransaction {
     required this.outputs,
     required this.validFrom,
     required this.validUntil,
+    super.inputMap,
   }) : super(
           inputs: inputs,
           outputs: outputs,

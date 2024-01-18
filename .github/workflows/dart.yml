@@ -3,7 +3,9 @@ name: UI-KIT CI/CD
 on:
   schedule:
     - cron: '0 0 * * *'
-  #push:
+  push:
+    branches:
+      - main
   pull_request:
 
 env:

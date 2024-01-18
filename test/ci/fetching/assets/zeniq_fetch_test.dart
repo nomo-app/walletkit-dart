@@ -3,7 +3,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../../no_ci/input_simulation_test.dart';
-import '../../../no_ci/utils_test.dart';
+import '../../../utils.dart';
 
 void main() {
   final devSeed = loadDevSeedFromEnv();

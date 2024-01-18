@@ -338,18 +338,14 @@ Future<String> buildTestTransaction({
   var tx = RawTransaction.build(
     version: version,
     lockTime: lockTime,
-    inputs: inputMap.values.toList(),
+    inputMap: inputMap,
     outputs: outputs,
   );
-  final signedInputs = signInputs(
-    inputs: inputMap,
-    walletType: walletType,
+
+  return signRawTransaction(
     tx: tx,
     networkType: networkType,
+    walletType: walletType,
     seed: seed,
-  );
-  tx = tx.signInputs(signedInputs);
-
-  final serializedTx = tx.asHex;
-  return serializedTx;
+  ).asHex;
 }

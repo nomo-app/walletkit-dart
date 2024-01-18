@@ -3,7 +3,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../../no_ci/input_simulation_test.dart';
-import '../../../no_ci/utils_test.dart';
+import '../../../utils.dart';
 import '../fetch_utxo_transactions_test.dart';
 
 void main() {

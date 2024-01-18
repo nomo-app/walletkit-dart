@@ -20,11 +20,10 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 /// https://github.com/bitcoin/bips/blob/master/bip-0144.mediawiki
 ///
 
-String buildTransaction({
+RawTransaction buildUnsignedTransaction({
   required TransferIntent intent,
   required UTXONetworkType networkType,
   required HDWalletType walletType,
-  required Uint8List seed,
   required Iterable<UTXOTransaction> txList,
   required double feePerKB,
   required Iterable<String> changeAddresses,
@@ -89,6 +88,7 @@ String buildTransaction({
   ///
   /// Build Dummy TX
   ///
+  final dummySeed = helloSeed;
 
   final dummyOutputs = buildOutputs(
     recipient: intent.recipient,
@@ -103,19 +103,16 @@ String buildTransaction({
     lockTime: lockTime,
     validFrom: validFrom,
     validUntil: validUntil,
-    inputs: inputMap.values.toList(),
+    inputMap: inputMap,
     outputs: dummyOutputs,
   );
 
-  var dummyInputs = signInputs(
-    inputs: inputMap,
-    walletType: walletType,
+  dummyTx = signRawTransaction(
     tx: dummyTx,
     networkType: networkType,
-    seed: seed,
+    walletType: walletType,
+    seed: dummySeed,
   );
-
-  dummyTx = dummyTx.signInputs(dummyInputs);
 
   ///
   /// Build Outputs again with the estimated size
@@ -144,12 +141,12 @@ String buildTransaction({
 
       dummyTx = dummyTx.signInputs(inputMap.values.toList());
 
-      dummyInputs = signInputs(
+      final dummyInputs = signInputs(
         inputs: inputMap,
         walletType: walletType,
         tx: dummyTx,
         networkType: networkType,
-        seed: seed,
+        seed: dummySeed,
       );
 
       dummyTx = dummyTx.signInputs(dummyInputs);
@@ -187,17 +184,9 @@ String buildTransaction({
     lockTime: lockTime,
     validFrom: validFrom,
     validUntil: validUntil,
-    inputs: inputMap.values.toList(),
+    inputMap: inputMap,
     outputs: outputs,
   );
-  final signedInputs = signInputs(
-    inputs: inputMap,
-    walletType: walletType,
-    tx: tx,
-    networkType: networkType,
-    seed: seed,
-  );
-  tx = tx.signInputs(signedInputs);
 
   if (tx.totalOutputValue + estimatedFee != totalInputValue) {
     throw SendFailure(
@@ -205,9 +194,33 @@ String buildTransaction({
     );
   }
 
-  final serializedTx = tx.asHex;
+  return tx;
+}
 
-  return serializedTx;
+RawTransaction signRawTransaction({
+  required RawTransaction tx,
+  required UTXONetworkType networkType,
+  required HDWalletType walletType,
+  required Uint8List seed,
+}) {
+  assert(
+    tx.inputMap != null,
+    'Cant sign transaction without inputs',
+  );
+
+  final signedInputs = signInputs(
+    inputs: tx.inputMap!,
+    walletType: walletType,
+    tx: tx,
+    networkType: networkType,
+    seed: seed,
+  );
+
+  final signedTx = tx.signInputs(
+    signedInputs,
+  );
+
+  return signedTx;
 }
 
 List<Input> signInputs({
