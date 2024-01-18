@@ -4,6 +4,7 @@ import 'package:convert/convert.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
+import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 part "utxo_transaction.g.dart";
@@ -122,7 +123,9 @@ final class UTXOTransaction extends GenericTransaction {
       (prev, spentOutput) => prev + spentOutput.value,
     );
 
-    final fee = spentOutputs.isEmpty
+    final fee_int = json['fee_int'] as int?;
+    var fee = fee_int != null ? BigInt.from(fee_int) : null;
+    fee ??= spentOutputs.isEmpty
         ? BigInt.from(-1)
         : totalInputValue - totalOutputValue;
 
@@ -189,6 +192,8 @@ class ElectrumInput {
   final List<String>? txinwitness;
   @HiveField(5)
   final String? coinbase;
+  @HiveField(6)
+  final int? value;
 
   bool get isCoinbase => coinbase != null;
 
@@ -199,6 +204,7 @@ class ElectrumInput {
     this.vout,
     this.txinwitness,
     this.coinbase,
+    this.value,
   });
 
   String getAddress(UTXONetworkType type) {
@@ -274,6 +280,23 @@ class ElectrumInput {
           coinbase: coinbase,
           sequence: sequence,
         ),
+      {
+        "scriptSig": {
+          "asm": _,
+          "hex": String hex,
+        },
+        "txid": String txid,
+        "vout": int vout,
+        "value_int": int value,
+        "weight": int weight,
+      } =>
+        ElectrumInput(
+          scriptSig: hex,
+          txid: txid,
+          vout: vout,
+          value: value,
+          sequence: weight,
+        ),
       _ => throw Exception("Could not parse ElectrumInput from $json"),
     };
   }
@@ -298,6 +321,8 @@ class ElectrumOutput {
   @HiveField(5)
   final NodeWithAddress node;
 
+  final BigInt? weight;
+
   const ElectrumOutput({
     required this.scriptPubKey,
     required this.value,
@@ -305,20 +330,25 @@ class ElectrumOutput {
     this.belongsToUs = false,
     this.spent = false,
     required this.node,
+    this.weight,
   });
 
   /// Zeniq: { value_coin || value_satoshi: int, ... }
   /// Bitcoin: { value: float, ... }
 
   factory ElectrumOutput.fromJson(Map<String, dynamic> json) {
-    final valIsSatoshi = json.containsKey('value_satoshi');
+    final valIsSatoshi =
+        json.containsKey('value_satoshi') || json.containsKey('value_int');
 
-    var value = json['value'] ?? json['value_satoshi'] ?? 0;
+    var value =
+        json['value_int'] ?? json['value'] ?? json['value_satoshi'] ?? 0;
 
     value =
         valIsSatoshi ? BigInt.from(value) : BigInt.from(toSatoshiValue(value));
 
     final n = json['n'] ?? -1;
+
+    final weight = json['weight'] as int?;
 
     return ElectrumOutput(
       value: value,
@@ -327,6 +357,7 @@ class ElectrumOutput {
         json['scriptPubKey'] as Map<String, dynamic>,
       ),
       node: EmptyNode(),
+      weight: weight.toBI,
     );
   }
 
@@ -367,6 +398,7 @@ class ElectrumOutput {
       spent: spent ?? this.spent,
       belongsToUs: belongsToUs ?? this.belongsToUs,
       node: node ?? this.node,
+      weight: weight,
     );
   }
 

@@ -1,9 +1,11 @@
+import 'dart:typed_data';
+
+import 'package:dotenv/dotenv.dart';
 import 'package:test/scaffolding.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
-
   test('Broadcast Raw Tx"', () async {
     final client = await createRandomElectrumXClient(
       endpoints: List.from(BitcoinNetwork.endpoints, growable: true),
@@ -23,4 +25,14 @@ void main() {
 
     print(raw);
   });
+}
+
+Uint8List loadDevSeedFromEnv() {
+  var env = DotEnv(includePlatformEnvironment: true)..load();
+  final rejectSeedString = env["REJECT_SEED"]!.split(",");
+  List<int> rejectIntList = rejectSeedString
+      .map((i) => int.parse(i))
+      .toList(); // Convert to list of integers
+  Uint8List rejectSeed = Uint8List.fromList(rejectIntList);
+  return rejectSeed;
 }

@@ -18,7 +18,8 @@ class P2Hash {
   Uint8List get publicKeyScript {
     if (address.startsWith(P2PKH_PREFIX) ||
         address.startsWith(P2PKH_PREFIX_LTC) ||
-        address.startsWith(P2PKH_PREFIX_ZENIQ)) {
+        address.startsWith(P2PKH_PREFIX_ZENIQ) ||
+        address.startsWith(P2PKH_PREFIX_EC8)) {
       return p2pkhScript;
     }
 

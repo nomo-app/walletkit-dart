@@ -320,17 +320,19 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
   const EUROCOIN_NETWORK()
       : super(
           pubKeyHashPrefix: 87, // Only Used Value
-          bech32: "ec",
-          scriptHashPrefix: 5,
-          coinType: 0,
+          bech32: "",
+          scriptHashPrefix: 88,
+          coinType: -1,
           coin: ec8Coin,
-          endpoints: const {},
+          endpoints: const {
+            ("195.201.227.129", 50001),
+          },
           messagePrefix: "\x18Eurocoin Signed Message:\n",
           networkBIP: BITCOIN_NETWORK_BIP,
           sighash: BITCOIN_SIGHASH_INFO,
-          txVersion: 1,
+          txVersion: 2,
           addressPrefixes: const {
-            AddressType.legacy: "e", // TODO Correct this
+            AddressType.legacy: "c",
           },
         );
 }
