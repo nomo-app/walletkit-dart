@@ -78,12 +78,13 @@ void main() {
       feePerKB: 0.0001,
     );
 
-    final signedTx = signRawTransaction(
-      tx: unsignedTx,
-      seed: devSeed,
-      networkType: ZeniqNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
-    ).asHex;
+    final signedTx = unsignedTx
+        .sign(
+          seed: devSeed,
+          networkType: ZeniqNetwork,
+          walletType: HDWalletType.NO_STRUCTURE,
+        )
+        .asHex;
 
     expect(signedTx, isNotNull);
 
@@ -133,8 +134,7 @@ void main() {
       feePerKB: 0.00008, // Minimum 0.00004; Max 0.00008
     );
 
-    final signedTx = signRawTransaction(
-      tx: unsignedTx,
+    final signedTx = unsignedTx.sign(
       seed: devSeed,
       networkType: EurocoinNetwork,
       walletType: HDWalletType.NO_STRUCTURE,

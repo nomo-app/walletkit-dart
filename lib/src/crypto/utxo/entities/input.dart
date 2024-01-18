@@ -164,7 +164,7 @@ class BTCInput extends Input {
     Uint8List? wittnessScript,
   }) {
     final _scriptSig = scriptSig ?? this._scriptSig;
-    final _witnessScript = wittnessScript ?? this._wittnessScript;
+    final _witnessScript = wittnessScript ?? _wittnessScript;
 
     return BTCInput(
       txid: txid,
@@ -221,7 +221,7 @@ class EC8Input extends Input {
     Uint8List? wittnessScript,
   }) {
     final _scriptSig = scriptSig ?? this._scriptSig;
-    final _witnessScript = wittnessScript ?? this._wittnessScript;
+    final _witnessScript = wittnessScript ?? _wittnessScript;
 
     return EC8Input(
       txid: txid,

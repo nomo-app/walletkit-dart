@@ -105,13 +105,10 @@ RawTransaction buildUnsignedTransaction({
     validUntil: validUntil,
     inputMap: inputMap,
     outputs: dummyOutputs,
-  );
-
-  dummyTx = signRawTransaction(
-    tx: dummyTx,
+  ).sign(
+    seed: dummySeed,
     networkType: networkType,
     walletType: walletType,
-    seed: dummySeed,
   );
 
   ///
@@ -139,17 +136,18 @@ RawTransaction buildUnsignedTransaction({
 
       (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
 
-      dummyTx = dummyTx.signInputs(inputMap.values.toList());
-
-      final dummyInputs = signInputs(
-        inputs: inputMap,
-        walletType: walletType,
-        tx: dummyTx,
-        networkType: networkType,
+      dummyTx = RawTransaction.build(
+        version: version,
+        lockTime: lockTime,
+        validFrom: validFrom,
+        validUntil: validUntil,
+        inputMap: inputMap,
+        outputs: dummyOutputs,
+      ).sign(
         seed: dummySeed,
+        networkType: networkType,
+        walletType: walletType,
       );
-
-      dummyTx = dummyTx.signInputs(dummyInputs);
 
       estimatedSize = BigInt.from(dummyTx.size);
       estimatedFee = estimatedSize * feePerByte.toSatoshi;
@@ -195,32 +193,6 @@ RawTransaction buildUnsignedTransaction({
   }
 
   return tx;
-}
-
-RawTransaction signRawTransaction({
-  required RawTransaction tx,
-  required UTXONetworkType networkType,
-  required HDWalletType walletType,
-  required Uint8List seed,
-}) {
-  assert(
-    tx.inputMap != null,
-    'Cant sign transaction without inputs',
-  );
-
-  final signedInputs = signInputs(
-    inputs: tx.inputMap!,
-    walletType: walletType,
-    tx: tx,
-    networkType: networkType,
-    seed: seed,
-  );
-
-  final signedTx = tx.signInputs(
-    signedInputs,
-  );
-
-  return signedTx;
 }
 
 List<Input> signInputs({

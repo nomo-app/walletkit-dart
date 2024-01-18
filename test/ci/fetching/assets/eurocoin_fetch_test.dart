@@ -71,7 +71,7 @@ void main() {
   });
 
   test('Parse Raw Tx', () async {
-    final hash =
+    const hash =
         "0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a";
 
     final (utxoTx, raw) = await fetchUTXOTXByHash(

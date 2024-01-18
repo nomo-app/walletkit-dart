@@ -5,10 +5,9 @@ import 'package:walletkit_dart/src/crypto/utxo/payments/pk_script_converter.dart
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 const SEGWIT_FLAG = 0x01;
 const SEGWIT_MARKER = 0x00;
@@ -101,7 +100,7 @@ abstract class RawTransaction {
 
   RawTransaction createCopy();
 
-  RawTransaction signInputs(List<Input>? inputs);
+  RawTransaction _addInputs(List<Input>? inputs);
 
   static RawTransaction build({
     required int version,
@@ -143,6 +142,27 @@ abstract class RawTransaction {
     }
 
     throw UnimplementedError();
+  }
+
+  RawTransaction sign({
+    required Uint8List seed,
+    required HDWalletType walletType,
+    required UTXONetworkType networkType,
+  }) {
+    assert(
+      inputMap != null,
+      'Cant sign transaction without inputs',
+    );
+
+    final signedInputs = signInputs(
+      inputs: inputMap!,
+      walletType: walletType,
+      tx: this,
+      networkType: networkType,
+      seed: seed,
+    );
+
+    return _addInputs(signedInputs);
   }
 }
 
@@ -190,7 +210,7 @@ class BTCRawTransaction extends RawTransaction {
     );
   }
 
-  BTCRawTransaction signInputs(
+  BTCRawTransaction _addInputs(
     List<Input>? inputs,
   ) {
     final signedInputs = inputs?.whereType<BTCInput>().toList() ?? this.inputs;
@@ -663,7 +683,7 @@ class EC8RawTransaction extends RawTransaction {
     );
   }
 
-  EC8RawTransaction signInputs(
+  EC8RawTransaction _addInputs(
     List<Input>? inputs,
   ) {
     final signedInputs = inputs?.whereType<EC8Input>().toList() ?? this.inputs;

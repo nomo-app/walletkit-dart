@@ -19,7 +19,7 @@ export 'src/crypto/utxo/utxo_analyzer.dart';
 export 'src/domain/entities/asset/staking_nft_entity.dart';
 export 'src/domain/repository/evm_rpc_interface.dart';
 export 'src/domain/repository/etherscan_repository.dart';
-export 'src/domain/entities/predefined_assets.dart';
+export 'src/domain/predefined_assets.dart';
 
 ///
 ///

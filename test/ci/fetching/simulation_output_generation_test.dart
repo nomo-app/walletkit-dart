@@ -340,12 +340,7 @@ Future<String> buildTestTransaction({
     lockTime: lockTime,
     inputMap: inputMap,
     outputs: outputs,
-  );
+  ).sign(seed: seed, walletType: walletType, networkType: networkType);
 
-  return signRawTransaction(
-    tx: tx,
-    networkType: networkType,
-    walletType: walletType,
-    seed: seed,
-  ).asHex;
+  return tx.asHex;
 }

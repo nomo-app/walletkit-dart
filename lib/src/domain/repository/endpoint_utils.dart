@@ -2,7 +2,7 @@ library endpoint_utils;
 
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/predefined_assets.dart';
+import 'package:walletkit_dart/src/domain/predefined_assets.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/domain/repository/json_rpc_client.dart';

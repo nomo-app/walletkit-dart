@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/staking_nft_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/predefined_assets.dart';
+import 'package:walletkit_dart/src/domain/predefined_assets.dart';
 
 part 'token_entity.g.dart';
 
@@ -52,7 +52,7 @@ class TokenEntity extends Equatable {
   bool get isERC20 => this is EthBasedTokenEntity;
 
   bool get isUTXO => switch (this) {
-        btcCoin || ltcCoin || zeniqCoin || bchCoin => true,
+        btcCoin || ltcCoin || zeniqCoin || bchCoin || ec8Coin => true,
         _ => false,
       };
 }
