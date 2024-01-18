@@ -120,6 +120,7 @@ abstract class RawTransaction {
         version: version,
         inputs: btcInputs.toList(),
         outputs: btcOutputs.toList(),
+        inputMap: inputMap,
         lockTime: lockTime,
       );
     }
@@ -135,6 +136,7 @@ abstract class RawTransaction {
         version: version,
         inputs: ec8Inputs.toList(),
         outputs: ec8Outputs.toList(),
+        inputMap: inputMap,
         validFrom: validFrom,
         validUntil: validUntil,
       );

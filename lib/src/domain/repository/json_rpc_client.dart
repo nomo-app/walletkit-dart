@@ -93,9 +93,9 @@ class TcpJsonRpcClient extends JsonRpcClient {
         return null;
       }
       return result;
-    } catch (e, s) {
+    } catch (e, _) {
       print(
-        "error: $e $s Error from $host:$port in ${watch.elapsedMilliseconds}ms",
+        "error: $e Error from $host:$port in ${watch.elapsedMilliseconds}ms",
       );
       return null;
     }
