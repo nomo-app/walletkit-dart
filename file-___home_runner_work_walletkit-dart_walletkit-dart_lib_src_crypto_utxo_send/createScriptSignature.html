@@ -93,24 +93,18 @@
   final prevScriptPubKey = output.scriptPubKey.lockingScript;
 
   final sigHash = switch (networkType) {
-    BITCOINCASH_NETWORK() ||
-    ZENIQ_NETWORK() when tx is BTCRawTransaction =&gt;
-      tx.bip143sigHash(
+    BITCOINCASH_NETWORK() || ZENIQ_NETWORK() =&gt; tx.bip143sigHash(
         index: i,
         prevScriptPubKey: prevScriptPubKey,
         output: output,
         hashType: hashType,
       ),
-    LITECOIN_NETWORK() ||
-    BITCOIN_NETWORK() ||
-    EUROCOIN_NETWORK() =&gt;
-      tx.legacySigHash(
+    LITECOIN_NETWORK() || BITCOIN_NETWORK() =&gt; tx.legacySigHash(
         index: i,
         prevScriptPubKey: prevScriptPubKey,
         hashType: hashType,
       ),
-    _ =&gt;
-      throw SendFailure(&quot;Could not find sigHash for networkType $networkType&quot;),
+    EUROCOIN_NETWORK() =&gt; throw UnimplementedError(),
   };
 
   final sig = signInput(bip32: node, sigHash: sigHash);

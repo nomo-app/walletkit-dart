@@ -74,19 +74,17 @@
   <pre class="language-dart"><code class="language-dart">const EUROCOIN_NETWORK()
     : super(
         pubKeyHashPrefix: 87, &#47;&#47; Only Used Value
-        bech32: &quot;&quot;,
-        scriptHashPrefix: 88,
-        coinType: -1,
+        bech32: &quot;ec&quot;,
+        scriptHashPrefix: 5,
+        coinType: 0,
         coin: ec8Coin,
-        endpoints: const {
-          (&quot;195.201.227.129&quot;, 50001),
-        },
+        endpoints: const {},
         messagePrefix: &quot;\x18Eurocoin Signed Message:\n&quot;,
         networkBIP: BITCOIN_NETWORK_BIP,
         sighash: BITCOIN_SIGHASH_INFO,
-        txVersion: 2,
+        txVersion: 1,
         addressPrefixes: const {
-          AddressType.legacy: &quot;c&quot;,
+          AddressType.legacy: &quot;e&quot;, &#47;&#47; TODO Correct this
         },
       );</code></pre>
 </section>
