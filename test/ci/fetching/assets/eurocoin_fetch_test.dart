@@ -18,6 +18,8 @@ void main() {
       addressTypes: [AddressType.legacy],
     );
 
+    expect(txList.length, greaterThanOrEqualTo(10));
+
     reportCoinsAndAddresses(txList: txList, type: EurocoinNetwork);
   });
 
