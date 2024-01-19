@@ -13,7 +13,7 @@ void main() {
     final (txList, _) = await fetchUTXOTransactions(
       networkType: EurocoinNetwork,
       seed: rejectSeed,
-      minEndpoints: 1,
+      minEndpoints: 2,
       walletTypes: [HDWalletType.NO_STRUCTURE],
       addressTypes: [AddressType.legacy],
     );
