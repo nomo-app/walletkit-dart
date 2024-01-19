@@ -327,6 +327,7 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
           coin: ec8Coin,
           endpoints: const {
             ("195.201.227.129", 50001),
+            ("95.216.218.225", 50001),
           },
           messagePrefix: "\x18Eurocoin Signed Message:\n",
           networkBIP: BITCOIN_NETWORK_BIP,
