@@ -145,3 +145,26 @@ const zeniqBSCToken = EthBasedTokenEntity(
   contractAddress: "0x5b52bfB8062Ce664D74bbCd4Cd6DC7Df53Fd7233",
   decimals: 18,
 );
+
+///
+/// Polygon Assets
+///
+const polygon = EvmEntity(
+  name: 'Polygon',
+  symbol: 'MATIC',
+  decimals: 18,
+);
+
+const cLFi = EthBasedTokenEntity(
+  name: 'CLFi',
+  symbol: 'CLFI',
+  decimals: 8,
+  contractAddress: "0x08715F5c743F747dE0005ad6C45336C163711137",
+);
+
+const LFi = EthBasedTokenEntity(
+  name: 'LFi',
+  symbol: 'LFi',
+  decimals: 8,
+  contractAddress: "0x9b760D11F63cb80BFFBCf69421cd46511E429f83",
+);

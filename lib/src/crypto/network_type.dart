@@ -387,3 +387,16 @@ class BNB_NETWORK extends EVMNetworkType {
           messagePrefix: "\x19Binance Chain Signed Message:\n",
         );
 }
+
+const PolygonNetwork = POLYGON_NETWORK();
+
+class POLYGON_NETWORK extends EVMNetworkType {
+  const POLYGON_NETWORK()
+      : super(
+          chainId: 137,
+          rpcUrl: "https://polygon.llamarpc.com/",
+          blockExplorer: (polygonScanBaseEndpoint, const [polygonScanApiKey]),
+          coin: polygon,
+          messagePrefix: "\x19Polygon Signed Message:\n",
+        );
+}
