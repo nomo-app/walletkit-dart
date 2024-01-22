@@ -206,6 +206,8 @@ const etherscanApiKey = "AC72N833U9MKUNXS44MV27T3HKEN4WYYT3";
 
 const bnbScanBaseEndpoint = "https://api.bscscan.com/api";
 const etherscanBaseEndpoint = "https://api.etherscan.io/api";
+const polygonScanBaseEndpoint = "https://api.polygonscan.com/api";
+const polygonScanApiKey = "SUUDUQP2JT7HME5VY5DIRIEZVZWHM1YM3M";
 
 const zeniqSmartRPCEndpoint = "https://smart.zeniq.network:9545";
 
