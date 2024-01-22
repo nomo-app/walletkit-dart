@@ -4,6 +4,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../../no_ci/input_simulation_test.dart';
 import '../../../utils.dart';
+import '../expected_utxo_tx_hashes.dart';
 import '../fetch_utxo_transactions_test.dart';
 
 void main() {
@@ -19,6 +20,8 @@ void main() {
     );
 
     expect(txList.length, greaterThanOrEqualTo(10));
+    final expectedTxHashes = expectedTxHashesEuroCoinReject();
+    expectTxHashes(txList: txList, expectedTxHashes: expectedTxHashes);
 
     reportCoinsAndAddresses(txList: txList, type: EurocoinNetwork);
   });

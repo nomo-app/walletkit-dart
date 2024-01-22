@@ -7,9 +7,26 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 void expectTxHashes(
     {required Set<UTXOTransaction> txList,
     required List<String> expectedTxHashes}) {
+  // print(txList.toList().map((tx) => "'" + tx.hash + "'").toList().toString());
   for (final hash in expectedTxHashes) {
     expect(txList.firstWhereOrNull((tx) => tx.id == hash)?.id, hash);
   }
+}
+
+List<String> expectedTxHashesEuroCoinReject() {
+  return [
+    '23d39cdd55dc3f7ae7b5e6e631587a85e1e78f691d6e126f6dac50b44359f118',
+    '0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a',
+    '74e7fd813bc2452e821fc72fdd07abe8df30b981f2edad1ec4faebb28b5062f1',
+    'e1dedc0a6e080686aaa579f77b32b7f97d4ba6e2493a64970b36e1692ac45122',
+    'e2d927462a03bdee8aa643a2dc29c872696ac59a680d73bfda99033760fb3dac',
+    '2720a674d55119f7c8a2d856e7920f50c54a4bca7ef90bb2ff8af730b3451ac7',
+    'dfbfbe044cd39d1dee8f7d63f9e7107c1e81d453a963c7ec767768f2cde78012',
+    '2c051b428019ed6c6fd02d0ff54792eba479c51322da8119830b74736696b33f',
+    '9c65b13cdfa026c59322f2e9deac82111b5cbc85508bbd2f9e0580cebbb0976e',
+    'e4b06195023ab59ed3d52e6f6b16acdb8ce67f7dd14b5e03ce31fe26ce67671a',
+    '854eb05f31883e6745be567bf98d46d566945a65f536af4f5cb4a5a80e83756f'
+  ];
 }
 
 List<String> expectedTxHashesBTCxpub69T() {
