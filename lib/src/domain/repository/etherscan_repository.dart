@@ -3,13 +3,7 @@ import 'dart:math';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/crypto/network_type.dart';
-import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/generic_transaction.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
-import 'package:walletkit_dart/src/domain/entities/tx_gasFee_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/erc721_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/etherscan_transaction.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract class EtherscanRepository {
   final String base;
@@ -210,7 +204,7 @@ class EVMExplorer extends EtherscanRepository {
   ///
   /// Fetch the Balance of a [token] given  for a given [address]
   ///
-  Future<double> fetchBalance(
+  Future<BigInt> fetchBalance(
     String address,
     TokenEntity token,
   ) async {
@@ -221,9 +215,9 @@ class EVMExplorer extends EtherscanRepository {
     };
 
     final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
-    final balance = double.parse(result);
-    final balanceAdjusted = balance / token.subunits;
-    return balanceAdjusted;
+    final balance = int.parse(result);
+
+    return balance.toBigInt;
   }
 
   ///

@@ -394,7 +394,7 @@ class POLYGON_NETWORK extends EVMNetworkType {
   const POLYGON_NETWORK()
       : super(
           chainId: 137,
-          rpcUrl: "https://polygon.llamarpc.com/",
+          rpcUrl: "https://polygon-bor.publicnode.com/",
           blockExplorer: (polygonScanBaseEndpoint, const [polygonScanApiKey]),
           coin: polygon,
           messagePrefix: "\x19Polygon Signed Message:\n",
