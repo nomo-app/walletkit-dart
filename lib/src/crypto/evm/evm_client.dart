@@ -49,6 +49,18 @@ base class EvmRpcClient {
   }
 
   ///
+  /// Returns the balance of the account of given address in wei.
+  ///
+  Future<Json> getTransactionForHash(String hash) async {
+    final response = await _call<Json>(
+      'eth_getTransactionByHash',
+      args: [hash],
+    );
+
+    return response;
+  }
+
+  ///
   /// Returns the current block number.
   ///
   Future<int> getBlockNumber() async {

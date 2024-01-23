@@ -4,6 +4,8 @@ import 'package:walletkit_dart/src/crypto/evm/evm_client.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
+import 'package:walletkit_dart/src/domain/entities/transactions/etherscan_transaction.dart';
+import 'package:walletkit_dart/src/domain/entities/transactions/evm_rpc_transaction.dart';
 import 'package:walletkit_dart/src/domain/predefined_assets.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
@@ -37,6 +39,33 @@ final class EvmRpcInterface {
     return Amount(
       value: balance,
       decimals: zeniqSmart.decimals,
+    );
+  }
+
+  ///
+  /// Fetch Transaction for Hash
+  ///
+  Future<EvmRpcTransaction?> fetchTxFromHash({
+    required String hash,
+    required TokenEntity token,
+    required String address,
+  }) async {
+    final txJson = await client.getTransactionForHash(hash);
+
+    final block_s = txJson["blockNumber"] as String?;
+
+    final block = int.tryParse(block_s ?? "") ?? -1;
+
+    final time = await _getBlockTimestamp(block);
+
+    final status = await _getConfirmationStatus(hash);
+
+    return EvmRpcTransaction.fromJson(
+      txJson,
+      token: token,
+      address: address,
+      status: status,
+      time: time,
     );
   }
 

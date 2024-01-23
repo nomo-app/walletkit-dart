@@ -8,6 +8,7 @@ import 'package:walletkit_dart/src/domain/repository/etherscan_repository.dart';
 void main() {
   final etherscan = EVMExplorer(etherscanBaseEndpoint, [etherscanApiKey]);
   final bnbScan = EVMExplorer(bnbScanBaseEndpoint, [bnbScanApiKey]);
+  final polyScan = EVMExplorer(polygonScanBaseEndpoint, [polygonScanApiKey]);
 
   test('Test Ethereum Etherscan Fetching', () async {
     ///
@@ -101,5 +102,14 @@ void main() {
     final result = await etherscan.fetchGasPrice();
 
     print(result);
+  });
+
+  test('Polygon Transactions', () async {
+    final txs = await polyScan.fetchTransactions(
+      address: "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616",
+      token: polygon,
+    );
+
+    expect(txs, isNotEmpty);
   });
 }

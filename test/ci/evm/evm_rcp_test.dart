@@ -105,4 +105,30 @@ void main() {
 
     expect(gasLimit, greaterThanOrEqualTo(GasLimits.ethSend.value.toBigInt));
   });
+
+  final polygonRPC = EvmRpcInterface(PolygonNetwork);
+
+  test('Fetch Transaction from Hash', () async {
+    final tx = await polygonRPC.fetchTxFromHash(
+      hash:
+          "0xd3b29c3d82982b6a0c583014c16733a26e6b14b0316f8ad018e860939b2019d0",
+      token: polygon,
+      address: "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616",
+    );
+
+    expect(tx, isNotNull);
+  });
+
+  final ethRPC = EvmRpcInterface(EthereumNetwork);
+
+  test('Fetch Transaction from Hash', () async {
+    final tx = await ethRPC.fetchTxFromHash(
+      hash:
+          "0xe50fab29dac8d44d684543bbd946d7fb06b0f8d9bceea0614d4c17c370d80373",
+      token: ethNative,
+      address: "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616",
+    );
+
+    expect(tx, isNotNull);
+  });
 }

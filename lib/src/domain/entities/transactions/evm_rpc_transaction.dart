@@ -1,18 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:hive/hive.dart';
-import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/evm_transaction.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/generic_transaction.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
-part "etherscan_transaction.g.dart";
+part 'evm_rpc_transaction.g.dart';
 
-@HiveType(typeId: 1)
-final class EtherscanTransaction extends EVMTransaction {
-  const EtherscanTransaction({
+@HiveType(typeId: 22)
+final class EvmRpcTransaction extends EVMTransaction {
+  const EvmRpcTransaction({
     required super.hash,
     required super.block,
     required super.confirmations,
@@ -27,16 +22,16 @@ final class EtherscanTransaction extends EVMTransaction {
     required super.input,
   });
 
-  factory EtherscanTransaction.fromJson(
+  factory EvmRpcTransaction.fromJson(
     Json json, {
     required TokenEntity token,
     required String address,
-    ConfirmationStatus? status,
+    required ConfirmationStatus status,
+    required int time,
   }) {
     if (json
         case {
           'blockNumber': String block_s,
-          'timeStamp': String timeStamp_s,
           'hash': String hash,
           'from': String from,
           'to': String to,
@@ -49,7 +44,6 @@ final class EtherscanTransaction extends EVMTransaction {
       final block = block_s.toIntOrNull ?? -1;
       final confirmations = block_s.toIntOrNull ?? -1;
 
-      final timeMilli = timeStamp_s.toIntOrNull ?? -1;
       final amount = Amount(
         value: BigInt.tryParse(value_s) ?? BigInt.from(-1),
         decimals: token.decimals,
@@ -63,11 +57,11 @@ final class EtherscanTransaction extends EVMTransaction {
       final transferMethod =
           TransactionTransferMethod.fromAddress(address, to, from);
 
-      return EtherscanTransaction(
+      return EvmRpcTransaction(
         hash: hash,
         block: block,
         confirmations: confirmations,
-        timeMilli: timeMilli * 1000,
+        timeMilli: time * 1000,
         amount: amount,
         fee: fee,
         sender: from,
@@ -88,7 +82,6 @@ final class EtherscanTransaction extends EVMTransaction {
     if (json
         case {
           'blockNumber': String block_s,
-          'timeStamp': String timeStamp_s,
           'hash': String hash,
           'from': String from,
           'to': String to,
@@ -100,7 +93,6 @@ final class EtherscanTransaction extends EVMTransaction {
       final block = block_s.toIntOrNull ?? -1;
       final confirmations = block_s.toIntOrNull ?? -1;
 
-      final timeMilli = timeStamp_s.toIntOrNull ?? -1;
       final amount = Amount(
         value: BigInt.tryParse(value_s) ?? BigInt.from(-1),
         decimals: token.decimals,
@@ -114,18 +106,18 @@ final class EtherscanTransaction extends EVMTransaction {
       final transferMethod =
           TransactionTransferMethod.fromAddress(address, to, from);
 
-      return EtherscanTransaction(
+      return EvmRpcTransaction(
         hash: hash,
         block: block,
         confirmations: confirmations,
-        timeMilli: timeMilli * 1000,
+        timeMilli: time * 1000,
         amount: amount,
         fee: fee,
         sender: from,
         recipient: to,
         transferMethod: transferMethod,
         token: token,
-        status: status!,
+        status: status,
         input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
       );
     }
