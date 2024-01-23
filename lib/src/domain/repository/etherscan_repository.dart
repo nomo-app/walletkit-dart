@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+import 'package:web3dart/json_rpc.dart';
 
 abstract class EtherscanRepository {
   final String base;
@@ -215,7 +216,11 @@ class EVMExplorer extends EtherscanRepository {
     };
 
     final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
-    final balance = BigInt.from(result);
+    final balance = BigInt.tryParse(result);
+
+    if (balance == null) {
+      throw Exception('Failed to parse balance: $result');
+    }
 
     return balance;
   }
