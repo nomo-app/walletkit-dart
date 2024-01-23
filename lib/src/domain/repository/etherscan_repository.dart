@@ -215,9 +215,9 @@ class EVMExplorer extends EtherscanRepository {
     };
 
     final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
-    final balance = int.parse(result);
+    final balance = BigInt.from(result);
 
-    return balance.toBigInt;
+    return balance;
   }
 
   ///
