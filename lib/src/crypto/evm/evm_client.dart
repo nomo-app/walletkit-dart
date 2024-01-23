@@ -27,8 +27,11 @@ base class EvmRpcClient {
     } on RPCError catch (e, s) {
       Logger.logError(e, s: s, hint: 'EvmRpcClient');
       rethrow;
-    } catch (e) {
-      throw Exception(e.toString());
+    } catch (e, s) {
+      Logger.logError(e, s: s, hint: 'EvmRpcClient');
+      throw Exception(
+        e.toString(),
+      );
     }
   }
 
