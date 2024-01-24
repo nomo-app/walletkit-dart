@@ -31,7 +31,6 @@ final class EtherscanTransaction extends EVMTransaction {
     Json json, {
     required TokenEntity token,
     required String address,
-    ConfirmationStatus? status,
   }) {
     if (json
         case {
@@ -126,7 +125,7 @@ final class EtherscanTransaction extends EVMTransaction {
         recipient: to,
         transferMethod: transferMethod,
         token: token,
-        status: status!,
+        status: ConfirmationStatus.fromConfirmations(confirmations),
         input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
       );
     }
