@@ -17,13 +17,14 @@ import 'package:walletkit_dart/src/domain/entities/transactions/zsc_transaction.
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:web3dart/web3dart.dart';
 
-const _maxTxNumber = 1E3;
+const _maxTxNumber = 100;
 const _batchSize = 10;
 
 final class EvmRpcInterface {
   final EvmRpcClient client;
   final EVMNetworkType type;
   final Map<int, int> blockTimestampCache = {};
+  final Map<String, ConfirmationStatus> txStatusCache = {};
 
   EvmRpcInterface(this.type) : client = EvmRpcClient(type.rpcUrl);
 
@@ -209,7 +210,7 @@ final class EvmRpcInterface {
     final ethAddress = credentials.address;
 
     gasPrice ??= await client.getGasPrice();
-    
+
     final balance = await client.getBalance(toChecksumAddress(ethAddress.hex));
 
     final gasPriceEther = EtherAmount.fromBigInt(EtherUnit.wei, gasPrice);
@@ -551,9 +552,16 @@ final class EvmRpcInterface {
   }
 
   Future<ConfirmationStatus> _getConfirmationStatus(String hash) async {
-    final a = await client.getTransactionReceipt(hash);
+    if (txStatusCache[hash] == null ||
+        txStatusCache[hash] == ConfirmationStatus.pending) {
+      final json = await client.getTransactionReceipt(hash);
+      txStatusCache[hash] = _confirmationStatusFromJson(json);
+    }
+    return txStatusCache[hash]!;
+  }
 
-    if (a
+  ConfirmationStatus _confirmationStatusFromJson(Json json) {
+    if (json
         case {
           "status": String status_s,
         }) {
