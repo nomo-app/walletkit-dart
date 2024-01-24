@@ -107,20 +107,14 @@ class EVMExplorer extends EtherscanRepository {
       case EthBasedTokenEntity token:
         final txResults = await _fetchEtherscanWithRatelimitRetries(
             '$base?module=account&action=tokentx&address=$address&contractaddress=${token.contractAddress}&sort=desc&startblock=$lastBlock');
-        return await batchFutures(
-          [
-            for (final tx in txResults)
-              fetchTxStatus(tx['hash']).then(
-                (status) => EtherscanTransaction.fromJson(
-                  tx,
-                  token: token,
-                  address: address,
-                  status: status,
-                ),
-              )
-          ],
-          batchSize: 5,
-        );
+        return [
+          for (final tx in txResults)
+            EtherscanTransaction.fromJson(
+              tx,
+              token: token,
+              address: address,
+            )
+        ];
 
       default:
         final txResults = await _fetchEtherscanWithRatelimitRetries(
