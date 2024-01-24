@@ -4,7 +4,6 @@ import 'package:convert/convert.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
-import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 part "utxo_transaction.g.dart";
@@ -284,7 +283,7 @@ class ElectrumInput {
         },
         "txid": String txid,
         "vout": int vout,
-        "value_int": int value,
+        "value_int": int _,
         "weight": int weight,
       } =>
         ElectrumInput(
