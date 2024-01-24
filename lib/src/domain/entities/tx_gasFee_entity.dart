@@ -1,5 +1,4 @@
 import 'package:walletkit_dart/src/domain/entities/fee.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
 
 // TODO: Make abstract for UTXO and EVM Implementations as they differ
 class GasFeesEntity {
@@ -29,13 +28,18 @@ class GasFeesEntity {
           'SafeGasPrice': String safe,
           'ProposeGasPrice': String propose,
           'FastGasPrice': String fast,
-        })
+        }) {
+      final safe_num = toGwei(safe);
+      final propose_num = toGwei(propose);
+      final fast_num = toGwei(fast);
+
       return GasFeesEntity(
-        lastBlock: safe.toBigInt * BigInt.from(1E9),
-        safe: safe.toBigInt * BigInt.from(1E9),
-        average: propose.toBigInt * BigInt.from(1E9),
-        fast: fast.toBigInt * BigInt.from(1E9),
+        lastBlock: safe_num,
+        safe: safe_num,
+        average: propose_num,
+        fast: fast_num,
       );
+    }
 
     throw UnimplementedError();
   }
@@ -44,4 +48,14 @@ class GasFeesEntity {
   String toString() {
     return 'GasFeesEntity{lastBlock: $lastBlock, safe: $safe, average: $average, fast: $fast}';
   }
+}
+
+BigInt toGwei(String wei) {
+  final decimals = wei.contains('.') ? wei.split('.')[1].length : 0;
+  final wei_without_decimals = wei.replaceAll('.', '');
+  final val = BigInt.parse(wei_without_decimals);
+
+  final multiplier = BigInt.from(10).pow(9 - decimals);
+
+  return val * multiplier;
 }
