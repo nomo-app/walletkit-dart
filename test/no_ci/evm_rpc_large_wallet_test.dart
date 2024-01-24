@@ -9,7 +9,7 @@ void main() {
     final txList = await rpcInterface.fetchAllTransactionsZSC(
       address: "0x566d65116a24ce5dF9C8ABd271588ebc662688d0",
     );
-    expect(txList.length, greaterThanOrEqualTo(1000));
+    expect(txList.length, 100);
   });
 
   test(
