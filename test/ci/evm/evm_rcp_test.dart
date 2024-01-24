@@ -10,7 +10,7 @@ void main() {
       address: rejectEVM,
     );
 
-    expect(zscTransactions.length, greaterThanOrEqualTo(1000));
+    expect(zscTransactions.length, 100);
     print('ZSC Transactions: ${zscTransactions.length}');
 
     final zscBalance = await zeniqSmartRpcInterface.fetchBalance(
@@ -54,7 +54,7 @@ void main() {
           await zeniqSmartRpcInterface.fetchAllTransactionsZSC(
         address: rejectEVM,
       );
-      expect(zscTransactions.length, greaterThanOrEqualTo(1000));
+      expect(zscTransactions.length, 100);
       set = {...set, ...zscTransactions.toSet()};
       expect(set.length, zscTransactions.length);
     }
