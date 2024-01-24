@@ -1,5 +1,4 @@
 import 'package:walletkit_dart/src/domain/entities/fee.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
 
 // TODO: Make abstract for UTXO and EVM Implementations as they differ
 class GasFeesEntity {
