@@ -204,10 +204,12 @@ final class EvmRpcInterface {
   Future<String> sendCoin({
     required TransferIntent intent,
     required Credentials credentials,
+    BigInt? gasPrice,
   }) async {
     final ethAddress = credentials.address;
 
-    final gasPrice = await client.getGasPrice();
+    gasPrice ??= await client.getGasPrice();
+    
     final balance = await client.getBalance(toChecksumAddress(ethAddress.hex));
 
     final gasPriceEther = EtherAmount.fromBigInt(EtherUnit.wei, gasPrice);
@@ -243,10 +245,13 @@ final class EvmRpcInterface {
   Future<String> sendERC20Token({
     required TransferIntent intent,
     required Credentials credentials,
+    BigInt? gasPrice,
   }) async {
     assert(intent.token is EthBasedTokenEntity);
     final token = intent.token as EthBasedTokenEntity;
     final contractAddress = EthereumAddress.fromHex(token.contractAddress);
+
+    gasPrice ??= await client.getGasPrice();
 
     final tokenContract = ERC20Contract(
       address: contractAddress,
@@ -254,7 +259,6 @@ final class EvmRpcInterface {
       chainId: type.chainId,
     );
 
-    final gasPrice = await client.getGasPrice();
     final gasPriceEther = EtherAmount.fromBigInt(EtherUnit.wei, gasPrice);
     final amountInWei = intent.amount.value;
 
