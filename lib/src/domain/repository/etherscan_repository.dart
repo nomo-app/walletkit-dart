@@ -130,34 +130,34 @@ class EVMExplorer extends EtherscanRepository {
     }
   }
 
-  Future<ConfirmationStatus> fetchTxStatus(String hash) async {
-    final result = await _fetchEtherscanWithRatelimitRetries(
-        "$base?module=transaction&action=getstatus&txhash=$hash");
+  // Future<ConfirmationStatus> fetchTxStatus(String hash) async {
+  //   final result = await _fetchEtherscanWithRatelimitRetries(
+  //       "$base?module=transaction&action=getstatus&txhash=$hash");
 
-    if (result
-        case {
-          "status": String status,
-          "message": String _,
-        }) {
-      if (status == "1") {
-        return ConfirmationStatus.confirmed;
-      }
-      return ConfirmationStatus.failed;
-    }
+  //   if (result
+  //       case {
+  //         "status": String status,
+  //         "message": String _,
+  //       }) {
+  //     if (status == "1") {
+  //       return ConfirmationStatus.confirmed;
+  //     }
+  //     return ConfirmationStatus.failed;
+  //   }
 
-    if (result
-        case {
-          "isError": String isError,
-          "errDescription": String _,
-        }) {
-      if (isError == "0") {
-        return ConfirmationStatus.confirmed;
-      }
-      return ConfirmationStatus.failed;
-    }
+  //   if (result
+  //       case {
+  //         "isError": String isError,
+  //         "errDescription": String _,
+  //       }) {
+  //     if (isError == "0") {
+  //       return ConfirmationStatus.confirmed;
+  //     }
+  //     return ConfirmationStatus.failed;
+  //   }
 
-    throw Exception("Failed to fetch tx status");
-  }
+  //   throw Exception("Failed to fetch tx status");
+  // }
 
   ///
   /// Fetch all ERC20 Transactions for a given [token] and [address]
