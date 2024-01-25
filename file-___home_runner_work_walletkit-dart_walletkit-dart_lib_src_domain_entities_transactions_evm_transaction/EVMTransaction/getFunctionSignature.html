@@ -77,14 +77,14 @@
 
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;FunctionSignature?&gt; get getFunctionSignature async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;FunctionSignatureWithArgs?&gt; get getFunctionSignature async {
   if (!_cachedFunctionSigs.containsKey(hash)) {
     try {
-      _cachedFunctionSigs[hash] = FunctionSignature.fromData(input);
+      _cachedFunctionSigs[hash] = FunctionSignatureWithArgs.fromData(input);
     } catch (e) {
       try {
         _cachedFunctionSigs[hash] =
-            await FunctionSignature.fetchFunctionSignature(input);
+            await FunctionSignatureWithArgs.fetchFunctionSignature(input);
       } catch (e) {
         return null;
       }

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchFunctionSignature method from the FunctionSignature class, for the Dart programming language.">
-  <title>fetchFunctionSignature method - FunctionSignature class - function_signature library - Dart API</title>
+  <meta name="description" content="API docs for the FunctionSignatureWithArgs constructor from Class FunctionSignatureWithArgs from the function_signature library, for the Dart programming language.">
+  <title>FunctionSignatureWithArgs constructor - FunctionSignatureWithArgs - function_signature library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">src&#47;crypto&#47;evm&#47;function_signature.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></li>
-    <li class="self-crumb">fetchFunctionSignature static method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignatureWithArgs-class.html">FunctionSignatureWithArgs</a></li>
+    <li class="self-crumb">FunctionSignatureWithArgs const constructor</li>
   </ol>
-  <div class="self-name">fetchFunctionSignature</div>
+  <div class="self-name">FunctionSignatureWithArgs</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,61 +54,27 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature&#47;FunctionSignature-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature&#47;FunctionSignatureWithArgs-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-method">fetchFunctionSignature</span> static method 
+<h1><span class="kind-constructor">FunctionSignatureWithArgs</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
-      
-
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></span>&gt;</span></span>
-<span class="name ">fetchFunctionSignature</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fetchFunctionSignature-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span></span></li>
+      const
+      <span class="name ">FunctionSignatureWithArgs</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span></li>
+<li><span class="parameter" id="-param-parameters"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">parameters</span>, </span></li>
+<li><span class="parameter" id="-param-args"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionArg.html">FunctionArg</a></span>&gt;</span>?</span> <span class="parameter-name">args</span></span></li>
 </ol>)
-
-      
-
     </section>
+
     
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static Future&lt;FunctionSignature&gt; fetchFunctionSignature(
-  Uint8List data,
-) async {
-  final hex_signature = &quot;0x${hex.encode(data.sublist(0, 4))}&quot;;
-
-  if (functionSignatureCache.containsKey(hex_signature)) {
-    final sig = functionSignatureCache[hex_signature];
-    if (sig == null) throw Exception(&quot;No function signature found&quot;);
-    return sig;
-  }
-
-  final response = await http.get(
-    Uri.parse(
-      &quot;https:&#47;&#47;www.4byte.directory&#47;api&#47;v1&#47;signatures&#47;?hex_signature=$hex_signature&quot;,
-    ),
-  );
-  if (response.statusCode == 200) {
-    final responseData = jsonDecode(response.body);
-
-    final fetchedFunctionSignature =
-        getLowestIdSignature(responseData[&quot;results&quot;], data);
-
-    functionSignatureCache[hex_signature] = fetchedFunctionSignature;
-
-    if (fetchedFunctionSignature == null) {
-      throw Exception(&quot;No function signature found&quot;);
-    }
-
-    return fetchedFunctionSignature;
-  } else {
-    throw Exception(&#39;Failed to fetch function signature&#39;);
-  }
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">const FunctionSignatureWithArgs(super.name, super.parameters, this.args);</code></pre>
 </section>
 
 
@@ -125,14 +91,14 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">function_signature</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a></li>
-    <li class="self-crumb">fetchFunctionSignature static method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignatureWithArgs-class.html">FunctionSignatureWithArgs</a></li>
+    <li class="self-crumb">FunctionSignatureWithArgs const constructor</li>
 </ol>
 
 
-    <h5>FunctionSignature class</h5>
+    <h5>FunctionSignatureWithArgs class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-->
+  </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->

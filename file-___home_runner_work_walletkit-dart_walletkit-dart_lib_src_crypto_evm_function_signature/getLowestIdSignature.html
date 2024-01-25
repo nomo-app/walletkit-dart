@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignature-class.html">FunctionSignature</a>?</span>
+<span class="returntype"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/FunctionSignatureWithArgs-class.html">FunctionSignatureWithArgs</a>?</span>
 <span class="name ">getLowestIdSignature</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getLowestIdSignature-param-results"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">results</span>, </span></li>
 <li><span class="parameter" id="getLowestIdSignature-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span></span></li>
 </ol>)
@@ -77,7 +77,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">FunctionSignature? getLowestIdSignature(List&lt;dynamic&gt; results, Uint8List data) {
+  <pre class="language-dart"><code class="language-dart">FunctionSignatureWithArgs? getLowestIdSignature(
+    List&lt;dynamic&gt; results, Uint8List data) {
   results.sort((a, b) =&gt; a[&quot;id&quot;].compareTo(b[&quot;id&quot;]));
 
   for (final value in results) {
@@ -99,9 +100,9 @@
     List&lt;FunctionArg&gt; args = &lt;FunctionArg&gt;[];
 
     try {
-      args = FunctionSignature.decodeDataValues(data, params);
+      args = FunctionSignatureWithArgs.decodeDataValues(data, params);
 
-      final functionSignature = FunctionSignature(
+      final functionSignature = FunctionSignatureWithArgs(
         fetchedFunctionSignature.replaceAll(regex, &quot;&quot;),
         params,
         args,
@@ -109,7 +110,7 @@
 
       return functionSignature;
     } catch (e) {
-      return null;
+      continue;
     }
   }
   return null;
