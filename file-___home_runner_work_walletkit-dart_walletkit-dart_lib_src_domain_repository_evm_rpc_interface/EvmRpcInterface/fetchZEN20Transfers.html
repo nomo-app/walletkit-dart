@@ -110,8 +110,36 @@
   final res = await Future.wait(
     [outgoingTransfersFuture, incomingTransfersFuture],
   );
-  final outgoingTransfers = res.first;
-  final incomingTransfers = res.last;
+  var outgoingTransfers = res.first.toList();
+  var incomingTransfers = res.last.toList();
+
+  var allTransfersSorted = [
+    ...outgoingTransfers
+        .map((transfer) =&gt; (TransactionTransferMethod.send, transfer)),
+    ...incomingTransfers
+        .map((transfer) =&gt; (TransactionTransferMethod.receive, transfer)),
+  ]..sort((a, b) {
+      final aBlock = int.parse(a.$2[&quot;blockNumber&quot;]);
+      final bBlock = int.parse(b.$2[&quot;blockNumber&quot;]);
+      return bBlock.compareTo(aBlock);
+    });
+
+  allTransfersSorted = allTransfersSorted.take(_maxTxNumber).toList();
+
+  outgoingTransfers = allTransfersSorted
+      .where((transfer) =&gt; transfer.$1 == TransactionTransferMethod.send)
+      .map((transfer) =&gt; transfer.$2)
+      .toList();
+
+  incomingTransfers = allTransfersSorted
+      .where((transfer) =&gt; transfer.$1 == TransactionTransferMethod.receive)
+      .map((transfer) =&gt; transfer.$2)
+      .toList();
+
+  assert(
+    outgoingTransfers.length + incomingTransfers.length &lt;= _maxTxNumber,
+  ); &#47;&#47; sanity check
+
   final currentBlockNumber = await client.getBlockNumber();
   final transfers = [
     ...await Future.wait(

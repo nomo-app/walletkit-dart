@@ -82,7 +82,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;JsonList&gt; getLogs({
+  <pre class="language-dart"><code class="language-dart">Future&lt;JsonListNested&gt; getLogs({
   required String address,
   required List&lt;String?&gt; topics,
   required dynamic fromBlock,
@@ -100,7 +100,7 @@
     ],
   );
 
-  return response;
+  return response.cast&lt;Json&gt;();
 }</code></pre>
 </section>
 

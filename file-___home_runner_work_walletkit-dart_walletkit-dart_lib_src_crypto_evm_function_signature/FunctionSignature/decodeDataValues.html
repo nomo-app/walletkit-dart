@@ -78,7 +78,9 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static List&lt;FunctionArg&gt; decodeDataValues(
-    Uint8List data, Map&lt;String, String&gt; parameters) {
+  Uint8List data,
+  Map&lt;String, String&gt; parameters,
+) {
   final args = &lt;FunctionArg&gt;[];
   int offset = 4;
   int max_offset = 4;
