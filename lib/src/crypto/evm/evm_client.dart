@@ -61,7 +61,7 @@ base class EvmRpcClient {
   ///
   /// Returns the Logs
   ///
-  Future<JsonList> getLogs({
+  Future<JsonListNested> getLogs({
     required String address,
     required List<String?> topics,
     required dynamic fromBlock,
@@ -79,7 +79,7 @@ base class EvmRpcClient {
       ],
     );
 
-    return response;
+    return response.cast<Json>();
   }
 
   ///

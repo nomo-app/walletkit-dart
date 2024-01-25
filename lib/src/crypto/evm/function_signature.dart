@@ -29,6 +29,8 @@ typedef FunctionArg = ({
   dynamic value,
 });
 
+final Map<String, FunctionSignature?> functionSignatureCache = {};
+
 class FunctionSignature extends Equatable {
   final String name;
   final Map<String, String>? parameters;
@@ -40,7 +42,9 @@ class FunctionSignature extends Equatable {
   List<Object?> get props => [name, parameters, args];
 
   static List<FunctionArg> decodeDataValues(
-      Uint8List data, Map<String, String> parameters) {
+    Uint8List data,
+    Map<String, String> parameters,
+  ) {
     final args = <FunctionArg>[];
     int offset = 4;
     int max_offset = 4;
@@ -142,14 +146,28 @@ class FunctionSignature extends Equatable {
   }
 
   static Future<FunctionSignature> fetchFunctionSignature(
-      Uint8List data) async {
-    final response = await http.get(Uri.parse(
-        "https://www.4byte.directory/api/v1/signatures/?hex_signature=0x${hex.encode(data.sublist(0, 4))}"));
+    Uint8List data,
+  ) async {
+    final hex_signature = "0x${hex.encode(data.sublist(0, 4))}";
+
+    if (functionSignatureCache.containsKey(hex_signature)) {
+      final sig = functionSignatureCache[hex_signature];
+      if (sig == null) throw Exception("No function signature found");
+      return sig;
+    }
+
+    final response = await http.get(
+      Uri.parse(
+        "https://www.4byte.directory/api/v1/signatures/?hex_signature=$hex_signature",
+      ),
+    );
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
 
       final fetchedFunctionSignature =
           getLowestIdSignature(responseData["results"], data);
+
+      functionSignatureCache[hex_signature] = fetchedFunctionSignature;
 
       if (fetchedFunctionSignature == null) {
         throw Exception("No function signature found");
@@ -194,10 +212,8 @@ FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
 
       return functionSignature;
     } catch (e) {
-      print(e);
+      return null;
     }
-
-    throw Exception("No function signature found");
   }
   return null;
 }

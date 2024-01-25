@@ -12,6 +12,8 @@ typedef Json = Map<String, dynamic>;
 
 typedef JsonList = List<dynamic>;
 
+typedef JsonListNested = List<Json>;
+
 const String ADDRESS_NOT_SUPPORTED = "Address not supported";
 
 @HiveType(typeId: 3)
