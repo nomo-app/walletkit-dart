@@ -19,7 +19,7 @@ void main() {
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
     final contractFunction =
-        await FunctionSignature.fetchFunctionSignature(data);
+        await FunctionSignatureWithArgs.fetchFunctionSignature(data);
 
     expect(contractFunction.name, "mint");
     expect(contractFunction.parameters, {
@@ -37,8 +37,8 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final FunctionSignature contractFunction =
-        await FunctionSignature.fetchFunctionSignature(data);
+    final FunctionSignatureWithArgs contractFunction =
+        await FunctionSignatureWithArgs.fetchFunctionSignature(data);
 
     expect(contractFunction.name, "execute");
     expect(contractFunction.parameters, {
@@ -60,8 +60,8 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final FunctionSignature contractFunction =
-        await FunctionSignature.fetchFunctionSignature(data);
+    final FunctionSignatureWithArgs contractFunction =
+        await FunctionSignatureWithArgs.fetchFunctionSignature(data);
 
     expect(contractFunction.name, "execute");
     expect(contractFunction.parameters, {

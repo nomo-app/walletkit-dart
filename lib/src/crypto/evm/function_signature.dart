@@ -31,12 +31,21 @@ typedef FunctionArg = ({
 
 final Map<String, FunctionSignature?> functionSignatureCache = {};
 
-class FunctionSignature extends Equatable {
+class FunctionSignature {
   final String name;
   final Map<String, String>? parameters;
+
+  const FunctionSignature(this.name, this.parameters);
+
+  FunctionSignatureWithArgs addArgs(List<FunctionArg> args) {
+    return FunctionSignatureWithArgs(name, parameters, args);
+  }
+}
+
+class FunctionSignatureWithArgs extends FunctionSignature with EquatableMixin {
   final List<FunctionArg>? args;
 
-  FunctionSignature(this.name, this.parameters, this.args);
+  const FunctionSignatureWithArgs(super.name, super.parameters, this.args);
 
   @override
   List<Object?> get props => [name, parameters, args];
@@ -102,7 +111,7 @@ class FunctionSignature extends Equatable {
     return args;
   }
 
-  factory FunctionSignature.fromData(Uint8List data) {
+  factory FunctionSignatureWithArgs.fromData(Uint8List data) {
     if (data.length < 4) {
       throw Exception("data length must be at least 4");
     }
@@ -138,22 +147,26 @@ class FunctionSignature extends Equatable {
       value: (e) => e.type.name,
     );
 
-    return FunctionSignature(
+    return FunctionSignatureWithArgs(
       contractFunction.name,
       params,
       decodeDataValues(data, params),
     );
   }
 
-  static Future<FunctionSignature> fetchFunctionSignature(
+  static Future<FunctionSignatureWithArgs> fetchFunctionSignature(
     Uint8List data,
   ) async {
     final hex_signature = "0x${hex.encode(data.sublist(0, 4))}";
 
     if (functionSignatureCache.containsKey(hex_signature)) {
       final sig = functionSignatureCache[hex_signature];
-      if (sig == null) throw Exception("No function signature found");
-      return sig;
+      if (sig == null || sig.parameters == null)
+        throw Exception("No function signature found");
+
+      return sig.addArgs(
+        FunctionSignatureWithArgs.decodeDataValues(data, sig.parameters!),
+      );
     }
 
     final response = await http.get(
@@ -180,7 +193,8 @@ class FunctionSignature extends Equatable {
   }
 }
 
-FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
+FunctionSignatureWithArgs? getLowestIdSignature(
+    List<dynamic> results, Uint8List data) {
   results.sort((a, b) => a["id"].compareTo(b["id"]));
 
   for (final value in results) {
@@ -202,9 +216,9 @@ FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
     List<FunctionArg> args = <FunctionArg>[];
 
     try {
-      args = FunctionSignature.decodeDataValues(data, params);
+      args = FunctionSignatureWithArgs.decodeDataValues(data, params);
 
-      final functionSignature = FunctionSignature(
+      final functionSignature = FunctionSignatureWithArgs(
         fetchedFunctionSignature.replaceAll(regex, ""),
         params,
         args,
@@ -212,7 +226,7 @@ FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
 
       return functionSignature;
     } catch (e) {
-      return null;
+      continue;
     }
   }
   return null;
