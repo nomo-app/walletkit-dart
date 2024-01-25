@@ -171,8 +171,36 @@ final class EvmRpcInterface {
     final res = await Future.wait(
       [outgoingTransfersFuture, incomingTransfersFuture],
     );
-    final outgoingTransfers = res.first;
-    final incomingTransfers = res.last;
+    var outgoingTransfers = res.first.toList();
+    var incomingTransfers = res.last.toList();
+
+    var allTransfersSorted = [
+      ...outgoingTransfers
+          .map((transfer) => (TransactionTransferMethod.send, transfer)),
+      ...incomingTransfers
+          .map((transfer) => (TransactionTransferMethod.receive, transfer)),
+    ]..sort((a, b) {
+        final aBlock = int.parse(a.$2["blockNumber"]);
+        final bBlock = int.parse(b.$2["blockNumber"]);
+        return bBlock.compareTo(aBlock);
+      });
+
+    allTransfersSorted = allTransfersSorted.take(_maxTxNumber).toList();
+
+    outgoingTransfers = allTransfersSorted
+        .where((transfer) => transfer.$1 == TransactionTransferMethod.send)
+        .map((transfer) => transfer.$2)
+        .toList();
+
+    incomingTransfers = allTransfersSorted
+        .where((transfer) => transfer.$1 == TransactionTransferMethod.receive)
+        .map((transfer) => transfer.$2)
+        .toList();
+
+    assert(
+      outgoingTransfers.length + incomingTransfers.length <= _maxTxNumber,
+    ); // sanity check
+
     final currentBlockNumber = await client.getBlockNumber();
     final transfers = [
       ...await Future.wait(

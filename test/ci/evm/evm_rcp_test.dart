@@ -32,7 +32,7 @@ void main() {
       address: rejectEVM,
     );
 
-    expect(avinocZSCTransactions.length, greaterThanOrEqualTo(181));
+    expect(avinocZSCTransactions.length, 100);
     print('AVINOC ZSC Transactions: ${avinocZSCTransactions.length}');
 
     final erc721 = await zeniqSmartRpcInterface.fetchZEN721Transfers(
@@ -78,7 +78,7 @@ void main() {
       token: avinocZSC,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
-    expect(txs.length, greaterThanOrEqualTo(181));
+    expect(txs.length, 100);
   });
 
   test('fetch TUPAN transfers', () async {
@@ -87,7 +87,7 @@ void main() {
       token: tupanToken,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
-    expect(txs.length, greaterThanOrEqualTo(103));
+    expect(txs.length, 100);
   });
 
   test('estimate Gas Limit', () async {

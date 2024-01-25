@@ -29,18 +29,31 @@ typedef FunctionArg = ({
   dynamic value,
 });
 
-class FunctionSignature extends Equatable {
+final Map<String, FunctionSignature?> functionSignatureCache = {};
+
+class FunctionSignature {
   final String name;
   final Map<String, String>? parameters;
+
+  const FunctionSignature(this.name, this.parameters);
+
+  FunctionSignatureWithArgs addArgs(List<FunctionArg> args) {
+    return FunctionSignatureWithArgs(name, parameters, args);
+  }
+}
+
+class FunctionSignatureWithArgs extends FunctionSignature with EquatableMixin {
   final List<FunctionArg>? args;
 
-  FunctionSignature(this.name, this.parameters, this.args);
+  const FunctionSignatureWithArgs(super.name, super.parameters, this.args);
 
   @override
   List<Object?> get props => [name, parameters, args];
 
   static List<FunctionArg> decodeDataValues(
-      Uint8List data, Map<String, String> parameters) {
+    Uint8List data,
+    Map<String, String> parameters,
+  ) {
     final args = <FunctionArg>[];
     int offset = 4;
     int max_offset = 4;
@@ -98,7 +111,7 @@ class FunctionSignature extends Equatable {
     return args;
   }
 
-  factory FunctionSignature.fromData(Uint8List data) {
+  factory FunctionSignatureWithArgs.fromData(Uint8List data) {
     if (data.length < 4) {
       throw Exception("data length must be at least 4");
     }
@@ -134,22 +147,44 @@ class FunctionSignature extends Equatable {
       value: (e) => e.type.name,
     );
 
-    return FunctionSignature(
+    return FunctionSignatureWithArgs(
       contractFunction.name,
       params,
       decodeDataValues(data, params),
     );
   }
 
-  static Future<FunctionSignature> fetchFunctionSignature(
-      Uint8List data) async {
-    final response = await http.get(Uri.parse(
-        "https://www.4byte.directory/api/v1/signatures/?hex_signature=0x${hex.encode(data.sublist(0, 4))}"));
+  static Future<FunctionSignatureWithArgs> fetchFunctionSignature(
+    Uint8List data,
+  ) async {
+    final hex_signature = "0x${hex.encode(data.sublist(0, 4))}";
+
+    if (hex_signature == "0x00000000") {
+      throw Exception("Non existing function signature");
+    }
+
+    if (functionSignatureCache.containsKey(hex_signature)) {
+      final sig = functionSignatureCache[hex_signature];
+      if (sig == null || sig.parameters == null)
+        throw Exception("No function signature found");
+
+      return sig.addArgs(
+        FunctionSignatureWithArgs.decodeDataValues(data, sig.parameters!),
+      );
+    }
+
+    final response = await http.get(
+      Uri.parse(
+        "https://www.4byte.directory/api/v1/signatures/?hex_signature=$hex_signature",
+      ),
+    );
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
 
       final fetchedFunctionSignature =
           getLowestIdSignature(responseData["results"], data);
+
+      functionSignatureCache[hex_signature] = fetchedFunctionSignature;
 
       if (fetchedFunctionSignature == null) {
         throw Exception("No function signature found");
@@ -162,7 +197,8 @@ class FunctionSignature extends Equatable {
   }
 }
 
-FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
+FunctionSignatureWithArgs? getLowestIdSignature(
+    List<dynamic> results, Uint8List data) {
   results.sort((a, b) => a["id"].compareTo(b["id"]));
 
   for (final value in results) {
@@ -184,9 +220,9 @@ FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
     List<FunctionArg> args = <FunctionArg>[];
 
     try {
-      args = FunctionSignature.decodeDataValues(data, params);
+      args = FunctionSignatureWithArgs.decodeDataValues(data, params);
 
-      final functionSignature = FunctionSignature(
+      final functionSignature = FunctionSignatureWithArgs(
         fetchedFunctionSignature.replaceAll(regex, ""),
         params,
         args,
@@ -194,10 +230,8 @@ FunctionSignature? getLowestIdSignature(List<dynamic> results, Uint8List data) {
 
       return functionSignature;
     } catch (e) {
-      print(e);
+      continue;
     }
-
-    throw Exception("No function signature found");
   }
   return null;
 }

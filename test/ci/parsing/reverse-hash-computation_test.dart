@@ -18,8 +18,8 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final FunctionSignature functionSignature =
-        FunctionSignature.fromData(data);
+    final FunctionSignatureWithArgs functionSignature =
+        FunctionSignatureWithArgs.fromData(data);
 
     expect(functionSignature.name, "mint");
     expect(functionSignature.parameters, {
@@ -38,8 +38,8 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final FunctionSignature functionSignature =
-        FunctionSignature.fromData(data);
+    final FunctionSignatureWithArgs functionSignature =
+        FunctionSignatureWithArgs.fromData(data);
 
     expect(
         functionSignature.args?[0].value,
@@ -96,8 +96,8 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final FunctionSignature functionSignature =
-        FunctionSignature.fromData(data);
+    final FunctionSignatureWithArgs functionSignature =
+        FunctionSignatureWithArgs.fromData(data);
 
     expect(functionSignature.name, "mint");
     expect(functionSignature.parameters, {

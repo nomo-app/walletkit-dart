@@ -12,6 +12,15 @@ void main() {
     expect(txList.length, 100);
   });
 
+  test('fetch ZEN20 txs huge wallet', () async {
+    final rpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
+    final txList = await rpcInterface.fetchZEN20Transfers(
+      address: "0x2d6D6632768EC411104207E242248Fc5Bbb19eF8",
+      token: vooToken,
+    );
+    expect(txList.length, 100);
+  });
+
   test(
       'fetch ZSC txs & expect 0x1657dd75352314f7e1f81e6a66c51779ded751f28363ccbcfe5946c3b9b95bae Failed',
       () async {
