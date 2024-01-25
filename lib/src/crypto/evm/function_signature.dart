@@ -159,6 +159,10 @@ class FunctionSignatureWithArgs extends FunctionSignature with EquatableMixin {
   ) async {
     final hex_signature = "0x${hex.encode(data.sublist(0, 4))}";
 
+    if (hex_signature == "0x00000000") {
+      throw Exception("Non existing function signature");
+    }
+
     if (functionSignatureCache.containsKey(hex_signature)) {
       final sig = functionSignatureCache[hex_signature];
       if (sig == null || sig.parameters == null)
