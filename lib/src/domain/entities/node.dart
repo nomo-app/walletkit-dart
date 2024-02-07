@@ -18,6 +18,9 @@ sealed class NodeWithAddress {
   @HiveField(2)
   final Map<AddressType, String> addresses;
 
+  @HiveField(3)
+  final HDWalletType walletType;
+
   bool get isNeutered => bip32Node?.isNeutered() ?? true;
 
   List<String> get addressesList => addresses.values.toList();
@@ -36,12 +39,14 @@ sealed class NodeWithAddress {
             address: address,
             derivationPath: derivationPath,
             addresses: addresses,
+            walletType: walletType,
           ),
         ChangeNode() => ChangeNode(
             bip32Node: bip32Node?.neutered(),
             address: address,
             derivationPath: derivationPath,
             addresses: addresses,
+            walletType: walletType,
           ),
         EmptyNode() => EmptyNode(),
       };
@@ -52,6 +57,7 @@ sealed class NodeWithAddress {
     required int chainIndex,
     required String derivationPath,
     required Map<AddressType, String> addresses,
+    required HDWalletType walletType,
   }) {
     if (chainIndex == EXTERNAL_CHAIN_INDEX) {
       return ReceiveNode(
@@ -59,6 +65,7 @@ sealed class NodeWithAddress {
         address: address,
         derivationPath: derivationPath,
         addresses: addresses,
+        walletType: walletType,
       );
     }
     if (chainIndex == INTERNAL_CHAIN_INDEX) {
@@ -67,6 +74,7 @@ sealed class NodeWithAddress {
         address: address,
         derivationPath: derivationPath,
         addresses: addresses,
+        walletType: walletType,
       );
     }
     throw UnsupportedError("unexpected chainIndex");
@@ -77,6 +85,7 @@ sealed class NodeWithAddress {
     required this.address,
     required this.derivationPath,
     required this.addresses,
+    required this.walletType,
   });
 }
 
@@ -87,6 +96,7 @@ final class ReceiveNode extends NodeWithAddress {
     required super.address,
     required super.derivationPath,
     required super.addresses,
+    required super.walletType,
   });
 }
 
@@ -97,6 +107,7 @@ final class ChangeNode extends NodeWithAddress {
     required super.address,
     required super.derivationPath,
     required super.addresses,
+    required super.walletType,
   });
 }
 
@@ -108,6 +119,7 @@ final class EmptyNode extends NodeWithAddress {
           address: "",
           derivationPath: "",
           addresses: const {},
+          walletType: HDWalletType.BIP44,
         );
 }
 

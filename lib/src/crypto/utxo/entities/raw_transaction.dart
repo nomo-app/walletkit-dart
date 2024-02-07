@@ -1,10 +1,14 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
+import 'package:bip32/bip32.dart';
 import 'package:collection/collection.dart';
+import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/pk_script_converter.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
+import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -12,7 +16,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const SEGWIT_FLAG = 0x01;
 const SEGWIT_MARKER = 0x00;
 
-abstract class RawTransaction {
+sealed class RawTransaction {
   final int version;
   final List<Input> inputs;
   final List<Output> outputs;
@@ -437,6 +441,70 @@ class BTCRawTransaction extends RawTransaction {
     final hash = sha256Sha256Hash(tBuffer);
 
     return hash;
+  }
+
+  ///
+  /// Proof of Payment using BIP120: https://bips.xyz/120
+  ///
+  (Uint8List upop, List<Uint8List> pops) toPop({
+    required int nonce,
+    required Map<Uint8List?, NodeWithAddress> usedNodes,
+    required Uint8List seed,
+    required UTXONetworkType networkType,
+  }) {
+    ///
+    /// Create Pop Output
+    ///
+    final pop_output_script = Uint8List(1 + 2 + 32 + 6);
+    var offset = 0;
+    offset += pop_output_script.bytes.writeUint8(offset, OP_RETURN);
+    offset += pop_output_script.bytes.writeUint16(offset, 0x01); // POP Version
+    offset += pop_output_script.writeSlice(offset, txid.hexToBytes);
+    offset += pop_output_script.bytes.writeUint24(offset, nonce);
+
+    final pop_output = BTCOutput(
+      value: 0.toBI,
+      scriptPubKey: pop_output_script,
+    );
+
+    ///
+    /// Adjust Inputs (Set Sequence to 0x00000000)
+    ///
+    final pop_inputs = inputs.map((input) {
+      return input.changeSequence(0x00000000) as BTCInput;
+    }).toList();
+
+    ///
+    /// Create UPoP
+    ///
+    final uPopTx = BTCRawTransaction(
+      version: version,
+      lockTime: 499999999,
+      inputs: pop_inputs.toList(),
+      outputs: [pop_output],
+    );
+    final uPoPSerialized = uPopTx.bytes;
+
+    ///
+    /// Create Pop Signature
+    ///
+    final uPoPHash = sha256Sha256Hash(uPoPSerialized);
+
+    final bip32Nodes = [
+      for (final node in usedNodes.values)
+        deriveChildNodeFromPath(
+          seed: seed,
+          networkType: networkType,
+          childDerivationPath: node.derivationPath,
+          walletType: node.walletType,
+        ),
+    ];
+
+    final signatures = [
+      for (final node in bip32Nodes) (node.sign(uPoPHash) as Uint8List),
+    ];
+
+    return (uPoPHash, signatures);
   }
 }
 

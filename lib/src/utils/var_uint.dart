@@ -11,6 +11,13 @@ extension ByteUtil on ByteData {
     return 4;
   }
 
+  int writeUint24(int offset, int value) {
+    setUint8(offset, (value & 0xff0000) >> 16); //most significant byte
+    setUint8(offset + 1, (value & 0x00ff00) >> 8); //middle byte
+    setUint8(offset + 2, value & 0x0000ff); //least significant byte
+    return 3;
+  }
+
   int writeUint16(int offset, int val) {
     setUint16(offset, val, Endian.little);
     return 2;

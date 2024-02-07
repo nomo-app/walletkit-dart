@@ -10,7 +10,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const output_index_length = 4;
 const sequence_length = 4;
 
-abstract class Input {
+sealed class Input {
   final Uint8List txid;
   final int vout;
   final Uint8List? _scriptSig;
@@ -115,6 +115,21 @@ abstract class Input {
     }
 
     return w;
+  }
+
+  Input changeSequence(int sequence) {
+    return switch (this) {
+      BTCInput() => BTCInput(
+          txid: txid,
+          vout: vout,
+          value: value,
+          scriptSig: _scriptSig,
+          prevScriptPubKey: _prevScriptPubKey,
+          wittnessScript: _wittnessScript,
+          sequence: sequence,
+        ),
+      EC8Input() => this,
+    };
   }
 }
 

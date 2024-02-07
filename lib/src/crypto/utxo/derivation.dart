@@ -112,6 +112,7 @@ NodeWithAddress deriveChildNode({
     chainIndex: chainIndex,
     derivationPath: childDerivationPath,
     addresses: addressMap,
+    walletType: walletType,
   );
 }
 
