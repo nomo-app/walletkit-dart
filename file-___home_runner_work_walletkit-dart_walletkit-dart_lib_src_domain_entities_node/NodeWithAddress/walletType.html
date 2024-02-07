@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the write method from the ReceiveNodeAdapter class, for the Dart programming language.">
-  <title>write method - ReceiveNodeAdapter class - node library - Dart API</title>
+  <meta name="description" content="API docs for the walletType property from the NodeWithAddress class, for the Dart programming language.">
+  <title>walletType property - NodeWithAddress class - node library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node-library.html">src&#47;domain&#47;entities&#47;node.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/ReceiveNodeAdapter-class.html">ReceiveNodeAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/NodeWithAddress-class.html">NodeWithAddress</a></li>
+    <li class="self-crumb">walletType property</li>
   </ol>
-  <div class="self-name">write</div>
+  <div class="self-name">walletType</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,47 +54,26 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node&#47;ReceiveNodeAdapter-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node&#47;NodeWithAddress-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-method">write</span> method 
+<h1><span class="kind-property">walletType</span> property 
 </h1></div>
 
-    <section class="multi-line-signature">
-      
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
+        <section class="multi-line-signature">
+          
+          dynamic
+          <span class="name ">walletType</span>
+          <div class="features"><span class="feature">final</span></div>
 
-<span class="returntype">void</span>
-<span class="name ">write</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="write-param-writer"><span class="type-annotation">dynamic</span> <span class="parameter-name">writer</span>, </span></li>
-<li><span class="parameter" id="write-param-obj"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/ReceiveNode-class.html">ReceiveNode</a></span> <span class="parameter-name">obj</span></span></li>
-</ol>)
+        </section>
+        
 
-      
-
-    </section>
-    
-
-
-    
+        
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-void write(BinaryWriter writer, ReceiveNode obj) {
-  writer
-    ..writeByte(4)
-    ..writeByte(0)
-    ..write(obj.address)
-    ..writeByte(1)
-    ..write(obj.derivationPath)
-    ..writeByte(2)
-    ..write(obj.addresses)
-    ..writeByte(3)
-    ..write(obj.walletType);
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">@HiveField(3)
+final HDWalletType walletType;</code></pre>
 </section>
 
 
@@ -111,12 +90,12 @@ void write(BinaryWriter writer, ReceiveNode obj) {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node-library.html">node</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/ReceiveNodeAdapter-class.html">ReceiveNodeAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/NodeWithAddress-class.html">NodeWithAddress</a></li>
+    <li class="self-crumb">walletType property</li>
 </ol>
 
 
-    <h5>ReceiveNodeAdapter class</h5>
+    <h5>NodeWithAddress class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 

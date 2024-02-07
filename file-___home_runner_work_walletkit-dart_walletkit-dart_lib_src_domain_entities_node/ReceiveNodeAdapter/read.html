@@ -91,6 +91,7 @@ ReceiveNode read(BinaryReader reader) {
     address: fields[0] as String,
     derivationPath: fields[1] as String,
     addresses: (fields[2] as Map).cast&lt;AddressType, String&gt;(),
+    walletType: fields[3] as HDWalletType,
   );
 }</code></pre>
 </section>
