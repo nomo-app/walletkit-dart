@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bip32/bip32.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -26,6 +28,8 @@ sealed class NodeWithAddress {
   List<String> get addressesList => addresses.values.toList();
 
   int get index => derivationPath.split("/").last.toInt;
+
+  Uint8List? get publicKey => bip32Node?.publicKey;
 
   int get chainIndex => switch (this) {
         ReceiveNode() => EXTERNAL_CHAIN_INDEX,

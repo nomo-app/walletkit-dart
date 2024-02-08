@@ -1,17 +1,21 @@
 @Timeout(Duration(minutes: 5))
 
-import 'dart:typed_data';
-
-import 'package:collection/collection.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
+import 'package:walletkit_dart/src/crypto/utxo/proof_of_payment.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-
 import '../../utils.dart';
-import '../fetching/serialization_test.dart';
+
+/// Validation
+/// 1: Check Format of POP
+
+/// 2: Check that locktime is 499999999
+/// 3: Check that the tx has only one output and its value is 0
+/// 4: Check that the POP inputs are the same as the RawTx inputs except the sequence
+/// 6: Run the Scripts of the inputs and check that they are valid
+/// 7: Check that the TxID (in output) of the POP is the same as the TxID of the RawTx
 
 void main() {
-  test('Eurocoin Proof of Payment', () async {
+  test('Bitcoin Proof of Payment', () async {
     final devSeed = loadDevSeedFromEnv();
 
     final (txList, nodes) = await fetchUTXOTransactions(
@@ -22,75 +26,52 @@ void main() {
     );
     final selectedTx = txList.first;
 
-    final usedNodes = [
-      for (final input in selectedTx.inputs)
-        () {
-          final sig = input.getPublicKey(BitcoinNetwork);
-          final node = nodes.singleWhereOrNull(
-            (node) => node.address == input.getAddress(BitcoinNetwork),
-          );
-          if (node == null) return null;
-          return MapEntry(sig, node);
-        }.call()
-    ]
-        .where((element) => element != null)
-        .toList()
-        .cast<MapEntry<Uint8List?, NodeWithAddress>>();
-
-    /// Client
-    /// 1: We get TxID from other source
-    final txId = selectedTx.hash;
-
-    /// 2: We get the RawTx from this TxID
-    final serializedTx = await fetchRawTxByHash(txId, BitcoinNetwork);
-
-    final rawTx = BTCRawTransaction.fromHex(serializedTx);
-
-    /// 3: We get the POP from the RawTx
-    final (rawUPoP, sigs) = rawTx.toPop(
-      networkType: BitcoinNetwork,
+    final popResult = await proofOfPayment(
+      txid: selectedTx.hash,
+      nonce: rejectEVM,
+      nodes: nodes.toList(),
       seed: devSeed,
-      nonce: 123,
-      usedNodes: Map.fromEntries(usedNodes),
+      networkType: BitcoinNetwork,
     );
 
-    var bip = deriveChildNodeFromPath(
-      seed: devSeed,
-      childDerivationPath: "1/44",
-      networkType: BitcoinNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
-    );
-
-    var result = bip.verify(rawUPoP, sigs.first);
-
+    var publicKey = selectedTx.inputs.first.publicKey;
+    var result = popResult.verifiyPop(0, publicKey!);
     expect(result, true);
 
-    bip = deriveChildNodeFromPath(
-      seed: devSeed,
-      childDerivationPath: "0/15",
-      networkType: BitcoinNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
-    );
-    result = bip.verify(rawUPoP, sigs[1]);
+    publicKey = selectedTx.inputs[1].publicKey;
+    result = popResult.verifiyPop(1, publicKey!);
     expect(result, true);
 
-    bip = deriveChildNodeFromPath(
-      seed: devSeed,
-      childDerivationPath: "1/43",
-      networkType: BitcoinNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
-    );
-    result = bip.verify(rawUPoP, sigs.last);
+    publicKey = selectedTx.inputs[2].publicKey;
+    result = popResult.verifiyPop(2, publicKey!);
     expect(result, true);
+  });
 
-    /// 4: We return the POP
+  test('Eurcoin Proof of Payment', () async {
+    final devSeed = loadDevSeedFromEnv();
 
-    /// Validation
-    /// 1: Check Format of POP
-    /// 2: Check that locktime is 499999999
-    /// 3: Check that the tx has only one output and its value is 0
-    /// 4: Check that the POP inputs are the same as the RawTx inputs except the sequence
-    /// 6: Run the Scripts of the inputs and check that they are valid
-    /// 7: Check that the TxID (in output) of the POP is the same as the TxID of the RawTx
+    final (txList, nodes) = await fetchUTXOTransactions(
+      networkType: EurocoinNetwork,
+      seed: devSeed,
+      walletTypes: [HDWalletType.NO_STRUCTURE],
+      addressTypes: [AddressType.legacy],
+    );
+    final selectedTx = txList.first;
+
+    final popResult = await proofOfPayment(
+      txid: selectedTx.hash,
+      nonce: rejectEVM,
+      nodes: nodes.toList(),
+      seed: devSeed,
+      networkType: EurocoinNetwork,
+    );
+
+    final publicKey = selectedTx.inputs.first.publicKey;
+
+    expect(publicKey, isNotNull);
+
+    var result = popResult.verifiyPop(0, publicKey!);
+
+    expect(result, true);
   });
 }

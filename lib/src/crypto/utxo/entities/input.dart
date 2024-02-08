@@ -83,6 +83,20 @@ sealed class Input {
 
   bool get hasWitness => _wittnessScript != null;
 
+  Uint8List get publicKeyFromSig {
+    if (_scriptSig == null) throw Exception("No ScriptSig");
+    final script = Script(_scriptSig!);
+
+    final publicKey = script.chunks[1].data;
+    if (publicKey == null) {
+      throw Exception("Invalid Public Key");
+    }
+    if (publicKey.length != 33) {
+      throw Exception("Invalid Public Key");
+    }
+    return publicKey;
+  }
+
   Input addScript({Uint8List? scriptSig, Uint8List? wittnessScript});
 
   BigInt calculateWeight(
@@ -117,19 +131,16 @@ sealed class Input {
     return w;
   }
 
-  Input changeSequence(int sequence) {
-    return switch (this) {
-      BTCInput() => BTCInput(
-          txid: txid,
-          vout: vout,
-          value: value,
-          scriptSig: _scriptSig,
-          prevScriptPubKey: _prevScriptPubKey,
-          wittnessScript: _wittnessScript,
-          sequence: sequence,
-        ),
-      EC8Input() => this,
-    };
+  BTCInput changeSequence(int sequence) {
+    return BTCInput(
+      txid: txid,
+      vout: vout,
+      value: value,
+      scriptSig: _scriptSig,
+      prevScriptPubKey: _prevScriptPubKey,
+      wittnessScript: _wittnessScript,
+      sequence: sequence,
+    );
   }
 }
 
