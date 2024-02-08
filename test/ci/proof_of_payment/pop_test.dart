@@ -7,14 +7,10 @@ import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../../utils.dart';
 
-/// Validation
-/// 1: Check Format of POP
-
-/// 2: Check that locktime is 499999999
-/// 3: Check that the tx has only one output and its value is 0
-/// 4: Check that the POP inputs are the same as the RawTx inputs except the sequence
-/// 6: Run the Scripts of the inputs and check that they are valid
-/// 7: Check that the TxID (in output) of the POP is the same as the TxID of the RawTx
+///
+/// We do everything outlined in BIP120 except running the Input Scripts
+/// TODO: Implement Running of Scripts since we can only parse Scripts for now
+///
 
 void main() {
   test('Bitcoin Proof of Payment', () async {
