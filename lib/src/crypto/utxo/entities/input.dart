@@ -295,7 +295,7 @@ class EC8Input extends Input {
 
     var offset = 0;
     // Write TXID
-    offset += buffer.writeSlice(offset, txid.rev); // Or TXID ?
+    offset += buffer.writeSlice(offset, txid); // Or TXID ?
 
     // Write Vout
     offset += buffer.bytes.writeUint32(offset, vout);
