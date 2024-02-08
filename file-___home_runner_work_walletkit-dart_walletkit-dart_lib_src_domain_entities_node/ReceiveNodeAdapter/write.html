@@ -85,13 +85,15 @@
   <pre class="language-dart"><code class="language-dart">@override
 void write(BinaryWriter writer, ReceiveNode obj) {
   writer
-    ..writeByte(3)
+    ..writeByte(4)
     ..writeByte(0)
     ..write(obj.address)
     ..writeByte(1)
     ..write(obj.derivationPath)
     ..writeByte(2)
-    ..write(obj.addresses);
+    ..write(obj.addresses)
+    ..writeByte(3)
+    ..write(obj.walletType);
 }</code></pre>
 </section>
 

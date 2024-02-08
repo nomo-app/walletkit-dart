@@ -83,12 +83,14 @@
           address: address,
           derivationPath: derivationPath,
           addresses: addresses,
+          walletType: walletType,
         ),
       ChangeNode() =&gt; ChangeNode(
           bip32Node: bip32Node?.neutered(),
           address: address,
           derivationPath: derivationPath,
           addresses: addresses,
+          walletType: walletType,
         ),
       EmptyNode() =&gt; EmptyNode(),
     };</code></pre>

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getAddresses method from the ElectrumInput class, for the Dart programming language.">
-  <title>getAddresses method - ElectrumInput class - utxo_transaction library - Dart API</title>
+  <meta name="description" content="API docs for the publicKey property from the NodeWithAddress class, for the Dart programming language.">
+  <title>publicKey property - NodeWithAddress class - node library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction-library.html">src&#47;domain&#47;entities&#47;transactions&#47;utxo_transaction.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/ElectrumInput-class.html">ElectrumInput</a></li>
-    <li class="self-crumb">getAddresses method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node-library.html">src&#47;domain&#47;entities&#47;node.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/NodeWithAddress-class.html">NodeWithAddress</a></li>
+    <li class="self-crumb">publicKey property</li>
   </ol>
-  <div class="self-name">getAddresses</div>
+  <div class="self-name">publicKey</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,43 +54,32 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction&#47;ElectrumInput-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node&#47;NodeWithAddress-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-method">getAddresses</span> method 
+<h1><span class="kind-property">publicKey</span> property 
 </h1></div>
 
-    <section class="multi-line-signature">
-      
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-<span class="name ">getAddresses</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getAddresses-param-addressTypes">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">addressTypes</span>, </span></li>
-<li><span class="parameter" id="getAddresses-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>}</span></li>
-</ol>)
+        
+<section id="getter">
 
-      
+<section class="multi-line-signature">
+  
+  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span>
+  <span class="name ">publicKey</span>
+  
 
-    </section>
-    
+</section>
 
 
-    
+
+
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">List&lt;String&gt; getAddresses({
-  required Iterable&lt;AddressType&gt; addressTypes,
-  required UTXONetworkType networkType,
-}) {
-  final pubKey = publicKey;
+  <pre class="language-dart"><code class="language-dart">Uint8List? get publicKey =&gt; bip32Node?.publicKey;</code></pre>
+</section>
 
-  if (pubKey == null) {
-    return throw Exception(&quot;Cannot get public key from input&quot;);
-  }
-  return [
-    for (final addressType in addressTypes)
-      pubKeyToAddress(pubKey, addressType, networkType)
-  ];
-}</code></pre>
 </section>
 
 
@@ -106,13 +95,13 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction-library.html">utxo_transaction</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/ElectrumInput-class.html">ElectrumInput</a></li>
-    <li class="self-crumb">getAddresses method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node-library.html">node</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/NodeWithAddress-class.html">NodeWithAddress</a></li>
+    <li class="self-crumb">publicKey property</li>
 </ol>
 
 
-    <h5>ElectrumInput class</h5>
+    <h5>NodeWithAddress class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 

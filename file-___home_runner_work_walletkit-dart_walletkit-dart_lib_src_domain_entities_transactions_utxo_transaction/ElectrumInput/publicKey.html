@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getPublicKey method from the ElectrumInput class, for the Dart programming language.">
-  <title>getPublicKey method - ElectrumInput class - utxo_transaction library - Dart API</title>
+  <meta name="description" content="API docs for the publicKey property from the ElectrumInput class, for the Dart programming language.">
+  <title>publicKey property - ElectrumInput class - utxo_transaction library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction-library.html">src&#47;domain&#47;entities&#47;transactions&#47;utxo_transaction.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/ElectrumInput-class.html">ElectrumInput</a></li>
-    <li class="self-crumb">getPublicKey method</li>
+    <li class="self-crumb">publicKey property</li>
   </ol>
-  <div class="self-name">getPublicKey</div>
+  <div class="self-name">publicKey</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,32 +57,35 @@
       data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction&#47;ElectrumInput-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-method">getPublicKey</span> method 
+<h1><span class="kind-property">publicKey</span> property 
 </h1></div>
 
-    <section class="multi-line-signature">
-      
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span>
-<span class="name ">getPublicKey</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getPublicKey-param-type"><span class="type-annotation">dynamic</span> <span class="parameter-name">type</span></span></li>
-</ol>)
+        
+<section id="getter">
 
-      
+<section class="multi-line-signature">
+  
+  <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span>
+  <span class="name ">publicKey</span>
+  
 
-    </section>
-    
+</section>
 
 
-    
+
+
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Uint8List? getPublicKey(UTXONetworkType type) {
+  <pre class="language-dart"><code class="language-dart">Uint8List? get publicKey {
   try {
-    return getPubKeyFromInput(type, this).$1;
+    return getPubKeyFromInput(this).$1;
   } catch (e) {
     return null;
   }
 }</code></pre>
+</section>
+
 </section>
 
 
@@ -100,7 +103,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction-library.html">utxo_transaction</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_utxo_transaction/ElectrumInput-class.html">ElectrumInput</a></li>
-    <li class="self-crumb">getPublicKey method</li>
+    <li class="self-crumb">publicKey property</li>
 </ol>
 
 
