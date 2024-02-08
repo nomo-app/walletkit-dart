@@ -10,7 +10,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const output_index_length = 4;
 const sequence_length = 4;
 
-abstract class Input {
+sealed class Input {
   final Uint8List txid;
   final int vout;
   final Uint8List? _scriptSig;
@@ -83,6 +83,20 @@ abstract class Input {
 
   bool get hasWitness => _wittnessScript != null;
 
+  Uint8List get publicKeyFromSig {
+    if (_scriptSig == null) throw Exception("No ScriptSig");
+    final script = Script(_scriptSig!);
+
+    final publicKey = script.chunks[1].data;
+    if (publicKey == null) {
+      throw Exception("Invalid Public Key");
+    }
+    if (publicKey.length != 33) {
+      throw Exception("Invalid Public Key");
+    }
+    return publicKey;
+  }
+
   Input addScript({Uint8List? scriptSig, Uint8List? wittnessScript});
 
   BigInt calculateWeight(
@@ -115,6 +129,18 @@ abstract class Input {
     }
 
     return w;
+  }
+
+  BTCInput changeSequence(int sequence) {
+    return BTCInput(
+      txid: txid,
+      vout: vout,
+      value: value,
+      scriptSig: _scriptSig,
+      prevScriptPubKey: _prevScriptPubKey,
+      wittnessScript: _wittnessScript,
+      sequence: sequence,
+    );
   }
 }
 

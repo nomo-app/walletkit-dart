@@ -216,7 +216,7 @@ String getAddressFromLockingScript(
 /// Returns the address from the unlocking script of a transaction input. This only works for P2PKH and P2WPKH inputs.
 ///
 String getAddressFromInput(UTXONetworkType type, ElectrumInput input) {
-  final (publicKey, addressType) = getPubKeyFromInput(type, input);
+  final (publicKey, addressType) = getPubKeyFromInput(input);
   return pubKeyToAddress(publicKey, addressType, type);
 }
 
@@ -224,7 +224,6 @@ String getAddressFromInput(UTXONetworkType type, ElectrumInput input) {
 /// Returns the PublicKey from the unlocking script of a transaction input. This only works for P2PKH and P2WPKH inputs.
 ///
 (Uint8List, AddressType) getPubKeyFromInput(
-  UTXONetworkType type,
   ElectrumInput input,
 ) {
   final hexSig = input.scriptSig;

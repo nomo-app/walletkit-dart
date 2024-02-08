@@ -213,9 +213,9 @@ class ElectrumInput {
     }
   }
 
-  Uint8List? getPublicKey(UTXONetworkType type) {
+  Uint8List? get publicKey {
     try {
-      return getPubKeyFromInput(type, this).$1;
+      return getPubKeyFromInput(this).$1;
     } catch (e) {
       return null;
     }
@@ -225,7 +225,7 @@ class ElectrumInput {
     required Iterable<AddressType> addressTypes,
     required UTXONetworkType networkType,
   }) {
-    final pubKey = getPublicKey(networkType);
+    final pubKey = publicKey;
 
     if (pubKey == null) {
       return throw Exception("Cannot get public key from input");

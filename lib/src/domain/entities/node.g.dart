@@ -20,19 +20,22 @@ class ReceiveNodeAdapter extends TypeAdapter<ReceiveNode> {
       address: fields[0] as String,
       derivationPath: fields[1] as String,
       addresses: (fields[2] as Map).cast<AddressType, String>(),
+      walletType: fields[3] as HDWalletType,
     );
   }
 
   @override
   void write(BinaryWriter writer, ReceiveNode obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
       ..write(obj.derivationPath)
       ..writeByte(2)
-      ..write(obj.addresses);
+      ..write(obj.addresses)
+      ..writeByte(3)
+      ..write(obj.walletType);
   }
 
   @override
@@ -60,19 +63,22 @@ class ChangeNodeAdapter extends TypeAdapter<ChangeNode> {
       address: fields[0] as String,
       derivationPath: fields[1] as String,
       addresses: (fields[2] as Map).cast<AddressType, String>(),
+      walletType: fields[3] as HDWalletType,
     );
   }
 
   @override
   void write(BinaryWriter writer, ChangeNode obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
       ..write(obj.derivationPath)
       ..writeByte(2)
-      ..write(obj.addresses);
+      ..write(obj.addresses)
+      ..writeByte(3)
+      ..write(obj.walletType);
   }
 
   @override
@@ -92,23 +98,21 @@ class EmptyNodeAdapter extends TypeAdapter<EmptyNode> {
 
   @override
   EmptyNode read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final _ = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
     return EmptyNode();
   }
 
   @override
   void write(BinaryWriter writer, EmptyNode obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
       ..write(obj.derivationPath)
       ..writeByte(2)
-      ..write(obj.addresses);
+      ..write(obj.addresses)
+      ..writeByte(3)
+      ..write(obj.walletType);
   }
 
   @override

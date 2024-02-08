@@ -112,6 +112,7 @@ NodeWithAddress deriveChildNode({
     chainIndex: chainIndex,
     derivationPath: childDerivationPath,
     addresses: addressMap,
+    walletType: walletType,
   );
 }
 
@@ -128,8 +129,6 @@ bip32.BIP32 deriveChildNodeFromPath({
   );
 
   final node = masterNode.derivePath(childDerivationPath);
-
-  print(node.publicKey.toHex);
 
   return node;
 }

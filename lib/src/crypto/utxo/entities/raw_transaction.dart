@@ -12,7 +12,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const SEGWIT_FLAG = 0x01;
 const SEGWIT_MARKER = 0x00;
 
-abstract class RawTransaction {
+sealed class RawTransaction {
   final int version;
   final List<Input> inputs;
   final List<Output> outputs;

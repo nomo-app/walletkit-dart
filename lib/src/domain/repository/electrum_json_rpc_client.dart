@@ -1,3 +1,4 @@
+import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/src/domain/repository/models/electrum_peer.dart';
 import 'package:walletkit_dart/src/domain/repository/models/electrum_transaction.dart';
 import 'package:walletkit_dart/src/domain/repository/utxo_in_memory_cache.dart';
@@ -219,4 +220,23 @@ class ElectrumXClient {
   }
 
   String get host => _client.host;
+}
+
+Future<String> fetchRawTxByHash(
+  String hash,
+  UTXONetworkType networkType,
+) async {
+  final (result, _, _) = await fetchFromRandomElectrumXNode(
+    (client) async {
+      return await client.getRaw(hash);
+    },
+    client: null,
+    endpoints: networkType.endpoints,
+    token: networkType.coin,
+  );
+  if (result == null) {
+    throw Exception("No result for $hash");
+  }
+
+  return result;
 }
