@@ -177,7 +177,7 @@ class BTCInput extends Input {
     offset += off4;
 
     return BTCInput(
-      txid: txid,
+      txid: txid.rev,
       vout: vout,
       sequence: sequence,
       scriptSig: script,
@@ -369,7 +369,7 @@ class EC8Input extends Input {
     offset += off5;
 
     return EC8Input(
-      txid: txid,
+      txid: txid.rev,
       vout: vout,
       scriptSig: scriptSig,
       value: BigInt.from(value),
