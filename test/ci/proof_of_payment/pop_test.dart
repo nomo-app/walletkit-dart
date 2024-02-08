@@ -2,7 +2,6 @@
 
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
-import 'package:walletkit_dart/src/crypto/utxo/proof_of_payment.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../../utils.dart';
