@@ -62,7 +62,7 @@ void main() {
 
       final compareInput = selectedTx.inputs[i];
 
-      expect(input.txid.toHex, compareInput.txid);
+      expect(input.txid.rev.toHex, compareInput.txid);
       expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
       expect(input.vout, compareInput.vout);
     }
@@ -131,7 +131,7 @@ void main() {
 
       final compareInput = selectedTx.inputs[i];
 
-      expect(input.txid.toHex, compareInput.txid);
+      expect(input.txid.rev.toHex, compareInput.txid);
       expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
       expect(input.vout, compareInput.vout);
     }

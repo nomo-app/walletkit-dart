@@ -177,7 +177,7 @@ class BTCInput extends Input {
     offset += off4;
 
     return BTCInput(
-      txid: txid.rev,
+      txid: txid,
       vout: vout,
       sequence: sequence,
       scriptSig: script,
@@ -295,7 +295,7 @@ class EC8Input extends Input {
 
     var offset = 0;
     // Write TXID
-    offset += buffer.writeSlice(offset, txid); // Or TXID ?
+    offset += buffer.writeSlice(offset, txid.rev); // Or TXID ?
 
     // Write Vout
     offset += buffer.bytes.writeUint32(offset, vout);
@@ -369,7 +369,7 @@ class EC8Input extends Input {
     offset += off5;
 
     return EC8Input(
-      txid: txid.rev,
+      txid: txid,
       vout: vout,
       scriptSig: scriptSig,
       value: BigInt.from(value),
