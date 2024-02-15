@@ -36,13 +36,17 @@ RawTransaction buildUnsignedTransaction({
   if (targetValue < BigInt.zero) {
     throw SendFailure("targetValue < 0");
   }
-  // TODO: Check if DUST_THRESHOLD is correct for each network
-  if (targetValue < DUST_THRESHOLD.toBI) {
-    throw SendFailure("targetValue < DUST_THRESHOLD");
+
+  if (targetValue < networkType.dustTreshhold.legacy.toBI) {
+    throw SendFailure(
+      "targetValue < DUST_THRESHOLD: ${networkType.dustTreshhold.legacy}",
+    );
   }
   if (walletType == HDWalletType.BIP84 &&
-      targetValue < DUST_THRESHOLD_SEGWIT.toBI) {
-    throw SendFailure("targetValue < DUST_THRESHOLD_BIP84");
+      targetValue < networkType.dustTreshhold.segwit.toBI) {
+    throw SendFailure(
+      "targetValue < DUST_THRESHOLD_BIP84: ${networkType.dustTreshhold.segwit}",
+    );
   }
 
   final allUTXOs = extractUTXOs(txList: txList);
@@ -121,7 +125,7 @@ RawTransaction buildUnsignedTransaction({
 
   if (changeValue < BigInt.zero) {
     targetValue -= estimatedFee;
-    if (targetValue < DUST_THRESHOLD.toBI) {
+    if (targetValue < networkType.dustTreshhold.legacy.toBI) {
       /// Ad addidional UTXO to cover the fee
       targetValue = intent.amount.value;
       final additionalUTXO = fillUpToTargetAmount(

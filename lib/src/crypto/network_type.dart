@@ -57,6 +57,8 @@ sealed class UTXONetworkType extends NetworkType {
 
   final SighashInfo sighash;
 
+  final ({int legacy, int segwit}) dustTreshhold;
+
   const UTXONetworkType({
     required super.messagePrefix,
     required super.coin,
@@ -69,6 +71,7 @@ sealed class UTXONetworkType extends NetworkType {
     required this.endpoints,
     required this.sighash,
     required this.addressPrefixes,
+    required this.dustTreshhold,
   });
 
   @override
@@ -160,6 +163,11 @@ const UTXO_Network_List = [
   EurocoinNetwork,
 ];
 
+const BTC_DUSTTRESHOLD = (
+  legacy: 546,
+  segwit: 294,
+);
+
 const BitcoinNetwork = BITCOIN_NETWORK();
 
 class BITCOIN_NETWORK extends UTXONetworkType {
@@ -200,6 +208,7 @@ class BITCOIN_NETWORK extends UTXONetworkType {
             AddressType.compatibility: "3",
             AddressType.segwit: "bc1",
           },
+          dustTreshhold: BTC_DUSTTRESHOLD,
         );
 }
 
@@ -231,6 +240,7 @@ class LITECOIN_NETWORK extends UTXONetworkType {
             AddressType.compatibility: "M",
             AddressType.segwit: "ltc1",
           },
+          dustTreshhold: BTC_DUSTTRESHOLD,
         );
 }
 
@@ -270,6 +280,7 @@ class BITCOINCASH_NETWORK extends UTXONetworkType {
             AddressType.compatibility: "3",
             AddressType.cashaddr: "bitcoincash",
           },
+          dustTreshhold: BTC_DUSTTRESHOLD,
         );
 }
 
@@ -312,6 +323,7 @@ class ZENIQ_NETWORK extends UTXONetworkType {
           addressPrefixes: const {
             AddressType.legacy: "m",
           },
+          dustTreshhold: BTC_DUSTTRESHOLD,
         );
 }
 
@@ -336,6 +348,7 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
           addressPrefixes: const {
             AddressType.legacy: "c",
           },
+          dustTreshhold: BTC_DUSTTRESHOLD,
         );
 }
 
