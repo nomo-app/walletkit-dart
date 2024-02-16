@@ -83,6 +83,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 EmptyNode read(BinaryReader reader) {
+  final numOfFields = reader.readByte();
+  final _ = &lt;int, dynamic&gt;{
+    for (int i = 0; i &lt; numOfFields; i++) reader.readByte(): reader.read(),
+  };
   return EmptyNode();
 }</code></pre>
 </section>
