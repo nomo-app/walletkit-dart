@@ -101,17 +101,13 @@
   if (targetValue &lt; BigInt.zero) {
     throw SendFailure(&quot;targetValue &lt; 0&quot;);
   }
-
-  if (targetValue &lt; networkType.dustTreshhold.legacy.toBI) {
-    throw SendFailure(
-      &quot;targetValue &lt; DUST_THRESHOLD: ${networkType.dustTreshhold.legacy}&quot;,
-    );
+  &#47;&#47; TODO: Check if DUST_THRESHOLD is correct for each network
+  if (targetValue &lt; DUST_THRESHOLD.toBI) {
+    throw SendFailure(&quot;targetValue &lt; DUST_THRESHOLD&quot;);
   }
   if (walletType == HDWalletType.BIP84 &amp;&amp;
-      targetValue &lt; networkType.dustTreshhold.segwit.toBI) {
-    throw SendFailure(
-      &quot;targetValue &lt; DUST_THRESHOLD_BIP84: ${networkType.dustTreshhold.segwit}&quot;,
-    );
+      targetValue &lt; DUST_THRESHOLD_SEGWIT.toBI) {
+    throw SendFailure(&quot;targetValue &lt; DUST_THRESHOLD_BIP84&quot;);
   }
 
   final allUTXOs = extractUTXOs(txList: txList);
@@ -190,7 +186,7 @@
 
   if (changeValue &lt; BigInt.zero) {
     targetValue -= estimatedFee;
-    if (targetValue &lt; networkType.dustTreshhold.legacy.toBI) {
+    if (targetValue &lt; DUST_THRESHOLD.toBI) {
       &#47;&#47;&#47; Ad addidional UTXO to cover the fee
       targetValue = intent.amount.value;
       final additionalUTXO = fillUpToTargetAmount(
