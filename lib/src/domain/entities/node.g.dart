@@ -98,6 +98,10 @@ class EmptyNodeAdapter extends TypeAdapter<EmptyNode> {
 
   @override
   EmptyNode read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final _ = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
     return EmptyNode();
   }
 
