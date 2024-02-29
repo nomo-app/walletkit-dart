@@ -119,6 +119,7 @@ Future<NodeWithAddress> deriveBIP32Ec8({
     derivationPath: "", //
     addresses: {AddressType.legacy: address},
     walletType: HDWalletType.NO_STRUCTURE,
+    publicKey: childNode.publicKey.toHex,
   );
 }
 

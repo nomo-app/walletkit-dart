@@ -500,6 +500,13 @@ Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({
     "Fetched ${txs.length} transactions in ${watch.elapsed}",
   );
 
+  ///
+  /// Disconnect Clients
+  ///
+  await Future.wait([
+    for (final client in clients) client.disconnect(),
+  ]);
+
   return txs;
 }
 

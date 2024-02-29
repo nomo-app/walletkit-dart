@@ -56,14 +56,20 @@ Future<POPResult> proofOfPayment({
     for (final input in tbProvenTx.inputs)
       () {
         final node = nodes.firstWhereOrNull(
-          (node) => listEquality(node.publicKey, input.publicKeyFromSig),
+          (node) => listEquality(
+            node.publicKey.hexToBytes,
+            input.publicKeyFromSig,
+          ),
         );
         if (node == null) return null;
         return node;
       }.call()
   ].whereType<NodeWithAddress>().toList();
 
-  assert(tbProvenTx.inputs.length == usedNodes.length, "Invalid Inputs");
+  assert(
+    tbProvenTx.inputs.length == usedNodes.length,
+    "Could not find the Nodes for the given transaction.",
+  );
 
   ///
   /// Create Pop Output

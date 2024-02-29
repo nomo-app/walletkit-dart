@@ -226,15 +226,17 @@ Future<String> fetchRawTxByHash(
   String hash,
   UTXONetworkType networkType,
 ) async {
-  final (result, _, _) = await fetchFromRandomElectrumXNode(
+  final (result, _client, _) = await fetchFromRandomElectrumXNode(
     (client) async {
       return await client.getRaw(hash);
     },
     client: null,
     endpoints: networkType.endpoints,
     token: networkType.coin,
+    timeout: Duration(seconds: 20),
   );
-  if (result == null) {
+  await _client?.disconnect();
+  if (result == null || result.isEmpty || result == "null") {
     throw Exception("No result for $hash");
   }
 
