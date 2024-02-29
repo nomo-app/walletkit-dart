@@ -1,6 +1,5 @@
 @Timeout(Duration(minutes: 5))
 
-import 'package:bip39/bip39.dart';
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
