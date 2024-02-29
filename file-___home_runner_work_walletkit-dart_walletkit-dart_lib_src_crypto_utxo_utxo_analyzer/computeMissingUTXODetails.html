@@ -156,6 +156,13 @@
     &quot;Fetched ${txs.length} transactions in ${watch.elapsed}&quot;,
   );
 
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Disconnect Clients
+  &#47;&#47;&#47;
+  await Future.wait([
+    for (final client in clients) client.disconnect(),
+  ]);
+
   return txs;
 }</code></pre>
 </section>

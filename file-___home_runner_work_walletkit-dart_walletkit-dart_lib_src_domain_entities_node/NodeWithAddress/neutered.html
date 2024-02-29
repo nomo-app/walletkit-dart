@@ -84,6 +84,7 @@
           derivationPath: derivationPath,
           addresses: addresses,
           walletType: walletType,
+          publicKey: publicKey,
         ),
       ChangeNode() =&gt; ChangeNode(
           bip32Node: bip32Node?.neutered(),
@@ -91,6 +92,7 @@
           derivationPath: derivationPath,
           addresses: addresses,
           walletType: walletType,
+          publicKey: publicKey,
         ),
       EmptyNode() =&gt; EmptyNode(),
     };</code></pre>

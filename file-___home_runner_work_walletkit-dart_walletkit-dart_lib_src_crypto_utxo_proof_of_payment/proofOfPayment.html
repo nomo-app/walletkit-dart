@@ -110,14 +110,20 @@
     for (final input in tbProvenTx.inputs)
       () {
         final node = nodes.firstWhereOrNull(
-          (node) =&gt; listEquality(node.publicKey, input.publicKeyFromSig),
+          (node) =&gt; listEquality(
+            node.publicKey.hexToBytes,
+            input.publicKeyFromSig,
+          ),
         );
         if (node == null) return null;
         return node;
       }.call()
   ].whereType&lt;NodeWithAddress&gt;().toList();
 
-  assert(tbProvenTx.inputs.length == usedNodes.length, &quot;Invalid Inputs&quot;);
+  assert(
+    tbProvenTx.inputs.length == usedNodes.length,
+    &quot;Could not find the Nodes for the given transaction.&quot;,
+  );
 
   &#47;&#47;&#47;
   &#47;&#47;&#47; Create Pop Output

@@ -92,6 +92,7 @@
       derivationPath: derivationPath,
       addresses: addresses,
       walletType: walletType,
+      publicKey: node.publicKey.toHex,
     );
   }
   if (chainIndex == INTERNAL_CHAIN_INDEX) {
@@ -101,6 +102,7 @@
       derivationPath: derivationPath,
       addresses: addresses,
       walletType: walletType,
+      publicKey: node.publicKey.toHex,
     );
   }
   throw UnsupportedError(&quot;unexpected chainIndex&quot;);
