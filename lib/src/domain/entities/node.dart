@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bip32/bip32.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -23,13 +21,14 @@ sealed class NodeWithAddress {
   @HiveField(3)
   final HDWalletType walletType;
 
+  @HiveField(4)
+  final String publicKey;
+
   bool get isNeutered => bip32Node?.isNeutered() ?? true;
 
   List<String> get addressesList => addresses.values.toList();
 
   int get index => derivationPath.split("/").last.toInt;
-
-  Uint8List? get publicKey => bip32Node?.publicKey;
 
   int get chainIndex => switch (this) {
         ReceiveNode() => EXTERNAL_CHAIN_INDEX,
@@ -44,6 +43,7 @@ sealed class NodeWithAddress {
             derivationPath: derivationPath,
             addresses: addresses,
             walletType: walletType,
+            publicKey: publicKey,
           ),
         ChangeNode() => ChangeNode(
             bip32Node: bip32Node?.neutered(),
@@ -51,6 +51,7 @@ sealed class NodeWithAddress {
             derivationPath: derivationPath,
             addresses: addresses,
             walletType: walletType,
+            publicKey: publicKey,
           ),
         EmptyNode() => EmptyNode(),
       };
@@ -70,6 +71,7 @@ sealed class NodeWithAddress {
         derivationPath: derivationPath,
         addresses: addresses,
         walletType: walletType,
+        publicKey: node.publicKey.toHex,
       );
     }
     if (chainIndex == INTERNAL_CHAIN_INDEX) {
@@ -79,6 +81,7 @@ sealed class NodeWithAddress {
         derivationPath: derivationPath,
         addresses: addresses,
         walletType: walletType,
+        publicKey: node.publicKey.toHex,
       );
     }
     throw UnsupportedError("unexpected chainIndex");
@@ -90,6 +93,7 @@ sealed class NodeWithAddress {
     required this.derivationPath,
     required this.addresses,
     required this.walletType,
+    required this.publicKey,
   });
 }
 
@@ -101,6 +105,7 @@ final class ReceiveNode extends NodeWithAddress {
     required super.derivationPath,
     required super.addresses,
     required super.walletType,
+    required super.publicKey,
   });
 }
 
@@ -112,6 +117,7 @@ final class ChangeNode extends NodeWithAddress {
     required super.derivationPath,
     required super.addresses,
     required super.walletType,
+    required super.publicKey,
   });
 }
 
@@ -124,6 +130,7 @@ final class EmptyNode extends NodeWithAddress {
           derivationPath: "",
           addresses: const {},
           walletType: HDWalletType.BIP44,
+          publicKey: "",
         );
 }
 

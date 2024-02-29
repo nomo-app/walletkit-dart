@@ -1,5 +1,6 @@
 @Timeout(Duration(minutes: 5))
 
+import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
@@ -84,13 +85,23 @@ void main() {
   test('Eurcoin Proof of Payment', () async {
     final devSeed = loadDevSeedFromEnv();
 
+    const toBeProvenHash =
+        "3574231d1a64760f6e42bd469bef95aa0b2c8ea6c38e043a443c3f0196cecd39";
+
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: EurocoinNetwork,
       seed: devSeed,
       walletTypes: [HDWalletType.NO_STRUCTURE],
       addressTypes: [AddressType.legacy],
+      minEndpoints: 1,
     );
-    final selectedTx = txList.first;
+    final selectedTx = txList.singleWhereOrNull(
+      (element) => element.hash == toBeProvenHash,
+    );
+
+    if (selectedTx == null) {
+      throw Exception("Could not find a transaction with the hash");
+    }
 
     final popResult = await proofOfPayment(
       txid: selectedTx.hash,
@@ -99,6 +110,8 @@ void main() {
       seed: devSeed,
       networkType: EurocoinNetwork,
     );
+
+    expect(popResult.pops, isNotEmpty);
 
     /// Verify uPoPTx Structure
 

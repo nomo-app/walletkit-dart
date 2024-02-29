@@ -21,13 +21,14 @@ class ReceiveNodeAdapter extends TypeAdapter<ReceiveNode> {
       derivationPath: fields[1] as String,
       addresses: (fields[2] as Map).cast<AddressType, String>(),
       walletType: fields[3] as HDWalletType,
+      publicKey: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, ReceiveNode obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class ReceiveNodeAdapter extends TypeAdapter<ReceiveNode> {
       ..writeByte(2)
       ..write(obj.addresses)
       ..writeByte(3)
-      ..write(obj.walletType);
+      ..write(obj.walletType)
+      ..writeByte(4)
+      ..write(obj.publicKey);
   }
 
   @override
@@ -64,13 +67,14 @@ class ChangeNodeAdapter extends TypeAdapter<ChangeNode> {
       derivationPath: fields[1] as String,
       addresses: (fields[2] as Map).cast<AddressType, String>(),
       walletType: fields[3] as HDWalletType,
+      publicKey: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, ChangeNode obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -78,7 +82,9 @@ class ChangeNodeAdapter extends TypeAdapter<ChangeNode> {
       ..writeByte(2)
       ..write(obj.addresses)
       ..writeByte(3)
-      ..write(obj.walletType);
+      ..write(obj.walletType)
+      ..writeByte(4)
+      ..write(obj.publicKey);
   }
 
   @override
@@ -108,7 +114,7 @@ class EmptyNodeAdapter extends TypeAdapter<EmptyNode> {
   @override
   void write(BinaryWriter writer, EmptyNode obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.address)
       ..writeByte(1)
@@ -116,7 +122,9 @@ class EmptyNodeAdapter extends TypeAdapter<EmptyNode> {
       ..writeByte(2)
       ..write(obj.addresses)
       ..writeByte(3)
-      ..write(obj.walletType);
+      ..write(obj.walletType)
+      ..writeByte(4)
+      ..write(obj.publicKey);
   }
 
   @override
