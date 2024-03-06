@@ -29,8 +29,22 @@ class Amount extends Equatable {
 
   static Amount get empty => Amount(value: BigInt.from(0), decimals: 0);
 
-  double get displayValue {
+  double get displayDouble {
     return value / BigInt.from(10).pow(decimals);
+  }
+
+  String get displayValue {
+    final firstBI = value ~/ BigInt.from(10).pow(decimals);
+
+    final secondBI = value % BigInt.from(10).pow(decimals);
+
+    final string = '$firstBI.${secondBI.toString().padLeft(decimals, '0')}';
+
+    final lastNonZeroIndex = string.lastIndexOf(RegExp(r'[^0]'));
+
+    if (lastNonZeroIndex == -1) return string;
+
+    return string.substring(0, lastNonZeroIndex < 3 ? 3 : lastNonZeroIndex + 1);
   }
 
   Amount copyWith({
@@ -54,7 +68,7 @@ class Amount extends Equatable {
 
   @override
   String toString() {
-    return 'Amount{value: $value, decimals: $decimals}: $displayValue';
+    return 'Amount{value: $value, decimals: $decimals}: $displayDouble';
   }
 
   Map<String, dynamic> toJson() {

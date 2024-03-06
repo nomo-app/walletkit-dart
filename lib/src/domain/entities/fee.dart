@@ -2,9 +2,9 @@ enum FeePriority {
   tommorow(144, 'Tommorow'),
   threeHours(18, '3 Hours'),
   twoHours(12, '2 Hours'),
-  low(6, "Slow"),
-  medium(3, "Medium"),
-  high(1, "Fast");
+  low(6, "slow"),
+  medium(3, "medium"),
+  high(1, "fast");
 
   final int blocks;
   final String displayName;
@@ -18,6 +18,14 @@ enum FeePriority {
       low,
       medium,
       high,
+    ];
+  }
+
+  static List<FeePriority> get utxo {
+    return [
+      tommorow,
+      threeHours,
+      twoHours,
     ];
   }
 }

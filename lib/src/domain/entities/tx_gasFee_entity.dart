@@ -1,4 +1,5 @@
 import 'package:walletkit_dart/src/domain/entities/fee.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 // TODO: Make abstract for UTXO and EVM Implementations as they differ
 class GasFeesEntity {
@@ -14,12 +15,17 @@ class GasFeesEntity {
     required this.fast,
   });
 
-  BigInt getFee(FeePriority feePriority) => switch (feePriority) {
+  BigInt getFeeGWEI(FeePriority feePriority) => switch (feePriority) {
         FeePriority.high => fast,
         FeePriority.medium => average,
         FeePriority.low => safe,
         _ => safe,
       };
+
+  Amount getFeeAmount(FeePriority feePriority) => Amount(
+        value: getFeeGWEI(feePriority),
+        decimals: 9,
+      );
 
   factory GasFeesEntity.fromJson(Map<String, dynamic> json) {
     if (json
