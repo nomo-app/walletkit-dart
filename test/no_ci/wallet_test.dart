@@ -22,7 +22,7 @@ void main() {
       intent: TransferIntent(
         recipient: spoilEVM,
         amount: Amount.num(value: 1, decimals: zeniqSmart.decimals),
-        feePriority: FeePriority.high,
+        feeInfo: null,
         token: zeniqSmart,
       ),
       credentials: credentials,
@@ -41,7 +41,7 @@ void main() {
       intent: TransferIntent(
         recipient: spoilEVM,
         amount: Amount.num(value: 0.001, decimals: avinocZSC.decimals),
-        feePriority: FeePriority.high,
+        feeInfo: null,
         token: avinocZSC,
       ),
       credentials: credentials,
@@ -65,7 +65,7 @@ void main() {
     final intent = TransferIntent(
       recipient: reveiveAddress,
       amount: Amount(value: BigInt.from(100000000), decimals: 8),
-      feePriority: FeePriority.high,
+      feeInfo: null,
       token: zeniqCoin,
     );
 
@@ -121,7 +121,7 @@ void main() {
     final intent = TransferIntent(
       recipient: receive,
       amount: Amount.num(value: 1.2, decimals: 5),
-      feePriority: FeePriority.high,
+      feeInfo: null,
       token: ec8Coin,
     );
 

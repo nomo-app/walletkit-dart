@@ -306,6 +306,16 @@ class EVMExplorer extends EtherscanRepository {
     }
     return map;
   }
+
+  Future<int?> fetchEstimatedTime(int gasPrice) async {
+    final endpoint =
+        "$base?module=gastracker&action=gasestimate&gasprice=$gasPrice";
+    final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
+    if (result is! String) {
+      throw Exception("Failed to fetch gas price");
+    }
+    return int.tryParse(result);
+  }
 }
 
 Future<List<T>> batchFutures<T>(

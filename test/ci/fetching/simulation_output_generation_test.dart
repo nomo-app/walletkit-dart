@@ -61,7 +61,7 @@ void main() {
           value: BigInt.from(1E5), // 0.01 Zeniq
           decimals: 8,
         ),
-        feePriority: FeePriority.high,
+        feeInfo: null,
         token: ZeniqNetwork.coin,
       ),
       networkType: ZeniqNetwork,
@@ -108,7 +108,7 @@ void main() {
           value: BigInt.from(546),
           decimals: 8,
         ),
-        feePriority: FeePriority.high,
+        feeInfo: null,
         token: BitcoinNetwork.coin,
       ),
       networkType: BitcoinNetwork,
@@ -176,7 +176,7 @@ void main() {
           value: BigInt.from(1E5), // 0.001 BCH
           decimals: 8,
         ),
-        feePriority: FeePriority.high,
+        feeInfo: null,
         token: BitcoincashNetwork.coin,
       ),
       networkType: BitcoincashNetwork,

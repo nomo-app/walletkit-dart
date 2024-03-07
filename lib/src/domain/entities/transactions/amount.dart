@@ -23,11 +23,7 @@ class Amount extends Equatable {
     required this.decimals,
   }) : value = BigInt.from(value * pow(10, decimals));
 
-  Amount.zero()
-      : value = -1.toBI,
-        decimals = 0;
-
-  static Amount get empty => Amount(value: BigInt.from(0), decimals: 0);
+  static Amount get zero => Amount(value: BigInt.from(0), decimals: 0);
 
   double get displayDouble {
     return value / BigInt.from(10).pow(decimals);
@@ -76,5 +72,54 @@ class Amount extends Equatable {
       'value': value.toString(),
       'decimals': decimals,
     };
+  }
+
+  Amount convertToDecimals(int newDecimals) {
+    if (newDecimals == decimals) return this;
+
+    final newAmount = value * BigInt.from(10).pow(newDecimals - decimals);
+
+    return Amount(
+      value: newAmount,
+      decimals: newDecimals,
+    );
+  }
+
+  /// Operators
+
+  Amount operator *(Amount other) {
+    return Amount(
+      value: value * other.value,
+      decimals: decimals,
+    );
+  }
+
+  Amount operator +(Amount other) {
+    return Amount(
+      value: value + other.value,
+      decimals: decimals,
+    );
+  }
+
+  Amount operator -(Amount other) {
+    return Amount(
+      value: value - other.value,
+      decimals: decimals,
+    );
+  }
+
+  Amount operator /(Amount other) {
+    return Amount(
+      value: value ~/ other.value,
+      decimals: decimals,
+    );
+  }
+
+  bool operator >(Amount other) {
+    return value > other.value;
+  }
+
+  bool operator <(Amount other) {
+    return value < other.value;
   }
 }
