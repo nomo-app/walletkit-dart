@@ -19,8 +19,10 @@ class TransferIntent {
   final FeeInformation? feeInfo;
 
   Amount? get fee {
-    if (feeInfo == null) return null;
-    return feeInfo!.fee;
+    if (feeInfo is EvmFeeInformation) {
+      return (feeInfo as EvmFeeInformation).fee;
+    }
+    return null;
   }
 
   Amount get total {

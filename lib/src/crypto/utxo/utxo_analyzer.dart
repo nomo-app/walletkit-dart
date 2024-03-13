@@ -406,11 +406,11 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
 }
 
 Future<double?> estimateFeeForPriority({
-  required FeePriority priority,
+  required int blocks,
   required UTXONetworkType network,
 }) async {
   final (fee, _, _) = await fetchFromRandomElectrumXNode(
-    (client) => client.estimateFee(blocks: priority.blocks),
+    (client) => client.estimateFee(blocks: blocks),
     client: null,
     endpoints: network.endpoints,
     token: network.coin,
@@ -422,6 +422,29 @@ Future<double?> estimateFeeForPriority({
 
   print("Fee per KB: $fee");
   return fee;
+}
+
+Future<UtxoNetworkFees> getNetworkFees({
+  required UTXONetworkType network,
+}) async {
+  final blockInOneHour = 3600 ~/ network.blockTime;
+  final blocksTillTomorrow = 24 * 3600 ~/ network.blockTime;
+
+  final fees = await Future.wait(
+    [
+      estimateFeeForPriority(blocks: 1, network: network),
+      estimateFeeForPriority(blocks: 2, network: network),
+      estimateFeeForPriority(blocks: blockInOneHour, network: network),
+      estimateFeeForPriority(blocks: blocksTillTomorrow, network: network),
+    ],
+  );
+
+  return UtxoNetworkFees(
+    nextBlock: fees[0] ?? -1,
+    secondBlock: fees[1] ?? -1,
+    hour: fees[2] ?? -1,
+    day: fees[3] ?? -1,
+  );
 }
 
 Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({

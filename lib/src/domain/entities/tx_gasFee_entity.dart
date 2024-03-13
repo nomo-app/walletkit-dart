@@ -1,14 +1,31 @@
 import 'package:walletkit_dart/src/domain/entities/fee.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-// TODO: Make abstract for UTXO and EVM Implementations as they differ
-class GasFeesEntity {
+sealed class NetworkFees {
+  const NetworkFees();
+}
+
+final class UtxoNetworkFees extends NetworkFees {
+  final double nextBlock;
+  final double secondBlock;
+  final double hour;
+  final double day;
+
+  const UtxoNetworkFees({
+    required this.nextBlock,
+    required this.secondBlock,
+    required this.hour,
+    required this.day,
+  });
+}
+
+final class EvmNetworkFees extends NetworkFees {
   final BigInt lastBlock;
   final BigInt safe;
   final BigInt average;
   final BigInt fast;
 
-  const GasFeesEntity({
+  const EvmNetworkFees({
     required this.lastBlock,
     required this.safe,
     required this.average,
@@ -27,7 +44,7 @@ class GasFeesEntity {
         decimals: 9,
       );
 
-  factory GasFeesEntity.fromJson(Map<String, dynamic> json) {
+  factory EvmNetworkFees.fromJson(Map<String, dynamic> json) {
     if (json
         case {
           //  'suggestBaseFee': String last,
@@ -39,7 +56,7 @@ class GasFeesEntity {
       final propose_num = toGwei(propose);
       final fast_num = toGwei(fast);
 
-      return GasFeesEntity(
+      return EvmNetworkFees(
         lastBlock: safe_num,
         safe: safe_num,
         average: propose_num,

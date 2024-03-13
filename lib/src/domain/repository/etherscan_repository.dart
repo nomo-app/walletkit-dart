@@ -241,13 +241,13 @@ class EVMExplorer extends EtherscanRepository {
   ///
   /// Fetch Gas Prices
   ///
-  Future<GasFeesEntity> fetchGasPrice() async {
+  Future<EvmNetworkFees> fetchGasPrice() async {
     final endpoint = "$base?module=gastracker&action=gasoracle";
     final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
     if (result is! Json) {
       throw Exception("Failed to fetch gas price");
     }
-    final entity = GasFeesEntity.fromJson(result);
+    final entity = EvmNetworkFees.fromJson(result);
 
     return entity;
   }

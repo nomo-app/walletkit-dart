@@ -4,20 +4,18 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 part 'fee.g.dart';
 
 enum FeePriority {
-  custom(0, 'Custom'),
-  tommorow(144, 'Tommorow'),
-  threeHours(18, '3 Hours'),
-  twoHours(12, '2 Hours'),
-  low(6, "slow"),
-  medium(3, "medium"),
-  high(1, "fast");
+  custom('Custom'),
+  low("slow"),
+  medium("medium"),
+  high("fast"),
+  nextBlock("nextBlock"),
+  secondBlock("secondBlock"),
+  hour("hour"),
+  day("day");
 
-  final int blocks;
   final String displayName;
 
-  int get estimatedMinutes => blocks * 10;
-
-  const FeePriority(this.blocks, this.displayName);
+  const FeePriority(this.displayName);
 
   static List<FeePriority> get evm {
     return [
@@ -29,16 +27,15 @@ enum FeePriority {
 
   static List<FeePriority> get utxo {
     return [
-      tommorow,
-      threeHours,
-      twoHours,
+      nextBlock,
+      secondBlock,
+      hour,
+      day,
     ];
   }
 }
 
 sealed class FeeInformation {
-  Amount get fee;
-
   const FeeInformation();
 }
 
@@ -54,16 +51,15 @@ final class EvmFeeInformation extends FeeInformation {
     required this.gasPrice,
   });
 
-  @override
   Amount get fee {
     return gasPrice * Amount.num(value: gasLimit, decimals: 0);
   }
 }
 
-final class UtxoFeeInformation {
-  final int feeRate;
+final class UtxoFeeInformation extends FeeInformation {
+  final double feePerKB;
 
   const UtxoFeeInformation({
-    required this.feeRate,
+    required this.feePerKB,
   });
 }
