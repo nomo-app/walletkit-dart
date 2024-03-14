@@ -57,9 +57,9 @@ final class EvmFeeInformation extends FeeInformation {
 }
 
 final class UtxoFeeInformation extends FeeInformation {
-  final double feePerKB;
+  final double feePerByte;
 
   const UtxoFeeInformation({
-    required this.feePerKB,
+    required this.feePerByte,
   });
 }

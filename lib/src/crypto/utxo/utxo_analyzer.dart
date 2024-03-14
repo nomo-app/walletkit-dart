@@ -409,23 +409,26 @@ Future<double?> estimateFeeForPriority({
   required int blocks,
   required UTXONetworkType network,
 }) async {
-  final (fee, _, _) = await fetchFromRandomElectrumXNode(
+  final (fee, client, _) = await fetchFromRandomElectrumXNode(
     (client) => client.estimateFee(blocks: blocks),
     client: null,
     endpoints: network.endpoints,
     token: network.coin,
   );
+  client?.disconnect();
 
   if (fee == null) return null;
 
-  if (fee < 0) throw Exception("Fee estimation failed");
+  final feePerByte = fee / 1024;
 
-  print("Fee per KB: $fee");
-  return fee;
+  if (feePerByte < 0) throw Exception("Fee estimation failed");
+
+  return feePerByte;
 }
 
 Future<UtxoNetworkFees> getNetworkFees({
   required UTXONetworkType network,
+  double multiplier = 1.0,
 }) async {
   final blockInOneHour = 3600 ~/ network.blockTime;
   final blocksTillTomorrow = 24 * 3600 ~/ network.blockTime;
@@ -440,10 +443,10 @@ Future<UtxoNetworkFees> getNetworkFees({
   );
 
   return UtxoNetworkFees(
-    nextBlock: fees[0] ?? -1,
-    secondBlock: fees[1] ?? -1,
-    hour: fees[2] ?? -1,
-    day: fees[3] ?? -1,
+    nextBlock: (fees[0] ?? -1) * multiplier,
+    secondBlock: (fees[1] ?? -1) * multiplier,
+    hour: (fees[2] ?? -1) * multiplier,
+    day: (fees[3] ?? -1) * multiplier,
   );
 }
 

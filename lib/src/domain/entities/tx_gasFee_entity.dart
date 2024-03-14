@@ -17,6 +17,19 @@ final class UtxoNetworkFees extends NetworkFees {
     required this.hour,
     required this.day,
   });
+
+  @override
+  String toString() {
+    return "UtxoNetworkFees{nextBlock: $nextBlock, secondBlock: $secondBlock, hour: $hour, day: $day}";
+  }
+
+  double getForPriority(FeePriority priority) => switch (priority) {
+        FeePriority.nextBlock => nextBlock,
+        FeePriority.secondBlock => secondBlock,
+        FeePriority.hour => hour,
+        FeePriority.day => day,
+        _ => nextBlock,
+      };
 }
 
 final class EvmNetworkFees extends NetworkFees {
