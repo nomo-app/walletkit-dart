@@ -1,4 +1,3 @@
-import 'package:walletkit_dart/src/domain/entities/fee.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 sealed class NetworkFees {

@@ -289,9 +289,9 @@ final class EvmRpcInterface {
         web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
     final amountInWei = intent.amount.value;
 
-    final data = erc20TransferSig +
-        intent.recipient.substring(2).padLeft(64, '0') +
-        intent.amount.value.toHex.padLeft(64, '0');
+    // final data = erc20TransferSig +
+    //     intent.recipient.substring(2).padLeft(64, '0') +
+    //     intent.amount.value.toHex.padLeft(64, '0');
 
     // TODO: put in fee selection
     // final gasLimit = await client

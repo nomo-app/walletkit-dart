@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
-import 'package:walletkit_dart/src/utils/int.dart';
 
 part 'amount.g.dart';
 
