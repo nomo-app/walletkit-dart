@@ -105,9 +105,9 @@
       web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
   final amountInWei = intent.amount.value;
 
-  final data = erc20TransferSig +
-      intent.recipient.substring(2).padLeft(64, &#39;0&#39;) +
-      intent.amount.value.toHex.padLeft(64, &#39;0&#39;);
+  &#47;&#47; final data = erc20TransferSig +
+  &#47;&#47;     intent.recipient.substring(2).padLeft(64, &#39;0&#39;) +
+  &#47;&#47;     intent.amount.value.toHex.padLeft(64, &#39;0&#39;);
 
   &#47;&#47; TODO: put in fee selection
   &#47;&#47; final gasLimit = await client
