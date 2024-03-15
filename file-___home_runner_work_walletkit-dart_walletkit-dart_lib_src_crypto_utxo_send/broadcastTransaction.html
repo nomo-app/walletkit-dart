@@ -97,9 +97,9 @@
     throw SendFailure(&quot;Broadcasting failed: ${error?.message}&quot;);
   }
 
-  final json = jsonDecode(result);
-
   if (result.contains(&#39;error&#39;)) {
+    final json = jsonDecode(result);
+
     if (json
         case {
           &quot;error&quot;: {&quot;error&quot;: {&quot;code&quot;: int code, &quot;message&quot;: String message}}
@@ -109,13 +109,7 @@
     throw SendFailure(&quot;Unknown error: $result&quot;);
   }
 
-  if (result.contains(&#39;result&#39;) == false) {
-    throw SendFailure(&quot;Unknown error: $result&quot;);
-  }
-
-  final hash = json[&#39;result&#39;];
-
-  return hash;
+  return result;
 }</code></pre>
 </section>
 
