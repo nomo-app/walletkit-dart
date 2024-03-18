@@ -64,7 +64,7 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span>&gt;</span></span>
-<span class="name ">estimateFeeForPriority</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="estimateFeeForPriority-param-priority">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">priority</span>, </span></li>
+<span class="name ">estimateFeeForPriority</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="estimateFeeForPriority-param-blocks">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">blocks</span>, </span></li>
 <li><span class="parameter" id="estimateFeeForPriority-param-network"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">network</span>}</span></li>
 </ol>)
 
@@ -78,22 +78,24 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;double?&gt; estimateFeeForPriority({
-  required FeePriority priority,
+  required int blocks,
   required UTXONetworkType network,
 }) async {
-  final (fee, _, _) = await fetchFromRandomElectrumXNode(
-    (client) =&gt; client.estimateFee(blocks: priority.blocks),
+  final (fee, client, _) = await fetchFromRandomElectrumXNode(
+    (client) =&gt; client.estimateFee(blocks: blocks),
     client: null,
     endpoints: network.endpoints,
     token: network.coin,
   );
+  client?.disconnect();
 
   if (fee == null) return null;
 
-  if (fee &lt; 0) throw Exception(&quot;Fee estimation failed&quot;);
+  final feePerByte = fee &#47; 1024;
 
-  print(&quot;Fee per KB: $fee&quot;);
-  return fee;
+  if (feePerByte &lt; 0) throw Exception(&quot;Fee estimation failed&quot;);
+
+  return feePerByte;
 }</code></pre>
 </section>
 

@@ -64,9 +64,8 @@
       const
       <span class="name ">TransferIntent</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-recipient">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span></li>
 <li><span class="parameter" id="-param-amount"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">amount</span>, </span></li>
-<li><span class="parameter" id="-param-feePriority"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">feePriority</span>, </span></li>
-<li><span class="parameter" id="-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span></li>
-<li><span class="parameter" id="-param-status"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferStatus.html">TransferStatus</a></span> <span class="parameter-name">status</span> = <span class="default-value">TransferStatus.notSubmitted</span>}</span></li>
+<li><span class="parameter" id="-param-feeInfo"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">feeInfo</span>, </span></li>
+<li><span class="parameter" id="-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>}</span></li>
 </ol>)
     </section>
 
@@ -79,9 +78,8 @@
   <pre class="language-dart"><code class="language-dart">const TransferIntent({
   required this.recipient,
   required this.amount,
-  required this.feePriority,
+  required this.feeInfo,
   required this.token,
-  this.status = TransferStatus.notSubmitted,
 });</code></pre>
 </section>
 
