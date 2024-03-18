@@ -85,7 +85,6 @@ class Amount extends Equatable {
   }
 
   /// Operators
-
   Amount operator *(Amount other) {
     return Amount(
       value: value * other.value,

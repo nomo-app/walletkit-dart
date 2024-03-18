@@ -76,10 +76,10 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
 
   final newTxs = allTxs.where(
     (tx) {
-      return cachedTransactions.any((cTx) {
-            return cTx.id == tx.hash && cTx is NotAvaialableUTXOTransaction;
-          }) ==
-          false;
+      final isNotAvailable = tx is NotAvaialableUTXOTransaction;
+      final isCached = cachedTransactions.any((cTx) => cTx.id == tx.hash);
+
+      return isNotAvailable == false && isCached == false;
     },
   );
 

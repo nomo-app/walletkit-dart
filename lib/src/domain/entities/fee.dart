@@ -37,6 +37,8 @@ enum FeePriority {
 
 sealed class FeeInformation {
   const FeeInformation();
+
+  Json toJson();
 }
 
 @HiveType(typeId: 23)
@@ -54,6 +56,13 @@ final class EvmFeeInformation extends FeeInformation {
   Amount get fee {
     return gasPrice * Amount.num(value: gasLimit, decimals: 0);
   }
+
+  Json toJson() {
+    return {
+      'gasLimit': gasLimit,
+      'gasPrice': gasPrice.toJson(),
+    };
+  }
 }
 
 final class UtxoFeeInformation extends FeeInformation {
@@ -62,4 +71,10 @@ final class UtxoFeeInformation extends FeeInformation {
   const UtxoFeeInformation({
     required this.feePerByte,
   });
+
+  Json toJson() {
+    return {
+      'feePerByte': feePerByte,
+    };
+  }
 }

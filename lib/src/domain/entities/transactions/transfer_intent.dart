@@ -1,7 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/fee.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 part 'transfer_intent.g.dart';
 
@@ -35,4 +33,13 @@ class TransferIntent {
     required this.feeInfo,
     required this.token,
   });
+
+  Json toJson() {
+    return {
+      'recipient': recipient,
+      'amount': amount.toJson(),
+      'token': token.symbol,
+      'fee': feeInfo?.toJson(),
+    };
+  }
 }
