@@ -65,7 +65,8 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
 <span class="name ">sendCoin</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="sendCoin-param-intent">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span></li>
-<li><span class="parameter" id="sendCoin-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>}</span></li>
+<li><span class="parameter" id="sendCoin-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>, </span></li>
+<li><span class="parameter" id="sendCoin-param-gasPrice"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">gasPrice</span>}</span></li>
 </ol>)
 
       
@@ -82,41 +83,35 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendCoin({
   required TransferIntent intent,
-  required web3.Credentials credentials,
+  required Credentials credentials,
+  BigInt? gasPrice,
 }) async {
   final ethAddress = credentials.address;
 
-  final (gasPrice, gasLimit) = switch (intent.feeInfo) {
-    EvmFeeInformation info =&gt; (info.gasPrice, info.gasLimit),
-    _ =&gt; await client.getGasPrice().then(
-          (bi) =&gt; (Amount(value: bi, decimals: 18), GasLimits.ethSend.value),
-        ),
-  };
+  gasPrice ??= await client.getGasPrice();
 
   final balance = await client.getBalance(toChecksumAddress(ethAddress.hex));
 
-  final gasPriceEther =
-      web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
+  final gasPriceEther = EtherAmount.fromBigInt(EtherUnit.wei, gasPrice);
 
-  var amountWei = intent.amount;
+  BigInt amountWei = intent.amount.value;
 
   &#47;&#47; native EVM sending should always consume 21000 gas
-  final estimatedFee =
-      gasPrice * Amount(value: BigInt.from(gasLimit), decimals: 0);
-  if (balance &lt; (estimatedFee + amountWei).value) {
+  final BigInt estimatedFee = BigInt.from(GasLimits.ethSend.value) * gasPrice;
+  if (balance &lt; (estimatedFee + amountWei)) {
     &#47;&#47; subtract the fee if the transaction would otherwise fail!
     amountWei -= estimatedFee;
-    if (amountWei &lt; Amount.zero) {
+    if (amountWei &lt; BigInt.from(0)) {
       throw Failure(&quot;Insufficient funds to pay native gas fee&quot;);
     }
   }
 
   return await client.asWeb3.sendTransaction(
     credentials,
-    web3.Transaction(
+    Transaction(
       from: ethAddress,
-      to: web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
-      value: web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, amountWei.value),
+      to: EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
+      value: EtherAmount.fromBigInt(EtherUnit.wei, amountWei),
       gasPrice: gasPriceEther,
       maxGas: GasLimits.ethSend.value,
     ),

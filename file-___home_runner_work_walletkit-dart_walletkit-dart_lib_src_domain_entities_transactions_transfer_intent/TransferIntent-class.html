@@ -70,11 +70,18 @@
 
     <dl class="constructor-summary-list">
         <dt id="TransferIntent" class="callable">
-          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/TransferIntent.html">TransferIntent</a></span><span class="signature">(<span class="parameter" id="-param-recipient">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="-param-amount"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">amount</span>, </span><span class="parameter" id="-param-feeInfo"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">feeInfo</span>, </span><span class="parameter" id="-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>}</span>)</span>
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/TransferIntent.html">TransferIntent</a></span><span class="signature">(<span class="parameter" id="-param-recipient">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="-param-amount"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">amount</span>, </span><span class="parameter" id="-param-feePriority"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">feePriority</span>, </span><span class="parameter" id="-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span><span class="parameter" id="-param-status"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferStatus.html">TransferStatus</a></span> <span class="parameter-name">status</span> = <span class="default-value">TransferStatus.notSubmitted</span>}</span>)</span>
         </dt>
         <dd>
           
             <div class="constructor-modifier features">const</div>
+        </dd>
+        <dt id="TransferIntent.initial" class="callable">
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/TransferIntent.initial.html">TransferIntent.initial</a></span><span class="signature">()</span>
+        </dt>
+        <dd>
+          
+            <div class="constructor-modifier features">factory</div>
         </dd>
     </dl>
   </section>
@@ -95,26 +102,14 @@
 
 </dd>
 
-        <dt id="fee" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/fee.html">fee</a></span>
+        <dt id="feePriority" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/feePriority.html">feePriority</a></span>
   <span class="signature">&#8594; dynamic</span>
   
 
 </dt>
 <dd>
   
-  <div class="features"><span class="feature">no setter</span></div>
-
-</dd>
-
-        <dt id="feeInfo" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/feeInfo.html">feeInfo</a></span>
-  <span class="signature">&#8594; dynamic</span>
-  
-
-</dt>
-<dd>
-  If null, the fee will be calculated by the network
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -155,6 +150,18 @@
 
 </dd>
 
+        <dt id="status" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/status.html">status</a></span>
+  <span class="signature">&#8594; <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferStatus.html">TransferStatus</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
         <dt id="token" class="property">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/token.html">token</a></span>
   <span class="signature">&#8594; dynamic</span>
@@ -167,18 +174,6 @@
 
 </dd>
 
-        <dt id="total" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/total.html">total</a></span>
-  <span class="signature">&#8594; dynamic</span>
-  
-
-</dt>
-<dd>
-  
-  <div class="features"><span class="feature">no setter</span></div>
-
-</dd>
-
       </dl>
     </section>
 
@@ -188,6 +183,19 @@
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
+        <dt id="copyWith" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/copyWith.html">copyWith</a></span><span class="signature">(<wbr><span class="parameter" id="copyWith-param-recipient">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="copyWith-param-amount"><span class="type-annotation">dynamic</span> <span class="parameter-name">amount</span>, </span><span class="parameter" id="copyWith-param-feePriority"><span class="type-annotation">dynamic</span> <span class="parameter-name">feePriority</span>, </span><span class="parameter" id="copyWith-param-status"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferStatus.html">TransferStatus</a>?</span> <span class="parameter-name">status</span>, </span><span class="parameter" id="copyWith-param-subtractFee"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">subtractFee</span>, </span><span class="parameter" id="copyWith-param-token"><span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
         <dt id="noSuchMethod" class="callable inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
@@ -198,19 +206,6 @@
 <dd class="inherited">
   Invoked when a nonexistent method or property is accessed.
   <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="toJson" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent/toJson.html">toJson</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; dynamic</span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
 
 </dd>
 
