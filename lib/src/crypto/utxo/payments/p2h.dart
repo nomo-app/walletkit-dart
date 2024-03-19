@@ -147,23 +147,28 @@ class P2Hash {
 ///
 String getAddressFromLockingScript(
   ElectrumScriptPubKey scriptPubKey,
-  UTXONetworkType type,
-) {
-  final (pubKey, addressType) = getPublicKeyFromLockingScript(
+  UTXONetworkType type, {
+  AddressType? addressType,
+}) {
+  final (pubKeyHash, walletType) = getPublicKeyFromLockingScript(
     scriptPubKey,
     type,
   );
 
-  // return pubKeyToAddress(pubKey, addressType, type);
-
-  return switch (addressType) {
+  return switch (walletType) {
+    HDWalletType.NO_STRUCTURE when addressType == AddressType.cashaddr =>
+      bchAddrEncode(
+        hrp: type.bech32,
+        data: pubKeyHash,
+        witnessVersion: type.pubKeyHashPrefix,
+      ),
     HDWalletType.NO_STRUCTURE =>
-      pubKeyHashToLegacyAddress(pubKey, type.pubKeyHashPrefix),
+      pubKeyHashToLegacyAddress(pubKeyHash, type.pubKeyHashPrefix),
     HDWalletType.BIP49 =>
-      pubKeyHashToP2SHAddress(pubKey, type.scriptHashPrefix),
+      pubKeyHashToP2SHAddress(pubKeyHash, type.scriptHashPrefix),
     HDWalletType.BIP84 =>
-      pubKeyHashToSegwitAddress(pubKey, type.bech32, type.pubKeyHashPrefix),
-    _ => throw UnsupportedError("Address type not supported: $pubKey")
+      pubKeyHashToSegwitAddress(pubKeyHash, type.bech32, type.pubKeyHashPrefix),
+    _ => throw UnsupportedError("Address type not supported: $pubKeyHash")
   };
 }
 
@@ -215,9 +220,23 @@ String getAddressFromLockingScript(
 ///
 /// Returns the address from the unlocking script of a transaction input. This only works for P2PKH and P2WPKH inputs.
 ///
-String getAddressFromInput(UTXONetworkType type, ElectrumInput input) {
-  final (publicKey, addressType) = getPubKeyFromInput(input);
-  return pubKeyToAddress(publicKey, addressType, type);
+String getAddressFromInput(
+  UTXONetworkType type,
+  ElectrumInput input, {
+  AddressType? addressType,
+}) {
+  final (publicKey, pubKeyAddressType) = getPubKeyFromInput(input);
+
+  ///
+  /// Allow for overriding the address type (used for BCH)
+  ///
+  final _addressType = switch (addressType) {
+    AddressType.cashaddr when pubKeyAddressType == AddressType.legacy =>
+      AddressType.cashaddr,
+    _ => pubKeyAddressType
+  };
+
+  return pubKeyToAddress(publicKey, _addressType, type);
 }
 
 ///

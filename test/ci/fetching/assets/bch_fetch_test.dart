@@ -109,7 +109,7 @@ void main() {
       networkType: network,
       ePubKey: rejectXpub,
       walletTypes: [HDWalletType.NO_STRUCTURE],
-      addressTypes: [AddressType.legacy, AddressType.cashaddr],
+      addressTypes: [AddressType.cashaddr, AddressType.legacy],
     );
     expect(legacyTxList.length, greaterThanOrEqualTo(17));
 
