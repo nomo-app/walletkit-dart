@@ -102,7 +102,10 @@ final class UTXOTransaction extends GenericTransaction {
 
     final outputs = findOurOwnCoins(rawOutputs, nodes, addressTypes, type);
 
-    final sender = inputs.first.getAddress(type);
+    final sender = inputs.first.getAddress(
+      type,
+      addressType: addressTypes.first,
+    );
 
     final transferMethod = determineSendDirection(
       inputs: inputs,
@@ -130,9 +133,13 @@ final class UTXOTransaction extends GenericTransaction {
         ? BigInt.from(-1)
         : totalInputValue - totalOutputValue;
 
-    final recipient =
-        determineTransactionTarget(outputs, transferMethod, type) ??
-            ADDRESS_NOT_SUPPORTED;
+    final recipient = determineTransactionTarget(
+          outputs,
+          transferMethod,
+          type,
+          addressTypes.first,
+        ) ??
+        ADDRESS_NOT_SUPPORTED;
 
     //final blockHash = json['blockhash'] as String;
 
@@ -205,9 +212,9 @@ class ElectrumInput {
     this.coinbase,
   });
 
-  String getAddress(UTXONetworkType type) {
+  String getAddress(UTXONetworkType type, {AddressType? addressType}) {
     try {
-      return getAddressFromInput(type, this);
+      return getAddressFromInput(type, this, addressType: addressType);
     } catch (e) {
       return ADDRESS_NOT_SUPPORTED;
     }
@@ -352,9 +359,10 @@ class ElectrumOutput {
     );
   }
 
-  String getAddress(UTXONetworkType type) {
+  String getAddress(UTXONetworkType type, {AddressType? addressType}) {
     try {
-      return getAddressFromLockingScript(scriptPubKey, type);
+      return getAddressFromLockingScript(scriptPubKey, type,
+          addressType: addressType);
     } catch (e) {
       return ADDRESS_NOT_SUPPORTED;
     }

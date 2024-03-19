@@ -697,9 +697,10 @@ String? determineTransactionTarget(
   List<ElectrumOutput> outputs,
   TransactionTransferMethod transferMethod,
   UTXONetworkType type,
+  AddressType addressType,
 ) {
   final mainOutput = _findMainOutput(outputs, transferMethod);
-  return mainOutput?.getAddress(type);
+  return mainOutput?.getAddress(type, addressType: addressType);
 }
 
 ElectrumOutput? _findMainOutput(
