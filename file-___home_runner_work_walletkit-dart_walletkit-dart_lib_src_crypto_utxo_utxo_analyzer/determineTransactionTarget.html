@@ -66,7 +66,8 @@
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>
 <span class="name ">determineTransactionTarget</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="determineTransactionTarget-param-outputs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">outputs</span>, </span></li>
 <li><span class="parameter" id="determineTransactionTarget-param-transferMethod"><span class="type-annotation">dynamic</span> <span class="parameter-name">transferMethod</span>, </span></li>
-<li><span class="parameter" id="determineTransactionTarget-param-type"><span class="type-annotation">dynamic</span> <span class="parameter-name">type</span></span></li>
+<li><span class="parameter" id="determineTransactionTarget-param-type"><span class="type-annotation">dynamic</span> <span class="parameter-name">type</span>, </span></li>
+<li><span class="parameter" id="determineTransactionTarget-param-addressType"><span class="type-annotation">dynamic</span> <span class="parameter-name">addressType</span></span></li>
 </ol>)
 
         
@@ -82,9 +83,10 @@
   List&lt;ElectrumOutput&gt; outputs,
   TransactionTransferMethod transferMethod,
   UTXONetworkType type,
+  AddressType addressType,
 ) {
   final mainOutput = _findMainOutput(outputs, transferMethod);
-  return mainOutput?.getAddress(type);
+  return mainOutput?.getAddress(type, addressType: addressType);
 }</code></pre>
 </section>
 

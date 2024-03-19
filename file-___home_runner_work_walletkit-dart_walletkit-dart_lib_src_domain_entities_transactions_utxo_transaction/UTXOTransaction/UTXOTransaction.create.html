@@ -97,7 +97,10 @@
 
   final outputs = findOurOwnCoins(rawOutputs, nodes, addressTypes, type);
 
-  final sender = inputs.first.getAddress(type);
+  final sender = inputs.first.getAddress(
+    type,
+    addressType: addressTypes.first,
+  );
 
   final transferMethod = determineSendDirection(
     inputs: inputs,
@@ -125,9 +128,13 @@
       ? BigInt.from(-1)
       : totalInputValue - totalOutputValue;
 
-  final recipient =
-      determineTransactionTarget(outputs, transferMethod, type) ??
-          ADDRESS_NOT_SUPPORTED;
+  final recipient = determineTransactionTarget(
+        outputs,
+        transferMethod,
+        type,
+        addressTypes.first,
+      ) ??
+      ADDRESS_NOT_SUPPORTED;
 
   &#47;&#47;final blockHash = json[&#39;blockhash&#39;] as String;
 

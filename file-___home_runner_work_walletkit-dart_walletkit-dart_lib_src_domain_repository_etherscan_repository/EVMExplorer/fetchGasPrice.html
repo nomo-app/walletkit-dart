@@ -78,13 +78,13 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;EvmNetworkFees&gt; fetchGasPrice() async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;GasFeesEntity&gt; fetchGasPrice() async {
   final endpoint = &quot;$base?module=gastracker&amp;action=gasoracle&quot;;
   final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
   if (result is! Json) {
     throw Exception(&quot;Failed to fetch gas price&quot;);
   }
-  final entity = EvmNetworkFees.fromJson(result);
+  final entity = GasFeesEntity.fromJson(result);
 
   return entity;
 }</code></pre>
