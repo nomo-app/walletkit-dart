@@ -405,19 +405,19 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
   return (txs0, nodes);
 }
 
-Future<double?> estimateFeeForPriority({
+Future<double> estimateFeeForPriority({
   required int blocks,
   required UTXONetworkType network,
+  required ElectrumXClient? initalClient,
 }) async {
-  final (fee, client, _) = await fetchFromRandomElectrumXNode(
+  final (fee, _, _) = await fetchFromRandomElectrumXNode(
     (client) => client.estimateFee(blocks: blocks),
-    client: null,
+    client: initalClient,
     endpoints: network.endpoints,
     token: network.coin,
   );
-  client?.disconnect();
 
-  if (fee == null) return null;
+  if (fee == null) throw Exception("Fee estimation failed");
 
   final feePerByte = fee / 1024;
 
@@ -433,20 +433,52 @@ Future<UtxoNetworkFees> getNetworkFees({
   final blockInOneHour = 3600 ~/ network.blockTime;
   final blocksTillTomorrow = 24 * 3600 ~/ network.blockTime;
 
-  final fees = await Future.wait(
-    [
-      estimateFeeForPriority(blocks: 1, network: network),
-      estimateFeeForPriority(blocks: 2, network: network),
-      estimateFeeForPriority(blocks: blockInOneHour, network: network),
-      estimateFeeForPriority(blocks: blocksTillTomorrow, network: network),
-    ],
+  final client = await getBestHealthEndpointsWithRetry(
+    endpointPool: network.endpoints,
+    token: network.coin,
+    max: 1,
+    min: 1,
+  )
+      .then(
+        (endpoints) => endpoints.first,
+      )
+      .then(
+        (endpoint) => createElectrumXClient(
+          endpoint: endpoint.$1,
+          port: endpoint.$2,
+          token: network.coin,
+        ),
+      );
+
+  final next = await estimateFeeForPriority(
+    blocks: 1,
+    network: network,
+    initalClient: client,
+  );
+
+  final second = await estimateFeeForPriority(
+    blocks: 2,
+    network: network,
+    initalClient: client,
+  );
+
+  final hour = await estimateFeeForPriority(
+    blocks: blockInOneHour,
+    network: network,
+    initalClient: client,
+  );
+
+  final day = await estimateFeeForPriority(
+    blocks: blocksTillTomorrow,
+    network: network,
+    initalClient: client,
   );
 
   return UtxoNetworkFees(
-    nextBlock: (fees[0] ?? -1) * multiplier,
-    secondBlock: (fees[1] ?? -1) * multiplier,
-    hour: (fees[2] ?? -1) * multiplier,
-    day: (fees[3] ?? -1) * multiplier,
+    nextBlock: next * multiplier,
+    secondBlock: second * multiplier,
+    hour: hour * multiplier,
+    day: day * multiplier,
   );
 }
 

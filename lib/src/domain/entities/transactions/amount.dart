@@ -17,10 +17,18 @@ class Amount extends Equatable {
     required this.decimals,
   });
 
-  Amount.num({
+  /// Converts the given value to the smallest unit of the currency
+  Amount.convert({
     required num value,
     required this.decimals,
   }) : value = BigInt.from(value * pow(10, decimals));
+
+  /// Converts the given value to a BigInt
+  /// This is useful when the value is already in the smallest unit of the currency
+  Amount.from({
+    required num value,
+    required this.decimals,
+  }) : value = BigInt.from(value);
 
   static Amount get zero => Amount(value: BigInt.from(0), decimals: 0);
 

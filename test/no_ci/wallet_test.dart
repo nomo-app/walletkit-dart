@@ -21,7 +21,7 @@ void main() {
     final hash = await zeniqSmartRpcInterface.sendCoin(
       intent: TransferIntent(
         recipient: spoilEVM,
-        amount: Amount.num(value: 1, decimals: zeniqSmart.decimals),
+        amount: Amount.convert(value: 1, decimals: zeniqSmart.decimals),
         feeInfo: null,
         token: zeniqSmart,
       ),
@@ -40,7 +40,7 @@ void main() {
     final hash = await zeniqSmartRpcInterface.sendERC20Token(
       intent: TransferIntent(
         recipient: spoilEVM,
-        amount: Amount.num(value: 0.001, decimals: avinocZSC.decimals),
+        amount: Amount.convert(value: 0.001, decimals: avinocZSC.decimals),
         feeInfo: null,
         token: avinocZSC,
       ),
@@ -120,7 +120,7 @@ void main() {
 
     final intent = TransferIntent(
       recipient: receive,
-      amount: Amount.num(value: 1.2, decimals: 5),
+      amount: Amount.convert(value: 1.2, decimals: 5),
       feeInfo: null,
       token: ec8Coin,
     );

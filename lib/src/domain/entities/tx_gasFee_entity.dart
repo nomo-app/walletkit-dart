@@ -53,7 +53,7 @@ final class EvmNetworkFees extends NetworkFees {
 
   Amount getFeeAmount(FeePriority feePriority) => Amount(
         value: getFeeGWEI(feePriority),
-        decimals: 9,
+        decimals: 18, // GWEI
       );
 
   factory EvmNetworkFees.fromJson(Map<String, dynamic> json) {

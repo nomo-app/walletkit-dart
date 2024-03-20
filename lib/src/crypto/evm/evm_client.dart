@@ -155,7 +155,7 @@ base class EvmRpcClient {
   ///
   /// Estimate Gas Fee
   ///
-  Future<BigInt> estimateGasFee({
+  Future<BigInt> estimateGasLimit({
     String? from,
     required String to,
     BigInt? amount,

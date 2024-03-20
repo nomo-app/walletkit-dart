@@ -190,6 +190,7 @@ Future<(T?, ElectrumXClient?, NoWorkingHostsException?)>
   required Iterable<(String, int)> endpoints,
   required TokenEntity token,
   Duration timeout = const Duration(milliseconds: 3000),
+  bool cleanup = true,
 }) async {
   try {
     if (client == null) throw ClientNullException("Client is null");
@@ -218,6 +219,7 @@ Future<(T?, ElectrumXClient?, NoWorkingHostsException?)>
       if (client == null) continue;
       try {
         final result = await fetchFunction(client).timeout(timeout);
+        if (cleanup) client.disconnect();
         return (result, client, null);
       } catch (e, s) {
         client.disconnect();

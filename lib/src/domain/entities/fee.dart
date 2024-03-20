@@ -56,7 +56,7 @@ final class EvmFeeInformation extends FeeInformation {
   });
 
   Amount get fee {
-    return gasPrice * Amount.num(value: gasLimit, decimals: 0);
+    return gasPrice * Amount.convert(value: gasLimit, decimals: 0);
   }
 
   Json toJson() {

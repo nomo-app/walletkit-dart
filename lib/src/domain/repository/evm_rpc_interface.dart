@@ -233,7 +233,7 @@ final class EvmRpcInterface {
     final balance = await client.getBalance(toChecksumAddress(ethAddress.hex));
 
     final gasPriceEther =
-        web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
+        web3.EtherAmount.fromBigInt(web3.EtherUnit.gwei, gasPrice.value);
 
     var amountWei = intent.amount;
 
@@ -255,7 +255,7 @@ final class EvmRpcInterface {
         to: web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
         value: web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, amountWei.value),
         gasPrice: gasPriceEther,
-        maxGas: GasLimits.ethSend.value,
+        maxGas: gasLimit,
       ),
       chainId: type.chainId,
     );
@@ -286,21 +286,8 @@ final class EvmRpcInterface {
     );
 
     final gasPriceEther =
-        web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
+        web3.EtherAmount.fromBigInt(web3.EtherUnit.gwei, gasPrice.value);
     final amountInWei = intent.amount.value;
-
-    // final data = erc20TransferSig +
-    //     intent.recipient.substring(2).padLeft(64, '0') +
-    //     intent.amount.value.toHex.padLeft(64, '0');
-
-    // TODO: put in fee selection
-    // final gasLimit = await client
-    //     .estimateGasFee(
-    //       from: credentials.address.hex,
-    //       to: token.contractAddress,
-    //       data: data,
-    //     )
-    //     .then((value) => value.toInt());
 
     return await tokenContract.sendToken(
       web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
@@ -311,6 +298,23 @@ final class EvmRpcInterface {
         maxGas: gasLimit,
       ),
     );
+  }
+
+  Future<int> estimateGasLimit({
+    required TransferIntent intent,
+    required String ownAddress,
+  }) async {
+    assert(intent.token is EthBasedTokenEntity);
+
+    final erc20 = intent.token as EthBasedTokenEntity;
+
+    return await client
+        .estimateGasLimit(
+          from: ownAddress,
+          to: erc20.contractAddress,
+          data: intent.getErc20TransferSig(),
+        )
+        .then((value) => value.toInt());
   }
 
   ///
