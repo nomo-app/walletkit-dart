@@ -88,7 +88,7 @@ class Amount extends Equatable {
   Amount operator *(Amount other) {
     return Amount(
       value: value * other.value,
-      decimals: decimals,
+      decimals: decimals + other.decimals,
     );
   }
 
@@ -107,9 +107,30 @@ class Amount extends Equatable {
   }
 
   Amount operator /(Amount other) {
+    if (decimals == other.decimals) {
+      return Amount(
+        value: value ~/ other.value,
+        decimals: decimals,
+      );
+    }
+    final precision = max(decimals, other.decimals);
+
+    if (decimals > other.decimals) {
+      final newOther = other.convertToDecimals(decimals);
+      final shiftedA = value * BigInt.from(10).pow(precision);
+      final shiftedResult = shiftedA ~/ newOther.value;
+      return Amount(
+        value: shiftedResult,
+        decimals: decimals,
+      );
+    }
+
+    final newThis = convertToDecimals(other.decimals);
+    final shiftedA = newThis.value * BigInt.from(10).pow(precision);
+    final shiftedResult = shiftedA ~/ other.value;
     return Amount(
-      value: value ~/ other.value,
-      decimals: decimals,
+      value: shiftedResult,
+      decimals: other.decimals,
     );
   }
 
