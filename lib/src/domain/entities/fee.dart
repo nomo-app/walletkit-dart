@@ -8,14 +8,16 @@ enum FeePriority {
   low("slow"),
   medium("medium"),
   high("fast"),
-  nextBlock("nextBlock"),
-  secondBlock("secondBlock"),
-  hour("hour"),
-  day("day");
+  nextBlock("nextBlock", "fast"),
+  secondBlock("secondBlock", "medium"),
+  hour("hour", "slow"),
+  day("day", "slow");
 
   final String displayName;
+  final String assetName;
 
-  const FeePriority(this.displayName);
+  const FeePriority(this.displayName, [String? assetName])
+      : assetName = assetName ?? displayName;
 
   static List<FeePriority> get evm {
     return [
