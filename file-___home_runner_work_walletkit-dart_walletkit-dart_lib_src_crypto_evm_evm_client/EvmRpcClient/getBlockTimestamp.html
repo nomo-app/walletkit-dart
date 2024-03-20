@@ -72,14 +72,18 @@
     </section>
     
 <section class="desc markdown">
-  <p>Get Timestamp for block</p>
+  <p>Estimate Time to be included in the next block</p>
+<p>Get Timestamp for block</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;int&gt; getBlockTimestamp(int blockNumber) async {
+  <pre class="language-dart"><code class="language-dart">&#47;&#47;&#47;
+&#47;&#47;&#47; Get Timestamp for block
+&#47;&#47;&#47;
+Future&lt;int&gt; getBlockTimestamp(int blockNumber) async {
   final response = await _call(
     &#39;eth_getBlockByNumber&#39;,
     args: [blockNumber.toHexWithPrefix, false],
