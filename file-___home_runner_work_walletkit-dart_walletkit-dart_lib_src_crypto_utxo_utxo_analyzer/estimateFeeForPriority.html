@@ -63,9 +63,10 @@
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>?</span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>&gt;</span></span>
 <span class="name ">estimateFeeForPriority</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="estimateFeeForPriority-param-blocks">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">blocks</span>, </span></li>
-<li><span class="parameter" id="estimateFeeForPriority-param-network"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">network</span>}</span></li>
+<li><span class="parameter" id="estimateFeeForPriority-param-network"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">network</span>, </span></li>
+<li><span class="parameter" id="estimateFeeForPriority-param-initalClient"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">initalClient</span>}</span></li>
 </ol>)
 
         
@@ -77,19 +78,19 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;double?&gt; estimateFeeForPriority({
+  <pre class="language-dart"><code class="language-dart">Future&lt;double&gt; estimateFeeForPriority({
   required int blocks,
   required UTXONetworkType network,
+  required ElectrumXClient? initalClient,
 }) async {
-  final (fee, client, _) = await fetchFromRandomElectrumXNode(
+  final (fee, _, _) = await fetchFromRandomElectrumXNode(
     (client) =&gt; client.estimateFee(blocks: blocks),
-    client: null,
+    client: initalClient,
     endpoints: network.endpoints,
     token: network.coin,
   );
-  client?.disconnect();
 
-  if (fee == null) return null;
+  if (fee == null) throw Exception(&quot;Fee estimation failed&quot;);
 
   final feePerByte = fee &#47; 1024;
 

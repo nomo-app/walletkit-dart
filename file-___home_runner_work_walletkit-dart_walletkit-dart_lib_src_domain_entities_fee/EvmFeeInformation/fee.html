@@ -78,7 +78,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Amount get fee {
-  return gasPrice * Amount.num(value: gasLimit, decimals: 0);
+  return gasPrice * Amount.convert(value: gasLimit, decimals: 0);
 }</code></pre>
 </section>
 

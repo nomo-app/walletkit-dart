@@ -76,11 +76,18 @@
           
             <div class="constructor-modifier features">const</div>
         </dd>
-        <dt id="Amount.num" class="callable">
-          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount/Amount.num.html">Amount.num</a></span><span class="signature">(<span class="parameter" id="num-param-value">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/num-class.html">num</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="num-param-decimals"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">decimals</span>}</span>)</span>
+        <dt id="Amount.convert" class="callable">
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount/Amount.convert.html">Amount.convert</a></span><span class="signature">(<span class="parameter" id="convert-param-value">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/num-class.html">num</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="convert-param-decimals"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">decimals</span>}</span>)</span>
         </dt>
         <dd>
-          
+          Converts the given value to the smallest unit of the currency
+        </dd>
+        <dt id="Amount.from" class="callable">
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount/Amount.from.html">Amount.from</a></span><span class="signature">(<span class="parameter" id="from-param-value">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/num-class.html">num</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="from-param-decimals"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">decimals</span>}</span>)</span>
+        </dt>
+        <dd>
+          Converts the given value to a BigInt
+This is useful when the value is already in the smallest unit of the currency
         </dd>
     </dl>
   </section>

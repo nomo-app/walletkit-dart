@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getFeeAmount method from the EvmNetworkFees class, for the Dart programming language.">
-  <title>getFeeAmount method - EvmNetworkFees class - tx_gasFee_entity library - Dart API</title>
+  <meta name="description" content="API docs for the Amount.convert constructor from Class Amount from the amount library, for the Dart programming language.">
+  <title>Amount.convert constructor - Amount - amount library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity-library.html">src&#47;domain&#47;entities&#47;tx_gasFee_entity.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity/EvmNetworkFees-class.html">EvmNetworkFees</a></li>
-    <li class="self-crumb">getFeeAmount method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">src&#47;domain&#47;entities&#47;transactions&#47;amount.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount-class.html">Amount</a></li>
+    <li class="self-crumb">Amount.convert constructor</li>
   </ol>
-  <div class="self-name">getFeeAmount</div>
+  <div class="self-name">Amount.convert</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -51,35 +51,35 @@
 </header>
 <main>
 
-<div
-    id="dartdoc-main-content"
-    class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity&#47;EvmNetworkFees-class-sidebar.html"
-    data-below-sidebar="">
-    <div>
-<h1><span class="kind-method">getFeeAmount</span> method 
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount&#47;Amount-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-constructor">Amount.convert</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
       
-
-<span class="returntype">dynamic</span>
-<span class="name ">getFeeAmount</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getFeeAmount-param-feePriority"><span class="type-annotation">dynamic</span> <span class="parameter-name">feePriority</span></span></li>
+      <span class="name ">Amount.convert</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="convert-param-value">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/num-class.html">num</a></span> <span class="parameter-name">value</span>, </span></li>
+<li><span class="parameter" id="convert-param-decimals"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">decimals</span>}</span></li>
 </ol>)
-
-      
-
     </section>
+
     
+<section class="desc markdown">
+  <p>Converts the given value to the smallest unit of the currency</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Amount getFeeAmount(FeePriority feePriority) =&gt; Amount(
-      value: getFeeGWEI(feePriority),
-      decimals: 18, &#47;&#47; GWEI
-    );</code></pre>
+  <pre class="language-dart"><code class="language-dart">Amount.convert({
+  required num value,
+  required this.decimals,
+}) : value = BigInt.from(value * pow(10, decimals));</code></pre>
 </section>
 
 
@@ -95,18 +95,18 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity-library.html">tx_gasFee_entity</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_tx_gasFee_entity/EvmNetworkFees-class.html">EvmNetworkFees</a></li>
-    <li class="self-crumb">getFeeAmount method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">amount</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount-class.html">Amount</a></li>
+    <li class="self-crumb">Amount.convert constructor</li>
 </ol>
 
 
-    <h5>EvmNetworkFees class</h5>
+    <h5>Amount class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-->
+  </div><!--/.sidebar-offcanvas-left-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-</div><!--/.sidebar-offcanvas-->
+  </div><!--/.sidebar-offcanvas-->
 
 </main>
 
