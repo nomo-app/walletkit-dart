@@ -41,6 +41,7 @@ final class EtherscanTransaction extends EVMTransaction {
           'to': String to,
           'value': String value_s,
           'gas': String gas_s,
+          'gasUsed': String gasUsed_s,
           'gasPrice': String gasPrice_s,
           'txreceipt_status': String txreceipt_status_s,
           'isError': String _,
@@ -56,7 +57,7 @@ final class EtherscanTransaction extends EVMTransaction {
       );
 
       final fee = Amount(
-        value: gasPrice_s.toBigInt * gas_s.toBigInt,
+        value: gasPrice_s.toBigInt * gasUsed_s.toBigInt,
         decimals: token.decimals,
       );
 
@@ -81,10 +82,15 @@ final class EtherscanTransaction extends EVMTransaction {
       );
     }
 
-    ///
-    /// ERC20 Token Transfer
-    ///
+    throw UnsupportedError("Invalid JSON for EtherscanTransaction");
+  }
 
+  factory EtherscanTransaction.fromJsonErc20(
+    Json json, {
+    required TokenEntity token,
+    required EvmEntity currency,
+    required String address,
+  }) {
     if (json
         case {
           'blockNumber': String block_s,
@@ -94,6 +100,7 @@ final class EtherscanTransaction extends EVMTransaction {
           'to': String to,
           'value': String value_s,
           'gas': String gas_s,
+          'gasUsed': String gasUsed_s,
           'gasPrice': String gasPrice_s,
           'input': String input,
         }) {
@@ -107,8 +114,8 @@ final class EtherscanTransaction extends EVMTransaction {
       );
 
       final fee = Amount(
-        value: gasPrice_s.toBigInt * gas_s.toBigInt,
-        decimals: token.decimals,
+        value: gasPrice_s.toBigInt * gasUsed_s.toBigInt,
+        decimals: currency.decimals,
       );
 
       final transferMethod =
@@ -129,6 +136,6 @@ final class EtherscanTransaction extends EVMTransaction {
         input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
       );
     }
-    throw UnimplementedError();
+    throw UnsupportedError("Invalid JSON for EtherscanTransaction");
   }
 }

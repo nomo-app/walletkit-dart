@@ -92,10 +92,10 @@ class EVMExplorer extends EtherscanRepository {
         super(type.blockExplorer!.$1, type.blockExplorer!.$2);
 
   ///
-  /// Fetch all Transactions for a given [token] on the given [address]
+  /// Fetch all Transactions for the given [token] on the given [address]
   ///
   Future<List<EtherscanTransaction>> fetchTransactions({
-    required TokenEntity token,
+    required EvmEntity token,
     required String address,
     int? lastBlock,
   }) async {
@@ -103,31 +103,43 @@ class EVMExplorer extends EtherscanRepository {
       lastBlock++;
     }
 
-    switch (token) {
-      case EthBasedTokenEntity token:
-        final txResults = await _fetchEtherscanWithRatelimitRetries(
-            '$base?module=account&action=tokentx&address=$address&contractaddress=${token.contractAddress}&sort=desc&startblock=$lastBlock');
-        return [
-          for (final tx in txResults)
-            EtherscanTransaction.fromJson(
-              tx,
-              token: token,
-              address: address,
-            )
-        ];
+    final txResults = await _fetchEtherscanWithRatelimitRetries(
+        '$base?module=account&action=txlist&address=$address&sort=desc&startblock=$lastBlock');
+    return [
+      for (final tx in txResults)
+        EtherscanTransaction.fromJson(
+          tx,
+          token: token,
+          address: address,
+        )
+    ];
+  }
 
-      default:
-        final txResults = await _fetchEtherscanWithRatelimitRetries(
-            '$base?module=account&action=txlist&address=$address&sort=desc&startblock=$lastBlock');
-        return [
-          for (final tx in txResults)
-            EtherscanTransaction.fromJson(
-              tx,
-              token: token,
-              address: address,
-            )
-        ];
+  ///
+  /// Fetch all ERC20 Transactions for a given [token] and [address]
+  ///
+  Future<List<EtherscanTransaction>> fetchERC20Transactions({
+    required EthBasedTokenEntity token,
+    required EvmEntity currency,
+    required String address,
+    int? lastBlock,
+  }) async {
+    if (lastBlock != null) {
+      lastBlock++;
     }
+
+    final txResults = await _fetchEtherscanWithRatelimitRetries(
+      '$base?module=account&action=tokentx&address=$address&contractaddress=${token.contractAddress}&sort=desc&startblock=$lastBlock',
+    );
+    return [
+      for (final tx in txResults)
+        EtherscanTransaction.fromJsonErc20(
+          tx,
+          token: token,
+          address: address,
+          currency: currency,
+        )
+    ];
   }
 
   // Future<ConfirmationStatus> fetchTxStatus(String hash) async {

@@ -233,7 +233,7 @@ final class EvmRpcInterface {
     final balance = await client.getBalance(toChecksumAddress(ethAddress.hex));
 
     final gasPriceEther =
-        web3.EtherAmount.fromBigInt(web3.EtherUnit.gwei, gasPrice.value);
+        web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
 
     var amountWei = intent.amount;
 
@@ -286,7 +286,7 @@ final class EvmRpcInterface {
     );
 
     final gasPriceEther =
-        web3.EtherAmount.fromBigInt(web3.EtherUnit.gwei, gasPrice.value);
+        web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
     final amountInWei = intent.amount.value;
 
     return await tokenContract.sendToken(
