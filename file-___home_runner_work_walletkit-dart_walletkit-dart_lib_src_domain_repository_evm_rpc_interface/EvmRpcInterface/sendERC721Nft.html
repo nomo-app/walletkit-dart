@@ -82,32 +82,31 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendERC721Nft({
   required TransferIntent intent,
-  required web3.Credentials credentials,
+  required Credentials credentials,
 }) async {
   final token = intent.token.asEthBased!;
   final stakingNft = token.stakingNft!;
   final tokenId = stakingNft.tokenId;
 
-  final contractAddress = web3.EthereumAddress.fromHex(token.contractAddress);
+  final contractAddress = EthereumAddress.fromHex(token.contractAddress);
 
   &#47;&#47; see https:&#47;&#47;docs.openzeppelin.com&#47;contracts&#47;2.x&#47;api&#47;token&#47;erc721
-  final List&lt;web3.FunctionParameter&gt; params = [
-    web3.FunctionParameter(&quot;from&quot;, web3.AddressType()),
-    web3.FunctionParameter(&quot;to&quot;, web3.AddressType()),
-    web3.FunctionParameter(&quot;tokenId&quot;, web3.UintType())
+  final List&lt;FunctionParameter&gt; params = [
+    FunctionParameter(&quot;from&quot;, AddressType()),
+    FunctionParameter(&quot;to&quot;, AddressType()),
+    FunctionParameter(&quot;tokenId&quot;, UintType())
   ];
-  final function = web3.ContractFunction(&quot;transferFrom&quot;, params);
+  final function = ContractFunction(&quot;transferFrom&quot;, params);
 
   final from = credentials.address;
-  final to = web3.EthereumAddress.fromHex(intent.recipient);
+  final to = EthereumAddress.fromHex(intent.recipient);
   final arguments = [from, to, tokenId];
   final data = function.encodeCall(arguments);
 
   final gasPrice = await client.getGasPrice();
-  final gasPriceEther =
-      web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice);
+  final gasPriceEther = EtherAmount.fromBigInt(EtherUnit.wei, gasPrice);
 
-  final transaction = web3.Transaction(
+  final transaction = Transaction(
     from: from,
     to: contractAddress,
     data: data,
