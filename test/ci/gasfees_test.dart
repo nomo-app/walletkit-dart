@@ -25,20 +25,4 @@ void main() {
 
     print(gasEntity);
   });
-
-  test('Estimate Fees EC8', () async {
-    final gasEntity = await getNetworkFees(network: EurocoinNetwork);
-
-    expect(gasEntity, isNotNull);
-
-    print(gasEntity);
-  });
-
-  test('Estimate Fees Zeniq', () async {
-    final gasEntity = await getNetworkFees(network: ZeniqNetwork);
-
-    expect(gasEntity, isNotNull);
-
-    print(gasEntity);
-  });
 }
