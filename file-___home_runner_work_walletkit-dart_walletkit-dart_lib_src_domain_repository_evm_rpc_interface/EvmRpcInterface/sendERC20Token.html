@@ -65,8 +65,7 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
 <span class="name ">sendERC20Token</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="sendERC20Token-param-intent">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span></li>
-<li><span class="parameter" id="sendERC20Token-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>, </span></li>
-<li><span class="parameter" id="sendERC20Token-param-gasPrice"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">gasPrice</span>}</span></li>
+<li><span class="parameter" id="sendERC20Token-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>}</span></li>
 </ol>)
 
       
@@ -83,14 +82,18 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendERC20Token({
   required TransferIntent intent,
-  required Credentials credentials,
-  BigInt? gasPrice,
+  required web3.Credentials credentials,
 }) async {
   assert(intent.token is EthBasedTokenEntity);
   final token = intent.token as EthBasedTokenEntity;
-  final contractAddress = EthereumAddress.fromHex(token.contractAddress);
+  final contractAddress = web3.EthereumAddress.fromHex(token.contractAddress);
 
-  gasPrice ??= await client.getGasPrice();
+  final (gasPrice, gasLimit) = switch (intent.feeInfo) {
+    EvmFeeInformation info =&gt; (info.gasPrice, info.gasLimit),
+    _ =&gt; await client.getGasPrice().then(
+          (bi) =&gt; (Amount(value: bi, decimals: 18), GasLimits.ethSend.value),
+        ),
+  };
 
   final tokenContract = ERC20Contract(
     address: contractAddress,
@@ -98,26 +101,15 @@
     chainId: type.chainId,
   );
 
-  final gasPriceEther = EtherAmount.fromBigInt(EtherUnit.wei, gasPrice);
+  final gasPriceEther =
+      web3.EtherAmount.fromBigInt(web3.EtherUnit.gwei, gasPrice.value);
   final amountInWei = intent.amount.value;
 
-  final data = erc20TransferSig +
-      intent.recipient.substring(2).padLeft(64, &#39;0&#39;) +
-      intent.amount.value.toHex.padLeft(64, &#39;0&#39;);
-
-  final gasLimit = await client
-      .estimateGasFee(
-        from: credentials.address.hex,
-        to: token.contractAddress,
-        data: data,
-      )
-      .then((value) =&gt; value.toInt());
-
   return await tokenContract.sendToken(
-    EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
+    web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
     amountInWei,
     credentials: credentials,
-    transaction: Transaction(
+    transaction: web3.Transaction(
       gasPrice: gasPriceEther,
       maxGas: gasLimit,
     ),
