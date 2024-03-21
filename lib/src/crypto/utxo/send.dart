@@ -25,11 +25,15 @@ RawTransaction buildUnsignedTransaction({
   required UTXONetworkType networkType,
   required HDWalletType walletType,
   required Iterable<UTXOTransaction> txList,
-  required double feePerKB,
+  required double feePerByte,
   required Iterable<String> changeAddresses,
+
+  /// Pre chosen UTXOs to deterministly choose the UTXOs
+  /// if null, the UTXOs will be chosen randomly
+  List<ElectrumOutput>? preChosenUTXOs,
 }) {
   if (txList.isEmpty) {
-    throw SendFailure("empty txList"); // should be never reached
+    throw SendFailure("No transactions");
   }
 
   var targetValue = intent.amount.value;
@@ -55,17 +59,16 @@ RawTransaction buildUnsignedTransaction({
     throw const SendFailure("no UTXOs"); // should be never reached
   }
 
-  final feePerByte = feePerKB / 1024;
-
   const lockTime = 0;
   const validFrom = 0; // EC8 specific
   const validUntil = 0; // EC8 specific
   final version = networkType.txVersion;
 
-  final chosenUTXOs = singleRandomDrawUTXOSelection(
-    allUTXOs.keys.toList(),
-    targetValue,
-  );
+  final chosenUTXOs = preChosenUTXOs ??
+      singleRandomDrawUTXOSelection(
+        allUTXOs.keys.toList(),
+        targetValue,
+      );
 
   Logger.log("Chosen UTXOs: ${chosenUTXOs}");
 
@@ -84,7 +87,7 @@ RawTransaction buildUnsignedTransaction({
 
   final targetAddress = intent.recipient;
 
-  final changeAdress = findUnusedAddress(
+  final changeAddress = findUnusedAddress(
     addresses: changeAddresses,
     txs: txList,
   );
@@ -92,27 +95,20 @@ RawTransaction buildUnsignedTransaction({
   ///
   /// Build Dummy TX
   ///
-  final dummySeed = helloSeed;
 
   final dummyOutputs = buildOutputs(
     recipient: intent.recipient,
     value: targetValue,
-    changeAddress: changeAdress,
+    changeAddress: changeAddress,
     changeValue: BigInt.one,
     networkType: networkType,
   );
 
-  var dummyTx = RawTransaction.build(
-    version: version,
-    lockTime: lockTime,
-    validFrom: validFrom,
-    validUntil: validUntil,
-    inputMap: inputMap,
-    outputs: dummyOutputs,
-  ).sign(
-    seed: dummySeed,
+  var dummyTx = buildDummyTx(
     networkType: networkType,
     walletType: walletType,
+    inputMap: inputMap,
+    dummyOutputs: dummyOutputs,
   );
 
   ///
@@ -140,17 +136,11 @@ RawTransaction buildUnsignedTransaction({
 
       (totalInputValue, inputMap) = buildInputs(chosenUTXOsMap, networkType);
 
-      dummyTx = RawTransaction.build(
-        version: version,
-        lockTime: lockTime,
-        validFrom: validFrom,
-        validUntil: validUntil,
-        inputMap: inputMap,
-        outputs: dummyOutputs,
-      ).sign(
-        seed: dummySeed,
+      dummyTx = buildDummyTx(
         networkType: networkType,
         walletType: walletType,
+        inputMap: inputMap,
+        dummyOutputs: dummyOutputs,
       );
 
       estimatedSize = BigInt.from(dummyTx.size);
@@ -172,7 +162,7 @@ RawTransaction buildUnsignedTransaction({
   final outputs = buildOutputs(
     recipient: targetAddress,
     value: targetValue,
-    changeAddress: changeAdress,
+    changeAddress: changeAddress,
     changeValue: changeValue,
     networkType: networkType,
   );
@@ -197,6 +187,83 @@ RawTransaction buildUnsignedTransaction({
   }
 
   return tx;
+}
+
+typedef DummyTxInfo = ({
+  RawTransaction dummyTx,
+  List<ElectrumOutput> chosenUTXOs
+});
+
+///
+/// Creates a dummy transaction to estimate the size of the transaction and hence the fee
+/// Also returns the chosen UTXOs so that they can be used to create the real transaction with the same UTXOs
+///
+DummyTxInfo buildDummyTxFromScratch({
+  required TransferIntent intent,
+  required UTXONetworkType networkType,
+  required HDWalletType walletType,
+  required Iterable<UTXOTransaction> txList,
+  required List<String> changeAddresses,
+}) {
+  final allUTXOs = extractUTXOs(txList: txList);
+
+  final chosenUTXOs = singleRandomDrawUTXOSelection(
+    allUTXOs.keys.toList(),
+    intent.amount.value,
+  );
+
+  final chosenUTXOsMap = {
+    for (final utxo in chosenUTXOs) utxo: allUTXOs[utxo]!,
+  };
+
+  final (_, inputMap) = buildInputs(chosenUTXOsMap, networkType);
+
+  final changeAddress = findUnusedAddress(
+    addresses: changeAddresses,
+    txs: txList,
+  );
+
+  final dummyOutputs = buildOutputs(
+    recipient: intent.recipient,
+    value: intent.amount.value,
+    changeAddress: changeAddress,
+    changeValue: BigInt.one,
+    networkType: networkType,
+  );
+
+  return (
+    dummyTx: buildDummyTx(
+      networkType: networkType,
+      walletType: walletType,
+      inputMap: inputMap,
+      dummyOutputs: dummyOutputs,
+    ),
+    chosenUTXOs: chosenUTXOs
+  );
+}
+
+RawTransaction buildDummyTx({
+  required UTXONetworkType networkType,
+  required HDWalletType walletType,
+  required Map<ElectrumOutput, Input> inputMap,
+  required List<Output> dummyOutputs,
+}) {
+  final dummySeed = helloSeed;
+
+  var dummyTx = RawTransaction.build(
+    version: 0,
+    lockTime: 0,
+    validFrom: 0,
+    validUntil: 0,
+    inputMap: inputMap,
+    outputs: dummyOutputs,
+  ).sign(
+    seed: dummySeed,
+    networkType: networkType,
+    walletType: walletType,
+  );
+
+  return dummyTx;
 }
 
 List<Input> signInputs({
@@ -454,9 +521,9 @@ Future<String> broadcastTransaction({
     throw SendFailure("Broadcasting failed: ${error?.message}");
   }
 
-  if (result.contains('error')) {
-    final json = jsonDecode(result);
+  final json = jsonDecode(result);
 
+  if (result.contains('error')) {
     if (json
         case {
           "error": {"error": {"code": int code, "message": String message}}
@@ -466,7 +533,13 @@ Future<String> broadcastTransaction({
     throw SendFailure("Unknown error: $result");
   }
 
-  return result;
+  if (result.contains('result') == false) {
+    throw SendFailure("Unknown error: $result");
+  }
+
+  final hash = json['result'];
+
+  return hash;
 }
 
 Uint8List signInput({

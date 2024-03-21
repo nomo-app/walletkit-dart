@@ -39,7 +39,9 @@ class TokenEntity extends Equatable {
   num get subunits => pow(10, decimals);
 
   @override
-  List<Object> get props => [name, symbol];
+  List<Object> get props => [name, symbol, decimals];
+
+  String get identifier => "$name:$symbol:$decimals";
 
   EthBasedTokenEntity? get asEthBased {
     if (this is EthBasedTokenEntity) {
@@ -89,6 +91,9 @@ class EthBasedTokenEntity extends TokenEntity {
   bool get isNFT {
     return stakingNft != null;
   }
+
+  @override
+  String get identifier => "$name:$symbol:$decimals:$contractAddress";
 
   @override
   List<Object> get props => [name, symbol, contractAddress, decimals];

@@ -108,13 +108,17 @@ base class EvmRpcClient {
   /// Get the transaction receipt
   ///
   Future<Json> getTransactionReceipt(String txHash) async {
-    final response = await _call<Json>(
+    final response = await _call<Json?>(
       'eth_getTransactionReceipt',
       args: [txHash],
     );
 
-    return response;
+    return response ?? {};
   }
+
+  ///
+  /// Estimate Time to be included in the next block
+  ///
 
   ///
   /// Get Timestamp for block
@@ -151,7 +155,7 @@ base class EvmRpcClient {
   ///
   /// Estimate Gas Fee
   ///
-  Future<BigInt> estimateGasFee({
+  Future<BigInt> estimateGasLimit({
     String? from,
     required String to,
     BigInt? amount,

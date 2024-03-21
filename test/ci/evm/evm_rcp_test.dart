@@ -97,7 +97,7 @@ void main() {
         spoilEVM.substring(2).padLeft(64, '0') +
         BigInt.from(0).toHex.padLeft(64, '0');
 
-    final gasLimit = await rpcInterface.client.estimateGasFee(
+    final gasLimit = await rpcInterface.client.estimateGasLimit(
       from: rejectEVM,
       to: avinocZSC.contractAddress,
       data: data,

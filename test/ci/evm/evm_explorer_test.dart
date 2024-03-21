@@ -35,9 +35,10 @@ void main() {
 
     print('ETH Transactions: $transactions');
 
-    final wBTCTransactions = await etherscan.fetchTransactions(
+    final wBTCTransactions = await etherscan.fetchERC20Transactions(
       address: rejectEVM,
       token: wbtcToken,
+      currency: ethNative,
     );
 
     expect(wBTCTransactions, isNotEmpty);
@@ -79,9 +80,10 @@ void main() {
 
     print('BNB Transactions: $transactions');
 
-    final zeniqBSCTokenTransactions = await bnbScan.fetchTransactions(
+    final zeniqBSCTokenTransactions = await bnbScan.fetchERC20Transactions(
       address: rejectEVM,
       token: zeniqBSCToken,
+      currency: binanceSmart,
     );
 
     expect(zeniqBSCTokenTransactions, isNotEmpty);

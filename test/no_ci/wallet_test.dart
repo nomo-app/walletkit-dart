@@ -21,8 +21,8 @@ void main() {
     final hash = await zeniqSmartRpcInterface.sendCoin(
       intent: TransferIntent(
         recipient: spoilEVM,
-        amount: Amount.num(value: 1, decimals: zeniqSmart.decimals),
-        feePriority: FeePriority.high,
+        amount: Amount.convert(value: 1, decimals: zeniqSmart.decimals),
+        feeInfo: null,
         token: zeniqSmart,
       ),
       credentials: credentials,
@@ -40,8 +40,8 @@ void main() {
     final hash = await zeniqSmartRpcInterface.sendERC20Token(
       intent: TransferIntent(
         recipient: spoilEVM,
-        amount: Amount.num(value: 0.001, decimals: avinocZSC.decimals),
-        feePriority: FeePriority.high,
+        amount: Amount.convert(value: 0.001, decimals: avinocZSC.decimals),
+        feeInfo: null,
         token: avinocZSC,
       ),
       credentials: credentials,
@@ -65,7 +65,7 @@ void main() {
     final intent = TransferIntent(
       recipient: reveiveAddress,
       amount: Amount(value: BigInt.from(100000000), decimals: 8),
-      feePriority: FeePriority.high,
+      feeInfo: null,
       token: zeniqCoin,
     );
 
@@ -75,7 +75,7 @@ void main() {
       walletType: HDWalletType.NO_STRUCTURE,
       txList: txList,
       changeAddresses: nodes.changeNodes.addresses,
-      feePerKB: 0.0001,
+      feePerByte: 3 * 1e-8,
     );
 
     final signedTx = unsignedTx
@@ -120,8 +120,8 @@ void main() {
 
     final intent = TransferIntent(
       recipient: receive,
-      amount: Amount.num(value: 1.2, decimals: 5),
-      feePriority: FeePriority.high,
+      amount: Amount.convert(value: 1.2, decimals: 5),
+      feeInfo: null,
       token: ec8Coin,
     );
 
@@ -131,7 +131,7 @@ void main() {
       walletType: HDWalletType.NO_STRUCTURE,
       txList: txList,
       changeAddresses: nodes.changeNodes.addresses,
-      feePerKB: 0.00008, // Minimum 0.00004; Max 0.00008
+      feePerByte: 8 * 1e-8,
     );
 
     final signedTx = unsignedTx.sign(

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
-import 'package:walletkit_dart/src/utils/int.dart';
 
 part 'amount.g.dart';
 
@@ -18,19 +17,37 @@ class Amount extends Equatable {
     required this.decimals,
   });
 
-  Amount.num({
+  /// Converts the given value to the smallest unit of the currency
+  Amount.convert({
     required num value,
     required this.decimals,
   }) : value = BigInt.from(value * pow(10, decimals));
 
-  Amount.zero()
-      : value = -1.toBI,
-        decimals = 0;
+  /// Converts the given value to a BigInt
+  /// This is useful when the value is already in the smallest unit of the currency
+  Amount.from({
+    required num value,
+    required this.decimals,
+  }) : value = BigInt.from(value);
 
-  static Amount get empty => Amount(value: BigInt.from(0), decimals: 0);
+  static Amount get zero => Amount(value: BigInt.from(0), decimals: 0);
 
-  double get displayValue {
+  double get displayDouble {
     return value / BigInt.from(10).pow(decimals);
+  }
+
+  String get displayValue {
+    final firstBI = value ~/ BigInt.from(10).pow(decimals);
+
+    final secondBI = value % BigInt.from(10).pow(decimals);
+
+    final string = '$firstBI.${secondBI.toString().padLeft(decimals, '0')}';
+
+    final lastNonZeroIndex = string.lastIndexOf(RegExp(r'[^0]'));
+
+    if (lastNonZeroIndex == -1) return string;
+
+    return string.substring(0, lastNonZeroIndex < 3 ? 3 : lastNonZeroIndex + 1);
   }
 
   Amount copyWith({
@@ -54,7 +71,7 @@ class Amount extends Equatable {
 
   @override
   String toString() {
-    return 'Amount{value: $value, decimals: $decimals}: $displayValue';
+    return 'Amount{value: $value, decimals: $decimals}: $displayDouble';
   }
 
   Map<String, dynamic> toJson() {
@@ -62,5 +79,74 @@ class Amount extends Equatable {
       'value': value.toString(),
       'decimals': decimals,
     };
+  }
+
+  Amount convertToDecimals(int newDecimals) {
+    if (newDecimals == decimals) return this;
+
+    final newAmount = value * BigInt.from(10).pow(newDecimals - decimals);
+
+    return Amount(
+      value: newAmount,
+      decimals: newDecimals,
+    );
+  }
+
+  /// Operators
+  Amount operator *(Amount other) {
+    return Amount(
+      value: value * other.value,
+      decimals: decimals + other.decimals,
+    );
+  }
+
+  Amount operator +(Amount other) {
+    return Amount(
+      value: value + other.value,
+      decimals: decimals,
+    );
+  }
+
+  Amount operator -(Amount other) {
+    return Amount(
+      value: value - other.value,
+      decimals: decimals,
+    );
+  }
+
+  Amount operator /(Amount other) {
+    if (decimals == other.decimals) {
+      return Amount(
+        value: value ~/ other.value,
+        decimals: decimals,
+      );
+    }
+    final precision = max(decimals, other.decimals);
+
+    if (decimals > other.decimals) {
+      final newOther = other.convertToDecimals(decimals);
+      final shiftedA = value * BigInt.from(10).pow(precision);
+      final shiftedResult = shiftedA ~/ newOther.value;
+      return Amount(
+        value: shiftedResult,
+        decimals: decimals,
+      );
+    }
+
+    final newThis = convertToDecimals(other.decimals);
+    final shiftedA = newThis.value * BigInt.from(10).pow(precision);
+    final shiftedResult = shiftedA ~/ other.value;
+    return Amount(
+      value: shiftedResult,
+      decimals: other.decimals,
+    );
+  }
+
+  bool operator >(Amount other) {
+    return value > other.value;
+  }
+
+  bool operator <(Amount other) {
+    return value < other.value;
   }
 }

@@ -1,17 +1,23 @@
+import 'package:hive/hive.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
+
+part 'fee.g.dart';
+
 enum FeePriority {
-  tommorow(144, 'Tommorow'),
-  threeHours(18, '3 Hours'),
-  twoHours(12, '2 Hours'),
-  low(6, "Slow"),
-  medium(3, "Medium"),
-  high(1, "Fast");
+  custom('Custom'),
+  low("slow"),
+  medium("medium"),
+  high("fast"),
+  nextBlock("nextBlock", "fast"),
+  secondBlock("secondBlock", "medium"),
+  hour("hour", "slow"),
+  day("day", "slow");
 
-  final int blocks;
   final String displayName;
+  final String assetName;
 
-  int get estimatedMinutes => blocks * 10;
-
-  const FeePriority(this.blocks, this.displayName);
+  const FeePriority(this.displayName, [String? assetName])
+      : assetName = assetName ?? displayName;
 
   static List<FeePriority> get evm {
     return [
@@ -19,5 +25,60 @@ enum FeePriority {
       medium,
       high,
     ];
+  }
+
+  static List<FeePriority> get utxo {
+    return [
+      nextBlock,
+      secondBlock,
+      hour,
+      day,
+    ];
+  }
+}
+
+sealed class FeeInformation {
+  const FeeInformation();
+
+  Json toJson();
+}
+
+@HiveType(typeId: 23)
+final class EvmFeeInformation extends FeeInformation {
+  @HiveField(0)
+  final int gasLimit;
+  @HiveField(1)
+  final Amount gasPrice;
+
+  const EvmFeeInformation({
+    required this.gasLimit,
+    required this.gasPrice,
+  });
+
+  Amount get fee {
+    return gasPrice * Amount.convert(value: gasLimit, decimals: 0);
+  }
+
+  Json toJson() {
+    return {
+      'gasLimit': gasLimit,
+      'gasPrice': gasPrice.toJson(),
+    };
+  }
+}
+
+@HiveType(typeId: 24)
+final class UtxoFeeInformation extends FeeInformation {
+  @HiveField(0)
+  final double feePerByte;
+
+  const UtxoFeeInformation({
+    required this.feePerByte,
+  });
+
+  Json toJson() {
+    return {
+      'feePerByte': feePerByte,
+    };
   }
 }

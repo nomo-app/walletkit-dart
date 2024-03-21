@@ -59,6 +59,9 @@ sealed class UTXONetworkType extends NetworkType {
 
   final ({int legacy, int segwit}) dustTreshhold;
 
+  /// Block time in seconds
+  final int blockTime;
+
   const UTXONetworkType({
     required super.messagePrefix,
     required super.coin,
@@ -72,6 +75,7 @@ sealed class UTXONetworkType extends NetworkType {
     required this.sighash,
     required this.addressPrefixes,
     required this.dustTreshhold,
+    required this.blockTime,
   });
 
   @override
@@ -209,6 +213,7 @@ class BITCOIN_NETWORK extends UTXONetworkType {
             AddressType.segwit: "bc1",
           },
           dustTreshhold: BTC_DUSTTRESHOLD,
+          blockTime: 600, // 10 minutes
         );
 }
 
@@ -241,6 +246,7 @@ class LITECOIN_NETWORK extends UTXONetworkType {
             AddressType.segwit: "ltc1",
           },
           dustTreshhold: BTC_DUSTTRESHOLD,
+          blockTime: 150, // 2.5 minutes
         );
 }
 
@@ -281,6 +287,7 @@ class BITCOINCASH_NETWORK extends UTXONetworkType {
             AddressType.cashaddr: "bitcoincash",
           },
           dustTreshhold: BTC_DUSTTRESHOLD,
+          blockTime: 600, // 10 minutes
         );
 }
 
@@ -324,6 +331,7 @@ class ZENIQ_NETWORK extends UTXONetworkType {
             AddressType.legacy: "m",
           },
           dustTreshhold: BTC_DUSTTRESHOLD,
+          blockTime: 600, // 10 minutes
         );
 }
 
@@ -349,6 +357,7 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
             AddressType.legacy: "c",
           },
           dustTreshhold: BTC_DUSTTRESHOLD,
+          blockTime: 600, // 10 minutes
         );
 }
 
