@@ -67,7 +67,9 @@ final class EvmFeeInformation extends FeeInformation {
   }
 }
 
+@HiveType(typeId: 24)
 final class UtxoFeeInformation extends FeeInformation {
+  @HiveField(0)
   final double feePerByte;
 
   const UtxoFeeInformation({
