@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the EtherscanTransaction.fromJson constructor from Class EtherscanTransaction from the etherscan_transaction library, for the Dart programming language.">
-  <title>EtherscanTransaction.fromJson constructor - EtherscanTransaction - etherscan_transaction library - Dart API</title>
+  <meta name="description" content="API docs for the EtherscanTransaction.fromJsonErc20 constructor from Class EtherscanTransaction from the etherscan_transaction library, for the Dart programming language.">
+  <title>EtherscanTransaction.fromJsonErc20 constructor - EtherscanTransaction - etherscan_transaction library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction-library.html">src&#47;domain&#47;entities&#47;transactions&#47;etherscan_transaction.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction/EtherscanTransaction-class.html">EtherscanTransaction</a></li>
-    <li class="self-crumb">EtherscanTransaction.fromJson factory constructor</li>
+    <li class="self-crumb">EtherscanTransaction.fromJsonErc20 factory constructor</li>
   </ol>
-  <div class="self-name">EtherscanTransaction.fromJson</div>
+  <div class="self-name">EtherscanTransaction.fromJsonErc20</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,14 +57,15 @@
       data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction&#47;EtherscanTransaction-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">EtherscanTransaction.fromJson</span> constructor 
+<h1><span class="kind-constructor">EtherscanTransaction.fromJsonErc20</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">EtherscanTransaction.fromJson</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJson-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span>, </span></li>
-<li><span class="parameter" id="fromJson-param-token">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span></li>
-<li><span class="parameter" id="fromJson-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>}</span></li>
+      <span class="name ">EtherscanTransaction.fromJsonErc20</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="fromJsonErc20-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span>, </span></li>
+<li><span class="parameter" id="fromJsonErc20-param-token">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span></li>
+<li><span class="parameter" id="fromJsonErc20-param-currency"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">currency</span>, </span></li>
+<li><span class="parameter" id="fromJsonErc20-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>}</span></li>
 </ol>)
     </section>
 
@@ -74,9 +75,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory EtherscanTransaction.fromJson(
+  <pre class="language-dart"><code class="language-dart">factory EtherscanTransaction.fromJsonErc20(
   Json json, {
   required TokenEntity token,
+  required EvmEntity currency,
   required String address,
 }) {
   if (json
@@ -90,8 +92,6 @@
         &#39;gas&#39;: String gas_s,
         &#39;gasUsed&#39;: String gasUsed_s,
         &#39;gasPrice&#39;: String gasPrice_s,
-        &#39;txreceipt_status&#39;: String txreceipt_status_s,
-        &#39;isError&#39;: String _,
         &#39;input&#39;: String input,
       }) {
     final block = block_s.toIntOrNull ?? -1;
@@ -105,7 +105,7 @@
 
     final fee = Amount(
       value: gasPrice_s.toBigInt * gasUsed_s.toBigInt,
-      decimals: token.decimals,
+      decimals: currency.decimals,
     );
 
     final transferMethod =
@@ -122,13 +122,10 @@
       recipient: to,
       transferMethod: transferMethod,
       token: token,
-      status: ConfirmationStatus.fromReceiptStatus(
-        txreceipt_status_s.toIntOrNull ?? -1,
-      ),
+      status: ConfirmationStatus.fromConfirmations(confirmations),
       input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
     );
   }
-
   throw UnsupportedError(&quot;Invalid JSON for EtherscanTransaction&quot;);
 }</code></pre>
 </section>
@@ -148,7 +145,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction-library.html">etherscan_transaction</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_etherscan_transaction/EtherscanTransaction-class.html">EtherscanTransaction</a></li>
-    <li class="self-crumb">EtherscanTransaction.fromJson factory constructor</li>
+    <li class="self-crumb">EtherscanTransaction.fromJsonErc20 factory constructor</li>
 </ol>
 
 
