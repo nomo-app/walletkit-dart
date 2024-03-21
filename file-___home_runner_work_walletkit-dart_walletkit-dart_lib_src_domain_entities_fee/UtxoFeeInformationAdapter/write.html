@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the feePerByte property from the UtxoFeeInformation class, for the Dart programming language.">
-  <title>feePerByte property - UtxoFeeInformation class - fee library - Dart API</title>
+  <meta name="description" content="API docs for the write method from the UtxoFeeInformationAdapter class, for the Dart programming language.">
+  <title>write method - UtxoFeeInformationAdapter class - fee library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee-library.html">src&#47;domain&#47;entities&#47;fee.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/UtxoFeeInformation-class.html">UtxoFeeInformation</a></li>
-    <li class="self-crumb">feePerByte property</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/UtxoFeeInformationAdapter-class.html">UtxoFeeInformationAdapter</a></li>
+    <li class="self-crumb">write method</li>
   </ol>
-  <div class="self-name">feePerByte</div>
+  <div class="self-name">write</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,33 +54,48 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee&#47;UtxoFeeInformation-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee&#47;UtxoFeeInformationAdapter-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-property">feePerByte</span> property 
+<h1><span class="kind-method">write</span> method 
 </h1></div>
 
-      <section class="multi-line-signature">
-        
-        <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>
-        <span class="name ">feePerByte</span>
-        <div class="features"><span class="feature">final</span></div>
+    <section class="multi-line-signature">
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
 
-      </section>
+<span class="returntype">void</span>
+<span class="name ">write</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="write-param-writer"><span class="type-annotation">dynamic</span> <span class="parameter-name">writer</span>, </span></li>
+<li><span class="parameter" id="write-param-obj"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/UtxoFeeInformation-class.html">UtxoFeeInformation</a></span> <span class="parameter-name">obj</span></span></li>
+</ol>)
+
       
 
-      
+    </section>
+    
+
+
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@HiveField(0)
-final double feePerByte;</code></pre>
+  <pre class="language-dart"><code class="language-dart">@override
+void write(BinaryWriter writer, UtxoFeeInformation obj) {
+  writer
+    ..writeByte(1)
+    ..writeByte(0)
+    ..write(obj.feePerByte);
+}</code></pre>
 </section>
 
 
-</div> <!-- /.main-content -->
+  </div> <!-- /.main-content -->
 
-<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -90,16 +105,16 @@ final double feePerByte;</code></pre>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee-library.html">fee</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/UtxoFeeInformation-class.html">UtxoFeeInformation</a></li>
-    <li class="self-crumb">feePerByte property</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_fee/UtxoFeeInformationAdapter-class.html">UtxoFeeInformationAdapter</a></li>
+    <li class="self-crumb">write method</li>
 </ol>
 
 
-  <h5>UtxoFeeInformation class</h5>
-  <div id="dartdoc-sidebar-left-content"></div>
-</div><!--/.sidebar-offcanvas-->
+    <h5>UtxoFeeInformationAdapter class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
 
-<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 
 </main>
