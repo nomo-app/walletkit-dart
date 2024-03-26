@@ -50,8 +50,9 @@ void main() {
     print('Hash: $hash');
   });
   test('Send ZENIQ-UTXO to ourselves', () async {
+    final seed = loadFromEnv("DEV_SEED");
     final (txList, nodes) = await fetchUTXOTransactions(
-      seed: devSeed,
+      seed: seed,
       walletTypes: [HDWalletType.NO_STRUCTURE],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
@@ -80,7 +81,7 @@ void main() {
 
     final signedTx = unsignedTx
         .sign(
-          seed: devSeed,
+          seed: seed,
           networkType: ZeniqNetwork,
           walletType: HDWalletType.NO_STRUCTURE,
         )
@@ -94,8 +95,15 @@ void main() {
       rawTxHex: signedTx,
       type: ZeniqNetwork,
     );
-
     print(hash);
+
+    final inMempool = await rebroadcastTransaction(
+      hash: hash,
+      serializedTx: signedTx,
+      type: ZeniqNetwork,
+    );
+
+    expect(inMempool, true);
 
     expect(hash, isNotEmpty);
   });

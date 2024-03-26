@@ -237,3 +237,23 @@ Future<(T?, ElectrumXClient?, NoWorkingHostsException?)>
     );
   }
 }
+
+Future<(T?, Object?)> fetchFromNode<T>(
+  Future<T> Function(ElectrumXClient) fetchFunction, {
+  required ElectrumXClient client,
+  Duration timeout = const Duration(milliseconds: 3000),
+  bool cleanup = false,
+}) async {
+  try {
+    final T result = await fetchFunction(client).timeout(timeout);
+    if (cleanup) client.disconnect();
+    return (result, null);
+  } on Exception catch (e, _) {
+    Logger.logWarning(
+      "ElectrumX fetch failed for ${client.host}. $e",
+    );
+
+    if (cleanup) client.disconnect();
+    return (null, e);
+  }
+}

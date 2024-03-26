@@ -9,6 +9,7 @@ import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
+import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/src/utils/der.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
@@ -506,7 +507,6 @@ Future<String> broadcastTransaction({
 }) async {
   final (result, _, error) = await fetchFromRandomElectrumXNode(
     (client) async {
-      print("Broadcasting Tx to ${client.host}");
       final broadcastResult =
           await client.broadcastTransaction(rawTxHex: rawTxHex);
       return broadcastResult;
@@ -539,6 +539,93 @@ Future<String> broadcastTransaction({
   final hash = json['result'];
 
   return hash;
+}
+
+///
+/// For a given [hash] and [serializedTx] we check if the transaction is already in the mempool
+/// If not we rebroadcast the transaction until at least half of the nodes have the transaction
+///
+Future<bool> rebroadcastTransaction({
+  required String hash,
+  required String serializedTx,
+  required UTXONetworkType type,
+  Duration delay = const Duration(seconds: 5),
+}) async {
+  await Future.delayed(delay);
+
+  final clients = await Future.wait(
+    [
+      for (final endpoint in type.endpoints)
+        createElectrumXClient(
+          endpoint: endpoint.$1,
+          port: endpoint.$2,
+          token: type.coin,
+        ),
+    ],
+  ).then(
+    (clients) => clients.whereType<ElectrumXClient>(),
+  );
+
+  while (true) {
+    int rebroadcastCount = 0;
+    Set<ElectrumXClient> clientsForRebroadcast = {};
+
+    Future<void> testEndpoint(ElectrumXClient client) async {
+      final (rawTx, error) = await fetchFromNode(
+        (client) => client.getRaw(hash),
+        client: client,
+      );
+
+      if (error != null) {
+        clientsForRebroadcast.add(client);
+        return;
+      }
+
+      if (rawTx == serializedTx) {
+        rebroadcastCount++;
+      }
+    }
+
+    await Future.wait(
+      [
+        for (final client in clients) testEndpoint(client),
+      ],
+    );
+
+    if (rebroadcastCount > type.endpoints.length / 2) {
+      break;
+    }
+
+    Logger.log(
+      "Rebroadcasting: $hash for ${clientsForRebroadcast.length} endpoints",
+    );
+
+    for (final client in clientsForRebroadcast) {
+      final (result, _) = await fetchFromNode(
+        (client) => client.broadcastTransaction(rawTxHex: serializedTx),
+        client: client,
+      );
+      if (result == null) continue;
+      final json = jsonDecode(result);
+      final hasResult = json.containsKey('result');
+      final hasError = json.containsKey('error');
+      if (hasResult) {
+        final _hash = json['result'];
+        Logger.log("Rebroadcasted: $_hash");
+        assert(_hash == hash);
+      }
+      if (hasError) {
+        final error = json['error'];
+        Logger.logWarning("Error rebroadcasting: $error");
+      }
+    }
+
+    await Future.delayed(delay);
+  }
+
+  await Future.wait([for (final client in clients) client.disconnect()]);
+
+  return true;
 }
 
 Uint8List signInput({

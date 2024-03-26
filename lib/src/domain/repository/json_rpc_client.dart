@@ -78,8 +78,6 @@ class TcpJsonRpcClient extends JsonRpcClient {
 
   @override
   Future<dynamic> sendRequest(Map<String, dynamic> procedure) async {
-    final watch = Stopwatch()..start();
-
     try {
       final rawResult = await sendRawRequest(procedure);
       final json = jsonDecode(rawResult);
@@ -87,17 +85,11 @@ class TcpJsonRpcClient extends JsonRpcClient {
       if (result == null) {
         final error = json['error'];
         final message = error['message'];
-        print(
-          "Error from $host:$port in ${watch.elapsedMilliseconds}ms: $message",
-        );
-        return null;
+        throw Exception(message);
       }
       return result;
     } catch (e, _) {
-      // print(
-      //   "error: $e Error from $host:$port in ${watch.elapsedMilliseconds}ms",
-      // );
-      return null;
+      rethrow;
     }
   }
 
