@@ -54,7 +54,7 @@ class UtxoFeeInformationAdapter extends TypeAdapter<UtxoFeeInformation> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UtxoFeeInformation(
-      feePerByte: fields[0] as double,
+      feePerByte: fields[0] as Amount,
     );
   }
 

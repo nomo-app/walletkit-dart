@@ -60,3 +60,5 @@ export 'src/crypto/evm/transaction/raw_evm_transaction.dart';
 export 'src/crypto/evm/function_argument_decoding.dart';
 
 export 'src/crypto/utxo/proof_of_payment.dart';
+
+export 'src/crypto/utxo/entities/raw_transaction.dart';

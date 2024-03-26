@@ -25,7 +25,7 @@ RawTransaction buildUnsignedTransaction({
   required UTXONetworkType networkType,
   required HDWalletType walletType,
   required Iterable<UTXOTransaction> txList,
-  required double feePerByte,
+  required Amount feePerByte,
   required Iterable<String> changeAddresses,
 
   /// Pre chosen UTXOs to deterministly choose the UTXOs
@@ -115,12 +115,12 @@ RawTransaction buildUnsignedTransaction({
   /// Build Outputs again with the estimated size
   ///
   var estimatedSize = BigInt.from(dummyTx.size);
-  var estimatedFee = estimatedSize * feePerByte.toSatoshi;
+  var estimatedFee = estimatedSize * feePerByte.value;
 
   var changeValue = totalInputValue - targetValue - estimatedFee;
 
   if (changeValue < BigInt.zero) {
-    targetValue -= estimatedFee;
+    targetValue -= changeValue.abs();
     if (targetValue < networkType.dustTreshhold.legacy.toBI) {
       /// Ad addidional UTXO to cover the fee
       targetValue = intent.amount.value;
@@ -144,7 +144,7 @@ RawTransaction buildUnsignedTransaction({
       );
 
       estimatedSize = BigInt.from(dummyTx.size);
-      estimatedFee = estimatedSize * feePerByte.toSatoshi;
+      estimatedFee = estimatedSize * feePerByte.value;
     }
 
     changeValue = totalInputValue - targetValue - estimatedFee;
@@ -190,13 +190,14 @@ RawTransaction buildUnsignedTransaction({
 }
 
 typedef DummyTxInfo = ({
-  RawTransaction dummyTx,
+  RawTransaction dummyRawTx,
   List<ElectrumOutput> chosenUTXOs
 });
 
 ///
 /// Creates a dummy transaction to estimate the size of the transaction and hence the fee
 /// Also returns the chosen UTXOs so that they can be used to create the real transaction with the same UTXOs
+/// Includes a safety margin so that changes in the Amount dont lead to a different fee
 ///
 DummyTxInfo buildDummyTxFromScratch({
   required TransferIntent intent,
@@ -231,15 +232,14 @@ DummyTxInfo buildDummyTxFromScratch({
     networkType: networkType,
   );
 
-  return (
-    dummyTx: buildDummyTx(
-      networkType: networkType,
-      walletType: walletType,
-      inputMap: inputMap,
-      dummyOutputs: dummyOutputs,
-    ),
-    chosenUTXOs: chosenUTXOs
+  final dummyTx = buildDummyTx(
+    networkType: networkType,
+    walletType: walletType,
+    inputMap: inputMap,
+    dummyOutputs: dummyOutputs,
   );
+
+  return (dummyRawTx: dummyTx, chosenUTXOs: chosenUTXOs);
 }
 
 RawTransaction buildDummyTx({

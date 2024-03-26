@@ -405,7 +405,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
   return (txs0, nodes);
 }
 
-Future<double> estimateFeeForPriority({
+Future<Amount> estimateFeeForPriority({
   required int blocks,
   required UTXONetworkType network,
   required ElectrumXClient? initalClient,
@@ -419,11 +419,11 @@ Future<double> estimateFeeForPriority({
 
   if (fee == null) throw Exception("Fee estimation failed");
 
-  final feePerByte = fee / 1024;
+  final feePerKb = Amount.fromDouble(value: fee, decimals: 8);
 
-  if (feePerByte < 0) throw Exception("Fee estimation failed");
+  final feePerB = feePerKb / Amount.from(value: 1000, decimals: 0);
 
-  return feePerByte;
+  return feePerB;
 }
 
 Future<UtxoNetworkFees> getNetworkFees({
@@ -475,10 +475,10 @@ Future<UtxoNetworkFees> getNetworkFees({
   );
 
   return UtxoNetworkFees(
-    nextBlock: next * multiplier,
-    secondBlock: second * multiplier,
-    hour: hour * multiplier,
-    day: day * multiplier,
+    nextBlock: next.multiplyAndCeil(multiplier),
+    secondBlock: second.multiplyAndCeil(multiplier),
+    hour: hour.multiplyAndCeil(multiplier),
+    day: day.multiplyAndCeil(multiplier),
   );
 }
 

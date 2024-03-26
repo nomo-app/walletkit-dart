@@ -241,11 +241,7 @@ final class EvmRpcInterface {
     final estimatedFee =
         gasPrice * Amount(value: BigInt.from(gasLimit), decimals: 0);
     if (balance < (estimatedFee + amountWei).value) {
-      // subtract the fee if the transaction would otherwise fail!
-      amountWei -= estimatedFee;
-      if (amountWei < Amount.zero) {
-        throw Failure("Insufficient funds to pay native gas fee");
-      }
+      throw Failure("Insufficient funds to pay native gas fee");
     }
 
     return await client.asWeb3.sendTransaction(

@@ -75,7 +75,7 @@ void main() {
       walletType: HDWalletType.NO_STRUCTURE,
       txList: txList,
       changeAddresses: nodes.changeNodes.addresses,
-      feePerByte: 3 * 1e-8,
+      feePerByte: Amount.from(value: 3, decimals: 8),
     );
 
     final signedTx = unsignedTx
@@ -131,7 +131,7 @@ void main() {
       walletType: HDWalletType.NO_STRUCTURE,
       txList: txList,
       changeAddresses: nodes.changeNodes.addresses,
-      feePerByte: 8 * 1e-8,
+      feePerByte: Amount.from(value: 8, decimals: 8),
     );
 
     final signedTx = unsignedTx.sign(
