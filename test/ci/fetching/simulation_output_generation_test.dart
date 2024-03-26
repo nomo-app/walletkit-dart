@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:dotenv/dotenv.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';

@@ -4,7 +4,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 part 'transfer_intent.g.dart';
 
 @HiveType(typeId: 22)
-class TransferIntent<T extends FeeInformation> {
+class TransferIntent<T extends FeeInformation?> {
   @HiveField(0)
   final TokenEntity token;
   @HiveField(1)
