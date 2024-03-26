@@ -200,7 +200,6 @@ class ElectrumXClient {
         "params": [rawTxHex]
       },
     );
-    print("broadcastTransaction response: $response");
     return response;
   }
 
