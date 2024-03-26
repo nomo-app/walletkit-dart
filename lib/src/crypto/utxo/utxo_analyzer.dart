@@ -474,6 +474,8 @@ Future<UtxoNetworkFees> getNetworkFees({
     initalClient: client,
   );
 
+  client?.disconnect();
+
   return UtxoNetworkFees(
     nextBlock: next.multiplyAndCeil(multiplier),
     secondBlock: second.multiplyAndCeil(multiplier),
