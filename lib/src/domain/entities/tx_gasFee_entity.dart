@@ -5,10 +5,10 @@ sealed class NetworkFees {
 }
 
 final class UtxoNetworkFees extends NetworkFees {
-  final double nextBlock;
-  final double secondBlock;
-  final double hour;
-  final double day;
+  final Amount nextBlock;
+  final Amount secondBlock;
+  final Amount hour;
+  final Amount day;
 
   const UtxoNetworkFees({
     required this.nextBlock,
@@ -22,7 +22,7 @@ final class UtxoNetworkFees extends NetworkFees {
     return "UtxoNetworkFees{nextBlock: $nextBlock, secondBlock: $secondBlock, hour: $hour, day: $day}";
   }
 
-  double getForPriority(FeePriority priority) => switch (priority) {
+  Amount getForPriority(FeePriority priority) => switch (priority) {
         FeePriority.nextBlock => nextBlock,
         FeePriority.secondBlock => secondBlock,
         FeePriority.hour => hour,

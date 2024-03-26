@@ -70,7 +70,7 @@ final class EvmFeeInformation extends FeeInformation {
 @HiveType(typeId: 24)
 final class UtxoFeeInformation extends FeeInformation {
   @HiveField(0)
-  final double feePerByte;
+  final Amount feePerByte;
 
   const UtxoFeeInformation({
     required this.feePerByte,
@@ -78,7 +78,7 @@ final class UtxoFeeInformation extends FeeInformation {
 
   Json toJson() {
     return {
-      'feePerByte': feePerByte,
+      'feePerByte': feePerByte.toJson(),
     };
   }
 }

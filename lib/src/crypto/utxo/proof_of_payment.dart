@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
 import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';

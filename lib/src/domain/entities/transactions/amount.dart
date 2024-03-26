@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:walletkit_dart/src/utils/int.dart';
 
 part 'amount.g.dart';
 
@@ -17,6 +18,10 @@ class Amount extends Equatable {
     required this.decimals,
   });
 
+  Amount convertTo(int newDecimals) {
+    return Amount(value: value, decimals: newDecimals);
+  }
+
   /// Converts the given value to the smallest unit of the currency
   Amount.convert({
     required num value,
@@ -26,9 +31,35 @@ class Amount extends Equatable {
   /// Converts the given value to a BigInt
   /// This is useful when the value is already in the smallest unit of the currency
   Amount.from({
-    required num value,
+    required int value,
     required this.decimals,
   }) : value = BigInt.from(value);
+
+  factory Amount.fromDouble({
+    required double value,
+    int? decimals,
+  }) {
+    final value_s = value.toString();
+
+    final parts = value_s.split('.');
+
+    final dec = parts.length == 1 ? 0 : parts[1].length;
+
+    var value_int = BigInt.tryParse(value_s.replaceAll('.', ''));
+
+    if (value_int == null) {
+      throw Exception('Invalid value: $value');
+    }
+
+    if (decimals != null) {
+      value_int = value_int * BigInt.from(10).pow(decimals.toInt() - dec);
+    }
+
+    return Amount(
+      value: value_int,
+      decimals: decimals ?? dec,
+    );
+  }
 
   static Amount get zero => Amount(value: BigInt.from(0), decimals: 0);
 
@@ -148,5 +179,28 @@ class Amount extends Equatable {
 
   bool operator <(Amount other) {
     return value < other.value;
+  }
+
+  Amount multiplyAndCeil(double multiplier) {
+    final result = value.toInt() * multiplier;
+    final result_int = result.ceil().toBI;
+
+    return Amount(value: result_int, decimals: decimals);
+  }
+}
+
+extension AmountUtil on int {
+  Amount get asAmount {
+    return Amount.from(value: this, decimals: 0);
+  }
+
+  Amount toAmount(int decimals) {
+    return Amount.from(value: this, decimals: decimals);
+  }
+}
+
+extension DoubleAmountUtil on double {
+  Amount get asAmount {
+    return Amount.fromDouble(value: this);
   }
 }
