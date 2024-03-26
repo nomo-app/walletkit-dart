@@ -125,6 +125,14 @@
   
 </dd>
 
+          <dt id="BTCRawTransaction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/BTCRawTransaction-class.html">BTCRawTransaction</a></span> 
+
+</dt>
+<dd>
+  Raw Transaction Implementation for Bitcoin
+</dd>
+
           <dt id="ChangeNode">
   <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/ChangeNode-class.html">ChangeNode</a></span> 
 
@@ -163,6 +171,14 @@
 </dt>
 <dd>
   
+</dd>
+
+          <dt id="EC8RawTransaction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/EC8RawTransaction-class.html">EC8RawTransaction</a></span> 
+
+</dt>
+<dd>
+  Raw Transaction Implementation for EC8
 </dd>
 
           <dt id="ElectrumInput">
@@ -501,6 +517,14 @@
   
 </dd>
 
+          <dt id="RawTransaction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/RawTransaction-class.html">RawTransaction</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
           <dt id="ReceiveNode">
   <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_node/ReceiveNode-class.html">ReceiveNode</a></span> 
 
@@ -574,7 +598,7 @@
 </dd>
 
           <dt id="TransferIntent">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a></span> 
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a><span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></span> 
 
 </dt>
 <dd>
@@ -741,6 +765,17 @@
       <h2>Extensions</h2>
 
       <dl>
+          <dt id="AmountUtil">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/AmountUtil.html">AmountUtil</a></span>
+  on <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>
+  
+
+</dt>
+<dd>
+  
+</dd>
+
+
           <dt id="BigIntUtil">
   <span class="name "><a href="../extensions/BigIntUtil.html">BigIntUtil</a></span>
   on <a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>
@@ -766,6 +801,17 @@
           <dt id="ConvUtil">
   <span class="name "><a href="../extensions/ConvUtil.html">ConvUtil</a></span>
   on <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>
+  
+
+</dt>
+<dd>
+  
+</dd>
+
+
+          <dt id="DoubleAmountUtil">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/DoubleAmountUtil.html">DoubleAmountUtil</a></span>
+  on <a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a>
   
 
 </dt>
@@ -1672,6 +1718,30 @@
 
 </dd>
 
+          <dt id="SEGWIT_FLAG" class="constant">
+    <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/SEGWIT_FLAG-constant.html">SEGWIT_FLAG</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="SEGWIT_MARKER" class="constant">
+    <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/SEGWIT_MARKER-constant.html">SEGWIT_MARKER</a></span>
+  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
           <dt id="sidiToken" class="constant">
     <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_predefined_assets/sidiToken-constant.html">sidiToken</a></span>
   <span class="signature">&#8594; const dynamic</span>
@@ -2119,6 +2189,7 @@
 <dd>
   Creates a dummy transaction to estimate the size of the transaction and hence the fee
 Also returns the chosen UTXOs so that they can be used to create the real transaction with the same UTXOs
+Includes a safety margin so that changes in the Amount dont lead to a different fee
   
 
 </dd>
@@ -2176,7 +2247,7 @@ Also returns the chosen UTXOs so that they can be used to create the real transa
 </dd>
 
           <dt id="buildUnsignedTransaction" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/buildUnsignedTransaction.html">buildUnsignedTransaction</a></span><span class="signature">(<wbr><span class="parameter" id="buildUnsignedTransaction-param-intent">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-txList"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">txList</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-feePerByte"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span> <span class="parameter-name">feePerByte</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-changeAddresses"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">changeAddresses</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-preChosenUTXOs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">preChosenUTXOs</span>}</span>)
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/buildUnsignedTransaction.html">buildUnsignedTransaction</a></span><span class="signature">(<wbr><span class="parameter" id="buildUnsignedTransaction-param-intent">{<span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-txList"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">txList</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-feePerByte"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">feePerByte</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-changeAddresses"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">changeAddresses</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-preChosenUTXOs"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">preChosenUTXOs</span>}</span>)
     <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
@@ -2504,7 +2575,7 @@ Also returns the chosen UTXOs so that they can be used to create the real transa
 
           <dt id="estimateFeeForPriority" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/estimateFeeForPriority.html">estimateFeeForPriority</a></span><span class="signature">(<wbr><span class="parameter" id="estimateFeeForPriority-param-blocks">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">blocks</span>, </span><span class="parameter" id="estimateFeeForPriority-param-network"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">network</span>, </span><span class="parameter" id="estimateFeeForPriority-param-initalClient"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">initalClient</span>}</span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
   </span>
   
 
@@ -2984,7 +3055,7 @@ Also returns the chosen UTXOs so that they can be used to create the real transa
           
   <dt id="DummyTxInfo" class="">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/DummyTxInfo.html">DummyTxInfo</a></span>
-    = (<span class="field">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="field-name">chosenUTXOs</span>, </span><span class="field"><span class="type-annotation">dynamic</span> <span class="field-name">dummyTx</span>}</span>)
+    = (<span class="field">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="field-name">chosenUTXOs</span>, </span><span class="field"><span class="type-annotation">dynamic</span> <span class="field-name">dummyRawTx</span>}</span>)
   </span>
   
 
@@ -3134,6 +3205,7 @@ Also returns the chosen UTXOs so that they can be used to create the real transa
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_predefined_assets/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_predefined_assets-library.html">src/domain/predefined_assets</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_proof_of_payment/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_proof_of_payment-library.html">src/crypto/utxo/proof_of_payment</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">src/crypto/evm/transaction/raw_evm_transaction</a></li>
+      <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction-library.html">src/crypto/utxo/entities/raw_transaction</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">src/crypto/evm/rlp</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send-library.html">src/crypto/utxo/send</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">src/crypto/evm/signing</a></li>

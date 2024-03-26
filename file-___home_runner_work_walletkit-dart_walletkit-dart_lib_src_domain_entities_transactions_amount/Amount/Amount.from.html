@@ -62,7 +62,7 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">Amount.from</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="from-param-value">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/num-class.html">num</a></span> <span class="parameter-name">value</span>, </span></li>
+      <span class="name ">Amount.from</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="from-param-value">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">value</span>, </span></li>
 <li><span class="parameter" id="from-param-decimals"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">decimals</span>}</span></li>
 </ol>)
     </section>
@@ -78,7 +78,7 @@ This is useful when the value is already in the smallest unit of the currency</p
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Amount.from({
-  required num value,
+  required int value,
   required this.decimals,
 }) : value = BigInt.from(value);</code></pre>
 </section>

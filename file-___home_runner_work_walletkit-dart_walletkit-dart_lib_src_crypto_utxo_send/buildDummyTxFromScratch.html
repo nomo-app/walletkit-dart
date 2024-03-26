@@ -77,7 +77,8 @@
     
 <section class="desc markdown">
   <p>Creates a dummy transaction to estimate the size of the transaction and hence the fee
-Also returns the chosen UTXOs so that they can be used to create the real transaction with the same UTXOs</p>
+Also returns the chosen UTXOs so that they can be used to create the real transaction with the same UTXOs
+Includes a safety margin so that changes in the Amount dont lead to a different fee</p>
 </section>
 
 
@@ -117,15 +118,14 @@ Also returns the chosen UTXOs so that they can be used to create the real transa
     networkType: networkType,
   );
 
-  return (
-    dummyTx: buildDummyTx(
-      networkType: networkType,
-      walletType: walletType,
-      inputMap: inputMap,
-      dummyOutputs: dummyOutputs,
-    ),
-    chosenUTXOs: chosenUTXOs
+  final dummyTx = buildDummyTx(
+    networkType: networkType,
+    walletType: walletType,
+    inputMap: inputMap,
+    dummyOutputs: dummyOutputs,
   );
+
+  return (dummyRawTx: dummyTx, chosenUTXOs: chosenUTXOs);
 }</code></pre>
 </section>
 

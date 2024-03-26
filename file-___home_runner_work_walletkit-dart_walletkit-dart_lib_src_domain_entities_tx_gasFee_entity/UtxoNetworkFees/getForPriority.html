@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>
+<span class="returntype">dynamic</span>
 <span class="name ">getForPriority</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getForPriority-param-priority"><span class="type-annotation">dynamic</span> <span class="parameter-name">priority</span></span></li>
 </ol>)
 
@@ -76,7 +76,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">double getForPriority(FeePriority priority) =&gt; switch (priority) {
+  <pre class="language-dart"><code class="language-dart">Amount getForPriority(FeePriority priority) =&gt; switch (priority) {
       FeePriority.nextBlock =&gt; nextBlock,
       FeePriority.secondBlock =&gt; secondBlock,
       FeePriority.hour =&gt; hour,
