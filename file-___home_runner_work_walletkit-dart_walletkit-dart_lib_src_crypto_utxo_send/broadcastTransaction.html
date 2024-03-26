@@ -83,7 +83,6 @@
 }) async {
   final (result, _, error) = await fetchFromRandomElectrumXNode(
     (client) async {
-      print(&quot;Broadcasting Tx to ${client.host}&quot;);
       final broadcastResult =
           await client.broadcastTransaction(rawTxHex: rawTxHex);
       return broadcastResult;
