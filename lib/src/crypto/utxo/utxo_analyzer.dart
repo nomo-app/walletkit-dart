@@ -77,18 +77,18 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
   final newTxs = allTxs.where(
     (tx) {
       final isNotAvailable = tx is NotAvaialableUTXOTransaction;
+      if (isNotAvailable) return true;
+
       final isCached = cachedTransactions.any((cTx) => cTx.id == tx.hash);
 
-      return isNotAvailable == false && isCached == false;
+      return isCached == false;
     },
   );
 
   final pendingTxs = allTxs.where(
     (tx) {
       return cachedTransactions.any((cTx) {
-        return cTx.id == tx.hash &&
-            cTx.status == ConfirmationStatus.pending &&
-            cTx is! NotAvaialableUTXOTransaction;
+        return cTx.id == tx.hash && cTx.status == ConfirmationStatus.pending;
       });
     },
   );
