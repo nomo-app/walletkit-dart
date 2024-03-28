@@ -76,9 +76,6 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
 
   final newTxs = allTxs.where(
     (tx) {
-      final isNotAvailable = tx is NotAvaialableUTXOTransaction;
-      if (isNotAvailable) return true;
-
       final isCached = cachedTransactions.any((cTx) => cTx.id == tx.hash);
 
       return isCached == false;
@@ -87,9 +84,12 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
 
   final pendingTxs = allTxs.where(
     (tx) {
-      return cachedTransactions.any((cTx) {
-        return cTx.id == tx.hash && cTx.status == ConfirmationStatus.pending;
-      });
+      final cTx = cachedTransactions.singleWhereOrNull(
+        (cTx) => cTx.id == tx.hash,
+      );
+      if (cTx == null) return false;
+
+      return cTx.isPending || cTx is NotAvaialableUTXOTransaction;
     },
   );
   Logger.log("Found ${pendingTxs.length} pending TXs for ${token.symbol}");
