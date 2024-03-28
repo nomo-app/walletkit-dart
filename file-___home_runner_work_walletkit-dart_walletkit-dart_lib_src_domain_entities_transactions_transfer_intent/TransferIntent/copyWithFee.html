@@ -86,7 +86,7 @@ If <code>balance</code> is provided, the target amount will be recalculated</p>
   Amount? balance,
 }) {
   final newTargetValue = switch ((balance, feeInfo)) {
-    (Amount balance, EvmFeeInformation info) =&gt;
+    (Amount balance, EvmFeeInformation info) when token.isERC20 == false =&gt;
       _calcTargetAmount(balance, info.fee),
     _ =&gt; amount,
   };
