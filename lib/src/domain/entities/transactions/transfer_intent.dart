@@ -50,7 +50,7 @@ class TransferIntent<T extends FeeInformation?> {
     Amount? balance,
   }) {
     final newTargetValue = switch ((balance, feeInfo)) {
-      (Amount balance, EvmFeeInformation info) =>
+      (Amount balance, EvmFeeInformation info) when token.isERC20 == false =>
         _calcTargetAmount(balance, info.fee),
       _ => amount,
     };
