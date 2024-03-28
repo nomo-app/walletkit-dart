@@ -131,7 +131,7 @@
       if (tx == null) {
         Logger.logWarning(
             &quot;Failed to fetch TX ${txInfo.hash} from ${client.host}&quot;);
-        txs.add(txInfo.notAvailableUTXOTransaction);
+        txs.add(txInfo.getNotAvailableUTXOTransaction(type.coin));
         continue;
       }
 
