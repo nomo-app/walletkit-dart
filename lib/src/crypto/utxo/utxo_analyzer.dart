@@ -535,7 +535,7 @@ Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({
       if (tx == null) {
         Logger.logWarning(
             "Failed to fetch TX ${txInfo.hash} from ${client.host}");
-        txs.add(txInfo.notAvailableUTXOTransaction);
+        txs.add(txInfo.getNotAvailableUTXOTransaction(type.coin));
         continue;
       }
 

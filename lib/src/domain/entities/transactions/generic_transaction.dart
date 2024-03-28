@@ -1,14 +1,12 @@
 library generic_transaction;
 
-import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
 
 part 'generic_transaction.g.dart';
 
-base class GenericTransaction extends Equatable
-    implements Comparable<GenericTransaction> {
+base class GenericTransaction implements Comparable<GenericTransaction> {
   @HiveField(0)
   final String hash;
   @HiveField(1)
@@ -72,7 +70,17 @@ base class GenericTransaction extends Equatable
   }
 
   @override
-  List<Object?> get props => [hash, token.symbol, block];
+  int get hashCode => hash.hashCode ^ token.hashCode ^ block.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is GenericTransaction &&
+        other.hash == hash &&
+        other.token == token &&
+        other.block == block;
+  }
 
   Map<String, dynamic> toJson() {
     return {
