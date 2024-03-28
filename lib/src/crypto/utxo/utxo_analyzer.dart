@@ -76,20 +76,20 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
 
   final newTxs = allTxs.where(
     (tx) {
-      final isNotAvailable = tx is NotAvaialableUTXOTransaction;
       final isCached = cachedTransactions.any((cTx) => cTx.id == tx.hash);
 
-      return isNotAvailable == false && isCached == false;
+      return isCached == false;
     },
   );
 
   final pendingTxs = allTxs.where(
     (tx) {
-      return cachedTransactions.any((cTx) {
-        return cTx.id == tx.hash &&
-            cTx.status == ConfirmationStatus.pending &&
-            cTx is! NotAvaialableUTXOTransaction;
-      });
+      final cTx = cachedTransactions.singleWhereOrNull(
+        (cTx) => cTx.id == tx.hash,
+      );
+      if (cTx == null) return false;
+
+      return cTx.isPending || cTx is NotAvaialableUTXOTransaction;
     },
   );
   Logger.log("Found ${pendingTxs.length} pending TXs for ${token.symbol}");
@@ -535,7 +535,7 @@ Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({
       if (tx == null) {
         Logger.logWarning(
             "Failed to fetch TX ${txInfo.hash} from ${client.host}");
-        txs.add(txInfo.notAvailableUTXOTransaction);
+        txs.add(txInfo.getNotAvailableUTXOTransaction(type.coin));
         continue;
       }
 

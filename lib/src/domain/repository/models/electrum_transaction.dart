@@ -22,7 +22,8 @@ class ElectrumTransactionInfo {
   @override
   int get hashCode => hash.hashCode;
 
-  NotAvaialableUTXOTransaction get notAvailableUTXOTransaction {
-    return NotAvaialableUTXOTransaction(hash, height);
+  NotAvaialableUTXOTransaction getNotAvailableUTXOTransaction(
+      TokenEntity token) {
+    return NotAvaialableUTXOTransaction(hash, height, token);
   }
 }

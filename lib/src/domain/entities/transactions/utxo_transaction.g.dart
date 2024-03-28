@@ -240,6 +240,7 @@ class NotAvaialableUTXOTransactionAdapter
     return NotAvaialableUTXOTransaction(
       fields[0] as String,
       fields[1] as int,
+      fields[4] as TokenEntity,
     );
   }
 

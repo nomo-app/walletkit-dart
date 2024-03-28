@@ -472,7 +472,7 @@ extension JsonUtil on Json {
 
 @HiveType(typeId: 21)
 final class NotAvaialableUTXOTransaction extends UTXOTransaction {
-  NotAvaialableUTXOTransaction(String hash, int block)
+  NotAvaialableUTXOTransaction(String hash, int block, TokenEntity token)
       : super(
           block: block,
           hash: hash,
@@ -487,7 +487,7 @@ final class NotAvaialableUTXOTransaction extends UTXOTransaction {
           sender: "",
           status: ConfirmationStatus.notSubmitted,
           timeMilli: -1,
-          token: nullToken,
+          token: token,
           transferMethod: TransactionTransferMethod.unknown,
         );
 }
