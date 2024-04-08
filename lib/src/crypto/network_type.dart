@@ -7,9 +7,13 @@ sealed class NetworkType {
   final String messagePrefix;
   final TokenEntity coin;
 
+  /// Block time in seconds
+  final int blockTime;
+
   const NetworkType({
     required this.messagePrefix,
     required this.coin,
+    required this.blockTime,
   });
 }
 
@@ -25,6 +29,7 @@ sealed class EVMNetworkType extends NetworkType {
     required super.messagePrefix,
     required this.chainId,
     required this.rpcUrl,
+    required super.blockTime,
     this.blockExplorer,
   });
 
@@ -59,12 +64,10 @@ sealed class UTXONetworkType extends NetworkType {
 
   final ({int legacy, int segwit}) dustTreshhold;
 
-  /// Block time in seconds
-  final int blockTime;
-
   const UTXONetworkType({
     required super.messagePrefix,
     required super.coin,
+    required super.blockTime,
     required this.networkBIP,
     required this.pubKeyHashPrefix,
     required this.scriptHashPrefix,
@@ -75,7 +78,6 @@ sealed class UTXONetworkType extends NetworkType {
     required this.sighash,
     required this.addressPrefixes,
     required this.dustTreshhold,
-    required this.blockTime,
   });
 
   @override
@@ -382,6 +384,7 @@ class ETHEREUM_NETWORK extends EVMNetworkType {
               "AC72N833U9MKUNXS44MV27T3HKEN4WYYT3"
             ]
           ),
+          blockTime: 12,
         );
 }
 
@@ -394,6 +397,7 @@ class ZENIQ_SMART_NETWORK extends EVMNetworkType {
           coin: zeniqSmart,
           messagePrefix: "\x19Zeniq Signed Message:\n",
           rpcUrl: zeniqSmartRPCEndpoint,
+          blockTime: 3,
         );
 }
 
@@ -407,6 +411,7 @@ class BNB_NETWORK extends EVMNetworkType {
           blockExplorer: (bnbScanBaseEndpoint, const [bnbScanApiKey]),
           coin: binanceSmart,
           messagePrefix: "\x19Binance Chain Signed Message:\n",
+          blockTime: 3,
         );
 }
 
@@ -420,5 +425,6 @@ class POLYGON_NETWORK extends EVMNetworkType {
           blockExplorer: (polygonScanBaseEndpoint, const [polygonScanApiKey]),
           coin: polygon,
           messagePrefix: "\x19Polygon Signed Message:\n",
+          blockTime: 2,
         );
 }
