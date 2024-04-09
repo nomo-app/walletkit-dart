@@ -92,6 +92,7 @@ TransferIntent read(BinaryReader reader) {
     amount: fields[2] as Amount,
     feeInfo: fields[3] as FeeInformation?,
     token: fields[0] as TokenEntity,
+    memo: fields[4] as String?,
   );
 }</code></pre>
 </section>

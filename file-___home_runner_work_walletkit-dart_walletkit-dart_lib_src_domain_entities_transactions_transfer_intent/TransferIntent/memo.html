@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the copyWithFee method from the TransferIntent class, for the Dart programming language.">
-  <title>copyWithFee method - TransferIntent class - transfer_intent library - Dart API</title>
+  <meta name="description" content="API docs for the memo property from the TransferIntent class, for the Dart programming language.">
+  <title>memo property - TransferIntent class - transfer_intent library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">src&#47;domain&#47;entities&#47;transactions&#47;transfer_intent.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
-    <li class="self-crumb">copyWithFee&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt; method</li>
+    <li class="self-crumb">memo property</li>
   </ol>
-  <div class="self-name">copyWithFee</div>
+  <div class="self-name">memo</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,55 +57,30 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent&#47;TransferIntent-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">copyWithFee&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span> method 
+<h1><span class="kind-property">memo</span> property 
 </h1></div>
 
-    <section class="multi-line-signature">
+      <section class="multi-line-signature">
+        
+        <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?
+        <span class="name ">memo</span>
+        <div class="features"><span class="feature">final</span></div>
+
+      </section>
       
 
-<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-<span class="name ">copyWithFee</span>&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="copyWithFee-param-feeInfo"><span class="type-annotation">T</span> <span class="parameter-name">feeInfo</span>, {</span></li>
-<li><span class="parameter" id="copyWithFee-param-balance"><span class="type-annotation">dynamic</span> <span class="parameter-name">balance</span>, </span></li>
-</ol>})
-
       
-
-    </section>
-    
-<section class="desc markdown">
-  <p>Copy the transfer intent with a new fee
-If <code>balance</code> is provided, the target amount will be recalculated</p>
-</section>
-
-
-    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">TransferIntent&lt;T&gt; copyWithFee&lt;T extends FeeInformation&gt;(
-  T feeInfo, {
-  Amount? balance,
-}) {
-  final newTargetValue = switch ((balance, feeInfo)) {
-    (Amount balance, EvmFeeInformation info) when token.isERC20 == false =&gt;
-      _calcTargetAmount(balance, info.fee),
-    _ =&gt; amount,
-  };
-
-  return TransferIntent(
-    recipient: recipient,
-    amount: newTargetValue,
-    feeInfo: feeInfo,
-    token: token,
-    memo: memo,
-  );
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">@HiveField(4)
+final String? memo;</code></pre>
 </section>
 
 
-  </div> <!-- /.main-content -->
+</div> <!-- /.main-content -->
 
-  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -116,15 +91,15 @@ If <code>balance</code> is provided, the target amount will be recalculated</p>
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">transfer_intent</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
-    <li class="self-crumb">copyWithFee&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt; method</li>
+    <li class="self-crumb">memo property</li>
 </ol>
 
 
-    <h5>TransferIntent class</h5>
-    <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-->
+  <h5>TransferIntent class</h5>
+  <div id="dartdoc-sidebar-left-content"></div>
+</div><!--/.sidebar-offcanvas-->
 
-  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 
 </main>
