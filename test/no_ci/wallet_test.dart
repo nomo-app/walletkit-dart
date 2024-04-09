@@ -24,6 +24,7 @@ void main() {
         amount: Amount.convert(value: 1, decimals: zeniqSmart.decimals),
         feeInfo: null,
         token: zeniqSmart,
+        memo: null,
       ),
       credentials: credentials,
     );
@@ -43,6 +44,7 @@ void main() {
         amount: Amount.convert(value: 0.001, decimals: avinocZSC.decimals),
         feeInfo: null,
         token: avinocZSC,
+        memo: null,
       ),
       credentials: credentials,
     );
@@ -68,6 +70,7 @@ void main() {
       amount: Amount(value: BigInt.from(100000000), decimals: 8),
       feeInfo: null,
       token: zeniqCoin,
+      memo: null,
     );
 
     final unsignedTx = buildUnsignedTransaction(
@@ -131,6 +134,7 @@ void main() {
       amount: Amount.convert(value: 1.2, decimals: 5),
       feeInfo: null,
       token: ec8Coin,
+      memo: null,
     );
 
     final unsignedTx = buildUnsignedTransaction(

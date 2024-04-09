@@ -21,13 +21,14 @@ class TransferIntentAdapter extends TypeAdapter<TransferIntent> {
       amount: fields[2] as Amount,
       feeInfo: fields[3] as FeeInformation?,
       token: fields[0] as TokenEntity,
+      memo: fields[4] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, TransferIntent obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.token)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class TransferIntentAdapter extends TypeAdapter<TransferIntent> {
       ..writeByte(2)
       ..write(obj.amount)
       ..writeByte(3)
-      ..write(obj.feeInfo);
+      ..write(obj.feeInfo)
+      ..writeByte(4)
+      ..write(obj.memo);
   }
 
   @override

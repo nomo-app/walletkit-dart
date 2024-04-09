@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -16,11 +18,15 @@ class TransferIntent<T extends FeeInformation?> {
   @HiveField(3)
   final T? feeInfo;
 
+  @HiveField(4)
+  final String? memo;
+
   const TransferIntent({
     required this.recipient,
     required this.amount,
     required this.feeInfo,
     required this.token,
+    required this.memo,
   });
 
   Amount? get fee {
@@ -60,6 +66,7 @@ class TransferIntent<T extends FeeInformation?> {
       amount: newTargetValue,
       feeInfo: feeInfo,
       token: token,
+      memo: memo,
     );
   }
 
@@ -76,5 +83,24 @@ class TransferIntent<T extends FeeInformation?> {
       'token': token.symbol,
       'fee': feeInfo?.toJson(),
     };
+  }
+
+  TransferIntent<T> copyWith({String? memo}) {
+    return TransferIntent<T>(
+      recipient: recipient,
+      amount: amount,
+      feeInfo: feeInfo,
+      token: token,
+      memo: memo ?? this.memo,
+    );
+  }
+
+  Uint8List? get encodedMemo {
+    if (memo == null) {
+      return null;
+    }
+    final utf = utf8.encode(memo!);
+
+    return utf;
   }
 }

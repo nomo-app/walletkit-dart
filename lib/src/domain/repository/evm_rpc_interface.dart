@@ -252,6 +252,7 @@ final class EvmRpcInterface {
         value: web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, amountWei.value),
         gasPrice: gasPriceEther,
         maxGas: gasLimit,
+        data: intent.encodedMemo,
       ),
       chainId: type.chainId,
     );
