@@ -169,8 +169,8 @@
         seed: seed,
         networkType: networkType,
         childDerivationPath: node.derivationPath,
-        walletPath: HDWalletPath.fromString(
-            node.derivationPath), &#47;&#47; TODO: Store HDWalletPath better
+        walletPath: HDWalletPath.fromPurpose(
+            node.walletPurpose), &#47;&#47; TODO: Store HDWalletPath better
       ),
   ];
 

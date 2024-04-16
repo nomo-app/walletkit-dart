@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the HDWalletPath.fromString constructor from Class HDWalletPath from the hd_wallet_type library, for the Dart programming language.">
-  <title>HDWalletPath.fromString constructor - HDWalletPath - hd_wallet_type library - Dart API</title>
+  <meta name="description" content="API docs for the HDWalletPath.fromPurpose constructor from Class HDWalletPath from the hd_wallet_type library, for the Dart programming language.">
+  <title>HDWalletPath.fromPurpose constructor - HDWalletPath - hd_wallet_type library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type-library.html">src&#47;domain&#47;entities&#47;hd_wallet_type.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPath-class.html">HDWalletPath</a></li>
-    <li class="self-crumb">HDWalletPath.fromString factory constructor</li>
+    <li class="self-crumb">HDWalletPath.fromPurpose factory constructor</li>
   </ol>
-  <div class="self-name">HDWalletPath.fromString</div>
+  <div class="self-name">HDWalletPath.fromPurpose</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,12 +57,12 @@
       data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type&#47;HDWalletPath-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">HDWalletPath.fromString</span> constructor 
+<h1><span class="kind-constructor">HDWalletPath.fromPurpose</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">HDWalletPath.fromString</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromString-param-path"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">path</span></span></li>
+      <span class="name ">HDWalletPath.fromPurpose</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromPurpose-param-purpose"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPurpose.html">HDWalletPurpose</a></span> <span class="parameter-name">purpose</span></span></li>
 </ol>)
     </section>
 
@@ -72,18 +72,12 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory HDWalletPath.fromString(String path) {
-  final parts = path.split(&quot;&#47;&quot;);
-  if (parts.length &lt; 2) {
-    throw ArgumentError(&quot;Invalid path: $path&quot;);
-  }
-  final purpose = HDWalletPurpose.fromString(parts[0]);
-  final coinType = parts[1];
+  <pre class="language-dart"><code class="language-dart">factory HDWalletPath.fromPurpose(HDWalletPurpose purpose) {
   return switch (purpose) {
-    HDWalletPurpose.NO_STRUCTURE =&gt; NSHDWalletPath(coinType),
-    HDWalletPurpose.BIP44 =&gt; Bip44HDWalletPath(coinType),
-    HDWalletPurpose.BIP49 =&gt; Bip49HDWalletPath(coinType),
-    HDWalletPurpose.BIP84 =&gt; Bip84HDWalletPath(coinType),
+    HDWalletPurpose.NO_STRUCTURE =&gt; NSHDWalletPath(&#39;&#39;),
+    HDWalletPurpose.BIP44 =&gt; Bip44HDWalletPath(&#39;&#39;),
+    HDWalletPurpose.BIP49 =&gt; Bip49HDWalletPath(&#39;&#39;),
+    HDWalletPurpose.BIP84 =&gt; Bip84HDWalletPath(&#39;&#39;),
   };
 }</code></pre>
 </section>
@@ -103,7 +97,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type-library.html">hd_wallet_type</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPath-class.html">HDWalletPath</a></li>
-    <li class="self-crumb">HDWalletPath.fromString factory constructor</li>
+    <li class="self-crumb">HDWalletPath.fromPurpose factory constructor</li>
 </ol>
 
 
