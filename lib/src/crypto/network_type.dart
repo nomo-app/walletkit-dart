@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:bip32/bip32.dart' as bip32;
-import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 sealed class NetworkType {

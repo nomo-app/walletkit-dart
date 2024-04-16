@@ -13,7 +13,7 @@ void main() {
   test('Derive Addresses', () {
     final seed = loadFromEnv('TRON_SEED');
 
-    final masterNode = deriveMasterNodeFromSeed(
+    final _ = deriveMasterNodeFromSeed(
       seed: seed,
       walletPath: bitcoinNSHDPath,
     );
