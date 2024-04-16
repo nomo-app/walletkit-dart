@@ -78,18 +78,12 @@ sealed class HDWalletPath {
     return "$basePath/$account'/$change/$index";
   }
 
-  factory HDWalletPath.fromString(String path) {
-    final parts = path.split("/");
-    if (parts.length < 2) {
-      throw ArgumentError("Invalid path: $path");
-    }
-    final purpose = HDWalletPurpose.fromString(parts[0]);
-    final coinType = parts[1];
+  factory HDWalletPath.fromPurpose(HDWalletPurpose purpose) {
     return switch (purpose) {
-      HDWalletPurpose.NO_STRUCTURE => NSHDWalletPath(coinType),
-      HDWalletPurpose.BIP44 => Bip44HDWalletPath(coinType),
-      HDWalletPurpose.BIP49 => Bip49HDWalletPath(coinType),
-      HDWalletPurpose.BIP84 => Bip84HDWalletPath(coinType),
+      HDWalletPurpose.NO_STRUCTURE => NSHDWalletPath(''),
+      HDWalletPurpose.BIP44 => Bip44HDWalletPath(''),
+      HDWalletPurpose.BIP49 => Bip49HDWalletPath(''),
+      HDWalletPurpose.BIP84 => Bip84HDWalletPath(''),
     };
   }
 }
