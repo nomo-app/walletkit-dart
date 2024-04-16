@@ -1,5 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/ecurve.dart';
+import 'package:walletkit_dart/src/utils/base58.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+import 'package:web3dart/crypto.dart';
 import '../utils.dart';
 
 void main() {
@@ -13,15 +18,32 @@ void main() {
   test('Derive Addresses', () {
     final seed = loadFromEnv('TRON_SEED');
 
-    final masterNode = deriveMasterNodeFromSeed(
-      seed: seed,
-      walletPath: tronBip44HDPath,
+    final node = deriveNode(seed, tronBip44HDPath.defaultPath);
+
+    final address = uncompressedPublicKeyToAddress(
+      node.publicKeyUncompressed,
+      0x41,
     );
 
-    final xpub = masterNode.neutered().publicKey;
-
-    print("xpub: $xpub");
+    expect(address, "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
   });
 
   test('Validate Address', () {});
+}
+
+extension on BipNode {
+  Uint8List get publicKeyUncompressed {
+    if (privateKey == null) {
+      throw UnsupportedError("privateKey is null");
+    }
+    return pointFromScalar(privateKey!, false)!;
+  }
+}
+
+String uncompressedPublicKeyToAddress(Uint8List publicKey, int prefix) {
+  final addressInput = publicKey.sublist(1);
+  final publicKeyHash = keccak256(addressInput);
+  final addressBuffer = publicKeyHash.sublist(12);
+  final addressBase58 = base58encode(prefix, addressBuffer);
+  return addressBase58;
 }

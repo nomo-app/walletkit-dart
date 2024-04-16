@@ -107,15 +107,16 @@ String pubKeyHashToSegwitAddress(
 /// P2SH Address (Base58)
 ///
 String pubKeyHashToP2SHAddress(Uint8List pubKeyHash, int scriptHashPrefix) {
-  final prefixedHash = Uint8List.fromList([scriptHashPrefix, ...pubKeyHash]);
+  throw UnimplementedError();
+  // final prefixedHash = Uint8List.fromList([scriptHashPrefix, ...pubKeyHash]);
 
-  final checkSum = sha256Sha256Hash(prefixedHash).sublist(0, 4);
+  // final checkSum = sha256Sha256Hash(prefixedHash).sublist(0, 4);
 
-  final prefixedHashWithChecksum = Uint8List.fromList(
-    [...prefixedHash, ...checkSum],
-  );
+  // final prefixedHashWithChecksum = Uint8List.fromList(
+  //   [...prefixedHash, ...checkSum],
+  // );
 
-  return base58encode(prefixedHashWithChecksum);
+  // return base58encode(prefixedHashWithChecksum);
 }
 
 ///
