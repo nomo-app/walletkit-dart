@@ -19,7 +19,7 @@ void main() {
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       seed: devSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
     final selectedTx = txList.first;
@@ -91,7 +91,7 @@ void main() {
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: EurocoinNetwork,
       seed: devSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       minEndpoints: 1,
     );
@@ -167,7 +167,7 @@ void main() {
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: ZeniqNetwork,
       seed: devSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       minEndpoints: 1,
     );

@@ -12,7 +12,7 @@ void main() {
     final (_, nodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: addressTypes,
     );
 

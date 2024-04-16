@@ -13,7 +13,7 @@ final seed = helloSeed;
 void main() {
   test('measure bip32 derivation performance', () {
     const c = EXTERNAL_CHAIN_INDEX;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
     const t = ZeniqNetwork;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
@@ -21,7 +21,7 @@ void main() {
     final masterNode = deriveMasterNode(
       ePubKey: ePubKey,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     expect(
       deriveChildNode(
@@ -29,7 +29,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mGDcPPDSnyJDKM7MzUTmFDwhaEHxFTEw1Q",
@@ -41,7 +41,7 @@ void main() {
           chainIndex: c,
           index: i,
           networkType: ZeniqNetwork,
-          walletType: type,
+          walletPurpose: type.purpose,
           addressTypes: [AddressType.legacy],
         ).address,
         startsWith("m"),
@@ -51,14 +51,14 @@ void main() {
 
   test('derive external ZENIQ addresses from ePubKey', () {
     const c = EXTERNAL_CHAIN_INDEX;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
     const t = ZeniqNetwork;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
     final masterNode = deriveMasterNode(
       ePubKey: ePubKey,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     expect(
       deriveChildNode(
@@ -66,7 +66,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mGDcPPDSnyJDKM7MzUTmFDwhaEHxFTEw1Q",
@@ -77,7 +77,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mW96EYARiQNDe1fua5Bc1x9nhNg47JrbM2",
@@ -88,7 +88,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mR4FAAi9v8MtJCiAVMtCu4MaTvhLFZofxf",
@@ -98,13 +98,13 @@ void main() {
   test('derive external Bitcoin addresses from ePubKey', () {
     const c = EXTERNAL_CHAIN_INDEX;
     const t = BitcoinNetwork;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
     final masterNode = deriveMasterNode(
       ePubKey: ePubKey,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     expect(
       deriveChildNode(
@@ -112,7 +112,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "113G5SRkh8KqMfmqJKphuS1ALjxC3ead3Z",
@@ -123,7 +123,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1ExjvbNjcZPqgLLNsvYYgADFTtLHrwYivT",
@@ -134,7 +134,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "19strDvTpHPWLXNdoDF9ZGR3ESMa7NpXPw",
@@ -144,11 +144,11 @@ void main() {
   test('derive multiple external ZENIQ addresses', () {
     const c = EXTERNAL_CHAIN_INDEX;
     const t = ZeniqNetwork;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
     final masterNode = deriveMasterNode(
       seed: helloSeed,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     expect(
       deriveChildNode(
@@ -156,7 +156,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mVTbmKpr8JCrsfPFYHCYWw9TwgSArNDLoR",
@@ -167,7 +167,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "maqPxzXWCt1q5UmWn6XLjE3QJUNdHGkED4",
@@ -178,7 +178,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mVGteJKnMiuep5wjj7FRp9JdftVNhV8QS7",
@@ -189,7 +189,7 @@ void main() {
         chainIndex: c,
         index: 3,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mTU69gAgvG9UgerEQrj9TiFr9jkYhTjGfY",
@@ -200,7 +200,7 @@ void main() {
         chainIndex: c,
         index: 4,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mQhMkrwU4oK69dmJbnFVnaqcdmuNNEvoTA",
@@ -212,7 +212,7 @@ void main() {
         chainIndex: c,
         index: 19,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mbdqnzumEruGcnjMYssVDo74f1AGvzkEyX",
@@ -222,11 +222,11 @@ void main() {
   test('derive multiple external BTC addresses', () {
     const c = EXTERNAL_CHAIN_INDEX;
     const t = BitcoinNetwork;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
     final masterNode = deriveMasterNode(
       seed: seed,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     expect(
       deriveChildNode(
@@ -234,7 +234,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1EHFTP3A2TEUuz3ir8ZVB9CviC6Qh24Fvv",
@@ -245,7 +245,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1Kf3f3jp733T7oRz5wtHPS6s4z2s2Jfkpi",
@@ -256,7 +256,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1E6YLMY6FswGrQcD2xcNUMN6SQ9cREai2U",
@@ -267,7 +267,7 @@ void main() {
         chainIndex: c,
         index: 3,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1CHjqjNzpRB6iyWhii667vKJvFQnRukXwD",
@@ -278,7 +278,7 @@ void main() {
         chainIndex: c,
         index: 4,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "19X1Sv9mxxLiBxRmudcSSnu5QHZcA6CtFH",
@@ -288,11 +288,11 @@ void main() {
   test('derive multiple internal ZENIQ addresses', () {
     const c = INTERNAL_CHAIN_INDEX;
     const t = ZeniqNetwork;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
     final masterNode = deriveMasterNode(
       seed: seed,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     expect(
       deriveChildNode(
@@ -300,7 +300,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mWS6NjWm1mdqWQMo39qeHwNpA3CxBC5rSa",
@@ -311,7 +311,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mPYfRo9F7UG3Sujue31bvs74A8Wypf86LX",
@@ -322,7 +322,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mGBPKm1gvMnbQyYBKMRBKUtNR4CY7yKDqc",
@@ -332,11 +332,11 @@ void main() {
   test('derive multiple internal BTC addresses', () {
     const c = INTERNAL_CHAIN_INDEX;
     const t = BitcoinNetwork;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
     final masterNode = deriveMasterNode(
       seed: seed,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     expect(
       deriveChildNode(
@@ -344,7 +344,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1FFk4nj4uvfTYj2GM1Cax9SGvYsC3Gp6A3",
@@ -355,7 +355,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "18NK7rMZ1dHfVEQNwtNYb5AWveBDYgvwAq",
@@ -366,7 +366,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1131pDzpWpDTJCedCn7ygwqBZrmu4g6t4",
@@ -470,12 +470,12 @@ void main() {
 
   test("Derive Litecoin Addresses", () async {
     const t = LitecoinNetwork;
-    const type = HDWalletType.BIP44_LITECOIN;
+    const type = litecoinBip44HDPath;
 
     final masterNode = deriveMasterNode(
       ePubKey: wkDebugXPUB,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     for (var i = 0; i < 10; i++) {
       final addresses = deriveChildNode(
@@ -483,7 +483,7 @@ void main() {
         chainIndex: EXTERNAL_CHAIN_INDEX,
         index: i,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.segwit, AddressType.legacy],
       ).addresses;
 
@@ -496,7 +496,7 @@ void main() {
         chainIndex: INTERNAL_CHAIN_INDEX,
         index: i,
         networkType: t,
-        walletType: type,
+        walletPurpose: type.purpose,
         addressTypes: [AddressType.segwit, AddressType.legacy],
       ).addresses;
 

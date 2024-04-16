@@ -14,7 +14,7 @@ void main() {
       networkType: EurocoinNetwork,
       seed: rejectSeed,
       minEndpoints: 2,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
     );
 
@@ -43,7 +43,7 @@ void main() {
 
     final (_, nodes) = await fetchUTXOTransactions(
       seed: rejectSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: EurocoinNetwork,
       minEndpoints: 1,
@@ -95,7 +95,7 @@ void main() {
   // test('Simulate All Send EC8 Tx', () async {
   //   final (txList, nodes) = await fetchUTXOTransactions(
   //     seed: rejectSeed,
-  //     walletTypes: [HDWalletType.NO_STRUCTURE],
+  //     walletTypes: [bitcoinNSHDPath],
   //     addressTypes: [AddressType.legacy],
   //     networkType: EurocoinNetwork,
   //     minEndpoints: 1,

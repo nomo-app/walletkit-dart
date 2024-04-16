@@ -65,7 +65,7 @@ void main() {
         memo: null,
       ),
       networkType: ZeniqNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletType: bitcoinNSHDPath,
       chosenUTXOs: chosenUTXOs,
       seed: rejectSeed,
       changeAddress: "mWthLdHK2DeQGSneiZ9SGeYtyueDsQc8uD",
@@ -113,7 +113,7 @@ void main() {
         memo: null,
       ),
       networkType: BitcoinNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletType: bitcoinNSHDPath,
       chosenUTXOs: chosenUTXOs,
       seed: rejectSeed,
       changeAddress: "1MGQBo8kinNLu7U3CrrgcEbpKZ8bXMMYNK",
@@ -182,7 +182,7 @@ void main() {
         memo: null,
       ),
       networkType: BitcoincashNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletType: bitcoinNSHDPath,
       chosenUTXOs: chosenUTXOs,
       seed: rejectSeed,
       changeAddress: "1LLFknJu3zHJHZqU5naBdrfSZFN9vW4sFU",
@@ -244,7 +244,7 @@ void main() {
   //       assets: bchCoin,
   //     ),
   //     networkType: LITECOIN_NETWORK,
-  //     walletType: HDWalletType.BIP84,
+  //     walletType: bitcoinBip84HDPath,
   //     chosenUTXOs: chosenUTXOs,
   //     seed: rejectSeed,
   //     changeAddress: "1LLFknJu3zHJHZqU5naBdrfSZFN9vW4sFU",
@@ -266,18 +266,18 @@ Future<UTXOTransaction> fetchUTXOTXByHashAndIndex(
   Uint8List? seed,
   UTXONetworkType networkType,
 ) async {
-  const walletType = HDWalletType.NO_STRUCTURE;
+  const walletType = bitcoinNSHDPath;
   final masterNode = deriveMasterNode(
     seed: seed,
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletType,
   );
   final node = deriveChildNode(
     masterNode: masterNode,
     chainIndex: chainIndex,
     index: nodeIndex,
     networkType: networkType,
-    walletType: walletType,
+    walletPurpose: walletType.purpose,
     addressTypes: [AddressType.legacy],
   );
 
@@ -303,7 +303,7 @@ Future<UTXOTransaction> fetchUTXOTXByHashAndIndex(
 Future<String> buildTestTransaction({
   required TransferIntent intent,
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletType,
   required Map<ElectrumOutput, UTXOTransaction> chosenUTXOs,
   required Uint8List seed,
   required String? changeAddress,
@@ -342,7 +342,7 @@ Future<String> buildTestTransaction({
     lockTime: lockTime,
     inputMap: inputMap,
     outputs: outputs,
-  ).sign(seed: seed, walletType: walletType, networkType: networkType);
+  ).sign(seed: seed, walletPath: walletType, networkType: networkType);
 
   return tx.asHex;
 }

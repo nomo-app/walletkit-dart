@@ -12,7 +12,7 @@ void main() {
     stopWatch.start();
     final (txList1, _) = await fetchUTXOTransactions(
       ePubKey: ePubKey,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
     );
@@ -21,7 +21,7 @@ void main() {
     final cacheSimulation = txList1.take(txList1.length ~/ 2).toSet();
     final (txList2, _) = await fetchUTXOTransactions(
       ePubKey: ePubKey,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       cachedTransactions: cacheSimulation,
       networkType: ZeniqNetwork,
@@ -52,7 +52,7 @@ void main() {
       stopWatch.start();
       final (txList, _) = await fetchUTXOTransactions(
         ePubKey: ePubKey,
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );

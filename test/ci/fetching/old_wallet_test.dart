@@ -30,7 +30,7 @@ void main() {
   test('Fetch Zeniq Txs $ePubKeyNS', () async {
     final (txs, _) = await fetchUTXOTransactions(
       ePubKey: ePubKeyNS,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
     );
@@ -45,7 +45,7 @@ void main() {
   test('Fetch Litecoin Txs $ePubKeyBip44LTC', () async {
     final (txs, _) = await fetchUTXOTransactions(
       ePubKey: ePubKeyBip44LTC,
-      walletTypes: [HDWalletType.BIP44_LITECOIN],
+      walletTypes: [litecoinBip44HDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
       networkType: LitecoinNetwork,
       minEndpoints: 1,
@@ -62,7 +62,7 @@ void main() {
   // test('Not Available Txs Cache Test', () async {
   //   final (txs, nodes) = await fetchUTXOTransactions(
   //     ePubKey: ePubKeyNS,
-  //     walletTypes: [HDWalletType.NO_STRUCTURE],
+  //     walletTypes: [bitcoinNSHDPath],
   //     addressTypes: [AddressType.legacy],
   //     networkType: ZeniqNetwork,
   //   );
@@ -71,7 +71,7 @@ void main() {
 
   //   final (txs2, _) = await fetchUTXOTransactions(
   //     ePubKey: ePubKeyNS,
-  //     walletTypes: [HDWalletType.NO_STRUCTURE],
+  //     walletTypes: [bitcoinNSHDPath],
   //     addressTypes: [AddressType.legacy],
   //     networkType: ZeniqNetwork,
   //     cachedNodes: nodes.toList(),

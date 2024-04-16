@@ -12,7 +12,7 @@ void main() {
         "xpub692ymxrAm8ZiquZW4AwHmXg8xnSsFeVyzGGTRBBmKVhRvYqwGjfd5yYw8JToejJJrKwKexFXgjnr4thKaSqYBSXKZvuxQtUDHRZsYoVaE8p";
 
     final (txs, _) = await fetchUTXOTransactions(
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
       ePubKey: epubKey,

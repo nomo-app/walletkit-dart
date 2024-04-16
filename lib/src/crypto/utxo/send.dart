@@ -8,6 +8,7 @@ import 'package:walletkit_dart/src/crypto/utxo/payments/input_selection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/output.dart';
+import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
@@ -23,7 +24,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 RawTransaction buildUnsignedTransaction({
   required TransferIntent intent,
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
   required Iterable<UTXOTransaction> txList,
   required Amount feePerByte,
   required Iterable<String> changeAddresses,
@@ -46,7 +47,7 @@ RawTransaction buildUnsignedTransaction({
       "targetValue < DUST_THRESHOLD: ${networkType.dustTreshhold.legacy}",
     );
   }
-  if (walletType == HDWalletType.BIP84 &&
+  if (walletPath.purpose == HDWalletPurpose.BIP84 &&
       targetValue < networkType.dustTreshhold.segwit.toBI) {
     throw SendFailure(
       "targetValue < DUST_THRESHOLD_BIP84: ${networkType.dustTreshhold.segwit}",
@@ -106,7 +107,7 @@ RawTransaction buildUnsignedTransaction({
 
   var dummyTx = buildDummyTx(
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletPath,
     inputMap: inputMap,
     dummyOutputs: dummyOutputs,
   );
@@ -138,7 +139,7 @@ RawTransaction buildUnsignedTransaction({
 
       dummyTx = buildDummyTx(
         networkType: networkType,
-        walletType: walletType,
+        walletPath: walletPath,
         inputMap: inputMap,
         dummyOutputs: dummyOutputs,
       );
@@ -202,7 +203,7 @@ typedef DummyTxInfo = ({
 DummyTxInfo buildDummyTxFromScratch({
   required TransferIntent intent,
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
   required Iterable<UTXOTransaction> txList,
   required List<String> changeAddresses,
 }) {
@@ -234,7 +235,7 @@ DummyTxInfo buildDummyTxFromScratch({
 
   final dummyTx = buildDummyTx(
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletPath,
     inputMap: inputMap,
     dummyOutputs: dummyOutputs,
   );
@@ -244,7 +245,7 @@ DummyTxInfo buildDummyTxFromScratch({
 
 RawTransaction buildDummyTx({
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
   required Map<ElectrumOutput, Input> inputMap,
   required List<Output> dummyOutputs,
 }) {
@@ -260,7 +261,7 @@ RawTransaction buildDummyTx({
   ).sign(
     seed: dummySeed,
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletPath,
   );
 
   return dummyTx;
@@ -268,7 +269,7 @@ RawTransaction buildDummyTx({
 
 List<Input> signInputs({
   required Map<ElectrumOutput, Input> inputs,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
   required UTXONetworkType networkType,
   required RawTransaction tx,
   required Uint8List seed,
@@ -287,7 +288,7 @@ List<Input> signInputs({
           seed: seed,
           childDerivationPath: output.node.derivationPath,
           networkType: networkType,
-          walletType: walletType,
+          walletPath: walletPath,
         );
       } else
         throw SendFailure("Can't sign input without node");
@@ -310,7 +311,7 @@ List<Input> signInputs({
       tx: tx,
       i: i,
       output: output,
-      walletType: walletType,
+      walletPurpose: walletPath.purpose,
       networkType: networkType,
       node: bip32Node,
     );
@@ -325,7 +326,7 @@ Uint8List createScriptSignature({
   required RawTransaction tx,
   required int i,
   required ElectrumOutput output,
-  required HDWalletType walletType,
+  required HDWalletPurpose walletPurpose,
   required UTXONetworkType networkType,
   required BIP32 node,
 }) {
@@ -358,7 +359,7 @@ Uint8List createScriptSignature({
   final scriptSig = encodeSignature(sig, hashType);
 
   final unlockingScript = constructScriptSig(
-    walletType: walletType,
+    walletPurpose: walletPurpose,
     signature: scriptSig,
     publicKey: node.publicKey,
   );
@@ -640,22 +641,21 @@ Uint8List signInput({
 }
 
 Uint8List constructScriptSig({
-  required HDWalletType walletType,
+  required HDWalletPurpose walletPurpose,
   required Uint8List signature,
   required Uint8List publicKey,
   Uint8List? redeemScript, // Required for BIP49 (P2SH-P2WPKH)
 }) =>
-    switch (walletType) {
-      HDWalletType.NO_STRUCTURE ||
-      HDWalletType.BIP44 ||
-      HDWalletType.BIP44_LITECOIN =>
+    switch (walletPurpose) {
+      HDWalletPurpose.NO_STRUCTURE ||
+      HDWalletPurpose.BIP44 =>
         Uint8List.fromList([
           signature.length,
           ...signature,
           publicKey.length,
           ...publicKey,
         ]),
-      HDWalletType.BIP49 => Uint8List.fromList([
+      HDWalletPurpose.BIP49 => Uint8List.fromList([
           0x00,
           signature.length,
           ...signature,
@@ -664,7 +664,7 @@ Uint8List constructScriptSig({
         ]),
 
       /// Should never be called as it is handled in constructWitnessScript
-      HDWalletType.BIP84 => Uint8List.fromList([
+      HDWalletPurpose.BIP84 => Uint8List.fromList([
           0x00,
           signature.length,
           ...signature,

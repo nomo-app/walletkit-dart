@@ -8,46 +8,48 @@ typedef BipNode = bip32.BIP32;
 
 String deriveExtendedPubKey({
   required Uint8List seed,
-  required UTXONetworkType type,
-  required HDWalletType walletType,
+  required HDWalletPath walletPurpose,
+  UTXONetworkType? type,
 }) {
   ///
   /// Walletkit Compatibility
   ///
   if (type == LitecoinNetwork) {
-    final depth1MasterNode = _deriveMasterNodeFromSeed(
+    final depth1MasterNode = deriveMasterNodeFromSeed(
       seed: seed,
       networkType: type,
-      walletType: HDWalletType.BIP44,
+      walletPath: bitcoinBip44HDPath, // TODO: Check if still valid
     );
 
     final parentFingerprint = depth1MasterNode.parentFingerprint;
 
-    final masterNode = _deriveMasterNodeFromSeed(
+    final masterNode = deriveMasterNodeFromSeed(
       seed: seed,
       networkType: type,
-      walletType: walletType,
+      walletPath: walletPurpose,
     );
     return masterNode.neutered().toBase58wkCompatibility(parentFingerprint, 1);
   }
 
-  final masterNode = _deriveMasterNodeFromSeed(
+  final masterNode = deriveMasterNodeFromSeed(
     seed: seed,
     networkType: type,
-    walletType: walletType,
+    walletPath: walletPurpose,
   );
   return masterNode.neutered().toBase58();
 }
 
-BipNode _deriveMasterNodeFromSeed({
+BipNode deriveMasterNodeFromSeed({
   required Uint8List seed,
-  required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
+  UTXONetworkType? networkType,
 }) {
-  final bipNetworkType = networkType.networkBIP.getForWalletType(walletType);
+  final bipNetworkType =
+      networkType?.networkBIP.getForWalletType(walletPath.purpose);
 
   final parentNode = BipNode.fromSeed(seed, bipNetworkType);
-  final BipNode node = parentNode.derivePath(walletType.purpose);
+  final BipNode node = parentNode.derivePath(
+      walletPath.purpose.string); // TODO: Use base Path with Account
 
   return node;
 }
@@ -56,7 +58,7 @@ BipNode deriveMasterNode({
   Uint8List? seed,
   String? ePubKey,
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
 }) {
   if (seed == null && ePubKey == null) {
     throw UnsupportedError("seed or ePubKey must be provided");
@@ -66,14 +68,14 @@ BipNode deriveMasterNode({
     return BipNode.fromBase58(
         ePubKey,
         networkType.networkBIP
-            .getForWalletType(walletType) //    bipNetworkType,
+            .getForWalletType(walletPath.purpose) //    bipNetworkType,
         );
   }
 
-  return _deriveMasterNodeFromSeed(
+  return deriveMasterNodeFromSeed(
     seed: seed!,
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletPath,
   );
 }
 
@@ -83,7 +85,7 @@ NodeWithAddress deriveChildNode({
   required int index,
   required UTXONetworkType networkType,
   required Iterable<AddressType> addressTypes,
-  required HDWalletType walletType,
+  required HDWalletPurpose walletPurpose,
 }) {
   if (index < 0) {
     throw UnsupportedError("index must not be negative");
@@ -112,7 +114,7 @@ NodeWithAddress deriveChildNode({
     chainIndex: chainIndex,
     derivationPath: childDerivationPath,
     addresses: addressMap,
-    walletType: walletType,
+    walletPurpose: walletPurpose,
   );
 }
 
@@ -120,12 +122,12 @@ bip32.BIP32 deriveChildNodeFromPath({
   required Uint8List seed,
   required String childDerivationPath,
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
 }) {
   final masterNode = deriveMasterNode(
     seed: seed,
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletPath,
   );
 
   final node = masterNode.derivePath(childDerivationPath);

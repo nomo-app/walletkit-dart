@@ -168,3 +168,13 @@ const LFi = EthBasedTokenEntity(
   decimals: 8,
   contractAddress: "0x9b760D11F63cb80BFFBCf69421cd46511E429f83",
 );
+
+///
+/// Tron Assets
+///
+
+const tron = EvmEntity(
+  name: 'Tron',
+  symbol: 'TRX',
+  decimals: 6,
+);

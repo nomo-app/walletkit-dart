@@ -146,7 +146,7 @@ sealed class RawTransaction {
 
   RawTransaction sign({
     required Uint8List seed,
-    required HDWalletType walletType,
+    required HDWalletPath walletPath,
     required UTXONetworkType networkType,
   }) {
     assert(
@@ -156,7 +156,7 @@ sealed class RawTransaction {
 
     final signedInputs = signInputs(
       inputs: inputMap!,
-      walletType: walletType,
+      walletPath: walletPath,
       tx: this,
       networkType: networkType,
       seed: seed,

@@ -2,8 +2,6 @@ import 'package:bip32/bip32.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-part "node.g.dart";
-
 /// TODO: Make sure this only has the privateKey when used for signing. Else EpubKey should be used.
 
 sealed class NodeWithAddress {
@@ -19,7 +17,7 @@ sealed class NodeWithAddress {
   final Map<AddressType, String> addresses;
 
   @HiveField(3)
-  final HDWalletType walletType;
+  final HDWalletPurpose walletPurpose;
 
   @HiveField(4)
   final String publicKey;
@@ -42,7 +40,7 @@ sealed class NodeWithAddress {
             address: address,
             derivationPath: derivationPath,
             addresses: addresses,
-            walletType: walletType,
+            walletPurpose: walletPurpose,
             publicKey: publicKey,
           ),
         ChangeNode() => ChangeNode(
@@ -50,7 +48,7 @@ sealed class NodeWithAddress {
             address: address,
             derivationPath: derivationPath,
             addresses: addresses,
-            walletType: walletType,
+            walletPurpose: walletPurpose,
             publicKey: publicKey,
           ),
         EmptyNode() => EmptyNode(),
@@ -62,7 +60,7 @@ sealed class NodeWithAddress {
     required int chainIndex,
     required String derivationPath,
     required Map<AddressType, String> addresses,
-    required HDWalletType walletType,
+    required HDWalletPurpose walletPurpose,
   }) {
     if (chainIndex == EXTERNAL_CHAIN_INDEX) {
       return ReceiveNode(
@@ -70,7 +68,7 @@ sealed class NodeWithAddress {
         address: address,
         derivationPath: derivationPath,
         addresses: addresses,
-        walletType: walletType,
+        walletPurpose: walletPurpose,
         publicKey: node.publicKey.toHex,
       );
     }
@@ -80,7 +78,7 @@ sealed class NodeWithAddress {
         address: address,
         derivationPath: derivationPath,
         addresses: addresses,
-        walletType: walletType,
+        walletPurpose: walletPurpose,
         publicKey: node.publicKey.toHex,
       );
     }
@@ -92,7 +90,7 @@ sealed class NodeWithAddress {
     required this.address,
     required this.derivationPath,
     required this.addresses,
-    required this.walletType,
+    required this.walletPurpose,
     required this.publicKey,
   });
 }
@@ -104,7 +102,7 @@ final class ReceiveNode extends NodeWithAddress {
     required super.address,
     required super.derivationPath,
     required super.addresses,
-    required super.walletType,
+    required super.walletPurpose,
     required super.publicKey,
   });
 }
@@ -116,7 +114,7 @@ final class ChangeNode extends NodeWithAddress {
     required super.address,
     required super.derivationPath,
     required super.addresses,
-    required super.walletType,
+    required super.walletPurpose,
     required super.publicKey,
   });
 }
@@ -129,7 +127,7 @@ final class EmptyNode extends NodeWithAddress {
           address: "",
           derivationPath: "",
           addresses: const {},
-          walletType: HDWalletType.BIP44,
+          walletPurpose: HDWalletPurpose.BIP44,
           publicKey: "",
         );
 }

@@ -114,7 +114,8 @@ Future<POPResult> proofOfPayment({
         seed: seed,
         networkType: networkType,
         childDerivationPath: node.derivationPath,
-        walletType: node.walletType,
+        walletPath: HDWalletPath.fromString(
+            node.derivationPath), // TODO: Store HDWalletPath better
       ),
   ];
 
