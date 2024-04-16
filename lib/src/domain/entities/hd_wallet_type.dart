@@ -59,7 +59,11 @@ sealed class HDWalletPath {
   const HDWalletPath(this.purpose, this.coinType);
 
   String get basePath {
-    return "$purpose/$coinType";
+    return "${purpose.string}/$coinType";
+  }
+
+  String get account0Path {
+    return "$basePath/0'";
   }
 
   String get defaultPath {

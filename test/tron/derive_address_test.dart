@@ -13,10 +13,14 @@ void main() {
   test('Derive Addresses', () {
     final seed = loadFromEnv('TRON_SEED');
 
-    final _ = deriveMasterNodeFromSeed(
+    final masterNode = deriveMasterNodeFromSeed(
       seed: seed,
-      walletPath: bitcoinNSHDPath,
+      walletPath: tronBip44HDPath,
     );
+
+    final xpub = masterNode.neutered().publicKey;
+
+    print("xpub: $xpub");
   });
 
   test('Validate Address', () {});
