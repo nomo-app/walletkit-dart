@@ -18,14 +18,23 @@ void main() {
   test('Derive Addresses', () {
     final seed = loadFromEnv('TRON_SEED');
 
-    final node = deriveNode(seed, tronBip44HDPath.defaultPath);
+    var node = deriveNode(seed, tronBip44HDPath.defaultPath);
 
-    final address = uncompressedPublicKeyToAddress(
+    var address = uncompressedPublicKeyToAddress(
       node.publicKeyUncompressed,
-      0x41,
+      TRON_ADDRESS_PREFIX,
     );
 
     expect(address, "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
+
+    node = deriveNode(seed, tronBip44HDPath.getPath(0, 0, 1));
+
+    address = uncompressedPublicKeyToAddress(
+      node.publicKeyUncompressed,
+      TRON_ADDRESS_PREFIX,
+    );
+
+    expect(address, "TBdBhvCChFgbC4zz64GbtL6PRxWPsZJSwU");
   });
 
   test('Validate Address', () {});

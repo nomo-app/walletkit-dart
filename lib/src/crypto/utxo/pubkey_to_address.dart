@@ -3,7 +3,6 @@ import 'package:dart_bech32/dart_bech32.dart';
 import 'package:pointycastle/digests/ripemd160.dart';
 import 'package:pointycastle/digests/sha256.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
-import 'package:walletkit_dart/src/utils/base58.dart';
 import 'package:convert/convert.dart' show hex;
 import 'package:bs58check/bs58check.dart' as bs58check;
 import 'package:walletkit_dart/walletkit_dart.dart';

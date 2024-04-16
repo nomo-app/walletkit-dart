@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:bs58check/bs58check.dart' as bs58check;
-import 'package:walletkit_dart/src/crypto/utxo/utils/ecurve.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 typedef BipNode = bip32.BIP32;
