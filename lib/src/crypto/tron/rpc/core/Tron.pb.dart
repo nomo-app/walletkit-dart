@@ -14,10 +14,10 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../google/protobuf/any.pb.dart' as $0;
-import 'Discover.pb.dart' as $1;
+import '../google/protobuf/any.pb.dart' as $12;
+import 'Discover.pb.dart' as $13;
 import 'Tron.pbenum.dart';
-import 'contract/common.pbenum.dart' as $2;
+import 'contract/common.pbenum.dart' as $14;
 
 export 'Tron.pbenum.dart';
 
@@ -1442,7 +1442,7 @@ class Account_AccountResource extends $pb.GeneratedMessage {
 
 class Account_FreezeV2 extends $pb.GeneratedMessage {
   factory Account_FreezeV2({
-    $2.ResourceCode? type,
+    $14.ResourceCode? type,
     $fixnum.Int64? amount,
   }) {
     final $result = create();
@@ -1459,7 +1459,7 @@ class Account_FreezeV2 extends $pb.GeneratedMessage {
   factory Account_FreezeV2.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Account.FreezeV2', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..e<$2.ResourceCode>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $2.ResourceCode.BANDWIDTH, valueOf: $2.ResourceCode.valueOf, enumValues: $2.ResourceCode.values)
+    ..e<$14.ResourceCode>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $14.ResourceCode.BANDWIDTH, valueOf: $14.ResourceCode.valueOf, enumValues: $14.ResourceCode.values)
     ..aInt64(2, _omitFieldNames ? '' : 'amount')
     ..hasRequiredFields = false
   ;
@@ -1486,9 +1486,9 @@ class Account_FreezeV2 extends $pb.GeneratedMessage {
   static Account_FreezeV2? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $2.ResourceCode get type => $_getN(0);
+  $14.ResourceCode get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type($2.ResourceCode v) { setField(1, v); }
+  set type($14.ResourceCode v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -1506,7 +1506,7 @@ class Account_FreezeV2 extends $pb.GeneratedMessage {
 
 class Account_UnFreezeV2 extends $pb.GeneratedMessage {
   factory Account_UnFreezeV2({
-    $2.ResourceCode? type,
+    $14.ResourceCode? type,
     $fixnum.Int64? unfreezeAmount,
     $fixnum.Int64? unfreezeExpireTime,
   }) {
@@ -1527,7 +1527,7 @@ class Account_UnFreezeV2 extends $pb.GeneratedMessage {
   factory Account_UnFreezeV2.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Account.UnFreezeV2', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..e<$2.ResourceCode>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $2.ResourceCode.BANDWIDTH, valueOf: $2.ResourceCode.valueOf, enumValues: $2.ResourceCode.values)
+    ..e<$14.ResourceCode>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: $14.ResourceCode.BANDWIDTH, valueOf: $14.ResourceCode.valueOf, enumValues: $14.ResourceCode.values)
     ..aInt64(3, _omitFieldNames ? '' : 'unfreezeAmount')
     ..aInt64(4, _omitFieldNames ? '' : 'unfreezeExpireTime')
     ..hasRequiredFields = false
@@ -1555,9 +1555,9 @@ class Account_UnFreezeV2 extends $pb.GeneratedMessage {
   static Account_UnFreezeV2? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $2.ResourceCode get type => $_getN(0);
+  $14.ResourceCode get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type($2.ResourceCode v) { setField(1, v); }
+  set type($14.ResourceCode v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -3278,7 +3278,7 @@ class MarketOrderDetail extends $pb.GeneratedMessage {
 class Transaction_Contract extends $pb.GeneratedMessage {
   factory Transaction_Contract({
     Transaction_Contract_ContractType? type,
-    $0.Any? parameter,
+    $12.Any? parameter,
     $core.List<$core.int>? provider,
     $core.List<$core.int>? contractName,
     $core.int? permissionId,
@@ -3307,7 +3307,7 @@ class Transaction_Contract extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Transaction.Contract', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
     ..e<Transaction_Contract_ContractType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Transaction_Contract_ContractType.AccountCreateContract, valueOf: Transaction_Contract_ContractType.valueOf, enumValues: Transaction_Contract_ContractType.values)
-    ..aOM<$0.Any>(2, _omitFieldNames ? '' : 'parameter', subBuilder: $0.Any.create)
+    ..aOM<$12.Any>(2, _omitFieldNames ? '' : 'parameter', subBuilder: $12.Any.create)
     ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'provider', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'ContractName', $pb.PbFieldType.OY, protoName: 'ContractName')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'PermissionId', $pb.PbFieldType.O3, protoName: 'Permission_id')
@@ -3345,15 +3345,15 @@ class Transaction_Contract extends $pb.GeneratedMessage {
   void clearType() => clearField(1);
 
   @$pb.TagNumber(2)
-  $0.Any get parameter => $_getN(1);
+  $12.Any get parameter => $_getN(1);
   @$pb.TagNumber(2)
-  set parameter($0.Any v) { setField(2, v); }
+  set parameter($12.Any v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasParameter() => $_has(1);
   @$pb.TagNumber(2)
   void clearParameter() => clearField(2);
   @$pb.TagNumber(2)
-  $0.Any ensureParameter() => $_ensure(1);
+  $12.Any ensureParameter() => $_ensure(1);
 
   @$pb.TagNumber(3)
   $core.List<$core.int> get provider => $_getN(2);
@@ -5206,7 +5206,7 @@ class HelloMessage_BlockId extends $pb.GeneratedMessage {
 
 class HelloMessage extends $pb.GeneratedMessage {
   factory HelloMessage({
-    $1.Endpoint? from,
+    $13.Endpoint? from,
     $core.int? version,
     $fixnum.Int64? timestamp,
     HelloMessage_BlockId? genesisBlockId,
@@ -5259,7 +5259,7 @@ class HelloMessage extends $pb.GeneratedMessage {
   factory HelloMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HelloMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..aOM<$1.Endpoint>(1, _omitFieldNames ? '' : 'from', subBuilder: $1.Endpoint.create)
+    ..aOM<$13.Endpoint>(1, _omitFieldNames ? '' : 'from', subBuilder: $13.Endpoint.create)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'version', $pb.PbFieldType.O3)
     ..aInt64(3, _omitFieldNames ? '' : 'timestamp')
     ..aOM<HelloMessage_BlockId>(4, _omitFieldNames ? '' : 'genesisBlockId', protoName: 'genesisBlockId', subBuilder: HelloMessage_BlockId.create)
@@ -5295,15 +5295,15 @@ class HelloMessage extends $pb.GeneratedMessage {
   static HelloMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $1.Endpoint get from => $_getN(0);
+  $13.Endpoint get from => $_getN(0);
   @$pb.TagNumber(1)
-  set from($1.Endpoint v) { setField(1, v); }
+  set from($13.Endpoint v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasFrom() => $_has(0);
   @$pb.TagNumber(1)
   void clearFrom() => clearField(1);
   @$pb.TagNumber(1)
-  $1.Endpoint ensureFrom() => $_ensure(0);
+  $13.Endpoint ensureFrom() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.int get version => $_getIZ(1);
