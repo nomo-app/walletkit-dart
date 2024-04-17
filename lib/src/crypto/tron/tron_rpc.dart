@@ -1,26 +1,24 @@
+import 'package:convert/convert.dart' as convert;
 import 'package:grpc/grpc.dart';
-import 'package:helloworld/src/generated/helloworld.pbgrpc.dart';
+import 'package:walletkit_dart/src/crypto/tron/rpc/api/api.pbgrpc.dart';
 
 Future<void> main(List<String> args) async {
   final channel = ClientChannel(
-    'localhost',
+    "grpc.trongrid.io",
     port: 50051,
     options: ChannelOptions(
-      credentials: ChannelCredentials.insecure(),
+      credentials: ChannelCredentials.secure(),
       codecRegistry:
           CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
     ),
   );
-  final stub = GreeterClient(channel);
 
-  final name = args.isNotEmpty ? args[0] : 'world';
+  final client = WalletClient(channel);
 
   try {
-    final response = await stub.sayHello(
-      HelloRequest()..name = name,
-      options: CallOptions(compression: const GzipCodec()),
-    );
-    print('Greeter client received: ${response.message}');
+    final result = await client.getBlock(BlockReq());
+    print(result.blockHeader.rawData.number);
+    print(convert.hex.encode(result.blockid));
   } catch (e) {
     print('Caught error: $e');
   }
