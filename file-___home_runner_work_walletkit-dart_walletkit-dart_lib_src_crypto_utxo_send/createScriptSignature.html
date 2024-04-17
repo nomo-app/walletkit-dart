@@ -67,7 +67,7 @@
 <span class="name ">createScriptSignature</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="createScriptSignature-param-tx"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tx</span>, </span></li>
 <li><span class="parameter" id="createScriptSignature-param-i"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">i</span>, </span></li>
 <li><span class="parameter" id="createScriptSignature-param-output"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">output</span>, </span></li>
-<li><span class="parameter" id="createScriptSignature-param-walletPurpose"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPurpose</span>, </span></li>
+<li><span class="parameter" id="createScriptSignature-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
 <li><span class="parameter" id="createScriptSignature-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
 <li><span class="parameter" id="createScriptSignature-param-node"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">node</span>, </span></li>
 </ol>})
@@ -85,7 +85,7 @@
   required RawTransaction tx,
   required int i,
   required ElectrumOutput output,
-  required HDWalletPurpose walletPurpose,
+  required HDWalletType walletType,
   required UTXONetworkType networkType,
   required BIP32 node,
 }) {
@@ -118,7 +118,7 @@
   final scriptSig = encodeSignature(sig, hashType);
 
   final unlockingScript = constructScriptSig(
-    walletPurpose: walletPurpose,
+    walletType: walletType,
     signature: scriptSig,
     publicKey: node.publicKey,
   );

@@ -69,7 +69,7 @@
 <li><span class="parameter" id="deriveChildNode-param-index"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">index</span>, </span></li>
 <li><span class="parameter" id="deriveChildNode-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
 <li><span class="parameter" id="deriveChildNode-param-addressTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">addressTypes</span>, </span></li>
-<li><span class="parameter" id="deriveChildNode-param-walletPurpose"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPurpose</span>, </span></li>
+<li><span class="parameter" id="deriveChildNode-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
 </ol>})
 
         
@@ -87,7 +87,7 @@
   required int index,
   required UTXONetworkType networkType,
   required Iterable&lt;AddressType&gt; addressTypes,
-  required HDWalletPurpose walletPurpose,
+  required HDWalletType walletType,
 }) {
   if (index &lt; 0) {
     throw UnsupportedError(&quot;index must not be negative&quot;);
@@ -116,7 +116,7 @@
     chainIndex: chainIndex,
     derivationPath: childDerivationPath,
     addresses: addressMap,
-    walletPurpose: walletPurpose,
+    walletType: walletType,
   );
 }</code></pre>
 </section>
