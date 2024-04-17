@@ -272,3 +272,8 @@ String base58encode(int version, Uint8List payload) {
 Uint8List base58decode(String input) {
   return Uint8List.fromList(Base58CheckCodec.bitcoin().decode(input).payload);
 }
+
+Uint8List base58decodeWithVersion(String input) {
+  final result = Base58CheckCodec.bitcoin().decode(input);
+  return Uint8List.fromList([result.version, ...result.payload]);
+}

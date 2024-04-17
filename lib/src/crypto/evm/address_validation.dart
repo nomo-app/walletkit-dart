@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:collection/collection.dart';
+import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/utils/general.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -47,11 +48,12 @@ AddressError? validateAddress({
   required String address,
   required TokenEntity token,
 }) {
-  if (token.isUTXO) {
-    return validateUTXOAddress(address: address, token: token).$1;
-  } else {
-    return validateEVMAddress(address: address);
-  }
+  return switch (token) {
+    _ when token.isUTXO =>
+      validateUTXOAddress(address: address, token: token).$1,
+    tron => validateTronAddress(address: address),
+    _ => validateEVMAddress(address: address),
+  };
 }
 
 (AddressError?, UTXONetworkType?) validateAddressAnyChain({
