@@ -84,12 +84,11 @@
   required String address,
   required TokenEntity token,
 }) {
-  return switch (token) {
-    _ when token.isUTXO =&gt;
-      validateUTXOAddress(address: address, token: token).$1,
-    tron =&gt; validateTronAddress(address: address),
-    _ =&gt; validateEVMAddress(address: address),
-  };
+  if (token.isUTXO) {
+    return validateUTXOAddress(address: address, token: token).$1;
+  } else {
+    return validateEVMAddress(address: address);
+  }
 }</code></pre>
 </section>
 
