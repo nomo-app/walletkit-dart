@@ -15,7 +15,7 @@ class TronScanRepository extends HTTPRepository {
     int? startTimestamp,
     int? endTimestamp,
   }) {
-    final sort = descending ? "-" : "+";
+    // final sort = descending ? "-" : "+";
     return "$baseURL/block?sort=&start=${start.asQueryString}&limit=${limit.asQueryString}&producer=${producer.asQueryString}&start_timestamp=${startTimestamp.asQueryString}&end_timestamp=${endTimestamp.asQueryString}";
   }
 

@@ -1,4 +1,3 @@
-import 'package:http/http.dart';
 import 'package:walletkit_dart/src/common/http_repository.dart';
 
 const testNode = 'https://api.shasta.trongrid.io';
