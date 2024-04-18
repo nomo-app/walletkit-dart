@@ -64,7 +64,7 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
-<span class="name ">constructScriptSig</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="constructScriptSig-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
+<span class="name ">constructScriptSig</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="constructScriptSig-param-walletPurpose"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPurpose</span>, </span></li>
 <li><span class="parameter" id="constructScriptSig-param-signature"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">signature</span>, </span></li>
 <li><span class="parameter" id="constructScriptSig-param-publicKey"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">publicKey</span>, </span></li>
 <li><span class="parameter" id="constructScriptSig-param-redeemScript"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">redeemScript</span>, </span></li>
@@ -80,22 +80,21 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Uint8List constructScriptSig({
-  required HDWalletType walletType,
+  required HDWalletPurpose walletPurpose,
   required Uint8List signature,
   required Uint8List publicKey,
   Uint8List? redeemScript, &#47;&#47; Required for BIP49 (P2SH-P2WPKH)
 }) =&gt;
-    switch (walletType) {
-      HDWalletType.NO_STRUCTURE ||
-      HDWalletType.BIP44 ||
-      HDWalletType.BIP44_LITECOIN =&gt;
+    switch (walletPurpose) {
+      HDWalletPurpose.NO_STRUCTURE ||
+      HDWalletPurpose.BIP44 =&gt;
         Uint8List.fromList([
           signature.length,
           ...signature,
           publicKey.length,
           ...publicKey,
         ]),
-      HDWalletType.BIP49 =&gt; Uint8List.fromList([
+      HDWalletPurpose.BIP49 =&gt; Uint8List.fromList([
           0x00,
           signature.length,
           ...signature,
@@ -104,7 +103,7 @@
         ]),
 
       &#47;&#47;&#47; Should never be called as it is handled in constructWitnessScript
-      HDWalletType.BIP84 =&gt; Uint8List.fromList([
+      HDWalletPurpose.BIP84 =&gt; Uint8List.fromList([
           0x00,
           signature.length,
           ...signature,
