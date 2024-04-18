@@ -13,7 +13,7 @@ Future<void> main(List<String> args) async {
     ),
   );
 
-  final client = WalletClient(channel);
+  final client = WalletClient(channel, options: CallOptions());
 
   try {
     final result = await client.getBlock(BlockReq());

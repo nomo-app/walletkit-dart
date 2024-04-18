@@ -7,6 +7,8 @@ import '../utils.dart';
 const tronAddress = "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj";
 const tronAddress1 = "TBdBhvCChFgbC4zz64GbtL6PRxWPsZJSwU";
 
+const tronUSDTAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+
 void main() {
   test('Test HD Wallet Path Test', () {
     expect(tronBip44HDPath.basePath, "m/44'/195'");
