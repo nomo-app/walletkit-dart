@@ -438,25 +438,32 @@ class POLYGON_NETWORK extends EVMNetworkType {
 const TronNetwork = TRON_NETWORK();
 
 class TRON_NETWORK extends EVMNetworkType {
+  final String httpApi;
+
   const TRON_NETWORK()
-      : super(
+      : httpApi = "https://api.trongrid.io",
+        super(
           chainId: 1,
-          rpcUrl: "https://api.trongrid.io",
+          rpcUrl: "https://api.trongrid.io/jsonrpc",
+          blockExplorer: (
+            "https://apilist.tronscanapi.com/api",
+            const ["a875e9b5-2d45-410c-ade9-49ee456be28a"],
+          ),
           coin: tron,
           messagePrefix: "\x19Tron Signed Message:\n",
           blockTime: 3,
         );
 }
 
-const TronNileTestNet = TRON_NILE_TEST_NETWORK();
+// const TronNileTestNet = TRON_NILE_TEST_NETWORK();
 
-class TRON_NILE_TEST_NETWORK extends EVMNetworkType {
-  const TRON_NILE_TEST_NETWORK()
-      : super(
-          chainId: 1,
-          rpcUrl: "https://api.nileex.io",
-          coin: tron,
-          messagePrefix: "\x19Tron Signed Message:\n",
-          blockTime: 3,
-        );
-}
+// class TRON_NILE_TEST_NETWORK extends TRON_NETWORK {
+//   const TRON_NILE_TEST_NETWORK()
+//       : super(
+//           chainId: 1,
+//           rpcUrl: "https://api.nileex.io",
+//           coin: tron,
+//           messagePrefix: "\x19Tron Signed Message:\n",
+//           blockTime: 3,
+//         );
+// }

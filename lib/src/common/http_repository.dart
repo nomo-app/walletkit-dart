@@ -18,12 +18,11 @@ abstract class HTTPRepository {
     required this.baseURL,
     required this.apiKeyHeader,
   });
-  Map<String, String> _getHeaders({String? apiKey, String? data}) {
+  Map<String, String> _getHeaders({String? apiKey}) {
     return {
       "Content-Type": "application/json",
       "Accept": "application/json",
       if (apiKey != null) "TRON-PRO-API-KEY": apiKey,
-      if (data != null) "data": data,
     };
   }
 
@@ -88,7 +87,8 @@ abstract class HTTPRepository {
   Future<T> postCall<T>(String url, {required JSON data}) async {
     final dataString = jsonEncode(data);
     final uri = Uri.parse(url);
-    String? apiKey;
+
+    String? apiKey = _getApiKey(0);
     for (int i = 0; true; i++) {
       try {
         return await _postCall<T>(uri, apiKey: apiKey, data: dataString);
@@ -108,7 +108,8 @@ abstract class HTTPRepository {
   }) async {
     final response = await HTTPService.client.post(
       url,
-      headers: _getHeaders(apiKey: apiKey, data: data),
+      headers: _getHeaders(apiKey: apiKey),
+      body: data,
     );
 
     if (response.statusCode != 200) {

@@ -1,12 +1,14 @@
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/tron/domain/tron_http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/domain/tronscan_repository.dart';
+import 'package:walletkit_dart/src/domain/repository/evm_rpc_interface.dart';
 import 'derive_address_test.dart';
 
 void main() {
   test('Test Tronscan', () async {
     final tronScan = TronScanRepository(
-      apiKeys: ["a875e9b5-2d45-410c-ade9-49ee456be28a"],
+      apiKeys: TronNetwork.blockExplorer!.$2.toList(),
     );
 
     final block = await tronScan.getLatestBlock();
@@ -66,15 +68,51 @@ void main() {
 
   test('Test RPC', () async {
     final tronHTTP = TronHTTPRepository(
-      apiKeys: ["a875e9b5-2d45-410c-ade9-49ee456be28a"],
+      apiKeys: ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"],
     );
 
-    // final addressValid = await tronHTTP.validateAddress(tronAddress);
+    final valid = await tronHTTP.validateAddress(tronAddress);
 
-    // print("Address Valid: $addressValid");
+    print("Valid: $valid");
+
+    final balance = await tronHTTP.getAccountBalance(
+        address: "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
+
+    print("Balance: $balance");
 
     final nowBlock = await tronHTTP.getBlock();
 
     print("Now Block: $nowBlock");
+
+    final list = await tronHTTP.getAllTRC10Tokens();
+
+    print("Account: $list");
+
+    final trc = await tronHTTP.getTRC10byID("1000001");
+
+    print("TRC10: $trc");
+
+    final nodeList = await tronHTTP.listNodes();
+
+    print("Node List: $nodeList");
+
+    final tx = await tronHTTP.getTransactionById(
+        "d0807adb3c5412aa150787b944c96ee898c997debdc27e2f6a643c771edb5933");
+
+    print("Transaction: $tx");
+
+    final accoutInfo = await tronHTTP.getAccountInfo(address: tronAddress);
+
+    print("Account Info: $accoutInfo");
+  });
+
+  test('Solidity RPC', () async {
+    final rpc = EvmRpcInterface(TRON_NETWORK());
+
+    final balance = await rpc.fetchBalance(
+      address: "0x7F9DC8311E51C1685764BBB0F5CEAC7AD79B0128",
+    );
+
+    print("Balance: $balance");
   });
 }

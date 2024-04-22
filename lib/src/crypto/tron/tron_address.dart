@@ -36,3 +36,8 @@ AddressError? validateTronAddress({required String address}) {
     return AddressError.INVALID_CHECKSUM;
   }
 }
+
+String base58ToHex(String base58) {
+  final bytes = base58decode(base58);
+  return "0x${bytes.toHex}";
+}
