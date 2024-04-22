@@ -4,9 +4,13 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/tron/domain/tron_http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/domain/tronscan_repository.dart';
+import 'package:walletkit_dart/src/crypto/tron/rpc/api/api.pb.dart';
+import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart';
 import 'package:walletkit_dart/src/domain/repository/evm_rpc_interface.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'derive_address_test.dart';
+
+import 'package:protobuf/protobuf.dart' as $pb;
 
 void main() {
   test('Test Tronscan', () async {
@@ -83,9 +87,9 @@ void main() {
 
     // print("Balance: $balance");
 
-    // final nowBlock = await tronHTTP.getBlock();
+    final nowBlock = await tronHTTP.getBlock();
 
-    // print("Now Block: $nowBlock");
+    print("Now Block: $nowBlock");
 
     // final list = await tronHTTP.getAllTRC10Tokens();
 

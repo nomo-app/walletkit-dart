@@ -4,7 +4,7 @@ import 'package:walletkit_dart/src/crypto/tron/rpc/api/api.pbgrpc.dart';
 
 Future<void> main(List<String> args) async {
   final channel = ClientChannel(
-    "grpc.trongrid.io",
+    "52.15.93.92",
     port: 50051,
     options: ChannelOptions(
       credentials: ChannelCredentials.secure(),
