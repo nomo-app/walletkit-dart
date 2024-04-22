@@ -1,4 +1,7 @@
 import 'package:walletkit_dart/src/common/http_repository.dart';
+import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
+import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 const testNode = 'https://api.trongrid.io';
 
@@ -80,4 +83,62 @@ class TronHTTPRepository extends HTTPRepository {
       "$baseURL/v1/accounts/$address",
     );
   }
+
+  Future<JSON> getTRC20TransactionList({
+    required String address,
+    required String contractAddress,
+    int limit = 200,
+  }) {
+    return getCall<JSON>(
+      "$baseURL/v1/accounts/$address/transactions/trc20?limit=$limit&contract_address=$contractAddress",
+    );
+  }
+
+  Future<JSON> triggerConstantContract({
+    required String address,
+    required String contractAddress,
+    required String functionSelector,
+    required String parameter,
+    bool visible = true,
+  }) {
+    return postCall<JSON>(
+      "$baseURL/wallet/triggerconstantcontract",
+      data: {
+        "owner_address": address,
+        "contract_address": contractAddress,
+        "function_selector": functionSelector,
+        "parameter": parameter,
+        "visible": visible,
+      },
+    );
+  }
+
+  Future<Amount> getTRC20Balance({
+    required String address,
+    required EthBasedTokenEntity trc20,
+  }) async {
+    final addressParameter = base58ToHex(address, false).padLeft(64, '0');
+    final result = await triggerConstantContract(
+      address: address,
+      contractAddress: trc20.contractAddress,
+      functionSelector: "balanceOf(address)",
+      parameter: addressParameter,
+    );
+
+    final balance_s = result["constant_result"][0] as String;
+
+    final balance_bi = balance_s.toBigIntFromHex;
+
+    return Amount(
+      value: balance_bi,
+      decimals: trc20.decimals,
+    );
+  }
+
+  // Future<JSON> transferTRC20({
+  //   required String address,
+  //   required EthBasedTokenEntity trc20,
+  // }){
+
+  // }
 }

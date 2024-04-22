@@ -37,7 +37,7 @@ AddressError? validateTronAddress({required String address}) {
   }
 }
 
-String base58ToHex(String base58) {
+String base58ToHex(String base58, [bool withPrefix = true]) {
   final bytes = base58decode(base58);
-  return "0x${bytes.toHex}";
+  return "${withPrefix ? "0x" : ""}${bytes.toHex}";
 }

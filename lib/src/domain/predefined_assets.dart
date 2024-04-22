@@ -178,3 +178,10 @@ const tron = EvmEntity(
   symbol: 'TRX',
   decimals: 6,
 );
+
+const tronUSDT = EthBasedTokenEntity(
+  name: 'Tether USD',
+  symbol: 'USDT',
+  decimals: 6,
+  contractAddress: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+);

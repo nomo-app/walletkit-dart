@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/tron/domain/tron_http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/domain/tronscan_repository.dart';
 import 'package:walletkit_dart/src/domain/repository/evm_rpc_interface.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 import 'derive_address_test.dart';
 
 void main() {
@@ -71,39 +74,60 @@ void main() {
       apiKeys: ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"],
     );
 
-    final valid = await tronHTTP.validateAddress(tronAddress);
+    // final valid = await tronHTTP.validateAddress(tronAddress);
 
-    print("Valid: $valid");
+    // print("Valid: $valid");
 
-    final balance = await tronHTTP.getAccountBalance(
-        address: "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
+    // final balance = await tronHTTP.getAccountBalance(
+    //     address: "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
 
-    print("Balance: $balance");
+    // print("Balance: $balance");
 
-    final nowBlock = await tronHTTP.getBlock();
+    // final nowBlock = await tronHTTP.getBlock();
 
-    print("Now Block: $nowBlock");
+    // print("Now Block: $nowBlock");
 
-    final list = await tronHTTP.getAllTRC10Tokens();
+    // final list = await tronHTTP.getAllTRC10Tokens();
 
-    print("Account: $list");
+    // print("Account: $list");
 
-    final trc = await tronHTTP.getTRC10byID("1000001");
+    // final trc = await tronHTTP.getTRC10byID("1000001");
 
-    print("TRC10: $trc");
+    // print("TRC10: $trc");
 
-    final nodeList = await tronHTTP.listNodes();
+    // final nodeList = await tronHTTP.listNodes();
 
-    print("Node List: $nodeList");
+    // print("Node List: $nodeList");
 
-    final tx = await tronHTTP.getTransactionById(
-        "d0807adb3c5412aa150787b944c96ee898c997debdc27e2f6a643c771edb5933");
+    // final tx = await tronHTTP.getTransactionById(
+    //     "d0807adb3c5412aa150787b944c96ee898c997debdc27e2f6a643c771edb5933");
 
-    print("Transaction: $tx");
+    // print("Transaction: $tx");
 
-    final accoutInfo = await tronHTTP.getAccountInfo(address: tronAddress);
+    // final accoutInfo = await tronHTTP.getAccountInfo(address: tronAddress);
 
-    print("Account Info: $accoutInfo");
+    // print("Account Info: $accoutInfo");
+
+    // final usdtHistory = await tronHTTP.getTRC20TransactionList(
+    //   address: tronAddress,
+    //   contractAddress: tronUSDTAddress,
+    // );
+
+    // print("USDT History: $usdtHistory");
+
+    // final usdtBalance = await tronHTTP.getTRC20Balance(
+    //   address: tronAddress,
+    //   trc20: tronUSDT,
+    // );
+
+    // print("USDT Balance: $usdtBalance");
+
+    final rawTx = await tronHTTP.getTransactionById(
+        "387302162b58c458434f184fa99ef5e9c9670f1c95388641fdfb15f6429e58e3");
+
+    print(jsonEncode(rawTx));
+
+    print("Raw Transaction: $rawTx");
   });
 
   test('Solidity RPC', () async {
