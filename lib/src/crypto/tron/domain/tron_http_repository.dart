@@ -117,7 +117,7 @@ class TronHTTPRepository extends HTTPRepository {
     required String address,
     required EthBasedTokenEntity trc20,
   }) async {
-    final addressParameter = base58ToHex(address, false).padLeft(64, '0');
+    final addressParameter = base58ToEVM(address, false).padLeft(64, '0');
     final result = await triggerConstantContract(
       address: address,
       contractAddress: trc20.contractAddress,
@@ -132,6 +132,37 @@ class TronHTTPRepository extends HTTPRepository {
     return Amount(
       value: balance_bi,
       decimals: trc20.decimals,
+    );
+  }
+
+  Future<JSON> broadcastCastTransactionHex(String hex) {
+    return postCall<JSON>(
+      "$baseURL/wallet/broadcasthex",
+      data: {"transaction": hex},
+    );
+  }
+
+  Future<JSON> createTransaction({
+    required String ownerAddress,
+    required String toAddress,
+    required Amount amount,
+    bool visible = true,
+  }) {
+    return postCall<JSON>(
+      "$baseURL/wallet/createtransaction",
+      data: {
+        "owner_address": ownerAddress,
+        "to_address": toAddress,
+        "amount": amount.value.toInt(),
+        "visible": visible,
+      },
+    );
+  }
+
+  Future<JSON> broadcastTransaction({required JSON json}) {
+    return postCall<JSON>(
+      "$baseURL/wallet/broadcasttransaction",
+      data: json,
     );
   }
 

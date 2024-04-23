@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 extension SatoshiUtils on num {
   BigInt get toSatoshi {

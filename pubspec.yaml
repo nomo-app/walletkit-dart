@@ -24,6 +24,7 @@ dependencies:
     path: packages/bip39
   dotenv: ^4.2.0
   grpc: 3.2.4
+  fixnum: ^1.1.0
 
 dev_dependencies:
   lints: ^2.0.0

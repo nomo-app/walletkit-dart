@@ -1,11 +1,14 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
+import 'package:walletkit_dart/src/crypto/tron/tron_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../utils.dart';
 
 const tronAddress = "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj";
+
 const tronAddressEVM = "0x7f9dc8311e51c1685764bbb0f5ceac7ad79b0128";
+
 const tronAddress1 = "TBdBhvCChFgbC4zz64GbtL6PRxWPsZJSwU";
 const tronAddress1EVM = "0x1226d9d2d336d60e42496133790d6a69af045e33";
 
@@ -22,7 +25,11 @@ void main() {
   test('Derive Addresses', () {
     final seed = loadFromEnv('TRON_SEED');
 
+    // final credentails = getTronCredentials(seed: seed);
+
     var node = deriveNode(seed, tronBip44HDPath.defaultPath);
+
+    print(node.privateKey?.toHex);
 
     var address = uncompressedPublicKeyToAddress(
       node.publicKeyUncompressed,
@@ -31,9 +38,12 @@ void main() {
 
     expect(address, tronAddress);
 
-    var evm_address = base58ToHex(address);
+    // final credentialsAddress = credentails.address.hex;
+
+    var evm_address = base58ToEVM(address);
 
     expect(evm_address, tronAddressEVM);
+    // expect(credentialsAddress, evm_address);
 
     node = deriveNode(seed, tronBip44HDPath.getPath(0, 0, 1));
 
@@ -44,7 +54,7 @@ void main() {
 
     expect(address, tronAddress1);
 
-    evm_address = base58ToHex(address);
+    evm_address = base58ToEVM(address);
 
     expect(evm_address, tronAddress1EVM);
   });
