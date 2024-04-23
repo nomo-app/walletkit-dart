@@ -67,7 +67,7 @@
 <span class="name ">deriveMasterNode</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="deriveMasterNode-param-seed"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">seed</span>, </span></li>
 <li><span class="parameter" id="deriveMasterNode-param-ePubKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">ePubKey</span>, </span></li>
 <li><span class="parameter" id="deriveMasterNode-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
-<li><span class="parameter" id="deriveMasterNode-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span>, </span></li>
+<li><span class="parameter" id="deriveMasterNode-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
 </ol>})
 
         
@@ -83,7 +83,7 @@
   Uint8List? seed,
   String? ePubKey,
   required UTXONetworkType networkType,
-  required HDWalletPath walletPath,
+  required HDWalletType walletType,
 }) {
   if (seed == null &amp;&amp; ePubKey == null) {
     throw UnsupportedError(&quot;seed or ePubKey must be provided&quot;);
@@ -93,14 +93,14 @@
     return BipNode.fromBase58(
         ePubKey,
         networkType.networkBIP
-            .getForWalletType(walletPath.purpose) &#47;&#47;    bipNetworkType,
+            .getForWalletType(walletType) &#47;&#47;    bipNetworkType,
         );
   }
 
-  return deriveMasterNodeFromSeed(
+  return _deriveMasterNodeFromSeed(
     seed: seed!,
     networkType: networkType,
-    walletPath: walletPath,
+    walletType: walletType,
   );
 }</code></pre>
 </section>
