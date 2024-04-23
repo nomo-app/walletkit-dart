@@ -64,37 +64,37 @@
       
 
 <span class="returntype">dynamic</span>
-<span class="name ">getForWalletType</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getForWalletType-param-type"><span class="type-annotation">dynamic</span> <span class="parameter-name">type</span></span></li>
+<span class="name ">getForWalletType</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getForWalletType-param-purpose"><span class="type-annotation">dynamic</span> <span class="parameter-name">purpose</span></span></li>
 </ol>)
 
       
 
     </section>
     
-<section class="desc markdown">
-  <p>TODO: Implement other HDWalletTypes</p>
-</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">bip32.NetworkType getForWalletType(HDWalletType type) =&gt; switch (type) {
-      HDWalletType.NO_STRUCTURE || HDWalletType.BIP44 =&gt; bip32.NetworkType(
+  <pre class="language-dart"><code class="language-dart">bip32.NetworkType getForWalletType(HDWalletPurpose purpose) =&gt;
+    switch (purpose) {
+      HDWalletPurpose.NO_STRUCTURE ||
+      HDWalletPurpose.BIP44 =&gt;
+        bip32.NetworkType(
           wif: wif,
           bip32: bip32.Bip32Type(
             private: bip32XprivPrefix,
             public: bip32XpubPrefix,
           ),
         ),
-      HDWalletType.BIP84 =&gt; bip32.NetworkType(
+      HDWalletPurpose.BIP84 =&gt; bip32.NetworkType(
           wif: wif,
           bip32: bip32.Bip32Type(
             private: bip84XprivPrefix,
             public: bip84XpubPrefix,
           ),
         ),
-      _ =&gt; bip32.NetworkType(
+      HDWalletPurpose.BIP49 =&gt; bip32.NetworkType(
           wif: wif,
           bip32: bip32.Bip32Type(
             private: bip49XprivPrefix,
