@@ -4,7 +4,7 @@ import 'package:walletkit_dart/src/crypto/tron/tron_contract_type.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-import '../tron/derive_address_test.dart';
+import '../ci/tron/derive_address_test.dart';
 import '../utils.dart';
 
 void main() {

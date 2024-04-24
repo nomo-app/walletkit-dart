@@ -9,7 +9,7 @@ import 'package:walletkit_dart/src/crypto/tron/tron_transaction.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/utils/base58.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import '../utils.dart';
+import '../../utils.dart';
 import 'derive_address_test.dart';
 
 void main() {

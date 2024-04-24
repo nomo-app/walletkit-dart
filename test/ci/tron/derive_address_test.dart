@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
 
 const tronAddress = "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj";
 const tronAddressHex = "417f9dc8311e51c1685764bbb0f5ceac7ad79b0128";
