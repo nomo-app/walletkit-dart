@@ -1,7 +1,6 @@
 import 'package:walletkit_dart/src/common/http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/smart_contract.pb.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
-import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const testNode = 'https://api.trongrid.io';

@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -18,10 +17,6 @@ void main() {
       networkType: ZeniqNetwork,
       ePubKey: epubKey,
     );
-
-    final a = txs.toList().singleWhereOrNull((element) =>
-        element.hash ==
-        "3ca54c015f3c79bc86c92e50f19f5f8278254c5327a2a05ededab8fe36e79b89");
 
     reportCoinsAndAddresses(txList: txs, type: ZeniqNetwork);
   });
