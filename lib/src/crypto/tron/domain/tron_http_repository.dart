@@ -1,4 +1,5 @@
 import 'package:walletkit_dart/src/common/http_repository.dart';
+import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/smart_contract.pb.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -38,6 +39,35 @@ class TronHTTPRepository extends HTTPRepository {
         "address": address,
         "visible": visible,
       },
+    );
+  }
+
+  Future<({int bandwidth, int energy})> getAccountResource({
+    required String address,
+    bool visible = true,
+  }) async {
+    final json = await postCall<JSON>(
+      "$baseURL/wallet/getaccountresource",
+      data: {
+        "address": address,
+        "visible": visible,
+      },
+    );
+
+    final freeNetUsed = json["freeNetUsed"] as int;
+    final freeNetLimit = json["freeNetLimit"] as int;
+
+    final remainingFreeBandwidth = freeNetLimit - freeNetUsed;
+
+    final energyLimit = json["EnergyLimit"] as int?;
+    final energyUsed = json["EnergyUsed"] as int?;
+    final energyBalance = (energyUsed != null && energyLimit != null)
+        ? energyLimit - energyUsed
+        : 0;
+
+    return (
+      bandwidth: remainingFreeBandwidth,
+      energy: energyBalance,
     );
   }
 
@@ -94,21 +124,79 @@ class TronHTTPRepository extends HTTPRepository {
     );
   }
 
+  ///
+  ///  Trigger a constant contract (read-only, does not modify the blockchain)
+  ///
   Future<JSON> triggerConstantContract({
+    required String address,
+    required String contractAddress,
+    String? functionSelector,
+    String? parameter,
+    String? data,
+    bool visible = true,
+  }) {
+    assert(
+      functionSelector != null || data != null,
+      "FunctionSelector or Data must be provided",
+    );
+
+    return postCall<JSON>(
+      "$baseURL/wallet/triggerconstantcontract",
+      data: {
+        "owner_address": address,
+        "contract_address": contractAddress,
+        if (functionSelector != null) "function_selector": functionSelector,
+        if (parameter != null) "parameter": parameter,
+        if (data != null) "data": data,
+        "visible": visible,
+      },
+    );
+  }
+
+  Future<JSON> transferTRC20({
+    required String address,
+    required String contractAddress,
+    required Amount amount,
+  }) {
+    final functionSelector = "transfer(address,uint256)";
+    final addressParameter = base58ToEVM(address, false).padLeft(64, '0');
+    final amountParameter = amount.value.toHex.padLeft(64, '0');
+    final parmeter = "$addressParameter$amountParameter";
+
+    return triggerSmartContract(
+      address: address,
+      contractAddress: contractAddress,
+      functionSelector: functionSelector,
+      parameter: parmeter,
+    );
+  }
+
+  ///
+  ///  Trigger a smart contract (write, modifies the blockchain)
+  ///
+  Future<JSON> triggerSmartContract({
     required String address,
     required String contractAddress,
     required String functionSelector,
     required String parameter,
     bool visible = true,
+    int feeLimit = 1000000, // 1 TRX
+    int? call_value, // Amount of TRX within the transaction
+    int? call_token_value, // Amount of TRC10 token within the transaction
+    String? token_id, // Token ID for TRC10
   }) {
     return postCall<JSON>(
-      "$baseURL/wallet/triggerconstantcontract",
+      "$baseURL/wallet/triggercontract",
       data: {
         "owner_address": address,
         "contract_address": contractAddress,
         "function_selector": functionSelector,
         "parameter": parameter,
         "visible": visible,
+        "fee_limit": feeLimit,
+        if (call_value != null) "call_value": call_value,
+        if (call_token_value != null) "call_token_value": call_token_value,
+        if (token_id != null) "token_id": token_id,
       },
     );
   }
@@ -133,6 +221,18 @@ class TronHTTPRepository extends HTTPRepository {
       value: balance_bi,
       decimals: trc20.decimals,
     );
+  }
+
+  Future<int> estimateEnergy(TriggerSmartContract contract) async {
+    final json = await triggerConstantContract(
+      address: contract.ownerAddress.toUint8List.toHex,
+      contractAddress: contract.contractAddress.toUint8List.toHex,
+      visible: false,
+      data: contract.data.toUint8List.toHex,
+    );
+
+    final energy_used = json["energy_used"] as int;
+    return energy_used;
   }
 
   Future<JSON> broadcastCastTransactionHex(String hex) {

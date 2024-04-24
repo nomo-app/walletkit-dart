@@ -128,8 +128,12 @@ abstract class HTTPRepository {
       if (json is JSON) {
         final code = json["code"];
         final message = json["message"];
-        if (code != null && code != 200) {
+
+        if (code is int && code != 200) {
           throw HTTPStatusException(code, message, url);
+        }
+        if (code is String && code != "SUCCESS") {
+          throw HTTPStatusException(400, message, url);
         }
       }
 

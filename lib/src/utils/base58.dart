@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:pointycastle/digests/sha256.dart';
+import 'package:walletkit_dart/src/domain/extensions.dart';
 
 /// Encode and decode bytes to base58 strings.
 ///
@@ -9,6 +10,15 @@ import 'package:pointycastle/digests/sha256.dart';
 ///
 /// In order to comply with Bitcoin and Ripple standard encoding Base58Check,
 /// use [Base58CheckCodec].
+
+const bitcoinAlphabet =
+    '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+
+const rippleAlphabet =
+    'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz';
+
+const base58BitcoinCodec =
+    Base58Codec(bitcoinAlphabet); // Bitcoin alphabet without checksum
 
 class Base58Codec extends Codec<List<int>, String> {
   const Base58Codec(this.alphabet);
@@ -263,17 +273,27 @@ int hash(List<int>? list) {
   return hash;
 }
 
-String base58encode(int version, Uint8List payload) {
+String base58CheckEncode(int version, Uint8List payload) {
   return Base58CheckCodec.bitcoin().encode(
     Base58CheckPayload(version, payload),
   );
 }
 
-Uint8List base58decode(String input) {
+Uint8List base58CheckDecode(String input) {
   return Uint8List.fromList(Base58CheckCodec.bitcoin().decode(input).payload);
 }
 
-Uint8List base58decodeWithVersion(String input) {
+Uint8List base58CheckDecodeWithVersion(String input) {
   final result = Base58CheckCodec.bitcoin().decode(input);
   return Uint8List.fromList([result.version, ...result.payload]);
+}
+
+Uint8List base58Decode(String input, {bool withChecksum = false}) {
+  final decoded = base58BitcoinCodec.decoder.convert(input).toUint8List;
+  if (withChecksum) return decoded;
+  return decoded.sublist(0, decoded.length - 4);
+}
+
+String base58Encode(Uint8List input) {
+  return base58BitcoinCodec.encoder.convert(input);
 }
