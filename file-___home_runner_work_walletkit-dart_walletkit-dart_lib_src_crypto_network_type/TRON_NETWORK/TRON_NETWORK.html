@@ -72,7 +72,10 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">const TRON_NETWORK()
-    : httpApi = &quot;https:&#47;&#47;api.trongrid.io&quot;,
+    : httpApi = (
+        &quot;https:&#47;&#47;api.trongrid.io&quot;,
+        const [&quot;1d06fa37-79bf-4250-a4aa-9656a92a71b0&quot;]
+      ),
       super(
         chainId: 1,
         rpcUrl: &quot;https:&#47;&#47;api.trongrid.io&#47;jsonrpc&quot;,
