@@ -30,6 +30,7 @@ Future<int> calculateTransactionSize(TronContractData contractData) async {
   );
 
   final rawDataLength = tx.rawData.writeToBuffer().length;
+
   final sigLength = tx.signature.first.toUint8List.length;
 
   final headerSize = (rawDataLength > 127 ? 3 : 2) + 2;
