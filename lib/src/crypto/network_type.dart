@@ -438,10 +438,13 @@ class POLYGON_NETWORK extends EVMNetworkType {
 const TronNetwork = TRON_NETWORK();
 
 class TRON_NETWORK extends EVMNetworkType {
-  final String httpApi;
+  final (String, Iterable<String>) httpApi;
 
   const TRON_NETWORK()
-      : httpApi = "https://api.trongrid.io",
+      : httpApi = (
+          "https://api.trongrid.io",
+          const ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"]
+        ),
         super(
           chainId: 1,
           rpcUrl: "https://api.trongrid.io/jsonrpc",

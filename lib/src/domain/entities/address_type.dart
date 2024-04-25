@@ -16,4 +16,6 @@ enum AddressType {
   cashaddr,
   @HiveField(5)
   evm,
+  @HiveField(6)
+  tron,
 }

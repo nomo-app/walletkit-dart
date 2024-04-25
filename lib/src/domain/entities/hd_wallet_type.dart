@@ -1,3 +1,8 @@
+import 'package:collection/collection.dart';
+import 'package:hive/hive.dart';
+
+part 'hd_wallet_type.g.dart';
+
 const NS_PURPOSE = "m/0'";
 const BIP44_PURPOSE = "m/44'";
 const BIP49_PURPOSE = "m/49'";
@@ -26,10 +31,15 @@ const BIP84_PURPOSE = "m/84'";
 //   const HDWalletType(this.purpose);
 // }
 
+@HiveType(typeId: 20)
 enum HDWalletPurpose {
+  @HiveField(0)
   NO_STRUCTURE("m/0'"), // (P2PKH)
+  @HiveField(1)
   BIP44("m/44'"), // (P2PKH)
+  @HiveField(2)
   BIP49("m/49'"), // (P2SH)
+  @HiveField(3)
   BIP84("m/84'"); // (P2WPKH)
 
   final String string;
@@ -52,11 +62,27 @@ enum HDWalletPurpose {
   }
 }
 
+final supportedPaths = [
+  bitcoinNSHDPath,
+  bitcoinBip44HDPath,
+  bitcoinBip49HDPath,
+  bitcoinBip84HDPath,
+  tronBip44HDPath,
+  litecoinBip44HDPath,
+  ethereumBip44HDPath,
+];
+
 sealed class HDWalletPath {
   final HDWalletPurpose purpose;
   final String coinType;
 
   const HDWalletPath(this.purpose, this.coinType);
+
+  static HDWalletPath? fromBasePath(String basePath) {
+    return supportedPaths.singleWhereOrNull(
+      (hdPath) => hdPath.basePath == basePath,
+    );
+  }
 
   String get basePath {
     return "${purpose.string}/$coinType";

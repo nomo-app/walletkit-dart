@@ -25,6 +25,8 @@ class AddressTypeAdapter extends TypeAdapter<AddressType> {
         return AddressType.cashaddr;
       case 5:
         return AddressType.evm;
+      case 6:
+        return AddressType.tron;
       default:
         return AddressType.legacy;
     }
@@ -50,6 +52,9 @@ class AddressTypeAdapter extends TypeAdapter<AddressType> {
         break;
       case AddressType.evm:
         writer.writeByte(5);
+        break;
+      case AddressType.tron:
+        writer.writeByte(6);
         break;
     }
   }
