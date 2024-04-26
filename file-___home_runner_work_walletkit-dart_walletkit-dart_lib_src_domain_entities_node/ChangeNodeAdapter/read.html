@@ -91,7 +91,7 @@ ChangeNode read(BinaryReader reader) {
     address: fields[0] as String,
     derivationPath: fields[1] as String,
     addresses: (fields[2] as Map).cast&lt;AddressType, String&gt;(),
-    walletPurpose: fields[3] as HDWalletPurpose,
+    walletType: fields[3] as HDWalletType,
     publicKey: fields[4] as String,
   );
 }</code></pre>

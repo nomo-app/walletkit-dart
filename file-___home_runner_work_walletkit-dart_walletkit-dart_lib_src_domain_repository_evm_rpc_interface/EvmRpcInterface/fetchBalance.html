@@ -85,7 +85,7 @@
   final balance = await client.getBalance(address);
   return Amount(
     value: balance,
-    decimals: type.coin.decimals,
+    decimals: zeniqSmart.decimals,
   );
 }</code></pre>
 </section>
