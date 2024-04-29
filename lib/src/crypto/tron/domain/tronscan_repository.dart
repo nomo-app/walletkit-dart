@@ -1,11 +1,15 @@
 import 'package:walletkit_dart/src/common/http_repository.dart';
+import 'package:walletkit_dart/src/crypto/tron/tron_transaction.dart';
+import 'package:walletkit_dart/src/domain/entities/transactions/generic_transaction.dart';
+import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
-const baseURL = "https://apilist.tronscanapi.com/api";
+const _tronScanBaseUrl = "https://apilist.tronscanapi.com/api";
 
 class TronScanRepository extends HTTPRepository {
   const TronScanRepository({
     required super.apiKeys,
-  }) : super(baseURL: baseURL, apiKeyHeader: "TRON-PRO-API-KEY");
+  }) : super(baseURL: _tronScanBaseUrl, apiKeyHeader: "TRON-PRO-API-KEY");
 
   String getBlockEndpoint({
     required int start,
@@ -41,32 +45,47 @@ class TronScanRepository extends HTTPRepository {
     return "$baseURL/transaction?start=${start.asQueryString}&limit=${limit.asQueryString}&address=${address.asQueryString}&start_timestamp=${startTimestamp.asQueryString}&end_timestamp=${endTimestamp.asQueryString}&type=${type.asQueryString}&method=${method.asQueryString}&block=${block.asQueryString}&tokens=${tokens.asQueryString}";
   }
 
-  Future<JSON> getTransactions({
+  Future<Set<GenericTransaction>> getTransactions({
     required String address,
-    int start = 0,
+    required TokenEntity token,
     int limit = 10,
     int? startTimestamp,
     int? endTimestamp,
     String? type,
     String? method,
-    int? block,
     List<String>? tokens,
   }) async {
-    final result = await getCall<JSON>(
-      getTransactionsEndpont(
-        start: start,
+    final data = [];
+
+    int? totalLength;
+    for (int i = 0; true; i += limit) {
+      final endpoint = getTransactionsEndpont(
+        start: i,
         address: address,
         limit: limit,
         startTimestamp: startTimestamp,
         endTimestamp: endTimestamp,
         type: type,
         method: method,
-        block: block,
         tokens: tokens,
-      ),
-    );
+      );
+      print(endpoint);
+      final result = await getCall<JSON>(endpoint);
 
-    return result;
+      totalLength ??= result['total'] as int;
+
+      final newData = result['data'];
+
+      data.addAll(newData);
+
+      if (data.length >= totalLength) {
+        break;
+      }
+    }
+
+    return {
+      for (final item in data) TronTransaction.fromJson(item, token),
+    }.whereType<TronTransaction>().toSet();
   }
 
   Future<JSON> getTokenPrice(String symbol) async {
@@ -126,19 +145,29 @@ class TronScanRepository extends HTTPRepository {
     return getCall<JSON>(endpoint);
   }
 
-  Future<JSON> getTRC20TransferList({
+  Future<Set<GenericTransaction>> getTRC20TransferList({
     required String address,
-    required String trc20Id,
+    required EthBasedTokenEntity trc20,
     int start = 0,
     int limit = 20,
     int direction = 0,
     int? start_timestamp,
     int? end_timestamp,
-  }) {
+  }) async {
     final endpoint =
-        "$baseURL/transfer/trc20?address=${address}&trc20Id=${trc20Id}&start=${start.asQueryString}&limit=${limit.asQueryString}&direction=${direction.asQueryString}&start_timestamp=${start_timestamp.asQueryString}&end_timestamp=${end_timestamp.asQueryString}";
+        "$baseURL/transfer/trc20?address=${address}&trc20Id=${trc20.contractAddress}&start=${start.asQueryString}&limit=${limit.asQueryString}&direction=${direction.asQueryString}&start_timestamp=${start_timestamp.asQueryString}&end_timestamp=${end_timestamp.asQueryString}";
 
-    return getCall<JSON>(endpoint);
+    final result = await getCall<JSON>(endpoint);
+    final code = result['code'] as int;
+
+    if (code != 200) {
+      throw Exception("Failed to fetch TRC20 Transfer List: $result");
+    }
+    final data = result['data'] as JsonList;
+
+    return {
+      for (final item in data) TronTransaction.fromJson(item, trc20),
+    }.whereType<TronTransaction>().toSet();
   }
 
   Future<JSON> getUnfreezableBalance(String address) {

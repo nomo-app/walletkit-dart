@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
+import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/crypto/tron/domain/tron_http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart';
 
@@ -10,11 +11,15 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:web3dart/src/crypto/secp256k1.dart' as secp256k1;
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
 
+part 'tron_transaction.g.dart';
+
 const energyPrice = 420; // Price per energy unit in SUN
 const bandWidthPrice = 1000; // Price per bandwidth unit in SUN
 
 const maxReturnFieldSize = 64;
 const protoBufferHeaderSize = 5;
+
+const tronInitialBlockTimestamp = 1529891469000;
 
 final dummySeed = helloSeed;
 
@@ -208,4 +213,103 @@ Uint8List createTxSignature({
 (Uint8List, Uint8List) getTronCredentials({required Uint8List seed}) {
   final node = deriveNode(seed, tronBip44HDPath.defaultPath);
   return (node.privateKey!, node.publicKeyUncompressed);
+}
+
+@HiveType(typeId: 26)
+final class TronTransaction extends GenericTransaction {
+  const TronTransaction({
+    required super.hash,
+    required super.block,
+    required super.confirmations,
+    required super.timeMilli,
+    required super.amount,
+    required super.fee,
+    required super.sender,
+    required super.recipient,
+    required super.transferMethod,
+    required super.token,
+    required super.status,
+  });
+
+  static TronTransaction? fromJson(Json json, TokenEntity token) {
+    /// TRC20 Transaction
+    if (json
+        case {
+          "hash": String hash,
+          "from": String from,
+          "to": String to,
+          "amount": String value_s,
+          "block_timestamp": int block_timestamp,
+          "block": int block,
+          "confirmed": int confirmed,
+          "direction": int direction,
+        }) {
+      final value = BigInt.parse(value_s);
+      final amount = Amount(value: value, decimals: token.decimals);
+
+      return TronTransaction(
+        token: token,
+        hash: hash,
+        block: block,
+        timeMilli: block_timestamp,
+        recipient: to,
+        sender: from,
+        amount: amount,
+        fee: Amount.zero,
+        transferMethod: switch (direction) {
+          2 => TransactionTransferMethod.receive,
+          1 => TransactionTransferMethod.send,
+          _ => TransactionTransferMethod.unknown,
+        },
+        confirmations: 0,
+        status: switch (confirmed) {
+          1 => ConfirmationStatus.confirmed,
+          0 => ConfirmationStatus.pending,
+          _ => ConfirmationStatus.failed,
+        },
+      );
+    }
+
+    if (json
+        case {
+          "block": int block,
+          "hash": String hash,
+          "ownerAddress": String ownerAddress,
+          "toAddress": String toAddress,
+          "fee": String fee_s,
+          "amount": String amount_s,
+          "timestamp": int timestamp,
+          "confirmed": bool confirmed,
+          "riskTransaction": bool riskTransaction,
+        }) {
+      if (riskTransaction) {
+        return null;
+      }
+
+      final fee_bi = BigInt.tryParse(fee_s) ?? BigInt.zero;
+      final feeAmount = Amount(value: fee_bi, decimals: 6);
+
+      final amount_bi = BigInt.tryParse(amount_s) ?? BigInt.zero;
+      final amount = Amount(value: amount_bi, decimals: 6);
+
+      return TronTransaction(
+        hash: hash,
+        block: block,
+        confirmations: 0,
+        timeMilli: timestamp,
+        amount: amount,
+        fee: feeAmount,
+        sender: ownerAddress,
+        recipient: toAddress,
+        transferMethod: TransactionTransferMethod.unknown,
+        token: token,
+        status: switch (confirmed) {
+          true => ConfirmationStatus.confirmed,
+          false => ConfirmationStatus.pending,
+        },
+      );
+    }
+
+    throw UnimplementedError();
+  }
 }

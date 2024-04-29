@@ -1,9 +1,8 @@
 import 'package:walletkit_dart/src/common/http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/smart_contract.pb.dart';
-import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-const testNode = 'https://api.trongrid.io';
+const _tronGridBaseUrl = 'https://api.trongrid.io';
 
 class TronHTTPRepository extends HTTPRepository {
   final List<String> apiKeys;
@@ -11,7 +10,7 @@ class TronHTTPRepository extends HTTPRepository {
   const TronHTTPRepository({required this.apiKeys})
       : super(
           apiKeys: apiKeys,
-          baseURL: testNode,
+          baseURL: _tronGridBaseUrl,
           apiKeyHeader: "TRON-PRO-API-KEY",
         );
 
@@ -53,7 +52,7 @@ class TronHTTPRepository extends HTTPRepository {
       },
     );
 
-    final freeNetUsed = json["freeNetUsed"] as int;
+    final freeNetUsed = json["freeNetUsed"] as int? ?? 0;
     final freeNetLimit = json["freeNetLimit"] as int;
 
     final remainingFreeBandwidth = freeNetLimit - freeNetUsed;
@@ -70,19 +69,12 @@ class TronHTTPRepository extends HTTPRepository {
     );
   }
 
-  Future<JSON> getAccountBalance({required String address}) async {
-    final nowBlock = await getBlock();
-    final hash = nowBlock["blockID"] as String;
-    final number = nowBlock["block_header"]["raw_data"]["number"] as int;
+  Future<Amount> getBalance({required String address}) async {
+    final accountInfo = await getAccount(address: address);
 
-    return postCall<JSON>(
-      "$baseURL/wallet/getaccountbalance",
-      data: {
-        "account_identifier": {"address": address},
-        "block_identifier": {"hash": hash, "number": number},
-        "visible": true
-      },
-    );
+    final balance = accountInfo["balance"] as int;
+
+    return Amount(value: balance.toBigInt, decimals: 6);
   }
 
   Future<JSON> getAllTRC10Tokens() {
@@ -120,6 +112,15 @@ class TronHTTPRepository extends HTTPRepository {
   }) {
     return getCall<JSON>(
       "$baseURL/v1/accounts/$address/transactions/trc20?limit=$limit&contract_address=$contractAddress",
+    );
+  }
+
+  Future<JSON> getTRXTransactionList({
+    required String address,
+    int limit = 200,
+  }) {
+    return getCall<JSON>(
+      "$baseURL/v1/accounts/$address/transactions?limit=$limit",
     );
   }
 
@@ -262,6 +263,15 @@ class TronHTTPRepository extends HTTPRepository {
     return postCall<JSON>(
       "$baseURL/wallet/broadcasttransaction",
       data: json,
+    );
+  }
+
+  Future<JSON> getBlockByNumber(int number) {
+    return postCall<JSON>(
+      "$baseURL/wallet/getblockbynum",
+      data: {
+        "num": number,
+      },
     );
   }
 

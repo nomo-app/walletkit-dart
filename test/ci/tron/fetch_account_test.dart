@@ -9,14 +9,15 @@ import 'derive_address_test.dart';
 void main() {
   test('Test Tronscan', () async {
     final tronScan = TronScanRepository(
-      apiKeys: TronNetwork.blockExplorer!.$2.toList(),
+      apiKeys: TRON_Network.blockExplorer!.$2.toList(),
     );
 
     final block = await tronScan.getLatestBlock();
 
     print(block);
 
-    final txs = await tronScan.getTransactions(address: tronAddress);
+    final txs =
+        await tronScan.getTransactions(address: tronAddress, token: tron);
 
     print(txs);
 
@@ -47,7 +48,7 @@ void main() {
 
     final trc20Transfers = await tronScan.getTRC20TransferList(
       address: tronAddress,
-      trc20Id: tronUSDTAddress,
+      trc20: tronUSDT,
     );
 
     print("USDT TRC20 Transfers: $trc20Transfers");
@@ -69,14 +70,14 @@ void main() {
 
   test('Test RPC', () async {
     final tronHTTP = TronHTTPRepository(
-      apiKeys: ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"],
+      apiKeys: ["9b3974db-6887-41b3-bb70-39f43be242bd"],
     );
 
     final valid = await tronHTTP.validateAddress(tronAddress);
 
     print("Valid: $valid");
 
-    final balance = await tronHTTP.getAccountBalance(
+    final balance = await tronHTTP.getBalance(
         address: "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
 
     print("Balance: $balance");
@@ -142,11 +143,32 @@ void main() {
 
   test('Fetch Account Resources', () async {
     final tronHTTP = TronHTTPRepository(
-      apiKeys: ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"],
+      apiKeys: [
+        // "1d06fa37-79bf-4250-a4aa-9656a92a71b0",
+        "9b3974db-6887-41b3-bb70-39f43be242bd"
+      ],
     );
 
     final resource = await tronHTTP.getAccountResource(address: tronAddress);
 
     print(resource);
+  });
+
+  test('Fetch Tron Balance ', () async {
+    final tronHttp = TronHTTPRepository(
+      apiKeys: ["9b3974db-6887-41b3-bb70-39f43be242bd"],
+    );
+
+    final tronScan = TronScanRepository(
+      apiKeys: TRON_Network.blockExplorer!.$2.toList(),
+    );
+
+    final txs = await tronHttp.getTRXTransactionList(address: tronAddress);
+
+    final scanTxs =
+        await tronScan.getTransactions(address: tronAddress, token: tron);
+
+    print(txs['data'].length);
+    print(scanTxs.length);
   });
 }

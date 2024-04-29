@@ -435,7 +435,7 @@ class POLYGON_NETWORK extends EVMNetworkType {
 /// TRON Networks
 ///
 
-const TronNetwork = TRON_NETWORK();
+const TRON_Network = TRON_NETWORK();
 
 class TRON_NETWORK extends EVMNetworkType {
   final (String, Iterable<String>) httpApi;

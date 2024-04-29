@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -7,6 +8,7 @@ typedef JSON = Map<String, dynamic>;
 typedef JSONList = List<Map<String, dynamic>>;
 
 const retryInterval = Duration(seconds: 1);
+const timeoutDuration = Duration(seconds: 10);
 
 abstract class HTTPRepository {
   final List<String> apiKeys;
@@ -50,10 +52,12 @@ abstract class HTTPRepository {
   }
 
   Future<T> _getCall<T>(Uri url, {String? apiKey}) async {
-    final response = await HTTPService.client.get(
-      url,
-      headers: _getHeaders(apiKey: apiKey),
-    );
+    final response = await HTTPService.client
+        .get(
+          url,
+          headers: _getHeaders(apiKey: apiKey),
+        )
+        .timeout(timeoutDuration);
 
     if (response.statusCode != 200) {
       if (response.statusCode == 403) {
@@ -88,7 +92,7 @@ abstract class HTTPRepository {
     final dataString = jsonEncode(data);
     final uri = Uri.parse(url);
 
-    String? apiKey = _getApiKey(0);
+    String? apiKey;
     for (int i = 0; true; i++) {
       try {
         return await _postCall<T>(uri, apiKey: apiKey, data: dataString);
@@ -106,11 +110,13 @@ abstract class HTTPRepository {
     String? apiKey,
     required String data,
   }) async {
-    final response = await HTTPService.client.post(
-      url,
-      headers: _getHeaders(apiKey: apiKey),
-      body: data,
-    );
+    final response = await HTTPService.client
+        .post(
+          url,
+          headers: _getHeaders(apiKey: apiKey),
+          body: data,
+        )
+        .timeout(timeoutDuration);
 
     if (response.statusCode != 200) {
       if (response.statusCode == 403) {
