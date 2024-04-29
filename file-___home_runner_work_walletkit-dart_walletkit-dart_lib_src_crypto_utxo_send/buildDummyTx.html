@@ -65,7 +65,7 @@
 
 <span class="returntype">dynamic</span>
 <span class="name ">buildDummyTx</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="buildDummyTx-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
-<li><span class="parameter" id="buildDummyTx-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
+<li><span class="parameter" id="buildDummyTx-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span>, </span></li>
 <li><span class="parameter" id="buildDummyTx-param-inputMap"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">inputMap</span>, </span></li>
 <li><span class="parameter" id="buildDummyTx-param-dummyOutputs"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">dummyOutputs</span>, </span></li>
 </ol>})
@@ -81,7 +81,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">RawTransaction buildDummyTx({
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
   required Map&lt;ElectrumOutput, Input&gt; inputMap,
   required List&lt;Output&gt; dummyOutputs,
 }) {
@@ -97,7 +97,7 @@
   ).sign(
     seed: dummySeed,
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletPath,
   );
 
   return dummyTx;

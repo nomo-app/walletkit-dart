@@ -93,7 +93,7 @@ void write(BinaryWriter writer, ChangeNode obj) {
     ..writeByte(2)
     ..write(obj.addresses)
     ..writeByte(3)
-    ..write(obj.walletType)
+    ..write(obj.walletPurpose)
     ..writeByte(4)
     ..write(obj.publicKey);
 }</code></pre>
