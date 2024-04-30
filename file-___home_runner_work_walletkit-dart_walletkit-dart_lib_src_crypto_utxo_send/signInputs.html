@@ -65,7 +65,7 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>
 <span class="name ">signInputs</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="signInputs-param-inputs"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">inputs</span>, </span></li>
-<li><span class="parameter" id="signInputs-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span>, </span></li>
+<li><span class="parameter" id="signInputs-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
 <li><span class="parameter" id="signInputs-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
 <li><span class="parameter" id="signInputs-param-tx"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tx</span>, </span></li>
 <li><span class="parameter" id="signInputs-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
@@ -82,7 +82,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">List&lt;Input&gt; signInputs({
   required Map&lt;ElectrumOutput, Input&gt; inputs,
-  required HDWalletPath walletPath,
+  required HDWalletType walletType,
   required UTXONetworkType networkType,
   required RawTransaction tx,
   required Uint8List seed,
@@ -101,7 +101,7 @@
           seed: seed,
           childDerivationPath: output.node.derivationPath,
           networkType: networkType,
-          walletPath: walletPath,
+          walletType: walletType,
         );
       } else
         throw SendFailure(&quot;Can&#39;t sign input without node&quot;);
@@ -124,7 +124,7 @@
       tx: tx,
       i: i,
       output: output,
-      walletPurpose: walletPath.purpose,
+      walletType: walletType,
       networkType: networkType,
       node: bip32Node,
     );

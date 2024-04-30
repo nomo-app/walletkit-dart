@@ -65,8 +65,8 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
 <span class="name ">deriveExtendedPubKey</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="deriveExtendedPubKey-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
-<li><span class="parameter" id="deriveExtendedPubKey-param-walletPurpose"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPurpose</span>, </span></li>
-<li><span class="parameter" id="deriveExtendedPubKey-param-type"><span class="type-annotation">dynamic</span> <span class="parameter-name">type</span>, </span></li>
+<li><span class="parameter" id="deriveExtendedPubKey-param-type"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">type</span>, </span></li>
+<li><span class="parameter" id="deriveExtendedPubKey-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
 </ol>})
 
         
@@ -80,33 +80,33 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String deriveExtendedPubKey({
   required Uint8List seed,
-  required HDWalletPath walletPurpose,
-  UTXONetworkType? type,
+  required UTXONetworkType type,
+  required HDWalletType walletType,
 }) {
   &#47;&#47;&#47;
   &#47;&#47;&#47; Walletkit Compatibility
   &#47;&#47;&#47;
   if (type == LitecoinNetwork) {
-    final depth1MasterNode = deriveMasterNodeFromSeed(
+    final depth1MasterNode = _deriveMasterNodeFromSeed(
       seed: seed,
       networkType: type,
-      walletPath: bitcoinBip44HDPath, &#47;&#47; TODO: Check if still valid
+      walletType: HDWalletType.BIP44,
     );
 
     final parentFingerprint = depth1MasterNode.parentFingerprint;
 
-    final masterNode = deriveMasterNodeFromSeed(
+    final masterNode = _deriveMasterNodeFromSeed(
       seed: seed,
       networkType: type,
-      walletPath: walletPurpose,
+      walletType: walletType,
     );
     return masterNode.neutered().toBase58wkCompatibility(parentFingerprint, 1);
   }
 
-  final masterNode = deriveMasterNodeFromSeed(
+  final masterNode = _deriveMasterNodeFromSeed(
     seed: seed,
     networkType: type,
-    walletPath: walletPurpose,
+    walletType: walletType,
   );
   return masterNode.neutered().toBase58();
 }</code></pre>
