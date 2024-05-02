@@ -168,3 +168,16 @@ const LFi = EthBasedTokenEntity(
   decimals: 8,
   contractAddress: "0x9b760D11F63cb80BFFBCf69421cd46511E429f83",
 );
+
+const arbitrum = EthBasedTokenEntity(
+  name: 'Arbitrum',
+  symbol: 'ARB',
+  decimals: 18,
+  contractAddress: "0x912CE59144191C1204E64559FE8253a0e49E6548",
+);
+
+const ethAbitrum = EvmEntity(
+  name: "EthereumARB",
+  symbol: "ETH",
+  decimals: 18,
+);

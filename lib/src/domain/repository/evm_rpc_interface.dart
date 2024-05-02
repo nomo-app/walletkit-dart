@@ -272,7 +272,11 @@ final class EvmRpcInterface {
     final (gasPrice, gasLimit) = switch (intent.feeInfo) {
       EvmFeeInformation info => (info.gasPrice, info.gasLimit),
       _ => await client.getGasPrice().then(
-            (bi) => (Amount(value: bi, decimals: 18), GasLimits.ethSend.value),
+            (bi) async => (
+              Amount(value: bi, decimals: 18),
+              await estimateGasLimit(
+                  intent: intent, ownAddress: credentials.address.hex)
+            ),
           ),
     };
 
