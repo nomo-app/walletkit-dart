@@ -114,4 +114,14 @@ void main() {
     );
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
+  test('MoonBeam Test', () async {
+    final rpcInterface = EvmRpcInterface(MoonbeamNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    print(balance);
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
 }
