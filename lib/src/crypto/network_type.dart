@@ -428,3 +428,17 @@ class POLYGON_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+const ArbitrumNetwork = ARBITRUM_NETWORK();
+
+class ARBITRUM_NETWORK extends EVMNetworkType {
+  const ARBITRUM_NETWORK()
+      : super(
+          chainId: 42161,
+          rpcUrl: "https://arbitrum.llamarpc.com",
+          blockExplorer: (arbitrumScanBaseEndpoint, const [arbitrumScanApiKey]),
+          coin: arbitrum,
+          messagePrefix: "\x19Arbitrum Signed Message:\n",
+          blockTime: 2,
+        );
+}
