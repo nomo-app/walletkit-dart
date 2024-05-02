@@ -56,6 +56,15 @@ final class EvmNetworkFees extends NetworkFees {
         decimals: 18, // GWEI
       );
 
+  const EvmNetworkFees.fromBigInt({
+    required BigInt lastBlock,
+  }) : this(
+          lastBlock: lastBlock,
+          safe: lastBlock,
+          average: lastBlock,
+          fast: lastBlock,
+        );
+
   factory EvmNetworkFees.fromJson(Map<String, dynamic> json) {
     if (json
         case {
