@@ -169,6 +169,9 @@ const LFi = EthBasedTokenEntity(
   contractAddress: "0x9b760D11F63cb80BFFBCf69421cd46511E429f83",
 );
 
+///
+/// Arbitrum Assets
+///
 const arbitrum = EthBasedTokenEntity(
   name: 'Arbitrum',
   symbol: 'ARB',
@@ -179,5 +182,14 @@ const arbitrum = EthBasedTokenEntity(
 const ethAbitrum = EvmEntity(
   name: "EthereumARB",
   symbol: "ETH",
+  decimals: 18,
+);
+
+///
+/// Moonbeam Assets
+///
+const moonbeam = EvmEntity(
+  name: 'Moonbeam',
+  symbol: 'GLMR',
   decimals: 18,
 );
