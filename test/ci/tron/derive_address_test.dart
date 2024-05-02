@@ -60,4 +60,11 @@ void main() {
       false,
     );
   });
+
+  test('test name', () {
+    expect(
+      base58FromEVM("0x1226d9d2d336d60e42496133790d6a69af045e33"),
+      tronAddress1,
+    );
+  });
 }

@@ -43,6 +43,11 @@ String base58ToEVM(String base58, [bool withPrefix = true]) {
   return "${withPrefix ? "0x" : ""}${bytes.toHex.toLowerCase()}";
 }
 
+String base58FromEVM(String evmAddress) {
+  final bytes = hexToBytes(evmAddress);
+  return base58CheckEncode(TRON_ADDRESS_PREFIX, bytes);
+}
+
 // String base58CheckToHex(String base58) {
 //   final bytes = base58CheckDecode(base58);
 
