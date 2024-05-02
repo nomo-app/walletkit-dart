@@ -18,7 +18,7 @@ class UTXOTransactionAdapter extends TypeAdapter<UTXOTransaction> {
     };
     return UTXOTransaction(
       block: fields[1] as int,
-      fee: fields[6] as Amount,
+      fee: fields[6] as Amount?,
       hash: fields[0] as String,
       timeMilli: fields[3] as int,
       amount: fields[5] as Amount,

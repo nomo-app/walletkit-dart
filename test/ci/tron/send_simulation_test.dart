@@ -92,7 +92,7 @@ bool simulateTrxSendTransaction({
   final from = base58CheckFromHex(contract.ownerAddress.toUint8List);
   final to = base58CheckFromHex(contract.toAddress.toUint8List);
   final amount_int = contract.amount.toInt().toBigInt;
-  final amount = Amount(value: amount_int, decimals: 6);
+  final amount = Amount(value: amount_int, decimals: 6).value;
 
   final new_raw_tx = createRawTransaction(
     data: TronTransferContractData(to: to, from: from, amount: amount),

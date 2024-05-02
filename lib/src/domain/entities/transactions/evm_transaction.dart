@@ -45,7 +45,7 @@ abstract base class EVMTransaction extends GenericTransaction {
       'confirmations': confirmations,
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
-      'fee': fee.toJson(),
+      if (fee != null) 'fee': fee!.toJson(),
       'sender': sender,
       'recipient': recipient,
       'transferMethod': transferMethod.toString(),

@@ -30,7 +30,7 @@ void main() {
     final contractData = TronTransferContractData(
       from: tronAddress,
       to: tronAddress1,
-      amount: Amount.convert(value: 1, decimals: 6),
+      amount: Amount.convert(value: 1, decimals: 6).value,
     );
 
     final (bandwidth: balance, energy: _) =

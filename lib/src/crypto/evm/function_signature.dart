@@ -40,6 +40,16 @@ class FunctionSignature {
   FunctionSignatureWithArgs addArgs(List<FunctionArg> args) {
     return FunctionSignatureWithArgs(name, parameters, args);
   }
+
+  FunctionSignatureWithArgs addUnkown(Uint8List data) {
+    return FunctionSignatureWithArgs(
+      name,
+      parameters,
+      [
+        (name: "input", type: "hex", value: data.sublist(4).toHex),
+      ],
+    );
+  }
 }
 
 class FunctionSignatureWithArgs extends FunctionSignature with EquatableMixin {
@@ -187,7 +197,12 @@ class FunctionSignatureWithArgs extends FunctionSignature with EquatableMixin {
       functionSignatureCache[hex_signature] = fetchedFunctionSignature;
 
       if (fetchedFunctionSignature == null) {
-        throw Exception("No function signature found");
+        return FunctionSignature(
+          hex_signature,
+          {
+            "input": "hex",
+          },
+        ).addUnkown(data);
       }
 
       return fetchedFunctionSignature;

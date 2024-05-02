@@ -23,7 +23,7 @@ class ZeniqSmartChainTransactionAdapter
       confirmations: fields[2] as int,
       timeMilli: fields[3] as int,
       amount: fields[5] as Amount,
-      fee: fields[6] as Amount,
+      fee: fields[6] as Amount?,
       sender: fields[7] as String,
       recipient: fields[8] as String,
       transferMethod: fields[9] as TransactionTransferMethod,

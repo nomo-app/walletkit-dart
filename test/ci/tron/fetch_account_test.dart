@@ -163,12 +163,29 @@ void main() {
       apiKeys: TRON_Network.blockExplorer!.$2.toList(),
     );
 
-    final txs = await tronHttp.getTRXTransactionList(address: tronAddress);
+    // final txs = await tronHttp.getTRXTransactionList(address: tronAddress);
 
     final scanTxs =
         await tronScan.getTransactions(address: tronAddress, token: tron);
 
-    print(txs['data'].length);
+    // print(txs['data'].length);
     print(scanTxs.length);
+  });
+
+  test('Fetch TRX Transfers', () async {
+    final tronHttp = TronHTTPRepository(
+      apiKeys: ["9b3974db-6887-41b3-bb70-39f43be242bd"],
+    );
+
+    final transfers =
+        await tronHttp.getTRXTransactionList(address: tronAddress);
+
+    final data = transfers['data'];
+
+    final txs = [
+      for (final tx in data) TronTransaction.fromJson(tx, tron, tronAddress)
+    ].whereType<TronTransaction>();
+
+    print(txs.length);
   });
 }

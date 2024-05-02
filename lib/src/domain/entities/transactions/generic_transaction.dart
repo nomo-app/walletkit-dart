@@ -20,7 +20,7 @@ base class GenericTransaction implements Comparable<GenericTransaction> {
   @HiveField(5)
   final Amount amount;
   @HiveField(6)
-  final Amount fee;
+  final Amount? fee;
   @HiveField(7)
   final String sender;
   @HiveField(8)
@@ -46,7 +46,7 @@ base class GenericTransaction implements Comparable<GenericTransaction> {
 
   BigInt get value => amount.value;
 
-  BigInt get totalValue => value + fee.value;
+  BigInt get totalValue => value + (fee?.value ?? BigInt.zero);
 
   @override
   String toString() => "Transaction: $hash";
@@ -89,7 +89,7 @@ base class GenericTransaction implements Comparable<GenericTransaction> {
       'confirmations': confirmations,
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
-      'fee': fee.toJson(),
+      if (fee != null) 'fee': fee!.toJson(),
       'sender': sender,
       'recipient': recipient,
       'transferMethod': transferMethod.displayName,

@@ -69,7 +69,7 @@ class TronScanRepository extends HTTPRepository {
         method: method,
         tokens: tokens,
       );
-      print(endpoint);
+
       final result = await getCall<JSON>(endpoint);
 
       totalLength ??= result['total'] as int;
@@ -84,7 +84,7 @@ class TronScanRepository extends HTTPRepository {
     }
 
     return {
-      for (final item in data) TronTransaction.fromJson(item, token),
+      for (final item in data) TronTransaction.fromJson(item, token, address),
     }.whereType<TronTransaction>().toSet();
   }
 
@@ -166,7 +166,7 @@ class TronScanRepository extends HTTPRepository {
     final data = result['data'] as JsonList;
 
     return {
-      for (final item in data) TronTransaction.fromJson(item, trc20),
+      for (final item in data) TronTransaction.fromJson(item, trc20, address),
     }.whereType<TronTransaction>().toSet();
   }
 

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
+import 'package:web3dart/crypto.dart';
 
 const defaultParameterSize = 32;
 
@@ -107,4 +108,18 @@ List<TronParameter> decodeParams(
   }
 
   return result;
+}
+
+List<TronParameter> decodeSmartContractParameter({
+  required Uint8List data,
+  required List<TronParameterType> types,
+}) {
+  final parameters = decodeParams(data.sublist(4), types);
+
+  return parameters;
+}
+
+String getFunctionSelectorFromData(Uint8List data) {
+  final hash = keccak256(data);
+  return hash.sublist(0, 4).toHex;
 }

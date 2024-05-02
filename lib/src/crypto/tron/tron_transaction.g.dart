@@ -22,19 +22,22 @@ class TronTransactionAdapter extends TypeAdapter<TronTransaction> {
       confirmations: fields[2] as int,
       timeMilli: fields[3] as int,
       amount: fields[5] as Amount,
-      fee: fields[6] as Amount,
+      fee: fields[6] as Amount?,
       sender: fields[7] as String,
       recipient: fields[8] as String,
       transferMethod: fields[9] as TransactionTransferMethod,
       token: fields[4] as TokenEntity,
       status: fields[10] as ConfirmationStatus,
+      input: fields[11] as Uint8List,
     );
   }
 
   @override
   void write(BinaryWriter writer, TronTransaction obj) {
     writer
+      ..writeByte(12)
       ..writeByte(11)
+      ..write(obj.input)
       ..writeByte(0)
       ..write(obj.hash)
       ..writeByte(1)

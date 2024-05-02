@@ -312,7 +312,7 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
             })
         .toList();
 
-    final fees = expectedTx.fee.value.toInt();
+    final fees = expectedTx.fee?.value.toInt() ?? 0;
 
     if (fees <= 0) {
       return (expectedTx, false, "Fees <= 0");

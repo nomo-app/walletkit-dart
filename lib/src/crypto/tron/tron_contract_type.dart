@@ -26,6 +26,27 @@ sealed class TronContractData {
   }
 
   $pb.GeneratedMessage get contract;
+
+  static TronContractData from(
+      tron.Transaction_Contract_ContractType type, Any parameter) {
+    return switch (type) {
+      tron.Transaction_Contract_ContractType.TransferContract =>
+        TronTransferContractData.fromPB(
+          parameter.unpackInto<TransferContract>(TransferContract()),
+        ),
+      tron.Transaction_Contract_ContractType.TriggerSmartContract =>
+        TronTriggerSmartContractData.from(
+          parameter.unpackInto<TriggerSmartContract>(TriggerSmartContract()),
+        ),
+      tron.Transaction_Contract_ContractType.TransferAssetContract =>
+        TronTransferAssetContractData.fromPB(
+          parameter.unpackInto<TransferAssetContract>(TransferAssetContract()),
+        ),
+      _ => throw UnsupportedError(
+          "Unsupported Contract Type: $type with $parameter",
+        ),
+    };
+  }
 }
 
 ///
@@ -34,7 +55,7 @@ sealed class TronContractData {
 final class TronTransferContractData extends TronContractData {
   final String to;
   final String from;
-  final Amount amount;
+  final BigInt amount;
 
   const TronTransferContractData({
     required this.to,
@@ -42,12 +63,22 @@ final class TronTransferContractData extends TronContractData {
     required this.amount,
   }) : super(tron.Transaction_Contract_ContractType.TransferContract);
 
+  factory TronTransferContractData.fromPB(
+    TransferContract contract,
+  ) {
+    return TronTransferContractData(
+      to: base58CheckFromHex(contract.toAddress.toUint8List),
+      from: base58CheckFromHex(contract.ownerAddress.toUint8List),
+      amount: contract.amount.toInt().toBigInt,
+    );
+  }
+
   @override
   TransferContract get contract {
     final contract = TransferContract(
       ownerAddress: base58ToHex(from),
       toAddress: base58ToHex(to),
-      amount: Int64(amount.value.toInt()),
+      amount: Int64(amount.toInt()),
     );
 
     return contract;
@@ -61,7 +92,7 @@ final class TronTransferAssetContractData extends TronContractData {
   final String to;
   final String from;
   final String assetName;
-  final Amount amount;
+  final BigInt amount;
 
   const TronTransferAssetContractData({
     required this.to,
@@ -76,12 +107,23 @@ final class TronTransferAssetContractData extends TronContractData {
       ownerAddress: base58ToHex(from),
       toAddress: base58ToHex(to),
       assetName: assetName.hexToBytes,
-      amount: Int64(amount.value.toInt()),
+      amount: Int64(amount.toInt()),
+    );
+  }
+
+  factory TronTransferAssetContractData.fromPB(
+    TransferAssetContract contract,
+  ) {
+    return TronTransferAssetContractData(
+      to: base58CheckFromHex(contract.toAddress.toUint8List),
+      from: base58CheckFromHex(contract.ownerAddress.toUint8List),
+      amount: contract.amount.toInt().toBigInt,
+      assetName: contract.assetName.toUint8List.toHex,
     );
   }
 }
 
-final class TronTriggerSmartContractData extends TronContractData {
+sealed class TronTriggerSmartContractData extends TronContractData {
   final String ownerAddress;
   final String contractAddress;
   final Uint8List data;
@@ -121,6 +163,31 @@ final class TronTriggerSmartContractData extends TronContractData {
       tokenId: token_id,
     );
   }
+
+  static TronTriggerSmartContractData from(
+    TriggerSmartContract contract,
+  ) {
+    final owner = base58CheckFromHex(contract.ownerAddress.toUint8List);
+    final contractAddress =
+        base58CheckFromHex(contract.contractAddress.toUint8List);
+
+    final data = contract.data.toUint8List;
+    final functionSelector = getFunctionSelectorFromData(data);
+
+    print(getFunctionSignature(TronTRC20TransferContractData.selector).toHex);
+
+    return switch (functionSelector) {
+      TronTRC20TransferContractData.selector =>
+        TronTRC20TransferContractData.fromPB(
+          data,
+          ownerAddress: owner,
+          contractAddress: contractAddress,
+        ),
+      _ => throw UnsupportedError(
+          "Unsupported Contract Type: $functionSelector with $contract",
+        ),
+    };
+  }
 }
 
 final class TronTRC20TransferContractData extends TronTriggerSmartContractData {
@@ -129,13 +196,16 @@ final class TronTRC20TransferContractData extends TronTriggerSmartContractData {
   final String contractAddress;
   final Amount amount;
 
+  static const selector = "transfer(address,uint256)";
+  static const selectorHex = "a9059cbb";
+
   TronTRC20TransferContractData({
     required this.recipient,
     required this.ownerAddress,
     required this.contractAddress,
     required this.amount,
   }) : super(
-          function_selector: "transfer(address,uint256)",
+          function_selector: selector,
           ownerAddress: ownerAddress,
           contractAddress: contractAddress,
           parameters: [
@@ -143,10 +213,30 @@ final class TronTRC20TransferContractData extends TronTriggerSmartContractData {
             TronIntParameter(amount.value),
           ],
         );
+
+  factory TronTRC20TransferContractData.fromPB(
+    Uint8List data, {
+    required String ownerAddress,
+    required String contractAddress,
+  }) {
+    final paramData = decodeParams(
+      data.sublist(4),
+      [TronParameterType.ADDRESS, TronParameterType.INT256],
+    );
+
+    final recipient = paramData[0] as TronAddressParameter;
+    final amount = paramData[1] as TronIntParameter;
+
+    return TronTRC20TransferContractData(
+      recipient: recipient.value,
+      ownerAddress: "",
+      contractAddress: "",
+      amount: Amount(value: amount.value, decimals: 6),
+    );
+  }
 }
 
 Uint8List getFunctionSignature(String function_selector) {
-  final encoded = utf8.encode(function_selector);
-  final hash = keccak256(encoded);
+  final hash = keccakUtf8(function_selector);
   return hash.sublist(0, 4);
 }

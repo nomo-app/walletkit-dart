@@ -38,7 +38,7 @@ abstract class HTTPRepository {
 
   Future<T> getCall<T>(String url) async {
     final uri = Uri.parse(url);
-    String? apiKey;
+    String? apiKey = _getApiKey(0);
     for (int i = 0; true; i++) {
       try {
         return await _getCall<T>(uri, apiKey: apiKey);
