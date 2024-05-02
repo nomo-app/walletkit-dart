@@ -3,9 +3,7 @@ import 'package:fixnum/fixnum.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/balance_contract.pb.dart';
-import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_contract_type.dart';
-import 'package:walletkit_dart/src/crypto/tron/tron_transaction.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/utils/base58.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -14,7 +12,7 @@ import 'derive_address_test.dart';
 
 void main() {
   test('Decode Raw Transaction & Rebuild it', () {
-    final hex =
+    const hex =
         "0a8a010a0261202208a3636ac7209ee5bd4087a78dfef0315a67080112630a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412320a15417f9dc8311e51c1685764bbb0f5ceac7ad79b01281215411226d9d2d336d60e42496133790d6a69af045e3318c0843d70c7d7e8fdf0319001c0843d12415db5f02f81c38320a7f1b8566451e2784ed209c6f2fa7b9b81821c6cbc8add12269d61ca867ec18c193917a754129072bc0682ad30f097495269736a877e08e71c";
 
     final transaction = tron.Transaction.fromBuffer(hex.hexToBytes);
@@ -37,7 +35,7 @@ void main() {
   });
 
   test('Test TxID', () {
-    final raw =
+    const raw =
         "0a020fc922085ff2b5033581620340b89786e0f0315a65080112610a2d747970652e676f6f676c65617069732e636f6d2f70726f746f636f6c2e5472616e73666572436f6e747261637412300a15417f9dc8311e51c1685764bbb0f5ceac7ad79b01281215411226d9d2d336d60e42496133790d6a69af045e33180170d8c282e0f031";
 
     final id = sha256Hash(raw.hexToBytes);
@@ -55,7 +53,7 @@ void main() {
 
     final value = contract_.writeToBuffer();
 
-    final contractValue =
+    const contractValue =
         "0a15417f9dc8311e51c1685764bbb0f5ceac7ad79b01281215411226d9d2d336d60e42496133790d6a69af045e331801";
 
     expect(value.toHex, contractValue);

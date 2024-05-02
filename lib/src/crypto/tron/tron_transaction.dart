@@ -2,13 +2,8 @@ import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/common/http_repository.dart';
-import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/crypto/tron/domain/tron_http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart';
-import 'package:walletkit_dart/src/crypto/tron/rpc/core/any.pb.dart';
-import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/balance_contract.pb.dart';
 
-import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_contract_type.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -337,9 +332,9 @@ final class TronTransaction extends EVMTransaction {
     if (json
         case {
           "txID": String hash,
-          "net_usage": int netUsage,
+          "net_usage": int _,
           "net_fee": int netFee,
-          "energy_usage": int energyUsage,
+          "energy_usage": int _,
           "energy_fee": int energyFee,
           "blockNumber": int block,
           "block_timestamp": int block_timestamp,

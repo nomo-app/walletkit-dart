@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/tron/domain/tron_http_repository.dart';
-import 'package:walletkit_dart/src/crypto/tron/domain/tronscan_repository.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'derive_address_test.dart';
 
@@ -155,9 +153,9 @@ void main() {
   });
 
   test('Fetch Tron Balance ', () async {
-    final tronHttp = TronHTTPRepository(
-      apiKeys: ["9b3974db-6887-41b3-bb70-39f43be242bd"],
-    );
+    // final tronHttp = TronHTTPRepository(
+    //   apiKeys: ["9b3974db-6887-41b3-bb70-39f43be242bd"],
+    // );
 
     final tronScan = TronScanRepository(
       apiKeys: TRON_Network.blockExplorer!.$2.toList(),

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 import 'package:collection/collection.dart';
-import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/utils/general.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';

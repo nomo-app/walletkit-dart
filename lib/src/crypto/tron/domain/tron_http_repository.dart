@@ -158,7 +158,7 @@ class TronHTTPRepository extends HTTPRepository {
     required String contractAddress,
     required Amount amount,
   }) {
-    final functionSelector = "transfer(address,uint256)";
+    const functionSelector = "transfer(address,uint256)";
     final addressParameter = base58ToEVM(address, false).padLeft(64, '0');
     final amountParameter = amount.value.toHex.padLeft(64, '0');
     final parmeter = "$addressParameter$amountParameter";

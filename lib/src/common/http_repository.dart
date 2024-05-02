@@ -157,7 +157,7 @@ extension QueryUtil on dynamic {
     if (this == null) {
       return "";
     }
-    return this.toString();
+    return toString();
   }
 }
 

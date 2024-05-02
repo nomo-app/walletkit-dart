@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:fixnum/fixnum.dart';
@@ -6,7 +5,6 @@ import 'package:walletkit_dart/src/crypto/tron/rpc/core/any.pb.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/asset_issue_contract.pb.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/balance_contract.pb.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/smart_contract.pb.dart';
-import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_parameter_type.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
@@ -20,8 +18,8 @@ sealed class TronContractData {
 
   tron.Transaction_Contract createContract() {
     return tron.Transaction_Contract(
-      type: this.type,
-      parameter: Any.pack(this.contract),
+      type: type,
+      parameter: Any.pack(contract),
     );
   }
 
