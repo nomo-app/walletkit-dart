@@ -131,6 +131,6 @@ void main() {
 
     print(transactions);
 
-    expect(transactions, []);
+    expect(transactions, isNotEmpty);
   });
 }
