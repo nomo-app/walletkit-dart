@@ -456,3 +456,16 @@ class MOONBEAM_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+const AvalancheNetwork = AVALANCHE_NETWORK();
+
+class AVALANCHE_NETWORK extends EVMNetworkType {
+  const AVALANCHE_NETWORK()
+      : super(
+          chainId: 43114,
+          rpcUrl: "https://api.avax.network/ext/bc/C/rpc",
+          coin: avalanche,
+          messagePrefix: "\x19Avalanche Signed Message:\n",
+          blockTime: 2,
+        );
+}

@@ -193,3 +193,12 @@ const moonbeam = EvmEntity(
   symbol: 'GLMR',
   decimals: 18,
 );
+
+///
+/// Avalanche Assets
+///
+const avalanche = EvmEntity(
+  name: 'Avalanche',
+  symbol: 'AVAX',
+  decimals: 18,
+);
