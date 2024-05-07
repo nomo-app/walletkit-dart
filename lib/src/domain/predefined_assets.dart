@@ -88,6 +88,12 @@ const zeniqSmart = EvmEntity(
   symbol: 'ZENIQ Token',
   decimals: 18,
 );
+const wrappedZeniqSmart = EthBasedTokenEntity(
+  name: 'Wrapped ZENIQ',
+  symbol: 'WZENIQ',
+  decimals: 18,
+  contractAddress: "0x74DC1C4ec10abE9F5C8A3EabF1A90b97cDc3Ead8",
+);
 const tupanToken = EthBasedTokenEntity(
   name: 'Tupan Community Token',
   symbol: 'TUPAN',

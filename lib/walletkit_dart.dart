@@ -62,3 +62,7 @@ export 'src/crypto/evm/function_argument_decoding.dart';
 export 'src/crypto/utxo/proof_of_payment.dart';
 
 export 'src/crypto/utxo/entities/raw_transaction.dart';
+
+export 'src/crypto/evm/abi/zeniqswap/zeniqswap_router.dart';
+export 'src/crypto/evm/abi/zeniqswap/zeniqswap_factory.dart';
+export 'src/crypto/evm/abi/zeniqswap/zeniqswap_pair.dart';

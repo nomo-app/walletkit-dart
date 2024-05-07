@@ -606,4 +606,10 @@ final class EvmRpcInterface {
 
     return ConfirmationStatus.pending;
   }
+
+  dynamic callContractFuntion({
+    required String contractAddress,
+    required String functionSelector,
+    required List<dynamic> args,
+  }) {}
 }

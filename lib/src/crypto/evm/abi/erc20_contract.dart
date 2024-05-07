@@ -2,6 +2,8 @@
 
 import 'package:web3dart/web3dart.dart';
 
+export 'package:web3dart/web3dart.dart' show EthereumAddress;
+
 final contractAbiErc20 = ContractAbi.fromJson(
   '''[
   {

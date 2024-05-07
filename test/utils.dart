@@ -21,3 +21,7 @@ Uint8List loadFromEnv(String envName) {
   Uint8List seed = Uint8List.fromList(intList);
   return seed;
 }
+
+Uint8List loadDevSeed2FromEnv() {
+  return loadFromEnv("DEV_SEED");
+}
