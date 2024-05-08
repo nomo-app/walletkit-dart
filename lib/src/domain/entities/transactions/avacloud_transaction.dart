@@ -20,7 +20,6 @@ final class AvalancheTransaction extends EVMTransaction {
     required super.transferMethod,
     required super.token,
     required super.status,
-    // most likely handle this differently
     required super.input,
   });
 
@@ -53,6 +52,8 @@ final class AvalancheTransaction extends EVMTransaction {
         int.tryParse(nativeTransaction['txStatus']) ?? -1,
       );
 
+      final data = nativeTransaction['method']['methodHash'].toString();
+
       return AvalancheTransaction(
         hash: hash,
         block: block,
@@ -66,8 +67,7 @@ final class AvalancheTransaction extends EVMTransaction {
         transferMethod: transferMethod,
         token: token,
         status: status,
-        //no input field equivalent
-        input: Uint8List(0),
+        input: data.hexToBytesWithPrefixOrNull ?? Uint8List(0),
       );
     }
 

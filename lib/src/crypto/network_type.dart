@@ -465,6 +465,7 @@ class AVALANCHE_NETWORK extends EVMNetworkType {
           chainId: 43114,
           rpcUrl: "https://api.avax.network/ext/bc/C/rpc",
           coin: avalanche,
+          blockExplorer: (avalancheAPIEndpoint, const [avalancheAPIKey]),
           messagePrefix: "\x19Avalanche Signed Message:\n",
           blockTime: 2,
         );
