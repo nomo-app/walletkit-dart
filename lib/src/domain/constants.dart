@@ -215,6 +215,11 @@ const arbitrumTestWallet = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
 const moonbeamScanBaseEndpoint = "https://api-moonbeam.moonscan.io/api";
 const moonbeamScanApiKey = "CAURYUIK5DMNXVFI1BPFYDXPKC48WM19R8";
 
+const avalancheAPIEndpoint =
+    "https://glacier-api.avax.network/v1/chains/43114/addresses/";
+const avalancheAPIKey =
+    "ac_XnIjoTXZHJ4u28HJYz8E5zIRdO60BlVkFISzZ0a0dVSWJBx1emxrDH-vMTW6MeGTnvm7iZV-1xvLF31ovpkm4w";
+
 ///
 /// Staking
 ///

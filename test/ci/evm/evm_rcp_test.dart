@@ -125,7 +125,6 @@ void main() {
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
 
-
   test('Avalanche Test', () async {
     final rpcInterface = EvmRpcInterface(AvalancheNetwork);
 
@@ -135,11 +134,5 @@ void main() {
 
     print(balance);
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
-
-    final tx = await rpcInterface.fetchAllTransactionsZSC(address: arbitrumTestWallet);
-
-    print(tx);
-
-
   });
 }

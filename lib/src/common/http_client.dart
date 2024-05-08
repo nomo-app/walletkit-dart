@@ -9,4 +9,10 @@ abstract class HTTPService {
     _client ??= HTTPClient();
     return _client!;
   }
+
+  //Add headers to the request
+  static Future<http.Response> getWithHeaders(String url,
+      {Map<String, String>? headers}) {
+    return client.get(Uri.parse(url), headers: headers);
+  }
 }
