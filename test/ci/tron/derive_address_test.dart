@@ -14,6 +14,14 @@ const tronAddress1EVM = "0x1226d9d2d336d60e42496133790d6a69af045e33";
 const tronUSDTAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
 
 void main() {
+  test('test name', () {
+    var address = uncompressedPublicKeyToAddress(
+      "04e9d8c21089493d6bc2021a760359ab2c340e0f4182584c9f5facd65686f79e18ce83ecf8531c8a09950db9eb4c3941955e676884cc894f1be1d4b8c7ffeb56e4"
+          .hexToBytes,
+      TRON_ADDRESS_PREFIX,
+    );
+    print(address);
+  });
   test('Test HD Wallet Path Test', () {
     expect(tronBip44HDPath.basePath, "m/44'/195'");
     expect(tronBip44HDPath.getPath(0, 0, 0), "m/44'/195'/0'/0/0");

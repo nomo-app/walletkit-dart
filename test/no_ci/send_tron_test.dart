@@ -20,23 +20,29 @@ void main() {
   });
 
   test('Send Contract (TRX Transfer)', () async {
-    final seed = loadFromEnv("TRON_SEED");
+    final seed = loadFromEnv("DEV_SEED");
     final tronHTTP = TronHTTPRepository(
       apiKeys: ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"],
     );
 
     final contractData = TronTransferContractData(
-      from: tronAddress,
+      from: "TDvoNesroeU7fHtwnvYn9Uw1c2hNZ8iBqX",
       to: tronAddress1,
       amount: Amount.convert(value: 1, decimals: 6).value,
     );
 
-    final (bandwidth: balance, energy: _) =
-        await tronHTTP.getAccountResource(address: tronAddress);
+    final (bandwidth: balance, energy: _) = await tronHTTP.getAccountResource(
+        address: "TDvoNesroeU7fHtwnvYn9Uw1c2hNZ8iBqX");
     final bandWidth = await calculateTransactionSize(contractData);
     final feeLimit = balance >= bandWidth ? 0 : bandWidth * bandWidthPrice;
 
-    final rawTx = await buildRawTransaction(contractData, feeLimit: feeLimit);
+    final block = await tronHTTP.getBlock();
+
+    final rawTx = await buildRawTransaction(
+      contractData,
+      feeLimit: feeLimit,
+      block: block,
+    );
 
     final tx = signTransaction(
       rawTx: rawTx,
@@ -72,7 +78,13 @@ void main() {
         energyBalance >= energyUsed ? 0 : energyUsed * energyPrice;
     final feeLimit = bandWidthFee + energyFee;
 
-    final rawTx = await buildRawTransaction(contractData, feeLimit: feeLimit);
+    final block = await tronHTTP.getBlock();
+
+    final rawTx = await buildRawTransaction(
+      contractData,
+      feeLimit: feeLimit,
+      block: block,
+    );
 
     final tx = signTransaction(
       rawTx: rawTx,

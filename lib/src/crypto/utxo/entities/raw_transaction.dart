@@ -40,6 +40,9 @@ sealed class RawTransaction {
 
   BigInt get fee => totalInputValue - totalOutputValue;
 
+  // Value of the first output
+  BigInt get targetAmount => outputs.first.value;
+
   BigInt get totalInputValue {
     return inputs.fold(
       BigInt.zero,

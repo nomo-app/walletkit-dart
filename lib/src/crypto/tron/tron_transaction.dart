@@ -4,11 +4,14 @@ import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/common/http_repository.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart';
 
-import 'package:walletkit_dart/src/crypto/tron/tron_contract_type.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:web3dart/src/crypto/secp256k1.dart' as secp256k1;
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
+
+export 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart'
+    show Transaction_raw;
+export 'package:walletkit_dart/src/crypto/tron/tron_contract_type.dart';
 
 part 'tron_transaction.g.dart';
 
@@ -20,13 +23,21 @@ const protoBufferHeaderSize = 5;
 
 const tronInitialBlockTimestamp = 1529891469000;
 
+const TronBlockInfo tronDummyBlock = (
+  blockId: '0000000003accb92e18c15be0680c23f217731bdf0a453d5a89c0bb80d2713f3',
+  blockNumber: 1,
+);
+
 final dummySeed = helloSeed;
 
 /// Used for calculating the bandwidth of a transaction (Size in Bytes)
 /// Builds a Dummy Transaction and calculates the size of the transaction
 /// https://github.com/tronprotocol/wallet-cli/issues/292
-Future<int> calculateTransactionSize(TronContractData contractData) async {
-  final rawTx = await buildRawTransaction(contractData);
+int calculateTransactionSize(TronContractData contractData) {
+  final rawTx = buildRawTransaction(
+    contractData,
+    block: tronDummyBlock,
+  );
 
   final tx = signTransaction(
     rawTx: rawTx,
@@ -82,25 +93,16 @@ Future<String> sendTRX({
   return txID;
 }
 
-// TODO: Convert to Non Future => pass Current Block as parameter
-Future<Transaction_raw> buildRawTransaction(
+Transaction_raw buildRawTransaction(
   TronContractData contractData, {
   int feeLimit = 10000000,
-}) async {
-  final tronHTTP = TronHTTPRepository(
-    apiKeys: ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"],
-  );
-
-  final block = await tronHTTP.getBlock();
-
-  final blockId = (block['blockID'] as String).hexToBytes;
+  required TronBlockInfo block,
+}) {
+  final blockId = block.blockId.hexToBytes;
   final refBlockHash = blockId.sublist(8, 16);
-
-  final blockNumberBytes = (block['block_header']['raw_data']['number'] as int)
-      .toBigInt
-      .bigIntToBytes;
+  final blockNumberBytes = block.blockNumber.toBigInt.bigIntToBytes;
   final refBlockBytes = blockNumberBytes.sublist(
-    blockNumberBytes.length - 2,
+    blockNumberBytes.length < 2 ? 0 : blockNumberBytes.length - 2,
     blockNumberBytes.length,
   );
 
@@ -199,6 +201,8 @@ Uint8List createTxSignature({
 }) {
   final credentials = getTronCredentials(seed: seed);
   final sig = secp256k1.sign(txID, credentials.$1);
+
+  print(credentials.$2.toHex);
 
   final r = padUint8ListTo32(sig.r.bigIntToBytes);
   final s = padUint8ListTo32(sig.s.bigIntToBytes);

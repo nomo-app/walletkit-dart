@@ -33,6 +33,9 @@ class TransferIntent<T extends FeeInformation?> {
     if (feeInfo is EvmFeeInformation) {
       return (feeInfo as EvmFeeInformation).fee;
     }
+    if (feeInfo is TronFeeInformation) {
+      return (feeInfo as TronFeeInformation).feeLimit;
+    }
     return null;
   }
 

@@ -4,6 +4,8 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 const _tronGridBaseUrl = 'https://api.trongrid.io';
 
+typedef TronBlockInfo = ({String blockId, int blockNumber});
+
 class TronHTTPRepository extends HTTPRepository {
   final List<String> apiKeys;
 
@@ -26,8 +28,14 @@ class TronHTTPRepository extends HTTPRepository {
     return result;
   }
 
-  Future<JSON> getBlock() {
-    return postCall<JSON>("$baseURL/wallet/getnowblock", data: {});
+  Future<TronBlockInfo> getBlock() async {
+    final result =
+        await postCall<JSON>("$baseURL/wallet/getnowblock", data: {});
+
+    final blockId = result["blockID"] as String;
+    final blockNumber = result["block_header"]["raw_data"]["number"] as int;
+
+    return (blockId: blockId, blockNumber: blockNumber);
   }
 
   Future<JSON> getAccount({required String address, bool visible = true}) {

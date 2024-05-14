@@ -82,3 +82,18 @@ final class UtxoFeeInformation extends FeeInformation {
     };
   }
 }
+
+@HiveType(typeId: 25)
+final class TronFeeInformation extends FeeInformation {
+  final Amount feeLimit;
+
+  const TronFeeInformation({
+    required this.feeLimit,
+  });
+
+  Json toJson() {
+    return {
+      'feeLimit': feeLimit.toJson(),
+    };
+  }
+}
