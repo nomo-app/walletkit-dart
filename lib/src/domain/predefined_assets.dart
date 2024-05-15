@@ -182,8 +182,18 @@ const ethAbitrum = EvmEntity(
   decimals: 18,
 );
 
+///
+/// Base Assets
+///
 const ethBase = EvmEntity(
   name: "EthereumBASE",
   symbol: "ETH",
   decimals: 18,
+);
+
+const mathToken = EthBasedTokenEntity(
+  name: "MATH Token",
+  symbol: "MATH",
+  decimals: 18,
+  contractAddress: "0x9e81F6495BA29a6B4D48bDdD042C0598fA8abc9F",
 );
