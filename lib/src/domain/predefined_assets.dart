@@ -33,6 +33,7 @@ const ec8Coin = TokenEntity(
 /// Ethereum Assets
 ///
 const ethNative = EvmEntity(
+  chainID: 1,
   name: 'Ethereum',
   symbol: 'ETH',
   decimals: 18,
@@ -84,6 +85,7 @@ const usdtToken = EthBasedTokenEntity(
 /// ZSC Assets
 ///
 const zeniqSmart = EvmEntity(
+  chainID: 383414847825,
   name: 'ZENIQ',
   symbol: 'ZENIQ Token',
   decimals: 18,
@@ -135,6 +137,7 @@ const vooToken = EthBasedTokenEntity(
 /// Binance Chain Assets
 ///
 const binanceSmart = EvmEntity(
+  chainID: 56,
   name: 'BNB',
   symbol: 'BNB',
   decimals: 18,
@@ -150,6 +153,7 @@ const zeniqBSCToken = EthBasedTokenEntity(
 /// Polygon Assets
 ///
 const polygon = EvmEntity(
+  chainID: 137,
   name: 'Polygon',
   symbol: 'MATIC',
   decimals: 18,
@@ -180,6 +184,7 @@ const arbitrum = EthBasedTokenEntity(
 );
 
 const ethAbitrum = EvmEntity(
+  chainID: 42161,
   name: "EthereumARB",
   symbol: "ETH",
   decimals: 18,
@@ -189,6 +194,7 @@ const ethAbitrum = EvmEntity(
 /// Avalanche Assets
 ///
 const avalanche = EvmEntity(
+  chainID: 43114,
   name: 'Avalanche',
   symbol: 'AVAX',
   decimals: 18,
@@ -205,6 +211,7 @@ const wrappedETH = EthBasedTokenEntity(
 /// Base Assets
 ///
 const ethBase = EvmEntity(
+  chainID: 8453,
   name: "EthereumBASE",
   symbol: "ETH",
   decimals: 18,
@@ -221,6 +228,7 @@ const mathToken = EthBasedTokenEntity(
 /// Moonbeam Assets
 ///
 const moonbeam = EvmEntity(
+  chainID: 1284,
   name: 'Moonbeam',
   symbol: 'GLMR',
   decimals: 18,

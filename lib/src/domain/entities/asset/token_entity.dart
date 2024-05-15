@@ -61,10 +61,20 @@ class TokenEntity extends Equatable {
 
 @HiveType(typeId: 8)
 class EvmEntity extends TokenEntity {
+  @HiveField(3)
+  final int chainID;
+
+  @override
+  List<Object> get props => [name, symbol, decimals, chainID];
+
+  @override
+  String get identifier => "$name:$symbol:$decimals:$chainID";
+
   const EvmEntity({
     required super.name,
     required super.symbol,
     required super.decimals,
+    required this.chainID,
   });
 }
 
