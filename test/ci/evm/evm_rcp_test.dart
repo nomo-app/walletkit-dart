@@ -114,4 +114,13 @@ void main() {
     );
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
+
+  test('Base Test', () async {
+    final rpcInterface = EvmRpcInterface(BaseNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
 }

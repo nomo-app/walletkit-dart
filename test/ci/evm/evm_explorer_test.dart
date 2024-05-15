@@ -1,4 +1,6 @@
 @Timeout(Duration(seconds: 600))
+import 'dart:math';
+
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/predefined_assets.dart';
@@ -8,6 +10,7 @@ void main() {
   final etherscan = EVMExplorer(etherscanBaseEndpoint, [etherscanApiKey]);
   final bnbScan = EVMExplorer(bnbScanBaseEndpoint, [bnbScanApiKey]);
   final arbiScan = EVMExplorer(arbitrumScanBaseEndpoint, [arbitrumScanApiKey]);
+  final baseScan = EVMExplorer(baseScanEndpoint, [baseScanApiKey]);
 
   test('Test Ethereum Etherscan Fetching', () async {
     ///
@@ -111,6 +114,18 @@ void main() {
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
     final transactions = await arbiScan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: ethNative,
+    );
+
+    expect(transactions, isNotEmpty);
+  });
+  test('Test Base Fetching', () async {
+    final balance = await baseScan.fetchBalance(arbitrumTestWallet, ethNative);
+
+    expect(balance, greaterThanOrEqualTo(BigInt.zero));
+
+    final transactions = await baseScan.fetchTransactions(
       address: arbitrumTestWallet,
       token: ethNative,
     );
