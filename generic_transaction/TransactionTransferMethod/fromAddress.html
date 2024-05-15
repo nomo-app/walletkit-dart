@@ -83,8 +83,7 @@
   String recipient,
   String sender,
 ) {
-  if (address.toLowerCase() == sender.toLowerCase() &amp;&amp;
-      address.toLowerCase() == recipient.toLowerCase())
+  if (address == sender &amp;&amp; address == recipient)
     return TransactionTransferMethod.own;
   if (address == recipient) return TransactionTransferMethod.receive;
   return TransactionTransferMethod.send;
