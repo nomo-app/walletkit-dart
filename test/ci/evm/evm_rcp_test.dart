@@ -122,5 +122,10 @@ void main() {
       address: arbitrumTestWallet,
     );
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final tokenBalance =
+        await rpcInterface.fetchTokenBalance(arbitrumTestWallet, mathToken);
+
+    expect(tokenBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
 }

@@ -1,4 +1,6 @@
 @Timeout(Duration(seconds: 600))
+import 'dart:math';
+
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/predefined_assets.dart';
@@ -137,5 +139,9 @@ void main() {
     );
 
     expect(erc20Transactions, isNotEmpty);
+
+    final erc20balance =
+        await baseScan.fetchBalance(arbitrumTestWallet, mathToken);
+    expect(erc20balance, greaterThan(BigInt.zero));
   });
 }
