@@ -79,47 +79,50 @@
   required EvmEntity token,
   required String address,
 }) {
-  &#47;&#47; var nativeTransaction = json[&#39;nativeTransaction&#39;];
-  &#47;&#47; if (nativeTransaction != null) {
-  final block = int.tryParse(json[&#39;blockNumber&#39;]) ?? -1;
-  final timeMilli = json[&#39;blockTimestamp&#39;] * 1000;
+  var nativeTransaction = json[&#39;nativeTransaction&#39;];
+  if (nativeTransaction != null) {
+    final block = int.tryParse(nativeTransaction[&#39;blockNumber&#39;]) ?? -1;
+    final timeMilli = nativeTransaction[&#39;blockTimestamp&#39;] * 1000;
 
-  final hash = json[&#39;txHash&#39;];
-  final from = json[&#39;from&#39;][&#39;address&#39;];
-  final to = json[&#39;to&#39;][&#39;address&#39;];
-  final value = BigInt.parse(json[&#39;value&#39;]);
+    final hash = nativeTransaction[&#39;txHash&#39;];
+    final from = nativeTransaction[&#39;from&#39;][&#39;address&#39;];
+    final to = nativeTransaction[&#39;to&#39;][&#39;address&#39;];
+    final value = BigInt.parse(nativeTransaction[&#39;value&#39;]);
 
-  final gasUsed = BigInt.parse(json[&#39;gasUsed&#39;]);
-  final gasPrice = BigInt.parse(json[&#39;gasPrice&#39;]);
-  final fee = Amount(
-    value: gasPrice * gasUsed,
-    decimals: token.decimals,
-  );
+    final gasUsed = BigInt.parse(nativeTransaction[&#39;gasUsed&#39;]);
+    final gasPrice = BigInt.parse(nativeTransaction[&#39;gasPrice&#39;]);
+    final fee = Amount(
+      value: gasPrice * gasUsed,
+      decimals: token.decimals,
+    );
 
-  final transferMethod =
-      TransactionTransferMethod.fromAddress(address, to, from);
+    final transferMethod =
+        TransactionTransferMethod.fromAddress(address, to, from);
 
-  final status = ConfirmationStatus.fromReceiptStatus(
-    int.tryParse(json[&#39;txStatus&#39;]) ?? -1,
-  );
+    final status = ConfirmationStatus.fromReceiptStatus(
+      int.tryParse(nativeTransaction[&#39;txStatus&#39;]) ?? -1,
+    );
 
-  final data = json[&#39;method&#39;][&#39;methodHash&#39;].toString();
+    final data = nativeTransaction[&#39;method&#39;][&#39;methodHash&#39;].toString();
 
-  return AvalancheTransaction(
-    hash: hash,
-    block: block,
-    &#47;&#47; Needs to be calculated or fetched if required
-    confirmations: 0,
-    timeMilli: timeMilli,
-    amount: Amount(value: value, decimals: token.decimals),
-    fee: fee,
-    sender: from,
-    recipient: to,
-    transferMethod: transferMethod,
-    token: token,
-    status: status,
-    input: data.hexToBytesWithPrefixOrNull ?? Uint8List(0),
-  );
+    return AvalancheTransaction(
+      hash: hash,
+      block: block,
+      &#47;&#47; Needs to be calculated or fetched if required
+      confirmations: 0,
+      timeMilli: timeMilli,
+      amount: Amount(value: value, decimals: token.decimals),
+      fee: fee,
+      sender: from,
+      recipient: to,
+      transferMethod: transferMethod,
+      token: token,
+      status: status,
+      input: data.hexToBytesWithPrefixOrNull ?? Uint8List(0),
+    );
+  }
+
+  throw UnsupportedError(&quot;Invalid JSON for AvalancheTransaction&quot;);
 }</code></pre>
 </section>
 
