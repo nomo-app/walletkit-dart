@@ -225,12 +225,6 @@ const baseScanEndpoint = "https://api.basescan.org/api";
 const baseScanApiKey = "VHXGQKFM94SSR1GTC2RQYVP19QTVVHVIXT";
 
 ///
-/// Base Assets
-///
-const baseScanEndpoint = "https://api.basescan.org/api";
-const baseScanApiKey = "VHXGQKFM94SSR1GTC2RQYVP19QTVVHVIXT";
-
-///
 /// Staking
 ///
 const mainnetStakingContract = "0x7561DEAf4ECf96dc9F0d50B4136046979ACdAD3e";
