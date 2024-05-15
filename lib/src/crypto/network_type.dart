@@ -451,7 +451,7 @@ class BASE_NETWORK extends EVMNetworkType {
           chainId: 8453,
           rpcUrl: "https://base.drpc.org",
           blockExplorer: (baseScanEndpoint, const [baseScanApiKey]),
-          coin: baseToken,
+          coin: ethBase,
           messagePrefix: "\x19Base Chain Signed Message:\n",
           blockTime: 2,
         );

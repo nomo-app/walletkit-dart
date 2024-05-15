@@ -182,8 +182,8 @@ const ethAbitrum = EvmEntity(
   decimals: 18,
 );
 
-const baseToken = EvmEntity(
-  name: "Base",
+const ethBase = EvmEntity(
+  name: "EthereumBASE",
   symbol: "ETH",
   decimals: 18,
 );
