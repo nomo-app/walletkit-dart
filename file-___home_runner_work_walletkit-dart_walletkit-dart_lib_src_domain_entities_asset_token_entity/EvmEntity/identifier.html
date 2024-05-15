@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the write method from the EvmEntityAdapter class, for the Dart programming language.">
-  <title>write method - EvmEntityAdapter class - token_entity library - Dart API</title>
+  <meta name="description" content="API docs for the identifier property from the EvmEntity class, for the Dart programming language.">
+  <title>identifier property - EvmEntity class - token_entity library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">src&#47;domain&#47;entities&#47;asset&#47;token_entity.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntityAdapter-class.html">EvmEntityAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntity-class.html">EvmEntity</a></li>
+    <li class="self-crumb">identifier property</li>
   </ol>
-  <div class="self-name">write</div>
+  <div class="self-name">identifier</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,11 +54,15 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity&#47;EvmEntityAdapter-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity&#47;EvmEntity-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">write</span> method 
+<h1><span class="kind-property">identifier</span> property 
 </h1></div>
+
+
+        
+  <section id="getter">
 
     <section class="multi-line-signature">
       
@@ -67,41 +71,28 @@
         <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
     </ol>
   </div>
-
-<span class="returntype">void</span>
-<span class="name ">write</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="write-param-writer"><span class="type-annotation">dynamic</span> <span class="parameter-name">writer</span>, </span></li>
-<li><span class="parameter" id="write-param-obj"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntity-class.html">EvmEntity</a></span> <span class="parameter-name">obj</span></span></li>
-</ol>)
-
-      
+      <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+      <span class="name ">identifier</span>
+      <div class="features"><span class="feature">override</span></div>
 
     </section>
-    
 
+    
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-void write(BinaryWriter writer, EvmEntity obj) {
-  writer
-    ..writeByte(4)
-    ..writeByte(3)
-    ..write(obj.chainID)
-    ..writeByte(0)
-    ..write(obj.name)
-    ..writeByte(1)
-    ..write(obj.symbol)
-    ..writeByte(2)
-    ..write(obj.decimals);
-}</code></pre>
+String get identifier =&gt; &quot;$name:$symbol:$decimals:$chainID&quot;;</code></pre>
 </section>
 
+  </section>
 
-  </div> <!-- /.main-content -->
 
-  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+</div> <!-- /.main-content -->
+
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -111,16 +102,16 @@ void write(BinaryWriter writer, EvmEntity obj) {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">token_entity</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntityAdapter-class.html">EvmEntityAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntity-class.html">EvmEntity</a></li>
+    <li class="self-crumb">identifier property</li>
 </ol>
 
 
-    <h5>EvmEntityAdapter class</h5>
-    <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-->
+  <h5>EvmEntity class</h5>
+  <div id="dartdoc-sidebar-left-content"></div>
+</div><!--/.sidebar-offcanvas-->
 
-  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 
 </main>
