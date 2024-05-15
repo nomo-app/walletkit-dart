@@ -208,12 +208,21 @@ const polygonScanApiKey = "SUUDUQP2JT7HME5VY5DIRIEZVZWHM1YM3M";
 
 const zeniqSmartRPCEndpoint = "https://smart.zeniq.network:9545";
 
+///
+/// Arbitrum
+///
 const arbitrumScanBaseEndpoint = "https://api.arbiscan.io/api";
 const arbitrumScanApiKey = "P65DHD52BSM4DP8C9F1MAGFQ44GKCPJZXK";
 const arbitrumTestWallet = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
 
 const moonbeamScanBaseEndpoint = "https://api-moonbeam.moonscan.io/api";
 const moonbeamScanApiKey = "CAURYUIK5DMNXVFI1BPFYDXPKC48WM19R8";
+
+///
+/// Base Assets
+///
+const baseScanEndpoint = "https://api.basescan.org/api";
+const baseScanApiKey = "VHXGQKFM94SSR1GTC2RQYVP19QTVVHVIXT";
 
 ///
 /// Staking
