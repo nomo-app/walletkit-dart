@@ -117,6 +117,9 @@ class EVMExplorer extends EtherscanRepository {
       : assert(type.blockExplorer != null, "No block explorer defined"),
         super(type.blockExplorer!.$1, type.blockExplorer!.$2);
 
+  ///
+  /// Fetch all Transactions for the given [token] on the given [address] for Avalanche
+  ///
   Future<List<AvalancheTransaction>> fetchAvaTransactions({
     required EvmEntity token,
     required String address,
@@ -127,7 +130,7 @@ class EVMExplorer extends EtherscanRepository {
     }
 
     final txResults = await _fetchAvaTransactionWithRateLimits(
-        "$base$address/transactions", apiyKey);
+        "$base$address/transactions:listNative", apiyKey);
     return [
       for (final tx in txResults)
         AvalancheTransaction.fromJson(
@@ -137,6 +140,32 @@ class EVMExplorer extends EtherscanRepository {
         )
     ];
   }
+
+  ///
+  ///Fetch all ERC20 Transactions for a given [token] and [address] for Avalanche
+  ///
+  // Future<List<AvalancheTransaction>> fetchAvaERC20Transactions({
+  //   required EthBasedTokenEntity token,
+  //   required EvmEntity currency,
+  //   required String address,
+  //   int? lastBlock,
+  // }) async {
+  //   if (lastBlock != null) {
+  //     lastBlock++;
+  //   }
+
+  //   final txResults = await _fetchAvaTransactionWithRateLimits(
+  //       "$base$address/transactions", apiyKey);
+  //   return [
+  //     for (final tx in txResults)
+  //       AvalancheTransaction.fromJsonErc20(
+  //         tx,
+  //         token: token,
+  //         address: address,
+  //         currency: currency,
+  //       )
+  //   ];
+  // }
 
   ///
   /// Fetch all Transactions for the given [token] on the given [address]

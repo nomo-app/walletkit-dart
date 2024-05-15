@@ -118,6 +118,13 @@ void main() {
     );
 
     expect(transactions, isNotEmpty);
+
+    final erc20T = await arbiScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: arbitrum,
+      currency: ethNative,
+    );
+    expect(erc20T, isNotEmpty);
   });
 
   test("Test MoonBeam Fetching", () async {
@@ -130,9 +137,14 @@ void main() {
       token: ethNative,
     );
 
-    print(transactions);
-
     expect(transactions, isNotEmpty);
+
+    final erc20T = await moonScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: frax,
+      currency: ethNative,
+    );
+    expect(erc20T, isNotEmpty);
   });
 
   test("Test Avalanche Fetching", () async {
@@ -141,6 +153,6 @@ void main() {
       token: ethNative,
     );
 
-    print(transactions);
+    print(transactions.length);
   });
 }
