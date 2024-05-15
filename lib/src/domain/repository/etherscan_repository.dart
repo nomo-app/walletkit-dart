@@ -130,7 +130,7 @@ class EVMExplorer extends EtherscanRepository {
     }
 
     final txResults = await _fetchAvaTransactionWithRateLimits(
-        "$base$address/transactions:listNative", apiyKey);
+        "$base$address/transactions", apiyKey);
     return [
       for (final tx in txResults)
         AvalancheTransaction.fromJson(
