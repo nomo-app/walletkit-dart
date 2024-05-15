@@ -129,5 +129,13 @@ void main() {
     );
 
     expect(transactions, isNotEmpty);
+
+    final erc20Transactions = await baseScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: mathToken,
+      currency: ethNative,
+    );
+
+    expect(erc20Transactions, isNotEmpty);
   });
 }
