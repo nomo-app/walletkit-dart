@@ -470,3 +470,4 @@ class MOONBEAM_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
