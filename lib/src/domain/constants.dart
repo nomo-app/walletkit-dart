@@ -215,6 +215,9 @@ const arbitrumScanBaseEndpoint = "https://api.arbiscan.io/api";
 const arbitrumScanApiKey = "P65DHD52BSM4DP8C9F1MAGFQ44GKCPJZXK";
 const arbitrumTestWallet = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
 
+///
+/// Moonbeam
+///
 const moonbeamScanBaseEndpoint = "https://api-moonbeam.moonscan.io/api";
 const moonbeamScanApiKey = "CAURYUIK5DMNXVFI1BPFYDXPKC48WM19R8";
 
@@ -223,6 +226,14 @@ const moonbeamScanApiKey = "CAURYUIK5DMNXVFI1BPFYDXPKC48WM19R8";
 ///
 const baseScanEndpoint = "https://api.basescan.org/api";
 const baseScanApiKey = "VHXGQKFM94SSR1GTC2RQYVP19QTVVHVIXT";
+
+///
+/// Avalanche
+///
+const avalancheAPIEndpoint =
+    "https://glacier-api.avax.network/v1/chains/43114/addresses/";
+const avalancheAPIKey =
+    "ac_XnIjoTXZHJ4u28HJYz8E5zIRdO60BlVkFISzZ0a0dVSWJBx1emxrDH-vMTW6MeGTnvm7iZV-1xvLF31ovpkm4w";
 
 ///
 /// Staking

@@ -186,6 +186,22 @@ const ethAbitrum = EvmEntity(
 );
 
 ///
+/// Avalanche Assets
+///
+const avalanche = EvmEntity(
+  name: 'Avalanche',
+  symbol: 'AVAX',
+  decimals: 18,
+);
+
+const wrappedETH = EthBasedTokenEntity(
+  name: "Wrapped ETH",
+  symbol: "WETH.e",
+  decimals: 18,
+  contractAddress: "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+);
+
+///
 /// Base Assets
 ///
 const ethBase = EvmEntity(

@@ -47,6 +47,8 @@ export 'src/domain/entities/transactions/zsc_transaction.dart';
 
 export 'src/domain/entities/node.dart';
 
+export 'src/domain/entities/transactions/avacloud_transaction.dart';
+
 export 'src/domain/entities/hd_wallet_type.dart';
 
 export 'src/domain/entities/address_type.dart';
