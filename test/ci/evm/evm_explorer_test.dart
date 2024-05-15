@@ -1,6 +1,4 @@
 @Timeout(Duration(seconds: 600))
-import 'dart:math';
-
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/predefined_assets.dart';
@@ -156,8 +154,17 @@ void main() {
       token: ethNative,
     );
 
-    print(transactions);
-
     expect(transactions, isNotEmpty);
+
+    final erc20T = await moonScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: frax,
+      currency: ethNative,
+    );
+    expect(erc20T, isNotEmpty);
+
+    final fraxBalance = await moonScan.fetchBalance(arbitrumTestWallet, frax);
+
+    expect(fraxBalance, greaterThan(BigInt.zero));
   });
 }

@@ -209,3 +209,9 @@ const moonbeam = EvmEntity(
   symbol: 'GLMR',
   decimals: 18,
 );
+const frax = EthBasedTokenEntity(
+  name: "Frax",
+  symbol: "FRAX",
+  decimals: 18,
+  contractAddress: "0x322E86852e492a7Ee17f28a78c663da38FB33bfb",
+);
