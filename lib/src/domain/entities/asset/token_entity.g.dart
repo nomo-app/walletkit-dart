@@ -60,13 +60,16 @@ class EvmEntityAdapter extends TypeAdapter<EvmEntity> {
       name: fields[0] as String,
       symbol: fields[1] as String,
       decimals: fields[2] as int,
+      chainID: fields[3] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, EvmEntity obj) {
     writer
+      ..writeByte(4)
       ..writeByte(3)
+      ..write(obj.chainID)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
