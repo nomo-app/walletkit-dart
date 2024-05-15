@@ -121,8 +121,14 @@ void main() {
       address: arbitrumTestWallet,
     );
 
-    print(balance);
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final fraxBalance = await rpcInterface.fetchTokenBalance(
+      arbitrumTestWallet,
+      frax,
+    );
+
+    expect(fraxBalance.value, greaterThan(BigInt.zero));
   });
 
   test('Avalanche Test', () async {

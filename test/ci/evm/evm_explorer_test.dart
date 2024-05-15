@@ -145,6 +145,10 @@ void main() {
       currency: ethNative,
     );
     expect(erc20T, isNotEmpty);
+
+    final fraxBalance = await moonScan.fetchBalance(arbitrumTestWallet, frax);
+
+    expect(fraxBalance, greaterThan(BigInt.zero));
   });
 
   test("Test Avalanche Fetching", () async {
