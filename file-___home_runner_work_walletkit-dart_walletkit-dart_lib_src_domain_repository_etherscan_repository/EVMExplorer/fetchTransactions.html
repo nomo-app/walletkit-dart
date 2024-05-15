@@ -74,14 +74,41 @@
     </section>
     
 <section class="desc markdown">
-  <p>Fetch all Transactions for the given <code>token</code> on the given <code>address</code></p>
+  <p>Fetch all ERC20 Transactions for a given <code>token</code> and <code>address</code> for Avalanche</p>
+<p>Fetch all Transactions for the given <code>token</code> on the given <code>address</code></p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;EtherscanTransaction&gt;&gt; fetchTransactions({
+  <pre class="language-dart"><code class="language-dart">&#47;&#47; Future&lt;List&lt;AvalancheTransaction&gt;&gt; fetchAvaERC20Transactions({
+&#47;&#47;   required EthBasedTokenEntity token,
+&#47;&#47;   required EvmEntity currency,
+&#47;&#47;   required String address,
+&#47;&#47;   int? lastBlock,
+&#47;&#47; }) async {
+&#47;&#47;   if (lastBlock != null) {
+&#47;&#47;     lastBlock++;
+&#47;&#47;   }
+
+&#47;&#47;   final txResults = await _fetchAvaTransactionWithRateLimits(
+&#47;&#47;       &quot;$base$address&#47;transactions&quot;, apiyKey);
+&#47;&#47;   return [
+&#47;&#47;     for (final tx in txResults)
+&#47;&#47;       AvalancheTransaction.fromJsonErc20(
+&#47;&#47;         tx,
+&#47;&#47;         token: token,
+&#47;&#47;         address: address,
+&#47;&#47;         currency: currency,
+&#47;&#47;       )
+&#47;&#47;   ];
+&#47;&#47; }
+
+&#47;&#47;&#47;
+&#47;&#47;&#47; Fetch all Transactions for the given [token] on the given [address]
+&#47;&#47;&#47;
+Future&lt;List&lt;EtherscanTransaction&gt;&gt; fetchTransactions({
   required EvmEntity token,
   required String address,
   int? lastBlock,
