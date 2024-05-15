@@ -93,6 +93,13 @@ class TronScanRepository extends HTTPRepository {
     return result;
   }
 
+  Future<JSON> getAccountInfo(String address) async {
+    final endpoint = "$baseURL/accountv2?address=${address}";
+    final result = await getCall<JSON>(endpoint);
+
+    return result;
+  }
+
   Future<JSON> getCurrentTPS() {
     final endpoint = "$baseURL/system/tps";
     return getCall<JSON>(endpoint);

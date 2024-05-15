@@ -72,19 +72,25 @@ final class UtxoFeeInformation extends FeeInformation {
   @HiveField(0)
   final Amount feePerByte;
 
+  @HiveField(1)
+  final Amount? fee;
+
   const UtxoFeeInformation({
     required this.feePerByte,
+    this.fee,
   });
 
   Json toJson() {
     return {
       'feePerByte': feePerByte.toJson(),
+      if (fee != null) 'fee': fee?.toJson(),
     };
   }
 }
 
-@HiveType(typeId: 25)
+@HiveType(typeId: 27)
 final class TronFeeInformation extends FeeInformation {
+  @HiveField(0)
   final Amount feeLimit;
 
   const TronFeeInformation({

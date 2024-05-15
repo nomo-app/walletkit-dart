@@ -159,7 +159,7 @@ tron.Transaction_raw createRawTransaction({
     refBlockHash: refBlockHash,
     expiration: Int64(expiration),
     timestamp: Int64(timestamp),
-    feeLimit: feeLimit != null ? Int64(feeLimit) : null,
+    feeLimit: feeLimit != null && feeLimit != 0 ? Int64(feeLimit) : null,
   );
 
   return tx;
@@ -289,7 +289,7 @@ final class TronTransaction extends EVMTransaction {
           "fee": String fee_s,
           "amount": String amount_s,
           "timestamp": int timestamp,
-          "confirmed": bool confirmed,
+          "confirmed": bool _,
           "riskTransaction": bool riskTransaction,
           "contractData": JSON contractData,
         }) {
@@ -322,10 +322,7 @@ final class TronTransaction extends EVMTransaction {
         recipient: toAddress,
         transferMethod: transferMethod,
         token: token,
-        status: switch (confirmed) {
-          true => ConfirmationStatus.confirmed,
-          false => ConfirmationStatus.pending,
-        },
+        status: ConfirmationStatus.confirmed, // TODO:
         input: input,
       );
     }

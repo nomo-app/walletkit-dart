@@ -62,6 +62,10 @@ AddressError? validateAddress({
   if (evmError == null) {
     return (null, null);
   }
+  final AddressError? tronError = validateTronAddress(address: address);
+  if (tronError == null) {
+    return (null, null);
+  }
   return validateUTXOAddress(address: address, token: null);
 }
 

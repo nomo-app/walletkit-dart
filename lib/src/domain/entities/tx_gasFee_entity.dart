@@ -139,4 +139,9 @@ final class TronNetworkFees extends NetworkFees {
     required this.energyBalance,
     required this.bandwidthBalance,
   });
+
+  @override
+  String toString() {
+    return 'TronNetworkFees{energyPrice: $energyPrice, bandWidthPrice: $bandWidthPrice, energyBalance: $energyBalance, bandwidthBalance: $bandwidthBalance, bandWidthConsumed: $bandWidthConsumed, energyConsumed: $energyConsumed}';
+  }
 }

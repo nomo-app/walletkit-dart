@@ -129,9 +129,7 @@ final class UTXOTransaction extends GenericTransaction {
 
     final fee_int = json['fee_int'] as int?;
     var fee = fee_int != null ? BigInt.from(fee_int) : null;
-    fee ??= spentOutputs.isEmpty
-        ? BigInt.from(-1)
-        : totalInputValue - totalOutputValue;
+    fee ??= spentOutputs.isEmpty ? null : totalInputValue - totalOutputValue;
 
     final recipient = determineTransactionTarget(
           outputs,
@@ -150,7 +148,7 @@ final class UTXOTransaction extends GenericTransaction {
 
     return UTXOTransaction(
       block: height,
-      fee: Amount(value: fee, decimals: coin.decimals),
+      fee: fee != null ? Amount(value: fee, decimals: coin.decimals) : null,
       hash: id,
       timeMilli: timestamp,
       amount: Amount(value: value, decimals: coin.decimals),
