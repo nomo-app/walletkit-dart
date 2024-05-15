@@ -442,3 +442,17 @@ class ARBITRUM_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+const BaseNetwork = BASE_NETWORK();
+
+class BASE_NETWORK extends EVMNetworkType {
+  const BASE_NETWORK()
+      : super(
+          chainId: 8453,
+          rpcUrl: "https://base.drpc.org",
+          blockExplorer: (baseScanEndpoint, const [baseScanApiKey]),
+          coin: ethBase,
+          messagePrefix: "\x19Base Chain Signed Message:\n",
+          blockTime: 2,
+        );
+}
