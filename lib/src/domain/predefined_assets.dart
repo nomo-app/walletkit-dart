@@ -186,22 +186,6 @@ const ethAbitrum = EvmEntity(
 );
 
 ///
-/// Moonbeam Assets
-///
-const moonbeam = EvmEntity(
-  name: 'Moonbeam',
-  symbol: 'GLMR',
-  decimals: 18,
-);
-
-const frax = EthBasedTokenEntity(
-  name: "Frax",
-  symbol: "FRAX",
-  decimals: 18,
-  contractAddress: "0x322E86852e492a7Ee17f28a78c663da38FB33bfb",
-);
-
-///
 /// Avalanche Assets
 ///
 const avalanche = EvmEntity(
@@ -215,4 +199,35 @@ const wrappedETH = EthBasedTokenEntity(
   symbol: "WETH.e",
   decimals: 18,
   contractAddress: "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
+);
+
+///
+/// Base Assets
+///
+const ethBase = EvmEntity(
+  name: "EthereumBASE",
+  symbol: "ETH",
+  decimals: 18,
+);
+
+const mathToken = EthBasedTokenEntity(
+  name: "MATH Token",
+  symbol: "MATH",
+  decimals: 18,
+  contractAddress: "0x9e81F6495BA29a6B4D48bDdD042C0598fA8abc9F",
+);
+
+///
+/// Moonbeam Assets
+///
+const moonbeam = EvmEntity(
+  name: 'Moonbeam',
+  symbol: 'GLMR',
+  decimals: 18,
+);
+const frax = EthBasedTokenEntity(
+  name: "Frax",
+  symbol: "FRAX",
+  decimals: 18,
+  contractAddress: "0x322E86852e492a7Ee17f28a78c663da38FB33bfb",
 );
