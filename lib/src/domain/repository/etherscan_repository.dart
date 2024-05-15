@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/avacloud_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract class EtherscanRepository {
