@@ -456,3 +456,18 @@ class BASE_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+const MoonbeamNetwork = MOONBEAM_NETWORK();
+
+class MOONBEAM_NETWORK extends EVMNetworkType {
+  const MOONBEAM_NETWORK()
+      : super(
+          chainId: 1284,
+          rpcUrl: "https://moonbeam-rpc.publicnode.com",
+          blockExplorer: (moonbeamScanBaseEndpoint, const [moonbeamScanApiKey]),
+          coin: moonbeam,
+          messagePrefix: "\x19Moonbeam Signed Message:\n",
+          blockTime: 2,
+        );
+}
+

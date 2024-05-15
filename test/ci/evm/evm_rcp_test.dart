@@ -128,4 +128,20 @@ void main() {
 
     expect(tokenBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
+  test('MoonBeam Test', () async {
+    final rpcInterface = EvmRpcInterface(MoonbeamNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final fraxBalance = await rpcInterface.fetchTokenBalance(
+      arbitrumTestWallet,
+      frax,
+    );
+
+    expect(fraxBalance.value, greaterThan(BigInt.zero));
+  });
 }
