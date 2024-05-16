@@ -222,7 +222,7 @@ const moonbeamScanBaseEndpoint = "https://api-moonbeam.moonscan.io/api";
 const moonbeamScanApiKey = "CAURYUIK5DMNXVFI1BPFYDXPKC48WM19R8";
 
 ///
-/// Base Assets
+/// Base
 ///
 const baseScanEndpoint = "https://api.basescan.org/api";
 const baseScanApiKey = "VHXGQKFM94SSR1GTC2RQYVP19QTVVHVIXT";
@@ -234,6 +234,12 @@ const avalancheAPIEndpoint =
     "https://glacier-api.avax.network/v1/chains/43114/addresses/";
 const avalancheAPIKey =
     "ac_XnIjoTXZHJ4u28HJYz8E5zIRdO60BlVkFISzZ0a0dVSWJBx1emxrDH-vMTW6MeGTnvm7iZV-1xvLF31ovpkm4w";
+
+///
+/// Optimism
+///
+const optimismScanEndpoint = "https://api-optimistic.etherscan.io/api";
+const optimismAPIKey = "511U519H4U6S1XJBJ9JWQJWKI62ZTZ23AQ";
 
 ///
 /// Staking

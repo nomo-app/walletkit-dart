@@ -239,3 +239,20 @@ const frax = EthBasedTokenEntity(
   decimals: 18,
   contractAddress: "0x322E86852e492a7Ee17f28a78c663da38FB33bfb",
 );
+
+///
+/// Optimism Assets
+///
+const optimism = EthBasedTokenEntity(
+  name: "Optimism",
+  symbol: "OP",
+  decimals: 18,
+  contractAddress: "0x4200000000000000000000000000000000000042",
+);
+
+const ethOptimism = EvmEntity(
+  chainID: 10,
+  name: "EthereumOPT",
+  symbol: "ETH",
+  decimals: 18,
+);

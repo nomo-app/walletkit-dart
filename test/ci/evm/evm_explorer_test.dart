@@ -11,6 +11,7 @@ void main() {
   final baseScan = EVMExplorer(baseScanEndpoint, [baseScanApiKey]);
   final moonScan = EVMExplorer(moonbeamScanBaseEndpoint, [moonbeamScanApiKey]);
   final avaCloud = EVMExplorer(avalancheAPIEndpoint, [avalancheAPIKey]);
+  final optiScan = EVMExplorer(optimismScanEndpoint, [optimismAPIKey]);
 
   test('Test Ethereum Etherscan Fetching', () async {
     ///
@@ -184,5 +185,29 @@ void main() {
     final fraxBalance = await moonScan.fetchBalance(arbitrumTestWallet, frax);
 
     expect(fraxBalance, greaterThan(BigInt.zero));
+  });
+
+  test('Test Optimism Fetching', () async {
+    final balance = await optiScan.fetchBalance(arbitrumTestWallet, ethNative);
+
+    expect(balance, greaterThanOrEqualTo(BigInt.zero));
+
+    final transactions = await optiScan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: ethNative,
+    );
+    expect(transactions, isNotEmpty);
+
+    final erc20T = await optiScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: optimism,
+      currency: ethNative,
+    );
+    expect(erc20T, isNotEmpty);
+
+    final optimismBalance =
+        await optiScan.fetchBalance(arbitrumTestWallet, optimism);
+
+    expect(optimismBalance, greaterThan(BigInt.zero));
   });
 }

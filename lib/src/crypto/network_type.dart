@@ -484,3 +484,16 @@ class AVALANCHE_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+const OptimismNetwork = OPTIMISM_NETWORK();
+
+class OPTIMISM_NETWORK extends EVMNetworkType {
+  const OPTIMISM_NETWORK()
+      : super(
+          chainId: 10,
+          rpcUrl: "https://optimism.llamarpc.com",
+          coin: optimism,
+          messagePrefix: "\x19Optimism Signed Message:\n",
+          blockTime: 2,
+        );
+}

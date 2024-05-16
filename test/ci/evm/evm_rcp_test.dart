@@ -156,4 +156,20 @@ void main() {
     print(balance);
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
+
+  test('Optimism Test', () async {
+    final rpcInterface = EvmRpcInterface(OptimismNetwork);
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final opBalance = await rpcInterface.fetchTokenBalance(
+      arbitrumTestWallet,
+      optimism,
+    );
+
+    expect(opBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
 }
