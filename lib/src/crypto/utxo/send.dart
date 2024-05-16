@@ -114,8 +114,8 @@ RawTransaction buildUnsignedTransaction({
   ///
   /// Build Outputs again with the estimated size
   ///
-  var estimatedSize = BigInt.from(dummyTx.size);
-  var estimatedFee = estimatedSize * feePerByte.value;
+
+  var estimatedFee = calculateFee(tx: dummyTx, feePerByte: feePerByte);
 
   var changeValue = totalInputValue - targetValue - estimatedFee;
 
@@ -143,8 +143,7 @@ RawTransaction buildUnsignedTransaction({
         dummyOutputs: dummyOutputs,
       );
 
-      estimatedSize = BigInt.from(dummyTx.size);
-      estimatedFee = estimatedSize * feePerByte.value;
+      estimatedFee = calculateFee(tx: dummyTx, feePerByte: feePerByte);
     }
 
     changeValue = totalInputValue - targetValue - estimatedFee;
@@ -671,3 +670,35 @@ Uint8List constructScriptSig({
           ...publicKey,
         ]),
     };
+
+BigInt calculateFee({
+  required RawTransaction tx,
+  required Amount feePerByte,
+}) {
+  return switch (tx) {
+    EC8RawTransaction _ => calculateFeeEC8(tx: tx),
+    _ => tx.size.toBI * feePerByte.value,
+  };
+}
+
+const int max_cheap_tx_weight = 15000;
+
+BigInt calculateFeeEC8({
+  required RawTransaction tx,
+}) {
+  var fee = 1000.toBI; // Base fee
+
+  final outputLength = tx.outputs.length;
+
+  if (outputLength > 2) {
+    fee += 1000.toBI * (outputLength - 2).toBI;
+  }
+
+  if (tx.weight > max_cheap_tx_weight.toBI) {
+    fee += 1000.toBI * ((tx.weight + 999.toBI) / 1000.toBI).toBI;
+  }
+
+  assert(fee % 1000.toBI == 0.toBI);
+
+  return fee;
+}
