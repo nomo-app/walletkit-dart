@@ -698,7 +698,7 @@ BigInt calculateFeeEC8({
     fee += 1000.toBI * ((tx.weight + 999.toBI) / 1000.toBI).toBI;
   }
 
-  assert(!(fee % 1000.toBI).isNegative);
+  assert(fee % 1000.toBI == 0.toBI);
 
   return fee;
 }
