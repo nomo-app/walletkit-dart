@@ -9,10 +9,10 @@ void main() {
   ///
   test('Fetch Extended Public Key Wallet', () async {
     const epubKey =
-        "xpub692ymxrAm8ZiquZW4AwHmXg8xnSsFeVyzGGTRBBmKVhRvYqwGjfd5yYw8JToejJJrKwKexFXgjnr4thKaSqYBSXKZvuxQtUDHRZsYoVaE8p";
+        "xpub69H9jhEomWFjJQWsFqR9RyoQz7tbjFGukUsh357dvkfKywxkvPEtVPy9p8mq87GJd94uhWyiuKWRgncwMiZ7sJ3no6EQMMRGFGUE1nRrsK4";
 
     final (txs, _) = await fetchUTXOTransactions(
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
       ePubKey: epubKey,

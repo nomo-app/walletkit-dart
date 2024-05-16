@@ -5,6 +5,8 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/domain/entities/node.dart';
 import 'package:web3dart/credentials.dart';
+// ignore: implementation_imports
+import 'package:pointycastle/src/utils.dart' as p_utils;
 
 extension ExtFixedPrecision on double {
   double toPrecision(int n) => double.parse(toStringAsFixed(n));
@@ -12,14 +14,8 @@ extension ExtFixedPrecision on double {
 
 extension BigIntUtil on BigInt {
   Uint8List get bigIntToBytes {
-    var asHex =
-        toRadixString(16).padLeft(64, '0'); // padding left to have length = 64
-    return Uint8List.fromList(
-      List<int>.generate(
-        32,
-        (i) => int.parse(asHex.substring(i * 2, (i + 1) * 2), radix: 16),
-      ),
-    ); // parsing every 2 character ( = 8 bit = 1 byte)
+    assert(this >= BigInt.zero, "BigInt must be positive");
+    return p_utils.encodeBigIntAsUnsigned(this);
   }
 
   String get toHex => toRadixString(16);

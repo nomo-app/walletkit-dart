@@ -13,7 +13,7 @@ void main() {
     final (legacyTxList, _) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
     expect(legacyTxList.length, greaterThanOrEqualTo(74));
@@ -26,7 +26,7 @@ void main() {
     final (segwitTxList, segwitNodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       ePubKey: rejectZpub,
-      walletTypes: [HDWalletType.BIP84],
+      walletTypes: [bitcoinBip84HDPath],
       addressTypes: [AddressType.segwit],
     );
 
@@ -48,7 +48,7 @@ void main() {
     final (segwitTxList, segwitNodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       seed: helloSeed,
-      walletTypes: [HDWalletType.BIP84],
+      walletTypes: [bitcoinBip84HDPath],
       addressTypes: [AddressType.segwit],
     );
 
@@ -70,7 +70,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 
@@ -92,7 +92,7 @@ void main() {
     final (_, bip44Nodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       seed: helloSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 
@@ -111,7 +111,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpubBip44,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 
@@ -133,7 +133,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
       networkType: BitcoinNetwork,
       seed: helloSeed,
-      walletTypes: [HDWalletType.BIP44],
+      walletTypes: [bitcoinBip44HDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 
@@ -155,7 +155,7 @@ void main() {
     final devSeed = loadDevSeedFromEnv();
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: devSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
       networkType: BitcoinNetwork,
       minEndpoints: 1,

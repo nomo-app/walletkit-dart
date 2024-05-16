@@ -25,11 +25,11 @@ sealed class EVMNetworkType extends NetworkType {
   final (String, Iterable<String>)? blockExplorer;
 
   const EVMNetworkType({
-    required super.coin,
     required super.messagePrefix,
+    required super.coin,
+    required super.blockTime,
     required this.chainId,
     required this.rpcUrl,
-    required super.blockTime,
     this.blockExplorer,
   });
 
@@ -114,23 +114,25 @@ class NetworkBIP {
     required this.wif,
   });
 
-  /// TODO: Implement other HDWalletTypes
-  bip32.NetworkType getForWalletType(HDWalletType type) => switch (type) {
-        HDWalletType.NO_STRUCTURE || HDWalletType.BIP44 => bip32.NetworkType(
+  bip32.NetworkType getForWalletType(HDWalletPurpose purpose) =>
+      switch (purpose) {
+        HDWalletPurpose.NO_STRUCTURE ||
+        HDWalletPurpose.BIP44 =>
+          bip32.NetworkType(
             wif: wif,
             bip32: bip32.Bip32Type(
               private: bip32XprivPrefix,
               public: bip32XpubPrefix,
             ),
           ),
-        HDWalletType.BIP84 => bip32.NetworkType(
+        HDWalletPurpose.BIP84 => bip32.NetworkType(
             wif: wif,
             bip32: bip32.Bip32Type(
               private: bip84XprivPrefix,
               public: bip84XpubPrefix,
             ),
           ),
-        _ => bip32.NetworkType(
+        HDWalletPurpose.BIP49 => bip32.NetworkType(
             wif: wif,
             bip32: bip32.Bip32Type(
               private: bip49XprivPrefix,
@@ -428,6 +430,46 @@ class POLYGON_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+///
+/// TRON Networks
+///
+
+const TRON_Network = TRON_NETWORK();
+
+class TRON_NETWORK extends EVMNetworkType {
+  final (String, Iterable<String>) httpApi;
+
+  const TRON_NETWORK()
+      : httpApi = (
+          "https://api.trongrid.io",
+          const ["1d06fa37-79bf-4250-a4aa-9656a92a71b0"]
+        ),
+        super(
+          chainId: 1,
+          rpcUrl: "https://api.trongrid.io/jsonrpc",
+          blockExplorer: (
+            "https://apilist.tronscanapi.com/api",
+            const ["a875e9b5-2d45-410c-ade9-49ee456be28a"],
+          ),
+          coin: tron,
+          messagePrefix: "\x19Tron Signed Message:\n",
+          blockTime: 3,
+        );
+}
+
+// const TronNileTestNet = TRON_NILE_TEST_NETWORK();
+
+// class TRON_NILE_TEST_NETWORK extends TRON_NETWORK {
+//   const TRON_NILE_TEST_NETWORK()
+//       : super(
+//           chainId: 1,
+//           rpcUrl: "https://api.nileex.io",
+//           coin: tron,
+//           messagePrefix: "\x19Tron Signed Message:\n",
+//           blockTime: 3,
+//         );
+// }
 
 const ArbitrumNetwork = ARBITRUM_NETWORK();
 

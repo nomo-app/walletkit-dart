@@ -103,3 +103,54 @@ BigInt toGwei(String wei) {
 
   return val * multiplier;
 }
+
+final class TronNetworkFees extends NetworkFees {
+  final int energyPrice = 420; // SUN
+  final int bandWidthPrice = 1000; // SUN
+
+  final int energyBalance;
+  final int bandwidthBalance;
+
+  final int bandWidthConsumed;
+  final int energyConsumed;
+
+  Amount get bandWidthFee {
+    return Amount.from(
+      value: bandwidthBalance >= bandWidthConsumed
+          ? 0
+          : bandWidthConsumed * bandWidthPrice,
+      decimals: 6,
+    );
+  }
+
+  Amount get energyFee {
+    return Amount.from(
+      value: energyBalance >= energyConsumed ? 0 : energyConsumed * energyPrice,
+      decimals: 6,
+    );
+  }
+
+  Amount get fee {
+    return bandWidthFee + energyFee;
+  }
+
+  int get bandWidthUsed {
+    return bandWidthConsumed > bandwidthBalance ? 0 : bandWidthConsumed;
+  }
+
+  int get energyUsed {
+    return energyConsumed > energyBalance ? 0 : energyConsumed;
+  }
+
+  TronNetworkFees({
+    required this.bandWidthConsumed,
+    required this.energyConsumed,
+    required this.energyBalance,
+    required this.bandwidthBalance,
+  });
+
+  @override
+  String toString() {
+    return 'TronNetworkFees{energyPrice: $energyPrice, bandWidthPrice: $bandWidthPrice, energyBalance: $energyBalance, bandwidthBalance: $bandwidthBalance, bandWidthConsumed: $bandWidthConsumed, energyConsumed: $energyConsumed}';
+  }
+}

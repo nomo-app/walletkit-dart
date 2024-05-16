@@ -55,7 +55,7 @@ void main() {
     final seed = loadFromEnv("DEV_SEED");
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: seed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
     );
@@ -76,7 +76,7 @@ void main() {
     final unsignedTx = buildUnsignedTransaction(
       intent: intent,
       networkType: ZeniqNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletPath: bitcoinNSHDPath,
       txList: txList,
       changeAddresses: nodes.changeNodes.addresses,
       feePerByte: Amount.from(value: 3, decimals: 8),
@@ -86,7 +86,7 @@ void main() {
         .sign(
           seed: seed,
           networkType: ZeniqNetwork,
-          walletType: HDWalletType.NO_STRUCTURE,
+          walletPath: bitcoinNSHDPath,
         )
         .asHex;
 
@@ -116,7 +116,7 @@ void main() {
       networkType: EurocoinNetwork,
       seed: devSeed,
       minEndpoints: 1,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
     );
 
@@ -140,7 +140,7 @@ void main() {
     final unsignedTx = buildUnsignedTransaction(
       intent: intent,
       networkType: EurocoinNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletPath: bitcoinNSHDPath,
       txList: txList,
       changeAddresses: nodes.changeNodes.addresses,
       feePerByte: Amount.from(value: 8, decimals: 8),
@@ -149,7 +149,7 @@ void main() {
     final signedTx = unsignedTx.sign(
       seed: devSeed,
       networkType: EurocoinNetwork,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletPath: bitcoinNSHDPath,
     );
 
     final serializedTx = signedTx.asHex;

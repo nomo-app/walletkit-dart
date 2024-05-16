@@ -47,11 +47,12 @@ AddressError? validateAddress({
   required String address,
   required TokenEntity token,
 }) {
-  if (token.isUTXO) {
-    return validateUTXOAddress(address: address, token: token).$1;
-  } else {
-    return validateEVMAddress(address: address);
-  }
+  return switch (token) {
+    _ when token.isUTXO =>
+      validateUTXOAddress(address: address, token: token).$1,
+    tron => validateTronAddress(address: address),
+    _ => validateEVMAddress(address: address),
+  };
 }
 
 (AddressError?, UTXONetworkType?) validateAddressAnyChain({
@@ -59,6 +60,10 @@ AddressError? validateAddress({
 }) {
   final AddressError? evmError = validateEVMAddress(address: address);
   if (evmError == null) {
+    return (null, null);
+  }
+  final AddressError? tronError = validateTronAddress(address: address);
+  if (tronError == null) {
     return (null, null);
   }
   return validateUTXOAddress(address: address, token: null);

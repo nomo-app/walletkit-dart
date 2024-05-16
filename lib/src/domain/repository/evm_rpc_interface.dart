@@ -15,6 +15,10 @@ final class EvmRpcInterface {
 
   EvmRpcInterface(this.type) : client = EvmRpcClient(type.rpcUrl);
 
+  EvmRpcInterface.fromURL(String rpcURL)
+      : client = EvmRpcClient(rpcURL),
+        type = ETHEREUM_NETWORK();
+
   ///
   /// Fetch Balance
   ///
@@ -24,7 +28,7 @@ final class EvmRpcInterface {
     final balance = await client.getBalance(address);
     return Amount(
       value: balance,
-      decimals: zeniqSmart.decimals,
+      decimals: type.coin.decimals,
     );
   }
 

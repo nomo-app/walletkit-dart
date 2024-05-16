@@ -63,6 +63,8 @@ class Amount extends Equatable {
 
   static Amount get zero => Amount(value: BigInt.from(0), decimals: 0);
 
+  static Amount get negativeOne => Amount(value: BigInt.from(-1), decimals: 0);
+
   double get displayDouble {
     return value / BigInt.from(10).pow(decimals);
   }

@@ -65,6 +65,16 @@ final class EvmFeeInformation extends FeeInformation {
       'gasPrice': gasPrice.toJson(),
     };
   }
+
+  EvmFeeInformation copyWith({
+    int? gasLimit,
+    Amount? gasPrice,
+  }) {
+    return EvmFeeInformation(
+      gasLimit: gasLimit ?? this.gasLimit,
+      gasPrice: gasPrice ?? this.gasPrice,
+    );
+  }
 }
 
 @HiveType(typeId: 24)
@@ -72,13 +82,34 @@ final class UtxoFeeInformation extends FeeInformation {
   @HiveField(0)
   final Amount feePerByte;
 
+  @HiveField(1)
+  final Amount? fee;
+
   const UtxoFeeInformation({
     required this.feePerByte,
+    this.fee,
   });
 
   Json toJson() {
     return {
       'feePerByte': feePerByte.toJson(),
+      if (fee != null) 'fee': fee?.toJson(),
+    };
+  }
+}
+
+@HiveType(typeId: 27)
+final class TronFeeInformation extends FeeInformation {
+  @HiveField(0)
+  final Amount feeLimit;
+
+  const TronFeeInformation({
+    required this.feeLimit,
+  });
+
+  Json toJson() {
+    return {
+      'feeLimit': feeLimit.toJson(),
     };
   }
 }

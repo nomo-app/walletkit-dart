@@ -93,11 +93,10 @@ Credentials getETHCredentialsFromMnemonic({
 }
 
 Uint8List _derivePrivateKeyETH(Uint8List seed) {
-  const type =
-      HDWalletType.BIP44; // we keep using the same derivation path for EVM !
-
   final node = bip32.BIP32.fromSeed(seed);
-  final ethDerivationPath = "${type.purpose}/60'/0'/0/0";
-  final bip32.BIP32 childNode = node.derivePath(ethDerivationPath);
+
+  final bip32.BIP32 childNode = node.derivePath(
+    ethereumBip44HDPath.defaultPath,
+  );
   return childNode.privateKey!;
 }

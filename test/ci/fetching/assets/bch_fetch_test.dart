@@ -11,7 +11,7 @@ import '../fetch_utxo_transactions_test.dart';
 void main() {
   const network = BitcoincashNetwork;
   // final walletTypes = [
-  //   HDWalletType.NO_STRUCTURE,
+  //   bitcoinNSHDPath,
   // ];
 
   // test('Test BCH Derivation', () async {
@@ -30,12 +30,12 @@ void main() {
   test('CashAddressFormat Test', () async {
     const c = INTERNAL_CHAIN_INDEX;
     const t = BitcoincashNetwork;
-    const type = HDWalletType.NO_STRUCTURE;
+    const type = bitcoinNSHDPath;
 
     final masterNode = deriveMasterNode(
       seed: helloSeed,
       networkType: t,
-      walletType: type,
+      walletPath: type,
     );
     final addresses = [];
     for (var i = 0; i < 5; i++) {
@@ -45,7 +45,7 @@ void main() {
         index: i,
         networkType: t,
         addressTypes: [AddressType.legacy, AddressType.cashaddr],
-        walletType: type,
+        walletPurpose: type.purpose,
       ).addresses;
       addresses.add(address);
     }
@@ -108,7 +108,7 @@ void main() {
     final (legacyTxList, _) = await fetchUTXOTransactions(
       networkType: network,
       ePubKey: rejectXpub,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.cashaddr, AddressType.legacy],
     );
     expect(legacyTxList.length, greaterThanOrEqualTo(17));
@@ -122,7 +122,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
       networkType: network,
       ePubKey: rejectXpub,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
     );
 
@@ -144,7 +144,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
       networkType: network,
       ePubKey: rejectXpubBip44,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
     );
 
@@ -166,7 +166,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
       networkType: network,
       seed: helloSeed,
-      walletTypes: [HDWalletType.BIP44],
+      walletTypes: [bitcoinBip44HDPath],
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
     );
 

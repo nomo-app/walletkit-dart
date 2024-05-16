@@ -40,6 +40,9 @@ sealed class RawTransaction {
 
   BigInt get fee => totalInputValue - totalOutputValue;
 
+  // Value of the first output
+  BigInt get targetAmount => outputs.first.value;
+
   BigInt get totalInputValue {
     return inputs.fold(
       BigInt.zero,
@@ -146,7 +149,7 @@ sealed class RawTransaction {
 
   RawTransaction sign({
     required Uint8List seed,
-    required HDWalletType walletType,
+    required HDWalletPath walletPath,
     required UTXONetworkType networkType,
   }) {
     assert(
@@ -156,7 +159,7 @@ sealed class RawTransaction {
 
     final signedInputs = signInputs(
       inputs: inputMap!,
-      walletType: walletType,
+      walletPath: walletPath,
       tx: this,
       networkType: networkType,
       seed: seed,

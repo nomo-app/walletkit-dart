@@ -5,7 +5,7 @@ void main() {
   test('derive extended pubkey', () {
     //   final ePubKey = deriveExtendedPubKey(
     //     seed: helloSeed,
-    //     walletType: HDWalletType.NO_STRUCTURE,
+    //     walletType: bitcoinNSHDPath,
     //     type: LitecoinNetwork,
     //   );
     //   expect(
@@ -16,7 +16,7 @@ void main() {
     expect(
       deriveExtendedPubKey(
         seed: helloSeed,
-        walletType: HDWalletType.BIP84,
+        walletPurpose: bitcoinBip84HDPath,
         type: LitecoinNetwork,
       ),
       "xpub69BsBUCquKCkUvJczrqfBKDeHTRzNRsdBm61D72VjRPmtiTpzqz98k2wYnQppBb1TLfQp16iMMapaBJ2MSbtsCKRkDti9goSWpUbaAeSKQx",

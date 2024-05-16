@@ -121,3 +121,6 @@ For EVM-chains, WalletKit-Dart depends on several JSON-RPC-providers as well as 
 [Fetch Peers from ElectrumX](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/peers_test.dart)
 
 [Broadcast UTXO Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/wallet_test.dart)
+
+
+protoc -I. --dart_out=grpc:/home/thomas/src/walletkit-dart/lib/src/crypto/tron/rpc core/Tron.proto core/Discover.proto core/TronInventoryItems.proto core/contract/common.proto core/contract/account_contract.proto core/contract/asset_issue_contract.proto core/contract/balance_contract.proto core/contract/exchange_contract.proto core/contract/market_contract.proto core/contract/proposal_contract.proto core/contract/shield_contract.proto core/contract/smart_contract.proto core/contract/storage_contract.proto core/contract/witness_contract.proto api/api.proto 

@@ -11,40 +11,40 @@ import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 void main() {
   // test("", () {
   //   var token = zeniqCoin;
-  //   expect(getDerivationPath(HDWalletType.NO_STRUCTURE, token), "m/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP44, token), "m/44'/0'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP49, token), "m/49'/0'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP84, token), "m/84'/0'/0'");
+  //   expect(getDerivationPath(bitcoinNSHDPath, token), "m/0'");
+  //   expect(getDerivationPath(bitcoinBip44HDPath, token), "m/44'/0'/0'");
+  //   expect(getDerivationPath(bitcoinBip49HDPath, token), "m/49'/0'/0'");
+  //   expect(getDerivationPath(bitcoinBip84HDPath, token), "m/84'/0'/0'");
 
   //   token = btcCoin;
-  //   expect(getDerivationPath(HDWalletType.NO_STRUCTURE, token), "m/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP44, token), "m/44'/0'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP49, token), "m/49'/0'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP84, token), "m/84'/0'/0'");
+  //   expect(getDerivationPath(bitcoinNSHDPath, token), "m/0'");
+  //   expect(getDerivationPath(bitcoinBip44HDPath, token), "m/44'/0'/0'");
+  //   expect(getDerivationPath(bitcoinBip49HDPath, token), "m/49'/0'/0'");
+  //   expect(getDerivationPath(bitcoinBip84HDPath, token), "m/84'/0'/0'");
 
   //   token = ltcCoin;
-  //   expect(getDerivationPath(HDWalletType.NO_STRUCTURE, token), "m/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP44, token), "m/44'/2'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP49, token), "m/49'/2'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP84, token), "m/84'/2'/0'");
+  //   expect(getDerivationPath(bitcoinNSHDPath, token), "m/0'");
+  //   expect(getDerivationPath(bitcoinBip44HDPath, token), "m/44'/2'/0'");
+  //   expect(getDerivationPath(bitcoinBip49HDPath, token), "m/49'/2'/0'");
+  //   expect(getDerivationPath(bitcoinBip84HDPath, token), "m/84'/2'/0'");
 
   //   token = bchCoin;
-  //   expect(getDerivationPath(HDWalletType.NO_STRUCTURE, token), "m/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP44, token), "m/44'/0'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP49, token), "m/49'/0'/0'");
-  //   expect(getDerivationPath(HDWalletType.BIP84, token), "m/84'/0'/0'");
+  //   expect(getDerivationPath(bitcoinNSHDPath, token), "m/0'");
+  //   expect(getDerivationPath(bitcoinBip44HDPath, token), "m/44'/0'/0'");
+  //   expect(getDerivationPath(bitcoinBip49HDPath, token), "m/49'/0'/0'");
+  //   expect(getDerivationPath(bitcoinBip84HDPath, token), "m/84'/0'/0'");
   // });
 
   test('Assert that Xpub and Seed lead same Node', () {
     const networkType = BitcoinNetwork;
     final node_seed_ns = deriveMasterNode(
       networkType: networkType,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletPath: bitcoinNSHDPath,
       seed: helloSeed,
     );
     final node_xpub_ns = deriveMasterNode(
       networkType: networkType,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletPath: bitcoinNSHDPath,
       ePubKey: helloXpub,
     );
 

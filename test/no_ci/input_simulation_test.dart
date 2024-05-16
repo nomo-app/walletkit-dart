@@ -25,7 +25,7 @@ void main() {
   test('Simulate All Send Zeniq Tx', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: rejectSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
       minEndpoints: 10,
@@ -66,7 +66,7 @@ void main() {
     ];
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: rejectSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: addressTypes,
       networkType: BitcoinNetwork,
       minEndpoints: 10,
@@ -122,7 +122,7 @@ void main() {
   test('Litecoin Segwit Sending', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: spoilSeed,
-      walletTypes: [HDWalletType.BIP44_LITECOIN],
+      walletTypes: [litecoinBip44HDPath],
       addressTypes: [AddressType.segwit, AddressType.legacy],
       networkType: LitecoinNetwork,
       minEndpoints: 1,
@@ -159,7 +159,7 @@ void main() {
   test('Bitcoincash Sending', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: rejectSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
       networkType: BitcoincashNetwork,
       minEndpoints: 3,
@@ -228,7 +228,7 @@ Future<(UTXOTransaction, String?)> fetchUTXOTXByHash(
 
 String buildTestTransactionWithOutputs({
   required UTXONetworkType networkType,
-  required HDWalletType walletType,
+  required HDWalletPath walletType,
   required Map<ElectrumOutput, UTXOTransaction> chosenUTXOs,
   required Uint8List seed,
   required int version,
@@ -253,7 +253,7 @@ String buildTestTransactionWithOutputs({
     validUntil: validUntil,
   ).sign(
     seed: seed,
-    walletType: walletType,
+    walletPath: walletType,
     networkType: networkType,
   );
 
@@ -312,7 +312,7 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
             })
         .toList();
 
-    final fees = expectedTx.fee.value.toInt();
+    final fees = expectedTx.fee?.value.toInt() ?? 0;
 
     if (fees <= 0) {
       return (expectedTx, false, "Fees <= 0");
@@ -320,7 +320,7 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
 
     final simulatedTx = buildTestTransactionWithOutputs(
       networkType: networkType,
-      walletType: HDWalletType.NO_STRUCTURE,
+      walletType: bitcoinNSHDPath,
       chosenUTXOs: chosenUtxosMap,
       seed: seed,
       version: expectedTx.version,

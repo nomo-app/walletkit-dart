@@ -33,10 +33,19 @@ class TransferIntent<T extends FeeInformation?> {
     if (feeInfo is EvmFeeInformation) {
       return (feeInfo as EvmFeeInformation).fee;
     }
+    if (feeInfo is TronFeeInformation) {
+      return (feeInfo as TronFeeInformation).feeLimit;
+    }
+    if (feeInfo is UtxoFeeInformation) {
+      return (feeInfo as UtxoFeeInformation).fee;
+    }
     return null;
   }
 
   Amount get total {
+    if (token.isERC20) {
+      return fee ?? Amount.zero;
+    }
     return amount + (fee ?? Amount.zero);
   }
 
@@ -58,6 +67,8 @@ class TransferIntent<T extends FeeInformation?> {
     final newTargetValue = switch ((balance, feeInfo)) {
       (Amount balance, EvmFeeInformation info) when token.isERC20 == false =>
         _calcTargetAmount(balance, info.fee),
+      (Amount balance, TronFeeInformation info) when token.isERC20 == false =>
+        _calcTargetAmount(balance, info.feeLimit),
       _ => amount,
     };
 
@@ -85,11 +96,15 @@ class TransferIntent<T extends FeeInformation?> {
     };
   }
 
-  TransferIntent<T> copyWith({String? memo}) {
+  TransferIntent<T> copyWith({
+    String? memo,
+    Amount? amount,
+    T? feeInfo,
+  }) {
     return TransferIntent<T>(
       recipient: recipient,
-      amount: amount,
-      feeInfo: feeInfo,
+      amount: amount ?? this.amount,
+      feeInfo: feeInfo ?? this.feeInfo,
       token: token,
       memo: memo ?? this.memo,
     );
@@ -102,5 +117,15 @@ class TransferIntent<T extends FeeInformation?> {
     final utf = utf8.encode(memo!);
 
     return utf;
+  }
+
+  TransferIntent<A> convert<A extends FeeInformation>(A FeeInfo) {
+    return TransferIntent<A>(
+      recipient: recipient,
+      amount: amount,
+      feeInfo: feeInfo as A,
+      token: token,
+      memo: memo,
+    );
   }
 }

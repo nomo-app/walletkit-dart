@@ -18,7 +18,7 @@ typedef UTXOTxInfo = (Set<UTXOTransaction>, Iterable<NodeWithAddress>);
 typedef ElectrumXResult = (Set<ElectrumTransactionInfo>?, ElectrumXClient);
 
 Future<UTXOTxInfo> fetchUTXOTransactions({
-  required Iterable<HDWalletType> walletTypes,
+  required Iterable<HDWalletPath> walletTypes,
   required Iterable<AddressType> addressTypes,
   required UTXONetworkType networkType,
   Uint8List? seed,
@@ -56,7 +56,7 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
   final (allTxs, nodes) = await Future.wait([
     for (final walletType in walletTypes)
       searchTransactionsForWalletType(
-        walletType: walletType,
+        walletPath: walletType,
         addressTypes: addressTypes,
         networkType: networkType,
         endpoints: endpoints,
@@ -219,7 +219,7 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
 
 Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     searchTransactionsForWalletType({
-  required HDWalletType walletType,
+  required HDWalletPath walletPath,
   required Iterable<AddressType> addressTypes,
   required UTXONetworkType networkType,
   required List<(String, int)> endpoints,
@@ -237,14 +237,14 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     seed: seed,
     ePubKey: ePubKey,
     networkType: networkType,
-    walletType: walletType,
+    walletPath: walletPath,
   );
 
   final receiveTxsFuture = searchForTransactions(
     masterNode: masterNode,
     chainIndex: EXTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletType: walletType,
+    walletPurpose: walletPath.purpose,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
@@ -255,7 +255,7 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     masterNode: masterNode,
     chainIndex: INTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletType: walletType,
+    walletPurpose: walletPath.purpose,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
@@ -274,7 +274,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
   required bip32.BIP32 masterNode,
   required int chainIndex,
   required Iterable<AddressType> addressTypes,
-  required HDWalletType walletType,
+  required HDWalletPurpose walletPurpose,
   required UTXONetworkType networkType,
   required List<(String, int)> endpoints,
   required List<NodeWithAddress> cachedNodes,
@@ -325,7 +325,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
                 index: index,
                 networkType: networkType,
                 addressTypes: addressTypes,
-                walletType: walletType,
+                walletPurpose: walletPurpose,
               ),
           ],
           argument: null,

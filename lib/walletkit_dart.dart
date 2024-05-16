@@ -64,3 +64,8 @@ export 'src/crypto/evm/function_argument_decoding.dart';
 export 'src/crypto/utxo/proof_of_payment.dart';
 
 export 'src/crypto/utxo/entities/raw_transaction.dart';
+
+export 'src/crypto/tron/domain/tron_http_repository.dart';
+export 'src/crypto/tron/domain/tronscan_repository.dart';
+export 'src/crypto/tron/tron_transaction.dart';
+export 'src/crypto/tron/tron_address.dart';

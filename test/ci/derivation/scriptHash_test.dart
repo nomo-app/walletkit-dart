@@ -54,7 +54,7 @@ void main() {
     expect(publicKeyScript, "a9145c6c66afe0972b0269229453c1db465fe24cd40d87");
   });
 
-  test("", () {
+  test("Bitcoin P2SH Script Hash", () {
     const hashedPublicKeyHex = "c02d3ae0c920004a03b69f27795c5f2867a883a2";
 
     final address = pubKeyHexToAddress(

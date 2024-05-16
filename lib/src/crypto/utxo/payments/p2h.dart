@@ -156,23 +156,23 @@ String getAddressFromLockingScript(
   );
 
   return switch (walletType) {
-    HDWalletType.NO_STRUCTURE when addressType == AddressType.cashaddr =>
+    HDWalletPurpose.BIP44 when addressType == AddressType.cashaddr =>
       bchAddrEncode(
         hrp: type.bech32,
         data: pubKeyHash,
         witnessVersion: type.pubKeyHashPrefix,
       ),
-    HDWalletType.NO_STRUCTURE =>
+    HDWalletPurpose.BIP44 =>
       pubKeyHashToLegacyAddress(pubKeyHash, type.pubKeyHashPrefix),
-    HDWalletType.BIP49 =>
+    HDWalletPurpose.BIP49 =>
       pubKeyHashToP2SHAddress(pubKeyHash, type.scriptHashPrefix),
-    HDWalletType.BIP84 =>
+    HDWalletPurpose.BIP84 =>
       pubKeyHashToSegwitAddress(pubKeyHash, type.bech32, type.pubKeyHashPrefix),
     _ => throw UnsupportedError("Address type not supported: $pubKeyHash")
   };
 }
 
-(Uint8List, HDWalletType) getPublicKeyFromLockingScript(
+(Uint8List, HDWalletPurpose) getPublicKeyFromLockingScript(
   ElectrumScriptPubKey scriptPubKey,
   UTXONetworkType type,
 ) {
@@ -187,7 +187,7 @@ String getAddressFromLockingScript(
       hexKey.length - p2pkhPostfix.length,
     );
     final pubKeyHash = Uint8List.fromList(hex.decode(pubKeyHashHex));
-    return (pubKeyHash, HDWalletType.NO_STRUCTURE);
+    return (pubKeyHash, HDWalletPurpose.BIP44);
   }
 
   ///
@@ -199,7 +199,7 @@ String getAddressFromLockingScript(
       hexKey.length - p2shPostfix.length,
     );
     final pubKeyHash = Uint8List.fromList(hex.decode(pubKeyHashHex));
-    return (pubKeyHash, HDWalletType.BIP49);
+    return (pubKeyHash, HDWalletPurpose.BIP49);
   }
 
   ///
@@ -211,7 +211,7 @@ String getAddressFromLockingScript(
       hexKey.length,
     );
     final pubKeyHash = Uint8List.fromList(hex.decode(pubKeyHashHex));
-    return (pubKeyHash, HDWalletType.BIP84);
+    return (pubKeyHash, HDWalletPurpose.BIP84);
   }
 
   throw UnsupportedError("Address type not supported: $hexKey");

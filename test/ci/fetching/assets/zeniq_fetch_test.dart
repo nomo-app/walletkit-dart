@@ -11,7 +11,7 @@ void main() {
   test('Simulate Zeniq Wallet', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
       seed: devSeed,
-      walletTypes: [HDWalletType.NO_STRUCTURE],
+      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
       minEndpoints: 1,

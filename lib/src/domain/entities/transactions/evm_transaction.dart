@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -20,6 +21,14 @@ abstract base class EVMTransaction extends GenericTransaction {
     required super.status,
     required this.input,
   });
+
+  String? get uTF8Input {
+    try {
+      return utf8.decode(input);
+    } catch (e) {
+      return null;
+    }
+  }
 
   Future<FunctionSignatureWithArgs?> get getFunctionSignature async {
     if (!_cachedFunctionSigs.containsKey(hash)) {
@@ -45,7 +54,7 @@ abstract base class EVMTransaction extends GenericTransaction {
       'confirmations': confirmations,
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
-      'fee': fee.toJson(),
+      if (fee != null) 'fee': fee!.toJson(),
       'sender': sender,
       'recipient': recipient,
       'transferMethod': transferMethod.toString(),

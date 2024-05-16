@@ -12,7 +12,7 @@ void main() {
       final (txList, _) = await fetchUTXOTransactions(
         networkType: BitcoincashNetwork,
         ePubKey: rejectXpub,
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy, AddressType.cashaddr],
       );
       expect(txList.length, greaterThanOrEqualTo(14));
@@ -24,7 +24,7 @@ void main() {
     test('fetch ZENIQ transactions xpub dev wallet', () async {
       final (txList, _) = await fetchUTXOTransactions(
         ePubKey: rejectXpub,
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -42,7 +42,7 @@ void main() {
         ePubKey:
             "xpub69TptoZubWfAZAi5TecLSRUjo8cvu5mq6qnbnD29deEzvdvcmy3sDiEYafmg5GD1Yvmr4uKtJadDEdY5ez6wBFSTawd5chLKHxdjw3uYZXw",
         walletTypes: [
-          HDWalletType.BIP44,
+          bitcoinBip44HDPath,
         ],
         addressTypes: [AddressType.legacy, AddressType.segwit],
         networkType: BitcoinNetwork,
@@ -60,7 +60,7 @@ void main() {
       final (txList, _) = await fetchUTXOTransactions(
         ePubKey:
             "xpub68G61RDvXPYULAPVaoK1djUycUqBi6UEYL2CkVZwYNM4FHnCcve7AkgCvmzpCMn48bgxsLgubUfrqznrTadyfkLxeQhtaH7NZ8rhuHfXyS5",
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -77,7 +77,7 @@ void main() {
       final (txList, _) = await fetchUTXOTransactions(
         ePubKey:
             "xpub68dxwSLMkhjyHmnpBBXNTDhyUFAaeLVinaDjYXndV9cEn6Dvz5jVMcPRYq6T6XyakjdSnWYmZixUPc6TkYwH64PWPtnj4x3S73F1igAimjr",
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -93,7 +93,7 @@ void main() {
       final (txList, _) = await fetchUTXOTransactions(
         ePubKey:
             "xpub69Y1Sk2jpT46Z18PWgpMb2qic9HSqDh6uacrbVu3Vxh7mKhswH15aECHM8hzewP53Vo5L7C6tCXbVXVbhi5qUFxZbmx6hwbiT4aPjoGB7dS",
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -107,7 +107,7 @@ void main() {
       final (legacyTxList, _) = await fetchUTXOTransactions(
         networkType: BitcoinNetwork,
         ePubKey: rejectXpub,
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy, AddressType.segwit],
         minEndpoints: 5,
       );
@@ -121,7 +121,7 @@ void main() {
       final (segwitTxList, segwitNodes) = await fetchUTXOTransactions(
         networkType: BitcoinNetwork,
         ePubKey: rejectXpub,
-        walletTypes: [HDWalletType.NO_STRUCTURE],
+        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.segwit],
       );
 
@@ -143,7 +143,7 @@ void main() {
     //   final (txList, _) = await fetchUTXOTransactions(
     //     ePubKey: rejectXpub,
     //     networkType: LitecoinNetwork,
-    //     walletTypes: [HDWalletType.BIP44_LITECOIN],
+    //     walletTypes: [bitcoinBip44HDPath_LITECOIN],
     //     addressTypes: [AddressType.segwit],
     //     minEndpoints: 1,
     //   );
