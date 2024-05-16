@@ -180,8 +180,8 @@
   &#47;&#47;&#47;
   &#47;&#47;&#47; Build Outputs again with the estimated size
   &#47;&#47;&#47;
-  var estimatedSize = BigInt.from(dummyTx.size);
-  var estimatedFee = estimatedSize * feePerByte.value;
+
+  var estimatedFee = calculateFee(tx: dummyTx, feePerByte: feePerByte);
 
   var changeValue = totalInputValue - targetValue - estimatedFee;
 
@@ -209,8 +209,7 @@
         dummyOutputs: dummyOutputs,
       );
 
-      estimatedSize = BigInt.from(dummyTx.size);
-      estimatedFee = estimatedSize * feePerByte.value;
+      estimatedFee = calculateFee(tx: dummyTx, feePerByte: feePerByte);
     }
 
     changeValue = totalInputValue - targetValue - estimatedFee;
