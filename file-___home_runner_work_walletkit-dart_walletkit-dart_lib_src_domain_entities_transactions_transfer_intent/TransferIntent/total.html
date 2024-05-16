@@ -78,9 +78,6 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Amount get total {
-  if (token.isERC20) {
-    return fee ?? Amount.zero;
-  }
   return amount + (fee ?? Amount.zero);
 }</code></pre>
 </section>

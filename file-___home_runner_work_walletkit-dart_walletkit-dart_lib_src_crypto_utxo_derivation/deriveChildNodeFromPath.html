@@ -67,7 +67,7 @@
 <span class="name ">deriveChildNodeFromPath</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="deriveChildNodeFromPath-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
 <li><span class="parameter" id="deriveChildNodeFromPath-param-childDerivationPath"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">childDerivationPath</span>, </span></li>
 <li><span class="parameter" id="deriveChildNodeFromPath-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
-<li><span class="parameter" id="deriveChildNodeFromPath-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span>, </span></li>
+<li><span class="parameter" id="deriveChildNodeFromPath-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
 </ol>})
 
         
@@ -83,12 +83,12 @@
   required Uint8List seed,
   required String childDerivationPath,
   required UTXONetworkType networkType,
-  required HDWalletPath walletPath,
+  required HDWalletType walletType,
 }) {
   final masterNode = deriveMasterNode(
     seed: seed,
     networkType: networkType,
-    walletPath: walletPath,
+    walletType: walletType,
   );
 
   final node = masterNode.derivePath(childDerivationPath);

@@ -64,7 +64,7 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a></span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a></span></span>)</span>&gt;</span></span>
-<span class="name ">searchTransactionsForWalletType</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="searchTransactionsForWalletType-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span>, </span></li>
+<span class="name ">searchTransactionsForWalletType</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="searchTransactionsForWalletType-param-walletType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletType</span>, </span></li>
 <li><span class="parameter" id="searchTransactionsForWalletType-param-addressTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">addressTypes</span>, </span></li>
 <li><span class="parameter" id="searchTransactionsForWalletType-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
 <li><span class="parameter" id="searchTransactionsForWalletType-param-endpoints"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span></span>)</span>&gt;</span></span> <span class="parameter-name">endpoints</span>, </span></li>
@@ -85,7 +85,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;(Set&lt;ElectrumTransactionInfo&gt;, Set&lt;NodeWithAddress&gt;)&gt;
     searchTransactionsForWalletType({
-  required HDWalletPath walletPath,
+  required HDWalletType walletType,
   required Iterable&lt;AddressType&gt; addressTypes,
   required UTXONetworkType networkType,
   required List&lt;(String, int)&gt; endpoints,
@@ -103,14 +103,14 @@
     seed: seed,
     ePubKey: ePubKey,
     networkType: networkType,
-    walletPath: walletPath,
+    walletType: walletType,
   );
 
   final receiveTxsFuture = searchForTransactions(
     masterNode: masterNode,
     chainIndex: EXTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletPurpose: walletPath.purpose,
+    walletType: walletType,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
@@ -121,7 +121,7 @@
     masterNode: masterNode,
     chainIndex: INTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletPurpose: walletPath.purpose,
+    walletType: walletType,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
