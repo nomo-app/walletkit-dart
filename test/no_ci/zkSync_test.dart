@@ -27,10 +27,6 @@ void main() {
     final intentETH = TransferIntent(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.005, decimals: 18),
-      // feeInfo: EvmFeeInformation(
-      //   gasLimit: gasLimit,
-      //   gasPrice: Amount(value: BigInt.from(maxFeePerGasWei), decimals: 0),
-      // ),
       feeInfo: null,
       token: ethzkSync,
       memo: null,
