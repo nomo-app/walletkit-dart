@@ -80,7 +80,14 @@ class Amount extends Equatable {
 
     if (lastNonZeroIndex == -1) return string;
 
-    return string.substring(0, lastNonZeroIndex < 3 ? 3 : lastNonZeroIndex + 1);
+    final formatted =
+        string.substring(0, lastNonZeroIndex < 3 ? 3 : lastNonZeroIndex + 1);
+
+    if (formatted.endsWith('.')) {
+      return formatted.substring(0, formatted.length - 1);
+    }
+
+    return formatted;
   }
 
   Amount copyWith({
