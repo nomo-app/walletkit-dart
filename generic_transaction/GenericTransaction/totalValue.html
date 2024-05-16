@@ -77,7 +77,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">BigInt get totalValue =&gt; value + fee.value;</code></pre>
+  <pre class="language-dart"><code class="language-dart">BigInt get totalValue =&gt; value + (fee?.value ?? BigInt.zero);</code></pre>
 </section>
 
   </section>

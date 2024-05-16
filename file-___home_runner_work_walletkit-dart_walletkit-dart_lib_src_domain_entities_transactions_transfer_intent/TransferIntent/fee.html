@@ -81,6 +81,12 @@
   if (feeInfo is EvmFeeInformation) {
     return (feeInfo as EvmFeeInformation).fee;
   }
+  if (feeInfo is TronFeeInformation) {
+    return (feeInfo as TronFeeInformation).feeLimit;
+  }
+  if (feeInfo is UtxoFeeInformation) {
+    return (feeInfo as UtxoFeeInformation).fee;
+  }
   return null;
 }</code></pre>
 </section>

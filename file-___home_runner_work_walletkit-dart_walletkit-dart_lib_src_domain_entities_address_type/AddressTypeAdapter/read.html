@@ -96,6 +96,8 @@ AddressType read(BinaryReader reader) {
       return AddressType.cashaddr;
     case 5:
       return AddressType.evm;
+    case 6:
+      return AddressType.tron;
     default:
       return AddressType.legacy;
   }
