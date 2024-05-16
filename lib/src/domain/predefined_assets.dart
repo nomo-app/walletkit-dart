@@ -185,7 +185,7 @@ const arbitrum = EthBasedTokenEntity(
 
 const ethAbitrum = EvmEntity(
   chainID: 42161,
-  name: "EthereumARB",
+  name: "Ethereum",
   symbol: "ETH",
   decimals: 18,
 );
@@ -212,7 +212,7 @@ const wrappedETH = EthBasedTokenEntity(
 ///
 const ethBase = EvmEntity(
   chainID: 8453,
-  name: "EthereumBASE",
+  name: "Ethereum",
   symbol: "ETH",
   decimals: 18,
 );
@@ -252,7 +252,7 @@ const optimism = EthBasedTokenEntity(
 
 const ethOptimism = EvmEntity(
   chainID: 10,
-  name: "EthereumOPT",
+  name: "Ethereum",
   symbol: "ETH",
   decimals: 18,
 );
@@ -262,7 +262,7 @@ const ethOptimism = EvmEntity(
 ///
 const ethzkSync = EvmEntity(
   chainID: 324,
-  name: "EthereumzkSync",
+  name: "Ethereum",
   symbol: "ETH",
   decimals: 18,
 );
