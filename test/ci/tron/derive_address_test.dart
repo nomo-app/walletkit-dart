@@ -42,7 +42,7 @@ void main() {
     var evm_address = base58ToEVM(address);
 
     expect(address, tronAddress);
-    expect(address_hex, tronAddressHex);
+    expect(address_hex.toHex, tronAddressHex);
     expect(evm_address, tronAddressEVM);
 
     node = deriveNode(seed, tronBip44HDPath.getPath(0, 0, 1));
@@ -54,17 +54,17 @@ void main() {
     evm_address = base58ToEVM(address);
 
     expect(address, tronAddress1);
-    expect(address_hex, tronAddress1Hex);
+    expect(address_hex.toHex, tronAddress1Hex);
     expect(evm_address, tronAddress1EVM);
   });
 
   test('Validate Address', () {
-    expect(validateTronAddress(address: tronAddress), true);
-    expect(validateTronAddress(address: tronAddress1), true);
-    expect(validateTronAddress(address: "Tasdasdasdasd"), false);
+    expect(validateTronAddress(address: tronAddress), null);
+    expect(validateTronAddress(address: tronAddress1), null);
+    expect(validateTronAddress(address: "Tasdasdasdasd"), AddressError.INVALID);
     expect(
       validateTronAddress(address: "TBdBhvCChFgbC4zz64GbtL6PRxWPsZJS99"),
-      false,
+      AddressError.INVALID_CHECKSUM,
     );
   });
 
