@@ -242,6 +242,12 @@ const optimismScanEndpoint = "https://api-optimistic.etherscan.io/api";
 const optimismAPIKey = "511U519H4U6S1XJBJ9JWQJWKI62ZTZ23AQ";
 
 ///
+///ZKSync
+///
+const zksyncAPIEndpoint = "https://api-era.zksync.network/api";
+const zksyncAPIKey = "AF79TF8SBQFW517Y8UEBAK7BR43BBGQZIA";
+
+///
 /// Staking
 ///
 const mainnetStakingContract = "0x7561DEAf4ECf96dc9F0d50B4136046979ACdAD3e";
@@ -254,7 +260,8 @@ enum GasLimits {
   nftSend(100000),
   ethSend(21000),
   erc20Send(70000),
-  toStake(280000);
+  toStake(280000),
+  ethzkSync(187734);
 
   final int value;
 

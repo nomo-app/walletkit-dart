@@ -172,4 +172,19 @@ void main() {
 
     expect(opBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
+  test('zkSync Test', () async {
+    final rpcInterface = EvmRpcInterface(ZKSyncNetwork);
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final wbtcBalance = await rpcInterface.fetchTokenBalance(
+      arbitrumTestWallet,
+      wbtcZKSync,
+    );
+
+    expect(wbtcBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
 }

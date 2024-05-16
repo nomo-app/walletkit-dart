@@ -498,3 +498,17 @@ class OPTIMISM_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+const ZKSyncNetwork = ZKSYNC_NETWORK();
+
+class ZKSYNC_NETWORK extends EVMNetworkType {
+  const ZKSYNC_NETWORK()
+      : super(
+          chainId: 324,
+          rpcUrl: "https://zksync-era.blockpi.network/v1/rpc/public",
+          coin: ethzkSync,
+          messagePrefix: "\x19ZKSync Signed Message:\n",
+          blockExplorer: (zksyncAPIEndpoint, const [zksyncAPIKey]),
+          blockTime: 2,
+        );
+}

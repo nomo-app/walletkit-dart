@@ -222,11 +222,14 @@ final class EvmRpcInterface {
     required web3.Credentials credentials,
   }) async {
     final ethAddress = credentials.address;
-
+    final fallbackGasLimit = switch (intent.token) {
+      ethzkSync => GasLimits.ethzkSync.value,
+      _ => GasLimits.ethSend.value,
+    };
     final (gasPrice, gasLimit) = switch (intent.feeInfo) {
       EvmFeeInformation info => (info.gasPrice, info.gasLimit),
       _ => await client.getGasPrice().then(
-            (bi) => (Amount(value: bi, decimals: 18), GasLimits.ethSend.value),
+            (bi) => (Amount(value: bi, decimals: 18), fallbackGasLimit),
           ),
     };
 

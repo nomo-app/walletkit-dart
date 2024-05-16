@@ -256,3 +256,20 @@ const ethOptimism = EvmEntity(
   symbol: "ETH",
   decimals: 18,
 );
+
+///
+///ZKSync Assets
+///
+const ethzkSync = EvmEntity(
+  chainID: 324,
+  name: "EthereumzkSync",
+  symbol: "ETH",
+  decimals: 18,
+);
+
+const wbtcZKSync = EthBasedTokenEntity(
+  name: "Wrapped BTC",
+  symbol: "WBTC",
+  decimals: 8,
+  contractAddress: "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+);

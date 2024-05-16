@@ -28,7 +28,7 @@ void main() {
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
-      token: ethNative,
+      token: ethOptimism,
       memo: null,
     );
 
