@@ -10,6 +10,7 @@ on:
 
 env:
   REJECT_SEED: ${{ secrets.REJECT_SEED }}
+  TRON_SEED: ${{ secrets.TRON_SEED }}
 
 jobs:
   lint:

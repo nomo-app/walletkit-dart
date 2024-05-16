@@ -5,6 +5,7 @@ import 'package:pointycastle/digests/sha256.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
 import 'package:convert/convert.dart' show hex;
 import 'package:bs58check/bs58check.dart' as bs58check;
+import 'package:walletkit_dart/src/utils/base58.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 String pubKeyHexToAddress(
@@ -106,16 +107,15 @@ String pubKeyHashToSegwitAddress(
 /// P2SH Address (Base58)
 ///
 String pubKeyHashToP2SHAddress(Uint8List pubKeyHash, int scriptHashPrefix) {
-  throw UnimplementedError();
-  // final prefixedHash = Uint8List.fromList([scriptHashPrefix, ...pubKeyHash]);
+  final prefixedHash = Uint8List.fromList([scriptHashPrefix, ...pubKeyHash]);
 
-  // final checkSum = sha256Sha256Hash(prefixedHash).sublist(0, 4);
+  final checkSum = sha256Sha256Hash(prefixedHash).sublist(0, 4);
 
-  // final prefixedHashWithChecksum = Uint8List.fromList(
-  //   [...prefixedHash, ...checkSum],
-  // );
+  final prefixedHashWithChecksum = Uint8List.fromList(
+    [...prefixedHash, ...checkSum],
+  );
 
-  // return base58encode(prefixedHashWithChecksum);
+  return base58Encode(prefixedHashWithChecksum);
 }
 
 ///
