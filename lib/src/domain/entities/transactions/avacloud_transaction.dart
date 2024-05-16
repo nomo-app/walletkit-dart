@@ -5,7 +5,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 part "avacloud_transaction.g.dart";
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 28)
 final class AvalancheTransaction extends EVMTransaction {
   const AvalancheTransaction({
     required super.hash,
