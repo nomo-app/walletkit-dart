@@ -25,4 +25,12 @@ void main() {
 
     print(gasEntity);
   });
+
+  test('Estimate Fees Zeniq', () async {
+    final gasEntity = await getNetworkFees(network: ZeniqNetwork);
+
+    expect(gasEntity, isNotNull);
+
+    print(gasEntity);
+  });
 }

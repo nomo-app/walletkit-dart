@@ -111,7 +111,7 @@ void main() {
     expect(hash, isNotEmpty);
   });
 
-  test('Send to own Address', () async {
+  test('Send EC8 to own Address', () async {
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: EurocoinNetwork,
       seed: devSeed,
@@ -143,7 +143,7 @@ void main() {
       walletPath: bitcoinNSHDPath,
       txList: txList,
       changeAddresses: nodes.changeNodes.addresses,
-      feePerByte: Amount.from(value: 8, decimals: 8),
+      feePerByte: Amount.zero, // Not used for EC8
     );
 
     final signedTx = unsignedTx.sign(
