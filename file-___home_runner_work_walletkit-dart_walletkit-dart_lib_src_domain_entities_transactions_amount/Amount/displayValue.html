@@ -88,7 +88,14 @@
 
   if (lastNonZeroIndex == -1) return string;
 
-  return string.substring(0, lastNonZeroIndex &lt; 3 ? 3 : lastNonZeroIndex + 1);
+  final formatted =
+      string.substring(0, lastNonZeroIndex &lt; 3 ? 3 : lastNonZeroIndex + 1);
+
+  if (formatted.endsWith(&#39;.&#39;)) {
+    return formatted.substring(0, formatted.length - 1);
+  }
+
+  return formatted;
 }</code></pre>
 </section>
 
