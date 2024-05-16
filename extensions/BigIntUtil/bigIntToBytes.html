@@ -78,14 +78,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Uint8List get bigIntToBytes {
-  var asHex =
-      toRadixString(16).padLeft(64, &#39;0&#39;); &#47;&#47; padding left to have length = 64
-  return Uint8List.fromList(
-    List&lt;int&gt;.generate(
-      32,
-      (i) =&gt; int.parse(asHex.substring(i * 2, (i + 1) * 2), radix: 16),
-    ),
-  ); &#47;&#47; parsing every 2 character ( = 8 bit = 1 byte)
+  assert(this &gt;= BigInt.zero, &quot;BigInt must be positive&quot;);
+  return p_utils.encodeBigIntAsUnsigned(this);
 }</code></pre>
 </section>
 

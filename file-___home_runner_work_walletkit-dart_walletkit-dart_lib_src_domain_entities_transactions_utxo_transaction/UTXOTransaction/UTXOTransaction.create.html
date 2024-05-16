@@ -124,9 +124,7 @@
 
   final fee_int = json[&#39;fee_int&#39;] as int?;
   var fee = fee_int != null ? BigInt.from(fee_int) : null;
-  fee ??= spentOutputs.isEmpty
-      ? BigInt.from(-1)
-      : totalInputValue - totalOutputValue;
+  fee ??= spentOutputs.isEmpty ? null : totalInputValue - totalOutputValue;
 
   final recipient = determineTransactionTarget(
         outputs,
@@ -145,7 +143,7 @@
 
   return UTXOTransaction(
     block: height,
-    fee: Amount(value: fee, decimals: coin.decimals),
+    fee: fee != null ? Amount(value: fee, decimals: coin.decimals) : null,
     hash: id,
     timeMilli: timestamp,
     amount: Amount(value: value, decimals: coin.decimals),

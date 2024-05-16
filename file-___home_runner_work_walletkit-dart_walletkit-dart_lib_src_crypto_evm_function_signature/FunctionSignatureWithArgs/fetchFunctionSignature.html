@@ -109,7 +109,12 @@
     functionSignatureCache[hex_signature] = fetchedFunctionSignature;
 
     if (fetchedFunctionSignature == null) {
-      throw Exception(&quot;No function signature found&quot;);
+      return FunctionSignature(
+        hex_signature,
+        {
+          &quot;input&quot;: &quot;hex&quot;,
+        },
+      ).addUnkown(data);
     }
 
     return fetchedFunctionSignature;
