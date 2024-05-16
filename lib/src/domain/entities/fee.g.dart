@@ -55,15 +55,18 @@ class UtxoFeeInformationAdapter extends TypeAdapter<UtxoFeeInformation> {
     };
     return UtxoFeeInformation(
       feePerByte: fields[0] as Amount,
+      fee: fields[1] as Amount?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UtxoFeeInformation obj) {
     writer
-      ..writeByte(1)
+      ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.feePerByte);
+      ..write(obj.feePerByte)
+      ..writeByte(1)
+      ..write(obj.fee);
   }
 
   @override

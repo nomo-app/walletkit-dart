@@ -8,7 +8,7 @@ part of 'avacloud_transaction.dart';
 
 class AvalancheTransactionAdapter extends TypeAdapter<AvalancheTransaction> {
   @override
-  final int typeId = 1;
+  final int typeId = 28;
 
   @override
   AvalancheTransaction read(BinaryReader reader) {
@@ -22,7 +22,7 @@ class AvalancheTransactionAdapter extends TypeAdapter<AvalancheTransaction> {
       confirmations: fields[2] as int,
       timeMilli: fields[3] as int,
       amount: fields[5] as Amount,
-      fee: fields[6] as Amount,
+      fee: fields[6] as Amount?,
       sender: fields[7] as String,
       recipient: fields[8] as String,
       transferMethod: fields[9] as TransactionTransferMethod,
