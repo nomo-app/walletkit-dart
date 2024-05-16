@@ -85,11 +85,14 @@
   required web3.Credentials credentials,
 }) async {
   final ethAddress = credentials.address;
-
+  final fallbackGasLimit = switch (intent.token) {
+    ethzkSync =&gt; GasLimits.ethzkSync.value,
+    _ =&gt; GasLimits.ethSend.value,
+  };
   final (gasPrice, gasLimit) = switch (intent.feeInfo) {
     EvmFeeInformation info =&gt; (info.gasPrice, info.gasLimit),
     _ =&gt; await client.getGasPrice().then(
-          (bi) =&gt; (Amount(value: bi, decimals: 18), GasLimits.ethSend.value),
+          (bi) =&gt; (Amount(value: bi, decimals: 18), fallbackGasLimit),
         ),
   };
 
