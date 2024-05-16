@@ -17,8 +17,6 @@ void main() {
     );
     final testSeed = loadFromEnv("DEV_SEED");
 
-    print("Sherif seed $testSeed");
-
     final hash = await arbitrumRPC.sendERC20Token(
       intent: intent,
       credentials: getETHCredentials(seed: testSeed),

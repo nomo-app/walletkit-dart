@@ -35,6 +35,24 @@ base class EvmRpcClient {
     }
   }
 
+  Future<BigInt?> estimateZkSyncFee(
+      {required String from, required String to}) async {
+    final body = [
+      {
+        'from': from,
+        'to': to,
+        'data': '0x',
+      },
+    ];
+
+    final response = await _call('zks_estimateFee', args: body);
+
+    final gaslimit = int.parse(
+        response['gas_limit'].toString().replaceAll("0x", ""),
+        radix: 16);
+    return BigInt.from(gaslimit);
+  }
+
   ///
   /// Returns the balance of the account of given address in wei.
   ///

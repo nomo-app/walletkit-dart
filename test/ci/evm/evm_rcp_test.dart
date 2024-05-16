@@ -114,4 +114,77 @@ void main() {
     );
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
+
+  test('Base Test', () async {
+    final rpcInterface = EvmRpcInterface(BaseNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final tokenBalance =
+        await rpcInterface.fetchTokenBalance(arbitrumTestWallet, mathToken);
+
+    expect(tokenBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
+
+  test('MoonBeam Test', () async {
+    final rpcInterface = EvmRpcInterface(MoonbeamNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final fraxBalance = await rpcInterface.fetchTokenBalance(
+      arbitrumTestWallet,
+      frax,
+    );
+
+    expect(fraxBalance.value, greaterThan(BigInt.zero));
+  });
+
+  test('Avalanche Test', () async {
+    final rpcInterface = EvmRpcInterface(AvalancheNetwork);
+
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    print(balance);
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
+
+  test('Optimism Test', () async {
+    final rpcInterface = EvmRpcInterface(OptimismNetwork);
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final opBalance = await rpcInterface.fetchTokenBalance(
+      arbitrumTestWallet,
+      optimism,
+    );
+
+    expect(opBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
+  test('zkSync Test', () async {
+    final rpcInterface = EvmRpcInterface(ZKSyncNetwork);
+    final balance = await rpcInterface.fetchBalance(
+      address: arbitrumTestWallet,
+    );
+
+    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    final wbtcBalance = await rpcInterface.fetchTokenBalance(
+      arbitrumTestWallet,
+      wbtcZKSync,
+    );
+
+    expect(wbtcBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  });
 }

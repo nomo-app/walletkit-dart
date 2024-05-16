@@ -84,12 +84,87 @@ abstract class EtherscanRepository {
   }
 }
 
+Future<T> _fetchAvaTransactionWithRateLimits<T>(
+  final String rawEndpoint,
+  final String apiKey, {
+  int maxRetries = 10,
+  Duration waitTime = const Duration(seconds: 5),
+}) async {
+  for (var i = 0; i < maxRetries; i++) {
+    final response = await HTTPService.getWithHeaders(rawEndpoint, headers: {
+      'Content-Type': 'application/json',
+      'x-glacier-api-key': apiKey
+    });
+
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+
+      final result = body['transactions'];
+
+      return result;
+    }
+
+    await Future.delayed(waitTime);
+  }
+  throw Exception("Failed to fetch $rawEndpoint");
+}
+
 class EVMExplorer extends EtherscanRepository {
   const EVMExplorer(super.base, super.apiKeys);
 
   EVMExplorer.fromType(EVMNetworkType type)
       : assert(type.blockExplorer != null, "No block explorer defined"),
         super(type.blockExplorer!.$1, type.blockExplorer!.$2);
+
+  ///
+  /// Fetch all Transactions for the given [token] on the given [address] for Avalanche
+  ///
+  Future<List<AvalancheTransaction>> fetchAvaTransactions({
+    required EvmEntity token,
+    required String address,
+    int? lastBlock,
+  }) async {
+    if (lastBlock != null) {
+      lastBlock++;
+    }
+
+    final txResults = await _fetchAvaTransactionWithRateLimits(
+        "$base$address/transactions", apiyKey);
+    return [
+      for (final tx in txResults)
+        AvalancheTransaction.fromJson(
+          tx,
+          token: token,
+          address: address,
+        )
+    ];
+  }
+
+  ///
+  ///Fetch all ERC20 Transactions for a given [token] and [address] for Avalanche
+  ///
+  // Future<List<AvalancheTransaction>> fetchAvaERC20Transactions({
+  //   required EthBasedTokenEntity token,
+  //   required EvmEntity currency,
+  //   required String address,
+  //   int? lastBlock,
+  // }) async {
+  //   if (lastBlock != null) {
+  //     lastBlock++;
+  //   }
+
+  //   final txResults = await _fetchAvaTransactionWithRateLimits(
+  //       "$base$address/transactions", apiyKey);
+  //   return [
+  //     for (final tx in txResults)
+  //       AvalancheTransaction.fromJsonErc20(
+  //         tx,
+  //         token: token,
+  //         address: address,
+  //         currency: currency,
+  //       )
+  //   ];
+  // }
 
   ///
   /// Fetch all Transactions for the given [token] on the given [address]

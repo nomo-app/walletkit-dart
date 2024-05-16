@@ -484,3 +484,73 @@ class ARBITRUM_NETWORK extends EVMNetworkType {
           blockTime: 2,
         );
 }
+
+const BaseNetwork = BASE_NETWORK();
+
+class BASE_NETWORK extends EVMNetworkType {
+  const BASE_NETWORK()
+      : super(
+          chainId: 8453,
+          rpcUrl: "https://base.drpc.org",
+          blockExplorer: (baseScanEndpoint, const [baseScanApiKey]),
+          coin: ethBase,
+          messagePrefix: "\x19Base Chain Signed Message:\n",
+          blockTime: 2,
+        );
+}
+
+const MoonbeamNetwork = MOONBEAM_NETWORK();
+
+class MOONBEAM_NETWORK extends EVMNetworkType {
+  const MOONBEAM_NETWORK()
+      : super(
+          chainId: 1284,
+          rpcUrl: "https://moonbeam-rpc.publicnode.com",
+          blockExplorer: (moonbeamScanBaseEndpoint, const [moonbeamScanApiKey]),
+          coin: moonbeam,
+          messagePrefix: "\x19Moonbeam Signed Message:\n",
+          blockTime: 2,
+        );
+}
+
+const AvalancheNetwork = AVALANCHE_NETWORK();
+
+class AVALANCHE_NETWORK extends EVMNetworkType {
+  const AVALANCHE_NETWORK()
+      : super(
+          chainId: 43114,
+          rpcUrl: "https://api.avax.network/ext/bc/C/rpc",
+          coin: avalanche,
+          blockExplorer: (avalancheAPIEndpoint, const [avalancheAPIKey]),
+          messagePrefix: "\x19Avalanche Signed Message:\n",
+          blockTime: 2,
+        );
+}
+
+const OptimismNetwork = OPTIMISM_NETWORK();
+
+class OPTIMISM_NETWORK extends EVMNetworkType {
+  const OPTIMISM_NETWORK()
+      : super(
+          chainId: 10,
+          rpcUrl: "https://optimism.llamarpc.com",
+          coin: optimism,
+          messagePrefix: "\x19Optimism Signed Message:\n",
+          blockExplorer: (optimismScanEndpoint, const [optimismAPIKey]),
+          blockTime: 2,
+        );
+}
+
+const ZKSyncNetwork = ZKSYNC_NETWORK();
+
+class ZKSYNC_NETWORK extends EVMNetworkType {
+  const ZKSYNC_NETWORK()
+      : super(
+          chainId: 324,
+          rpcUrl: "https://zksync-era.blockpi.network/v1/rpc/public",
+          coin: ethzkSync,
+          messagePrefix: "\x19ZKSync Signed Message:\n",
+          blockExplorer: (zksyncAPIEndpoint, const [zksyncAPIKey]),
+          blockTime: 2,
+        );
+}

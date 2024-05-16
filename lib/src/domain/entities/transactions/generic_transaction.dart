@@ -157,7 +157,8 @@ enum TransactionTransferMethod {
     String recipient,
     String sender,
   ) {
-    if (address == sender && address == recipient)
+    if (address.toLowerCase() == sender.toLowerCase() &&
+        address.toLowerCase() == recipient.toLowerCase())
       return TransactionTransferMethod.own;
     if (address == recipient) return TransactionTransferMethod.receive;
     return TransactionTransferMethod.send;
