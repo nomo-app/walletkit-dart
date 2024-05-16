@@ -11,7 +11,8 @@ void main() {
   final baseScan = EVMExplorer(baseScanEndpoint, [baseScanApiKey]);
   final moonScan = EVMExplorer(moonbeamScanBaseEndpoint, [moonbeamScanApiKey]);
   final avaCloud = EVMExplorer(avalancheAPIEndpoint, [avalancheAPIKey]);
-
+  final optiScan = EVMExplorer(optimismScanEndpoint, [optimismAPIKey]);
+  final zkSyncScan = EVMExplorer(zksyncAPIEndpoint, [zksyncAPIKey]);
   test('Test Ethereum Etherscan Fetching', () async {
     ///
     /// Balances
@@ -184,5 +185,56 @@ void main() {
     final fraxBalance = await moonScan.fetchBalance(arbitrumTestWallet, frax);
 
     expect(fraxBalance, greaterThan(BigInt.zero));
+  });
+
+  test('Test Optimism Fetching', () async {
+    final balance = await optiScan.fetchBalance(arbitrumTestWallet, ethNative);
+
+    expect(balance, greaterThanOrEqualTo(BigInt.zero));
+
+    final transactions = await optiScan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: ethNative,
+    );
+    expect(transactions, isNotEmpty);
+
+    final erc20T = await optiScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: optimism,
+      currency: ethNative,
+    );
+    expect(erc20T, isNotEmpty);
+
+    final optimismBalance =
+        await optiScan.fetchBalance(arbitrumTestWallet, optimism);
+
+    expect(optimismBalance, greaterThan(BigInt.zero));
+  });
+
+  test('Test zkSync Fetching', () async {
+    final balance =
+        await zkSyncScan.fetchBalance(arbitrumTestWallet, ethNative);
+
+    expect(balance, greaterThanOrEqualTo(BigInt.zero));
+
+    print(balance);
+    final transactions = await zkSyncScan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: ethNative,
+    );
+    expect(transactions, isNotEmpty);
+
+    final erc20T = await zkSyncScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: wbtcZKSync,
+      currency: ethNative,
+    );
+
+    expect(erc20T, isNotEmpty);
+
+    final wbtcBalance =
+        await zkSyncScan.fetchBalance(arbitrumTestWallet, wbtcZKSync);
+
+    expect(wbtcBalance, greaterThan(BigInt.zero));
   });
 }

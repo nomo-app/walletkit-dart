@@ -239,3 +239,37 @@ const frax = EthBasedTokenEntity(
   decimals: 18,
   contractAddress: "0x322E86852e492a7Ee17f28a78c663da38FB33bfb",
 );
+
+///
+/// Optimism Assets
+///
+const optimism = EthBasedTokenEntity(
+  name: "Optimism",
+  symbol: "OP",
+  decimals: 18,
+  contractAddress: "0x4200000000000000000000000000000000000042",
+);
+
+const ethOptimism = EvmEntity(
+  chainID: 10,
+  name: "EthereumOPT",
+  symbol: "ETH",
+  decimals: 18,
+);
+
+///
+///ZKSync Assets
+///
+const ethzkSync = EvmEntity(
+  chainID: 324,
+  name: "EthereumzkSync",
+  symbol: "ETH",
+  decimals: 18,
+);
+
+const wbtcZKSync = EthBasedTokenEntity(
+  name: "Wrapped BTC",
+  symbol: "WBTC",
+  decimals: 8,
+  contractAddress: "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+);
