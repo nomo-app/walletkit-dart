@@ -65,6 +65,16 @@ final class EvmFeeInformation extends FeeInformation {
       'gasPrice': gasPrice.toJson(),
     };
   }
+
+  EvmFeeInformation copyWith({
+    int? gasLimit,
+    Amount? gasPrice,
+  }) {
+    return EvmFeeInformation(
+      gasLimit: gasLimit ?? this.gasLimit,
+      gasPrice: gasPrice ?? this.gasPrice,
+    );
+  }
 }
 
 @HiveType(typeId: 24)
