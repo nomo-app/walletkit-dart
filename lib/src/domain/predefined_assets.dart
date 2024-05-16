@@ -185,3 +185,16 @@ const tronUSDT = EthBasedTokenEntity(
   decimals: 6,
   contractAddress: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
 );
+
+const arbitrum = EthBasedTokenEntity(
+  name: 'Arbitrum',
+  symbol: 'ARB',
+  decimals: 18,
+  contractAddress: "0x912CE59144191C1204E64559FE8253a0e49E6548",
+);
+
+const ethAbitrum = EvmEntity(
+  name: "EthereumARB",
+  symbol: "ETH",
+  decimals: 18,
+);
