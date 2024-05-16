@@ -494,6 +494,7 @@ class OPTIMISM_NETWORK extends EVMNetworkType {
           rpcUrl: "https://optimism.llamarpc.com",
           coin: optimism,
           messagePrefix: "\x19Optimism Signed Message:\n",
+          blockExplorer: (optimismScanEndpoint, const [optimismAPIKey]),
           blockTime: 2,
         );
 }
