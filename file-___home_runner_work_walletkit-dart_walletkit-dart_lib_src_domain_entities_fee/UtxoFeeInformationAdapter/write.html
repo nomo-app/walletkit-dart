@@ -85,9 +85,11 @@
   <pre class="language-dart"><code class="language-dart">@override
 void write(BinaryWriter writer, UtxoFeeInformation obj) {
   writer
-    ..writeByte(1)
+    ..writeByte(2)
     ..writeByte(0)
-    ..write(obj.feePerByte);
+    ..write(obj.feePerByte)
+    ..writeByte(1)
+    ..write(obj.fee);
 }</code></pre>
 </section>
 

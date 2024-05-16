@@ -89,6 +89,7 @@ UtxoFeeInformation read(BinaryReader reader) {
   };
   return UtxoFeeInformation(
     feePerByte: fields[0] as Amount,
+    fee: fields[1] as Amount?,
   );
 }</code></pre>
 </section>
