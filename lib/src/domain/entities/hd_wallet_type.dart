@@ -179,6 +179,12 @@ final class EthereumBip44HDPath extends Bip44HDWalletPath {
   const EthereumBip44HDPath() : super("60'");
 }
 
+const bitcoinCashBip44HDPath = BitcoinCashBip44HDPath();
+
+final class BitcoinCashBip44HDPath extends Bip44HDWalletPath {
+  const BitcoinCashBip44HDPath() : super("145'");
+}
+
 ///
 /// BIP49 HD Wallet Paths
 ///
