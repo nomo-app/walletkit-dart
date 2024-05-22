@@ -68,7 +68,7 @@ Credentials getETHCredentials({
   }
   // caching: prevent the expensive mnemonicToSeed from being called too often!
   if (_cachedEVMCredentials == null) {
-    final privateKey = _derivePrivateKeyETH(seed);
+    final privateKey = derivePrivateKeyETH(seed);
     final privKeyHex = privateKey.toHex;
     _cachedEVMCredentials = EthPrivateKey.fromHex(privKeyHex);
   }
@@ -85,14 +85,14 @@ Credentials getETHCredentialsFromMnemonic({
   // caching: prevent the expensive mnemonicToSeed from being called too often!
   if (_cachedEVMCredentials == null) {
     final seed = bip39.mnemonicToSeed(mnemonic);
-    final privateKey = _derivePrivateKeyETH(seed);
+    final privateKey = derivePrivateKeyETH(seed);
     final privKeyHex = privateKey.toHex;
     _cachedEVMCredentials = EthPrivateKey.fromHex(privKeyHex);
   }
   return _cachedEVMCredentials!;
 }
 
-Uint8List _derivePrivateKeyETH(Uint8List seed) {
+Uint8List derivePrivateKeyETH(Uint8List seed) {
   final node = bip32.BIP32.fromSeed(seed);
 
   final bip32.BIP32 childNode = node.derivePath(

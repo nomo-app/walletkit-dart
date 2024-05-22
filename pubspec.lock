@@ -497,7 +497,7 @@ packages:
     source: hosted
     version: "1.2.3"
   sec:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sec
       sha256: "8bbd56df884502192a441b5f5d667265498f2f8728a282beccd9db79e215f379"
