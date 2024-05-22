@@ -336,6 +336,34 @@ class ElectrumOutput {
   /// Bitcoin: { value: float, ... }
 
   factory ElectrumOutput.fromJson(Map<String, dynamic> json) {
+    if (json
+        case {
+          "scriptPubKey": Json scriptPubKey,
+          "belongsToUs": bool belongsToUs,
+          "spent": bool spent,
+          "value": String value,
+          "n": int n,
+          "derivationPath": String derivationPath,
+        }) {
+      final valueBI = BigInt.tryParse(value) ?? BigInt.zero;
+
+      return ElectrumOutput(
+        value: valueBI,
+        n: n,
+        node: ReceiveNode(
+          address: "",
+          derivationPath: derivationPath,
+          addresses: {},
+          walletPurpose:
+              HDWalletPurpose.NO_STRUCTURE, // TODO: Check if this ok to do.
+          publicKey: "publicKey",
+        ),
+        belongsToUs: belongsToUs,
+        spent: spent,
+        scriptPubKey: ElectrumScriptPubKey.fromJson(scriptPubKey),
+      );
+    }
+
     final valIsSatoshi =
         json.containsKey('value_satoshi') || json.containsKey('value_int');
 
@@ -410,7 +438,7 @@ class ElectrumOutput {
       'spent': spent,
       'value': value.toString(),
       'n': n,
-      'node': EmptyNode(),
+      'derivationPath': node.toString(),
     };
   }
 }
