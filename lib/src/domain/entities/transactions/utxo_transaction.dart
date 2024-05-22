@@ -438,7 +438,7 @@ class ElectrumOutput {
       'spent': spent,
       'value': value.toString(),
       'n': n,
-      'derivationPath': node.toString(),
+      'derivationPath': node.derivationPath,
     };
   }
 }
