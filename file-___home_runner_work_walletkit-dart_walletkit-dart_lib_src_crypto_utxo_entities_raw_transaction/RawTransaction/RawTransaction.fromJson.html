@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the BTCRawTransaction.fromHex constructor from Class BTCRawTransaction from the raw_transaction library, for the Dart programming language.">
-  <title>BTCRawTransaction.fromHex constructor - BTCRawTransaction - raw_transaction library - Dart API</title>
+  <meta name="description" content="API docs for the RawTransaction.fromJson constructor from Class RawTransaction from the raw_transaction library, for the Dart programming language.">
+  <title>RawTransaction.fromJson constructor - RawTransaction - raw_transaction library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction-library.html">src&#47;crypto&#47;utxo&#47;entities&#47;raw_transaction.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/BTCRawTransaction-class.html">BTCRawTransaction</a></li>
-    <li class="self-crumb">BTCRawTransaction.fromHex factory constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/RawTransaction-class.html">RawTransaction</a></li>
+    <li class="self-crumb">RawTransaction.fromJson factory constructor</li>
   </ol>
-  <div class="self-name">BTCRawTransaction.fromHex</div>
+  <div class="self-name">RawTransaction.fromJson</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,17 +54,16 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction&#47;BTCRawTransaction-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction&#47;RawTransaction-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">BTCRawTransaction.fromHex</span> constructor 
+<h1><span class="kind-constructor">RawTransaction.fromJson</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">BTCRawTransaction.fromHex</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="fromHex-param-hex"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">hex</span>, {</span></li>
-<li><span class="parameter" id="fromHex-param-inputMap"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a>?</span> <span class="parameter-name">inputMap</span>, </span></li>
-</ol>})
+      <span class="name ">RawTransaction.fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span></span></li>
+</ol>)
     </section>
 
     
@@ -73,64 +72,22 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory BTCRawTransaction.fromHex(
-  String hex, {
-  Map&lt;ElectrumOutput, Input&gt;? inputMap,
-}) {
-  final buffer = hex.hexToBytes;
+  <pre class="language-dart"><code class="language-dart">factory RawTransaction.fromJson(Json json) {
+  final raw = json[&#39;raw&#39;] as String;
 
-  var offset = 0;
+  final inputMap = json[&#39;inputMap&#39;];
 
-  &#47;&#47;&#47; Version
-  final (version, length) = buffer.bytes.readUint32(offset);
-  offset += length;
+  print(inputMap);
 
-  &#47;&#47;&#47; Segwit Flag
-  final isSegwit = buffer[offset] == SEGWIT_MARKER;
-  if (isSegwit) {
-    offset += 2;
-    throw UnimplementedError();
-  }
+  final a = {
+    for (final entry in inputMap)
+      ElectrumOutput.fromJson(entry[&#39;utxo&#39;]):
+          BTCInput.fromBuffer((entry[&#39;input&#39;] as String).hexToBytes),
+  };
 
-  &#47;&#47;&#47; Inputs
-  final (inputLength, inputLengthByteLength) =
-      buffer.bytes.readVarInt(offset);
-  offset += inputLengthByteLength;
-
-  final inputs = &lt;BTCInput&gt;[];
-  for (int i = 0; i &lt; inputLength; i++) {
-    final input = BTCInput.fromBuffer(buffer.sublist(offset));
-    offset += input.size;
-    inputs.add(input);
-  }
-
-  &#47;&#47;&#47; Outputs
-  final (outputLength, outputLengthByteLength) =
-      buffer.bytes.readVarInt(offset);
-  offset += outputLengthByteLength;
-
-  final outputs = &lt;BTCOutput&gt;[];
-
-  for (int i = 0; i &lt; outputLength; i++) {
-    final output = BTCOutput.fromBuffer(buffer.sublist(offset));
-    offset += output.size;
-    outputs.add(output);
-  }
-
-  &#47;&#47;&#47; Witness
-  if (isSegwit) {
-    throw UnimplementedError();
-  }
-
-  &#47;&#47;&#47; Locktime
-  final (lockTime, _) = buffer.bytes.readUint32(offset);
-
-  return BTCRawTransaction(
-    version: version,
-    lockTime: lockTime,
-    inputs: inputs,
-    outputs: outputs,
-    inputMap: inputMap,
+  return BTCRawTransaction.fromHex(
+    raw,
+    inputMap: a,
   );
 }</code></pre>
 </section>
@@ -149,12 +106,12 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction-library.html">raw_transaction</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/BTCRawTransaction-class.html">BTCRawTransaction</a></li>
-    <li class="self-crumb">BTCRawTransaction.fromHex factory constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_entities_raw_transaction/RawTransaction-class.html">RawTransaction</a></li>
+    <li class="self-crumb">RawTransaction.fromJson factory constructor</li>
 </ol>
 
 
-    <h5>BTCRawTransaction class</h5>
+    <h5>RawTransaction class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
