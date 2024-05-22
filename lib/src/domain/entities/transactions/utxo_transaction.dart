@@ -402,6 +402,17 @@ class ElectrumOutput {
   String toString() {
     return 'ElectrumOutput{scriptPubKey: $scriptPubKey, belongsToUs: $belongsToUs, spent: $spent, value: $value, n: $n, node: $node}';
   }
+
+  Json toJson() {
+    return {
+      'scriptPubKey': scriptPubKey.toJson(),
+      'belongsToUs': belongsToUs,
+      'spent': spent,
+      'value': value.toString(),
+      'n': n,
+      'node': EmptyNode(),
+    };
+  }
 }
 
 int toSatoshiValue(num val) {
@@ -458,6 +469,16 @@ class ElectrumScriptPubKey {
 
   Uint8List get lockingScript {
     return Uint8List.fromList(hex.decode(hexString));
+  }
+
+  Json toJson() {
+    return {
+      'addresses': addresses,
+      'asm': asm,
+      'hex': hexString,
+      'reqSigs': reqSigs,
+      'type': type,
+    };
   }
 }
 

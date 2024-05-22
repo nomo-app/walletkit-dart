@@ -36,6 +36,20 @@ sealed class RawTransaction {
 
   String get asHex => bytes.toHex;
 
+  Json toJson() {
+    return {
+      'raw': asHex,
+      if (inputMap != null)
+        'inputMap': [
+          for (final entry in inputMap!.entries)
+            {
+              'utxo': entry.key.toJson(),
+              'input': entry.value.toHex,
+            }
+        ],
+    };
+  }
+
   int get size => bytes.length;
 
   BigInt get fee => totalInputValue - totalOutputValue;
