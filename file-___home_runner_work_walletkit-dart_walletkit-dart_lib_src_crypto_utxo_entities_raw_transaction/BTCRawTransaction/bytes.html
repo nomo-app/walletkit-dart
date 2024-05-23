@@ -66,11 +66,6 @@
 
     <section class="multi-line-signature">
       
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
       <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
       <span class="name ">bytes</span>
       <div class="features"><span class="feature">override</span></div>
@@ -82,8 +77,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-Uint8List get bytes {
+  <pre class="language-dart"><code class="language-dart">Uint8List get bytes {
   final inputBuffers = inputs.map((input) =&gt; input.bytes);
   const inputLengthByte = 1;
   final inputsByteLength = inputBuffers.fold(

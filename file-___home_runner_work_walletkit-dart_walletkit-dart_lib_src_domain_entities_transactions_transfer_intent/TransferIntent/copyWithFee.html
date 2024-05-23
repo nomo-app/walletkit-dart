@@ -31,7 +31,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">src&#47;domain&#47;entities&#47;transactions&#47;transfer_intent.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
-    <li class="self-crumb">copyWithFee&lt;<wbr><span class="type-parameter">A extends dynamic</span>&gt; method</li>
+    <li class="self-crumb">copyWithFee&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt; method</li>
   </ol>
   <div class="self-name">copyWithFee</div>
   <form class="search navbar-right" role="search">
@@ -57,14 +57,14 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent&#47;TransferIntent-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">copyWithFee&lt;<wbr><span class="type-parameter">A extends dynamic</span>&gt;</span> method 
+<h1><span class="kind-method">copyWithFee&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a><span class="signature">&lt;<wbr><span class="type-parameter">A</span>&gt;</span></span>
-<span class="name ">copyWithFee</span>&lt;<wbr><span class="type-parameter">A extends dynamic</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="copyWithFee-param-feeInfo"><span class="type-annotation">A</span> <span class="parameter-name">feeInfo</span>, {</span></li>
+<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+<span class="name ">copyWithFee</span>&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="copyWithFee-param-feeInfo"><span class="type-annotation">T</span> <span class="parameter-name">feeInfo</span>, {</span></li>
 <li><span class="parameter" id="copyWithFee-param-balance"><span class="type-annotation">dynamic</span> <span class="parameter-name">balance</span>, </span></li>
 </ol>})
 
@@ -81,8 +81,8 @@ If <code>balance</code> is provided, the target amount will be recalculated</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">TransferIntent&lt;A&gt; copyWithFee&lt;A extends FeeInformation&gt;(
-  A feeInfo, {
+  <pre class="language-dart"><code class="language-dart">TransferIntent&lt;T&gt; copyWithFee&lt;T extends FeeInformation&gt;(
+  T feeInfo, {
   Amount? balance,
 }) {
   final newTargetValue = switch ((balance, feeInfo)) {
@@ -118,7 +118,7 @@ If <code>balance</code> is provided, the target amount will be recalculated</p>
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">transfer_intent</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
-    <li class="self-crumb">copyWithFee&lt;<wbr><span class="type-parameter">A extends dynamic</span>&gt; method</li>
+    <li class="self-crumb">copyWithFee&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt; method</li>
 </ol>
 
 

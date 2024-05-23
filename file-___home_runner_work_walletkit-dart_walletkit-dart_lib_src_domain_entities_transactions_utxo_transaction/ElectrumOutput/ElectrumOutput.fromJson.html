@@ -77,34 +77,6 @@ Bitcoin: { value: float, ... }</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory ElectrumOutput.fromJson(Map&lt;String, dynamic&gt; json) {
-  if (json
-      case {
-        &quot;scriptPubKey&quot;: Json scriptPubKey,
-        &quot;belongsToUs&quot;: bool belongsToUs,
-        &quot;spent&quot;: bool spent,
-        &quot;value&quot;: String value,
-        &quot;n&quot;: int n,
-        &quot;derivationPath&quot;: String derivationPath,
-      }) {
-    final valueBI = BigInt.tryParse(value) ?? BigInt.zero;
-
-    return ElectrumOutput(
-      value: valueBI,
-      n: n,
-      node: ReceiveNode(
-        address: &quot;&quot;,
-        derivationPath: derivationPath,
-        addresses: {},
-        walletPurpose:
-            HDWalletPurpose.NO_STRUCTURE, &#47;&#47; TODO: Check if this ok to do.
-        publicKey: &quot;publicKey&quot;,
-      ),
-      belongsToUs: belongsToUs,
-      spent: spent,
-      scriptPubKey: ElectrumScriptPubKey.fromJson(scriptPubKey),
-    );
-  }
-
   final valIsSatoshi =
       json.containsKey(&#39;value_satoshi&#39;) || json.containsKey(&#39;value_int&#39;);
 
