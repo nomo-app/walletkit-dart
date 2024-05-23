@@ -24,11 +24,11 @@ class Signature {
 
   factory Signature.createSignature(
     Uint8List payload,
-    Uint8List seed, {
+    Uint8List privateKey, {
     bool isEIP1559 = false,
     int? chainId,
   }) {
-    final privateKey = derivePrivateKeyETH(seed);
+    // final privateKey = derivePrivateKeyETH(seed);
 
     final digest = SHA256Digest();
     final signer = ECDSASigner(null, HMac(digest, 64));

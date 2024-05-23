@@ -22,6 +22,11 @@ class RawEVMTransaction {
     this.chainId,
   }) : to = to.startsWith("0x") ? to : "0x${to}";
 
+  @override
+  String toString() {
+    return 'RawEVMTransaction{nonce: $nonce, gasPrice: $gasPrice, gasLimit: $gasLimit, to: $to, value: $value, data: $data, chainId: $chainId}';
+  }
+
   /**
    * @param {String} messageHex
    * 
@@ -73,7 +78,7 @@ class RawEVMTransaction {
     );
   }
 
-  Uint8List serializeTransaction() {
+  Uint8List get serializeTransaction {
     final nonce = this.nonce.bigIntToBytes.toHex;
     final gasPrice = this.gasPrice.bigIntToBytes.toHex;
     final gasLimit = this.gasLimit.bigIntToBytes.toHex;
@@ -99,6 +104,6 @@ class RawEVMTransaction {
   }
 
   String get serializedMessageHex {
-    return serializeTransaction().toHex;
+    return serializeTransaction.toHex;
   }
 }
