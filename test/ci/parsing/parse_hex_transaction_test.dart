@@ -3,6 +3,7 @@ import 'package:convert/convert.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/evm/rlp.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/raw_evm_transaction.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
   /// Send ZeniqSmart to own Wallet
@@ -10,7 +11,7 @@ void main() {
       "0xf38207488502540be4008252089405870f1507d820212e921e1f39f14660336231d188016345785d8a0000808559454e49518080";
   test('parse hex transaction', () {
     final RawEVMTransaction tx =
-        getTransactionFromMessageHash(unsignedTxFromNomo);
+        RawEVMTransaction.getFromMessageHex(unsignedTxFromNomo);
 
     expect(tx.nonce, BigInt.from(1864));
     expect(tx.gasPrice, BigInt.from(10000000000));
@@ -36,8 +37,18 @@ void main() {
 
     DecodedRLP decoded = decodeRLP(message, 0);
 
+    print(decoded.result);
+
     final encoded = encode(decoded.result);
 
     expect("0x" + encoded, unsignedTxFromNomo);
+  });
+
+  test('serialize tx', () {
+    final RawEVMTransaction tx =
+        RawEVMTransaction.getFromMessageHex(unsignedTxFromNomo);
+    final serialiedTx = tx.serializeTransaction();
+
+    print("serialiedTx: ${serialiedTx.toHex}");
   });
 }
