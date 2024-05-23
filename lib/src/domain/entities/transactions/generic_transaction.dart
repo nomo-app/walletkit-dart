@@ -101,19 +101,19 @@ base class GenericTransaction implements Comparable<GenericTransaction> {
 @HiveType(typeId: 18)
 enum ConfirmationStatus {
   @HiveField(0)
-  notSubmitted("Not Submitted"),
+  notSubmitted("not_submitted"),
 
   /// Transaction is not confirmed yet
   @HiveField(1)
-  pending("Pending"),
+  pending("pending"),
 
   /// Transaction is confirmed
   @HiveField(2)
-  confirmed("Confirmed"),
+  confirmed("confirmed"),
 
   /// Transaction is failed
   @HiveField(3)
-  failed("Failed");
+  failed("failed");
 
   /// TODO: When is a transaction failed?
   static ConfirmationStatus fromConfirmations(int? confirmations) {
