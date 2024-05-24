@@ -14,9 +14,9 @@ void main() {
   final message =
       Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
   final testSeed = loadFromEnv("DEV_SEED");
+  final privateKey = derivePrivateKeyETH(testSeed);
 
   test('Sign Evm TX', () {
-    final privateKey = derivePrivateKeyETH(testSeed);
     final credentials = getETHCredentials(seed: testSeed);
     final signatureWeb3dart = credentials.signToEcSignature(message);
 
@@ -47,9 +47,44 @@ void main() {
 
     print(rawTransaction);
 
-    // final signedTx = InternalEVMTransaction.signTransaction(
-    //     rawTransaction, derivePrivateKeyETH(testSeed));
+    final signedTx =
+        InternalEVMTransaction.signTransaction(rawTransaction, privateKey);
 
-    // print(signedTx);
+    print(signedTx);
+  });
+
+  /**
+   * ToDO: Fix this test. Some error when signing the tx when the chainId is not null
+   */
+  test('Sign and broadcast internal tx', () async {
+    final arbRPC = EvmRpcInterface(ArbitrumNetwork);
+    final to = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
+    final gasLimit = await arbRPC.client.estimateGasLimit(to: to);
+    final gasPrice = await arbRPC.client.getGasPrice();
+    final nonce = await arbRPC.client.getTransactionCount(to) + BigInt.from(1);
+    final amount = Amount.convert(value: 0.001, decimals: 18);
+    final value = amount.value;
+    final data = Uint8List.fromList([]);
+    final chainId = BigInt.from(42161);
+
+    final rawUnsignedTx = RawEVMTransaction(
+      nonce: nonce,
+      gasPrice: gasPrice,
+      gasLimit: gasLimit,
+      to: to,
+      value: value,
+      data: data,
+      chainId: chainId,
+    );
+
+    final signedTx =
+        InternalEVMTransaction.signTransaction(rawUnsignedTx, privateKey);
+
+    final signedTxHex = signedTx.serializedMessageHex;
+
+    print(signedTxHex);
+    final tx = await arbRPC.client.sendRawTransaction(signedTxHex);
+
+    print(tx);
   });
 }

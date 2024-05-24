@@ -5,7 +5,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 class InternalEVMTransaction extends RawEVMTransaction {
   BigInt r, s;
-  // int v;
+  int v;
 
   InternalEVMTransaction({
     required super.nonce,
@@ -14,15 +14,15 @@ class InternalEVMTransaction extends RawEVMTransaction {
     required super.to,
     required super.value,
     required super.data,
-    required super.chainId,
+    super.chainId,
     required this.r,
     required this.s,
-    // required this.v,
+    required this.v,
   });
 
   @override
   String toString() {
-    return 'InternalEVMTransaction{nonce: $nonce, gasPrice: $gasPrice, gasLimit: $gasLimit, to: $to, value: $value, data: $data, chainId: $chainId, r: $r, s: $s}';
+    return 'InternalEVMTransaction{nonce: $nonce, gasPrice: $gasPrice, gasLimit: $gasLimit, to: $to, value: $value, data: $data, v: $v, r: $r, s: $s}';
   }
 
   factory InternalEVMTransaction.signTransaction(
@@ -32,7 +32,7 @@ class InternalEVMTransaction extends RawEVMTransaction {
     final signature = Signature.createSignature(
       serializedTx,
       privateKey,
-      chainId: transaction.chainId?.toInt() ?? null,
+      chainId: transaction.chainId!.toInt(),
     );
 
     final isValid = signature.isValidETHSignature(
@@ -52,10 +52,9 @@ class InternalEVMTransaction extends RawEVMTransaction {
       to: transaction.to,
       value: transaction.value,
       data: transaction.data,
-      chainId: signature.v.toBigInt,
+      v: signature.v,
       r: signature.r,
       s: signature.s,
-      // v: signature.v,
     );
   }
 }

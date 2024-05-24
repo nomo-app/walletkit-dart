@@ -35,6 +35,26 @@ base class EvmRpcClient {
     }
   }
 
+  Future<BigInt> getTransactionCount(String address) async {
+    final response = await _call<String>(
+      'eth_getTransactionCount',
+      args: [address, 'latest'],
+    );
+
+    final count = response.toBigIntOrNull;
+    if (count == null) throw Exception('Could not parse transaction count');
+    return count;
+  }
+
+  Future<String> sendRawTransaction(String rawTx) async {
+    final response = await _call<String>(
+      'eth_sendRawTransaction',
+      args: [rawTx],
+    );
+
+    return response;
+  }
+
   Future<BigInt?> estimateZkSyncFee(
       {required String from, required String to}) async {
     final body = [

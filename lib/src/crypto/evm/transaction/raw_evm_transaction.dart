@@ -104,6 +104,6 @@ class RawEVMTransaction {
   }
 
   String get serializedMessageHex {
-    return serializeTransaction.toHex;
+    return "0x" + serializeTransaction.toHex;
   }
 }
