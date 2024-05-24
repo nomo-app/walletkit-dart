@@ -200,7 +200,7 @@ const arbitrum = EthBasedTokenEntity(
   contractAddress: "0x912CE59144191C1204E64559FE8253a0e49E6548",
 );
 
-const ethAbitrum = EvmEntity(
+const ethArbitrum = EvmEntity(
   chainID: 42161,
   name: "Ethereum",
   symbol: "ETH",
