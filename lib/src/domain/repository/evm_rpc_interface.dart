@@ -228,6 +228,7 @@ final class EvmRpcInterface {
     final ethAddress = credentials.address;
     final fallbackGasLimit = switch (intent.token) {
       ethzkSync => GasLimits.ethzkSync.value,
+      ethArbitrum => GasLimits.ethArb.value,
       _ => GasLimits.ethSend.value,
     };
     final (gasPrice, gasLimit) = switch (intent.feeInfo) {

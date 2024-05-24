@@ -491,7 +491,7 @@ class BASE_NETWORK extends EVMNetworkType {
   const BASE_NETWORK()
       : super(
           chainId: 8453,
-          rpcUrl: "https://base.drpc.org",
+          rpcUrl: "https://base.llamarpc.com",
           blockExplorer: (baseScanEndpoint, const [baseScanApiKey]),
           coin: ethBase,
           messagePrefix: "\x19Base Chain Signed Message:\n",

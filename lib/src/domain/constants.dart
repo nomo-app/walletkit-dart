@@ -261,7 +261,8 @@ enum GasLimits {
   ethSend(21000),
   erc20Send(70000),
   toStake(280000),
-  ethzkSync(187734);
+  ethzkSync(187734),
+  ethArb(100000);
 
   final int value;
 
