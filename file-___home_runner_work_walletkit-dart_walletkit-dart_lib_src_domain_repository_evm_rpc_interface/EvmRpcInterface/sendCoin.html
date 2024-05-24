@@ -87,6 +87,7 @@
   final ethAddress = credentials.address;
   final fallbackGasLimit = switch (intent.token) {
     ethzkSync =&gt; GasLimits.ethzkSync.value,
+    ethArbitrum =&gt; GasLimits.ethArb.value,
     _ =&gt; GasLimits.ethSend.value,
   };
   final (gasPrice, gasLimit) = switch (intent.feeInfo) {
