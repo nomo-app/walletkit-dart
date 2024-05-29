@@ -32,7 +32,6 @@ void main() {
       token: ethArbitrum,
       memo: null,
     );
-
     final hash = await arbitrumRPC.sendCoin(
       intent: intent,
       credentials: getETHCredentials(seed: testSeed),

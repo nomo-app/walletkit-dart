@@ -4,43 +4,38 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:web3dart/crypto.dart' as web3;
 import '../../utils.dart';
 
 void main() {
   const String unsignedTxFromNomo = // from nomo.signEvmTransaction
       "f38207488502540be4008252089405870f1507d820212e921e1f39f14660336231d188016345785d8a0000808559454e49518080";
+  final arbRPC = EvmRpcInterface(ArbitrumNetwork);
   final message =
       Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
+
   final testSeed = loadFromEnv("DEV_SEED");
   final privateKey = derivePrivateKeyETH(testSeed);
-
   test('Sign Evm TX', () {
     final credentials = getETHCredentials(seed: testSeed);
+
     final signatureWeb3dart = credentials.signToEcSignature(message);
 
     final signature = Signature.createSignature(message, privateKey);
 
     final publicKey = privateKeyToPublic(bytesToUnsignedInt(privateKey));
 
-    final isValid = signature.isValidETHSignature(
-        message,
-        Signature(
-            signatureWeb3dart.r, signatureWeb3dart.s, signatureWeb3dart.v),
-        publicKey);
+    final payload = keccak256(message);
+    final recoveredPublicKey = recoverPublicKey(payload, signature);
 
-    final web3isValid = web3.isValidSignature(
-        web3.keccak256(message), signatureWeb3dart, publicKey);
+    expect(recoveredPublicKey.toHex, publicKey.toHex);
 
     expect(signature.r, signatureWeb3dart.r);
     expect(signature.s, signatureWeb3dart.s);
     expect(signature.v, signatureWeb3dart.v);
-    expect(web3isValid, true);
-    expect(isValid, true);
   });
 
-  //ToDO: Fix this test
   test('Sign RawTx and parse it to InternalEVMTransaction', () {
     final rawTransaction =
         RawEVMTransaction.getFromMessageHex(unsignedTxFromNomo);
@@ -53,21 +48,45 @@ void main() {
     print(signedTx);
   });
 
-  /**
-   * ToDO: Fix this test. Some error when signing the tx when the chainId is not null
-   */
-  test('Sign and broadcast internal tx', () async {
-    final arbRPC = EvmRpcInterface(ArbitrumNetwork);
-    final to = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
+  test('Simulate TX', () async {
+    final testTx = await arbRPC.client.getTransactionByHash(
+        "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b");
+    print("TestTx: $testTx");
+
+    print("ChainID ${testTx.chainId}");
+    print(testTx.serializeTransaction.toHex);
+
+    final rawUnsignedTx = RawEVMTransaction(
+      nonce: testTx.nonce,
+      gasPrice: testTx.gasPrice,
+      gasLimit: testTx.gasLimit,
+      to: testTx.to,
+      value: testTx.value,
+      data: testTx.data,
+      chainId: testTx.chainId,
+    );
+
+    final signedTx =
+        InternalEVMTransaction.signTransaction(rawUnsignedTx, privateKey);
+
+    final signedTxHex = signedTx.serializedMessageHex;
+
+    expect(testTx.chainId, 42161.toBigInt);
+    expect(signedTxHex,
+        "0xf86d1683989680830186a094a7fa4bb0bba164f999e8c7b83c9da96a3be4461687038d7ea4c680008083014985a01182f44be301418adb401ccca9c9d3236fe1f3de066ff2f425296262b9a4ce14a02e1a9afb021a6dc36fd94c18a5e43e1fa1a6870743dd1786a9cde3f3547eefa6");
+  });
+
+  test('Broadcast evm raw tx', () async {
+    final to = "0xa7fa4bb0bba164f999e8c7b83c9da96a3be44616";
     final gasLimit = await arbRPC.client.estimateGasLimit(to: to);
     final gasPrice = await arbRPC.client.getGasPrice();
-    final nonce = await arbRPC.client.getTransactionCount(to) + BigInt.from(1);
+    final nonce = await arbRPC.client.getTransactionCount(to);
     final amount = Amount.convert(value: 0.001, decimals: 18);
     final value = amount.value;
     final data = Uint8List.fromList([]);
     final chainId = BigInt.from(42161);
 
-    final rawUnsignedTx = RawEVMTransaction(
+    final rawTx = RawEVMTransaction(
       nonce: nonce,
       gasPrice: gasPrice,
       gasLimit: gasLimit,
@@ -77,14 +96,12 @@ void main() {
       chainId: chainId,
     );
 
-    final signedTx =
-        InternalEVMTransaction.signTransaction(rawUnsignedTx, privateKey);
+    final signedTx = InternalEVMTransaction.signTransaction(rawTx, privateKey);
 
     final signedTxHex = signedTx.serializedMessageHex;
 
-    print(signedTxHex);
-    final tx = await arbRPC.client.sendRawTransaction(signedTxHex);
+    final hash = await arbRPC.client.sendRawTransaction(signedTxHex);
 
-    print(tx);
+    print("Hash: $hash");
   });
 }

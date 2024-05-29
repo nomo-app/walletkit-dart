@@ -1,7 +1,8 @@
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:web3dart/json_rpc.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -44,6 +45,30 @@ base class EvmRpcClient {
     final count = response.toBigIntOrNull;
     if (count == null) throw Exception('Could not parse transaction count');
     return count;
+  }
+
+  Future<InternalEVMTransaction> getTransactionByHash(
+      String messageHash) async {
+    final response = await _call<Json>(
+      'eth_getTransactionByHash',
+      args: [messageHash],
+    );
+
+    final v = response['v'].toString().toIntOrNull ?? 0;
+
+    final chainIDV = extractChainId(v);
+    return InternalEVMTransaction(
+      nonce: response['nonce'].toString().toBigInt,
+      gasPrice: response['gasPrice'].toString().toBigInt,
+      gasLimit: response['gas'].toString().toBigInt,
+      to: response['to'],
+      value: response['value'].toString().toBigInt,
+      data: response['input'].toString().hexToBytesWithPrefixOrNull,
+      chainId: chainIDV.toBigInt,
+      v: v,
+      r: response['r'].toString().toBigInt,
+      s: response['s'].toString().toBigInt,
+    );
   }
 
   Future<String> sendRawTransaction(String rawTx) async {

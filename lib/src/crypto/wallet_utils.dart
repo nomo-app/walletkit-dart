@@ -2,10 +2,7 @@ library web3_client;
 
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
-import 'package:walletkit_dart/src/domain/entities/asset/token_info.dart';
-import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
@@ -99,4 +96,13 @@ Uint8List derivePrivateKeyETH(Uint8List seed) {
     ethereumBip44HDPath.defaultPath,
   );
   return childNode.privateKey!;
+}
+
+Uint8List derivePublicKeyETH(Uint8List seed) {
+  final node = bip32.BIP32.fromSeed(seed);
+
+  final bip32.BIP32 childNode = node.derivePath(
+    ethereumBip44HDPath.defaultPath,
+  );
+  return childNode.publicKeyUncompressed;
 }

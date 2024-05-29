@@ -1,10 +1,10 @@
 import 'dart:typed_data';
-
 import 'package:pointycastle/export.dart';
 import 'package:sec/sec.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+import 'package:pointycastle/src/utils.dart' as p_utils;
 
 class Signature {
   final BigInt r;
@@ -28,8 +28,6 @@ class Signature {
     bool isEIP1559 = false,
     int? chainId,
   }) {
-    // final privateKey = derivePrivateKeyETH(seed);
-
     final digest = SHA256Digest();
     final signer = ECDSASigner(null, HMac(digest, 64));
     final params = ECCurve_secp256k1();
@@ -70,12 +68,18 @@ class Signature {
 
   bool isValidETHSignature(
     Uint8List payload,
-    Signature signature,
     Uint8List publicKey,
   ) {
     payload = keccak256(payload);
-    final recoverdPublicKey = recoverPublicKey(payload, signature);
+    final recoverdPublicKey = recoverPublicKey(payload, this);
 
     return recoverdPublicKey.toHex == publicKey.toHex;
+  }
+
+  Uint8List toBytes() {
+    final rBytes = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(r));
+    final sBytes = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(s));
+
+    return Uint8List.fromList([...rBytes, ...sBytes, v]);
   }
 }

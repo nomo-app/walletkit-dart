@@ -102,3 +102,12 @@ BigInt? _recoverFromSignature(
   final bytes = q!.getEncoded(false);
   return bytesToUnsignedInt(bytes.sublist(1));
 }
+
+int extractChainId(int v) {
+  // Ensure `v` is a BigInt
+  if (v >= 35) {
+    return (v - 35) >> 1;
+  } else {
+    throw ArgumentError("v parameter does not contain a chain id");
+  }
+}
