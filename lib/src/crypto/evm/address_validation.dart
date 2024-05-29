@@ -2,9 +2,9 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/utils/general.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:web3dart/credentials.dart';
-import 'package:web3dart/crypto.dart' as web3crypto;
 import 'package:convert/convert.dart' as convert;
 
 String toChecksumAddress(String address) {
@@ -12,7 +12,7 @@ String toChecksumAddress(String address) {
     throw ArgumentError("not an EVM address");
   }
   final stripAddress = address.replaceFirst("0x", "").toLowerCase();
-  final Uint8List keccakHash = web3crypto.keccakUtf8(stripAddress);
+  final Uint8List keccakHash = keccakUtf8(stripAddress);
   final String keccakHashHex = convert.hex.encode(keccakHash);
 
   String checksumAddress = "0x";

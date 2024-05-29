@@ -26,7 +26,7 @@ void main() {
   test('zkSyncETH send', () async {
     final intentETH = TransferIntent(
       recipient: arbitrumTestWallet,
-      amount: Amount.convert(value: 0.005, decimals: 18),
+      amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
       token: ethzkSync,
       memo: null,
@@ -34,7 +34,8 @@ void main() {
 
     final hashETH = await zkSyncRPC.sendCoin(
       intent: intentETH,
-      credentials: getETHCredentials(seed: testSeed),
+      from: arbitrumTestWallet,
+      seed: testSeed,
     );
 
     print("Hash: $hashETH");

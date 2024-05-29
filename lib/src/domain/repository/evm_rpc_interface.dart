@@ -1,4 +1,6 @@
+import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -218,30 +220,51 @@ final class EvmRpcInterface {
     return transfers;
   }
 
+  Future<(Amount, int)> estimateNetworkFees(
+      TransferIntent intent, String from) async {
+    String? dataAsHex = intent.encodedMemo?.toHex;
+    String? dataString;
+
+    if (dataAsHex != null) {
+      dataString = "0x" + dataAsHex;
+    } else {
+      dataString = null;
+    }
+
+    final fallbackGasLimit = switch (intent.token) {
+      ethzkSync => client.estimateZkSyncFee(
+          from: from,
+          to: intent.recipient,
+          data: dataString,
+        ),
+      _ => client.estimateGasLimit(to: intent.recipient, data: dataString),
+    };
+
+    final gasPriceFuture = client.getGasPrice();
+
+    final results = await Future.wait([fallbackGasLimit, gasPriceFuture]);
+
+    final gasPriceAmount = Amount(
+      value: results.last,
+      decimals: intent.token.decimals,
+    );
+    return (gasPriceAmount, results.first.toInt());
+  }
+
   ///
   /// Send Currency
   ///
   Future<String> sendCoin({
     required TransferIntent intent,
-    required web3.Credentials credentials,
+    required String from,
+    required Uint8List seed,
   }) async {
-    final ethAddress = credentials.address;
-    final fallbackGasLimit = switch (intent.token) {
-      ethzkSync => GasLimits.ethzkSync.value,
-      ethArbitrum => GasLimits.ethArb.value,
-      _ => GasLimits.ethSend.value,
-    };
     final (gasPrice, gasLimit) = switch (intent.feeInfo) {
       EvmFeeInformation info => (info.gasPrice, info.gasLimit),
-      _ => await client.getGasPrice().then(
-            (bi) => (Amount(value: bi, decimals: 18), fallbackGasLimit),
-          ),
+      _ => await estimateNetworkFees(intent, from),
     };
 
-    final balance = await client.getBalance(toChecksumAddress(ethAddress.hex));
-
-    final gasPriceEther =
-        web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
+    final balance = await client.getBalance(toChecksumAddress(from));
 
     var amountWei = intent.amount;
 
@@ -252,17 +275,27 @@ final class EvmRpcInterface {
       throw Failure("Insufficient funds to pay native gas fee");
     }
 
-    return await client.asWeb3.sendTransaction(
-      credentials,
-      web3.Transaction(
-        from: ethAddress,
-        to: web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
-        value: web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, amountWei.value),
-        gasPrice: gasPriceEther,
-        maxGas: gasLimit,
-        data: intent.encodedMemo,
-      ),
-      chainId: type.chainId,
+    final nonce = await client.getTransactionCount(from);
+
+    final rawUnsignedTx = RawEVMTransaction(
+      nonce: nonce,
+      gasPrice: gasPrice.value,
+      gasLimit: gasLimit.toBI,
+      to: intent.recipient,
+      value: intent.amount.value,
+      data: intent.encodedMemo,
+      chainId: type.chainId.toBigInt,
+    );
+
+    final privateKey = derivePrivateKeyETH(seed);
+
+    final signedTx = InternalEVMTransaction.signTransaction(
+      rawUnsignedTx,
+      privateKey,
+    );
+
+    return await client.sendRawTransaction(
+      signedTx.serializedMessageHex,
     );
   }
 

@@ -6,7 +6,7 @@ import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_tr
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import '../../utils.dart';
+import '../utils.dart';
 
 void main() {
   const String unsignedTxFromNomo = // from nomo.signEvmTransaction
@@ -101,6 +101,24 @@ void main() {
     final signedTxHex = signedTx.serializedMessageHex;
 
     final hash = await arbRPC.client.sendRawTransaction(signedTxHex);
+
+    print("Hash: $hash");
+  });
+
+  test('Send Coin (EthARB)', () async {
+    final intent = TransferIntent(
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 0.001, decimals: 18),
+      feeInfo: null,
+      token: ethArbitrum,
+      memo: "Hello my friend",
+    );
+
+    final hash = await arbRPC.sendCoin(
+      intent: intent,
+      from: arbitrumTestWallet,
+      seed: testSeed,
+    );
 
     print("Hash: $hash");
   });

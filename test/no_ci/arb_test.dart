@@ -34,7 +34,8 @@ void main() {
     );
     final hash = await arbitrumRPC.sendCoin(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      from: arbitrumTestWallet,
+      seed: testSeed,
     );
 
     print("Hash: $hash");

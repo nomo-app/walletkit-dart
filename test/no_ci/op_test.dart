@@ -34,7 +34,8 @@ void main() {
 
     final hashETH = await optimismRPC.sendCoin(
       intent: intentETH,
-      credentials: getETHCredentials(seed: testSeed),
+      from: arbitrumTestWallet,
+      seed: testSeed,
     );
 
     print("Hash: $hashETH");

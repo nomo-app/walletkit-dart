@@ -72,21 +72,29 @@ base class EvmRpcClient {
   }
 
   Future<String> sendRawTransaction(String rawTx) async {
-    final response = await _call<String>(
-      'eth_sendRawTransaction',
-      args: [rawTx],
-    );
+    try {
+      final response = await _call<String>(
+        'eth_sendRawTransaction',
+        args: [rawTx],
+      );
 
-    return response;
+      return response;
+    } catch (e) {
+      final response = await _call<String>(
+        'eth_sendRawTransaction',
+        args: [rawTx],
+      );
+      return response;
+    }
   }
 
-  Future<BigInt?> estimateZkSyncFee(
-      {required String from, required String to}) async {
+  Future<BigInt> estimateZkSyncFee(
+      {required String from, required String to, String? data}) async {
     final body = [
       {
         'from': from,
         'to': to,
-        'data': '0x',
+        'data': data ?? "0x",
       },
     ];
 

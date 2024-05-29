@@ -17,7 +17,8 @@ void main() {
 
     final hash = await moonbeamRPC.sendCoin(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      from: arbitrumTestWallet,
+      seed: testSeed,
     );
 
     print("Hash: $hash");
@@ -33,7 +34,7 @@ void main() {
     );
     final testSeed = loadFromEnv("DEV_SEED");
 
-    final hash = await moonbeamRPC.sendCoin(
+    final hash = await moonbeamRPC.sendERC20Token(
       intent: intent,
       credentials: getETHCredentials(seed: testSeed),
     );
