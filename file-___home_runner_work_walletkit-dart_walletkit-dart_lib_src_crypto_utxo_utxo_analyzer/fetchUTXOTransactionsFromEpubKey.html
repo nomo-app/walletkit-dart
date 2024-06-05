@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchUTXOTransactions function from the utxo_analyzer library, for the Dart programming language.">
-  <title>fetchUTXOTransactions function - utxo_analyzer library - Dart API</title>
+  <meta name="description" content="API docs for the fetchUTXOTransactionsFromEpubKey function from the utxo_analyzer library, for the Dart programming language.">
+  <title>fetchUTXOTransactionsFromEpubKey function - utxo_analyzer library - Dart API</title>
 
 
   
@@ -30,9 +30,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
     <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library.html">src&#47;crypto&#47;utxo&#47;utxo_analyzer.dart</a></li>
-    <li class="self-crumb">fetchUTXOTransactions function</li>
+    <li class="self-crumb">fetchUTXOTransactionsFromEpubKey function</li>
   </ol>
-  <div class="self-name">fetchUTXOTransactions</div>
+  <div class="self-name">fetchUTXOTransactionsFromEpubKey</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -56,7 +56,7 @@
       data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">fetchUTXOTransactions</span> function 
+<h1><span class="kind-function">fetchUTXOTransactionsFromEpubKey</span> function 
  
 </h1></div>
 
@@ -64,30 +64,34 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/UTXOTxInfo.html">UTXOTxInfo</a></span>&gt;</span></span>
-<span class="name ">fetchUTXOTransactions</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchUTXOTransactions-param-walletTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">walletTypes</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-addressTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">addressTypes</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-cachedTransactions"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a></span> <span class="parameter-name">cachedTransactions</span> = <span class="default-value">const {}</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-cachedNodes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">cachedNodes</span> = <span class="default-value">const []</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-minEndpoints"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">minEndpoints</span> = <span class="default-value">2</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-maxLatency"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">maxLatency</span> = <span class="default-value">const Duration(milliseconds: 800)</span>, </span></li>
+<span class="name ">fetchUTXOTransactionsFromEpubKey</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-addressTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">addressTypes</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-ePubKey"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">ePubKey</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-purpose"><span class="type-annotation">dynamic</span> <span class="parameter-name">purpose</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-cachedTransactions"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a></span> <span class="parameter-name">cachedTransactions</span> = <span class="default-value">const {}</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-cachedNodes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">cachedNodes</span> = <span class="default-value">const []</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-minEndpoints"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">minEndpoints</span> = <span class="default-value">2</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactionsFromEpubKey-param-maxLatency"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">maxLatency</span> = <span class="default-value">const Duration(milliseconds: 800)</span>, </span></li>
 </ol>})
 
         
 
     </section>
     
+<section class="desc markdown">
+  <p>Fetches UTXO Transactions for a given ePubKey
+if <code>purpose</code> is not provied the returned <code>nodes</code> cant be used to derive the master node (used in Proof of Payment)</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;UTXOTxInfo&gt; fetchUTXOTransactions({
-  required Iterable&lt;HDWalletPath&gt; walletTypes,
+  <pre class="language-dart"><code class="language-dart">Future&lt;UTXOTxInfo&gt; fetchUTXOTransactionsFromEpubKey({
   required Iterable&lt;AddressType&gt; addressTypes,
   required UTXONetworkType networkType,
-  required Uint8List seed,
+  required String ePubKey,
+  HDWalletPurpose? purpose,
   Set&lt;UTXOTransaction&gt; cachedTransactions = const {},
   List&lt;NodeWithAddress&gt; cachedNodes = const [],
   int minEndpoints = 2,
@@ -108,44 +112,36 @@
   &#47;&#47;&#47; Search for Receive and Change Addresses
   &#47;&#47;&#47;
 
-  final (allTxs, nodes) = await Future.wait([
-    for (final walletType in walletTypes)
-      () async {
-        final masterNode = await isolateManager.executeTask(
-          IsolateTask(
-            task: (arg) {
-              return deriveMasterNodeFromSeed(
-                  seed: seed, walletPath: walletType);
-            },
-            argument: seed,
-          ),
-        );
-        return searchTransactionsForWalletType(
-          masterNode: masterNode,
-          purpose: walletType.purpose,
-          addressTypes: addressTypes,
-          networkType: networkType,
-          endpoints: endpoints,
-          cachedNodes: cachedNodes,
-          isolateManager: isolateManager,
-        );
-      }.call()
-  ]).then((value) =&gt; (
-        value.expand((element) =&gt; element.$1).toSet(),
-        value.expand((element) =&gt; element.$2).toSet()
-      ));
+  final masterNode = await isolateManager.executeTask(
+    IsolateTask(
+      task: (arg) {
+        return deriveMasterNodeFromEpubKey(arg).$1;
+      },
+      argument: ePubKey,
+    ),
+  );
+
+  final (allTxs, nodes) = await searchTransactionsForWalletType(
+    masterNode: masterNode,
+    purpose: purpose,
+    addressTypes: addressTypes,
+    networkType: networkType,
+    endpoints: endpoints,
+    cachedNodes: cachedNodes,
+    isolateManager: isolateManager,
+  );
 
   isolateManager.dispose();
 
   return fetchMissingUTXOTransactions(
-    cachedTransactions: cachedTransactions,
-    cachedNodes: cachedNodes,
     allTxs: allTxs,
     nodes: nodes,
-    coin: networkType.coin,
-    networkType: networkType,
+    cachedNodes: cachedNodes,
+    cachedTransactions: cachedTransactions,
     addressTypes: addressTypes,
+    coin: networkType.coin,
     endpoints: endpoints,
+    networkType: networkType,
     watch: watch,
   );
 }</code></pre>
@@ -165,7 +161,7 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
     <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library.html">utxo_analyzer</a></li>
-    <li class="self-crumb">fetchUTXOTransactions function</li>
+    <li class="self-crumb">fetchUTXOTransactionsFromEpubKey function</li>
 </ol>
 
 

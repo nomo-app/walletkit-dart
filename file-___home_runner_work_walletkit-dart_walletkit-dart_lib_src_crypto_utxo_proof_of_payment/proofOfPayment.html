@@ -163,6 +163,10 @@
   &#47;&#47;&#47;
   final uPoPHash = sha256Sha256Hash(uPoPSerialized);
 
+  if (usedNodes.any((node) =&gt; node.walletPurpose == null)) {
+    throw Exception(&quot;WalletPurpose is required for all nodes.&quot;);
+  }
+
   final bip32Nodes = [
     for (final node in usedNodes)
       deriveChildNodeFromPath(
@@ -170,7 +174,8 @@
         networkType: networkType,
         childDerivationPath: node.derivationPath,
         walletPath: HDWalletPath.fromPurpose(
-            node.walletPurpose), &#47;&#47; TODO: Store HDWalletPath better
+          node.walletPurpose!,
+        ), &#47;&#47; TODO: Store HDWalletPath better
       ),
   ];
 
