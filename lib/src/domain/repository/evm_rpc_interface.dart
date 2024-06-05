@@ -304,11 +304,11 @@ final class EvmRpcInterface {
   ///
   Future<String> sendERC20Token({
     required TransferIntent intent,
-    required web3.Credentials credentials,
+    required String from,
+    required Uint8List seed,
+    required Uint8List data,
   }) async {
     assert(intent.token is EthBasedTokenEntity);
-    final token = intent.token as EthBasedTokenEntity;
-    final contractAddress = web3.EthereumAddress.fromHex(token.contractAddress);
 
     final (gasPrice, gasLimit) = switch (intent.feeInfo) {
       EvmFeeInformation info => (info.gasPrice, info.gasLimit),
@@ -316,29 +316,36 @@ final class EvmRpcInterface {
             (bi) async => (
               Amount(value: bi, decimals: 18),
               await estimateGasLimit(
-                  intent: intent, ownAddress: credentials.address.hex)
+                intent: intent,
+                ownAddress: from,
+              )
             ),
           ),
     };
 
-    final tokenContract = ERC20Contract(
-      address: contractAddress,
-      client: client.asWeb3,
-      chainId: type.chainId,
+    final nonce = await client.getTransactionCount(from);
+
+    final rawUnsignedTx = RawEVMTransaction(
+      nonce: nonce,
+      gasPrice: gasPrice.value,
+      gasLimit: gasLimit.toBI,
+      to: intent.recipient,
+      value: intent.amount.value,
+      data: data,
+      chainId: type.chainId.toBigInt,
     );
 
-    final gasPriceEther =
-        web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
-    final amountInWei = intent.amount.value;
+    final privateKey = derivePrivateKeyETH(seed);
 
-    return await tokenContract.sendToken(
-      web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
-      amountInWei,
-      credentials: credentials,
-      transaction: web3.Transaction(
-        gasPrice: gasPriceEther,
-        maxGas: gasLimit,
-      ),
+    final signedTx = InternalEVMTransaction.signTransaction(
+      rawUnsignedTx,
+      privateKey,
+    );
+
+    print("Sending ERC20: ${signedTx.serializedMessageHex}");
+
+    return await client.sendRawTransaction(
+      signedTx.serializedMessageHex,
     );
   }
 
