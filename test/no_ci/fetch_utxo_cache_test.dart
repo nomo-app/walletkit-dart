@@ -10,18 +10,16 @@ void main() {
 
     final stopWatch = Stopwatch();
     stopWatch.start();
-    final (txList1, _) = await fetchUTXOTransactions(
+    final (txList1, _) = await fetchUTXOTransactionsFromEpubKey(
       ePubKey: ePubKey,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
     );
     final timeFirstFetch = stopWatch.elapsedMilliseconds;
     stopWatch.reset();
     final cacheSimulation = txList1.take(txList1.length ~/ 2).toSet();
-    final (txList2, _) = await fetchUTXOTransactions(
+    final (txList2, _) = await fetchUTXOTransactionsFromEpubKey(
       ePubKey: ePubKey,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       cachedTransactions: cacheSimulation,
       networkType: ZeniqNetwork,
@@ -50,9 +48,8 @@ void main() {
     for (int i = 1; i <= 4; i++) {
       final stopWatch = Stopwatch();
       stopWatch.start();
-      final (txList, _) = await fetchUTXOTransactions(
+      final (txList, _) = await fetchUTXOTransactionsFromEpubKey(
         ePubKey: ePubKey,
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );

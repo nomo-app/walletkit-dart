@@ -2,7 +2,9 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/common/isolate_service.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
+import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/src/domain/repository/models/electrum_transaction.dart';
@@ -17,63 +19,23 @@ typedef UTXOTxInfo = (Set<UTXOTransaction>, Iterable<NodeWithAddress>);
 
 typedef ElectrumXResult = (Set<ElectrumTransactionInfo>?, ElectrumXClient);
 
-Future<UTXOTxInfo> fetchUTXOTransactions({
-  required Iterable<HDWalletPath> walletTypes,
-  required Iterable<AddressType> addressTypes,
+typedef SearchTransactionResult = (
+  Set<ElectrumTransactionInfo>,
+  Set<NodeWithAddress>
+);
+
+Future<UTXOTxInfo> fetchMissingUTXOTransactions({
+  required Set<UTXOTransaction> cachedTransactions,
+  required List<NodeWithAddress> cachedNodes,
+  required Set<ElectrumTransactionInfo> allTxs,
+  required Iterable<NodeWithAddress> nodes,
+  required TokenEntity coin,
   required UTXONetworkType networkType,
-  Uint8List? seed,
-  String? ePubKey,
-  Set<UTXOTransaction> cachedTransactions = const {},
-  List<NodeWithAddress> cachedNodes = const [],
-  int minEndpoints = 2,
-  Duration maxLatency = const Duration(milliseconds: 800),
+  required Iterable<AddressType> addressTypes,
+  required List<(String, int)> endpoints,
+  required Stopwatch watch,
 }) async {
-  assert(
-    seed != null || ePubKey != null,
-    "Either seed or ePubKey must be given",
-  );
-  assert(
-    seed != null || (ePubKey != null && walletTypes.length == 1),
-    "Only one wallet type is supported for ePubKey",
-  );
-
-  final token = networkType.coin;
-  final watch = Stopwatch()..start();
-
-  final endpoints = await getBestHealthEndpointsWithRetry(
-    endpointPool: networkType.endpoints,
-    token: networkType.coin,
-    maxLatency: maxLatency,
-    min: minEndpoints,
-  );
-
-  final isolateManager = IsolateManager();
-
-  ///
-  /// Search for Receive and Change Addresses
-  ///
-
-  final (allTxs, nodes) = await Future.wait([
-    for (final walletType in walletTypes)
-      searchTransactionsForWalletType(
-        walletPath: walletType,
-        addressTypes: addressTypes,
-        networkType: networkType,
-        endpoints: endpoints,
-        cachedNodes: cachedNodes,
-        isolateManager: isolateManager,
-        seed: seed,
-        ePubKey: ePubKey,
-      )
-  ]).then((value) => (
-        value.expand((element) => element.$1).toSet(),
-        value.expand((element) => element.$2).toSet()
-      ));
-
-  isolateManager.dispose();
-
   /// Filter out all transactions that are already cached
-
   final newTxs = allTxs.where(
     (tx) {
       final isCached = cachedTransactions.any((cTx) => cTx.id == tx.hash);
@@ -92,8 +54,8 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
       return cTx.isPending || cTx is NotAvaialableUTXOTransaction;
     },
   );
-  Logger.log("Found ${pendingTxs.length} pending TXs for ${token.symbol}");
-  Logger.log("Found ${newTxs.length} new TXs for ${token.symbol}");
+  Logger.log("Found ${pendingTxs.length} pending TXs for ${coin.symbol}");
+  Logger.log("Found ${newTxs.length} new TXs for ${coin.symbol}");
 
   ///
   /// Fetch UTXO Details for all new transactions
@@ -141,7 +103,7 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
       },
       client: null,
       endpoints: networkType.endpoints,
-      token: token,
+      token: coin,
     );
 
     parentTx ??= _tx;
@@ -217,34 +179,149 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
   return (sortedTxs, nodes);
 }
 
+/// Fetches UTXO Transactions for a given ePubKey
+/// if [purpose] is not provied the returned [nodes] cant be used to derive the master node (used in Proof of Payment)
+Future<UTXOTxInfo> fetchUTXOTransactionsFromEpubKey({
+  required Iterable<AddressType> addressTypes,
+  required UTXONetworkType networkType,
+  required String ePubKey,
+  HDWalletPurpose? purpose,
+  Set<UTXOTransaction> cachedTransactions = const {},
+  List<NodeWithAddress> cachedNodes = const [],
+  int minEndpoints = 2,
+  Duration maxLatency = const Duration(milliseconds: 800),
+}) async {
+  final watch = Stopwatch()..start();
+
+  final endpoints = await getBestHealthEndpointsWithRetry(
+    endpointPool: networkType.endpoints,
+    token: networkType.coin,
+    maxLatency: maxLatency,
+    min: minEndpoints,
+  );
+
+  final isolateManager = IsolateManager();
+
+  ///
+  /// Search for Receive and Change Addresses
+  ///
+
+  final masterNode = await isolateManager.executeTask(
+    IsolateTask(
+      task: (arg) {
+        return deriveMasterNodeFromEpubKey(arg).$1;
+      },
+      argument: ePubKey,
+    ),
+  );
+
+  final (allTxs, nodes) = await searchTransactionsForWalletType(
+    masterNode: masterNode,
+    purpose: purpose,
+    addressTypes: addressTypes,
+    networkType: networkType,
+    endpoints: endpoints,
+    cachedNodes: cachedNodes,
+    isolateManager: isolateManager,
+  );
+
+  isolateManager.dispose();
+
+  return fetchMissingUTXOTransactions(
+    allTxs: allTxs,
+    nodes: nodes,
+    cachedNodes: cachedNodes,
+    cachedTransactions: cachedTransactions,
+    addressTypes: addressTypes,
+    coin: networkType.coin,
+    endpoints: endpoints,
+    networkType: networkType,
+    watch: watch,
+  );
+}
+
+Future<UTXOTxInfo> fetchUTXOTransactions({
+  required Iterable<HDWalletPath> walletTypes,
+  required Iterable<AddressType> addressTypes,
+  required UTXONetworkType networkType,
+  required Uint8List seed,
+  Set<UTXOTransaction> cachedTransactions = const {},
+  List<NodeWithAddress> cachedNodes = const [],
+  int minEndpoints = 2,
+  Duration maxLatency = const Duration(milliseconds: 800),
+}) async {
+  final watch = Stopwatch()..start();
+
+  final endpoints = await getBestHealthEndpointsWithRetry(
+    endpointPool: networkType.endpoints,
+    token: networkType.coin,
+    maxLatency: maxLatency,
+    min: minEndpoints,
+  );
+
+  final isolateManager = IsolateManager();
+
+  ///
+  /// Search for Receive and Change Addresses
+  ///
+
+  final (allTxs, nodes) = await Future.wait([
+    for (final walletType in walletTypes)
+      () async {
+        final masterNode = await isolateManager.executeTask(
+          IsolateTask(
+            task: (arg) {
+              return deriveMasterNodeFromSeed(
+                  seed: seed, walletPath: walletType);
+            },
+            argument: seed,
+          ),
+        );
+        return searchTransactionsForWalletType(
+          masterNode: masterNode,
+          purpose: walletType.purpose,
+          addressTypes: addressTypes,
+          networkType: networkType,
+          endpoints: endpoints,
+          cachedNodes: cachedNodes,
+          isolateManager: isolateManager,
+        );
+      }.call()
+  ]).then((value) => (
+        value.expand((element) => element.$1).toSet(),
+        value.expand((element) => element.$2).toSet()
+      ));
+
+  isolateManager.dispose();
+
+  return fetchMissingUTXOTransactions(
+    cachedTransactions: cachedTransactions,
+    cachedNodes: cachedNodes,
+    allTxs: allTxs,
+    nodes: nodes,
+    coin: networkType.coin,
+    networkType: networkType,
+    addressTypes: addressTypes,
+    endpoints: endpoints,
+    watch: watch,
+  );
+}
+
 Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     searchTransactionsForWalletType({
-  required HDWalletPath walletPath,
+  required BipNode masterNode,
+  required HDWalletPurpose? purpose,
   required Iterable<AddressType> addressTypes,
   required UTXONetworkType networkType,
   required List<(String, int)> endpoints,
   required List<NodeWithAddress> cachedNodes,
   required IsolateManager isolateManager,
-  Uint8List? seed,
-  String? ePubKey,
 }) async {
-  assert(
-    seed != null || ePubKey != null,
-    "Either seed or ePubKey must be given",
-  );
-
-  final masterNode = deriveMasterNode(
-    seed: seed,
-    ePubKey: ePubKey,
-    networkType: networkType,
-    walletPath: walletPath,
-  );
-
   final receiveTxsFuture = searchForTransactions(
     masterNode: masterNode,
     chainIndex: EXTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletPurpose: walletPath.purpose,
+    walletPurpose: purpose,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
@@ -255,7 +332,7 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     masterNode: masterNode,
     chainIndex: INTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletPurpose: walletPath.purpose,
+    walletPurpose: purpose,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
@@ -274,7 +351,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
   required bip32.BIP32 masterNode,
   required int chainIndex,
   required Iterable<AddressType> addressTypes,
-  required HDWalletPurpose walletPurpose,
+  required HDWalletPurpose? walletPurpose,
   required UTXONetworkType networkType,
   required List<(String, int)> endpoints,
   required List<NodeWithAddress> cachedNodes,

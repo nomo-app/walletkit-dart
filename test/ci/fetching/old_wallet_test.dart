@@ -28,9 +28,8 @@ void main() {
   );
 
   test('Fetch Zeniq Txs $ePubKeyNS', () async {
-    final (txs, _) = await fetchUTXOTransactions(
+    final (txs, _) = await fetchUTXOTransactionsFromEpubKey(
       ePubKey: ePubKeyNS,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
     );
@@ -43,9 +42,8 @@ void main() {
   });
 
   test('Fetch Litecoin Txs $ePubKeyBip44LTC', () async {
-    final (txs, _) = await fetchUTXOTransactions(
+    final (txs, _) = await fetchUTXOTransactionsFromEpubKey(
       ePubKey: ePubKeyBip44LTC,
-      walletTypes: [litecoinBip44HDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
       networkType: LitecoinNetwork,
       minEndpoints: 1,

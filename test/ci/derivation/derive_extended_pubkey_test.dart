@@ -22,4 +22,15 @@ void main() {
       "xpub69BsBUCquKCkUvJczrqfBKDeHTRzNRsdBm61D72VjRPmtiTpzqz98k2wYnQppBb1TLfQp16iMMapaBJ2MSbtsCKRkDti9goSWpUbaAeSKQx",
     );
   });
+
+  test("Get Node From EpubKey", () {
+    const btcPubKey =
+        "xpub68bx1dGR2BDKF2Ssy42k6inoJy1ZDNuTXVL3UudD63zU76vhmhX4jyN2doUh3ktHYmPN7x1TCxArK2rCqZ4QzwH562M4h4nUcWcwtSnN3S8";
+    const ltcPubKey =
+        "xpub68bx1dGR2BDKFzcmRD9zbYPCrGSbRmnk3pwE4tNc3XAdd2BDfWcskotdUsZTHyVpDzQrUZYBk3FeYzxkJ887XLuujSYp43AKRMcaYzU77hz";
+
+    final a = deriveMasterNodeFromEpubKey(btcPubKey);
+
+    print(a);
+  });
 }

@@ -108,6 +108,10 @@ Future<POPResult> proofOfPayment({
   ///
   final uPoPHash = sha256Sha256Hash(uPoPSerialized);
 
+  if (usedNodes.any((node) => node.walletPurpose == null)) {
+    throw Exception("WalletPurpose is required for all nodes.");
+  }
+
   final bip32Nodes = [
     for (final node in usedNodes)
       deriveChildNodeFromPath(
@@ -115,7 +119,8 @@ Future<POPResult> proofOfPayment({
         networkType: networkType,
         childDerivationPath: node.derivationPath,
         walletPath: HDWalletPath.fromPurpose(
-            node.walletPurpose), // TODO: Store HDWalletPath better
+          node.walletPurpose!,
+        ), // TODO: Store HDWalletPath better
       ),
   ];
 

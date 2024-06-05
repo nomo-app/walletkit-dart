@@ -32,7 +32,7 @@ void main() {
     const t = BitcoincashNetwork;
     const type = bitcoinNSHDPath;
 
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromSeed(
       seed: helloSeed,
       networkType: t,
       walletPath: type,
@@ -105,10 +105,9 @@ void main() {
   });
 
   test('No Structure Transaction with Xpub', () async {
-    final (legacyTxList, _) = await fetchUTXOTransactions(
+    final (legacyTxList, _) = await fetchUTXOTransactionsFromEpubKey(
       networkType: network,
       ePubKey: rejectXpub,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.cashaddr, AddressType.legacy],
     );
     expect(legacyTxList.length, greaterThanOrEqualTo(17));
@@ -119,10 +118,9 @@ void main() {
   });
 
   test('fetch BCH NS Transactions xpub reject wallet', () async {
-    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
+    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: network,
       ePubKey: rejectXpub,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
     );
 
@@ -141,10 +139,9 @@ void main() {
   });
 
   test('fetch BCH Bip44 Transactions xpub reject wallet', () async {
-    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
+    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: network,
       ePubKey: rejectXpubBip44,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
     );
 

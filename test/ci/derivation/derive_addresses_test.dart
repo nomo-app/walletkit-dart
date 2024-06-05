@@ -18,7 +18,7 @@ void main() {
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
 
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
       ePubKey: ePubKey,
       networkType: t,
       walletPath: type,
@@ -55,7 +55,7 @@ void main() {
     const t = ZeniqNetwork;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
       ePubKey: ePubKey,
       networkType: t,
       walletPath: type,
@@ -101,7 +101,7 @@ void main() {
     const type = bitcoinNSHDPath;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
       ePubKey: ePubKey,
       networkType: t,
       walletPath: type,
@@ -145,7 +145,7 @@ void main() {
     const c = EXTERNAL_CHAIN_INDEX;
     const t = ZeniqNetwork;
     const type = bitcoinNSHDPath;
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromSeed(
       seed: helloSeed,
       networkType: t,
       walletPath: type,
@@ -223,7 +223,7 @@ void main() {
     const c = EXTERNAL_CHAIN_INDEX;
     const t = BitcoinNetwork;
     const type = bitcoinNSHDPath;
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromSeed(
       seed: seed,
       networkType: t,
       walletPath: type,
@@ -289,7 +289,7 @@ void main() {
     const c = INTERNAL_CHAIN_INDEX;
     const t = ZeniqNetwork;
     const type = bitcoinNSHDPath;
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromSeed(
       seed: seed,
       networkType: t,
       walletPath: type,
@@ -333,7 +333,7 @@ void main() {
     const c = INTERNAL_CHAIN_INDEX;
     const t = BitcoinNetwork;
     const type = bitcoinNSHDPath;
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromSeed(
       seed: seed,
       networkType: t,
       walletPath: type,
@@ -472,7 +472,7 @@ void main() {
     const t = LitecoinNetwork;
     const type = litecoinBip44HDPath;
 
-    final masterNode = deriveMasterNode(
+    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
       ePubKey: wkDebugXPUB,
       networkType: t,
       walletPath: type,

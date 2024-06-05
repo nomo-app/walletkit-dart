@@ -37,12 +37,12 @@ void main() {
 
   test('Assert that Xpub and Seed lead same Node', () {
     const networkType = BitcoinNetwork;
-    final node_seed_ns = deriveMasterNode(
+    final node_seed_ns = deriveMasterNodeFromSeed(
       networkType: networkType,
       walletPath: bitcoinNSHDPath,
       seed: helloSeed,
     );
-    final node_xpub_ns = deriveMasterNode(
+    final node_xpub_ns = deriveMasterNodeFromEpubKeyWithCheck(
       networkType: networkType,
       walletPath: bitcoinNSHDPath,
       ePubKey: helloXpub,
