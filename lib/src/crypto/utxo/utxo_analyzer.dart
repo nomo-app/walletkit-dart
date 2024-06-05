@@ -269,10 +269,9 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
         final masterNode = await isolateManager.executeTask(
           IsolateTask(
             task: (arg) {
-              return deriveMasterNodeFromSeed(
-                  seed: seed, walletPath: walletType);
+              return deriveMasterNodeFromSeed(seed: arg.$1, walletPath: arg.$2);
             },
-            argument: seed,
+            argument: (seed, walletType),
           ),
         );
         return searchTransactionsForWalletType(
