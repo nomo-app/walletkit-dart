@@ -1,7 +1,5 @@
 import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
-import 'package:bip32/bip32.dart';
-import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:bs58check/bs58check.dart' as bs58check;
 import 'package:walletkit_dart/src/utils/var_uint.dart';
