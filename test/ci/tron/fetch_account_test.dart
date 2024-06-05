@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:js_util';
 
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
