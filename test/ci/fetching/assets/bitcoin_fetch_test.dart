@@ -10,10 +10,9 @@ import '../fetch_utxo_transactions_test.dart';
 
 void main() {
   test('No Structure Transaction with Xpub reject wallet', () async {
-    final (legacyTxList, _) = await fetchUTXOTransactions(
+    final (legacyTxList, _) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
     expect(legacyTxList.length, greaterThanOrEqualTo(74));
@@ -23,10 +22,9 @@ void main() {
   });
 
   test('fetch BTC BIP84 Transactions zpub reject wallet', () async {
-    final (segwitTxList, segwitNodes) = await fetchUTXOTransactions(
+    final (segwitTxList, segwitNodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectZpub,
-      walletTypes: [bitcoinBip84HDPath],
       addressTypes: [AddressType.segwit],
     );
 
@@ -67,10 +65,9 @@ void main() {
   });
 
   test('fetch BTC NS Transactions xpub reject wallet', () async {
-    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
+    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 
@@ -108,10 +105,9 @@ void main() {
   });
 
   test('fetch BTC Bip44 Transactions xpub reject wallet', () async {
-    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactions(
+    final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpubBip44,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 

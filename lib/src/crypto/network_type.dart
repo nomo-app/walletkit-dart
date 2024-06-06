@@ -450,7 +450,10 @@ class TRON_NETWORK extends EVMNetworkType {
           rpcUrl: "https://api.trongrid.io/jsonrpc",
           blockExplorer: (
             "https://apilist.tronscanapi.com/api",
-            const ["a875e9b5-2d45-410c-ade9-49ee456be28a"],
+            const [
+              "a875e9b5-2d45-410c-ade9-49ee456be28a",
+              "0eb54755-e150-40d3-8d1a-f8ab389b845a",
+            ],
           ),
           coin: tron,
           messagePrefix: "\x19Tron Signed Message:\n",

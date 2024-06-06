@@ -62,7 +62,7 @@ Future<List<(String, int)>> _getBestHealthEndpoints({
         maxLatency: maxLatency,
         token: token,
       ).timeout(
-        maxLatency * 100,
+        maxLatency * 5,
         onTimeout: () {
           print("Creat Client Timeout for ${entry}");
           return null;
