@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
-import 'package:walletkit_dart/src/crypto/utxo/utils/ecurve.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../utils.dart';
@@ -235,9 +234,7 @@ void main() {
     final transferFunction =
         contract.functions.firstWhere((element) => element.name == 'transfer');
 
-    final amount = Amount.convert(value: 10, decimals: 17);
-
-    print(amount.value);
+    final amount = Amount.convert(value: 10, decimals: 18);
 
     final encodedAddress = transferFunction.parameters[0].type
         .encodeParameter("0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616");
@@ -246,10 +243,6 @@ void main() {
 
     String selector = transferFunction.functionSelector;
     final encodedData = (selector + encodedAddress + encodeValue).hexToBytes;
-
-    // print("Encoded Data: $encodedData");
-
-    // print("data to hex: ${encodedData.toHex}");
 
     final intent = TransferIntent(
       recipient: arbitrum.contractAddress,

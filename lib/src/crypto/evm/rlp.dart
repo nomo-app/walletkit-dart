@@ -36,14 +36,16 @@ int unarrayifyInteger(Uint8List data, int offset, int length) {
  * @returns {Uint8List}
  */
 Uint8List arrayifyInteger(int value) {
+  if (value == 0) {
+    return Uint8List.fromList([0x80]);
+  }
   List<int> result = [];
-
   while (value > 0) {
     result.insert(0, value & 0xff);
     value >>= 8;
   }
 
-  return Uint8List.fromList(result.isEmpty ? [0] : result);
+  return Uint8List.fromList(result);
 }
 
 /**
@@ -95,7 +97,9 @@ Uint8List _encode(dynamic object) {
   }
 
   Uint8List data = object;
-  if (data.length == 1 && data[0] <= 0x7f) {
+  if (data.length == 1 && data[0] == 0) {
+    return Uint8List.fromList([0x80]);
+  } else if (data.length == 1 && data[0] <= 0x7f) {
     return data;
   } else if (data.length <= 55) {
     return Uint8List.fromList([0x80 + data.length] + data.toList());

@@ -26,7 +26,18 @@ class Amount extends Equatable {
   Amount.convert({
     required num value,
     required this.decimals,
-  }) : value = BigInt.from(value * pow(10, decimals));
+  }) : value = _toBigInt(value, decimals);
+
+  static BigInt _toBigInt(num value, int decimals) {
+    final double valueDouble = value.toDouble();
+    final double valueWithDecimals = valueDouble * pow(10, decimals);
+
+    print('valueDouble: $valueDouble');
+
+    String valueStr = valueWithDecimals.toStringAsFixed(0);
+    print('valueStr: $valueStr');
+    return BigInt.parse(valueStr);
+  }
 
   /// Converts the given value to a BigInt
   /// This is useful when the value is already in the smallest unit of the currency

@@ -342,8 +342,6 @@ final class EvmRpcInterface {
       privateKey,
     );
 
-    print("Sending ERC20: ${signedTx.serializedMessageHex}");
-
     return await client.sendRawTransaction(
       signedTx.serializedMessageHex,
     );
