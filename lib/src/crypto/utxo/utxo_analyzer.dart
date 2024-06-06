@@ -664,6 +664,28 @@ Map<ElectrumOutput, UTXOTransaction> extractUTXOs({
 ///
 /// Returns a map of UTXOs which belong to us and are unspent and their corresponding transactions
 ///
+Map<ElectrumOutput, UTXOTransaction> extractAllUTXOs({
+  required Iterable<UTXOTransaction> txList,
+  bool own = true,
+}) {
+  Map<ElectrumOutput, UTXOTransaction> utxoMap = {};
+  for (final tx in txList) {
+    for (final ElectrumOutput output in tx.outputs) {
+      if (own) {
+        if (output.belongsToUs == true) {
+          utxoMap[output] = tx;
+        }
+      } else {
+        utxoMap[output] = tx;
+      }
+    }
+  }
+  return utxoMap;
+}
+
+///
+/// Returns a map of UTXOs which belong to us and are unspent and their corresponding transactions
+///
 List<ElectrumOutput> getSpendableOutputs(
         {required List<UTXOTransaction> txList}) =>
     [
