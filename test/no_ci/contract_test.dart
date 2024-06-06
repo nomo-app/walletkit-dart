@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-
 import '../utils.dart';
 
 void main() {
@@ -234,19 +233,15 @@ void main() {
     final transferFunction =
         contract.functions.firstWhere((element) => element.name == 'transfer');
 
-    final amount = Amount.convert(value: 10, decimals: 18);
+    expect(transferFunction.name, "transfer");
+    expect(transferFunction.parameters.length, 2);
+    expect(transferFunction.stateMutability, "nonpayable");
+  });
 
-    final encodedAddress = transferFunction.parameters[0].type
-        .encodeParameter("0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616");
-    final encodeValue =
-        transferFunction.parameters[1].type.encodeParameter(amount.value);
-
-    String selector = transferFunction.functionSelector;
-    final encodedData = (selector + encodedAddress + encodeValue).hexToBytes;
-
+  test('Contract Interaction', () async {
     final intent = TransferIntent(
-      recipient: arbitrum.contractAddress,
-      amount: Amount.zero,
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 10, decimals: 18),
       feeInfo: null,
       token: arbitrum,
       memo: null,
@@ -256,9 +251,7 @@ void main() {
       intent: intent,
       from: arbitrumTestWallet,
       seed: testSeed,
-      data: encodedData,
     );
-
-    print("Hash: $hash");
+    print("hash : $hash");
   });
 }

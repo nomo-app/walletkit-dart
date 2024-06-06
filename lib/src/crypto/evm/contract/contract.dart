@@ -71,6 +71,23 @@ class ContractFunction {
     final buffer = keccakUtf8(function);
     return buffer.sublist(0, 4).toHex;
   }
+
+  String encodFunction(List<dynamic> values) {
+    String functionData = "";
+    final selector = functionSelector;
+    functionData += selector;
+    for (var param in parameters) {
+      int index = parameters.indexOf(param);
+      final encodedParam = switch (param.type) {
+        FunctionParamType.address => param.type.encodeParameter(values[index]),
+        FunctionParamType.uint256 => param.type.encodeParameter(values[index]),
+        FunctionParamType.uint => param.type.encodeParameter(values[index]),
+        _ => throw UnimplementedError(),
+      };
+      functionData += encodedParam;
+    }
+    return functionData;
+  }
 }
 
 class ContractEvent {

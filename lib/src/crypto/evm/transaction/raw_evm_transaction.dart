@@ -27,6 +27,26 @@ class RawEVMTransaction {
     return 'RawEVMTransaction{nonce: $nonce, gasPrice: $gasPrice, gasLimit: $gasLimit, to: $to, value: $value, data: $data, chainId: $chainId}';
   }
 
+  RawEVMTransaction copyWith({
+    BigInt? nonce,
+    BigInt? gasPrice,
+    BigInt? gasLimit,
+    String? to,
+    BigInt? value,
+    Uint8List? data,
+    BigInt? chainId,
+  }) {
+    return RawEVMTransaction(
+      nonce: nonce ?? this.nonce,
+      gasPrice: gasPrice ?? this.gasPrice,
+      gasLimit: gasLimit ?? this.gasLimit,
+      to: to ?? this.to,
+      value: value ?? this.value,
+      data: data ?? this.data,
+      chainId: chainId ?? this.chainId,
+    );
+  }
+
   /**
    * @param {String} messageHex
    * 

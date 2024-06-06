@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
@@ -34,6 +36,27 @@ base class EvmRpcClient {
         e.toString(),
       );
     }
+  }
+
+  Future<String> callRaw({
+    String? sender,
+    required String contractAddress,
+    required Uint8List data,
+    BlockNum? atBlock,
+  }) async {
+    final response = await _call<String>(
+      'eth_call',
+      args: [
+        {
+          'from': sender,
+          'to': contractAddress,
+          'data': data.toHex,
+          'Quantity': atBlock?.toBlockParam() ?? 'latest',
+        },
+      ],
+    );
+
+    return response;
   }
 
   Future<BigInt> getTransactionCount(String address) async {

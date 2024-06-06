@@ -5,6 +5,8 @@ import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:web3dart/web3dart.dart' as web3;
+import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract_without_web3.dart'
+    as erc;
 
 const _maxTxNumber = 100;
 const _batchSize = 10;
@@ -306,9 +308,16 @@ final class EvmRpcInterface {
     required TransferIntent intent,
     required String from,
     required Uint8List seed,
-    required Uint8List data,
   }) async {
     assert(intent.token is EthBasedTokenEntity);
+
+    final erc20 = intent.token as EthBasedTokenEntity;
+    final tokenContractAddress = erc20.contractAddress;
+
+    final erc20Contract = erc.ERC20Contract(
+      contractAddress: tokenContractAddress,
+      seed: seed,
+    );
 
     final (gasPrice, gasLimit) = switch (intent.feeInfo) {
       EvmFeeInformation info => (info.gasPrice, info.gasLimit),
@@ -331,19 +340,14 @@ final class EvmRpcInterface {
       gasLimit: gasLimit.toBI,
       to: intent.recipient,
       value: intent.amount.value,
-      data: data,
+      data: null,
       chainId: type.chainId.toBigInt,
     );
-
-    final privateKey = derivePrivateKeyETH(seed);
-
-    final signedTx = InternalEVMTransaction.signTransaction(
-      rawUnsignedTx,
-      privateKey,
-    );
+    final singedTxMessageHex =
+        erc20Contract.write(rawTx: rawUnsignedTx, seed: seed);
 
     return await client.sendRawTransaction(
-      signedTx.serializedMessageHex,
+      singedTxMessageHex,
     );
   }
 
