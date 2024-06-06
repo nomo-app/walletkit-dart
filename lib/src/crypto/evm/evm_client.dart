@@ -48,9 +48,9 @@ base class EvmRpcClient {
       'eth_call',
       args: [
         {
-          'from': sender,
+          if (sender != null) 'from': sender,
           'to': contractAddress,
-          'data': data.toHex,
+          'data': "0x" + data.toHex,
           'Quantity': atBlock?.toBlockParam() ?? 'latest',
         },
       ],

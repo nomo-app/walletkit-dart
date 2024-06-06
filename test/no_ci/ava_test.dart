@@ -36,7 +36,8 @@ void main() {
 
     final hash = await avalacheRPC.sendERC20Token(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      from: arbitrumTestWallet,
+      seed: testSeed,
     );
 
     print("Hash: $hash");

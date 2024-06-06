@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:collection/collection.dart';
+import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -206,4 +207,21 @@ extension FunctionParamTypeExtension on FunctionParamType {
 
     return byteData.buffer.asUint8List();
   }
+}
+
+String decodeString(Uint8List encoded) {
+  if (encoded.length < 64) {
+    throw ArgumentError("Invalid encoded string");
+  }
+
+  final offsetHex = hex.encode(encoded.sublist(0, 32));
+  final offset = BigInt.parse(offsetHex, radix: 16).toInt();
+
+  final lengthHex = hex.encode(encoded.sublist(offset, offset + 32));
+  final length = BigInt.parse(lengthHex, radix: 16).toInt();
+  final stringDataHex =
+      hex.encode(encoded.sublist(offset + 32, offset + 32 + length));
+  final stringBytes = Uint8List.fromList(hex.decode(stringDataHex));
+
+  return String.fromCharCodes(stringBytes);
 }

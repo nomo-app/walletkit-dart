@@ -36,7 +36,8 @@ void main() {
 
     final hash = await baseRPC.sendERC20Token(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      seed: testSeed,
+      from: arbitrumTestWallet,
     );
 
     print("Hash: $hash");

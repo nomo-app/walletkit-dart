@@ -17,7 +17,8 @@ void main() {
 
     final hash = await optimismRPC.sendERC20Token(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      seed: testSeed,
+      from: arbitrumTestWallet,
     );
 
     print("Hash: $hash");

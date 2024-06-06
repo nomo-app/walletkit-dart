@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
-import 'package:walletkit_dart/src/crypto/evm/evm_client.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -20,19 +19,6 @@ abstract class InternalContract {
     required String contractAddress,
     required EvmRpcClient client,
   }) async {
-    // String functionData = "";
-    // final selector = function.functionSelector;
-    // functionData += selector;
-
-    // for (var param in function.parameters) {
-    //   final encodedParam = switch (param.type) {
-    //     FunctionParamType.address => param.type.encodeParameter(rawTx.to),
-    //     FunctionParamType.uint256 => param.type.encodeParameter(rawTx.value),
-    //     FunctionParamType.uint => param.type.encodeParameter(rawTx.value),
-    //     _ => throw UnimplementedError(),
-    //   };
-    //   functionData += encodedParam;
-    // }
     final functionData = function.encodFunction([rawTx.to, rawTx.value]);
 
     final encodedFunctionData = functionData.hexToBytes;
@@ -42,14 +28,19 @@ abstract class InternalContract {
     final privateKey = derivePrivateKeyETH(seed);
     final signedTx = InternalEVMTransaction.signTransaction(tx, privateKey);
 
-    return signedTx.serializedMessageHex;
+    return client.sendRawTransaction(signedTx.serializedMessageHex);
   }
 
-  // Future<String> read({
-  //   required ContractFunction function,
-  //   BlockNum? atBlock,
-  //   required EvmRpcClient client,
-  // }) async {
-  //   return client.callRaw(contractAddress: contractAddress, data: data);
-  // }
+  Future<String> read({
+    required ContractFunction function,
+    BlockNum? atBlock,
+    required EvmRpcClient client,
+    required List<dynamic> params,
+  }) async {
+    final data = function.encodFunction(params).hexToBytes;
+
+    print("String ${function.encodFunction(params)}");
+    print("function encoded data: ${data.toHex}");
+    return client.callRaw(contractAddress: contractAddress, data: data);
+  }
 }

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
+import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
-import 'package:walletkit_dart/src/crypto/evm/evm_client.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 final erc20Contract = Contract.fromAbi('''[
@@ -240,22 +240,116 @@ class ERC20Contract extends InternalContract {
           client,
         );
 
-  Future<String> write({
+  Future<String> sendToken({
     required RawEVMTransaction rawTx,
     required Uint8List seed,
   }) async {
     final function = self.functions[7];
-    return send(
+    return await send(
         function: function,
         rawTx: rawTx,
         seed: seed,
-        contractAddress: contractAddress);
+        contractAddress: contractAddress,
+        client: client);
   }
 
-  // Future<String> getBalance(String address) async{
-  //   final function = self.functions[5];
-  //   assert(function.functionSelector == "0x70a08231");
+  Future<BigInt> getBalance(String address, {BlockNum? atBlock}) async {
+    final function = self.functions[5];
+    assert(function.functionSelector == "70a08231");
 
-  //   final response =
-  // }
+    final response = await read(
+      function: function,
+      atBlock: atBlock,
+      client: client,
+      params: [address],
+    );
+    return response.toBigInt;
+  }
+
+  Future<String> getName() async {
+    final function = self.functions[0];
+    assert(function.functionSelector == "06fdde03");
+
+    final response = await read(
+      function: function,
+      client: client,
+      params: [],
+    );
+    return response;
+  }
+
+  Future<String> getSymbol() async {
+    final function = self.functions[6];
+    assert(function.functionSelector == "95d89b41");
+    final response = await read(
+      function: function,
+      client: client,
+      params: [],
+    );
+    return response;
+  }
+
+  Future<BigInt> getSupply() async {
+    final function = self.functions[2];
+    assert(function.functionSelector == "18160ddd");
+    final response = await read(
+      function: function,
+      client: client,
+      params: [],
+    );
+    return response.toBigInt;
+  }
+
+  Future<int> getDecimals() async {
+    final function = self.functions[4];
+    assert(function.functionSelector == "313ce567");
+    final response = await read(
+      function: function,
+      client: client,
+      params: [],
+    );
+    return response.toBigInt.toInt();
+  }
+
+  Future<BigInt> balanceOf({required String address}) async {
+    final function = self.functions[5];
+    assert(function.functionSelector == "70a08231");
+    final response = await read(
+      function: function,
+      client: client,
+      params: [address],
+    );
+    return response.toBigInt;
+  }
+
+  Future<BigInt> allowance({
+    required String owner,
+    required String spender,
+  }) async {
+    final function = self.functions[8];
+    assert(function.functionSelector == "dd62ed3e");
+    final response = await read(
+      function: function,
+      client: client,
+      params: [owner, spender],
+    );
+    return response.toBigInt;
+  }
+
+  Future<String> approve({
+    required String spender,
+    required BigInt value,
+    required RawEVMTransaction rawTx,
+  }) async {
+    final function = self.functions[1];
+    assert(function.functionSelector == "095ea7b3");
+
+    return await send(
+      function: function,
+      rawTx: rawTx,
+      seed: seed,
+      contractAddress: contractAddress,
+      client: client,
+    );
+  }
 }

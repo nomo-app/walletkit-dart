@@ -310,6 +310,7 @@ final class EvmRpcInterface {
     required Uint8List seed,
   }) async {
     assert(intent.token is EthBasedTokenEntity);
+    assert(intent.memo == null);
 
     final erc20 = intent.token as EthBasedTokenEntity;
     final tokenContractAddress = erc20.contractAddress;
@@ -317,6 +318,7 @@ final class EvmRpcInterface {
     final erc20Contract = erc.ERC20Contract(
       contractAddress: tokenContractAddress,
       seed: seed,
+      client: client,
     );
 
     final (gasPrice, gasLimit) = switch (intent.feeInfo) {
@@ -333,7 +335,6 @@ final class EvmRpcInterface {
     };
 
     final nonce = await client.getTransactionCount(from);
-
     final rawUnsignedTx = RawEVMTransaction(
       nonce: nonce,
       gasPrice: gasPrice.value,
@@ -343,12 +344,7 @@ final class EvmRpcInterface {
       data: null,
       chainId: type.chainId.toBigInt,
     );
-    final singedTxMessageHex =
-        erc20Contract.write(rawTx: rawUnsignedTx, seed: seed);
-
-    return await client.sendRawTransaction(
-      singedTxMessageHex,
-    );
+    return await erc20Contract.sendToken(rawTx: rawUnsignedTx, seed: seed);
   }
 
   Future<int> estimateGasLimit({

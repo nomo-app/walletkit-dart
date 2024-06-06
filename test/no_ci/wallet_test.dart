@@ -31,20 +31,16 @@ void main() {
   });
 
   test('Test ZeniqSmart Sending: 0.001 Avinoc ZSC to Spoil Wallet', () async {
-    final credentials = getETHCredentials(
-      seed: devSeed,
-      wipeCache: true,
-    );
-
     final hash = await zeniqSmartRpcInterface.sendERC20Token(
       intent: TransferIntent(
-        recipient: spoilEVM,
+        recipient: arbitrumTestWallet,
         amount: Amount.convert(value: 0.001, decimals: avinocZSC.decimals),
         feeInfo: null,
         token: avinocZSC,
         memo: null,
       ),
-      credentials: credentials,
+      seed: testSeed,
+      from: arbitrumTestWallet,
     );
 
     print('Hash: $hash');
