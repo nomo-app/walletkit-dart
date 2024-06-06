@@ -67,7 +67,8 @@
 <span class="name ">fetchUTXOTransactions</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchUTXOTransactions-param-walletTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">walletTypes</span>, </span></li>
 <li><span class="parameter" id="fetchUTXOTransactions-param-addressTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">addressTypes</span>, </span></li>
 <li><span class="parameter" id="fetchUTXOTransactions-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span></li>
-<li><span class="parameter" id="fetchUTXOTransactions-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactions-param-seed"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">seed</span>, </span></li>
+<li><span class="parameter" id="fetchUTXOTransactions-param-ePubKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">ePubKey</span>, </span></li>
 <li><span class="parameter" id="fetchUTXOTransactions-param-cachedTransactions"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Set-class.html">Set</a></span> <span class="parameter-name">cachedTransactions</span> = <span class="default-value">const {}</span>, </span></li>
 <li><span class="parameter" id="fetchUTXOTransactions-param-cachedNodes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">cachedNodes</span> = <span class="default-value">const []</span>, </span></li>
 <li><span class="parameter" id="fetchUTXOTransactions-param-minEndpoints"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">minEndpoints</span> = <span class="default-value">2</span>, </span></li>
@@ -87,12 +88,23 @@
   required Iterable&lt;HDWalletPath&gt; walletTypes,
   required Iterable&lt;AddressType&gt; addressTypes,
   required UTXONetworkType networkType,
-  required Uint8List seed,
+  Uint8List? seed,
+  String? ePubKey,
   Set&lt;UTXOTransaction&gt; cachedTransactions = const {},
   List&lt;NodeWithAddress&gt; cachedNodes = const [],
   int minEndpoints = 2,
   Duration maxLatency = const Duration(milliseconds: 800),
 }) async {
+  assert(
+    seed != null || ePubKey != null,
+    &quot;Either seed or ePubKey must be given&quot;,
+  );
+  assert(
+    seed != null || (ePubKey != null &amp;&amp; walletTypes.length == 1),
+    &quot;Only one wallet type is supported for ePubKey&quot;,
+  );
+
+  final token = networkType.coin;
   final watch = Stopwatch()..start();
 
   final endpoints = await getBestHealthEndpointsWithRetry(
@@ -110,25 +122,16 @@
 
   final (allTxs, nodes) = await Future.wait([
     for (final walletType in walletTypes)
-      () async {
-        final masterNode = await isolateManager.executeTask(
-          IsolateTask(
-            task: (arg) {
-              return deriveMasterNodeFromSeed(seed: arg.$1, walletPath: arg.$2);
-            },
-            argument: (seed, walletType),
-          ),
-        );
-        return searchTransactionsForWalletType(
-          masterNode: masterNode,
-          purpose: walletType.purpose,
-          addressTypes: addressTypes,
-          networkType: networkType,
-          endpoints: endpoints,
-          cachedNodes: cachedNodes,
-          isolateManager: isolateManager,
-        );
-      }.call()
+      searchTransactionsForWalletType(
+        walletPath: walletType,
+        addressTypes: addressTypes,
+        networkType: networkType,
+        endpoints: endpoints,
+        cachedNodes: cachedNodes,
+        isolateManager: isolateManager,
+        seed: seed,
+        ePubKey: ePubKey,
+      )
   ]).then((value) =&gt; (
         value.expand((element) =&gt; element.$1).toSet(),
         value.expand((element) =&gt; element.$2).toSet()
@@ -136,17 +139,149 @@
 
   isolateManager.dispose();
 
-  return fetchMissingUTXOTransactions(
-    cachedTransactions: cachedTransactions,
-    cachedNodes: cachedNodes,
-    allTxs: allTxs,
-    nodes: nodes,
-    coin: networkType.coin,
-    networkType: networkType,
-    addressTypes: addressTypes,
-    endpoints: endpoints,
-    watch: watch,
+  &#47;&#47;&#47; Filter out all transactions that are already cached
+
+  final newTxs = allTxs.where(
+    (tx) {
+      final isCached = cachedTransactions.any((cTx) =&gt; cTx.id == tx.hash);
+
+      return isCached == false;
+    },
   );
+
+  final pendingTxs = allTxs.where(
+    (tx) {
+      final cTx = cachedTransactions.singleWhereOrNull(
+        (cTx) =&gt; cTx.id == tx.hash,
+      );
+      if (cTx == null) return false;
+
+      return cTx.isPending || cTx is NotAvaialableUTXOTransaction;
+    },
+  );
+  Logger.log(&quot;Found ${pendingTxs.length} pending TXs for ${token.symbol}&quot;);
+  Logger.log(&quot;Found ${newTxs.length} new TXs for ${token.symbol}&quot;);
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Fetch UTXO Details for all new transactions
+  &#47;&#47;&#47;
+  var newUtxoTxs = await computeMissingUTXODetails(
+    txList: newTxs,
+    nodes: nodes,
+    type: networkType,
+    endpoints: endpoints,
+    addressTypes: addressTypes,
+  );
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Fetch Parent Transactions of P2SH Inputs to get the redeem script and in hence the address
+  &#47;&#47;&#47;
+  final unsupported = newUtxoTxs.where(
+    (tx) =&gt; tx.sender == ADDRESS_NOT_SUPPORTED,
+  );
+  final updatedUTXOs = &lt;UTXOTransaction&gt;[];
+  for (final tx in unsupported) {
+    final firstInput = tx.inputs.firstOrNull;
+    if (firstInput == null) continue;
+
+    &#47;&#47;&#47; Coinbase Parent TX
+    if (firstInput.isCoinbase) {
+      continue;
+    }
+
+    final outputIndex = firstInput.vout!;
+    final parentTxHash = firstInput.txid;
+    if (parentTxHash == null) continue;
+
+    &#47;&#47; Check if Parent TX is already in the list
+    var parentTx = newUtxoTxs
+        .singleWhereOrNull((element) =&gt; element.id == firstInput.txid);
+
+    final (_tx, _, _) = await fetchFromRandomElectrumXNode(
+      (client) {
+        return client.getTransaction(
+          addressTypes: addressTypes,
+          nodes: nodes,
+          type: networkType,
+          txHash: parentTxHash,
+        );
+      },
+      client: null,
+      endpoints: networkType.endpoints,
+      token: token,
+    );
+
+    parentTx ??= _tx;
+
+    if (parentTx == null) {
+      Logger.logWarning(
+        &quot;Parent TX $parentTxHash not found for ${tx.hash}&quot;,
+      );
+      continue;
+    }
+
+    final output = parentTx.outputs[outputIndex];
+
+    final address = output.getAddress(networkType);
+
+    updatedUTXOs.add(tx.copyWith(sender: address));
+  }
+  &#47;&#47; Replace the unsupported transactions with the updated ones
+  newUtxoTxs = newUtxoTxs.map((tx) {
+    final updatedTx = updatedUTXOs.singleWhereOrNull(
+      (upTx) =&gt; upTx.id == tx.id,
+    );
+    return updatedTx ?? tx;
+  });
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Fetch UTXO Details for all pending transactions and replace them
+  &#47;&#47;&#47;
+  final pendingUtxoTxs = await computeMissingUTXODetails(
+    txList: pendingTxs,
+    nodes: nodes,
+    type: networkType,
+    endpoints: endpoints,
+    addressTypes: addressTypes,
+  );
+
+  var utxoTXs = {
+    ...newUtxoTxs,
+    ...cachedTransactions,
+  };
+
+  &#47;&#47;&#47; Replace the pending transactions with the updated ones
+  utxoTXs = utxoTXs.map((tx) {
+    final pendingTx = pendingUtxoTxs.singleWhereOrNull(
+      (element) =&gt; element.id == tx.id,
+    );
+    return pendingTx ?? tx;
+  }).toSet();
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Mark Spent Outputs
+  &#47;&#47;&#47;
+  for (final tx in utxoTXs) {
+    for (final input in tx.inputs) {
+      final outputs = utxoTXs
+          .singleWhereOrNull((element) =&gt; element.id == input.txid)
+          ?.outputs;
+
+      if (input.isCoinbase) continue;
+      final index = input.vout!;
+      if (outputs == null || outputs.length &lt;= index) {
+        continue;
+      }
+      outputs[index] = outputs[index].copyWith(spent: true);
+    }
+  }
+
+  watch.stop();
+  Logger.logFetch(&quot;Fetched TXs in ${watch.elapsed}&quot;);
+
+  final sortedTxs = utxoTXs.sortedBy&lt;GenericTransaction&gt;((tx) =&gt; tx).toSet();
+
+  return (sortedTxs, nodes);
 }</code></pre>
 </section>
 

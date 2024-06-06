@@ -87,7 +87,7 @@
   required int index,
   required UTXONetworkType networkType,
   required Iterable&lt;AddressType&gt; addressTypes,
-  required HDWalletPurpose? walletPurpose,
+  required HDWalletPurpose walletPurpose,
 }) {
   if (index &lt; 0) {
     throw UnsupportedError(&quot;index must not be negative&quot;);

@@ -85,7 +85,7 @@
   required UTXONetworkType networkType,
   required HDWalletPath walletPath,
 }) {
-  final masterNode = deriveMasterNodeFromSeed(
+  final masterNode = deriveMasterNode(
     seed: seed,
     networkType: networkType,
     walletPath: walletPath,
