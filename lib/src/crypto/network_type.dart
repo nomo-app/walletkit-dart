@@ -91,9 +91,7 @@ sealed class UTXONetworkType extends NetworkType {
     };
   }
 
-  UTXONetworkType fromJson(Map<String, dynamic> json) {
-    final coinType = json["coinType"] as int;
-
+  static UTXONetworkType fromCoinType(int coinType) {
     return switch (coinType) {
       0 => BitcoinNetwork,
       2 => LitecoinNetwork,

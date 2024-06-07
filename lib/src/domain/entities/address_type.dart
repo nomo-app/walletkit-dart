@@ -17,5 +17,9 @@ enum AddressType {
   @HiveField(5)
   evm,
   @HiveField(6)
-  tron,
+  tron;
+
+  static AddressType fromIndex(int index) {
+    return AddressType.values[index];
+  }
 }

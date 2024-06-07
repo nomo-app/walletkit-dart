@@ -176,13 +176,43 @@ final class UTXOTransaction extends GenericTransaction {
       if (fee != null) 'fee': fee!.toJson(),
       'sender': sender,
       'recipient': recipient,
-      'transferMethod': transferMethod.toString(),
+      'transferMethod': transferMethod.index,
       'status': status.toString(),
       'id': id,
       'version': version,
       'inputs': inputs.map((e) => e.toJson()).toList(),
       'outputs': outputs.map((e) => e.toJson()).toList(),
     };
+  }
+
+  static UTXOTransaction fromJson(Map<String, dynamic> json) {
+    return UTXOTransaction(
+      block: json['block'] as int,
+      fee: json['fee'] != null
+          ? Amount.fromJson(json['fee'] as Map<String, dynamic>)
+          : null,
+      hash: json['hash'] as String,
+      timeMilli: json['timeMilli'] as int,
+      amount: Amount.fromJson(json['amount'] as Map<String, dynamic>),
+      sender: json['sender'] as String,
+      recipient: json['recipient'] as String,
+      token: nullToken, // TODO: Add token to json
+      transferMethod: TransactionTransferMethod.fromIndex(
+        json['transferMethod'] as int,
+      ),
+      confirmations: json['confirmations'] as int,
+      inputs: (json['inputs'] as List<dynamic>)
+          .map((e) => ElectrumInput.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      outputs: (json['outputs'] as List<dynamic>)
+          .map((e) => ElectrumOutput.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      id: json['id'] as String,
+      version: json['version'] as int,
+      status: ConfirmationStatus.fromConfirmations(
+        json['confirmations'] as int,
+      ),
+    );
   }
 }
 

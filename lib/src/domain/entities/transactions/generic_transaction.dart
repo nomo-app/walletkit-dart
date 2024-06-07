@@ -164,6 +164,10 @@ enum TransactionTransferMethod {
     return TransactionTransferMethod.send;
   }
 
+  static TransactionTransferMethod fromIndex(int index) {
+    return values[index];
+  }
+
   final String displayName;
 
   const TransactionTransferMethod(this.displayName);

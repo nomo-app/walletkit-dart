@@ -37,6 +37,17 @@ class UTXONetworkInfo {
       'addresses': addresses.map((e) => e.toJson()).toList(),
     };
   }
+
+  static UTXONetworkInfo fromJson(Map<String, dynamic> json) {
+    return UTXONetworkInfo(
+      transactions: (json['transactions'] as List)
+          .map((e) => UTXOTransaction.fromJson(e))
+          .toList(),
+      addresses: (json['addresses'] as List)
+          .map((e) => NodeWithAddress.fromJson(e))
+          .toList(),
+    );
+  }
 }
 
 Future<UTXOTxInfo> fetchMissingUTXOTransactions({

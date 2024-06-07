@@ -96,11 +96,33 @@ sealed class NodeWithAddress {
 
   Map<String, dynamic> toJson() {
     return {
+      'isReceive': this is ReceiveNode,
       'address': address,
       'derivationPath': derivationPath,
-      //  'addresses': addresses,
+      'addresses': addresses.map((key, value) => MapEntry(key.index, value)),
       'publicKey': publicKey,
     };
+  }
+
+  static NodeWithAddress fromJson(Map<String, dynamic> json) {
+    final isReceive = json['isReceive'] as bool;
+    return isReceive
+        ? ReceiveNode(
+            address: json['address'] as String,
+            derivationPath: json['derivationPath'] as String,
+            addresses: (json['addresses'] as Map).map((key, value) =>
+                MapEntry(AddressType.fromIndex(key as int), value as String)),
+            publicKey: json['publicKey'] as String,
+            walletPurpose: null,
+          )
+        : ChangeNode(
+            address: json['address'] as String,
+            derivationPath: json['derivationPath'] as String,
+            addresses: (json['addresses'] as Map).map((key, value) =>
+                MapEntry(AddressType.fromIndex(key as int), value as String)),
+            publicKey: json['publicKey'] as String,
+            walletPurpose: null,
+          );
   }
 }
 

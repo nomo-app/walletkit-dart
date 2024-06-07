@@ -121,6 +121,13 @@ class Amount extends Equatable {
     };
   }
 
+  static Amount fromJson(Map<String, dynamic> json) {
+    return Amount(
+      value: BigInt.parse(json['value']),
+      decimals: json['decimals'],
+    );
+  }
+
   Amount convertToDecimals(int newDecimals) {
     if (newDecimals == decimals) return this;
 
