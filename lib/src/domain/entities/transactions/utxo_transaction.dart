@@ -209,9 +209,7 @@ final class UTXOTransaction extends GenericTransaction {
           .toList(),
       id: json['id'] as String,
       version: json['version'] as int,
-      status: ConfirmationStatus.fromConfirmations(
-        json['confirmations'] as int,
-      ),
+      status: ConfirmationStatus.values[json['status'] as int],
     );
   }
 }
@@ -331,7 +329,18 @@ class ElectrumInput {
           vout: vout,
           sequence: weight,
         ),
-      _ => throw Exception("Could not parse ElectrumInput from $json"),
+      _ => () {
+          return ElectrumInput(
+            scriptSig: json.get('scriptSig') as String?,
+            sequence: json.get('sequence') as int?,
+            txid: json.get('txid') as String?,
+            vout: json.get('vout') as int?,
+            txinwitness: (json.get('txinwitness') as List?)
+                ?.whereType<String>()
+                .toList(),
+            coinbase: json.get('coinbase') as String?,
+          );
+        }.call(),
     };
   }
 
@@ -379,6 +388,24 @@ class ElectrumOutput {
   /// Bitcoin: { value: float, ... }
 
   factory ElectrumOutput.fromJson(Map<String, dynamic> json) {
+    if (json
+        case {
+          'scriptPubKey': Map<String, dynamic> scriptPubKey,
+          'belongsToUs': bool belongsToUs,
+          'spent': bool spent,
+          'value': String value_bi,
+          'n': int n,
+        }) {
+      return ElectrumOutput(
+        scriptPubKey: ElectrumScriptPubKey.fromJson(scriptPubKey),
+        belongsToUs: belongsToUs,
+        spent: spent,
+        value: BigInt.parse(value_bi),
+        n: n,
+        node: EmptyNode(),
+      );
+    }
+
     final valIsSatoshi =
         json.containsKey('value_satoshi') || json.containsKey('value_int');
 
