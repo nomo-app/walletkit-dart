@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the validateEVMAddress function from the address_validation library, for the Dart programming language.">
-  <title>validateEVMAddress function - address_validation library - Dart API</title>
+  <meta name="description" content="API docs for the getTokenInfo function from the wallet_utils library, for the Dart programming language.">
+  <title>getTokenInfo function - wallet_utils library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation-library.html">src&#47;crypto&#47;evm&#47;address_validation.dart</a></li>
-    <li class="self-crumb">validateEVMAddress function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library.html">src&#47;crypto&#47;wallet_utils.dart</a></li>
+    <li class="self-crumb">getTokenInfo function</li>
   </ol>
-  <div class="self-name">validateEVMAddress</div>
+  <div class="self-name">getTokenInfo</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,18 +53,19 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">validateEVMAddress</span> function 
+<h1><span class="kind-function">getTokenInfo</span> function 
  
 </h1></div>
 
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation/AddressError.html">AddressError</a>?</span>
-<span class="name ">validateEVMAddress</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="validateEVMAddress-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+<span class="name ">getTokenInfo</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="getTokenInfo-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span></li>
+<li><span class="parameter" id="getTokenInfo-param-client"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">client</span>, </span></li>
 </ol>})
 
         
@@ -76,27 +77,43 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">AddressError? validateEVMAddress({required String address}) {
-  if (address.trim().length != address.length) {
-    return AddressError.WHITESPACE;
-  }
-  if (!address.startsWith(&quot;0x&quot;)) {
-    final utxoError = validateUTXOAddress(address: address, token: null).$1;
-    if (utxoError == null) {
-      return AddressError.WRONG_CHAIN;
-    } else {
-      return AddressError.INVALID;
-    }
-  }
+  <pre class="language-dart"><code class="language-dart">Future&lt;TokenInfo?&gt; getTokenInfo({
+  required String contractAddress,
+  required EvmRpcClient client,
+}) async {
+  final tokenContract = ERC20Contract(
+    contractAddress: contractAddress,
+    client: client,
+  );
+
+  print(&quot;contractAddress : $tokenContract&quot;);
+
   try {
-    address;
-    return null;
+    final result = await Future.wait([
+      tokenContract.getDecimals(),
+      tokenContract.getName(),
+      tokenContract.getSymbol(),
+      tokenContract.getSupply(),
+    ]);
+    int decimals = result[0] as int;
+    String name = result[1] as String;
+    String symbol = result[2] as String;
+    BigInt maxSupply = result[3] as BigInt;
+    double maxSupplyDouble = maxSupply.toDouble() &#47; pow(10, decimals);
+
+    print(&quot;decimals : $decimals&quot;);
+    print(&quot;name : $name&quot;);
+    print(&quot;symbol : $symbol&quot;);
+    print(&quot;maxSupply : $maxSupplyDouble&quot;);
+
+    return TokenInfo(
+      decimals: decimals,
+      maxSupply: maxSupplyDouble,
+      symbol: symbol,
+      name: name,
+    );
   } catch (e) {
-    if (e.toString().contains(&quot;not EIP-55 conformant&quot;)) {
-      return AddressError.INVALID_CHECKSUM;
-    } else {
-      return AddressError.INVALID;
-    }
+    return null;
   }
 }</code></pre>
 </section>
@@ -114,12 +131,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_address_validation-library.html">address_validation</a></li>
-    <li class="self-crumb">validateEVMAddress function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library.html">wallet_utils</a></li>
+    <li class="self-crumb">getTokenInfo function</li>
 </ol>
 
 
-    <h5>address_validation library</h5>
+    <h5>wallet_utils library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 

@@ -81,7 +81,7 @@
     throw ArgumentError(&quot;not an EVM address&quot;);
   }
   final stripAddress = address.replaceFirst(&quot;0x&quot;, &quot;&quot;).toLowerCase();
-  final Uint8List keccakHash = web3crypto.keccakUtf8(stripAddress);
+  final Uint8List keccakHash = keccakUtf8(stripAddress);
   final String keccakHashHex = convert.hex.encode(keccakHash);
 
   String checksumAddress = &quot;0x&quot;;
