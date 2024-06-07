@@ -22,6 +22,23 @@ typedef SearchTransactionResult = (
   Set<NodeWithAddress>
 );
 
+class UTXONetworkInfo {
+  final List<UTXOTransaction> transactions;
+  final List<NodeWithAddress> addresses;
+
+  UTXONetworkInfo({
+    required this.transactions,
+    required this.addresses,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'transactions': transactions.map((e) => e.toJson()).toList(),
+      'addresses': addresses.map((e) => e.toJson()).toList(),
+    };
+  }
+}
+
 Future<UTXOTxInfo> fetchMissingUTXOTransactions({
   required Set<UTXOTransaction> cachedTransactions,
   required List<NodeWithAddress> cachedNodes,

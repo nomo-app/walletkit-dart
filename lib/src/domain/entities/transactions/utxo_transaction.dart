@@ -180,6 +180,8 @@ final class UTXOTransaction extends GenericTransaction {
       'status': status.toString(),
       'id': id,
       'version': version,
+      'inputs': inputs.map((e) => e.toJson()).toList(),
+      'outputs': outputs.map((e) => e.toJson()).toList(),
     };
   }
 }
@@ -302,6 +304,17 @@ class ElectrumInput {
       _ => throw Exception("Could not parse ElectrumInput from $json"),
     };
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (scriptSig != null) 'scriptSig': scriptSig,
+      if (sequence != null) 'sequence': sequence,
+      if (txid != null) 'txid': txid,
+      if (vout != null) 'vout': vout,
+      if (txinwitness != null) 'txinwitness': txinwitness,
+      if (coinbase != null) 'coinbase': coinbase,
+    };
+  }
 }
 
 @HiveType(typeId: 5)
@@ -402,6 +415,16 @@ class ElectrumOutput {
   String toString() {
     return 'ElectrumOutput{scriptPubKey: $scriptPubKey, belongsToUs: $belongsToUs, spent: $spent, value: $value, n: $n, node: $node}';
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'scriptPubKey': scriptPubKey.toJson(),
+      'belongsToUs': belongsToUs,
+      'spent': spent,
+      'value': value.toString(),
+      'n': n,
+    };
+  }
 }
 
 int toSatoshiValue(num val) {
@@ -458,6 +481,16 @@ class ElectrumScriptPubKey {
 
   Uint8List get lockingScript {
     return Uint8List.fromList(hex.decode(hexString));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (addresses != null) 'addresses': addresses,
+      if (asm != null) 'asm': asm,
+      'hex': hexString,
+      if (reqSigs != null) 'reqSigs': reqSigs,
+      if (type != null) 'type': type,
+    };
   }
 }
 

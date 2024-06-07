@@ -84,6 +84,25 @@ sealed class UTXONetworkType extends NetworkType {
   String toString() {
     return "UTXONetworkType: ${coin.symbol}";
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "coinType": coinType,
+    };
+  }
+
+  UTXONetworkType fromJson(Map<String, dynamic> json) {
+    final coinType = json["coinType"] as int;
+
+    return switch (coinType) {
+      0 => BitcoinNetwork,
+      2 => LitecoinNetwork,
+      145 => BitcoincashNetwork,
+      999 => ZeniqNetwork,
+      998 => EurocoinNetwork,
+      _ => throw Exception("Invalid coin type: $coinType"),
+    };
+  }
 }
 
 class NetworkBIP {
@@ -304,7 +323,7 @@ class ZENIQ_NETWORK extends UTXONetworkType {
           networkBIP: BITCOIN_NETWORK_BIP,
           pubKeyHashPrefix: 0x6e,
           scriptHashPrefix: 0x6F,
-          coinType: 0,
+          coinType: 999,
           bech32: 'znq',
           txVersion: 2,
           sighash: BCH_SIGHASH_INFO,
@@ -347,7 +366,7 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
           pubKeyHashPrefix: 87, // Only Used Value
           bech32: "",
           scriptHashPrefix: 88,
-          coinType: -1,
+          coinType: 998,
           coin: ec8Coin,
           endpoints: const {
             ("195.201.227.129", 50001),

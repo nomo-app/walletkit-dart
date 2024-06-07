@@ -93,6 +93,15 @@ sealed class NodeWithAddress {
     required this.addresses,
     required this.publicKey,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'address': address,
+      'derivationPath': derivationPath,
+      //  'addresses': addresses,
+      'publicKey': publicKey,
+    };
+  }
 }
 
 @HiveType(typeId: 15)
