@@ -177,7 +177,7 @@ final class UTXOTransaction extends GenericTransaction {
       'sender': sender,
       'recipient': recipient,
       'transferMethod': transferMethod.index,
-      'status': status.toString(),
+      'status': status.index,
       'id': id,
       'version': version,
       'inputs': inputs.map((e) => e.toJson()).toList(),

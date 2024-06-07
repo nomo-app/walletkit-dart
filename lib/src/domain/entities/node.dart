@@ -99,7 +99,10 @@ sealed class NodeWithAddress {
       'isReceive': this is ReceiveNode,
       'address': address,
       'derivationPath': derivationPath,
-      'addresses': addresses.map((key, value) => MapEntry(key.index, value)),
+      'addresses': {
+        for (final entry in addresses.entries)
+          entry.key.index.toString(): entry.value,
+      },
       'publicKey': publicKey,
     };
   }
@@ -110,16 +113,26 @@ sealed class NodeWithAddress {
         ? ReceiveNode(
             address: json['address'] as String,
             derivationPath: json['derivationPath'] as String,
-            addresses: (json['addresses'] as Map).map((key, value) =>
-                MapEntry(AddressType.fromIndex(key as int), value as String)),
+            addresses: (json['addresses'] as Map).map(
+              (key, value) => MapEntry(
+                  AddressType.fromIndex(
+                    int.parse(key as String),
+                  ),
+                  value as String),
+            ),
             publicKey: json['publicKey'] as String,
             walletPurpose: null,
           )
         : ChangeNode(
             address: json['address'] as String,
             derivationPath: json['derivationPath'] as String,
-            addresses: (json['addresses'] as Map).map((key, value) =>
-                MapEntry(AddressType.fromIndex(key as int), value as String)),
+            addresses: (json['addresses'] as Map).map(
+              (key, value) => MapEntry(
+                  AddressType.fromIndex(
+                    int.parse(key as String),
+                  ),
+                  value as String),
+            ),
             publicKey: json['publicKey'] as String,
             walletPurpose: null,
           );
