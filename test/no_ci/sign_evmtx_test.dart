@@ -18,10 +18,6 @@ void main() {
   final testSeed = loadFromEnv("DEV_SEED");
   final privateKey = derivePrivateKeyETH(testSeed);
   test('Sign Evm TX', () {
-    final credentials = getETHCredentials(seed: testSeed);
-
-    final signatureWeb3dart = credentials.signToEcSignature(message);
-
     final signature = Signature.createSignature(message, privateKey);
 
     final publicKey = privateKeyToPublic(bytesToUnsignedInt(privateKey));
@@ -31,9 +27,13 @@ void main() {
 
     expect(recoveredPublicKey.toHex, publicKey.toHex);
 
-    expect(signature.r, signatureWeb3dart.r);
-    expect(signature.s, signatureWeb3dart.s);
-    expect(signature.v, signatureWeb3dart.v);
+    print("Signature: $signature");
+
+    expect(signature.r.toString(),
+        "108416698238142458920766909294412046931924383064358611369366506483536145079069");
+    expect(signature.s.toString(),
+        "38618417914543961133652146298086071310916316687892966422603324842792920587798");
+    expect(signature.v, 28);
   });
 
   test('Sign RawTx and parse it to InternalEVMTransaction', () {

@@ -38,7 +38,7 @@ base class EvmRpcClient {
     }
   }
 
-  Future<String> callRaw({
+  Future<String> call({
     String? sender,
     required String contractAddress,
     required Uint8List data,
@@ -51,8 +51,8 @@ base class EvmRpcClient {
           if (sender != null) 'from': sender,
           'to': contractAddress,
           'data': "0x" + data.toHex,
-          'Quantity': atBlock?.toBlockParam() ?? 'latest',
         },
+        atBlock?.toBlockParam() ?? 'latest',
       ],
     );
 

@@ -1,6 +1,6 @@
-import 'package:web3dart/web3dart.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
 
-final avinocStakingAbi = ContractAbi.fromJson('''
+final avinocStakingAbi = Contract.fromAbi('''
  [
     {
       "inputs": [
@@ -946,4 +946,4 @@ final avinocStakingAbi = ContractAbi.fromJson('''
       "type": "function"
     }
   ]
-''', 'Token');
+''');

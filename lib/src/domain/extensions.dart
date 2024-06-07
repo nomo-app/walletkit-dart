@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/domain/entities/node.dart';
-import 'package:web3dart/credentials.dart';
 // ignore: implementation_imports
 import 'package:pointycastle/src/utils.dart' as p_utils;
 
@@ -69,8 +68,6 @@ extension ConvUtil on String {
   BigInt get toBigIntFromHex => BigInt.parse(this, radix: 16);
 
   BigInt? get toBigIntFromHexOrNull => BigInt.tryParse(this, radix: 16);
-
-  EthereumAddress get toEVMAddress => EthereumAddress.fromHex(this);
 }
 
 extension IterableUtil<E> on Iterable<E> {

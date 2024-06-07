@@ -5,8 +5,6 @@ import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:web3dart/web3dart.dart' as web3;
-import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract_without_web3.dart'
-    as erc;
 
 const _maxTxNumber = 100;
 const _batchSize = 10;
@@ -44,8 +42,8 @@ final class EvmRpcInterface {
     EthBasedTokenEntity token,
   ) async {
     final erc20Contract = ERC20Contract(
-      address: token.contractAddress.toEVMAddress,
-      client: client.asWeb3,
+      contractAddress: token.contractAddress,
+      client: client,
     );
     final balance = await erc20Contract.getBalance(address);
     return Amount(value: balance, decimals: token.decimals);
@@ -315,7 +313,7 @@ final class EvmRpcInterface {
     final erc20 = intent.token as EthBasedTokenEntity;
     final tokenContractAddress = erc20.contractAddress;
 
-    final erc20Contract = erc.ERC20Contract(
+    final erc20Contract = ERC20Contract(
       contractAddress: tokenContractAddress,
       seed: seed,
       client: client,

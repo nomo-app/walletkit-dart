@@ -46,6 +46,6 @@ void main() {
 
     final messageHex = tx.serializedMessageHex;
 
-    expect("0x" + messageHex, unsignedTxFromNomo);
+    expect(messageHex, unsignedTxFromNomo);
   });
 }

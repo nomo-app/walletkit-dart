@@ -18,7 +18,11 @@ class Contract {
       final type = item['type'];
       final name = item['name'];
 
-      if (type == "fallback") {
+      if (name == null) {
+        continue;
+      }
+
+      if (type == "fallback" || type == "constructor" || type == "error") {
         continue;
       }
 
@@ -39,9 +43,10 @@ class Contract {
       for (final param in item["inputs"]) {
         parameters.add(FunctionParam.fromMap(param));
       }
-
-      for (final param in item["outputs"]) {
-        outputs.add(FunctionParam.fromMap(param));
+      if (item["outputs"] != null) {
+        for (final param in item["outputs"]) {
+          outputs.add(FunctionParam.fromMap(param));
+        }
       }
       functions
           .add(ContractFunction(name, parameters, stateMutability, outputs));
@@ -127,6 +132,15 @@ enum FunctionParamType {
   uint256Array("uint256[]"),
   addressArray("address[]"),
   bool("bool"),
+  boolArray("bool[]"),
+  int256Array("int256[]"),
+  stringArray("string[]"),
+  int8Array("int8[]"),
+  uint8Array("uint8[]"),
+  bytes32("bytes32"),
+  int8("int8"),
+  bytes4("bytes4"),
+  uint32("uint32"),
   string("string");
 
   final String abiName;
@@ -143,6 +157,8 @@ enum FunctionParamType {
 
     return enumType;
   }
+
+  String get name => abiName;
 }
 
 extension FunctionParamTypeExtension on FunctionParamType {
@@ -172,6 +188,24 @@ extension FunctionParamTypeExtension on FunctionParamType {
         return "bool";
       case FunctionParamType.string:
         return "string";
+      case FunctionParamType.boolArray:
+        return "bool[]";
+      case FunctionParamType.int256Array:
+        return "int256[]";
+      case FunctionParamType.stringArray:
+        return "string[]";
+      case FunctionParamType.int8Array:
+        return "int8[]";
+      case FunctionParamType.uint8Array:
+        return "uint8[]";
+      case FunctionParamType.bytes32:
+        return "bytes32";
+      case FunctionParamType.int8:
+        return "int8";
+      case FunctionParamType.bytes4:
+        return "bytes4";
+      case FunctionParamType.uint32:
+        return "uint32";
     }
   }
 

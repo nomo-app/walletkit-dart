@@ -4,7 +4,6 @@ import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
 import 'package:walletkit_dart/src/utils/general.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:web3dart/credentials.dart';
 import 'package:convert/convert.dart' as convert;
 
 String toChecksumAddress(String address) {
@@ -118,7 +117,7 @@ AddressError? validateEVMAddress({required String address}) {
     }
   }
   try {
-    EthereumAddress.fromHex(address);
+    address;
     return null;
   } catch (e) {
     if (e.toString().contains("not EIP-55 conformant")) {

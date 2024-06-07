@@ -38,9 +38,6 @@ abstract class InternalContract {
     required List<dynamic> params,
   }) async {
     final data = function.encodFunction(params).hexToBytes;
-
-    print("String ${function.encodFunction(params)}");
-    print("function encoded data: ${data.toHex}");
-    return client.callRaw(contractAddress: contractAddress, data: data);
+    return client.call(contractAddress: contractAddress, data: data);
   }
 }

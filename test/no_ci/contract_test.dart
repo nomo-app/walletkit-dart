@@ -1,11 +1,7 @@
-import 'dart:typed_data';
-import 'package:convert/convert.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
-import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract_without_web3.dart'
-    as erc;
 
 void main() {
   const contractAbiString = '''[
@@ -233,7 +229,7 @@ void main() {
   final arbitrumRPC = EvmRpcInterface(ArbitrumNetwork);
   final testSeed = loadFromEnv("DEV_SEED");
 
-  final ercContract = erc.ERC20Contract(
+  final ercContract = ERC20Contract(
     contractAddress: arbitrum.contractAddress,
     seed: testSeed,
     client: arbitrumRPC.client,
@@ -272,15 +268,11 @@ void main() {
   });
   test('Fetch Name', () async {
     final response = await ercContract.getName();
-    final encoded = hex.decode(response.substring(2));
-    final name = decodeString(Uint8List.fromList(encoded));
-    expect(name, "Arbitrum");
+    expect(response, "Arbitrum");
   });
   test('Fetch Symbol', () async {
     final response = await ercContract.getSymbol();
-    final encoded = hex.decode(response.substring(2));
-    final symbol = decodeString(Uint8List.fromList(encoded));
-    expect(symbol, "ARB");
+    expect(response, "ARB");
   });
   test('Fetch Supply', () async {
     final supply = await ercContract.getSupply();
@@ -302,5 +294,15 @@ void main() {
       spender: arbitrum.contractAddress,
     );
     print("Allowance : $allowance");
+  });
+  test("Token Info", () async{
+
+    final tokenInfo = await getTokenInfo(
+      contractAddress: arbitrum.contractAddress,
+      client: arbitrumRPC.client,
+    );
+
+    print("Token Info : $tokenInfo");
+    
   });
 }
