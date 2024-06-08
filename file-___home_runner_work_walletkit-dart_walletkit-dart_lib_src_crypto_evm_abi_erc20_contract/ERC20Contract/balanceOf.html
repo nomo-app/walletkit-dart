@@ -77,14 +77,12 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; balanceOf({required String address}) async {
-  final function = self.functions[5];
-  assert(function.functionSelector == &quot;70a08231&quot;);
-  final response = await read(
-    function: function,
-    client: client,
-    params: [address],
-  );
-  return response.toBigInt;
+  final function = self.abi.functions[5];
+  assert(checkSignature(function, &#39;70a08231&#39;));
+  final params = [EthereumAddress.fromHex(address)];
+  final response = await read(function, params, null);
+
+  return (response[0] as BigInt);
 }</code></pre>
 </section>
 

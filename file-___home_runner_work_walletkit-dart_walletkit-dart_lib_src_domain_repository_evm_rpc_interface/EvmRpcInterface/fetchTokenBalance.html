@@ -85,8 +85,8 @@
   EthBasedTokenEntity token,
 ) async {
   final erc20Contract = ERC20Contract(
-    contractAddress: token.contractAddress,
-    client: client,
+    address: token.contractAddress.toEVMAddress,
+    client: client.asWeb3,
   );
   final balance = await erc20Contract.getBalance(address);
   return Amount(value: balance, decimals: token.decimals);

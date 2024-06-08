@@ -89,7 +89,7 @@
     }
   }
   try {
-    address;
+    EthereumAddress.fromHex(address);
     return null;
   } catch (e) {
     if (e.toString().contains(&quot;not EIP-55 conformant&quot;)) {
