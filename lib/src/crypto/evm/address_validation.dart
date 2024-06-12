@@ -117,13 +117,57 @@ AddressError? validateEVMAddress({required String address}) {
     }
   }
   try {
-    address;
+    _validate(address);
     return null;
   } catch (e) {
     if (e.toString().contains("not EIP-55 conformant")) {
       return AddressError.INVALID_CHECKSUM;
     } else {
       return AddressError.INVALID;
+    }
+  }
+}
+
+final RegExp _basicAddress =
+    RegExp(r'^(0x)?[0-9a-f]{40}$', caseSensitive: false);
+
+void _validate(String address) {
+  // Basic address validation
+  if (!_basicAddress.hasMatch(address)) {
+    throw ArgumentError.value(
+      address,
+      'address',
+      'Must be a hex string with a length of 40, optionally prefixed with "0x"',
+    );
+  }
+
+  final cleanAddress =
+      address.startsWith('0x') ? address.substring(2) : address;
+
+  if (cleanAddress.toUpperCase() == cleanAddress ||
+      cleanAddress.toLowerCase() == cleanAddress) {
+    return;
+  }
+
+  // Perform EIP-55 checksum validation
+  _validateEIP55Checksum(address);
+}
+
+void _validateEIP55Checksum(String address) {
+  // Strip the '0x' prefix if present
+  final cleanAddress =
+      address.startsWith('0x') ? address.substring(2) : address;
+
+  // Convert to lowercase and compute the hash
+  final hash = keccakAscii(cleanAddress.toLowerCase()).toHex;
+  for (var i = 0; i < 40; i++) {
+    final hashedPos = int.parse(hash[i], radix: 16);
+    if ((hashedPos > 7 && cleanAddress[i].toUpperCase() != cleanAddress[i]) ||
+        (hashedPos <= 7 && cleanAddress[i].toLowerCase() != cleanAddress[i])) {
+      throw ArgumentError(
+        'Address has invalid case-characters and is'
+        'thus not EIP-55 conformant, rejecting. Address was: $address',
+      );
     }
   }
 }
