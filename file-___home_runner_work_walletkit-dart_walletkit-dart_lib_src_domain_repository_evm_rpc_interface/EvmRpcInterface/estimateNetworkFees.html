@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the sendERC20Token method from the EvmRpcInterface class, for the Dart programming language.">
-  <title>sendERC20Token method - EvmRpcInterface class - evm_rpc_interface library - Dart API</title>
+  <meta name="description" content="API docs for the estimateNetworkFees method from the EvmRpcInterface class, for the Dart programming language.">
+  <title>estimateNetworkFees method - EvmRpcInterface class - evm_rpc_interface library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface-library.html">src&#47;domain&#47;repository&#47;evm_rpc_interface.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface-class.html">EvmRpcInterface</a></li>
-    <li class="self-crumb">sendERC20Token method</li>
+    <li class="self-crumb">estimateNetworkFees method</li>
   </ol>
-  <div class="self-name">sendERC20Token</div>
+  <div class="self-name">estimateNetworkFees</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,71 +57,55 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface&#47;EvmRpcInterface-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">sendERC20Token</span> method 
+<h1><span class="kind-method">estimateNetworkFees</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-<span class="name ">sendERC20Token</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="sendERC20Token-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span></li>
-<li><span class="parameter" id="sendERC20Token-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span></li>
-<li><span class="parameter" id="sendERC20Token-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
-</ol>})
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation">dynamic</span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span></span>)</span>&gt;</span></span>
+<span class="name ">estimateNetworkFees</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="estimateNetworkFees-param-intent"><span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span></li>
+<li><span class="parameter" id="estimateNetworkFees-param-from"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span></span></li>
+</ol>)
 
       
 
     </section>
     
-<section class="desc markdown">
-  <p>Send ERC20 Token</p>
-</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendERC20Token({
-  required TransferIntent intent,
-  required String from,
-  required Uint8List seed,
-}) async {
-  assert(intent.token is EthBasedTokenEntity);
-  assert(intent.memo == null);
+  <pre class="language-dart"><code class="language-dart">Future&lt;(Amount, int)&gt; estimateNetworkFees(
+    TransferIntent intent, String from) async {
+  String? dataAsHex = intent.encodedMemo?.toHex;
+  String? dataString;
 
-  final erc20 = intent.token as EthBasedTokenEntity;
-  final tokenContractAddress = erc20.contractAddress;
+  if (dataAsHex != null) {
+    dataString = &quot;0x&quot; + dataAsHex;
+  } else {
+    dataString = null;
+  }
 
-  final erc20Contract = ERC20Contract(
-    contractAddress: tokenContractAddress,
-    seed: seed,
-    client: client,
-  );
-
-  final (gasPrice, gasLimit) = switch (intent.feeInfo) {
-    EvmFeeInformation info =&gt; (info.gasPrice, info.gasLimit),
-    _ =&gt; await client.getGasPrice().then(
-          (bi) async =&gt; (
-            Amount(value: bi, decimals: 18),
-            await estimateGasLimit(
-              intent: intent,
-              ownAddress: from,
-            )
-          ),
-        ),
+  final fallbackGasLimit = switch (intent.token) {
+    ethzkSync =&gt; client.estimateZkSyncFee(
+        from: from,
+        to: intent.recipient,
+        data: dataString,
+      ),
+    _ =&gt; client.estimateGasLimit(to: intent.recipient, data: dataString),
   };
 
-  final nonce = await client.getTransactionCount(from);
-  final rawUnsignedTx = RawEVMTransaction(
-    nonce: nonce,
-    gasPrice: gasPrice.value,
-    gasLimit: gasLimit.toBI,
-    to: intent.recipient,
-    value: intent.amount.value,
-    data: null,
-    chainId: type.chainId.toBigInt,
+  final gasPriceFuture = client.getGasPrice();
+
+  final results = await Future.wait([fallbackGasLimit, gasPriceFuture]);
+
+  final gasPriceAmount = Amount(
+    value: results.last,
+    decimals: intent.token.decimals,
   );
-  return await erc20Contract.sendToken(rawTx: rawUnsignedTx, seed: seed);
+  return (gasPriceAmount, results.first.toInt());
 }</code></pre>
 </section>
 
@@ -140,7 +124,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface-library.html">evm_rpc_interface</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface-class.html">EvmRpcInterface</a></li>
-    <li class="self-crumb">sendERC20Token method</li>
+    <li class="self-crumb">estimateNetworkFees method</li>
 </ol>
 
 

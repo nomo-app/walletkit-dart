@@ -65,7 +65,8 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
 <span class="name ">sendCoin</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="sendCoin-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span></li>
-<li><span class="parameter" id="sendCoin-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>, </span></li>
+<li><span class="parameter" id="sendCoin-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span></li>
+<li><span class="parameter" id="sendCoin-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
 </ol>})
 
       
@@ -82,25 +83,15 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendCoin({
   required TransferIntent intent,
-  required web3.Credentials credentials,
+  required String from,
+  required Uint8List seed,
 }) async {
-  final ethAddress = credentials.address;
-  final fallbackGasLimit = switch (intent.token) {
-    ethzkSync =&gt; GasLimits.ethzkSync.value,
-    ethArbitrum =&gt; GasLimits.ethArb.value,
-    _ =&gt; GasLimits.ethSend.value,
-  };
   final (gasPrice, gasLimit) = switch (intent.feeInfo) {
     EvmFeeInformation info =&gt; (info.gasPrice, info.gasLimit),
-    _ =&gt; await client.getGasPrice().then(
-          (bi) =&gt; (Amount(value: bi, decimals: 18), fallbackGasLimit),
-        ),
+    _ =&gt; await estimateNetworkFees(intent, from),
   };
 
-  final balance = await client.getBalance(toChecksumAddress(ethAddress.hex));
-
-  final gasPriceEther =
-      web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
+  final balance = await client.getBalance(toChecksumAddress(from));
 
   var amountWei = intent.amount;
 
@@ -111,17 +102,27 @@
     throw Failure(&quot;Insufficient funds to pay native gas fee&quot;);
   }
 
-  return await client.asWeb3.sendTransaction(
-    credentials,
-    web3.Transaction(
-      from: ethAddress,
-      to: web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
-      value: web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, amountWei.value),
-      gasPrice: gasPriceEther,
-      maxGas: gasLimit,
-      data: intent.encodedMemo,
-    ),
-    chainId: type.chainId,
+  final nonce = await client.getTransactionCount(from);
+
+  final rawUnsignedTx = RawEVMTransaction(
+    nonce: nonce,
+    gasPrice: gasPrice.value,
+    gasLimit: gasLimit.toBI,
+    to: intent.recipient,
+    value: intent.amount.value,
+    data: intent.encodedMemo,
+    chainId: type.chainId.toBigInt,
+  );
+
+  final privateKey = derivePrivateKeyETH(seed);
+
+  final signedTx = InternalEVMTransaction.signTransaction(
+    rawUnsignedTx,
+    privateKey,
+  );
+
+  return await client.sendRawTransaction(
+    signedTx.serializedMessageHex,
   );
 }</code></pre>
 </section>

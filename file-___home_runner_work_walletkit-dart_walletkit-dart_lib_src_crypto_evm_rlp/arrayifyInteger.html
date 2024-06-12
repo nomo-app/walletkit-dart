@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getTokenInfo function from the web3_client library, for the Dart programming language.">
-  <title>getTokenInfo function - web3_client library - Dart API</title>
+  <meta name="description" content="API docs for the arrayifyInteger function from the rlp library, for the Dart programming language.">
+  <title>arrayifyInteger function - rlp library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../web3_client/web3_client-library.html">src&#47;crypto&#47;wallet_utils.dart</a></li>
-    <li class="self-crumb">getTokenInfo function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">src&#47;crypto&#47;evm&#47;rlp.dart</a></li>
+    <li class="self-crumb">arrayifyInteger function</li>
   </ol>
-  <div class="self-name">getTokenInfo</div>
+  <div class="self-name">arrayifyInteger</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,67 +53,45 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="web3_client&#47;web3_client-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">getTokenInfo</span> function 
+<h1><span class="kind-function">arrayifyInteger</span> function 
  
 </h1></div>
 
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
-<span class="name ">getTokenInfo</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="getTokenInfo-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span></li>
-<li><span class="parameter" id="getTokenInfo-param-client"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">client</span>, </span></li>
-<li><span class="parameter" id="getTokenInfo-param-chainId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">chainId</span>, </span></li>
-</ol>})
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+<span class="name ">arrayifyInteger</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="arrayifyInteger-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">value</span></span></li>
+</ol>)
 
         
 
     </section>
     
+<section class="desc markdown">
+  <p>@param {int} value</p>
+<p>This function takes an integer value and converts it to a Uint8List.</p>
+<p>@returns {Uint8List}</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;TokenInfo?&gt; getTokenInfo({
-  required String contractAddress,
-  required Web3Client client,
-  required int chainId,
-}) async {
-  final address = EthereumAddress.fromHex(contractAddress);
-
-  final tokenContract = ERC20Contract(
-    address: address,
-    client: client,
-    chainId: chainId,
-  );
-
-  try {
-    final result = await Future.wait([
-      tokenContract.getDecimals(),
-      tokenContract.getName(),
-      tokenContract.getSymbol(),
-      tokenContract.getSupply(),
-    ]);
-
-    int decimals = result[0] as int;
-    String name = result[1] as String;
-    String symbol = result[2] as String;
-    double maxSupply = result[3] as double;
-    maxSupply = maxSupply &#47; pow(10, decimals);
-
-    return TokenInfo(
-      decimals: decimals,
-      maxSupply: maxSupply,
-      symbol: symbol,
-      name: name,
-    );
-  } catch (e) {
-    return null;
+  <pre class="language-dart"><code class="language-dart">Uint8List arrayifyInteger(int value) {
+  if (value == 0) {
+    return Uint8List.fromList([0x80]);
   }
+  List&lt;int&gt; result = [];
+  while (value &gt; 0) {
+    result.insert(0, value &amp; 0xff);
+    value &gt;&gt;= 8;
+  }
+
+  return Uint8List.fromList(result);
 }</code></pre>
 </section>
 
@@ -130,12 +108,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../web3_client/web3_client-library.html">web3_client</a></li>
-    <li class="self-crumb">getTokenInfo function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">rlp</a></li>
+    <li class="self-crumb">arrayifyInteger function</li>
 </ol>
 
 
-    <h5>web3_client library</h5>
+    <h5>rlp library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
