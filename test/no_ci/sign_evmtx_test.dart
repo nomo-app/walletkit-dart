@@ -126,16 +126,18 @@ void main() {
 
   test('send erc721 token', () async {
     final intent = TransferIntent(
-      recipient: arbitrumTestWallet,
-      amount: Amount.convert(value: 0.001, decimals: 18),
+      recipient: rejectEVM,
+      amount: Amount.convert(value: 1, decimals: 18),
       feeInfo: null,
       token: avinocETH,
       memo: null,
     );
     final hash = await ethRPC.sendERC721Nft(
       intent: intent,
-      from: arbitrumTestWallet,
+      from: rejectEVM,
       seed: testSeed,
+      contractAddress: "0x7561DEAf4ECf96dc9F0d50B4136046979ACdAD3e",
+      tokenId: 14142,
     );
 
     print("Hash: $hash");

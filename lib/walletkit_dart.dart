@@ -1,7 +1,6 @@
 /// Support for doing something awesome.
 ///
 /// More dartdocs go here.
-library web3_kit;
 
 export 'src/crypto/utxo/send.dart';
 export 'src/crypto/evm/evm_client.dart';

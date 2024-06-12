@@ -2,10 +2,10 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
+import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:web3dart/web3dart.dart' as web3;
 
 const _maxTxNumber = 100;
 const _batchSize = 10;
@@ -369,13 +369,15 @@ final class EvmRpcInterface {
   Future<String> sendERC721Nft({
     required TransferIntent intent,
     required String from,
+    required int tokenId,
+    required String contractAddress,
     required Uint8List seed,
   }) async {
-    final token = intent.token.asEthBased!;
-    final stakingNft = token.stakingNft!;
-    final tokenId = stakingNft.tokenId;
+    // final token = intent.token.asEthBased!;
+    // final stakingNft = token.stakingNft!;
+    // final tokenId = stakingNft.tokenId;
 
-    final contractAddress = token.contractAddress;
+    // final contractAddress = token.contractAddress;
 
     // see https://docs.openzeppelin.com/contracts/2.x/api/token/erc721
     final List<FunctionParam> params = [
@@ -387,13 +389,13 @@ final class EvmRpcInterface {
     final to = intent.recipient;
     // final arguments = [from, to, tokenId];
     // final data = function.encodeCall(arguments);
-    final data = function.encodFunction([from, to, tokenId]);
+    final data = function.encodFunction([from, to, tokenId.toBI]);
     final encodedFunctionData = data.hexToBytes;
     final gasPrice = await client.getGasPrice();
 
     final rawTx = RawEVMTransaction(
       nonce: await client.getTransactionCount(from),
-      gasPrice: gasPrice,
+      gasPrice: gasPrice * BigInt.from(2),
       gasLimit: BigInt.from(500000),
       to: contractAddress,
       value: BigInt.zero,
@@ -550,7 +552,7 @@ final class EvmRpcInterface {
     );
 
     final rawTxs = [
-      for (final Json map in result) web3.TransactionInformation.fromMap(map)
+      for (final Json map in result) TransactionInformation.fromMap(map)
     ];
 
     Logger.log(rawTxs.length.toString() + " ZSC TXs found");
@@ -575,7 +577,7 @@ final class EvmRpcInterface {
   }
 
   Future<ZeniqSmartChainTransaction> _extractTx({
-    required web3.TransactionInformation rawTx,
+    required TransactionInformation rawTx,
     required String address,
     required int currentBlockNumber,
   }) async {
@@ -586,19 +588,19 @@ final class EvmRpcInterface {
     final status = await getConfirmationStatus(rawTx.hash);
 
     final amount = Amount(
-      value: rawTx.value.getValueInUnitBI(web3.EtherUnit.wei),
+      value: rawTx.value,
       decimals: zeniqSmart.decimals,
     );
 
-    final feeVal = rawTx.gasPrice.getInWei * rawTx.gas.toBI;
+    final feeVal = rawTx.gasPrice * rawTx.gas.toBI;
     final fee = Amount(
       value: feeVal,
       decimals: zeniqSmart.decimals,
     );
 
     // when "to" is null, then it is probably a contract creation transaction
-    final recipient = rawTx.to?.hex ?? "Contract Creation";
-    final sender = rawTx.from.hex;
+    final recipient = rawTx.to ?? "Contract Creation";
+    final sender = rawTx.from;
     final transferMethod = TransactionTransferMethod.fromAddress(
       address,
       recipient,

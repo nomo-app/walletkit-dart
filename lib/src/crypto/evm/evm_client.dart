@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
+import 'package:walletkit_dart/src/domain/repository/json_rpc.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:web3dart/json_rpc.dart';
-import 'package:web3dart/web3dart.dart';
 
 const erc20TransferSig = "0xa9059cbb";
 
@@ -14,13 +14,8 @@ base class EvmRpcClient {
   final JsonRPC _rpc;
 
   /// Still needed for some calls
-  final Web3Client _web3Client;
 
-  Web3Client get asWeb3 => _web3Client;
-
-  EvmRpcClient(String rpcUrl)
-      : _rpc = JsonRPC(rpcUrl, HTTPService.client),
-        _web3Client = Web3Client(rpcUrl, HTTPService.client);
+  EvmRpcClient(String rpcUrl) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
 
   Future<T> _call<T>(String function, {List<dynamic>? args}) async {
     try {
