@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/crypto/tron/tron_address.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
-import 'package:web3dart/crypto.dart';
 
 const defaultParameterSize = 32;
 

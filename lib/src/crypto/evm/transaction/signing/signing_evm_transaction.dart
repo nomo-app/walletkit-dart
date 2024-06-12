@@ -27,6 +27,7 @@ class Signature {
     Uint8List privateKey, {
     bool isEIP1559 = false,
     int? chainId,
+    bool hashPayload = true,
   }) {
     final digest = SHA256Digest();
     final signer = ECDSASigner(null, HMac(digest, 64));
@@ -34,8 +35,9 @@ class Signature {
     final key = ECPrivateKey(bytesToUnsignedInt(privateKey), params);
     signer.init(true, PrivateKeyParameter(key));
 
-    payload = keccak256(payload);
-
+    if (hashPayload) {
+      payload = keccak256(payload);
+    }
     var sig = signer.generateSignature(payload) as ECSignature;
 
     if (sig.s.compareTo(params.n >> 1) > 0) {

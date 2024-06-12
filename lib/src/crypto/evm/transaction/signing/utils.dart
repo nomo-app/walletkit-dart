@@ -111,3 +111,11 @@ int extractChainId(int v) {
     throw ArgumentError("v parameter does not contain a chain id");
   }
 }
+
+/// Given a byte array computes its compressed version and returns it as a byte array,
+/// including the leading 02 or 03
+Uint8List compressPublicKey(Uint8List compressedPubKey) {
+  return Uint8List.view(
+    params.curve.decodePoint(compressedPubKey)!.getEncoded(true).buffer,
+  );
+}

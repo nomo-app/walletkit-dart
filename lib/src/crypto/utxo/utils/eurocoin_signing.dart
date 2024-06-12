@@ -2,10 +2,11 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:hex/hex.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:web3dart/crypto.dart' as web3crypto;
 import 'package:pointycastle/src/utils.dart' as p_utils;
 import 'package:bip32/src/utils/ecurve.dart' as ecc;
 import 'package:convert/convert.dart' as convert;
@@ -17,16 +18,16 @@ List<int> nomoIdDerivationPath(int hostId) {
 String ec8Recover({required String message, required String sig}) {
   final messageHash = createEurocoinMessageHash(message);
   final parsedSig = _parseEc8Signature(sig);
-  final pubKeyUncompressed = web3crypto.ecRecover(messageHash, parsedSig);
+  final pubKeyUncompressed = recoverPublicKey(messageHash, parsedSig);
 
   final uncompressedPrefix = [0x04];
-  final pubKeyCompressed = web3crypto.compressPublicKey(
+  final pubKeyCompressed = compressPublicKey(
       Uint8List.fromList(uncompressedPrefix + pubKeyUncompressed));
   final pubKeyHex = convert.hex.encode(pubKeyCompressed);
   return pubKeyHex;
 }
 
-web3crypto.MsgSignature _parseEc8Signature(String signature) {
+Signature _parseEc8Signature(String signature) {
   if (signature.startsWith("0x")) {
     throw Failure("expected to not begin with 0x");
   }
@@ -44,7 +45,7 @@ web3crypto.MsgSignature _parseEc8Signature(String signature) {
   final expectedRecId = (v - BigInt.from(27)) % BigInt.from(4);
   v = expectedRecId + BigInt.from(27);
 
-  return web3crypto.MsgSignature(r, s, v.toInt());
+  return Signature.fromRSV(r, s, v.toInt());
 }
 
 Uint8List createEurocoinMessageHash(String message) {
@@ -66,10 +67,11 @@ Uint8List ec8SignMessage(String message, NodeWithAddress node) {
   // message test vector: https://zeniq.id/safir.com/backend/qrl?n=2f24bc32c0752e835e21&r=/backend/qrll
   final messageHash = createEurocoinMessageHash(message);
   // messageHash test vector: u8	uint8_t[32]	"\xf9\x9b\xf9~\U00000015j\xf1\xd1K\U0000001a\U00000002[\U00000011\x83\U0000001ae\xeb\nH\xa0zⴞ\xa8k\xc4Tn~\x80\xe3"
-  final signature = web3crypto.sign(messageHash, privateKey);
+  final signature =
+      Signature.createSignature(messageHash, privateKey, hashPayload: false);
 
-  final r = padUint8ListTo32(web3crypto.unsignedIntToBytes(signature.r));
-  final s = padUint8ListTo32(web3crypto.unsignedIntToBytes(signature.s));
+  final r = padUint8ListTo32(unsignedIntToBytes(signature.r));
+  final s = padUint8ListTo32(unsignedIntToBytes(signature.s));
   final v = unsignedIntToBytes(BigInt.from(signature.v));
 
   // https://github.com/ethereumjs/ethereumjs-util/blob/8ffe697fafb33cefc7b7ec01c11e3a7da787fe0e/src/signature.ts#L63

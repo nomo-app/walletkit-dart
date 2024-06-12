@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
@@ -367,44 +368,43 @@ final class EvmRpcInterface {
   ///
   Future<String> sendERC721Nft({
     required TransferIntent intent,
-    required web3.Credentials credentials,
+    required String from,
+    required Uint8List seed,
   }) async {
     final token = intent.token.asEthBased!;
     final stakingNft = token.stakingNft!;
     final tokenId = stakingNft.tokenId;
 
-    final contractAddress = web3.EthereumAddress.fromHex(token.contractAddress);
+    final contractAddress = token.contractAddress;
 
     // see https://docs.openzeppelin.com/contracts/2.x/api/token/erc721
-    final List<web3.FunctionParameter> params = [
-      web3.FunctionParameter("from", web3.AddressType()),
-      web3.FunctionParameter("to", web3.AddressType()),
-      web3.FunctionParameter("tokenId", web3.UintType())
+    final List<FunctionParam> params = [
+      FunctionParam(name: "from", type: FunctionParamType.address),
+      FunctionParam(name: "to", type: FunctionParamType.address),
+      FunctionParam(name: "tokenId", type: FunctionParamType.uint),
     ];
-    final function = web3.ContractFunction("transferFrom", params);
-
-    final from = credentials.address;
-    final to = web3.EthereumAddress.fromHex(intent.recipient);
-    final arguments = [from, to, tokenId];
-    final data = function.encodeCall(arguments);
-
+    final function = ContractFunction("transferFrom", params, "nonpayable", []);
+    final to = intent.recipient;
+    // final arguments = [from, to, tokenId];
+    // final data = function.encodeCall(arguments);
+    final data = function.encodFunction([from, to, tokenId]);
+    final encodedFunctionData = data.hexToBytes;
     final gasPrice = await client.getGasPrice();
-    final gasPriceEther =
-        web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice);
 
-    final transaction = web3.Transaction(
-      from: from,
+    final rawTx = RawEVMTransaction(
+      nonce: await client.getTransactionCount(from),
+      gasPrice: gasPrice,
+      gasLimit: BigInt.from(500000),
       to: contractAddress,
-      data: data,
-      gasPrice: gasPriceEther,
-      maxGas: 500000,
+      value: BigInt.zero,
+      data: encodedFunctionData,
+      chainId: type.chainId.toBigInt,
     );
-    return client.asWeb3.sendTransaction(
-      credentials,
-      transaction,
-      chainId: type.chainId,
-      fetchChainIdFromNetworkId: false,
+    final signedTx = InternalEVMTransaction.signTransaction(
+      rawTx,
+      derivePrivateKeyETH(seed),
     );
+    return await client.sendRawTransaction(signedTx.serializedMessageHex);
   }
 
   ///

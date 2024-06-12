@@ -12,6 +12,7 @@ void main() {
   const String unsignedTxFromNomo = // from nomo.signEvmTransaction
       "f38207488502540be4008252089405870f1507d820212e921e1f39f14660336231d188016345785d8a0000808559454e49518080";
   final arbRPC = EvmRpcInterface(ArbitrumNetwork);
+  final ethRPC = EvmRpcInterface(EthereumNetwork);
   final message =
       Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
 
@@ -77,7 +78,7 @@ void main() {
   });
 
   test('Broadcast evm raw tx', () async {
-    final to = "0xa7fa4bb0bba164f999e8c7b83c9da96a3be44616";
+    const to = "0xa7fa4bb0bba164f999e8c7b83c9da96a3be44616";
     final gasLimit = await arbRPC.client.estimateGasLimit(to: to);
     final gasPrice = await arbRPC.client.getGasPrice();
     final nonce = await arbRPC.client.getTransactionCount(to);
@@ -115,6 +116,23 @@ void main() {
     );
 
     final hash = await arbRPC.sendCoin(
+      intent: intent,
+      from: arbitrumTestWallet,
+      seed: testSeed,
+    );
+
+    print("Hash: $hash");
+  });
+
+  test('send erc721 token', () async {
+    final intent = TransferIntent(
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 0.001, decimals: 18),
+      feeInfo: null,
+      token: avinocETH,
+      memo: null,
+    );
+    final hash = await ethRPC.sendERC721Nft(
       intent: intent,
       from: arbitrumTestWallet,
       seed: testSeed,

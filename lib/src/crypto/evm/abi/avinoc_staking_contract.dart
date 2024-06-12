@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 final avinocStakingAbi = Contract.fromAbi('''
  [
