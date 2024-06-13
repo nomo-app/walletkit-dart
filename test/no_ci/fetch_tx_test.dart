@@ -9,10 +9,9 @@ void main() {
       AddressType.segwit,
       //AddressType.compatibility,
     ];
-    final (_, nodes) = await fetchUTXOTransactions(
+    final (_, nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
-      walletTypes: [bitcoinNSHDPath],
       addressTypes: addressTypes,
     );
 

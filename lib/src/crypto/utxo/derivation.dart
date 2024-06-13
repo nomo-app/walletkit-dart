@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:bs58check/bs58check.dart' as bs58check;
+import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 typedef BipNode = bip32.BIP32;
@@ -57,29 +58,44 @@ BipNode deriveMasterNodeFromSeed({
   return node;
 }
 
-BipNode deriveMasterNode({
-  Uint8List? seed,
-  String? ePubKey,
+BipNode deriveMasterNodeFromEpubKeyWithCheck({
+  required String ePubKey,
   required UTXONetworkType networkType,
   required HDWalletPath walletPath,
 }) {
-  if (seed == null && ePubKey == null) {
-    throw UnsupportedError("seed or ePubKey must be provided");
+  final bip32NetworkType =
+      networkType.networkBIP.getForWalletType(walletPath.purpose);
+
+  final (node, version) = deriveMasterNodeFromEpubKey(ePubKey);
+
+  if (version != bip32NetworkType.bip32.public) {
+    throw UnsupportedError("invalid ePubKey");
   }
 
-  if (ePubKey != null && seed == null) {
-    return BipNode.fromBase58(
-        ePubKey,
-        networkType.networkBIP
-            .getForWalletType(walletPath.purpose) //    bipNetworkType,
-        );
+  return node;
+}
+
+(BipNode node, int version) deriveMasterNodeFromEpubKey(String ePubKey) {
+  final buffer = bs58check.decode(ePubKey);
+
+  if (buffer.length != 78) {
+    throw UnsupportedError("invalid ePubKey");
   }
 
-  return deriveMasterNodeFromSeed(
-    seed: seed!,
-    networkType: networkType,
-    walletPath: walletPath,
+  final version = buffer.bytes.getUint32(0);
+
+  final node = BipNode.fromBase58(
+    ePubKey,
+    bip32.NetworkType(
+      wif: 0x80, // Not used for deriving Node
+      bip32: bip32.Bip32Type(
+        public: version,
+        private: 0, // Can be ingored since we are only accepting public keys
+      ),
+    ),
   );
+
+  return (node, version);
 }
 
 NodeWithAddress deriveChildNode({
@@ -88,7 +104,7 @@ NodeWithAddress deriveChildNode({
   required int index,
   required UTXONetworkType networkType,
   required Iterable<AddressType> addressTypes,
-  required HDWalletPurpose walletPurpose,
+  required HDWalletPurpose? walletPurpose,
 }) {
   if (index < 0) {
     throw UnsupportedError("index must not be negative");
@@ -127,7 +143,7 @@ bip32.BIP32 deriveChildNodeFromPath({
   required UTXONetworkType networkType,
   required HDWalletPath walletPath,
 }) {
-  final masterNode = deriveMasterNode(
+  final masterNode = deriveMasterNodeFromSeed(
     seed: seed,
     networkType: networkType,
     walletPath: walletPath,

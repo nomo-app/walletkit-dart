@@ -17,7 +17,7 @@ sealed class NodeWithAddress {
   final Map<AddressType, String> addresses;
 
   @HiveField(3)
-  final HDWalletPurpose walletPurpose;
+  final HDWalletPurpose? walletPurpose;
 
   @HiveField(4)
   final String publicKey;
@@ -60,7 +60,7 @@ sealed class NodeWithAddress {
     required int chainIndex,
     required String derivationPath,
     required Map<AddressType, String> addresses,
-    required HDWalletPurpose walletPurpose,
+    HDWalletPurpose? walletPurpose,
   }) {
     if (chainIndex == EXTERNAL_CHAIN_INDEX) {
       return ReceiveNode(
@@ -87,10 +87,10 @@ sealed class NodeWithAddress {
 
   const NodeWithAddress({
     this.bip32Node,
+    this.walletPurpose,
     required this.address,
     required this.derivationPath,
     required this.addresses,
-    required this.walletPurpose,
     required this.publicKey,
   });
 }

@@ -9,10 +9,9 @@ import 'expected_utxo_tx_hashes.dart';
 void main() {
   group("Fetch Transaction for every Coin with the xpub", () {
     test('fetch BCH transactions xpub dev wallet', () async {
-      final (txList, _) = await fetchUTXOTransactions(
+      final (txList, _) = await fetchUTXOTransactionsFromEpubKey(
         networkType: BitcoincashNetwork,
         ePubKey: rejectXpub,
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy, AddressType.cashaddr],
       );
       expect(txList.length, greaterThanOrEqualTo(14));
@@ -22,9 +21,8 @@ void main() {
     });
 
     test('fetch ZENIQ transactions xpub dev wallet', () async {
-      final (txList, _) = await fetchUTXOTransactions(
+      final (txList, _) = await fetchUTXOTransactionsFromEpubKey(
         ePubKey: rejectXpub,
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -38,12 +36,9 @@ void main() {
         'fetch BTC transactions xpub69TptoZubWfAZAi5TecLSRUjo8cvu5mq6qnbnD29deEzvdvcmy3sDiEYafmg5GD1Yvmr4uKtJadDEdY5ez6wBFSTawd5chLKHxdjw3uYZXw',
         () async {
       // xpub69T.. reported by P
-      final (txList, _) = await fetchUTXOTransactions(
+      final (txList, _) = await fetchUTXOTransactionsFromEpubKey(
         ePubKey:
             "xpub69TptoZubWfAZAi5TecLSRUjo8cvu5mq6qnbnD29deEzvdvcmy3sDiEYafmg5GD1Yvmr4uKtJadDEdY5ez6wBFSTawd5chLKHxdjw3uYZXw",
-        walletTypes: [
-          bitcoinBip44HDPath,
-        ],
         addressTypes: [AddressType.legacy, AddressType.segwit],
         networkType: BitcoinNetwork,
       );
@@ -57,10 +52,9 @@ void main() {
         'fetch ZENIQ transactions xpub68G61RDvXPYULAPVaoK1djUycUqBi6UEYL2CkVZwYNM4FHnCcve7AkgCvmzpCMn48bgxsLgubUfrqznrTadyfkLxeQhtaH7NZ8rhuHfXyS5',
         () async {
       // see issue Nomo-801
-      final (txList, _) = await fetchUTXOTransactions(
+      final (txList, _) = await fetchUTXOTransactionsFromEpubKey(
         ePubKey:
             "xpub68G61RDvXPYULAPVaoK1djUycUqBi6UEYL2CkVZwYNM4FHnCcve7AkgCvmzpCMn48bgxsLgubUfrqznrTadyfkLxeQhtaH7NZ8rhuHfXyS5",
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -74,10 +68,9 @@ void main() {
         'fetch ZENIQ transactions xpub68dxwSLMkhjyHmnpBBXNTDhyUFAaeLVinaDjYXndV9cEn6Dvz5jVMcPRYq6T6XyakjdSnWYmZixUPc6TkYwH64PWPtnj4x3S73F1igAimjr',
         () async {
       // also see issue Nomo-801
-      final (txList, _) = await fetchUTXOTransactions(
+      final (txList, _) = await fetchUTXOTransactionsFromEpubKey(
         ePubKey:
             "xpub68dxwSLMkhjyHmnpBBXNTDhyUFAaeLVinaDjYXndV9cEn6Dvz5jVMcPRYq6T6XyakjdSnWYmZixUPc6TkYwH64PWPtnj4x3S73F1igAimjr",
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -90,10 +83,9 @@ void main() {
     test(
         'fetch ZENIQ transactions xpub69Y1Sk2jpT46Z18PWgpMb2qic9HSqDh6uacrbVu3Vxh7mKhswH15aECHM8hzewP53Vo5L7C6tCXbVXVbhi5qUFxZbmx6hwbiT4aPjoGB7dS',
         () async {
-      final (txList, _) = await fetchUTXOTransactions(
+      final (txList, _) = await fetchUTXOTransactionsFromEpubKey(
         ePubKey:
             "xpub69Y1Sk2jpT46Z18PWgpMb2qic9HSqDh6uacrbVu3Vxh7mKhswH15aECHM8hzewP53Vo5L7C6tCXbVXVbhi5qUFxZbmx6hwbiT4aPjoGB7dS",
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
       );
@@ -104,10 +96,9 @@ void main() {
     });
 
     test('fetch BTC transactions xpub dev wallet', () async {
-      final (legacyTxList, _) = await fetchUTXOTransactions(
+      final (legacyTxList, _) = await fetchUTXOTransactionsFromEpubKey(
         networkType: BitcoinNetwork,
         ePubKey: rejectXpub,
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.legacy, AddressType.segwit],
         minEndpoints: 5,
       );
@@ -118,10 +109,10 @@ void main() {
     });
 
     test('fetch BTC Segwit Transactions xpub reject wallet', () async {
-      final (segwitTxList, segwitNodes) = await fetchUTXOTransactions(
+      final (segwitTxList, segwitNodes) =
+          await fetchUTXOTransactionsFromEpubKey(
         networkType: BitcoinNetwork,
         ePubKey: rejectXpub,
-        walletTypes: [bitcoinNSHDPath],
         addressTypes: [AddressType.segwit],
       );
 

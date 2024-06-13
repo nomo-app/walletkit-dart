@@ -11,8 +11,7 @@ void main() {
     const epubKey =
         "xpub69H9jhEomWFjJQWsFqR9RyoQz7tbjFGukUsh357dvkfKywxkvPEtVPy9p8mq87GJd94uhWyiuKWRgncwMiZ7sJ3no6EQMMRGFGUE1nRrsK4";
 
-    final (txs, _) = await fetchUTXOTransactions(
-      walletTypes: [bitcoinNSHDPath],
+    final (txs, _) = await fetchUTXOTransactionsFromEpubKey(
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
       ePubKey: epubKey,

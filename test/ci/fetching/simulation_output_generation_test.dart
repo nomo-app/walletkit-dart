@@ -263,11 +263,11 @@ Future<UTXOTransaction> fetchUTXOTXByHashAndIndex(
   String hash,
   int nodeIndex,
   int chainIndex,
-  Uint8List? seed,
+  Uint8List seed,
   UTXONetworkType networkType,
 ) async {
   const walletType = bitcoinNSHDPath;
-  final masterNode = deriveMasterNode(
+  final masterNode = deriveMasterNodeFromSeed(
     seed: seed,
     networkType: networkType,
     walletPath: walletType,

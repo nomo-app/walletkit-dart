@@ -38,7 +38,7 @@ void main() {
     final validSimulations = results.where((result) => result.$2).toList();
     final invalidSimulations = results.where((result) => !result.$2).toList();
 
-    expect(validSimulations.length, greaterThanOrEqualTo(250));
     expect(invalidSimulations, isEmpty);
+    expect(validSimulations.length, greaterThanOrEqualTo(250));
   });
 }
