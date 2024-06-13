@@ -23,32 +23,9 @@ class Amount extends Equatable {
   }
 
   /// Converts the given value to the smallest unit of the currency
-  Amount.convert({
+  factory Amount.convert({
     required num value,
-    required this.decimals,
-  }) : value = _toBigInt(value, decimals);
-
-  static BigInt _toBigInt(num value, int decimals) {
-    final double valueDouble = value.toDouble();
-    final double valueWithDecimals = valueDouble * pow(10, decimals);
-
-    print('valueDouble: $valueDouble');
-
-    String valueStr = valueWithDecimals.toStringAsFixed(0);
-    print('valueStr: $valueStr');
-    return BigInt.parse(valueStr);
-  }
-
-  /// Converts the given value to a BigInt
-  /// This is useful when the value is already in the smallest unit of the currency
-  Amount.from({
-    required int value,
-    required this.decimals,
-  }) : value = BigInt.from(value);
-
-  factory Amount.fromDouble({
-    required double value,
-    int? decimals,
+    required int decimals,
   }) {
     final value_s = value.toString();
 
@@ -62,15 +39,20 @@ class Amount extends Equatable {
       throw Exception('Invalid value: $value');
     }
 
-    if (decimals != null) {
-      value_int = value_int * BigInt.from(10).pow(decimals.toInt() - dec);
-    }
+    value_int = value_int * BigInt.from(10).pow(decimals.toInt() - dec);
 
     return Amount(
       value: value_int,
-      decimals: decimals ?? dec,
+      decimals: decimals,
     );
   }
+
+  /// Converts the given value to a BigInt
+  /// This is useful when the value is already in the smallest unit of the currency
+  Amount.from({
+    required int value,
+    required this.decimals,
+  }) : value = BigInt.from(value);
 
   static Amount get zero => Amount(value: BigInt.from(0), decimals: 0);
 
@@ -216,11 +198,5 @@ extension AmountUtil on int {
 
   Amount toAmount(int decimals) {
     return Amount.from(value: this, decimals: decimals);
-  }
-}
-
-extension DoubleAmountUtil on double {
-  Amount get asAmount {
-    return Amount.fromDouble(value: this);
   }
 }
