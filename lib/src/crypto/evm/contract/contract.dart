@@ -78,7 +78,7 @@ class ContractFunction {
     return buffer.sublist(0, 4).toHex;
   }
 
-  String encodFunction(List<dynamic> values) {
+  String encodeFunction(List<dynamic> values) {
     String functionData = "";
     final selector = functionSelector;
     functionData += selector;

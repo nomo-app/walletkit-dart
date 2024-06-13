@@ -19,7 +19,7 @@ abstract class InternalContract {
     required String contractAddress,
     required EvmRpcClient client,
   }) async {
-    final functionData = function.encodFunction([rawTx.to, rawTx.value]);
+    final functionData = function.encodeFunction([rawTx.to, rawTx.value]);
 
     final encodedFunctionData = functionData.hexToBytes;
     final tx = rawTx.copyWith(
@@ -37,7 +37,7 @@ abstract class InternalContract {
     required EvmRpcClient client,
     required List<dynamic> params,
   }) async {
-    final data = function.encodFunction(params).hexToBytes;
+    final data = function.encodeFunction(params).hexToBytes;
     return client.call(contractAddress: contractAddress, data: data);
   }
 }

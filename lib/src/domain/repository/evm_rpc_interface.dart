@@ -389,7 +389,7 @@ final class EvmRpcInterface {
     final to = intent.recipient;
     // final arguments = [from, to, tokenId];
     // final data = function.encodeCall(arguments);
-    final data = function.encodFunction([from, to, tokenId.toBI]);
+    final data = function.encodeFunction([from, to, tokenId.toBI]);
     final encodedFunctionData = data.hexToBytes;
     final gasPrice = await client.getGasPrice();
 
