@@ -127,9 +127,9 @@
     );
 
     final List&lt;NodeWithAddress&gt; newNodes;
-    if (newIndexes.isEmpty)
+    if (newIndexes.isEmpty) {
       newNodes = [];
-    else
+    } else {
       newNodes = await isolateManager.executeTask(
         IsolateTask(
           task: (arg) =&gt; [
@@ -146,6 +146,7 @@
           argument: null,
         ),
       );
+    }
 
     final batchNodes = [
       ...newNodes,

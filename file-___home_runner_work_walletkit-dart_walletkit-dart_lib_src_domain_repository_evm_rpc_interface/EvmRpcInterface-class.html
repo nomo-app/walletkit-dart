@@ -183,19 +183,6 @@
 
 </dd>
 
-        <dt id="estimateNetworkFees" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/estimateNetworkFees.html">estimateNetworkFees</a></span><span class="signature">(<wbr><span class="parameter" id="estimateNetworkFees-param-intent"><span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="estimateNetworkFees-param-from"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation">dynamic</span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span></span>)</span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
         <dt id="fetchAllTransactionsZSC" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/fetchAllTransactionsZSC.html">fetchAllTransactionsZSC</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchAllTransactionsZSC-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchAllTransactionsZSC-param-block"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">block</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
@@ -288,7 +275,7 @@
 </dd>
 
         <dt id="sendCoin" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/sendCoin.html">sendCoin</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendCoin-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendCoin-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="sendCoin-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span></span>})
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/sendCoin.html">sendCoin</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendCoin-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendCoin-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
   </span>
   
@@ -301,7 +288,7 @@
 </dd>
 
         <dt id="sendERC20Token" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/sendERC20Token.html">sendERC20Token</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendERC20Token-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendERC20Token-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="sendERC20Token-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span></span>})
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/sendERC20Token.html">sendERC20Token</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendERC20Token-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendERC20Token-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
   </span>
   
@@ -314,7 +301,7 @@
 </dd>
 
         <dt id="sendERC721Nft" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/sendERC721Nft.html">sendERC721Nft</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendERC721Nft-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendERC721Nft-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="sendERC721Nft-param-tokenId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">tokenId</span>, </span><span class="parameter" id="sendERC721Nft-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="sendERC721Nft-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span></span>})
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface/sendERC721Nft.html">sendERC721Nft</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendERC721Nft-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendERC721Nft-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
   </span>
   

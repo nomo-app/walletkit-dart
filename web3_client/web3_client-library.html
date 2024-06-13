@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="utils library API docs, for the Dart programming language.">
-  <title>utils library - Dart API</title>
+  <meta name="description" content="web3_client library API docs, for the Dart programming language.">
+  <title>web3_client library - Dart API</title>
 
 
   
@@ -29,9 +29,9 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li class="self-crumb">src/crypto/evm/transaction/signing/utils.dart</li>
+    <li class="self-crumb">src/crypto/wallet_utils.dart</li>
   </ol>
-  <div class="self-name">utils</div>
+  <div class="self-name">web3_client</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,13 +53,13 @@
     id="dartdoc-main-content"
     class="main-content"
     data-above-sidebar=""
-    data-below-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library-sidebar.html">
+    data-below-sidebar="web3_client&#47;web3_client-library-sidebar.html">
   
     <div>
       
 
       <h1>
-        <span class="kind-library">src/crypto/evm/transaction/signing/utils</span>
+        <span class="kind-library">src/crypto/wallet_utils</span>
         library 
  
 
@@ -75,32 +75,14 @@
 
 
 
-    <section class="summary offset-anchor" id="properties">
-      <h2>Properties</h2>
-
-      <dl class="properties">
-          <dt id="params" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/params.html">params</a></span>
-  <span class="signature">&#8594; dynamic</span>
-  
-
-</dt>
-<dd>
-  
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
-      </dl>
-    </section>
 
     <section class="summary offset-anchor" id="functions">
       <h2>Functions</h2>
 
       <dl class="callables">
-          <dt id="bytesToUnsignedInt" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/bytesToUnsignedInt.html">bytesToUnsignedInt</a></span><span class="signature">(<wbr><span class="parameter" id="bytesToUnsignedInt-param-bytes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">bytes</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>
+          <dt id="deriveChildNode" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/deriveChildNode.html">deriveChildNode</a></span><span class="signature">(<wbr>{<span class="parameter" id="deriveChildNode-param-masterNode"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">masterNode</span>, </span><span class="parameter" id="deriveChildNode-param-chainIndex"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">chainIndex</span>, </span><span class="parameter" id="deriveChildNode-param-index"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">index</span>, </span><span class="parameter" id="deriveChildNode-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span><span class="parameter" id="deriveChildNode-param-addressTypes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">addressTypes</span>, </span><span class="parameter" id="deriveChildNode-param-walletPurpose"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPurpose</span></span>})
+    <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
 
@@ -111,23 +93,9 @@
 
 </dd>
 
-          <dt id="compressPublicKey" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/compressPublicKey.html">compressPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="compressPublicKey-param-compressedPubKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">compressedPubKey</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Given a byte array computes its compressed version and returns it as a byte array,
-including the leading 02 or 03
-  
-
-</dd>
-
-          <dt id="extractChainId" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/extractChainId.html">extractChainId</a></span><span class="signature">(<wbr><span class="parameter" id="extractChainId-param-v"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">v</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+          <dt id="deriveChildNodeFromPath" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/deriveChildNodeFromPath.html">deriveChildNodeFromPath</a></span><span class="signature">(<wbr>{<span class="parameter" id="deriveChildNodeFromPath-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="deriveChildNodeFromPath-param-childDerivationPath"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">childDerivationPath</span>, </span><span class="parameter" id="deriveChildNodeFromPath-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span><span class="parameter" id="deriveChildNodeFromPath-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span></span>})
+    <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
 
@@ -138,9 +106,9 @@ including the leading 02 or 03
 
 </dd>
 
-          <dt id="privateKeyToPublic" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/privateKeyToPublic.html">privateKeyToPublic</a></span><span class="signature">(<wbr><span class="parameter" id="privateKeyToPublic-param-privateKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">privateKey</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+          <dt id="deriveExtendedPubKey" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/deriveExtendedPubKey.html">deriveExtendedPubKey</a></span><span class="signature">(<wbr>{<span class="parameter" id="deriveExtendedPubKey-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="deriveExtendedPubKey-param-walletPurpose"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPurpose</span>, </span><span class="parameter" id="deriveExtendedPubKey-param-type"><span class="type-annotation">dynamic</span> <span class="parameter-name">type</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -151,9 +119,87 @@ including the leading 02 or 03
 
 </dd>
 
-          <dt id="recoverPublicKey" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/recoverPublicKey.html">recoverPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="recoverPublicKey-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="recoverPublicKey-param-signature"><span class="type-annotation">dynamic</span> <span class="parameter-name">signature</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+          <dt id="deriveMasterNodeFromEpubKey" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/deriveMasterNodeFromEpubKey.html">deriveMasterNodeFromEpubKey</a></span><span class="signature">(<wbr><span class="parameter" id="deriveMasterNodeFromEpubKey-param-ePubKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">ePubKey</span></span>)
+    <span class="returntype parameter">&#8594; (<span class="field"><span class="type-annotation">dynamic</span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span></span>)</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="deriveMasterNodeFromEpubKeyWithCheck" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/deriveMasterNodeFromEpubKeyWithCheck.html">deriveMasterNodeFromEpubKeyWithCheck</a></span><span class="signature">(<wbr>{<span class="parameter" id="deriveMasterNodeFromEpubKeyWithCheck-param-ePubKey"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">ePubKey</span>, </span><span class="parameter" id="deriveMasterNodeFromEpubKeyWithCheck-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span>, </span><span class="parameter" id="deriveMasterNodeFromEpubKeyWithCheck-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span></span>})
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="deriveMasterNodeFromSeed" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/deriveMasterNodeFromSeed.html">deriveMasterNodeFromSeed</a></span><span class="signature">(<wbr>{<span class="parameter" id="deriveMasterNodeFromSeed-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="deriveMasterNodeFromSeed-param-walletPath"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">walletPath</span>, </span><span class="parameter" id="deriveMasterNodeFromSeed-param-networkType"><span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span></span>})
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="deriveNode" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/deriveNode.html">deriveNode</a></span><span class="signature">(<wbr><span class="parameter" id="deriveNode-param-seed"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="deriveNode-param-path"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">path</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="getETHCredentials" class="callable">
+  <span class="name"><a href="../web3_client/getETHCredentials.html">getETHCredentials</a></span><span class="signature">(<wbr>{<span class="parameter" id="getETHCredentials-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="getETHCredentials-param-wipeCache"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">wipeCache</span></span>})
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="getETHCredentialsFromMnemonic" class="callable">
+  <span class="name"><a href="../web3_client/getETHCredentialsFromMnemonic.html">getETHCredentialsFromMnemonic</a></span><span class="signature">(<wbr>{<span class="parameter" id="getETHCredentialsFromMnemonic-param-mnemonic"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">mnemonic</span>, </span><span class="parameter" id="getETHCredentialsFromMnemonic-param-wipeCache"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">wipeCache</span></span>})
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="getTokenInfo" class="callable">
+  <span class="name"><a href="../web3_client/getTokenInfo.html">getTokenInfo</a></span><span class="signature">(<wbr>{<span class="parameter" id="getTokenInfo-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="getTokenInfo-param-client"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">client</span>, </span><span class="parameter" id="getTokenInfo-param-chainId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">chainId</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
   </span>
   
 
@@ -167,6 +213,27 @@ including the leading 02 or 03
       </dl>
     </section>
 
+    <section class="summary offset-anchor" id="typedefs">
+      <h2>Typedefs</h2>
+
+      <dl>
+          
+  <dt id="BipNode" class="">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/BipNode.html">BipNode</a></span>
+    = dynamic
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+
+      </dl>
+    </section>
 
 
   </div> <!-- /.main-content -->
@@ -181,7 +248,7 @@ including the leading 02 or 03
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li class="self-crumb">src/crypto/evm/transaction/signing/utils.dart</li>
+    <li class="self-crumb">src/crypto/wallet_utils.dart</li>
 </ol>
 
 
@@ -196,7 +263,6 @@ including the leading 02 or 03
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">src/crypto/evm/rlp</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">src/crypto/evm/signing</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">src/crypto/evm/transaction/raw_evm_transaction</a></li>
-      <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library.html">src/crypto/evm/transaction/signing/utils</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type-library.html">src/crypto/network_type</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tron_http_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tron_http_repository-library.html">src/crypto/tron/domain/tron_http_repository</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tronscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tronscan_repository-library.html">src/crypto/tron/domain/tronscan_repository</a></li>
@@ -210,7 +276,7 @@ including the leading 02 or 03
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utils_eurocoin_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utils_eurocoin_signing-library.html">src/crypto/utxo/utils/eurocoin_signing</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer-library.html">src/crypto/utxo/utxo_analyzer</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_receive_addresses/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_receive_addresses-library.html">src/crypto/utxo/utxo_receive_addresses</a></li>
-      <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library.html">src/crypto/wallet_utils</a></li>
+      <li><a href="../web3_client/web3_client-library.html">src/crypto/wallet_utils</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_constants-library.html">src/domain/constants</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type-library.html">src/domain/entities/address_type</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity-library.html">src/domain/entities/asset/staking_nft_entity</a></li>
@@ -233,13 +299,13 @@ including the leading 02 or 03
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_predefined_assets/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_predefined_assets-library.html">src/domain/predefined_assets</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src/domain/repository/etherscan_repository</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface-library.html">src/domain/repository/evm_rpc_interface</a></li>
-      <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_walletkit_dart/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_walletkit_dart-library.html">walletkit_dart</a></li>
+      <li><a href="../web3_kit/web3_kit-library.html">walletkit_dart</a></li>
 </ol>
 
   </div>
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-    <h5>utils library</h5>
+    <h5>web3_client library</h5>
   </div><!--/sidebar-offcanvas-right-->
 
 </main>
