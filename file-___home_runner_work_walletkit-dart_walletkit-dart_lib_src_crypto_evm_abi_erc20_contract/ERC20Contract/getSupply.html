@@ -63,7 +63,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
 <span class="name ">getSupply</span>(<wbr>)
 
       
@@ -75,11 +75,15 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;double&gt; getSupply() async {
-  final function = self.abi.functions[2];
-  assert(checkSignature(function, &#39;18160ddd&#39;));
-  final response = await read(function, [], null);
-  return (response[0] as BigInt).toDouble();
+  <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; getSupply() async {
+  final function = self.functions[2];
+  assert(function.functionSelector == &quot;18160ddd&quot;);
+  final response = await read(
+    function: function,
+    client: client,
+    params: [],
+  );
+  return response.toBigInt;
 }</code></pre>
 </section>
 
