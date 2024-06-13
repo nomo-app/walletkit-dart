@@ -79,7 +79,7 @@
   <pre class="language-dart"><code class="language-dart">Amount.convert({
   required num value,
   required this.decimals,
-}) : value = _toBigInt(value, decimals);</code></pre>
+}) : value = BigInt.from(value * pow(10, decimals));</code></pre>
 </section>
 
 

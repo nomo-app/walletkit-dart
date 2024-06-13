@@ -72,7 +72,8 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final contractAbiErc20 = Contract.fromAbi(&#39;&#39;&#39;[
+  <pre class="language-dart"><code class="language-dart">final contractAbiErc20 = ContractAbi.fromJson(
+  &#39;&#39;&#39;[
   {
     &quot;constant&quot;: true,
     &quot;inputs&quot;: [],
@@ -294,7 +295,9 @@
     &quot;type&quot;: &quot;event&quot;
   }
 ]
- &#39;&#39;&#39;);</code></pre>
+ &#39;&#39;&#39;,
+  &#39;Token&#39;,
+);</code></pre>
 </section>
 
 

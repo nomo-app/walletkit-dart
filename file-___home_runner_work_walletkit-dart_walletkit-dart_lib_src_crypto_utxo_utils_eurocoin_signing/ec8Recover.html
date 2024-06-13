@@ -80,10 +80,10 @@
   <pre class="language-dart"><code class="language-dart">String ec8Recover({required String message, required String sig}) {
   final messageHash = createEurocoinMessageHash(message);
   final parsedSig = _parseEc8Signature(sig);
-  final pubKeyUncompressed = recoverPublicKey(messageHash, parsedSig);
+  final pubKeyUncompressed = web3crypto.ecRecover(messageHash, parsedSig);
 
   final uncompressedPrefix = [0x04];
-  final pubKeyCompressed = compressPublicKey(
+  final pubKeyCompressed = web3crypto.compressPublicKey(
       Uint8List.fromList(uncompressedPrefix + pubKeyUncompressed));
   final pubKeyHex = convert.hex.encode(pubKeyCompressed);
   return pubKeyHex;

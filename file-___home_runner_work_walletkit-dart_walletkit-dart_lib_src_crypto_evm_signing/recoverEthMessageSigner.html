@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the abiList property from the function_signature library, for the Dart programming language.">
-  <title>abiList property - function_signature library - Dart API</title>
+  <meta name="description" content="API docs for the recoverEthMessageSigner function from the signing library, for the Dart programming language.">
+  <title>recoverEthMessageSigner function - signing library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">src&#47;crypto&#47;evm&#47;function_signature.dart</a></li>
-    <li class="self-crumb">abiList property</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">src&#47;crypto&#47;evm&#47;signing.dart</a></li>
+    <li class="self-crumb">recoverEthMessageSigner function</li>
   </ol>
-  <div class="self-name">abiList</div>
+  <div class="self-name">recoverEthMessageSigner</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,34 +53,43 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-top-level-property">abiList</span> top-level property 
+<h1><span class="kind-function">recoverEthMessageSigner</span> function 
  
 </h1></div>
 
-        <section class="multi-line-signature">
-          
-          <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>
-          <span class="name ">abiList</span>
-          <div class="features"><span class="feature">getter/setter pair</span></div>
-
-        </section>
+    <section class="multi-line-signature">
         
 
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">recoverEthMessageSigner</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="recoverEthMessageSigner-param-message"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span></li>
+<li><span class="parameter" id="recoverEthMessageSigner-param-signature"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">signature</span>, </span></li>
+</ol>})
+
         
+
+    </section>
+    
+
+
+    
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">List&lt;ContractAbi&gt; abiList = [
-  contractAbiDemoContract,
-  contractAbiNomoDevToken,
-  contractAbiErc20,
-  contractAbiErc721,
-  avinocStakingAbi
-];</code></pre>
-</section>
+  <pre class="language-dart"><code class="language-dart">String recoverEthMessageSigner({
+  required String message,
+  required String signature,
+}) {
+  final messageHash = _createEthStyleMessageHash(message);
+  final sig = _parseEthSignature(signature);
+  final recoveredSignerPubKey = web3crypto.ecRecover(messageHash, sig);
 
+  final recoveredSignerAddress =
+      EthereumAddress.fromPublicKey(recoveredSignerPubKey).hex;
+  return toChecksumAddress(recoveredSignerAddress);
+}</code></pre>
+</section>
 
 
   </div> <!-- /.main-content -->
@@ -95,12 +104,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_function_signature-library.html">function_signature</a></li>
-    <li class="self-crumb">abiList property</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">signing</a></li>
+    <li class="self-crumb">recoverEthMessageSigner function</li>
 </ol>
 
 
-    <h5>function_signature library</h5>
+    <h5>signing library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
