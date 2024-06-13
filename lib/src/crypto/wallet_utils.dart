@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 // import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
@@ -39,40 +42,36 @@ Future<TokenInfo?> getTokenInfo({
   }
 }
 
-// Credentials? _cachedEVMCredentials;
+String publicKeyToAddress(Uint8List seed) {
+  final publicKey = derivePublicKeyETH(seed);
+  final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
+  return '0x' + pubKeyWithoutPrefix.sublist(12).toHex;
+}
 
-// Credentials getETHCredentials({
-//   required Uint8List seed,
-//   bool? wipeCache,
-// }) {
-//   if (wipeCache == true) {
-//     _cachedEVMCredentials = null;
-//   }
-//   // caching: prevent the expensive mnemonicToSeed from being called too often!
-//   if (_cachedEVMCredentials == null) {
-//     final privateKey = derivePrivateKeyETH(seed);
-//     final privKeyHex = privateKey.toHex;
-//     _cachedEVMCredentials = EthPrivateKey.fromHex(privKeyHex);
-//   }
-//   return _cachedEVMCredentials!;
-// }
+String pubKeytoChecksumETHAddress(Uint8List seed) {
+  final publicKey = derivePublicKeyETH(seed);
+  final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
 
-// Credentials getETHCredentialsFromMnemonic({
-//   required String mnemonic,
-//   bool? wipeCache,
-// }) {
-//   if (wipeCache == true) {
-//     _cachedEVMCredentials = null;
-//   }
-//   // caching: prevent the expensive mnemonicToSeed from being called too often!
-//   if (_cachedEVMCredentials == null) {
-//     final seed = bip39.mnemonicToSeed(mnemonic);
-//     final privateKey = derivePrivateKeyETH(seed);
-//     final privKeyHex = privateKey.toHex;
-//     _cachedEVMCredentials = EthPrivateKey.fromHex(privKeyHex);
-//   }
-//   return _cachedEVMCredentials!;
-// }
+  final address = '0x' + pubKeyWithoutPrefix.sublist(12).toHex;
+
+  final addressWithoutPrefix = address.replaceFirst('0x', '').toLowerCase();
+
+  // Compute the keccak-256 hash of the address
+  final hash = keccak256(utf8.encode(addressWithoutPrefix));
+  final hashHex = hex.encode(hash);
+
+  // Apply the checksum
+  final checksummedAddress = StringBuffer('0x');
+  for (int i = 0; i < addressWithoutPrefix.length; i++) {
+    if (int.parse(hashHex[i], radix: 16) > 7) {
+      checksummedAddress.write(addressWithoutPrefix[i].toUpperCase());
+    } else {
+      checksummedAddress.write(addressWithoutPrefix[i].toLowerCase());
+    }
+  }
+
+  return checksummedAddress.toString();
+}
 
 Uint8List derivePrivateKeyETH(Uint8List seed) {
   final node = bip32.BIP32.fromSeed(seed);
