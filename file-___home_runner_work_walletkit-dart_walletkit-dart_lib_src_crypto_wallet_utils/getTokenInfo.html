@@ -86,8 +86,6 @@
     client: client,
   );
 
-  print(&quot;contractAddress : $tokenContract&quot;);
-
   try {
     final result = await Future.wait([
       tokenContract.getDecimals(),
@@ -100,11 +98,6 @@
     String symbol = result[2] as String;
     BigInt maxSupply = result[3] as BigInt;
     double maxSupplyDouble = maxSupply.toDouble() &#47; pow(10, decimals);
-
-    print(&quot;decimals : $decimals&quot;);
-    print(&quot;name : $name&quot;);
-    print(&quot;symbol : $symbol&quot;);
-    print(&quot;maxSupply : $maxSupplyDouble&quot;);
 
     return TokenInfo(
       decimals: decimals,
