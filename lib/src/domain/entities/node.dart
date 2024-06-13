@@ -146,7 +146,7 @@ class ReceiveNodeAdapter extends TypeAdapter<ReceiveNode> {
       address: fields[0] as String,
       derivationPath: fields[1] as String,
       addresses: (fields[2] as Map).cast<AddressType, String>(),
-      walletPurpose: fields[3] as HDWalletPurpose,
+      walletPurpose: fields[3] as HDWalletPurpose?,
       publicKey: fields[4] as String,
     );
   }
@@ -192,7 +192,7 @@ class ChangeNodeAdapter extends TypeAdapter<ChangeNode> {
       address: fields[0] as String,
       derivationPath: fields[1] as String,
       addresses: (fields[2] as Map).cast<AddressType, String>(),
-      walletPurpose: fields[3] as HDWalletPurpose,
+      walletPurpose: fields[3] as HDWalletPurpose?,
       publicKey: fields[4] as String,
     );
   }
