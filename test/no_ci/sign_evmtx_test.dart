@@ -143,9 +143,7 @@ void main() {
     print("Hash: $hash");
   });
   test('derive eth address from pubkey', () {
-    final address = publicKeyToAddress(testSeed);
     final checksumAddress = pubKeytoChecksumETHAddress(testSeed);
     expect(arbitrumTestWallet, checksumAddress);
-    expect(arbitrumTestWallet.toLowerCase(), address);
   });
 }

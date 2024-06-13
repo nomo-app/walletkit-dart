@@ -20,6 +20,18 @@ String signEvmTransaction({
   return signedTx.serializedMessageHex;
 }
 
+String recoverEthMessageSigner({
+  required String message,
+  required String signature,
+}) {
+  final messageHash = _createEthStyleMessageHash(message);
+  final sig = _parseEthSignature(signature);
+  final recoveredSignerPubKey = recoverPublicKey(messageHash, sig);
+
+  final recoveredSignerAddress = publicKeyToAddress(recoveredSignerPubKey);
+  return toChecksumAddress(recoveredSignerAddress);
+}
+
 String recoverPubKey({
   required String message,
   required String sig,

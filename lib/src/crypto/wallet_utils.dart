@@ -6,6 +6,7 @@ import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 // import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
+import 'package:bip39/bip39.dart' as bip39;
 
 export './utxo/derivation.dart';
 
@@ -42,8 +43,7 @@ Future<TokenInfo?> getTokenInfo({
   }
 }
 
-String publicKeyToAddress(Uint8List seed) {
-  final publicKey = derivePublicKeyETH(seed);
+String publicKeyToAddress(Uint8List publicKey) {
   final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
   return '0x' + pubKeyWithoutPrefix.sublist(12).toHex;
 }
@@ -71,6 +71,14 @@ String pubKeytoChecksumETHAddress(Uint8List seed) {
   }
 
   return checksummedAddress.toString();
+}
+
+String getETHAddressFromMnemonic({
+  required String mnemonic,
+}) {
+  final seed = bip39.mnemonicToSeed(mnemonic);
+  final publicKey = derivePublicKeyETH(seed);
+  return publicKeyToAddress(publicKey);
 }
 
 Uint8List derivePrivateKeyETH(Uint8List seed) {
