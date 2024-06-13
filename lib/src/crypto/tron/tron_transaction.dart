@@ -204,8 +204,6 @@ Uint8List createTxSignature({
   final sig =
       Signature.createSignature(txID, credentials.$1, hashPayload: false);
 
-  print(credentials.$2.toHex);
-
   final r = padUint8ListTo32(sig.r.bigIntToBytes);
   final s = padUint8ListTo32(sig.s.bigIntToBytes);
   final v = (BigInt.from(sig.v)).bigIntToBytes;

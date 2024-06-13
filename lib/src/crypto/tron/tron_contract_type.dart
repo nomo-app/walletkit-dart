@@ -172,8 +172,6 @@ sealed class TronTriggerSmartContractData extends TronContractData {
     final data = contract.data.toUint8List;
     final functionSelector = getFunctionSelectorFromData(data);
 
-    print(getFunctionSignature(TronTRC20TransferContractData.selector).toHex);
-
     return switch (functionSelector) {
       TronTRC20TransferContractData.selector =>
         TronTRC20TransferContractData.fromPB(

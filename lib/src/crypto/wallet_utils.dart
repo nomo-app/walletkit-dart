@@ -15,8 +15,6 @@ Future<TokenInfo?> getTokenInfo({
     client: client,
   );
 
-  print("contractAddress : $tokenContract");
-
   try {
     final result = await Future.wait([
       tokenContract.getDecimals(),
@@ -29,11 +27,6 @@ Future<TokenInfo?> getTokenInfo({
     String symbol = result[2] as String;
     BigInt maxSupply = result[3] as BigInt;
     double maxSupplyDouble = maxSupply.toDouble() / pow(10, decimals);
-
-    print("decimals : $decimals");
-    print("name : $name");
-    print("symbol : $symbol");
-    print("maxSupply : $maxSupplyDouble");
 
     return TokenInfo(
       decimals: decimals,
