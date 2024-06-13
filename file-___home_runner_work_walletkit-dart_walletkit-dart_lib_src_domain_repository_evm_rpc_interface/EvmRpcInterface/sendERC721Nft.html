@@ -106,7 +106,7 @@
   final to = intent.recipient;
   &#47;&#47; final arguments = [from, to, tokenId];
   &#47;&#47; final data = function.encodeCall(arguments);
-  final data = function.encodFunction([from, to, tokenId.toBI]);
+  final data = function.encodeFunction([from, to, tokenId.toBI]);
   final encodedFunctionData = data.hexToBytes;
   final gasPrice = await client.getGasPrice();
 
