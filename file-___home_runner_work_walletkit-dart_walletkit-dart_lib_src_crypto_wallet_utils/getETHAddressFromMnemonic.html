@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the publicKeyToAddress function from the wallet_utils library, for the Dart programming language.">
-  <title>publicKeyToAddress function - wallet_utils library - Dart API</title>
+  <meta name="description" content="API docs for the getETHAddressFromMnemonic function from the wallet_utils library, for the Dart programming language.">
+  <title>getETHAddressFromMnemonic function - wallet_utils library - Dart API</title>
 
 
   
@@ -30,9 +30,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
     <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library.html">src&#47;crypto&#47;wallet_utils.dart</a></li>
-    <li class="self-crumb">publicKeyToAddress function</li>
+    <li class="self-crumb">getETHAddressFromMnemonic function</li>
   </ol>
-  <div class="self-name">publicKeyToAddress</div>
+  <div class="self-name">getETHAddressFromMnemonic</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -56,7 +56,7 @@
       data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">publicKeyToAddress</span> function 
+<h1><span class="kind-function">getETHAddressFromMnemonic</span> function 
  
 </h1></div>
 
@@ -64,8 +64,8 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-<span class="name ">publicKeyToAddress</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="publicKeyToAddress-param-publicKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">publicKey</span></span></li>
-</ol>)
+<span class="name ">getETHAddressFromMnemonic</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="getETHAddressFromMnemonic-param-mnemonic"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">mnemonic</span>, </span></li>
+</ol>})
 
         
 
@@ -76,9 +76,12 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">String publicKeyToAddress(Uint8List publicKey) {
-  final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
-  return &#39;0x&#39; + pubKeyWithoutPrefix.sublist(12).toHex;
+  <pre class="language-dart"><code class="language-dart">String getETHAddressFromMnemonic({
+  required String mnemonic,
+}) {
+  final seed = bip39.mnemonicToSeed(mnemonic);
+  final publicKey = derivePublicKeyETH(seed);
+  return publicKeyToAddress(publicKey);
 }</code></pre>
 </section>
 
@@ -96,7 +99,7 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
     <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library.html">wallet_utils</a></li>
-    <li class="self-crumb">publicKeyToAddress function</li>
+    <li class="self-crumb">getETHAddressFromMnemonic function</li>
 </ol>
 
 

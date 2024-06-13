@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the publicKeyToAddress function from the wallet_utils library, for the Dart programming language.">
-  <title>publicKeyToAddress function - wallet_utils library - Dart API</title>
+  <meta name="description" content="API docs for the recoverEthMessageSigner function from the signing library, for the Dart programming language.">
+  <title>recoverEthMessageSigner function - signing library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library.html">src&#47;crypto&#47;wallet_utils.dart</a></li>
-    <li class="self-crumb">publicKeyToAddress function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">src&#47;crypto&#47;evm&#47;signing.dart</a></li>
+    <li class="self-crumb">recoverEthMessageSigner function</li>
   </ol>
-  <div class="self-name">publicKeyToAddress</div>
+  <div class="self-name">recoverEthMessageSigner</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,10 +53,10 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">publicKeyToAddress</span> function 
+<h1><span class="kind-function">recoverEthMessageSigner</span> function 
  
 </h1></div>
 
@@ -64,8 +64,9 @@
         
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-<span class="name ">publicKeyToAddress</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="publicKeyToAddress-param-publicKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">publicKey</span></span></li>
-</ol>)
+<span class="name ">recoverEthMessageSigner</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="recoverEthMessageSigner-param-message"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span></li>
+<li><span class="parameter" id="recoverEthMessageSigner-param-signature"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">signature</span>, </span></li>
+</ol>})
 
         
 
@@ -76,9 +77,16 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">String publicKeyToAddress(Uint8List publicKey) {
-  final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
-  return &#39;0x&#39; + pubKeyWithoutPrefix.sublist(12).toHex;
+  <pre class="language-dart"><code class="language-dart">String recoverEthMessageSigner({
+  required String message,
+  required String signature,
+}) {
+  final messageHash = _createEthStyleMessageHash(message);
+  final sig = _parseEthSignature(signature);
+  final recoveredSignerPubKey = recoverPublicKey(messageHash, sig);
+
+  final recoveredSignerAddress = publicKeyToAddress(recoveredSignerPubKey);
+  return toChecksumAddress(recoveredSignerAddress);
 }</code></pre>
 </section>
 
@@ -95,12 +103,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_wallet_utils-library.html">wallet_utils</a></li>
-    <li class="self-crumb">publicKeyToAddress function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">signing</a></li>
+    <li class="self-crumb">recoverEthMessageSigner function</li>
 </ol>
 
 
-    <h5>wallet_utils library</h5>
+    <h5>signing library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 
