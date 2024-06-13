@@ -2957,6 +2957,18 @@
 
 </dd>
 
+          <dt id="params" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/params.html">params</a></span>
+  <span class="signature">&#8594; dynamic</span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
           <dt id="supportedPaths" class="property">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/supportedPaths.html">supportedPaths</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPath-class.html">HDWalletPath</a></span>&gt;</span></span>
@@ -3174,6 +3186,19 @@ Includes a safety margin so that changes in the Amount dont lead to a different 
 
 </dd>
 
+          <dt id="bytesToUnsignedInt" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/bytesToUnsignedInt.html">bytesToUnsignedInt</a></span><span class="signature">(<wbr><span class="parameter" id="bytesToUnsignedInt-param-bytes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">bytes</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
           <dt id="calculateFee" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_send/calculateFee.html">calculateFee</a></span><span class="signature">(<wbr>{<span class="parameter" id="calculateFee-param-tx"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tx</span>, </span><span class="parameter" id="calculateFee-param-feePerByte"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">feePerByte</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>
@@ -3211,6 +3236,20 @@ Includes a safety margin so that changes in the Amount dont lead to a different 
   Used for calculating the bandwidth of a transaction (Size in Bytes)
 Builds a Dummy Transaction and calculates the size of the transaction
 <a href="https://github.com/tronprotocol/wallet-cli/issues/292">https://github.com/tronprotocol/wallet-cli/issues/292</a>
+  
+
+</dd>
+
+          <dt id="compressPublicKey" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/compressPublicKey.html">compressPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="compressPublicKey-param-compressedPubKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">compressedPubKey</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Given a byte array computes its compressed version and returns it as a byte array,
+including the leading 02 or 03
   
 
 </dd>
@@ -3658,6 +3697,19 @@ Builds a Dummy Transaction and calculates the size of the transaction
 
 </dd>
 
+          <dt id="extractChainId" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/extractChainId.html">extractChainId</a></span><span class="signature">(<wbr><span class="parameter" id="extractChainId-param-v"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">v</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
           <dt id="extractUTXOs" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utxo_analyzer/extractUTXOs.html">extractUTXOs</a></span><span class="signature">(<wbr>{<span class="parameter" id="extractUTXOs-param-txList"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a></span> <span class="parameter-name">txList</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span>
@@ -3841,6 +3893,19 @@ if <code>purpose</code> is not provied the returned <code>nodes</code> cant be u
 
 </dd>
 
+          <dt id="privateKeyToPublic" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/privateKeyToPublic.html">privateKeyToPublic</a></span><span class="signature">(<wbr><span class="parameter" id="privateKeyToPublic-param-privateKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">privateKey</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
           <dt id="proofOfPayment" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_proof_of_payment/proofOfPayment.html">proofOfPayment</a></span><span class="signature">(<wbr>{<span class="parameter" id="proofOfPayment-param-txid"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">txid</span>, </span><span class="parameter" id="proofOfPayment-param-nonce"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">nonce</span>, </span><span class="parameter" id="proofOfPayment-param-nodes"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">nodes</span>, </span><span class="parameter" id="proofOfPayment-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="proofOfPayment-param-networkType"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">networkType</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_proof_of_payment/POPResult-class.html">POPResult</a></span>&gt;</span></span>
@@ -3890,6 +3955,19 @@ if <code>purpose</code> is not provied the returned <code>nodes</code> cant be u
 <dd>
   For a given <code>hash</code> and <code>serializedTx</code> we check if the transaction is already in the mempool
 If not we rebroadcast the transaction until at least half of the nodes have the transaction
+  
+
+</dd>
+
+          <dt id="recoverPublicKey" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/recoverPublicKey.html">recoverPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="recoverPublicKey-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="recoverPublicKey-param-signature"><span class="type-annotation">dynamic</span> <span class="parameter-name">signature</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
   
 
 </dd>
@@ -4344,6 +4422,7 @@ If not we rebroadcast the transaction until at least half of the nodes have the 
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">src/crypto/evm/rlp</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">src/crypto/evm/signing</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">src/crypto/evm/transaction/raw_evm_transaction</a></li>
+      <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library.html">src/crypto/evm/transaction/signing/utils</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_network_type-library.html">src/crypto/network_type</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tron_http_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tron_http_repository-library.html">src/crypto/tron/domain/tron_http_repository</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tronscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_domain_tronscan_repository-library.html">src/crypto/tron/domain/tronscan_repository</a></li>

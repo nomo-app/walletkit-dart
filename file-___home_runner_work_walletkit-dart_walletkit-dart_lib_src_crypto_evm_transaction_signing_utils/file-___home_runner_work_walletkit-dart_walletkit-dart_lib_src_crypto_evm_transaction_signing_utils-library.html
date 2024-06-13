@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="staking_nft_entity library API docs, for the Dart programming language.">
-  <title>staking_nft_entity library - Dart API</title>
+  <meta name="description" content="utils library API docs, for the Dart programming language.">
+  <title>utils library - Dart API</title>
 
 
   
@@ -29,9 +29,9 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li class="self-crumb">src/domain/entities/asset/staking_nft_entity.dart</li>
+    <li class="self-crumb">src/crypto/evm/transaction/signing/utils.dart</li>
   </ol>
-  <div class="self-name">staking_nft_entity</div>
+  <div class="self-name">utils</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,13 +53,13 @@
     id="dartdoc-main-content"
     class="main-content"
     data-above-sidebar=""
-    data-below-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity-library-sidebar.html">
+    data-below-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library-sidebar.html">
   
     <div>
       
 
       <h1>
-        <span class="kind-library">src/domain/entities/asset/staking_nft_entity</span>
+        <span class="kind-library">src/crypto/evm/transaction/signing/utils</span>
         library 
  
 
@@ -69,35 +69,103 @@
     
 
 
-    <section class="summary offset-anchor" id="classes">
-      <h2>Classes</h2>
 
-      <dl>
-          <dt id="StakingNftEntity">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity/StakingNftEntity-class.html">StakingNftEntity</a></span> 
+
+
+
+
+
+    <section class="summary offset-anchor" id="properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+          <dt id="params" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/params.html">params</a></span>
+  <span class="signature">&#8594; dynamic</span>
+  
 
 </dt>
 <dd>
   
-</dd>
+  <div class="features"><span class="feature">final</span></div>
 
-          <dt id="StakingNftEntityAdapter">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_staking_nft_entity/StakingNftEntityAdapter-class.html">StakingNftEntityAdapter</a></span> 
-
-</dt>
-<dd>
-  
 </dd>
 
       </dl>
     </section>
 
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
 
+      <dl class="callables">
+          <dt id="bytesToUnsignedInt" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/bytesToUnsignedInt.html">bytesToUnsignedInt</a></span><span class="signature">(<wbr><span class="parameter" id="bytesToUnsignedInt-param-bytes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">bytes</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>
+  </span>
+  
 
+</dt>
+<dd>
+  
+  
 
+</dd>
 
+          <dt id="compressPublicKey" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/compressPublicKey.html">compressPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="compressPublicKey-param-compressedPubKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">compressedPubKey</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  </span>
+  
 
+</dt>
+<dd>
+  Given a byte array computes its compressed version and returns it as a byte array,
+including the leading 02 or 03
+  
 
+</dd>
+
+          <dt id="extractChainId" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/extractChainId.html">extractChainId</a></span><span class="signature">(<wbr><span class="parameter" id="extractChainId-param-v"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">v</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="privateKeyToPublic" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/privateKeyToPublic.html">privateKeyToPublic</a></span><span class="signature">(<wbr><span class="parameter" id="privateKeyToPublic-param-privateKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">privateKey</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+          <dt id="recoverPublicKey" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/recoverPublicKey.html">recoverPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="recoverPublicKey-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="recoverPublicKey-param-signature"><span class="type-annotation">dynamic</span> <span class="parameter-name">signature</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+      </dl>
+    </section>
 
 
 
@@ -113,7 +181,7 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li class="self-crumb">src/domain/entities/asset/staking_nft_entity.dart</li>
+    <li class="self-crumb">src/crypto/evm/transaction/signing/utils.dart</li>
 </ol>
 
 
@@ -171,7 +239,7 @@
   </div>
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-    <h5>staking_nft_entity library</h5>
+    <h5>utils library</h5>
   </div><!--/sidebar-offcanvas-right-->
 
 </main>
