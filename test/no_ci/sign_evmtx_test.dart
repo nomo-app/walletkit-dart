@@ -170,4 +170,19 @@ void main() {
     final address = pubKeytoChecksumETHAddress(rejectSeed);
     expect(address, "0x05870f1507d820212E921e1f39f14660336231D1");
   });
+
+  test('verify chat signature', () async {
+    const String message =
+        "0x3f0e8cf0c6eb9789348541d9d0ce4ac847277e9b_1702296844698";
+
+    const sig =
+        "0x143987b0bd7c5f5370acef96353164f776f12577f95ea4c2d70c6952302504d55c204ea33b73df46b3f2e9eaa6d14ae0ac678d6282c844d920d415105e9bb7651b";
+
+    expect(sig.length, 132);
+
+    final String address =
+        recoverEthMessageSigner(message: message, signature: sig);
+
+    expect(address, "0x3f0e8cF0c6eb9789348541D9D0Ce4ac847277e9B");
+  });
 }

@@ -43,9 +43,11 @@ Future<TokenInfo?> getTokenInfo({
   }
 }
 
-String publicKeyToAddress(Uint8List publicKey) {
-  final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
-  return '0x' + pubKeyWithoutPrefix.sublist(12).toHex;
+Uint8List publicKeyToAddress(Uint8List publicKey) {
+  assert(publicKey.length == 64);
+  final hashed = keccak256(publicKey);
+  assert(hashed.length == 32);
+  return hashed.sublist(12, 32);
 }
 
 String pubKeytoChecksumETHAddress(Uint8List seed) {
@@ -78,7 +80,7 @@ String getETHAddressFromMnemonic({
 }) {
   final seed = bip39.mnemonicToSeed(mnemonic);
   final publicKey = derivePublicKeyETH(seed);
-  return publicKeyToAddress(publicKey);
+  return "0x" + publicKeyToAddress(publicKey).toHex;
 }
 
 Uint8List derivePrivateKeyETH(Uint8List seed) {
