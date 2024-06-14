@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:pointycastle/ecc/api.dart';
 import 'package:pointycastle/ecc/curves/secp256k1.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;

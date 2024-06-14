@@ -1,7 +1,7 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:pointycastle/export.dart';
 import 'package:sec/sec.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;
@@ -66,6 +66,19 @@ class Signature {
     }
 
     return Signature(signature.r, signature.s, chainIdV);
+  }
+
+  static const _messagePrefix = '\u0019Ethereum Signed Message:\n';
+
+  static Uint8List signPersonalMessageToUint8List(
+      Uint8List payload, Uint8List privateKey) {
+    final prefix = _messagePrefix + payload.length.toString();
+    final prefixBytes = ascii.encode(prefix);
+
+    final concat = uint8ListFromList(prefixBytes + payload);
+
+    final signature = Signature.createSignature(concat, privateKey);
+    return signature.toBytes();
   }
 
   bool isValidETHSignature(

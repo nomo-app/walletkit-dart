@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 class InternalEVMTransaction extends RawEVMTransaction {

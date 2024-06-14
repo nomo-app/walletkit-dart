@@ -103,7 +103,6 @@ String signEvmMessage({
 }) {
   final payload = Uint8List.fromList(utf8.encode(message));
   final privateKey = derivePrivateKeyETH(seed);
-  final sig = Signature.createSignature(payload, privateKey);
-  final signatureUint8List = sig.toBytes();
-  return "0x" + HEX.encode(signatureUint8List);
+  final sig = Signature.signPersonalMessageToUint8List(payload, privateKey);
+  return "0x" + HEX.encode(sig);
 }

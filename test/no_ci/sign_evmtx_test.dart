@@ -3,7 +3,6 @@ import 'package:convert/convert.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/signing/utils.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
@@ -145,5 +144,30 @@ void main() {
   test('derive eth address from pubkey', () {
     final checksumAddress = pubKeytoChecksumETHAddress(testSeed);
     expect(arbitrumTestWallet, checksumAddress);
+  });
+
+  test('sign message and verify signature', () async {
+    const String message = "this message comes from my wallet";
+
+    final rejectSeed = loadFromEnv("REJECT_SEED");
+
+    final sig = signEvmMessage(
+      message: message,
+      seed: rejectSeed,
+    );
+    expect(sig,
+        "0x1e8fccc1f75eda4ee82adb9b3b0ae8243b418bd8810873b6df696d240267a223105e265189bd2ea0677bfa42f5d9cbba50622d91ef4e4805cd81f9f8715e38101b");
+
+    final String pubKeyHex = recoverPubKey(
+      sig: sig,
+      message: message,
+      coin: "ETH",
+      uncompressed: true,
+    );
+    expect(pubKeyHex,
+        "3f2ac2efe7a90c365e245e8e08c2dfba3aa57d8d0fe99ef1d6598f828ba200786ed81927394a2ec0db63387df95665ac83442fd9b21645dccc26c6154d0a1eff");
+
+    final address = pubKeytoChecksumETHAddress(rejectSeed);
+    expect(address, "0x05870f1507d820212E921e1f39f14660336231D1");
   });
 }
