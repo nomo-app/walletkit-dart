@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:hex/hex.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
@@ -15,9 +14,10 @@ String signEvmTransaction({
   required Uint8List seed,
 }) {
   final privateKey = derivePrivateKeyETH(seed);
-  final rawTx = RawEVMTransaction.getFromMessageHex(messageHex);
-  final signedTx = InternalEVMTransaction.signTransaction(rawTx, privateKey);
-  return signedTx.serializedMessageHex;
+  final message = Uint8List.fromList(HEX.decode(messageHex));
+  final sig = Signature.createSignature(message, privateKey);
+
+  return sig.toBytes().toHex;
 }
 
 String recoverEthMessageSigner({

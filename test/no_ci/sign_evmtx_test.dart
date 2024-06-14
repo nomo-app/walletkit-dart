@@ -185,4 +185,18 @@ void main() {
 
     expect(address, "0x3f0e8cF0c6eb9789348541D9D0Ce4ac847277e9B");
   });
+
+  test('sign Smartchain EVM transaction', () async {
+    final spoilSeed = loadFromEnv("SPOIL_SEED");
+
+    const unsignedTx =
+        "f38201008502540be400825208941464935f48ca992d1a0beaa2358471d7cb6374e588016345785d8a0000808559454e49518080";
+
+    final sig = signEvmTransaction(
+      messageHex: unsignedTx,
+      seed: spoilSeed,
+    );
+    expect(sig,
+        "fb4b75783e57b4244c3fcf03bb595ac8c54185273fc063e6f931afcce3af704f4a51f39e3e4d3881fe602ca0b078c2db1d45235483a79325c2e4236a250e9f9d1b");
+  });
 }
