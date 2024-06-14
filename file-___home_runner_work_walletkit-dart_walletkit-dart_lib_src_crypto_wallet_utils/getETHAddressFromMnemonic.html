@@ -80,8 +80,14 @@
   required String mnemonic,
 }) {
   final seed = bip39.mnemonicToSeed(mnemonic);
+
   final publicKey = derivePublicKeyETH(seed);
-  return &quot;0x&quot; + publicKeyToAddress(publicKey).toHex;
+
+  final publicKeyWithoutPrefix = keccak256(publicKey.sublist(1));
+
+  final address = &#39;0x${publicKeyWithoutPrefix.sublist(12).toHex}&#39;;
+
+  return address;
 }</code></pre>
 </section>
 

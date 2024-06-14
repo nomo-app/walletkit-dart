@@ -80,7 +80,7 @@
   final publicKey = derivePublicKeyETH(seed);
   final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
 
-  final address = &#39;0x&#39; + pubKeyWithoutPrefix.sublist(12).toHex;
+  final address = &#39;0x${pubKeyWithoutPrefix.sublist(12).toHex}&#39;;
 
   final addressWithoutPrefix = address.replaceFirst(&#39;0x&#39;, &#39;&#39;).toLowerCase();
 
