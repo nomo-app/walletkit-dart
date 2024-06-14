@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getETHCredentials function from the web3_client library, for the Dart programming language.">
-  <title>getETHCredentials function - web3_client library - Dart API</title>
+  <meta name="description" content="API docs for the bytesToUnsignedInt function from the utils library, for the Dart programming language.">
+  <title>bytesToUnsignedInt function - utils library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../web3_client/web3_client-library.html">src&#47;crypto&#47;wallet_utils.dart</a></li>
-    <li class="self-crumb">getETHCredentials function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library.html">src&#47;crypto&#47;evm&#47;transaction&#47;signing&#47;utils.dart</a></li>
+    <li class="self-crumb">bytesToUnsignedInt function</li>
   </ol>
-  <div class="self-name">getETHCredentials</div>
+  <div class="self-name">bytesToUnsignedInt</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,20 +53,19 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="web3_client&#47;web3_client-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">getETHCredentials</span> function 
+<h1><span class="kind-function">bytesToUnsignedInt</span> function 
  
 </h1></div>
 
     <section class="multi-line-signature">
         
 
-<span class="returntype">dynamic</span>
-<span class="name ">getETHCredentials</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="getETHCredentials-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
-<li><span class="parameter" id="getETHCredentials-param-wipeCache"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">wipeCache</span>, </span></li>
-</ol>})
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>
+<span class="name ">bytesToUnsignedInt</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="bytesToUnsignedInt-param-bytes"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">bytes</span></span></li>
+</ol>)
 
         
 
@@ -77,20 +76,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Credentials getETHCredentials({
-  required Uint8List seed,
-  bool? wipeCache,
-}) {
-  if (wipeCache == true) {
-    _cachedEVMCredentials = null;
-  }
-  &#47;&#47; caching: prevent the expensive mnemonicToSeed from being called too often!
-  if (_cachedEVMCredentials == null) {
-    final privateKey = _derivePrivateKeyETH(seed);
-    final privKeyHex = privateKey.toHex;
-    _cachedEVMCredentials = EthPrivateKey.fromHex(privKeyHex);
-  }
-  return _cachedEVMCredentials!;
+  <pre class="language-dart"><code class="language-dart">BigInt bytesToUnsignedInt(Uint8List bytes) {
+  return p_utils.decodeBigIntWithSign(1, bytes);
 }</code></pre>
 </section>
 
@@ -107,12 +94,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../web3_client/web3_client-library.html">web3_client</a></li>
-    <li class="self-crumb">getETHCredentials function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library.html">utils</a></li>
+    <li class="self-crumb">bytesToUnsignedInt function</li>
 </ol>
 
 
-    <h5>web3_client library</h5>
+    <h5>utils library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 

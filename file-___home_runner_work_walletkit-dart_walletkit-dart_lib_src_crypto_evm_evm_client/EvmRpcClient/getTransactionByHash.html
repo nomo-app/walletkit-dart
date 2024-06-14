@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the asWeb3 property from the EvmRpcClient class, for the Dart programming language.">
-  <title>asWeb3 property - EvmRpcClient class - evm_client library - Dart API</title>
+  <meta name="description" content="API docs for the getTransactionByHash method from the EvmRpcClient class, for the Dart programming language.">
+  <title>getTransactionByHash method - EvmRpcClient class - evm_client library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">src&#47;crypto&#47;evm&#47;evm_client.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/EvmRpcClient-class.html">EvmRpcClient</a></li>
-    <li class="self-crumb">asWeb3 property</li>
+    <li class="self-crumb">getTransactionByHash method</li>
   </ol>
-  <div class="self-name">asWeb3</div>
+  <div class="self-name">getTransactionByHash</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,36 +57,55 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client&#47;EvmRpcClient-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-property">asWeb3</span> property 
+<h1><span class="kind-method">getTransactionByHash</span> method 
 </h1></div>
-
-
-        
-  <section id="getter">
 
     <section class="multi-line-signature">
       
-      <span class="returntype">dynamic</span>
-      <span class="name ">asWeb3</span>
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
+<span class="name ">getTransactionByHash</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getTransactionByHash-param-messageHash"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">messageHash</span></span></li>
+</ol>)
+
       
 
     </section>
-
     
+
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Web3Client get asWeb3 =&gt; _web3Client;</code></pre>
+  <pre class="language-dart"><code class="language-dart">Future&lt;InternalEVMTransaction&gt; getTransactionByHash(
+    String messageHash) async {
+  final response = await _call&lt;Json&gt;(
+    &#39;eth_getTransactionByHash&#39;,
+    args: [messageHash],
+  );
+
+  final v = response[&#39;v&#39;].toString().toIntOrNull ?? 0;
+
+  final chainIDV = extractChainId(v);
+  return InternalEVMTransaction(
+    nonce: response[&#39;nonce&#39;].toString().toBigInt,
+    gasPrice: response[&#39;gasPrice&#39;].toString().toBigInt,
+    gasLimit: response[&#39;gas&#39;].toString().toBigInt,
+    to: response[&#39;to&#39;],
+    value: response[&#39;value&#39;].toString().toBigInt,
+    data: response[&#39;input&#39;].toString().hexToBytesWithPrefixOrNull,
+    chainId: chainIDV.toBigInt,
+    v: v,
+    r: response[&#39;r&#39;].toString().toBigInt,
+    s: response[&#39;s&#39;].toString().toBigInt,
+  );
+}</code></pre>
 </section>
 
-  </section>
 
+  </div> <!-- /.main-content -->
 
-</div> <!-- /.main-content -->
-
-<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -97,15 +116,15 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">evm_client</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/EvmRpcClient-class.html">EvmRpcClient</a></li>
-    <li class="self-crumb">asWeb3 property</li>
+    <li class="self-crumb">getTransactionByHash method</li>
 </ol>
 
 
-  <h5>EvmRpcClient class</h5>
-  <div id="dartdoc-sidebar-left-content"></div>
-</div><!--/.sidebar-offcanvas-->
+    <h5>EvmRpcClient class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
 
-<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 
 </main>

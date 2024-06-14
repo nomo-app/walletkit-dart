@@ -65,7 +65,8 @@
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
 <span class="name ">sendERC20Token</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="sendERC20Token-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span></li>
-<li><span class="parameter" id="sendERC20Token-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>, </span></li>
+<li><span class="parameter" id="sendERC20Token-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span></li>
+<li><span class="parameter" id="sendERC20Token-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
 </ol>})
 
       
@@ -82,11 +83,20 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendERC20Token({
   required TransferIntent intent,
-  required web3.Credentials credentials,
+  required String from,
+  required Uint8List seed,
 }) async {
   assert(intent.token is EthBasedTokenEntity);
-  final token = intent.token as EthBasedTokenEntity;
-  final contractAddress = web3.EthereumAddress.fromHex(token.contractAddress);
+  assert(intent.memo == null);
+
+  final erc20 = intent.token as EthBasedTokenEntity;
+  final tokenContractAddress = erc20.contractAddress;
+
+  final erc20Contract = ERC20Contract(
+    contractAddress: tokenContractAddress,
+    seed: seed,
+    client: client,
+  );
 
   final (gasPrice, gasLimit) = switch (intent.feeInfo) {
     EvmFeeInformation info =&gt; (info.gasPrice, info.gasLimit),
@@ -94,30 +104,24 @@
           (bi) async =&gt; (
             Amount(value: bi, decimals: 18),
             await estimateGasLimit(
-                intent: intent, ownAddress: credentials.address.hex)
+              intent: intent,
+              ownAddress: from,
+            )
           ),
         ),
   };
 
-  final tokenContract = ERC20Contract(
-    address: contractAddress,
-    client: client.asWeb3,
-    chainId: type.chainId,
+  final nonce = await client.getTransactionCount(from);
+  final rawUnsignedTx = RawEVMTransaction(
+    nonce: nonce,
+    gasPrice: gasPrice.value,
+    gasLimit: gasLimit.toBI,
+    to: intent.recipient,
+    value: intent.amount.value,
+    data: null,
+    chainId: type.chainId.toBigInt,
   );
-
-  final gasPriceEther =
-      web3.EtherAmount.fromBigInt(web3.EtherUnit.wei, gasPrice.value);
-  final amountInWei = intent.amount.value;
-
-  return await tokenContract.sendToken(
-    web3.EthereumAddress.fromHex(toChecksumAddress(intent.recipient)),
-    amountInWei,
-    credentials: credentials,
-    transaction: web3.Transaction(
-      gasPrice: gasPriceEther,
-      maxGas: gasLimit,
-    ),
-  );
+  return await erc20Contract.sendToken(rawTx: rawUnsignedTx, seed: seed);
 }</code></pre>
 </section>
 

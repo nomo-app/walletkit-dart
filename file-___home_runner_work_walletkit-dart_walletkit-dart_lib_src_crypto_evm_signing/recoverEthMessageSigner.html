@@ -83,11 +83,11 @@
 }) {
   final messageHash = _createEthStyleMessageHash(message);
   final sig = _parseEthSignature(signature);
-  final recoveredSignerPubKey = web3crypto.ecRecover(messageHash, sig);
-
+  final recoveredSignerPubKey = recoverPublicKey(messageHash, sig);
   final recoveredSignerAddress =
-      EthereumAddress.fromPublicKey(recoveredSignerPubKey).hex;
-  return toChecksumAddress(recoveredSignerAddress);
+      publicKeyToAddress(recoveredSignerPubKey).toHex;
+
+  return toChecksumAddress(&quot;0x&quot; + recoveredSignerAddress);
 }</code></pre>
 </section>
 
