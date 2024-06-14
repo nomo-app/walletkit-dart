@@ -82,9 +82,10 @@
   required Uint8List seed,
 }) {
   final privateKey = derivePrivateKeyETH(seed);
-  final rawTx = RawEVMTransaction.getFromMessageHex(messageHex);
-  final signedTx = InternalEVMTransaction.signTransaction(rawTx, privateKey);
-  return signedTx.serializedMessageHex;
+  final message = Uint8List.fromList(HEX.decode(messageHex));
+  final sig = Signature.createSignature(message, privateKey);
+
+  return sig.toBytes().toHex;
 }</code></pre>
 </section>
 
