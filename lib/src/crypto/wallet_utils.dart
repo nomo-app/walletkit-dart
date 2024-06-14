@@ -54,7 +54,7 @@ String pubKeytoChecksumETHAddress(Uint8List seed) {
   final publicKey = derivePublicKeyETH(seed);
   final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
 
-  final address = '0x' + pubKeyWithoutPrefix.sublist(12).toHex;
+  final address = '0x${pubKeyWithoutPrefix.sublist(12).toHex}';
 
   final addressWithoutPrefix = address.replaceFirst('0x', '').toLowerCase();
 
@@ -79,8 +79,14 @@ String getETHAddressFromMnemonic({
   required String mnemonic,
 }) {
   final seed = bip39.mnemonicToSeed(mnemonic);
+
   final publicKey = derivePublicKeyETH(seed);
-  return "0x" + publicKeyToAddress(publicKey).toHex;
+
+  final publicKeyWithoutPrefix = keccak256(publicKey.sublist(1));
+
+  final address = '0x${publicKeyWithoutPrefix.sublist(12).toHex}';
+
+  return address;
 }
 
 Uint8List derivePrivateKeyETH(Uint8List seed) {
