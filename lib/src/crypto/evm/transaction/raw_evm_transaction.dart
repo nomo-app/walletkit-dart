@@ -91,7 +91,7 @@ class RawEVMTransaction {
       nonce: nonce,
       gasPrice: gasPrice,
       gasLimit: gasLimit,
-      to: evmAddress,
+      to: '0x$evmAddress',
       value: value,
       data: data,
       chainId: chainId,
