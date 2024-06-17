@@ -1,6 +1,6 @@
-import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 
-final contractAbiErc721 = Contract.fromAbi(''' [
+final contractAbiErc721 = ContractABI.fromAbi(''' [
   {
     "anonymous": false,
     "inputs": [

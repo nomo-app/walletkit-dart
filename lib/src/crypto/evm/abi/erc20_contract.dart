@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-final contractAbiErc20 = Contract.fromAbi('''[
+final contractAbiErc20 = ContractABI.fromAbi('''[
   {
     "constant": true,
     "inputs": [],
@@ -231,49 +231,67 @@ final contractAbiErc20 = Contract.fromAbi('''[
 
 class ERC20Contract extends InternalContract {
   ERC20Contract({
-    required String contractAddress,
-    Uint8List? seed,
-    required EvmRpcClient client,
+    required super.contractAddress,
+    required super.rpc,
   }) : super(
-          contractAbiErc20,
-          seed ?? Uint8List(0),
-          contractAddress,
-          client,
+          abi: contractAbiErc20,
         );
 
-  Future<String> sendToken({
-    required RawEVMTransaction rawTx,
+  Future<String> transfer({
+    required String sender,
+    required String to,
+    required BigInt value,
     required Uint8List seed,
+    EvmFeeInformation? feeInfo,
   }) async {
-    final function = self.functions[7];
-    return await send(
-        function: function,
-        rawTx: rawTx,
-        seed: seed,
-        contractAddress: contractAddress,
-        client: client);
+    final function = abi.functions[7];
+    assert(function.functionSelector == "a9059cbb");
+    return await interact(
+      function: function,
+      seed: seed,
+      sender: sender,
+      params: [to, value],
+      feeInfo: feeInfo,
+    );
+  }
+
+  Future<String> approve({
+    required String sender,
+    required String spender,
+    required BigInt value,
+    required Uint8List seed,
+    EvmFeeInformation? feeInfo,
+  }) async {
+    final function = abi.functions[1];
+    assert(function.functionSelector == "095ea7b3");
+
+    return await interact(
+      function: function,
+      seed: seed,
+      sender: sender,
+      params: [spender, value],
+      feeInfo: feeInfo,
+    );
   }
 
   Future<BigInt> getBalance(String address, {BlockNum? atBlock}) async {
-    final function = self.functions[5];
+    final function = abi.functions[5];
     assert(function.functionSelector == "70a08231");
 
     final response = await read(
       function: function,
       atBlock: atBlock,
-      client: client,
       params: [address],
     );
     return response.toBigInt;
   }
 
   Future<String> getName() async {
-    final function = self.functions[0];
+    final function = abi.functions[0];
     assert(function.functionSelector == "06fdde03");
 
     final response = await read(
       function: function,
-      client: client,
       params: [],
     );
     final encoded = hex.decode(response.substring(2));
@@ -282,11 +300,10 @@ class ERC20Contract extends InternalContract {
   }
 
   Future<String> getSymbol() async {
-    final function = self.functions[6];
+    final function = abi.functions[6];
     assert(function.functionSelector == "95d89b41");
     final response = await read(
       function: function,
-      client: client,
       params: [],
     );
 
@@ -296,33 +313,30 @@ class ERC20Contract extends InternalContract {
   }
 
   Future<BigInt> getSupply() async {
-    final function = self.functions[2];
+    final function = abi.functions[2];
     assert(function.functionSelector == "18160ddd");
     final response = await read(
       function: function,
-      client: client,
       params: [],
     );
     return response.toBigInt;
   }
 
   Future<int> getDecimals() async {
-    final function = self.functions[4];
+    final function = abi.functions[4];
     assert(function.functionSelector == "313ce567");
     final response = await read(
       function: function,
-      client: client,
       params: [],
     );
     return response.toBigInt.toInt();
   }
 
   Future<BigInt> balanceOf({required String address}) async {
-    final function = self.functions[5];
+    final function = abi.functions[5];
     assert(function.functionSelector == "70a08231");
     final response = await read(
       function: function,
-      client: client,
       params: [address],
     );
     return response.toBigInt;
@@ -332,30 +346,12 @@ class ERC20Contract extends InternalContract {
     required String owner,
     required String spender,
   }) async {
-    final function = self.functions[8];
+    final function = abi.functions[8];
     assert(function.functionSelector == "dd62ed3e");
     final response = await read(
       function: function,
-      client: client,
       params: [owner, spender],
     );
     return response.toBigInt;
-  }
-
-  Future<String> approve({
-    required String spender,
-    required BigInt value,
-    required RawEVMTransaction rawTx,
-  }) async {
-    final function = self.functions[1];
-    assert(function.functionSelector == "095ea7b3");
-
-    return await send(
-      function: function,
-      rawTx: rawTx,
-      seed: seed,
-      contractAddress: contractAddress,
-      client: client,
-    );
   }
 }

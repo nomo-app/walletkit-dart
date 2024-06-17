@@ -4,10 +4,10 @@ import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_tr
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 class InternalEVMTransaction extends RawEVMTransaction {
-  BigInt r, s;
-  int v;
+  final BigInt r, s;
+  final int v;
 
-  InternalEVMTransaction({
+  const InternalEVMTransaction({
     required super.nonce,
     required super.gasPrice,
     required super.gasLimit,
@@ -78,7 +78,7 @@ class InternalEVMTransaction extends RawEVMTransaction {
   }
 
   @override
-  String get serializedMessageHex {
+  String get serializedTransactionHex {
     return "0x" + serializeTransaction.toHex;
   }
 }

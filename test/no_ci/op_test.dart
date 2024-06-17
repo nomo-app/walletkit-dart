@@ -7,7 +7,7 @@ void main() {
   final optimismRPC = EvmRpcInterface(OptimismNetwork);
   final testSeed = loadFromEnv("DEV_SEED");
   test('Test Optimism send', () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
@@ -25,7 +25,7 @@ void main() {
   });
 
   test('OptimismETH send', () async {
-    final intentETH = TransferIntent(
+    final intentETH = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,

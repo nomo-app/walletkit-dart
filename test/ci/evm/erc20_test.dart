@@ -6,7 +6,7 @@ void main() {
   test('Get Token Info for Avinoc', () async {
     final tokenInfo = await getTokenInfo(
       contractAddress: avinocZSC.contractAddress,
-      client: zeniqSmartRpcInterface.client,
+      rpc: zeniqSmartRpcInterface,
     );
 
     expect(tokenInfo, isNotNull);

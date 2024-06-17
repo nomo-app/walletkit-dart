@@ -12,11 +12,11 @@ export './utxo/derivation.dart';
 
 Future<TokenInfo?> getTokenInfo({
   required String contractAddress,
-  required EvmRpcClient client,
+  required EvmRpcInterface rpc,
 }) async {
   final tokenContract = ERC20Contract(
     contractAddress: contractAddress,
-    client: client,
+    rpc: rpc,
   );
 
   try {

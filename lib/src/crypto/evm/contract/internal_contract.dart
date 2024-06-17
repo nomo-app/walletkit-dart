@@ -1,43 +1,44 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract class InternalContract {
-  final Contract self;
-  final Uint8List seed;
+  final ContractABI abi;
   final String contractAddress;
-  final EvmRpcClient client;
+  final EvmRpcInterface rpc;
 
-  InternalContract(this.self, this.seed, this.contractAddress, this.client);
+  const InternalContract({
+    required this.abi,
+    required this.contractAddress,
+    required this.rpc,
+  });
 
-  Future<String> send({
+  Future<String> interact({
     required ContractFunction function,
-    required RawEVMTransaction rawTx,
+    required List<dynamic> params,
     required Uint8List seed,
-    required String contractAddress,
-    required EvmRpcClient client,
+    required String sender,
+    EvmFeeInformation? feeInfo,
   }) async {
-    final functionData = function.encodeFunction([rawTx.to, rawTx.value]);
+    final functionData = function.encodeFunction(params).hexToBytes;
 
-    final encodedFunctionData = functionData.hexToBytes;
-    final tx = rawTx.copyWith(
-        data: encodedFunctionData, to: contractAddress, value: BigInt.zero);
-
-    final privateKey = derivePrivateKeyETH(seed);
-    final signedTx = InternalEVMTransaction.signTransaction(tx, privateKey);
-
-    return client.sendRawTransaction(signedTx.serializedMessageHex);
+    return await rpc.buildAndBroadcastTransaction(
+      sender: sender,
+      recipient: contractAddress,
+      seed: seed,
+      feeInfo: feeInfo,
+      data: functionData,
+      value: BigInt.zero,
+    );
   }
 
   Future<String> read({
     required ContractFunction function,
     BlockNum? atBlock,
-    required EvmRpcClient client,
     required List<dynamic> params,
   }) async {
     final data = function.encodeFunction(params).hexToBytes;
-    return client.call(contractAddress: contractAddress, data: data);
+    return rpc.client.call(contractAddress: contractAddress, data: data);
   }
 }

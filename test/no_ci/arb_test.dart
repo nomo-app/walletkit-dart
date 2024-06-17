@@ -25,7 +25,7 @@ void main() {
   // });
 
   test('Send ETH Arbitrum', () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,

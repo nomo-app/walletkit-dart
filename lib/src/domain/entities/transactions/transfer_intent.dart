@@ -81,12 +81,6 @@ class TransferIntent<T extends FeeInformation?> {
     );
   }
 
-  String getErc20TransferSig() {
-    return erc20TransferSig +
-        recipient.substring(2).padLeft(64, '0') +
-        amount.value.toHex.padLeft(64, '0');
-  }
-
   Json toJson() {
     return {
       'recipient': recipient,

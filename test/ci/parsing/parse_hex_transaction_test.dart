@@ -44,7 +44,7 @@ void main() {
     final RawEVMTransaction tx =
         RawEVMTransaction.getFromMessageHex(unsignedTxFromNomo);
 
-    final messageHex = tx.serializedMessageHex;
+    final messageHex = tx.serializedTransactionHex;
 
     expect(messageHex, unsignedTxFromNomo);
   });

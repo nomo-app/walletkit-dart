@@ -1,6 +1,6 @@
-import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 
-final contractAbiDemoContract = Contract.fromAbi('''
+final contractAbiDemoContract = ContractABI.fromAbi('''
 [
     {
       "inputs": [],

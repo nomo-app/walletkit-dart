@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
@@ -44,7 +44,7 @@ final class EvmRpcInterface {
   ) async {
     final erc20Contract = ERC20Contract(
       contractAddress: token.contractAddress,
-      client: client,
+      rpc: this,
     );
     final balance = await erc20Contract.getBalance(address);
     return Amount(value: balance, decimals: token.decimals);
@@ -221,82 +221,53 @@ final class EvmRpcInterface {
     return transfers;
   }
 
-  Future<(Amount, int)> estimateNetworkFees(
-      TransferIntent intent, String from) async {
-    String? dataAsHex = intent.encodedMemo?.toHex;
-    String? dataString;
-
-    if (dataAsHex != null) {
-      dataString = "0x" + dataAsHex;
-    } else {
-      dataString = null;
-    }
-
-    final fallbackGasLimit = switch (intent.token) {
-      ethzkSync => client.estimateZkSyncFee(
-          from: from,
-          to: intent.recipient,
-          data: dataString,
-        ),
-      _ => client.estimateGasLimit(to: intent.recipient, data: dataString),
-    };
-
-    final gasPriceFuture = client.getGasPrice();
-
-    final results = await Future.wait([fallbackGasLimit, gasPriceFuture]);
-
-    final gasPriceAmount = Amount(
-      value: results.last,
-      decimals: intent.token.decimals,
-    );
-    return (gasPriceAmount, results.first.toInt());
+  Future<(Amount, int)> estimateNetworkFees({
+    required String recipient,
+    required String sender,
+    required Uint8List? data,
+    required BigInt? value,
+  }) async {
+    return await client.getGasPrice().then(
+          (gasPrice) async => (
+            Amount(value: gasPrice, decimals: 18),
+            await estimateGasLimit(
+              recipient: recipient,
+              sender: sender,
+              data: data,
+              gasPrice: gasPrice,
+              value: value,
+            )
+          ),
+        );
   }
 
   ///
   /// Send Currency
   ///
   Future<String> sendCoin({
-    required TransferIntent intent,
+    required TransferIntent<EvmFeeInformation> intent,
     required String from,
     required Uint8List seed,
   }) async {
-    final (gasPrice, gasLimit) = switch (intent.feeInfo) {
-      EvmFeeInformation info => (info.gasPrice, info.gasLimit),
-      _ => await estimateNetworkFees(intent, from),
-    };
+    final tx = await buildTransaction(
+      sender: from,
+      recipient: intent.recipient,
+      seed: seed,
+      feeInfo: intent.feeInfo,
+      data: intent.encodedMemo,
+      value: intent.amount.value,
+    );
 
     final balance = await client.getBalance(toChecksumAddress(from));
 
-    var amountWei = intent.amount;
+    final estimatedFee = tx.gasPrice * tx.gasLimit;
 
-    // native EVM sending should always consume 21000 gas
-    final estimatedFee =
-        gasPrice * Amount(value: BigInt.from(gasLimit), decimals: 0);
-    if (balance < (estimatedFee + amountWei).value) {
+    if (balance < estimatedFee + tx.value) {
       throw Failure("Insufficient funds to pay native gas fee");
     }
 
-    final nonce = await client.getTransactionCount(from);
-
-    final rawUnsignedTx = RawEVMTransaction(
-      nonce: nonce,
-      gasPrice: gasPrice.value,
-      gasLimit: gasLimit.toBI,
-      to: intent.recipient,
-      value: intent.amount.value,
-      data: intent.encodedMemo,
-      chainId: type.chainId.toBigInt,
-    );
-
-    final privateKey = derivePrivateKeyETH(seed);
-
-    final signedTx = InternalEVMTransaction.signTransaction(
-      rawUnsignedTx,
-      privateKey,
-    );
-
     return await client.sendRawTransaction(
-      signedTx.serializedMessageHex,
+      tx.serializedTransactionHex,
     );
   }
 
@@ -304,7 +275,7 @@ final class EvmRpcInterface {
   /// Send ERC20 Token
   ///
   Future<String> sendERC20Token({
-    required TransferIntent intent,
+    required TransferIntent<EvmFeeInformation> intent,
     required String from,
     required Uint8List seed,
   }) async {
@@ -316,49 +287,188 @@ final class EvmRpcInterface {
 
     final erc20Contract = ERC20Contract(
       contractAddress: tokenContractAddress,
-      seed: seed,
-      client: client,
+      rpc: this,
     );
 
-    final (gasPrice, gasLimit) = switch (intent.feeInfo) {
-      EvmFeeInformation info => (info.gasPrice, info.gasLimit),
-      _ => await client.getGasPrice().then(
-            (bi) async => (
-              Amount(value: bi, decimals: 18),
-              await estimateGasLimit(
-                intent: intent,
-                ownAddress: from,
-              )
-            ),
-          ),
-    };
+    return erc20Contract.transfer(
+      seed: seed,
+      sender: from,
+      to: intent.recipient,
+      value: intent.amount.value,
+      feeInfo: intent.feeInfo,
+    );
 
-    final nonce = await client.getTransactionCount(from);
-    final rawUnsignedTx = RawEVMTransaction(
+    // final data = contractAbiErc20.encodedFunctionForString(
+    //   'transfer',
+    //   [
+    //     intent.recipient,
+    //     intent.amount.value,
+    //   ],
+    // );
+
+    // final signedTx = await buildTransaction(
+    //   sender: from,
+    //   recipient: tokenContractAddress,
+    //   seed: seed,
+    //   feeInfo: intent.feeInfo,
+    //   data: data,
+    //   value: BigInt.zero,
+    // );
+
+    // final result = await client.sendRawTransaction(
+    //   signedTx.serializedTransactionHex,
+    // );
+
+    // return result;
+  }
+
+  ///
+  /// Used to create a raw Transactions
+  /// Fetches the gasPrice and gasLimit from the network
+  /// Fetches the nonce from the network
+  /// Signs the transaction
+  ///
+  Future<InternalEVMTransaction> buildTransaction({
+    required String sender,
+    required String recipient,
+    required Uint8List seed,
+    required EvmFeeInformation? feeInfo,
+    required Uint8List? data,
+    required BigInt? value,
+  }) async {
+    final (gasPrice, gasLimit) = feeInfo != null
+        ? (feeInfo.gasPrice, feeInfo.gasLimit)
+        : await estimateNetworkFees(
+            recipient: recipient,
+            sender: sender,
+            data: data,
+            value: value,
+          );
+
+    final nonce = await client.getTransactionCount(sender);
+
+    final unsignedTx = RawEVMTransaction(
       nonce: nonce,
       gasPrice: gasPrice.value,
       gasLimit: gasLimit.toBI,
-      to: intent.recipient,
-      value: intent.amount.value,
-      data: null,
+      to: recipient,
+      value: value ?? BigInt.zero,
       chainId: type.chainId.toBigInt,
+      data: data,
     );
-    return await erc20Contract.sendToken(rawTx: rawUnsignedTx, seed: seed);
+
+    final signedTx = InternalEVMTransaction.signTransaction(
+      unsignedTx,
+      derivePrivateKeyETH(
+        seed,
+      ), // TODO: Derivation shouldnt happen here as it will block the main thread
+    );
+
+    return signedTx;
+  }
+
+  Future<String> buildAndBroadcastTransaction({
+    required String sender,
+    required String recipient,
+    required Uint8List seed,
+    required EvmFeeInformation? feeInfo,
+    required Uint8List? data,
+    required BigInt? value,
+  }) async {
+    final signedTx = await buildTransaction(
+      sender: sender,
+      recipient: recipient,
+      seed: seed,
+      feeInfo: feeInfo,
+      data: data,
+      value: value,
+    );
+
+    final result = await client.sendRawTransaction(
+      signedTx.serializedTransactionHex,
+    );
+
+    return result;
+  }
+
+  Future<String> readContract({
+    required String contractAddress,
+    required ContractFunction function,
+    required List<dynamic> params,
+  }) async {
+    assert(
+      function.stateMutability == StateMutability.view ||
+          function.stateMutability == StateMutability.pure,
+      "Invalid function",
+    );
+
+    final data = function.encodeFunction(params).hexToBytes;
+
+    return await client.call(
+      contractAddress: contractAddress,
+      data: data,
+    );
+  }
+
+  ///
+  /// Interact with Contract
+  ///
+  Future<String> interactWithContract({
+    required String contractAddress,
+    required ContractFunction function,
+    required List<dynamic> params,
+    required String sender,
+    required Uint8List seed,
+    required EvmFeeInformation? feeInfo,
+    BigInt? value,
+  }) async {
+    final valid = switch ((function.stateMutability, value)) {
+      (StateMutability.nonpayable, BigInt? value) => value == null ||
+          value == BigInt.zero, // If nonpayable, value must be 0 or null
+      (StateMutability.payable, BigInt? value) =>
+        value != null && value != BigInt.zero, // If payable, value must be set
+      _ => false,
+    };
+    assert(valid, "Invalid value for state mutability of function");
+
+    final data = function.encodeFunction(params).hexToBytes;
+
+    return await buildAndBroadcastTransaction(
+      sender: sender,
+      recipient: contractAddress,
+      seed: seed,
+      feeInfo: feeInfo,
+      data: data,
+      value: value ?? BigInt.zero,
+    );
   }
 
   Future<int> estimateGasLimit({
-    required TransferIntent intent,
-    required String ownAddress,
+    required String sender,
+    required String recipient,
+    required Uint8List? data,
+    required BigInt? value,
+    required BigInt? gasPrice,
   }) async {
-    assert(intent.token is EthBasedTokenEntity);
+    final dataHex = data != null ? "0x" + data.toHex : null;
 
-    final erc20 = intent.token as EthBasedTokenEntity;
+    // if (type is ZKSYNC_NETWORK) {
+    //   return await client
+    //       .estimateZkSyncFee(
+    //         from: sender,
+    //         to: recipient,
+    //         data: dataHex,
+    //       )
+    //       .then((value) => value.toInt());
+    // }
 
     return await client
         .estimateGasLimit(
-          from: ownAddress,
-          to: erc20.contractAddress,
-          data: intent.getErc20TransferSig(),
+          from: sender,
+          to: recipient,
+          data: dataHex,
+          amount: value,
+          gasPrice: gasPrice,
         )
         .then((value) => value.toInt());
   }
@@ -367,46 +477,31 @@ final class EvmRpcInterface {
   /// Send ERC721
   ///
   Future<String> sendERC721Nft({
-    required TransferIntent intent,
+    required String recipient,
     required String from,
     required int tokenId,
     required String contractAddress,
     required Uint8List seed,
   }) async {
-    // final token = intent.token.asEthBased!;
-    // final stakingNft = token.stakingNft!;
-    // final tokenId = stakingNft.tokenId;
-
-    // final contractAddress = token.contractAddress;
-
-    // see https://docs.openzeppelin.com/contracts/2.x/api/token/erc721
-    final List<FunctionParam> params = [
-      FunctionParam(name: "from", type: FunctionParamType.address),
-      FunctionParam(name: "to", type: FunctionParamType.address),
-      FunctionParam(name: "tokenId", type: FunctionParamType.uint),
-    ];
-    final function = ContractFunction("transferFrom", params, "nonpayable", []);
-    final to = intent.recipient;
-    // final arguments = [from, to, tokenId];
-    // final data = function.encodeCall(arguments);
-    final data = function.encodeFunction([from, to, tokenId.toBI]);
-    final encodedFunctionData = data.hexToBytes;
-    final gasPrice = await client.getGasPrice();
-
-    final rawTx = RawEVMTransaction(
-      nonce: await client.getTransactionCount(from),
-      gasPrice: gasPrice * BigInt.from(2),
-      gasLimit: BigInt.from(500000),
-      to: contractAddress,
-      value: BigInt.zero,
-      data: encodedFunctionData,
-      chainId: type.chainId.toBigInt,
+    final function = ContractFunction(
+      name: "transferFrom",
+      parameters: [
+        FunctionParam(name: "from", type: FunctionParamType.address),
+        FunctionParam(name: "to", type: FunctionParamType.address),
+        FunctionParam(name: "tokenId", type: FunctionParamType.uint),
+      ],
+      stateMutability: StateMutability.nonpayable,
+      outputs: [],
     );
-    final signedTx = InternalEVMTransaction.signTransaction(
-      rawTx,
-      derivePrivateKeyETH(seed),
+
+    return await interactWithContract(
+      contractAddress: contractAddress,
+      function: function,
+      params: [from, recipient, tokenId],
+      sender: from,
+      seed: seed,
+      feeInfo: null,
     );
-    return await client.sendRawTransaction(signedTx.serializedMessageHex);
   }
 
   ///

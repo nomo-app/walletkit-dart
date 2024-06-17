@@ -69,7 +69,7 @@ void main() {
     final signedTx =
         InternalEVMTransaction.signTransaction(rawUnsignedTx, privateKey);
 
-    final signedTxHex = signedTx.serializedMessageHex;
+    final signedTxHex = signedTx.serializedTransactionHex;
 
     expect(testTx.chainId, 42161.toBigInt);
     expect(signedTxHex,
@@ -98,7 +98,7 @@ void main() {
 
     final signedTx = InternalEVMTransaction.signTransaction(rawTx, privateKey);
 
-    final signedTxHex = signedTx.serializedMessageHex;
+    final signedTxHex = signedTx.serializedTransactionHex;
 
     final hash = await arbRPC.client.sendRawTransaction(signedTxHex);
 
@@ -106,7 +106,7 @@ void main() {
   });
 
   test('Send Coin (EthARB)', () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
@@ -123,16 +123,9 @@ void main() {
     print("Hash: $hash");
   });
 
-  test('send erc721 token', () async {
-    final intent = TransferIntent(
-      recipient: rejectEVM,
-      amount: Amount.convert(value: 1, decimals: 18),
-      feeInfo: null,
-      token: avinocETH,
-      memo: null,
-    );
+  test('send erc721 token from reject to spoil', () async {
     final hash = await ethRPC.sendERC721Nft(
-      intent: intent,
+      recipient: spoilEVM,
       from: rejectEVM,
       seed: testSeed,
       contractAddress: "0x7561DEAf4ECf96dc9F0d50B4136046979ACdAD3e",

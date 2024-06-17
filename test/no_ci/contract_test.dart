@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 
@@ -231,11 +231,10 @@ void main() {
 
   final ercContract = ERC20Contract(
     contractAddress: arbitrum.contractAddress,
-    seed: testSeed,
-    client: arbitrumRPC.client,
+    rpc: arbitrumRPC,
   );
   test('Test to create Contract from Json', () async {
-    final contract = Contract.fromAbi(contractAbiString);
+    final contract = ContractABI.fromAbi(contractAbiString);
     final transferFunction =
         contract.functions.firstWhere((element) => element.name == 'transfer');
 
@@ -245,7 +244,7 @@ void main() {
   });
 
   test('Contract Interaction', () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 10, decimals: 18),
       feeInfo: null,
@@ -295,14 +294,12 @@ void main() {
     );
     print("Allowance : $allowance");
   });
-  test("Token Info", () async{
-
+  test("Token Info", () async {
     final tokenInfo = await getTokenInfo(
       contractAddress: arbitrum.contractAddress,
-      client: arbitrumRPC.client,
+      rpc: arbitrumRPC,
     );
 
     print("Token Info : $tokenInfo");
-    
   });
 }

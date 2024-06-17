@@ -5,12 +5,13 @@ import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-class Contract {
+class ContractABI {
   final List<ContractFunction> functions;
   final List<ContractEvent> events;
-  Contract(this.functions, this.events);
 
-  factory Contract.fromAbi(String jsonAbi) {
+  const ContractABI(this.functions, this.events);
+
+  factory ContractABI.fromAbi(String jsonAbi) {
     final abi = jsonDecode(jsonAbi);
     final functions = <ContractFunction>[];
     final events = <ContractEvent>[];
@@ -33,10 +34,18 @@ class Contract {
         for (final param in item["inputs"]) {
           parameters.add(FunctionParam.fromMap(param));
         }
-        events.add(ContractEvent(name, parameters, anonymous));
+        events.add(
+          ContractEvent(
+            name: name,
+            parameters: parameters,
+            anonymous: anonymous,
+          ),
+        );
         continue;
       }
-      final stateMutability = item['stateMutability'];
+      final stateMutability = StateMutability.fromString(
+        item['stateMutability'] as String,
+      );
       final parameters = <FunctionParam>[];
       final outputs = <FunctionParam>[];
 
@@ -48,25 +57,47 @@ class Contract {
           outputs.add(FunctionParam.fromMap(param));
         }
       }
-      functions
-          .add(ContractFunction(name, parameters, stateMutability, outputs));
+      functions.add(
+        ContractFunction(
+          name: name,
+          parameters: parameters,
+          stateMutability: stateMutability,
+          outputs: outputs,
+        ),
+      );
     }
-    return Contract(functions, events);
+    return ContractABI(functions, events);
+  }
+
+  String encodedFunctionForString(String functionName, List<dynamic> values) {
+    final function = functions.firstWhereOrNull((e) => e.name == functionName);
+    if (function == null) {
+      throw Exception('Function not found');
+    }
+    return function.encodeFunction(values);
+  }
+
+  String encodedFunction(ContractFunction function, List<dynamic> values) {
+    return function.encodeFunction(values);
+  }
+
+  ContractFunction? getFunction(String functionName) {
+    return functions.singleWhereOrNull((e) => e.name == functionName);
   }
 }
 
 class ContractFunction {
   final String name;
   final List<FunctionParam> parameters;
-  final String stateMutability;
+  final StateMutability stateMutability;
   final List<FunctionParam> outputs;
 
-  ContractFunction(
-    this.name,
-    this.parameters,
-    this.stateMutability,
-    this.outputs,
-  );
+  const ContractFunction({
+    required this.name,
+    required this.parameters,
+    required this.stateMutability,
+    required this.outputs,
+  });
 
   String get function {
     final params = parameters.map((e) => e.type.abiName).join(',');
@@ -101,7 +132,11 @@ class ContractEvent {
   final List<FunctionParam> parameters;
   final bool anonymous;
 
-  ContractEvent(this.name, this.parameters, this.anonymous);
+  const ContractEvent({
+    required this.name,
+    required this.parameters,
+    required this.anonymous,
+  });
 }
 
 class FunctionParam {
@@ -109,7 +144,11 @@ class FunctionParam {
   final FunctionParamType type;
   final bool? indexed;
 
-  FunctionParam({required this.name, required this.type, this.indexed});
+  const FunctionParam({
+    required this.name,
+    required this.type,
+    this.indexed,
+  });
 
   factory FunctionParam.fromMap(Map<String, dynamic> map) {
     return FunctionParam(
@@ -159,6 +198,19 @@ enum FunctionParamType {
   }
 
   String get name => abiName;
+}
+
+enum StateMutability {
+  pure,
+  view,
+  nonpayable,
+  payable;
+
+  static StateMutability fromString(String type) {
+    return StateMutability.values.singleWhere((e) {
+      return e.name == type;
+    });
+  }
 }
 
 extension FunctionParamTypeExtension on FunctionParamType {

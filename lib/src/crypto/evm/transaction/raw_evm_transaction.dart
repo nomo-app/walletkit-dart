@@ -12,15 +12,15 @@ class RawEVMTransaction {
   final Uint8List? data;
   final BigInt? chainId;
 
-  RawEVMTransaction({
+  const RawEVMTransaction({
     required this.nonce,
     required this.gasPrice,
     required this.gasLimit,
-    required String to,
+    required this.to,
     required this.value,
     required this.data,
     this.chainId,
-  }) : to = to.startsWith("0x") ? to : "0x${to}";
+  });
 
   @override
   String toString() {
@@ -123,7 +123,7 @@ class RawEVMTransaction {
     return Uint8List.fromList(hex.decode(encoded));
   }
 
-  String get serializedMessageHex {
+  String get serializedTransactionHex {
     return "0x" + serializeTransaction.toHex;
   }
 }

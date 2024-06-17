@@ -6,7 +6,7 @@ import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc721_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/demoContract.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/crypto/evm/function_argument_decoding.dart';
 import 'dart:convert';
@@ -16,7 +16,7 @@ import 'dart:math';
 
 import 'package:walletkit_dart/src/utils/keccak.dart';
 
-List<Contract> abiList = [
+List<ContractABI> abiList = [
   contractAbiDemoContract,
   contractAbiNomoDevToken,
   contractAbiErc20,

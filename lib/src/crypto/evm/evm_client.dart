@@ -12,8 +12,6 @@ const erc20TransferSig = "0xa9059cbb";
 base class EvmRpcClient {
   final JsonRPC _rpc;
 
-  /// Still needed for some calls
-
   EvmRpcClient(String rpcUrl) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
 
   Future<T> _call<T>(String function, {List<dynamic>? args}) async {
@@ -65,7 +63,8 @@ base class EvmRpcClient {
   }
 
   Future<InternalEVMTransaction> getTransactionByHash(
-      String messageHash) async {
+    String messageHash,
+  ) async {
     final response = await _call<Json>(
       'eth_getTransactionByHash',
       args: [messageHash],
@@ -105,23 +104,27 @@ base class EvmRpcClient {
     }
   }
 
-  Future<BigInt> estimateZkSyncFee(
-      {required String from, required String to, String? data}) async {
-    final body = [
-      {
-        'from': from,
-        'to': to,
-        'data': data ?? "0x",
-      },
-    ];
+  // Future<BigInt> estimateZkSyncFee({
+  //   required String from,
+  //   required String to,
+  //   String? data,
+  // }) async {
+  //   final body = [
+  //     {
+  //       'from': from,
+  //       'to': to,
+  //       'data': data ?? "0x",
+  //     },
+  //   ];
 
-    final response = await _call('zks_estimateFee', args: body);
+  //   final response = await _call('zks_estimateFee', args: body);
 
-    final gaslimit = int.parse(
-        response['gas_limit'].toString().replaceAll("0x", ""),
-        radix: 16);
-    return BigInt.from(gaslimit);
-  }
+  //   final gaslimit = int.parse(
+  //     response['gas_limit'].toString().replaceAll("0x", ""),
+  //     radix: 16,
+  //   );
+  //   return BigInt.from(gaslimit);
+  // }
 
   ///
   /// Returns the balance of the account of given address in wei.

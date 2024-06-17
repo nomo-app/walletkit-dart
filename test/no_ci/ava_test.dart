@@ -6,7 +6,7 @@ import '../utils.dart';
 void main() {
   final avalacheRPC = EvmRpcInterface(AvalancheNetwork);
   test("Avalanche send test", () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
@@ -25,7 +25,7 @@ void main() {
   });
 
   test('Wrapped ETH send test', () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.0005, decimals: 18),
       feeInfo: null,
