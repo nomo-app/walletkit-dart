@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the validateAVINOCStakingSignature function from the signing library, for the Dart programming language.">
-  <title>validateAVINOCStakingSignature function - signing library - Dart API</title>
+  <meta name="description" content="API docs for the compressPublicKey function from the utils library, for the Dart programming language.">
+  <title>compressPublicKey function - utils library - Dart API</title>
 
 
   
@@ -29,10 +29,10 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">src&#47;crypto&#47;evm&#47;signing.dart</a></li>
-    <li class="self-crumb">validateAVINOCStakingSignature function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library.html">src&#47;crypto&#47;evm&#47;transaction&#47;signing&#47;utils.dart</a></li>
+    <li class="self-crumb">compressPublicKey function</li>
   </ol>
-  <div class="self-name">validateAVINOCStakingSignature</div>
+  <div class="self-name">compressPublicKey</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -53,39 +53,37 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils&#47;file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-function">validateAVINOCStakingSignature</span> function 
+<h1><span class="kind-function">compressPublicKey</span> function 
  
 </h1></div>
 
     <section class="multi-line-signature">
         
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-<span class="name ">validateAVINOCStakingSignature</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="validateAVINOCStakingSignature-param-signature"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">signature</span>, </span></li>
-<li><span class="parameter" id="validateAVINOCStakingSignature-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
-</ol>})
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+<span class="name ">compressPublicKey</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="compressPublicKey-param-compressedPubKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">compressedPubKey</span></span></li>
+</ol>)
 
         
 
     </section>
     
+<section class="desc markdown">
+  <p>Given a byte array computes its compressed version and returns it as a byte array,
+including the leading 02 or 03</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">bool validateAVINOCStakingSignature({
-  required String signature,
-  required String address,
-}) {
-  final messageSigner = recoverEthMessageSigner(
-    message: address,
-    signature: signature,
+  <pre class="language-dart"><code class="language-dart">Uint8List compressPublicKey(Uint8List compressedPubKey) {
+  return Uint8List.view(
+    params.curve.decodePoint(compressedPubKey)!.getEncoded(true).buffer,
   );
-  return messageSigner.toLowerCase() == stakingPartnerAddress.toLowerCase();
 }</code></pre>
 </section>
 
@@ -102,12 +100,12 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">walletkit_dart</a></li>
-    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">signing</a></li>
-    <li class="self-crumb">validateAVINOCStakingSignature function</li>
+    <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library.html">utils</a></li>
+    <li class="self-crumb">compressPublicKey function</li>
 </ol>
 
 
-    <h5>signing library</h5>
+    <h5>utils library</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 

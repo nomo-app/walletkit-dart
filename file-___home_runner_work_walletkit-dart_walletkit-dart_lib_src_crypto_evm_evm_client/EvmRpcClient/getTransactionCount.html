@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getErc20TransferSig method from the TransferIntent class, for the Dart programming language.">
-  <title>getErc20TransferSig method - TransferIntent class - transfer_intent library - Dart API</title>
+  <meta name="description" content="API docs for the getTransactionCount method from the EvmRpcClient class, for the Dart programming language.">
+  <title>getTransactionCount method - EvmRpcClient class - evm_client library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">src&#47;domain&#47;entities&#47;transactions&#47;transfer_intent.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
-    <li class="self-crumb">getErc20TransferSig method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">src&#47;crypto&#47;evm&#47;evm_client.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/EvmRpcClient-class.html">EvmRpcClient</a></li>
+    <li class="self-crumb">getTransactionCount method</li>
   </ol>
-  <div class="self-name">getErc20TransferSig</div>
+  <div class="self-name">getTransactionCount</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,17 +54,18 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent&#47;TransferIntent-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client&#47;EvmRpcClient-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">getErc20TransferSig</span> method 
+<h1><span class="kind-method">getTransactionCount</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-<span class="name ">getErc20TransferSig</span>(<wbr>)
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
+<span class="name ">getTransactionCount</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getTransactionCount-param-address"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span></span></li>
+</ol>)
 
       
 
@@ -75,10 +76,15 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">String getErc20TransferSig() {
-  return erc20TransferSig +
-      recipient.substring(2).padLeft(64, &#39;0&#39;) +
-      amount.value.toHex.padLeft(64, &#39;0&#39;);
+  <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; getTransactionCount(String address) async {
+  final response = await _call&lt;String&gt;(
+    &#39;eth_getTransactionCount&#39;,
+    args: [address, &#39;latest&#39;],
+  );
+
+  final count = response.toBigIntOrNull;
+  if (count == null) throw Exception(&#39;Could not parse transaction count&#39;);
+  return count;
 }</code></pre>
 </section>
 
@@ -95,13 +101,13 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">transfer_intent</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
-    <li class="self-crumb">getErc20TransferSig method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">evm_client</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/EvmRpcClient-class.html">EvmRpcClient</a></li>
+    <li class="self-crumb">getTransactionCount method</li>
 </ol>
 
 
-    <h5>TransferIntent class</h5>
+    <h5>EvmRpcClient class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 

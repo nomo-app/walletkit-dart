@@ -31,7 +31,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">src&#47;crypto&#47;evm&#47;transaction&#47;raw_evm_transaction.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransaction-class.html">RawEVMTransaction</a></li>
-    <li class="self-crumb">RawEVMTransaction constructor</li>
+    <li class="self-crumb">RawEVMTransaction const constructor</li>
   </ol>
   <div class="self-name">RawEVMTransaction</div>
   <form class="search navbar-right" role="search">
@@ -61,7 +61,7 @@
 </h1></div>
 
     <section class="multi-line-signature">
-      
+      const
       <span class="name ">RawEVMTransaction</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-nonce"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">nonce</span>, </span></li>
 <li><span class="parameter" id="-param-gasPrice"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">gasPrice</span>, </span></li>
 <li><span class="parameter" id="-param-gasLimit"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">gasLimit</span>, </span></li>
@@ -78,15 +78,15 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">RawEVMTransaction({
+  <pre class="language-dart"><code class="language-dart">const RawEVMTransaction({
   required this.nonce,
   required this.gasPrice,
   required this.gasLimit,
-  required String to,
+  required this.to,
   required this.value,
   required this.data,
   this.chainId,
-}) : to = to.startsWith(&quot;0x&quot;) ? to : &quot;0x${to}&quot;;</code></pre>
+});</code></pre>
 </section>
 
 
@@ -104,7 +104,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">raw_evm_transaction</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransaction-class.html">RawEVMTransaction</a></li>
-    <li class="self-crumb">RawEVMTransaction constructor</li>
+    <li class="self-crumb">RawEVMTransaction const constructor</li>
 </ol>
 
 

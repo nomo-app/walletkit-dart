@@ -70,7 +70,7 @@
 
     <dl class="constructor-summary-list">
         <dt id="ERC20Contract" class="callable">
-          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/ERC20Contract.html">ERC20Contract</a></span><span class="signature">({<span class="parameter" id="-param-address"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">address</span>, </span><span class="parameter" id="-param-client"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">client</span>, </span><span class="parameter" id="-param-chainId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainId</span></span>})</span>
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/ERC20Contract.html">ERC20Contract</a></span><span class="signature">({<span class="parameter" id="-param-contractAddress"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="-param-rpc"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">rpc</span></span>})</span>
         </dt>
         <dd>
           
@@ -129,7 +129,7 @@
 </dd>
 
         <dt id="approve" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/approve.html">approve</a></span><span class="signature">(<wbr><span class="parameter" id="approve-param-spender"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">spender</span>, </span><span class="parameter" id="approve-param-amount"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">amount</span>, {</span><span class="parameter" id="approve-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>, </span><span class="parameter" id="approve-param-transaction"><span class="type-annotation">dynamic</span> <span class="parameter-name">transaction</span></span>})
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/approve.html">approve</a></span><span class="signature">(<wbr>{<span class="parameter" id="approve-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="approve-param-spender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">spender</span>, </span><span class="parameter" id="approve-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="approve-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="approve-param-feeInfo"><span class="type-annotation">dynamic</span> <span class="parameter-name">feeInfo</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
   </span>
   
@@ -155,7 +155,7 @@
 </dd>
 
         <dt id="getBalance" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/getBalance.html">getBalance</a></span><span class="signature">(<wbr><span class="parameter" id="getBalance-param-addr"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">addr</span>, {</span><span class="parameter" id="getBalance-param-atBlock"><span class="type-annotation">dynamic</span> <span class="parameter-name">atBlock</span></span>})
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/getBalance.html">getBalance</a></span><span class="signature">(<wbr><span class="parameter" id="getBalance-param-address"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, {</span><span class="parameter" id="getBalance-param-atBlock"><span class="type-annotation">dynamic</span> <span class="parameter-name">atBlock</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
   </span>
   
@@ -195,7 +195,7 @@
 
         <dt id="getSupply" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/getSupply.html">getSupply</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/double-class.html">double</a></span>&gt;</span></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
   </span>
   
 
@@ -232,19 +232,6 @@
 
 </dd>
 
-        <dt id="sendToken" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/sendToken.html">sendToken</a></span><span class="signature">(<wbr><span class="parameter" id="sendToken-param-receiver"><span class="type-annotation">dynamic</span> <span class="parameter-name">receiver</span>, </span><span class="parameter" id="sendToken-param-amount"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">amount</span>, {</span><span class="parameter" id="sendToken-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>, </span><span class="parameter" id="sendToken-param-transaction"><span class="type-annotation">dynamic</span> <span class="parameter-name">transaction</span></span>})
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
         <dt id="toString" class="callable inherited">
   <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
@@ -255,6 +242,19 @@
 <dd class="inherited">
   A string representation of this object.
   <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="transfer" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract/transfer.html">transfer</a></span><span class="signature">(<wbr>{<span class="parameter" id="transfer-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="transfer-param-to"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">to</span>, </span><span class="parameter" id="transfer-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="transfer-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span><span class="parameter" id="transfer-param-feeInfo"><span class="type-annotation">dynamic</span> <span class="parameter-name">feeInfo</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
 
 </dd>
 

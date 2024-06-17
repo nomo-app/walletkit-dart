@@ -64,8 +64,11 @@
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span>
-<span class="name ">estimateGasLimit</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="estimateGasLimit-param-intent"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">intent</span>, </span></li>
-<li><span class="parameter" id="estimateGasLimit-param-ownAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">ownAddress</span>, </span></li>
+<span class="name ">estimateGasLimit</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="estimateGasLimit-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span></li>
+<li><span class="parameter" id="estimateGasLimit-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span></li>
+<li><span class="parameter" id="estimateGasLimit-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span></li>
+<li><span class="parameter" id="estimateGasLimit-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span>, </span></li>
+<li><span class="parameter" id="estimateGasLimit-param-gasPrice"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">gasPrice</span>, </span></li>
 </ol>})
 
       
@@ -78,18 +81,31 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;int&gt; estimateGasLimit({
-  required TransferIntent intent,
-  required String ownAddress,
+  required String sender,
+  required String recipient,
+  required Uint8List? data,
+  required BigInt? value,
+  required BigInt? gasPrice,
 }) async {
-  assert(intent.token is EthBasedTokenEntity);
+  final dataHex = data != null ? &quot;0x&quot; + data.toHex : null;
 
-  final erc20 = intent.token as EthBasedTokenEntity;
+  &#47;&#47; if (type is ZKSYNC_NETWORK) {
+  &#47;&#47;   return await client
+  &#47;&#47;       .estimateZkSyncFee(
+  &#47;&#47;         from: sender,
+  &#47;&#47;         to: recipient,
+  &#47;&#47;         data: dataHex,
+  &#47;&#47;       )
+  &#47;&#47;       .then((value) =&gt; value.toInt());
+  &#47;&#47; }
 
   return await client
       .estimateGasLimit(
-        from: ownAddress,
-        to: erc20.contractAddress,
-        data: intent.getErc20TransferSig(),
+        from: sender,
+        to: recipient,
+        data: dataHex,
+        amount: value,
+        gasPrice: gasPrice,
       )
       .then((value) =&gt; value.toInt());
 }</code></pre>
