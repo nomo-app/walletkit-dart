@@ -27,11 +27,16 @@ class Amount extends Equatable {
     required num value,
     required int decimals,
   }) {
-    final value_s = value.toString();
+    var value_s = value.toString();
 
     final parts = value_s.split('.');
 
-    final dec = parts.length == 1 ? 0 : parts[1].length;
+    var dec = parts.length == 1 ? 0 : parts[1].length;
+
+    if (dec > decimals) {
+      value_s = value_s.substring(0, value_s.length - (dec - decimals));
+      dec = decimals;
+    }
 
     var value_int = BigInt.tryParse(value_s.replaceAll('.', ''));
 

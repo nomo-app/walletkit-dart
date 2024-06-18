@@ -7,7 +7,7 @@ import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transacti
 import 'package:walletkit_dart/src/domain/repository/json_rpc.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-const erc20TransferSig = "0xa9059cbb";
+const erc20TransferSig = "a9059cbb";
 
 base class EvmRpcClient {
   final JsonRPC _rpc;
