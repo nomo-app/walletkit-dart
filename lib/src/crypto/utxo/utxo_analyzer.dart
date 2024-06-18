@@ -386,9 +386,9 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
     );
 
     final List<NodeWithAddress> newNodes;
-    if (newIndexes.isEmpty)
+    if (newIndexes.isEmpty) {
       newNodes = [];
-    else
+    } else {
       newNodes = await isolateManager.executeTask(
         IsolateTask(
           task: (arg) => [
@@ -405,6 +405,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
           argument: null,
         ),
       );
+    }
 
     final batchNodes = [
       ...newNodes,
