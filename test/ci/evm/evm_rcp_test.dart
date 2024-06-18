@@ -1,5 +1,4 @@
 @Timeout(Duration(seconds: 600))
-import 'dart:convert';
 
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
