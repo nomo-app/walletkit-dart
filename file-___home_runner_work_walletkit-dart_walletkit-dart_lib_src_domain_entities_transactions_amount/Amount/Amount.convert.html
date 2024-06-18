@@ -31,7 +31,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">src&#47;domain&#47;entities&#47;transactions&#47;amount.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount-class.html">Amount</a></li>
-    <li class="self-crumb">Amount.convert factory constructor</li>
+    <li class="self-crumb">Amount.convert constructor</li>
   </ol>
   <div class="self-name">Amount.convert</div>
   <form class="search navbar-right" role="search">
@@ -76,29 +76,10 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory Amount.convert({
+  <pre class="language-dart"><code class="language-dart">Amount.convert({
   required num value,
-  required int decimals,
-}) {
-  final value_s = value.toString();
-
-  final parts = value_s.split(&#39;.&#39;);
-
-  final dec = parts.length == 1 ? 0 : parts[1].length;
-
-  var value_int = BigInt.tryParse(value_s.replaceAll(&#39;.&#39;, &#39;&#39;));
-
-  if (value_int == null) {
-    throw Exception(&#39;Invalid value: $value&#39;);
-  }
-
-  value_int = value_int * BigInt.from(10).pow(decimals.toInt() - dec);
-
-  return Amount(
-    value: value_int,
-    decimals: decimals,
-  );
-}</code></pre>
+  required this.decimals,
+}) : value = BigInt.from(value * pow(10, decimals));</code></pre>
 </section>
 
 
@@ -116,7 +97,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">amount</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount-class.html">Amount</a></li>
-    <li class="self-crumb">Amount.convert factory constructor</li>
+    <li class="self-crumb">Amount.convert constructor</li>
 </ol>
 
 

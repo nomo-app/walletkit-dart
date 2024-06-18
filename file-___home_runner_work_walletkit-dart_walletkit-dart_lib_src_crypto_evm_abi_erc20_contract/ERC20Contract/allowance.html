@@ -81,13 +81,15 @@
   required String owner,
   required String spender,
 }) async {
-  final function = abi.functions[8];
-  assert(function.functionSelector == &quot;dd62ed3e&quot;);
-  final response = await read(
-    function: function,
-    params: [owner, spender],
-  );
-  return response.toBigInt;
+  final function = self.abi.functions[8];
+  assert(checkSignature(function, &#39;dd62ed3e&#39;));
+  final params = [
+    EthereumAddress.fromHex(owner),
+    EthereumAddress.fromHex(spender)
+  ];
+  final response = await read(function, params, null);
+
+  return (response[0] as BigInt);
 }</code></pre>
 </section>
 

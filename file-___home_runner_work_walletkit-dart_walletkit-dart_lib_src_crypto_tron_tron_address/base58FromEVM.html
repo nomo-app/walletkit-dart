@@ -77,7 +77,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String base58FromEVM(String evmAddress) {
-  final bytes = evmAddress.hexToBytesWithPrefix;
+  final bytes = hexToBytes(evmAddress);
   return base58CheckEncode(TRON_ADDRESS_PREFIX, bytes);
 }</code></pre>
 </section>

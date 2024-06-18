@@ -76,13 +76,10 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;int&gt; getDecimals() async {
-  final function = abi.functions[4];
-  assert(function.functionSelector == &quot;313ce567&quot;);
-  final response = await read(
-    function: function,
-    params: [],
-  );
-  return response.toBigInt.toInt();
+  final function = self.abi.functions[4];
+  assert(checkSignature(function, &#39;313ce567&#39;));
+  final response = await read(function, [], null);
+  return (response[0] as BigInt).toInt();
 }</code></pre>
 </section>
 

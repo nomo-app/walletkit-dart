@@ -76,16 +76,10 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; getSymbol() async {
-  final function = abi.functions[6];
-  assert(function.functionSelector == &quot;95d89b41&quot;);
-  final response = await read(
-    function: function,
-    params: [],
-  );
-
-  final encoded = hex.decode(response.substring(2));
-  final symbol = decodeString(Uint8List.fromList(encoded));
-  return symbol;
+  final function = self.abi.functions[6];
+  assert(checkSignature(function, &#39;95d89b41&#39;));
+  final response = await read(function, [], null);
+  return (response[0] as String);
 }</code></pre>
 </section>
 

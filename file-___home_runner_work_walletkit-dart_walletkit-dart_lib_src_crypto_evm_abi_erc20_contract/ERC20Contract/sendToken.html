@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the readContract method from the EvmRpcInterface class, for the Dart programming language.">
-  <title>readContract method - EvmRpcInterface class - evm_rpc_interface library - Dart API</title>
+  <meta name="description" content="API docs for the sendToken method from the ERC20Contract class, for the Dart programming language.">
+  <title>sendToken method - ERC20Contract class - erc20_contract library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface-library.html">src&#47;domain&#47;repository&#47;evm_rpc_interface.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface-class.html">EvmRpcInterface</a></li>
-    <li class="self-crumb">readContract method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract-library.html">src&#47;crypto&#47;evm&#47;abi&#47;erc20_contract.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
+    <li class="self-crumb">sendToken method</li>
   </ol>
-  <div class="self-name">readContract</div>
+  <div class="self-name">sendToken</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,19 +54,20 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface&#47;EvmRpcInterface-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract&#47;ERC20Contract-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">readContract</span> method 
+<h1><span class="kind-method">sendToken</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
-<span class="name ">readContract</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="readContract-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span></li>
-<li><span class="parameter" id="readContract-param-function"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">function</span>, </span></li>
-<li><span class="parameter" id="readContract-param-params"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">params</span>, </span></li>
+<span class="name ">sendToken</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="sendToken-param-receiver"><span class="type-annotation">dynamic</span> <span class="parameter-name">receiver</span>, </span></li>
+<li><span class="parameter" id="sendToken-param-amount"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">amount</span>, {</span></li>
+<li><span class="parameter" id="sendToken-param-credentials"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">credentials</span>, </span></li>
+<li><span class="parameter" id="sendToken-param-transaction"><span class="type-annotation">dynamic</span> <span class="parameter-name">transaction</span>, </span></li>
 </ol>})
 
       
@@ -78,23 +79,16 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; readContract({
-  required String contractAddress,
-  required ContractFunction function,
-  required List&lt;dynamic&gt; params,
+  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendToken(
+  EthereumAddress receiver,
+  BigInt amount, {
+  required Credentials credentials,
+  Transaction? transaction,
 }) async {
-  assert(
-    function.stateMutability == StateMutability.view ||
-        function.stateMutability == StateMutability.pure,
-    &quot;Invalid function&quot;,
-  );
-
-  final data = function.encodeFunction(params).hexToBytes;
-
-  return await client.call(
-    contractAddress: contractAddress,
-    data: data,
-  );
+  final function = self.abi.functions[7];
+  &#47;&#47; assert(checkSignature(function, &#39;90b98a11&#39;));
+  final params = [receiver, amount];
+  return write(credentials, transaction, function, params);
 }</code></pre>
 </section>
 
@@ -111,13 +105,13 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface-library.html">evm_rpc_interface</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_evm_rpc_interface/EvmRpcInterface-class.html">EvmRpcInterface</a></li>
-    <li class="self-crumb">readContract method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract-library.html">erc20_contract</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
+    <li class="self-crumb">sendToken method</li>
 </ol>
 
 
-    <h5>EvmRpcInterface class</h5>
+    <h5>ERC20Contract class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
