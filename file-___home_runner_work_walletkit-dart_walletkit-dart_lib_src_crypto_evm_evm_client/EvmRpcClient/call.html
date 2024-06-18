@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the estimateZkSyncFee method from the EvmRpcClient class, for the Dart programming language.">
-  <title>estimateZkSyncFee method - EvmRpcClient class - evm_client library - Dart API</title>
+  <meta name="description" content="API docs for the call method from the EvmRpcClient class, for the Dart programming language.">
+  <title>call method - EvmRpcClient class - evm_client library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">src&#47;crypto&#47;evm&#47;evm_client.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/EvmRpcClient-class.html">EvmRpcClient</a></li>
-    <li class="self-crumb">estimateZkSyncFee method</li>
+    <li class="self-crumb">call method</li>
   </ol>
-  <div class="self-name">estimateZkSyncFee</div>
+  <div class="self-name">call</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,15 +57,17 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client&#47;EvmRpcClient-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">estimateZkSyncFee</span> method 
+<h1><span class="kind-method">call</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>?</span>&gt;</span></span>
-<span class="name ">estimateZkSyncFee</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="estimateZkSyncFee-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span></li>
-<li><span class="parameter" id="estimateZkSyncFee-param-to"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">to</span>, </span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+<span class="name ">call</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="call-param-sender"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">sender</span>, </span></li>
+<li><span class="parameter" id="call-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span></li>
+<li><span class="parameter" id="call-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span></li>
+<li><span class="parameter" id="call-param-atBlock"><span class="type-annotation">dynamic</span> <span class="parameter-name">atBlock</span>, </span></li>
 </ol>})
 
       
@@ -77,22 +79,25 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;BigInt?&gt; estimateZkSyncFee(
-    {required String from, required String to}) async {
-  final body = [
-    {
-      &#39;from&#39;: from,
-      &#39;to&#39;: to,
-      &#39;data&#39;: &#39;0x&#39;,
-    },
-  ];
+  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; call({
+  String? sender,
+  required String contractAddress,
+  required Uint8List data,
+  BlockNum? atBlock,
+}) async {
+  final response = await _call&lt;String&gt;(
+    &#39;eth_call&#39;,
+    args: [
+      {
+        if (sender != null) &#39;from&#39;: sender,
+        &#39;to&#39;: contractAddress,
+        &#39;data&#39;: &quot;0x&quot; + data.toHex,
+      },
+      atBlock?.toBlockParam() ?? &#39;latest&#39;,
+    ],
+  );
 
-  final response = await _call(&#39;zks_estimateFee&#39;, args: body);
-
-  final gaslimit = int.parse(
-      response[&#39;gas_limit&#39;].toString().replaceAll(&quot;0x&quot;, &quot;&quot;),
-      radix: 16);
-  return BigInt.from(gaslimit);
+  return response;
 }</code></pre>
 </section>
 
@@ -111,7 +116,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client-library.html">evm_client</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_evm_client/EvmRpcClient-class.html">EvmRpcClient</a></li>
-    <li class="self-crumb">estimateZkSyncFee method</li>
+    <li class="self-crumb">call method</li>
 </ol>
 
 

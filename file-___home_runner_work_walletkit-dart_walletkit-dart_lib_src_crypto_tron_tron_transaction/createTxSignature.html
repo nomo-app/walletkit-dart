@@ -82,9 +82,9 @@
   required Uint8List seed,
 }) {
   final credentials = getTronCredentials(seed: seed);
-  final sig = secp256k1.sign(txID, credentials.$1);
 
-  print(credentials.$2.toHex);
+  final sig =
+      Signature.createSignature(txID, credentials.$1, hashPayload: false);
 
   final r = padUint8ListTo32(sig.r.bigIntToBytes);
   final s = padUint8ListTo32(sig.s.bigIntToBytes);

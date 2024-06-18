@@ -62,9 +62,8 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">ERC20Contract</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-address"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">address</span>, </span></li>
-<li><span class="parameter" id="-param-client"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">client</span>, </span></li>
-<li><span class="parameter" id="-param-chainId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainId</span>, </span></li>
+      <span class="name ">ERC20Contract</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-contractAddress"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">contractAddress</span>, </span></li>
+<li><span class="parameter" id="-param-rpc"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">rpc</span>, </span></li>
 </ol>})
     </section>
 
@@ -75,10 +74,11 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">ERC20Contract({
-  required EthereumAddress address,
-  required Web3Client client,
-  int? chainId,
-}) : super(DeployedContract(contractAbiErc20, address), client, chainId);</code></pre>
+  required super.contractAddress,
+  required super.rpc,
+}) : super(
+        abi: contractAbiErc20,
+      );</code></pre>
 </section>
 
 

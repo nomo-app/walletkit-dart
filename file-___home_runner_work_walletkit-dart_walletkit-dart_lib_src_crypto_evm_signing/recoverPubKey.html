@@ -87,13 +87,13 @@
 }) {
   final messageHash = _createEthStyleMessageHash(message);
   final parsedSig = _parseEthSignature(sig);
-  final pubKeyUncompressed = web3crypto.ecRecover(messageHash, parsedSig);
+  final pubKeyUncompressed = recoverPublicKey(messageHash, parsedSig);
   if (uncompressed == true) {
     return HEX.encode(pubKeyUncompressed);
   }
 
   final uncompressedPrefix = [0x04];
-  final pubKeyCompressed = web3crypto.compressPublicKey(
+  final pubKeyCompressed = compressPublicKey(
     Uint8List.fromList(uncompressedPrefix + pubKeyUncompressed),
   );
   String pubKeyHex = HEX.encode(pubKeyCompressed);

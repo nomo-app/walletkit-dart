@@ -64,7 +64,7 @@
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
-<span class="name ">getBalance</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="getBalance-param-addr"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">addr</span>, {</span></li>
+<span class="name ">getBalance</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="getBalance-param-address"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, {</span></li>
 <li><span class="parameter" id="getBalance-param-atBlock"><span class="type-annotation">dynamic</span> <span class="parameter-name">atBlock</span>, </span></li>
 </ol>})
 
@@ -77,17 +77,16 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; getBalance(
-  String addr, {
-  BlockNum? atBlock,
-}) async {
-  final function = self.abi.functions[5];
+  <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; getBalance(String address, {BlockNum? atBlock}) async {
+  final function = abi.functions[5];
+  assert(function.functionSelector == &quot;70a08231&quot;);
 
-  assert(checkSignature(function, &#39;70a08231&#39;));
-  final params = [EthereumAddress.fromHex(addr)];
-
-  final response = await read(function, params, atBlock);
-  return (response[0] as BigInt);
+  final response = await read(
+    function: function,
+    atBlock: atBlock,
+    params: [address],
+  );
+  return response.toBigInt;
 }</code></pre>
 </section>
 
