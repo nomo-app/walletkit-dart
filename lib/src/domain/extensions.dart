@@ -1,5 +1,6 @@
 library extensions;
 
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
@@ -56,6 +57,8 @@ extension ConvUtil on String {
       return null;
     }
   }
+
+  Uint8List get asUTF8 => utf8.encode(this);
 
   int? get toIntOrNull => int.tryParse(this);
 
