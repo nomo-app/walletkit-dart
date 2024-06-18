@@ -6,12 +6,10 @@ void main() {
   test('Get Token Info for Avinoc', () async {
     final tokenInfo = await getTokenInfo(
       contractAddress: avinocZSC.contractAddress,
-      client: zeniqSmartRpcInterface.client.asWeb3,
-      chainId: zeniqSmartRpcInterface.type.chainId,
+      rpc: zeniqSmartRpcInterface,
     );
 
     expect(tokenInfo, isNotNull);
-
     expect(tokenInfo!.decimals, avinocZSC.decimals);
     expect(tokenInfo.name, "AVINOC Token");
     expect(tokenInfo.symbol, "AVINOC");

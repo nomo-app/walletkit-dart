@@ -7,7 +7,7 @@ void main() {
   final zkSyncRPC = EvmRpcInterface(ZKSyncNetwork);
   final testSeed = loadFromEnv("DEV_SEED");
   test('Test zkSync wbtc send', () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.00004, decimals: 8),
       feeInfo: null,
@@ -17,16 +17,17 @@ void main() {
 
     final hash = await zkSyncRPC.sendERC20Token(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      seed: testSeed,
+      from: arbitrumTestWallet,
     );
 
     print("Hash: $hash");
   });
 
   test('zkSyncETH send', () async {
-    final intentETH = TransferIntent(
+    final intentETH = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
-      amount: Amount.convert(value: 0.005, decimals: 18),
+      amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
       token: ethzkSync,
       memo: null,
@@ -34,16 +35,10 @@ void main() {
 
     final hashETH = await zkSyncRPC.sendCoin(
       intent: intentETH,
-      credentials: getETHCredentials(seed: testSeed),
+      from: arbitrumTestWallet,
+      seed: testSeed,
     );
 
     print("Hash: $hashETH");
-  });
-
-  test('estimate fee zksync', () async {
-    final fee = await zkSyncRPC.client
-        .estimateZkSyncFee(from: arbitrumTestWallet, to: arbitrumTestWallet);
-
-    print(fee);
   });
 }

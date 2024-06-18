@@ -6,7 +6,7 @@ import '../utils.dart';
 void main() {
   final moonbeamRPC = EvmRpcInterface(MoonbeamNetwork);
   test("MoonBeam send test", () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
@@ -17,14 +17,15 @@ void main() {
 
     final hash = await moonbeamRPC.sendCoin(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      from: arbitrumTestWallet,
+      seed: testSeed,
     );
 
     print("Hash: $hash");
   });
 
   test('Frax send test', () async {
-    final intent = TransferIntent(
+    final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.01, decimals: 18),
       feeInfo: null,
@@ -33,9 +34,10 @@ void main() {
     );
     final testSeed = loadFromEnv("DEV_SEED");
 
-    final hash = await moonbeamRPC.sendCoin(
+    final hash = await moonbeamRPC.sendERC20Token(
       intent: intent,
-      credentials: getETHCredentials(seed: testSeed),
+      seed: testSeed,
+      from: arbitrumTestWallet,
     );
 
     print("Hash: $hash");

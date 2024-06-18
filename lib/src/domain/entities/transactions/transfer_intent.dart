@@ -42,6 +42,13 @@ class TransferIntent<T extends FeeInformation?> {
     return null;
   }
 
+  Uint8List getErc20TransferSig() {
+    return (erc20TransferSig +
+            recipient.substring(2).padLeft(64, '0') +
+            amount.value.toHex.padLeft(64, '0'))
+        .hexToBytes;
+  }
+
   Amount get total {
     if (token.isERC20) {
       return fee ?? Amount.zero;
@@ -79,12 +86,6 @@ class TransferIntent<T extends FeeInformation?> {
       token: token,
       memo: memo,
     );
-  }
-
-  String getErc20TransferSig() {
-    return erc20TransferSig +
-        recipient.substring(2).padLeft(64, '0') +
-        amount.value.toHex.padLeft(64, '0');
   }
 
   Json toJson() {

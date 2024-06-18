@@ -23,27 +23,20 @@ class Amount extends Equatable {
   }
 
   /// Converts the given value to the smallest unit of the currency
-  Amount.convert({
+  factory Amount.convert({
     required num value,
-    required this.decimals,
-  }) : value = BigInt.from(value * pow(10, decimals));
-
-  /// Converts the given value to a BigInt
-  /// This is useful when the value is already in the smallest unit of the currency
-  Amount.from({
-    required int value,
-    required this.decimals,
-  }) : value = BigInt.from(value);
-
-  factory Amount.fromDouble({
-    required double value,
-    int? decimals,
+    required int decimals,
   }) {
-    final value_s = value.toString();
+    var value_s = value.toString();
 
     final parts = value_s.split('.');
 
-    final dec = parts.length == 1 ? 0 : parts[1].length;
+    var dec = parts.length == 1 ? 0 : parts[1].length;
+
+    if (dec > decimals) {
+      value_s = value_s.substring(0, value_s.length - (dec - decimals));
+      dec = decimals;
+    }
 
     var value_int = BigInt.tryParse(value_s.replaceAll('.', ''));
 
@@ -51,15 +44,20 @@ class Amount extends Equatable {
       throw Exception('Invalid value: $value');
     }
 
-    if (decimals != null) {
-      value_int = value_int * BigInt.from(10).pow(decimals.toInt() - dec);
-    }
+    value_int = value_int * BigInt.from(10).pow(decimals.toInt() - dec);
 
     return Amount(
       value: value_int,
-      decimals: decimals ?? dec,
+      decimals: decimals,
     );
   }
+
+  /// Converts the given value to a BigInt
+  /// This is useful when the value is already in the smallest unit of the currency
+  Amount.from({
+    required int value,
+    required this.decimals,
+  }) : value = BigInt.from(value);
 
   static Amount get zero => Amount(value: BigInt.from(0), decimals: 0);
 
@@ -205,11 +203,5 @@ extension AmountUtil on int {
 
   Amount toAmount(int decimals) {
     return Amount.from(value: this, decimals: decimals);
-  }
-}
-
-extension DoubleAmountUtil on double {
-  Amount get asAmount {
-    return Amount.fromDouble(value: this);
   }
 }

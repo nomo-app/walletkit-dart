@@ -1,6 +1,6 @@
-import 'package:web3dart/web3dart.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 
-final contractAbiErc721 = ContractAbi.fromJson(''' [
+final contractAbiErc721 = ContractABI.fromAbi(''' [
   {
     "anonymous": false,
     "inputs": [
@@ -345,4 +345,4 @@ final contractAbiErc721 = ContractAbi.fromJson(''' [
     "stateMutability": "nonpayable",
     "type": "function"
   }
-]''', 'Token');
+]''');

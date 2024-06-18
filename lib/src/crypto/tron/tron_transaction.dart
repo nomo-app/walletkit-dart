@@ -2,11 +2,11 @@ import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/common/http_repository.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart';
 
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:web3dart/src/crypto/secp256k1.dart' as secp256k1;
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
 
 export 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart'
@@ -200,9 +200,9 @@ Uint8List createTxSignature({
   required Uint8List seed,
 }) {
   final credentials = getTronCredentials(seed: seed);
-  final sig = secp256k1.sign(txID, credentials.$1);
 
-  print(credentials.$2.toHex);
+  final sig =
+      Signature.createSignature(txID, credentials.$1, hashPayload: false);
 
   final r = padUint8ListTo32(sig.r.bigIntToBytes);
   final s = padUint8ListTo32(sig.s.bigIntToBytes);

@@ -1,10 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/ecurve.dart';
 import 'package:walletkit_dart/src/utils/base58.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:web3dart/crypto.dart';
 
 extension BIP32Extension on BipNode {
   Uint8List get publicKeyUncompressed {
@@ -44,7 +43,7 @@ String base58ToEVM(String base58, [bool withPrefix = true]) {
 }
 
 String base58FromEVM(String evmAddress) {
-  final bytes = hexToBytes(evmAddress);
+  final bytes = evmAddress.hexToBytesWithPrefix;
   return base58CheckEncode(TRON_ADDRESS_PREFIX, bytes);
 }
 

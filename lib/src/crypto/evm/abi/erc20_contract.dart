@@ -1,9 +1,11 @@
-// Generated code, do not modify. Run `build_runner build` to re-generate!
+import 'dart:typed_data';
+import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
-import 'package:web3dart/web3dart.dart';
-
-final contractAbiErc20 = ContractAbi.fromJson(
-  '''[
+final contractAbiErc20 = ContractABI.fromAbi('''[
   {
     "constant": true,
     "inputs": [],
@@ -225,103 +227,131 @@ final contractAbiErc20 = ContractAbi.fromJson(
     "type": "event"
   }
 ]
- ''',
-  'Token',
-);
+ ''');
 
-class ERC20Contract extends GeneratedContract {
+class ERC20Contract extends InternalContract {
   ERC20Contract({
-    required EthereumAddress address,
-    required Web3Client client,
-    int? chainId,
-  }) : super(DeployedContract(contractAbiErc20, address), client, chainId);
+    required super.contractAddress,
+    required super.rpc,
+  }) : super(
+          abi: contractAbiErc20,
+        );
 
-  Future<String> sendToken(
-    EthereumAddress receiver,
-    BigInt amount, {
-    required Credentials credentials,
-    Transaction? transaction,
+  Future<String> transfer({
+    required String sender,
+    required String to,
+    required BigInt value,
+    required Uint8List seed,
+    EvmFeeInformation? feeInfo,
   }) async {
-    final function = self.abi.functions[7];
-    // assert(checkSignature(function, '90b98a11'));
-    final params = [receiver, amount];
-    return write(credentials, transaction, function, params);
+    final function = abi.functions[7];
+    assert(function.functionSelector == "a9059cbb");
+    return await interact(
+      function: function,
+      seed: seed,
+      sender: sender,
+      params: [to, value],
+      feeInfo: feeInfo,
+    );
   }
 
-  Future<BigInt> getBalance(
-    String addr, {
-    BlockNum? atBlock,
+  Future<String> approve({
+    required String sender,
+    required String spender,
+    required BigInt value,
+    required Uint8List seed,
+    EvmFeeInformation? feeInfo,
   }) async {
-    final function = self.abi.functions[5];
+    final function = abi.functions[1];
+    assert(function.functionSelector == "095ea7b3");
 
-    assert(checkSignature(function, '70a08231'));
-    final params = [EthereumAddress.fromHex(addr)];
+    return await interact(
+      function: function,
+      seed: seed,
+      sender: sender,
+      params: [spender, value],
+      feeInfo: feeInfo,
+    );
+  }
 
-    final response = await read(function, params, atBlock);
-    return (response[0] as BigInt);
+  Future<BigInt> getBalance(String address, {BlockNum? atBlock}) async {
+    final function = abi.functions[5];
+    assert(function.functionSelector == "70a08231");
+
+    final response = await read(
+      function: function,
+      atBlock: atBlock,
+      params: [address],
+    );
+    return response.toBigInt;
   }
 
   Future<String> getName() async {
-    final function = self.abi.functions[0];
-    assert(checkSignature(function, '06fdde03'));
-    final response = await read(function, [], null);
-    return (response[0] as String);
+    final function = abi.functions[0];
+    assert(function.functionSelector == "06fdde03");
+
+    final response = await read(
+      function: function,
+      params: [],
+    );
+    final encoded = hex.decode(response.substring(2));
+    final name = decodeString(Uint8List.fromList(encoded));
+    return name;
   }
 
   Future<String> getSymbol() async {
-    final function = self.abi.functions[6];
-    assert(checkSignature(function, '95d89b41'));
-    final response = await read(function, [], null);
-    return (response[0] as String);
+    final function = abi.functions[6];
+    assert(function.functionSelector == "95d89b41");
+    final response = await read(
+      function: function,
+      params: [],
+    );
+
+    final encoded = hex.decode(response.substring(2));
+    final symbol = decodeString(Uint8List.fromList(encoded));
+    return symbol;
   }
 
-  Future<double> getSupply() async {
-    final function = self.abi.functions[2];
-    assert(checkSignature(function, '18160ddd'));
-    final response = await read(function, [], null);
-    return (response[0] as BigInt).toDouble();
+  Future<BigInt> getSupply() async {
+    final function = abi.functions[2];
+    assert(function.functionSelector == "18160ddd");
+    final response = await read(
+      function: function,
+      params: [],
+    );
+    return response.toBigInt;
   }
 
   Future<int> getDecimals() async {
-    final function = self.abi.functions[4];
-    assert(checkSignature(function, '313ce567'));
-    final response = await read(function, [], null);
-    return (response[0] as BigInt).toInt();
+    final function = abi.functions[4];
+    assert(function.functionSelector == "313ce567");
+    final response = await read(
+      function: function,
+      params: [],
+    );
+    return response.toBigInt.toInt();
   }
 
   Future<BigInt> balanceOf({required String address}) async {
-    final function = self.abi.functions[5];
-    assert(checkSignature(function, '70a08231'));
-    final params = [EthereumAddress.fromHex(address)];
-    final response = await read(function, params, null);
-
-    return (response[0] as BigInt);
+    final function = abi.functions[5];
+    assert(function.functionSelector == "70a08231");
+    final response = await read(
+      function: function,
+      params: [address],
+    );
+    return response.toBigInt;
   }
 
   Future<BigInt> allowance({
     required String owner,
     required String spender,
   }) async {
-    final function = self.abi.functions[8];
-    assert(checkSignature(function, 'dd62ed3e'));
-    final params = [
-      EthereumAddress.fromHex(owner),
-      EthereumAddress.fromHex(spender)
-    ];
-    final response = await read(function, params, null);
-
-    return (response[0] as BigInt);
-  }
-
-  Future<String> approve(
-    String spender,
-    BigInt amount, {
-    required Credentials credentials,
-    Transaction? transaction,
-  }) async {
-    final function = self.abi.functions[1];
-    assert(checkSignature(function, '095ea7b3'));
-    final params = [EthereumAddress.fromHex(spender), amount];
-    return write(credentials, transaction, function, params);
+    final function = abi.functions[8];
+    assert(function.functionSelector == "dd62ed3e");
+    final response = await read(
+      function: function,
+      params: [owner, spender],
+    );
+    return response.toBigInt;
   }
 }

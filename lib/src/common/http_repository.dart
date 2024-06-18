@@ -45,6 +45,9 @@ abstract class HTTPRepository {
       } on RateLimitException {
         apiKey = _getApiKey(i);
         await Future.delayed(retryInterval);
+      } on UnAuthorizedException {
+        apiKey = _getApiKey(i);
+        await Future.delayed(retryInterval);
       } catch (e) {
         rethrow;
       }
@@ -63,6 +66,8 @@ abstract class HTTPRepository {
       if (response.statusCode == 403) {
         throw RateLimitException("Rate Limit Exceeded");
       }
+
+      if (response.statusCode == 401) throw UnAuthorizedException();
 
       throw HTTPStatusException(response.statusCode, response.body, url);
     }
@@ -192,5 +197,14 @@ class RateLimitException extends HTTPStatusException {
   @override
   String toString() {
     return "RateLimitException: $message";
+  }
+}
+
+class UnAuthorizedException extends HTTPStatusException {
+  const UnAuthorizedException() : super(401, "Unauthorized", null);
+
+  @override
+  String toString() {
+    return "UnAuthorizedException: Unauthorized";
   }
 }

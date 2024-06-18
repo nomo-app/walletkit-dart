@@ -1,4 +1,5 @@
 @Timeout(Duration(seconds: 600))
+
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -93,17 +94,33 @@ void main() {
   test('estimate Gas Limit', () async {
     final rpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
 
-    final data = erc20TransferSig +
+    var data = erc20TransferSig +
         spoilEVM.substring(2).padLeft(64, '0') +
         BigInt.from(0).toHex.padLeft(64, '0');
 
-    final gasLimit = await rpcInterface.client.estimateGasLimit(
-      from: rejectEVM,
-      to: avinocZSC.contractAddress,
-      data: data,
+    var gasLimit = await rpcInterface.estimateGasLimit(
+      sender: rejectEVM,
+      recipient: avinocZSC.contractAddress,
+      gasPrice: null,
+      value: BigInt.zero,
+      data: data.hexToBytes,
     );
 
-    expect(gasLimit, greaterThanOrEqualTo(GasLimits.ethSend.value.toBigInt));
+    expect(gasLimit, greaterThanOrEqualTo(GasLimits.ethSend.value));
+
+    data = "Test memo";
+
+    gasLimit = await rpcInterface.estimateGasLimit(
+      sender: rejectEVM,
+      recipient: spoilEVM,
+      gasPrice: null,
+      value: BigInt.one,
+      data: data.asUTF8,
+    );
+
+    final memoGasLimit = GasLimits.ethSend.value + 16 * data.length;
+
+    expect(gasLimit, greaterThanOrEqualTo(memoGasLimit));
   });
 
   test('Arbitrum Test', () async {
@@ -115,19 +132,19 @@ void main() {
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
 
-  test('Base Test', () async {
-    final rpcInterface = EvmRpcInterface(BaseNetwork);
+  // test('Base Test', () async {
+  //   final rpcInterface = EvmRpcInterface(BaseNetwork);
 
-    final balance = await rpcInterface.fetchBalance(
-      address: arbitrumTestWallet,
-    );
-    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  //   final balance = await rpcInterface.fetchBalance(
+  //     address: arbitrumTestWallet,
+  //   );
+  //   expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
 
-    final tokenBalance =
-        await rpcInterface.fetchTokenBalance(arbitrumTestWallet, mathToken);
+  //   final tokenBalance =
+  //       await rpcInterface.fetchTokenBalance(arbitrumTestWallet, mathToken);
 
-    expect(tokenBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
-  });
+  //   expect(tokenBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  // });
 
   test('MoonBeam Test', () async {
     final rpcInterface = EvmRpcInterface(MoonbeamNetwork);

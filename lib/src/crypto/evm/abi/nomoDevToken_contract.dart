@@ -1,6 +1,6 @@
-import 'package:web3dart/web3dart.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 
-final contractAbiNomoDevToken = ContractAbi.fromJson('''
+final contractAbiNomoDevToken = ContractABI.fromAbi('''
  [
     {
       "inputs": [],
@@ -439,4 +439,4 @@ final contractAbiNomoDevToken = ContractAbi.fromJson('''
       "type": "function"
     }
   ]
-''', 'Token');
+''');

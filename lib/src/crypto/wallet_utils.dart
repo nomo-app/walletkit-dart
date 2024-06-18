@@ -1,35 +1,22 @@
-library web3_client;
-
+import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/abi/erc20_contract.dart';
-import 'package:walletkit_dart/src/domain/entities/asset/token_info.dart';
-import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
-import 'package:web3dart/web3dart.dart';
-import 'package:bip39/bip39.dart' as bip39;
+import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
+// import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
+import 'package:bip39/bip39.dart' as bip39;
 
 export './utxo/derivation.dart';
 
-// const _rpcUrlGoerli =
-//     "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
-
-// final ethTestnetClient = Web3Client(_rpcUrlGoerli, Client());
-
-// const GOERLI_CHAIN_ID = 5;
-
 Future<TokenInfo?> getTokenInfo({
   required String contractAddress,
-  required Web3Client client,
-  required int chainId,
+  required EvmRpcInterface rpc,
 }) async {
-  final address = EthereumAddress.fromHex(contractAddress);
-
   final tokenContract = ERC20Contract(
-    address: address,
-    client: client,
-    chainId: chainId,
+    contractAddress: contractAddress,
+    rpc: rpc,
   );
 
   try {
@@ -39,16 +26,15 @@ Future<TokenInfo?> getTokenInfo({
       tokenContract.getSymbol(),
       tokenContract.getSupply(),
     ]);
-
     int decimals = result[0] as int;
     String name = result[1] as String;
     String symbol = result[2] as String;
-    double maxSupply = result[3] as double;
-    maxSupply = maxSupply / pow(10, decimals);
+    BigInt maxSupply = result[3] as BigInt;
+    double maxSupplyDouble = maxSupply.toDouble() / pow(10, decimals);
 
     return TokenInfo(
       decimals: decimals,
-      maxSupply: maxSupply,
+      maxSupply: maxSupplyDouble,
       symbol: symbol,
       name: name,
     );
@@ -57,46 +43,66 @@ Future<TokenInfo?> getTokenInfo({
   }
 }
 
-Credentials? _cachedEVMCredentials;
-
-Credentials getETHCredentials({
-  required Uint8List seed,
-  bool? wipeCache,
-}) {
-  if (wipeCache == true) {
-    _cachedEVMCredentials = null;
-  }
-  // caching: prevent the expensive mnemonicToSeed from being called too often!
-  if (_cachedEVMCredentials == null) {
-    final privateKey = _derivePrivateKeyETH(seed);
-    final privKeyHex = privateKey.toHex;
-    _cachedEVMCredentials = EthPrivateKey.fromHex(privKeyHex);
-  }
-  return _cachedEVMCredentials!;
+Uint8List publicKeyToAddress(Uint8List publicKey) {
+  assert(publicKey.length == 64);
+  final hashed = keccak256(publicKey);
+  assert(hashed.length == 32);
+  return hashed.sublist(12, 32);
 }
 
-Credentials getETHCredentialsFromMnemonic({
+String pubKeytoChecksumETHAddress(Uint8List seed) {
+  final publicKey = derivePublicKeyETH(seed);
+  final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
+
+  final address = '0x${pubKeyWithoutPrefix.sublist(12).toHex}';
+
+  final addressWithoutPrefix = address.replaceFirst('0x', '').toLowerCase();
+
+  // Compute the keccak-256 hash of the address
+  final hash = keccak256(utf8.encode(addressWithoutPrefix));
+  final hashHex = hex.encode(hash);
+
+  // Apply the checksum
+  final checksummedAddress = StringBuffer('0x');
+  for (int i = 0; i < addressWithoutPrefix.length; i++) {
+    if (int.parse(hashHex[i], radix: 16) > 7) {
+      checksummedAddress.write(addressWithoutPrefix[i].toUpperCase());
+    } else {
+      checksummedAddress.write(addressWithoutPrefix[i].toLowerCase());
+    }
+  }
+
+  return checksummedAddress.toString();
+}
+
+String getETHAddressFromMnemonic({
   required String mnemonic,
-  bool? wipeCache,
 }) {
-  if (wipeCache == true) {
-    _cachedEVMCredentials = null;
-  }
-  // caching: prevent the expensive mnemonicToSeed from being called too often!
-  if (_cachedEVMCredentials == null) {
-    final seed = bip39.mnemonicToSeed(mnemonic);
-    final privateKey = _derivePrivateKeyETH(seed);
-    final privKeyHex = privateKey.toHex;
-    _cachedEVMCredentials = EthPrivateKey.fromHex(privKeyHex);
-  }
-  return _cachedEVMCredentials!;
+  final seed = bip39.mnemonicToSeed(mnemonic);
+
+  final publicKey = derivePublicKeyETH(seed);
+
+  final publicKeyWithoutPrefix = keccak256(publicKey.sublist(1));
+
+  final address = '0x${publicKeyWithoutPrefix.sublist(12).toHex}';
+
+  return address;
 }
 
-Uint8List _derivePrivateKeyETH(Uint8List seed) {
+Uint8List derivePrivateKeyETH(Uint8List seed) {
   final node = bip32.BIP32.fromSeed(seed);
 
   final bip32.BIP32 childNode = node.derivePath(
     ethereumBip44HDPath.defaultPath,
   );
   return childNode.privateKey!;
+}
+
+Uint8List derivePublicKeyETH(Uint8List seed) {
+  final node = bip32.BIP32.fromSeed(seed);
+
+  final bip32.BIP32 childNode = node.derivePath(
+    ethereumBip44HDPath.defaultPath,
+  );
+  return childNode.publicKeyUncompressed;
 }

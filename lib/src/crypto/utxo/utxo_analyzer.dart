@@ -494,7 +494,7 @@ Future<Amount> estimateFeeForPriority({
 
   if (fee == null) throw Exception("Fee estimation failed");
 
-  final feePerKb = Amount.fromDouble(value: fee, decimals: 8);
+  final feePerKb = Amount.convert(value: fee, decimals: 8);
 
   final feePerB = feePerKb / Amount.from(value: 1000, decimals: 0);
 

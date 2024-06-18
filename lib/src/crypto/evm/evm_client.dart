@@ -1,23 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
-import 'package:web3dart/json_rpc.dart';
-import 'package:web3dart/web3dart.dart';
+import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
+import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
+import 'package:walletkit_dart/src/domain/repository/json_rpc.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
-const erc20TransferSig = "0xa9059cbb";
+const erc20TransferSig = "a9059cbb";
 
 base class EvmRpcClient {
   final JsonRPC _rpc;
 
-  /// Still needed for some calls
-  final Web3Client _web3Client;
-
-  Web3Client get asWeb3 => _web3Client;
-
-  EvmRpcClient(String rpcUrl)
-      : _rpc = JsonRPC(rpcUrl, HTTPService.client),
-        _web3Client = Web3Client(rpcUrl, HTTPService.client);
+  EvmRpcClient(String rpcUrl) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
 
   Future<T> _call<T>(String function, {List<dynamic>? args}) async {
     try {
@@ -35,23 +30,101 @@ base class EvmRpcClient {
     }
   }
 
-  Future<BigInt?> estimateZkSyncFee(
-      {required String from, required String to}) async {
-    final body = [
-      {
-        'from': from,
-        'to': to,
-        'data': '0x',
-      },
-    ];
+  Future<String> call({
+    String? sender,
+    required String contractAddress,
+    required Uint8List data,
+    BlockNum? atBlock,
+  }) async {
+    final response = await _call<String>(
+      'eth_call',
+      args: [
+        {
+          if (sender != null) 'from': sender,
+          'to': contractAddress,
+          'data': "0x" + data.toHex,
+        },
+        atBlock?.toBlockParam() ?? 'latest',
+      ],
+    );
 
-    final response = await _call('zks_estimateFee', args: body);
-
-    final gaslimit = int.parse(
-        response['gas_limit'].toString().replaceAll("0x", ""),
-        radix: 16);
-    return BigInt.from(gaslimit);
+    return response;
   }
+
+  Future<BigInt> getTransactionCount(String address) async {
+    final response = await _call<String>(
+      'eth_getTransactionCount',
+      args: [address, 'latest'],
+    );
+
+    final count = response.toBigIntOrNull;
+    if (count == null) throw Exception('Could not parse transaction count');
+    return count;
+  }
+
+  Future<InternalEVMTransaction> getTransactionByHash(
+    String messageHash,
+  ) async {
+    final response = await _call<Json>(
+      'eth_getTransactionByHash',
+      args: [messageHash],
+    );
+
+    final v = response['v'].toString().toIntOrNull ?? 0;
+
+    final chainIDV = extractChainId(v);
+    return InternalEVMTransaction(
+      nonce: response['nonce'].toString().toBigInt,
+      gasPrice: response['gasPrice'].toString().toBigInt,
+      gasLimit: response['gas'].toString().toBigInt,
+      to: response['to'],
+      value: response['value'].toString().toBigInt,
+      data: response['input'].toString().hexToBytesWithPrefixOrNull,
+      chainId: chainIDV.toBigInt,
+      v: v,
+      r: response['r'].toString().toBigInt,
+      s: response['s'].toString().toBigInt,
+    );
+  }
+
+  Future<String> sendRawTransaction(String rawTx) async {
+    try {
+      final response = await _call<String>(
+        'eth_sendRawTransaction',
+        args: [rawTx],
+      );
+
+      return response;
+    } catch (e) {
+      final response = await _call<String>(
+        'eth_sendRawTransaction',
+        args: [rawTx],
+      );
+      return response;
+    }
+  }
+
+  // Future<BigInt> estimateZkSyncFee({
+  //   required String from,
+  //   required String to,
+  //   String? data,
+  // }) async {
+  //   final body = [
+  //     {
+  //       'from': from,
+  //       'to': to,
+  //       'data': data ?? "0x",
+  //     },
+  //   ];
+
+  //   final response = await _call('zks_estimateFee', args: body);
+
+  //   final gaslimit = int.parse(
+  //     response['gas_limit'].toString().replaceAll("0x", ""),
+  //     radix: 16,
+  //   );
+  //   return BigInt.from(gaslimit);
+  // }
 
   ///
   /// Returns the balance of the account of given address in wei.

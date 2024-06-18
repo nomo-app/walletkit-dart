@@ -6,10 +6,10 @@ import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/asset_issue_con
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/balance_contract.pb.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/smart_contract.pb.dart';
 import 'package:walletkit_dart/src/crypto/tron/tron_parameter_type.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
 import 'package:protobuf/protobuf.dart' as $pb;
-import 'package:web3dart/crypto.dart';
 
 sealed class TronContractData {
   const TronContractData(this.type);
@@ -171,8 +171,6 @@ sealed class TronTriggerSmartContractData extends TronContractData {
 
     final data = contract.data.toUint8List;
     final functionSelector = getFunctionSelectorFromData(data);
-
-    print(getFunctionSignature(TronTRC20TransferContractData.selector).toHex);
 
     return switch (functionSelector) {
       TronTRC20TransferContractData.selector =>
