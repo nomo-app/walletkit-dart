@@ -67,8 +67,8 @@ class TransferIntent<T extends FeeInformation?> {
   /// Copy the transfer intent with a new fee
   /// If [balance] is provided, the target amount will be recalculated
   ///
-  TransferIntent<T> copyWithFee<T extends FeeInformation>(
-    T feeInfo, {
+  TransferIntent<A> copyWithFee<A extends FeeInformation>(
+    A feeInfo, {
     Amount? balance,
   }) {
     final newTargetValue = switch ((balance, feeInfo)) {

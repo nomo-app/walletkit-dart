@@ -36,6 +36,39 @@ sealed class RawTransaction {
 
   String get asHex => bytes.toHex;
 
+  factory RawTransaction.fromJson(Json json) {
+    final raw = json['raw'] as String;
+
+    final inputMap = json['inputMap'];
+
+    print(inputMap);
+
+    final a = {
+      for (final entry in inputMap)
+        ElectrumOutput.fromJson(entry['utxo']):
+            BTCInput.fromBuffer((entry['input'] as String).hexToBytes),
+    };
+
+    return BTCRawTransaction.fromHex(
+      raw,
+      inputMap: a,
+    );
+  }
+
+  Json toJson() {
+    return {
+      'raw': asHex,
+      if (inputMap != null)
+        'inputMap': [
+          for (final entry in inputMap!.entries)
+            {
+              'utxo': entry.key.toJson(),
+              'input': entry.value.toHex,
+            }
+        ],
+    };
+  }
+
   int get size => bytes.length;
 
   BigInt get fee => totalInputValue - totalOutputValue;
@@ -226,7 +259,10 @@ class BTCRawTransaction extends RawTransaction {
     );
   }
 
-  factory BTCRawTransaction.fromHex(String hex) {
+  factory BTCRawTransaction.fromHex(
+    String hex, {
+    Map<ElectrumOutput, Input>? inputMap,
+  }) {
     final buffer = hex.hexToBytes;
 
     var offset = 0;
@@ -280,9 +316,11 @@ class BTCRawTransaction extends RawTransaction {
       lockTime: lockTime,
       inputs: inputs,
       outputs: outputs,
+      inputMap: inputMap,
     );
   }
 
+  @override
   Uint8List get bytes {
     final inputBuffers = inputs.map((input) => input.bytes);
     const inputLengthByte = 1;

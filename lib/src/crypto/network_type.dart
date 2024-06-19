@@ -1,7 +1,26 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:bip32/bip32.dart' as bip32;
+import 'package:collection/collection.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+
+const allTypes = [
+  BitcoinNetwork,
+  LitecoinNetwork,
+  BitcoincashNetwork,
+  ZeniqNetwork,
+  EurocoinNetwork,
+  EthereumNetwork,
+  BNBNetwork,
+  TRON_Network,
+  ArbitrumNetwork,
+  BaseNetwork,
+  MoonbeamNetwork,
+  AvalancheNetwork,
+  OptimismNetwork,
+  ZKSyncNetwork,
+  PolygonNetwork,
+];
 
 sealed class NetworkType {
   final String messagePrefix;
@@ -15,6 +34,14 @@ sealed class NetworkType {
     required this.coin,
     required this.blockTime,
   });
+
+  String toJson() {
+    return coin.identifier;
+  }
+
+  static NetworkType? fromJson(String symbol) {
+    return allTypes.singleWhereOrNull((type) => type.coin.identifier == symbol);
+  }
 }
 
 sealed class EVMNetworkType extends NetworkType {
