@@ -14,6 +14,9 @@ base class EvmRpcClient {
 
   EvmRpcClient(String rpcUrl) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
 
+  String get rpcUrl => _rpc.url;
+  HTTPClient get httpClient => HTTPService.client;
+
   Future<T> _call<T>(String function, {List<dynamic>? args}) async {
     try {
       final response = await _rpc.call(function, args);
