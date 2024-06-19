@@ -80,18 +80,6 @@ class ContractABI {
     return ContractABI(functions, events);
   }
 
-  String encodedFunctionForString(String functionName, List<dynamic> values) {
-    final function = functions.firstWhereOrNull((e) => e.name == functionName);
-    if (function == null) {
-      throw Exception('Function not found');
-    }
-    return function.encodeFunction(values);
-  }
-
-  String encodedFunction(ContractFunction function, List<dynamic> values) {
-    return function.encodeFunction(values);
-  }
-
   ContractFunction? getFunction(String functionName) {
     return functions.singleWhereOrNull((e) => e.name == functionName);
   }
