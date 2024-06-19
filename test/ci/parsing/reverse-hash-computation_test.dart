@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
@@ -18,18 +20,15 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final FunctionSignatureWithArgs functionSignature =
-        FunctionSignatureWithArgs.fromData(data);
+    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
 
-    expect(functionSignature.name, "mint");
-    expect(functionSignature.parameters, {
-      "to": "address",
-      "amount": "uint256",
-    });
-
-    expect(functionSignature.args?[0].value,
+    expect(functionSignature, isNotNull);
+    expect(functionSignature!.name, "mint");
+    expect(functionSignature.parameters[0].type, FunctionParamType.address);
+    expect(functionSignature.parameters[0].value,
         "0x05870f1507d820212e921e1f39f14660336231d1");
-    expect(functionSignature.args?[1].value, BigInt.from(15942468));
+    expect(functionSignature.parameters[1].type, FunctionParamType.uint256);
+    expect(functionSignature.parameters[1].value, BigInt.from(15942468));
   });
 
   test('Test for data field with claim event', () {
@@ -38,11 +37,12 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final FunctionSignatureWithArgs functionSignature =
-        FunctionSignatureWithArgs.fromData(data);
+    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
+
+    expect(functionSignature, isNotNull);
 
     expect(
-        functionSignature.args?[0].value,
+        functionSignature!.parameters.first.value,
         [
           8644,
           8717,
@@ -96,39 +96,51 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final FunctionSignatureWithArgs functionSignature =
-        FunctionSignatureWithArgs.fromData(data);
+    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
 
-    expect(functionSignature.name, "mint");
-    expect(functionSignature.parameters, {
-      "_to": "address",
-      "_amount": "uint256",
-      "_amounts": "bytes[]",
-      "_collect": "bool",
-      "_addresses": "address[]",
-      "_intParam": "int256"
-    });
-    expect(functionSignature.args?[0].name, "_to");
-    expect(functionSignature.args?[0].value,
+    expect(functionSignature, isNotNull);
+
+    expect(functionSignature!.name, "mint");
+    print(functionSignature.parameters);
+
+    expect(functionSignature.parameters[0].name, "_to");
+    expect(functionSignature.parameters[0].type, FunctionParamType.address);
+    expect(functionSignature.parameters[0].value,
         "0x05870f1507d820212e921e1f39f14660336231d1");
 
-    expect(functionSignature.args?[1].name, "_amount");
-    expect(functionSignature.args?[1].value, BigInt.from(15942468));
+    expect(functionSignature.parameters[1].name, "_amount");
+    expect(functionSignature.parameters[1].type, FunctionParamType.uint256);
+    expect(functionSignature.parameters[1].value, BigInt.from(15942468));
 
-    expect(functionSignature.args?[2].name, "_amounts");
-    expect(functionSignature.args?[2].value,
-        ["0x4172726179456c656d656e7431", "0x4172726179456c656d656e7432"]);
+    expect(functionSignature.parameters[2].name, "_amounts");
+    expect(functionSignature.parameters[2].type, FunctionParamType.bytesArray);
+    expect(
+      (functionSignature.parameters[2].value as List<Uint8List>).first.toHex,
+      "4172726179456c656d656e7431",
+    );
+    expect(
+      (functionSignature.parameters[2].value as List<Uint8List>).last.toHex,
+      "4172726179456c656d656e7432",
+    );
 
-    expect(functionSignature.args?[3].name, "_collect");
-    expect(functionSignature.args?[3].value, true);
+    expect(functionSignature.parameters[3].name, "_collect");
+    expect(functionSignature.parameters[3].type, FunctionParamType.Bool);
+    expect(functionSignature.parameters[3].value, true);
 
-    expect(functionSignature.args?[4].name, "_addresses");
-    expect(functionSignature.args?[4].value, [
+    expect(functionSignature.parameters[4].name, "_addresses");
+    expect(
+        functionSignature.parameters[4].type, FunctionParamType.addressArray);
+    expect(
+      (functionSignature.parameters[4].value as List<String>)[0],
       '0x742d35cc6634c0532925a3b844bc454e4438f44e',
-      '0x742d35cc6634c0532925a3b844bc454e4438f44e'
-    ]);
+    );
+    expect(
+      (functionSignature.parameters[4].value as List<String>)[1],
+      '0x742d35cc6634c0532925a3b844bc454e4438f44e',
+    );
 
-    expect(functionSignature.args?[5].name, "_intParam");
-    expect(functionSignature.args?[5].value, BigInt.from(23));
+    expect(functionSignature.parameters[5].name, "_intParam");
+    expect(functionSignature.parameters[5].type, FunctionParamType.int256);
+    expect(functionSignature.parameters[5].value, BigInt.from(23));
   });
 }

@@ -2,14 +2,18 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'dart:math';
 
-class DecodedFunctionValue {
-  final dynamic value;
+class DecodedFunctionValue<T> {
+  final T value;
   final int offset;
 
   DecodedFunctionValue({required this.value, required this.offset});
 }
 
-DecodedFunctionValue decodeByte(int offset, Uint8List data, int max_offset) {
+DecodedFunctionValue<Uint8List> decodeByte(
+  int offset,
+  Uint8List data,
+  int max_offset,
+) {
   var byte_offset = data
           .sublist(offset, offset + 32)
           .toHex
@@ -26,7 +30,7 @@ DecodedFunctionValue decodeByte(int offset, Uint8List data, int max_offset) {
       .toInt();
 
   byte_offset += 32;
-  final bytes = "0x" + data.sublist(byte_offset, byte_offset + length).toHex;
+  final bytes = data.sublist(byte_offset, byte_offset + length);
   byte_offset += length;
   max_offset = max(max_offset, byte_offset);
   return DecodedFunctionValue(
@@ -35,7 +39,10 @@ DecodedFunctionValue decodeByte(int offset, Uint8List data, int max_offset) {
   );
 }
 
-DecodedFunctionValue decodeUint256Array(int offset, Uint8List data) {
+DecodedFunctionValue<List<BigInt>> decodeUint256Array(
+  int offset,
+  Uint8List data,
+) {
   final field_lenght = data
       .sublist(offset, offset + 32)
       .toHex
@@ -69,8 +76,11 @@ DecodedFunctionValue decodeUint256Array(int offset, Uint8List data) {
   );
 }
 
-DecodedFunctionValue decodeBytesArray(
-    int offset, int max_offset, Uint8List data) {
+DecodedFunctionValue<List<Uint8List>> decodeBytesArray(
+  int offset,
+  int max_offset,
+  Uint8List data,
+) {
   var array_offset = data
           .sublist(offset, offset + 32)
           .toHex
@@ -104,7 +114,7 @@ DecodedFunctionValue decodeBytesArray(
     array_offset += 32;
   }
 
-  var values = [];
+  var values = <Uint8List>[];
 
   for (int i = 0; i < byte_offsets.length; i++) {
     var byte_offset = byte_offsets[i];
@@ -118,7 +128,7 @@ DecodedFunctionValue decodeBytesArray(
 
     byte_offset += 32;
 
-    final byte = "0x" + data.sublist(byte_offset, byte_offset + length).toHex;
+    final byte = data.sublist(byte_offset, byte_offset + length);
     byte_offset += length;
 
     max_offset = max(max_offset, byte_offset);
@@ -131,8 +141,11 @@ DecodedFunctionValue decodeBytesArray(
   );
 }
 
-DecodedFunctionValue decodeAddressArray(
-    int offset, int max_offset, Uint8List data) {
+DecodedFunctionValue<List<String>> decodeAddressArray(
+  int offset,
+  int max_offset,
+  Uint8List data,
+) {
   final subList = data.sublist(offset, offset + 32);
   final subListHex = subList.toHex;
   final subListHex56 = subListHex.substring(56);
@@ -147,7 +160,7 @@ DecodedFunctionValue decodeAddressArray(
       .toInt();
 
   arrayOffset += 32;
-  var addresses = [];
+  var addresses = <String>[];
 
   for (int i = 0; i < arrayLength; i++) {
     var address = data.sublist(arrayOffset, arrayOffset + 32).toHex;
