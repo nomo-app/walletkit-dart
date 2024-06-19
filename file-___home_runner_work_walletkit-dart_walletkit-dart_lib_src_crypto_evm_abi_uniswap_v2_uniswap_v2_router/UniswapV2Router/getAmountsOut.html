@@ -84,11 +84,7 @@
   final function = abi.getFunction(&quot;getAmountsOut&quot;)!;
 
   final result = await read(
-    function: function,
-    params: [
-      amountIn,
-      path,
-    ],
+    function: function.addValues(values: [amountIn, path]),
   );
   throw UnimplementedError();
   &#47;&#47;return [for (final r in result[0]) r as BigInt];

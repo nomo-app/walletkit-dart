@@ -63,10 +63,9 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
 <span class="name ">read</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="read-param-function"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">function</span>, </span></li>
 <li><span class="parameter" id="read-param-atBlock"><span class="type-annotation">dynamic</span> <span class="parameter-name">atBlock</span>, </span></li>
-<li><span class="parameter" id="read-param-params"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">params</span>, </span></li>
 </ol>})
 
       
@@ -78,10 +77,9 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; read({
-  required ContractFunction function,
+  <pre class="language-dart"><code class="language-dart">Future&lt;dynamic&gt; read({
+  required ContractFunctionWithValues function,
   BlockNum? atBlock,
-  required List&lt;dynamic&gt; params,
 }) async {
   assert(
     function.stateMutability == StateMutability.pure ||
@@ -89,8 +87,14 @@
     &quot;Function is not view or pure&quot;,
   );
 
-  final data = function.encodeFunction(params).hexToBytes;
-  return rpc.client.call(contractAddress: contractAddress, data: data);
+  final data = function.buildDataField();
+
+  print(data);
+
+  final String result =
+      await rpc.client.call(contractAddress: contractAddress, data: data);
+
+  return result;
 }</code></pre>
 </section>
 

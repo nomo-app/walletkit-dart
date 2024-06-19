@@ -82,10 +82,9 @@
   required String spender,
 }) async {
   final function = abi.functions[8];
-  assert(function.functionSelector == &quot;dd62ed3e&quot;);
+  assert(function.functionSelectorHex == &quot;dd62ed3e&quot;);
   final response = await read(
-    function: function,
-    params: [owner, spender],
+    function: function.addValues(values: []),
   );
   return response.toBigInt;
 }</code></pre>
