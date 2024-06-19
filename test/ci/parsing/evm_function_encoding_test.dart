@@ -9,15 +9,14 @@ void main() {
     "Function Parameter Encoding and Decoding",
     () async {
       var function = uniswap_v2_router_abi.getFunction("getAmountsOut")!;
-      var dataFieldBuilder = DataFieldBuilder.fromFunction(
-        function,
-        [
+      var dataFieldBuilder = DataFieldBuilder(
+        function: function.addValues(values: [
           1.toBigInt,
           [
             wrappedZeniqSmart.contractAddress.toLowerCase(),
             avinocZSC.contractAddress.toLowerCase(),
           ],
-        ],
+        ]),
       );
 
       var data = dataFieldBuilder.buildDataField();

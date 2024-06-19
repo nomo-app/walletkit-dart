@@ -109,30 +109,30 @@ class ContractFunction extends ExternalContractFunction
     required this.outputs,
   });
 
-  String encodeFunction(List<dynamic> values) {
-    String functionData = "";
-    final selector = functionSelectorHex;
-    functionData += selector;
-    for (var param in parameters) {
-      int index = parameters.indexOf(param);
-      final encodedParam = switch (param.type) {
-        FunctionParamType.address => param.type.encodeParameter(
-            values[index],
-          ),
-        FunctionParamType.addressArray => param.type.encodeParameter(
-            values[index],
-          ),
-        FunctionParamType.uint256 => param.type.encodeParameter(
-            values[index],
-          ),
-        FunctionParamType.uint => param.type.encodeParameter(
-            values[index],
-          ),
-        _ => throw UnimplementedError(),
-      };
-      functionData += encodedParam.toHex;
+  ContractFunctionWithValues addValues({
+    required List<dynamic> values,
+  }) {
+    final paramsWithValues = <FunctionParamWithValue>[];
+    for (var i = 0; i < parameters.length; i++) {
+      final param = parameters[i];
+      final value = values[i];
+
+      if (param.type.internalType != value.runtimeType) {
+        throw Exception(
+          "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
+        );
+      }
+
+      final paramWithValue = FunctionParamWithValue.fromParam(param, value);
+      paramsWithValues.add(paramWithValue);
     }
-    return functionData;
+
+    return ContractFunctionWithValues(
+      name: name,
+      parameters: paramsWithValues,
+      stateMutability: stateMutability,
+      outputs: outputs,
+    );
   }
 }
 
@@ -150,6 +150,13 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
     required this.stateMutability,
     required this.outputs,
   }) : super(parameters: parameters);
+
+  Uint8List buildDataField() {
+    final dataFieldBuilder = DataFieldBuilder(function: this);
+    return dataFieldBuilder.buildDataField();
+  }
+
+  List<FunctionParamWithValue> decodeOutput(Uint8List output) {}
 
   ///
   /// Try to decode the raw data using the [abiList]

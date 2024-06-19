@@ -15,14 +15,13 @@ abstract class InternalContract {
   });
 
   Future<String> interact({
-    required ContractFunction function,
-    required List<dynamic> params,
+    required ContractFunctionWithValues function,
     required Uint8List seed,
     required String sender,
     EvmFeeInformation? feeInfo,
     BigInt? value,
   }) async {
-    final functionData = function.encodeFunction(params).hexToBytes;
+    final functionData = function.buildDataField();
 
     if (value != null) {
       assert(
@@ -46,10 +45,9 @@ abstract class InternalContract {
     );
   }
 
-  Future<String> read({
-    required ContractFunction function,
+  Future<dynamic> read({
+    required ContractFunctionWithValues function,
     BlockNum? atBlock,
-    required List<dynamic> params,
   }) async {
     assert(
       function.stateMutability == StateMutability.pure ||
@@ -57,7 +55,13 @@ abstract class InternalContract {
       "Function is not view or pure",
     );
 
-    final data = function.encodeFunction(params).hexToBytes;
-    return rpc.client.call(contractAddress: contractAddress, data: data);
+    final data = function.buildDataField();
+
+    print(data);
+
+    final String result =
+        await rpc.client.call(contractAddress: contractAddress, data: data);
+
+    return result;
   }
 }

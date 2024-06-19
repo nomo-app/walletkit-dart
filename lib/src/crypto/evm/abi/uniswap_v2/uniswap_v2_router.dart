@@ -987,20 +987,20 @@ class UniswapV2Router extends InternalContract {
           abi: uniswap_v2_router_abi,
         );
 
-  Future<BigInt> getAmountOut({
-    required BigInt amountIn,
-    required BigInt reserveIn,
-    required BigInt reserveOut,
-  }) async {
-    final function = abi.functions[6];
+  // Future<BigInt> getAmountOut({
+  //   required BigInt amountIn,
+  //   required BigInt reserveIn,
+  //   required BigInt reserveOut,
+  // }) async {
+  //   final function = abi.functions[6];
 
-    final result = await read(
-      function: function,
-      params: [amountIn, reserveIn, reserveOut],
-    );
+  //   final result = await read(
+  //     function: function,
+  //     params: [amountIn, reserveIn, reserveOut],
+  //   );
 
-    return result[0] as BigInt;
-  }
+  //   return result[0] as BigInt;
+  // }
 
   Future<List<BigInt>> getAmountsOut({
     required BigInt amountIn,
@@ -1009,97 +1009,93 @@ class UniswapV2Router extends InternalContract {
     final function = abi.getFunction("getAmountsOut")!;
 
     final result = await read(
-      function: function,
-      params: [
-        amountIn,
-        path,
-      ],
+      function: function.addValues(values: [amountIn, path]),
     );
     throw UnimplementedError();
     //return [for (final r in result[0]) r as BigInt];
   }
 
-  Future<BigInt> getAmountIn({
-    required BigInt amountOut,
-    required BigInt reserveIn,
-    required BigInt reserveOut,
-  }) async {
-    final function = abi.functions[5];
+  // Future<BigInt> getAmountIn({
+  //   required BigInt amountOut,
+  //   required BigInt reserveIn,
+  //   required BigInt reserveOut,
+  // }) async {
+  //   final function = abi.functions[5];
 
-    final result = await read(
-      function: function,
-      params: [amountOut, reserveIn, reserveOut],
-    );
+  //   final result = await read(
+  //     function: function,
+  //     params: [amountOut, reserveIn, reserveOut],
+  //   );
 
-    return result[0] as BigInt;
-  }
+  //   return result[0] as BigInt;
+  // }
 
-  Future<String> swapExactEthForTokens({
-    required BigInt amountIn,
-    required BigInt amountOutMin,
-    required List<String> path,
-    required String to,
-    required BigInt deadline,
-    required Uint8List seed,
-    required String sender,
-  }) async {
-    final function = abi.functions[17];
+  // Future<String> swapExactEthForTokens({
+  //   required BigInt amountIn,
+  //   required BigInt amountOutMin,
+  //   required List<String> path,
+  //   required String to,
+  //   required BigInt deadline,
+  //   required Uint8List seed,
+  //   required String sender,
+  // }) async {
+  //   final function = abi.functions[17];
 
-    final result = await interact(
-      seed: seed,
-      value: amountIn,
-      function: function,
-      params: [
-        amountOutMin,
-        path,
-        to,
-        deadline,
-      ],
-      sender: sender,
-    );
+  //   final result = await interact(
+  //     seed: seed,
+  //     value: amountIn,
+  //     function: function,
+  //     params: [
+  //       amountOutMin,
+  //       path,
+  //       to,
+  //       deadline,
+  //     ],
+  //     sender: sender,
+  //   );
 
-    return result;
-  }
+  //   return result;
+  // }
 
-  Future<String> swapExactTokensForEth({
-    required BigInt amountIn,
-    required BigInt amountOutMin,
-    required List<String> path,
-    required String to,
-    required BigInt deadline,
-    required Uint8List seed,
-    required String sender,
-  }) async {
-    final function = abi.functions[19];
+  // Future<String> swapExactTokensForEth({
+  //   required BigInt amountIn,
+  //   required BigInt amountOutMin,
+  //   required List<String> path,
+  //   required String to,
+  //   required BigInt deadline,
+  //   required Uint8List seed,
+  //   required String sender,
+  // }) async {
+  //   final function = abi.functions[19];
 
-    final result = await interact(
-      seed: seed,
-      sender: sender,
-      function: function,
-      params: [amountIn, amountOutMin, path, to, deadline],
-    );
+  //   final result = await interact(
+  //     seed: seed,
+  //     sender: sender,
+  //     function: function,
+  //     params: [amountIn, amountOutMin, path, to, deadline],
+  //   );
 
-    return result;
-  }
+  //   return result;
+  // }
 
-  Future<String> swapExactTokenForTokens({
-    required BigInt amountIn,
-    required BigInt amountOutMin,
-    required List<String> path,
-    required String to,
-    required BigInt deadline,
-    required Uint8List seed,
-    required String sender,
-  }) async {
-    final function = abi.functions[21];
+  // Future<String> swapExactTokenForTokens({
+  //   required BigInt amountIn,
+  //   required BigInt amountOutMin,
+  //   required List<String> path,
+  //   required String to,
+  //   required BigInt deadline,
+  //   required Uint8List seed,
+  //   required String sender,
+  // }) async {
+  //   final function = abi.functions[21];
 
-    final result = await interact(
-      seed: seed,
-      sender: sender,
-      function: function,
-      params: [amountIn, amountOutMin, path, to, deadline],
-    );
+  //   final result = await interact(
+  //     seed: seed,
+  //     sender: sender,
+  //     function: function,
+  //     params: [amountIn, amountOutMin, path, to, deadline],
+  //   );
 
-    return result;
-  }
+  //   return result;
+  // }
 }

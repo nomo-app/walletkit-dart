@@ -128,46 +128,33 @@ const int size_unit = 32;
 final Uint8List empty_bytes = Uint8List.fromList(List.filled(size_unit, -1));
 
 class DataFieldBuilder {
-  final Uint8List functionSelector;
-  final Map<FunctionParam, dynamic> fields;
+  final ContractFunctionWithValues function;
   final BufferBuilder buffer = BufferBuilder();
 
   DataFieldBuilder({
-    required this.functionSelector,
-    required this.fields,
+    required this.function,
   });
 
-  DataFieldBuilder.fromFunction(ContractFunction function, List<dynamic> values)
-      : assert(
-          function.parameters.length == values.length,
-          'Invalid values length. Must be equal to function parameters length',
-        ),
-        functionSelector = function.functionSelector,
-        fields = {
-          for (final param in function.parameters)
-            param: values[function.parameters.indexOf(param)]
-        };
-
   Uint8List buildDataField() {
-    final dynamicHeaderOffsets = List.filled(fields.length, -1);
+    final dynamicHeaderOffsets = List.filled(function.parameters.length, -1);
 
-    assert(functionSelector.length == 4);
+    assert(function.functionSelector.length == 4);
 
-    for (var i = 0; i < fields.length; i++) {
-      final MapEntry(key: param, value: payload) = fields.entries.elementAt(i);
+    for (var i = 0; i < function.parameters.length; i++) {
+      final param = function.parameters[i];
       if (param.isDynamic) {
         dynamicHeaderOffsets[i] = buffer.length;
         _addField(empty_bytes);
         continue;
       }
 
-      final encoded = param.type.encodeParameter(payload);
+      final encoded = param.type.encodeParameter(param.value);
       _addField(encoded);
     }
 
     /// Update Dynamic Fields
-    for (var i = 0; i < fields.length; i++) {
-      final MapEntry(key: param, value: payload) = fields.entries.elementAt(i);
+    for (var i = 0; i < function.parameters.length; i++) {
+      final param = function.parameters[i];
 
       /// Skip if not dynamic
       if (param.isDynamic == false) continue;
@@ -180,12 +167,12 @@ class DataFieldBuilder {
       _replace(header, headerOffset);
 
       /// Write dynamic field
-      final encoded = param.type.encodeParameter(payload);
+      final encoded = param.type.encodeParameter(param.value);
       _addField(encoded);
     }
 
     return Uint8List.fromList([
-      ...functionSelector,
+      ...function.functionSelector,
       ...buffer.asBytes(),
     ]);
   }
