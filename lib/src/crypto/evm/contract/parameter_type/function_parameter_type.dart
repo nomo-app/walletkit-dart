@@ -316,3 +316,19 @@ final class FunctionParamString extends DynamicFunctionParamType<String> {
     return (string, off);
   }
 }
+
+typedef ABIFunction = ({Uint8List selector, String address});
+
+final class FunctionParamFunction extends BaseFunctionParamType<ABIFunction> {
+  const FunctionParamFunction() : super('function');
+
+  @override
+  Uint8List encode(ABIFunction value) {
+    throw UnimplementedError();
+  }
+
+  @override
+  ABIFunction decode(Uint8List data) {
+    throw UnimplementedError();
+  }
+}
