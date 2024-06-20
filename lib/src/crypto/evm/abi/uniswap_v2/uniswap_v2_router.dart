@@ -1011,8 +1011,10 @@ class UniswapV2Router extends InternalContract {
     final result = await read(
       function: function.addValues(values: [amountIn, path]),
     );
-    throw UnimplementedError();
-    //return [for (final r in result[0]) r as BigInt];
+
+    return [
+      for (final r in result.outputs.first.value) r as BigInt,
+    ];
   }
 
   // Future<BigInt> getAmountIn({
