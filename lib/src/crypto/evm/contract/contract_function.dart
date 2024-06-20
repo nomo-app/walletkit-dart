@@ -5,6 +5,7 @@ import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/src/domain/repository/4byte_repository.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -24,7 +25,7 @@ class ExternalContractFunction {
   });
 
   String get function {
-    final params = parameters.map((e) => e.type.abiName).join(',');
+    final params = parameters.map((e) => e.type.name).join(',');
     return "$name($params)";
   }
 
@@ -117,11 +118,11 @@ class ContractFunction extends ExternalContractFunction
       final param = parameters[i];
       final value = values[i];
 
-      if (param.type.internalType != value.runtimeType) {
-        throw Exception(
-          "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
-        );
-      }
+      // if (param.type.internalType != value.runtimeType) {
+      //   throw Exception(
+      //     "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
+      //   );
+      // }
 
       final paramWithValue = FunctionParamWithValue.fromParam(param, value);
       paramsWithValues.add(paramWithValue);
@@ -156,8 +157,6 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
     return dataFieldBuilder.buildDataField();
   }
 
-  List<FunctionParamWithValue> decodeOutput(Uint8List output) {}
-
   ///
   /// Try to decode the raw data using the [abiList]
   /// If the function is not found locally it will try to fetch the function from an external source (4byte.directory)
@@ -190,7 +189,7 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
       name: "Unknown",
       parameters: [
         FunctionParamWithValue.fromParam<Uint8List>(
-          FunctionParam(name: "data", type: FunctionParamType.bytes),
+          FunctionParam(name: "data", type: FunctionParamBytes()),
           data,
         ),
       ],
@@ -263,97 +262,52 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
       "Invalid function selector",
     );
 
-    final decodedParams = <FunctionParamWithValue>[];
-    int offset = 4;
-    int max_offset = 4;
-    function.parameters.forEach((param) {
-      final sublist = data.sublist(offset, offset + 32).toHex;
+    final dataWithoutSelector = data.sublist(4);
 
-      final decodedParam = switch (param.type) {
-        FunctionParamType.address => FunctionParamWithValue.fromParam<String>(
-            param,
-            "0x" + sublist.substring(24),
-          ),
-        FunctionParamType.uint8 => FunctionParamWithValue.fromParam<int>(
-            param,
-            sublist.toInt,
-          ),
-        FunctionParamType.int => FunctionParamWithValue.fromParam<BigInt>(
-            param,
-            sublist.toBigIntFromHex,
-          ),
-        FunctionParamType.int256 => FunctionParamWithValue.fromParam<BigInt>(
-            param,
-            sublist.toBigIntFromHex,
-          ),
-        FunctionParamType.uint => FunctionParamWithValue.fromParam<BigInt>(
-            param,
-            sublist.toBigIntFromHex,
-          ),
-        FunctionParamType.uint256 => FunctionParamWithValue.fromParam<BigInt>(
-            param,
-            sublist.toBigIntFromHex,
-          ),
-        FunctionParamType.bytes => () {
-            final result = decodeByte(offset, data, max_offset);
-            max_offset = result.offset;
-
-            return FunctionParamWithValue.fromParam<Uint8List>(
-              param,
-              result.value,
-            );
-          }.call(),
-        FunctionParamType.bytesArray => () {
-            final result = decodeBytesArray(offset, max_offset, data);
-            max_offset = result.offset;
-
-            return FunctionParamWithValue.fromParam<List<Uint8List>>(
-              param,
-              result.value,
-            );
-          }.call(),
-        FunctionParamType.uint256Array => () {
-            final result = decodeUint256Array(offset, data);
-            offset = result.offset;
-
-            return FunctionParamWithValue.fromParam<List<BigInt>>(
-              param,
-              result.value,
-            );
-          }.call(),
-        FunctionParamType.addressArray => () {
-            final restult = decodeAddressArray(offset, max_offset, data);
-            max_offset = restult.offset;
-
-            return FunctionParamWithValue.fromParam<List<String>>(
-              param,
-              restult.value,
-            );
-          }.call(),
-        FunctionParamType.Bool => FunctionParamWithValue.fromParam<bool>(
-            param,
-            sublist.toBigIntFromHex == BigInt.from(1) ? true : false,
-          ),
-        _ => () {
-            Logger.logWarning("Not implemented type: ${param.type}");
-            return FunctionParamWithValue.fromParam<Null>(param, null);
-          }.call(),
-      };
-
-      offset += 32;
-
-      decodedParams.add(decodedParam);
-    });
-
-    max_offset = max(max_offset, offset);
-
-    if (max_offset != data.length) {
-      throw Exception("offset is not equal to data length");
-    }
+    final decodedParams = decodeDataField(
+      data: dataWithoutSelector,
+      params: function.parameters,
+    );
 
     return ExternalContractFunctionWithValues(
       parameters: decodedParams,
       name: function.name,
+    );
+  }
+}
+
+///
+/// An Object that represents a contract function generated from an ABI
+/// Has the List<FunctionParamWithValue> parameters with wich the function was called
+/// Has the List<FunctionParam> outputs with the outputs of said executed function
+///
+class ContractFunctionWithValuesAndOutputs extends ContractFunctionWithValues {
+  @override
+  final List<FunctionParamWithValue> outputs;
+
+  const ContractFunctionWithValuesAndOutputs._({
+    required this.outputs,
+    required super.name,
+    required super.parameters,
+    required super.stateMutability,
+  }) : super(
+          outputs: outputs,
+        );
+
+  factory ContractFunctionWithValuesAndOutputs.decode({
+    required ContractFunctionWithValues function,
+    required Uint8List data,
+  }) {
+    final decodedOutputs = decodeDataField(
+      data: data,
+      params: function.outputs,
+    );
+
+    return ContractFunctionWithValuesAndOutputs._(
+      outputs: decodedOutputs,
+      name: function.name,
+      parameters: function.parameters,
+      stateMutability: function.stateMutability,
     );
   }
 }

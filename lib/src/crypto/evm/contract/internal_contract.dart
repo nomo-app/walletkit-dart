@@ -45,7 +45,7 @@ abstract class InternalContract {
     );
   }
 
-  Future<dynamic> read({
+  Future<ContractFunctionWithValuesAndOutputs> read({
     required ContractFunctionWithValues function,
     BlockNum? atBlock,
   }) async {
@@ -57,11 +57,14 @@ abstract class InternalContract {
 
     final data = function.buildDataField();
 
-    print(data);
-
     final String result =
         await rpc.client.call(contractAddress: contractAddress, data: data);
 
-    return result;
+    final resultBuffer = result.hexToBytesWithPrefix;
+
+    return ContractFunctionWithValuesAndOutputs.decode(
+      data: resultBuffer,
+      function: function,
+    );
   }
 }

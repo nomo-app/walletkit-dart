@@ -1,60 +1,10 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
 import 'package:walletkit_dart/src/utils/buffer.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-extension FunctionParamTypeExtension on FunctionParamType {
-  Uint8List encodeParameter(dynamic value) {
-    switch (this) {
-      case FunctionParamType.address:
-        return _encodeAddress(value as String);
-      case FunctionParamType.uint256:
-        return _encodeUint256(value as BigInt);
-      case FunctionParamType.uint8:
-        return throw UnimplementedError();
-      case FunctionParamType.int:
-        return throw UnimplementedError();
-      case FunctionParamType.int256:
-        return throw UnimplementedError();
-      case FunctionParamType.uint:
-        return _encodeUint256(value as BigInt);
-      case FunctionParamType.bytes:
-        return throw UnimplementedError();
-      case FunctionParamType.bytesArray:
-        return throw UnimplementedError();
-      case FunctionParamType.uint256Array:
-        return throw UnimplementedError();
-      case FunctionParamType.addressArray:
-        return encodeArray(value as List<dynamic>, this.arrayType!);
-      case FunctionParamType.Bool:
-        return throw UnimplementedError();
-      case FunctionParamType.string:
-        return throw UnimplementedError();
-      case FunctionParamType.BoolArray:
-        return throw UnimplementedError();
-      case FunctionParamType.int256Array:
-        return throw UnimplementedError();
-      case FunctionParamType.stringArray:
-        return throw UnimplementedError();
-      case FunctionParamType.int8Array:
-        return throw UnimplementedError();
-      case FunctionParamType.uint8Array:
-        return throw UnimplementedError();
-      case FunctionParamType.bytes32:
-        return throw UnimplementedError();
-      case FunctionParamType.int8:
-        return throw UnimplementedError();
-      case FunctionParamType.bytes4:
-        return throw UnimplementedError();
-      case FunctionParamType.uint32:
-        return throw UnimplementedError();
-    }
-  }
-}
-
-Uint8List _encodeUint256(BigInt value) {
+Uint8List encodeUint256(BigInt value) {
   if (value < BigInt.zero) {
     throw Exception('Negative value');
   }
@@ -72,7 +22,7 @@ Uint8List _encodeUint256(BigInt value) {
   return byteData.buffer.asUint8List();
 }
 
-Uint8List _encodeAddress(String address) {
+Uint8List encodeAddress(String address) {
   if (address.length != 42) {
     throw Exception('Invalid address');
   }
@@ -104,26 +54,6 @@ String decodeString(Uint8List encoded) {
   return String.fromCharCodes(stringBytes);
 }
 
-Uint8List encodeArray(
-  List<dynamic> values,
-  FunctionParamType type,
-) {
-  final bytes_builder = BytesBuilder();
-
-  final length_payload = _encodeUint256(values.length.toBigInt);
-
-  bytes_builder.add(length_payload);
-
-  for (var i = 0; i < values.length; i++) {
-    final encoded = type.encodeParameter(values[i]);
-    bytes_builder.add(encoded);
-  }
-
-  assert(bytes_builder.length % 32 == 0);
-
-  return bytes_builder.toBytes();
-}
-
 const int size_unit = 32;
 final Uint8List empty_bytes = Uint8List.fromList(List.filled(size_unit, -1));
 
@@ -148,7 +78,7 @@ class DataFieldBuilder {
         continue;
       }
 
-      final encoded = param.type.encodeParameter(param.value);
+      final encoded = param.type.encode(param.value);
       _addField(encoded);
     }
 
@@ -163,11 +93,11 @@ class DataFieldBuilder {
       assert(headerOffset != -1);
 
       /// Replace placeholder with current offset
-      final header = _encodeUint256(buffer.length.toBigInt);
+      final header = encodeUint256(buffer.length.toBigInt);
       _replace(header, headerOffset);
 
       /// Write dynamic field
-      final encoded = param.type.encodeParameter(param.value);
+      final encoded = param.type.encode(param.value);
       _addField(encoded);
     }
 

@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'dart:typed_data';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -24,10 +24,10 @@ void main() {
         await ContractFunctionWithValues.decodeRawWithFetch(data: data);
 
     expect(contractFunction.name, "mint");
-    expect(contractFunction.parameters.first.type, FunctionParamType.address);
+    expect(contractFunction.parameters.first.type, FunctionParamAddress());
     expect(contractFunction.parameters.first.value,
         "0x05870f1507d820212e921e1f39f14660336231d1");
-    expect(contractFunction.parameters.last.type, FunctionParamType.uint256);
+    expect(contractFunction.parameters.last.type, FunctionParamUint256());
     expect(contractFunction.parameters.last.value, BigInt.from(15942468));
   });
 
@@ -41,15 +41,15 @@ void main() {
         await ContractFunctionWithValues.decodeRawWithFetch(data: data);
 
     expect(contractFunction.name, "execute");
-    expect(contractFunction.parameters.first.type, FunctionParamType.bytes);
+    expect(contractFunction.parameters.first.type, FunctionParamBytes());
     expect(
         (contractFunction.parameters.first.value as Uint8List).toHex, "0b08");
-    expect(contractFunction.parameters[1].type, FunctionParamType.bytesArray);
+    expect(contractFunction.parameters[1].type, FunctionParamBytesArray());
     expect((contractFunction.parameters[1].value[0] as Uint8List).toHex,
         "0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000016345785d8a0000");
     expect((contractFunction.parameters[1].value[1] as Uint8List).toHex,
         "0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000018c5c71dd6f8c06a772000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000004e9fcd48af4738e3bf1382009dc1e93ebfce698f");
-    expect(contractFunction.parameters.last.type, FunctionParamType.uint256);
+    expect(contractFunction.parameters.last.type, FunctionParamUint256());
     expect(contractFunction.parameters.last.value, BigInt.from(1701042887));
   });
 
@@ -63,10 +63,10 @@ void main() {
         await ContractFunctionWithValues.decodeRawWithFetch(data: data);
 
     expect(contractFunction.name, "execute");
-    expect(contractFunction.parameters.first.type, FunctionParamType.bytes);
+    expect(contractFunction.parameters.first.type, FunctionParamBytes());
     expect((contractFunction.parameters.first.value as Uint8List).toHex,
         "0b000604");
-    expect(contractFunction.parameters[1].type, FunctionParamType.bytesArray);
+    expect(contractFunction.parameters[1].type, FunctionParamBytesArray());
     expect((contractFunction.parameters[1].value[0] as Uint8List).toHex,
         "00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000de0b6b3a7640000");
     expect((contractFunction.parameters[1].value[1] as Uint8List).toHex,
@@ -75,7 +75,7 @@ void main() {
         "000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb4800000000000000000000000027213e28d7fda5c57fe9e5dd923818dbccf71c47000000000000000000000000000000000000000000000000000000000000000f");
     expect((contractFunction.parameters[1].value[3] as Uint8List).toHex,
         "000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000774a3421");
-    expect(contractFunction.parameters.last.type, FunctionParamType.uint256);
+    expect(contractFunction.parameters.last.type, FunctionParamUint256());
     expect(contractFunction.parameters.last.value, BigInt.from(1701349583));
   });
 }
