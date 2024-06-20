@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
@@ -487,17 +488,17 @@ final class EvmRpcInterface {
       parameters: [
         FunctionParamWithValue(
           name: "from",
-          type: FunctionParamType.address,
+          type: FunctionParamAddress(),
           value: from,
         ),
         FunctionParamWithValue(
           name: "to",
-          type: FunctionParamType.address,
+          type: FunctionParamAddress(),
           value: recipient,
         ),
         FunctionParamWithValue(
           name: "tokenId",
-          type: FunctionParamType.uint,
+          type: FunctionParamInt(),
           value: tokenId,
         ),
       ],

@@ -7,6 +7,7 @@ import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/domain/entities/node.dart';
 // ignore: implementation_imports
 import 'package:pointycastle/src/utils.dart' as p_utils;
+import 'package:walletkit_dart/src/utils/var_uint.dart';
 
 extension ExtFixedPrecision on double {
   double toPrecision(int n) => double.parse(toStringAsFixed(n));
@@ -43,6 +44,15 @@ extension BufferUtil on Uint8List {
   String get toHex => hex.encode(this);
 
   Uint8List get rev => Uint8List.fromList(reversed.toList());
+
+  Uint8List padToSize(int size) {
+    if (length >= size) {
+      return this;
+    }
+    final buffer = Uint8List(size);
+    buffer.writeSlice(size - length, this);
+    return buffer;
+  }
 }
 
 extension ConvUtil on String {

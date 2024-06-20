@@ -2,6 +2,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
@@ -33,10 +34,9 @@ void main() {
       );
 
       expect(decodedFunction.name, "getAmountsOut");
-      expect(decodedFunction.parameters[0].type, FunctionParamType.uint256);
+      expect(decodedFunction.parameters[0].type, FunctionParamUint256());
       expect(decodedFunction.parameters[0].value, 1.toBigInt);
-      expect(
-          decodedFunction.parameters[1].type, FunctionParamType.addressArray);
+      expect(decodedFunction.parameters[1].type, FunctionParamAddressArray());
       expect(decodedFunction.parameters[1].value[0],
           wrappedZeniqSmart.contractAddress.toLowerCase());
       expect(decodedFunction.parameters[1].value[1],

@@ -279,7 +279,7 @@ class ERC20Contract extends InternalContract {
       function: function.addValues(values: [address]),
       atBlock: atBlock,
     );
-    return response.toBigInt;
+    return response.outputs.first.castValue<BigInt>();
   }
 
   Future<String> getName() async {
@@ -289,9 +289,8 @@ class ERC20Contract extends InternalContract {
     final response = await read(
       function: function.addValues(values: []),
     );
-    final encoded = hex.decode(response.substring(2));
-    final name = decodeString(Uint8List.fromList(encoded));
-    return name;
+
+    return response.outputs.first.castValue<String>();
   }
 
   Future<String> getSymbol() async {
@@ -301,9 +300,7 @@ class ERC20Contract extends InternalContract {
       function: function.addValues(values: []),
     );
 
-    final encoded = hex.decode(response.substring(2));
-    final symbol = decodeString(Uint8List.fromList(encoded));
-    return symbol;
+    return response.outputs.first.castValue<String>();
   }
 
   Future<BigInt> getSupply() async {
@@ -312,7 +309,7 @@ class ERC20Contract extends InternalContract {
     final response = await read(
       function: function.addValues(values: []),
     );
-    return response.toBigInt;
+    return response.outputs.first.castValue<BigInt>();
   }
 
   Future<int> getDecimals() async {
@@ -321,7 +318,7 @@ class ERC20Contract extends InternalContract {
     final response = await read(
       function: function.addValues(values: []),
     );
-    return response.toBigInt.toInt();
+    return response.outputs.first.castValue<int>();
   }
 
   Future<BigInt> balanceOf({required String address}) async {
@@ -330,7 +327,7 @@ class ERC20Contract extends InternalContract {
     final response = await read(
       function: function.addValues(values: []),
     );
-    return response.toBigInt;
+    return response.outputs.first.castValue<BigInt>();
   }
 
   Future<BigInt> allowance({
@@ -342,6 +339,6 @@ class ERC20Contract extends InternalContract {
     final response = await read(
       function: function.addValues(values: []),
     );
-    return response.toBigInt;
+    return response.outputs.first.castValue<BigInt>();
   }
 }
