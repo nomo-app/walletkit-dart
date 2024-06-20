@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
 
