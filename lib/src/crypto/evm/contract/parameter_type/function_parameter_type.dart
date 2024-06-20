@@ -1,5 +1,6 @@
 library function_parameter_type;
 
+import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
@@ -265,7 +266,18 @@ final class FunctionParamAddress extends BaseFunctionParamType<String> {
 
   @override
   Uint8List encode(String value) {
-    return encodeAddress(value);
+    if (value.length != 42) {
+      throw Exception('Invalid address');
+    }
+
+    final bytes = value.substring(2).hexToBytes;
+    final byteData = ByteData(32);
+
+    for (var i = 0; i < bytes.length; i++) {
+      byteData.setUint8(12 + i, bytes[i]);
+    }
+
+    return byteData.buffer.asUint8List();
   }
 
   @override
@@ -294,11 +306,13 @@ final class FunctionParamString extends DynamicFunctionParamType<String> {
 
   @override
   Uint8List encode(String value) {
-    throw UnimplementedError();
+    return FunctionParamBytes().encode(value.asUTF8);
   }
 
   @override
   (String, int) decode(int offset, Uint8List data) {
-    throw UnimplementedError();
+    final (bytes, off) = FunctionParamBytes().decode(offset, data);
+    final string = utf8.decode(bytes);
+    return (string, off);
   }
 }

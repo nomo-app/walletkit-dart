@@ -10,7 +10,21 @@ final class FunctionParamInt extends BaseFunctionParamType<BigInt> {
 
   @override
   Uint8List encode(BigInt value) {
-    return encodeUint256(value);
+    if (value < BigInt.zero) {
+      throw Exception('Negative value');
+    }
+    if (value.bitLength > 256) {
+      throw Exception('Value is too big');
+    }
+    final byteData = ByteData(32);
+    final bytes = value.toRadixString(16).padLeft(64, '0');
+    final bytesList = bytes.hexToBytes;
+
+    for (var i = 0; i < bytesList.length; i++) {
+      byteData.setUint8(32 - bytesList.length + i, bytesList[i]);
+    }
+
+    return byteData.buffer.asUint8List();
   }
 
   @override
