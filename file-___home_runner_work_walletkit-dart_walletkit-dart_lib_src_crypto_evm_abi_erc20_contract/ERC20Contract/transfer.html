@@ -88,11 +88,12 @@
   EvmFeeInformation? feeInfo,
 }) async {
   final function = abi.functions[7];
-  assert(function.functionSelectorHex == &quot;a9059cbb&quot;);
+  assert(function.functionSelector == &quot;a9059cbb&quot;);
   return await interact(
-    function: function.addValues(values: [to, value]),
+    function: function,
     seed: seed,
     sender: sender,
+    params: [to, value],
     feeInfo: feeInfo,
   );
 }</code></pre>

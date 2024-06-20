@@ -77,9 +77,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;int&gt; getDecimals() async {
   final function = abi.functions[4];
-  assert(function.functionSelectorHex == &quot;313ce567&quot;);
+  assert(function.functionSelector == &quot;313ce567&quot;);
   final response = await read(
-    function: function.addValues(values: []),
+    function: function,
+    params: [],
   );
   return response.toBigInt.toInt();
 }</code></pre>

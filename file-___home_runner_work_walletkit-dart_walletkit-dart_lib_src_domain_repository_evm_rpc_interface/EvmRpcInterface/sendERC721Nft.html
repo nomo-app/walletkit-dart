@@ -90,24 +90,12 @@
   required String contractAddress,
   required Uint8List seed,
 }) async {
-  final function = ContractFunctionWithValues(
+  final function = ContractFunction(
     name: &quot;transferFrom&quot;,
     parameters: [
-      FunctionParamWithValue(
-        name: &quot;from&quot;,
-        type: FunctionParamType.address,
-        value: from,
-      ),
-      FunctionParamWithValue(
-        name: &quot;to&quot;,
-        type: FunctionParamType.address,
-        value: recipient,
-      ),
-      FunctionParamWithValue(
-        name: &quot;tokenId&quot;,
-        type: FunctionParamType.uint,
-        value: tokenId,
-      ),
+      FunctionParam(name: &quot;from&quot;, type: FunctionParamType.address),
+      FunctionParam(name: &quot;to&quot;, type: FunctionParamType.address),
+      FunctionParam(name: &quot;tokenId&quot;, type: FunctionParamType.uint),
     ],
     stateMutability: StateMutability.nonpayable,
     outputs: [],
@@ -116,6 +104,7 @@
   return await interactWithContract(
     contractAddress: contractAddress,
     function: function,
+    params: [from, recipient, tokenId],
     sender: from,
     seed: seed,
     feeInfo: null,
