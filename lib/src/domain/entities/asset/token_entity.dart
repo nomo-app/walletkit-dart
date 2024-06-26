@@ -89,11 +89,15 @@ class EthBasedTokenEntity extends TokenEntity {
   @HiveField(5)
   final bool? allowDeletion;
 
+  @HiveField(6)
+  final int chainID;
+
   const EthBasedTokenEntity({
     required super.name,
     required super.symbol,
     required super.decimals,
     required this.contractAddress,
+    required this.chainID,
     this.stakingNft,
     this.allowDeletion,
   });
@@ -103,14 +107,15 @@ class EthBasedTokenEntity extends TokenEntity {
   }
 
   @override
-  String get identifier => "$name:$symbol:$decimals:$contractAddress";
+  String get identifier => "$name:$symbol:$decimals:$contractAddress:$chainID";
 
   @override
-  List<Object> get props => [name, symbol, contractAddress, decimals];
+  List<Object> get props => [name, symbol, contractAddress, decimals, chainID];
 
   factory EthBasedTokenEntity.fromJson(
     Map<String, dynamic> json, {
     required bool allowDeletion,
+    required int chainID,
   }) {
     return EthBasedTokenEntity(
       name: json['name'],
@@ -119,6 +124,27 @@ class EthBasedTokenEntity extends TokenEntity {
       contractAddress: json['contractAddress'],
       stakingNft: null,
       allowDeletion: allowDeletion,
+      chainID: chainID,
+    );
+  }
+
+  EthBasedTokenEntity copyWith({
+    String? name,
+    String? symbol,
+    int? decimals,
+    String? contractAddress,
+    StakingNftEntity? stakingNft,
+    bool? allowDeletion,
+    int? chainID,
+  }) {
+    return EthBasedTokenEntity(
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      decimals: decimals ?? this.decimals,
+      contractAddress: contractAddress ?? this.contractAddress,
+      stakingNft: stakingNft ?? this.stakingNft,
+      allowDeletion: allowDeletion ?? this.allowDeletion,
+      chainID: chainID ?? this.chainID,
     );
   }
 }

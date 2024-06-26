@@ -4,13 +4,13 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 void main() {
   group('Amount Operations', () {
     test('Convert', () {
-      final bitcoin_amount_double = 1.1;
+      const bitcoin_amount_double = 1.1;
 
       var amount = Amount.convert(value: bitcoin_amount_double, decimals: 8);
 
       expect(amount.value, equals(110000000.toBigInt));
 
-      final eth_amount_double = 1.1;
+      const eth_amount_double = 1.1;
 
       amount = Amount.convert(value: eth_amount_double, decimals: 18);
 

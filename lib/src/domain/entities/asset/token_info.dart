@@ -6,11 +6,13 @@ class TokenInfo {
   final num maxSupply;
   final String symbol;
   final String name;
+  final String contractAddress;
 
   const TokenInfo({
     required this.decimals,
     required this.maxSupply,
     required this.symbol,
     required this.name,
+    required this.contractAddress,
   });
 }
