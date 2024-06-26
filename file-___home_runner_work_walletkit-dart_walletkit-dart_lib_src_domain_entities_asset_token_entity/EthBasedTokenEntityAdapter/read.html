@@ -92,6 +92,7 @@ EthBasedTokenEntity read(BinaryReader reader) {
     symbol: fields[1] as String,
     decimals: fields[2] as int,
     contractAddress: fields[3] as String,
+    chainID: fields.length &gt; 6 ? fields[6] as int : -1,
     stakingNft: fields[4] as StakingNftEntity?,
     allowDeletion: fields[5] as bool?,
   );

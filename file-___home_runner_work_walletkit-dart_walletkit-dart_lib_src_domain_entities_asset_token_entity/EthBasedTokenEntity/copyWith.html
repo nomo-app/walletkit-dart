@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the identifier property from the EthBasedTokenEntity class, for the Dart programming language.">
-  <title>identifier property - EthBasedTokenEntity class - token_entity library - Dart API</title>
+  <meta name="description" content="API docs for the copyWith method from the EthBasedTokenEntity class, for the Dart programming language.">
+  <title>copyWith method - EthBasedTokenEntity class - token_entity library - Dart API</title>
 
 
   
@@ -31,9 +31,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">src&#47;domain&#47;entities&#47;asset&#47;token_entity.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EthBasedTokenEntity-class.html">EthBasedTokenEntity</a></li>
-    <li class="self-crumb">identifier property</li>
+    <li class="self-crumb">copyWith method</li>
   </ol>
-  <div class="self-name">identifier</div>
+  <div class="self-name">copyWith</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -57,42 +57,57 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity&#47;EthBasedTokenEntity-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-property">identifier</span> property 
+<h1><span class="kind-method">copyWith</span> method 
 </h1></div>
-
-
-        
-  <section id="getter">
 
     <section class="multi-line-signature">
       
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
-      <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-      <span class="name ">identifier</span>
-      <div class="features"><span class="feature">override</span></div>
+
+<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EthBasedTokenEntity-class.html">EthBasedTokenEntity</a></span>
+<span class="name ">copyWith</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="copyWith-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-symbol"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">symbol</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-decimals"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">decimals</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-contractAddress"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">contractAddress</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-stakingNft"><span class="type-annotation">dynamic</span> <span class="parameter-name">stakingNft</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-allowDeletion"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">allowDeletion</span>, </span></li>
+<li><span class="parameter" id="copyWith-param-chainID"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainID</span>, </span></li>
+</ol>})
+
+      
 
     </section>
-
     
+
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-String get identifier =&gt; &quot;$name:$symbol:$decimals:$contractAddress:$chainID&quot;;</code></pre>
+  <pre class="language-dart"><code class="language-dart">EthBasedTokenEntity copyWith({
+  String? name,
+  String? symbol,
+  int? decimals,
+  String? contractAddress,
+  StakingNftEntity? stakingNft,
+  bool? allowDeletion,
+  int? chainID,
+}) {
+  return EthBasedTokenEntity(
+    name: name ?? this.name,
+    symbol: symbol ?? this.symbol,
+    decimals: decimals ?? this.decimals,
+    contractAddress: contractAddress ?? this.contractAddress,
+    stakingNft: stakingNft ?? this.stakingNft,
+    allowDeletion: allowDeletion ?? this.allowDeletion,
+    chainID: chainID ?? this.chainID,
+  );
+}</code></pre>
 </section>
 
-  </section>
 
+  </div> <!-- /.main-content -->
 
-</div> <!-- /.main-content -->
-
-<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -103,15 +118,15 @@ String get identifier =&gt; &quot;$name:$symbol:$decimals:$contractAddress:$chai
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">token_entity</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EthBasedTokenEntity-class.html">EthBasedTokenEntity</a></li>
-    <li class="self-crumb">identifier property</li>
+    <li class="self-crumb">copyWith method</li>
 </ol>
 
 
-  <h5>EthBasedTokenEntity class</h5>
-  <div id="dartdoc-sidebar-left-content"></div>
-</div><!--/.sidebar-offcanvas-->
+    <h5>EthBasedTokenEntity class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
 
-<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 
 </main>

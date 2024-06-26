@@ -85,13 +85,15 @@
   <pre class="language-dart"><code class="language-dart">@override
 void write(BinaryWriter writer, EthBasedTokenEntity obj) {
   writer
-    ..writeByte(6)
+    ..writeByte(7)
     ..writeByte(3)
     ..write(obj.contractAddress)
     ..writeByte(4)
     ..write(obj.stakingNft)
     ..writeByte(5)
     ..write(obj.allowDeletion)
+    ..writeByte(6)
+    ..write(obj.chainID)
     ..writeByte(0)
     ..write(obj.name)
     ..writeByte(1)
