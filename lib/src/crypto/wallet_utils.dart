@@ -37,6 +37,7 @@ Future<TokenInfo?> getTokenInfo({
       maxSupply: maxSupplyDouble,
       symbol: symbol,
       name: name,
+      contractAddress: contractAddress,
     );
   } catch (e) {
     return null;

@@ -104,6 +104,7 @@ class EthBasedTokenEntityAdapter extends TypeAdapter<EthBasedTokenEntity> {
       symbol: fields[1] as String,
       decimals: fields[2] as int,
       contractAddress: fields[3] as String,
+      chainID: fields.length > 6 ? fields[6] as int : -1,
       stakingNft: fields[4] as StakingNftEntity?,
       allowDeletion: fields[5] as bool?,
     );
@@ -112,13 +113,15 @@ class EthBasedTokenEntityAdapter extends TypeAdapter<EthBasedTokenEntity> {
   @override
   void write(BinaryWriter writer, EthBasedTokenEntity obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(3)
       ..write(obj.contractAddress)
       ..writeByte(4)
       ..write(obj.stakingNft)
       ..writeByte(5)
       ..write(obj.allowDeletion)
+      ..writeByte(6)
+      ..write(obj.chainID)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
