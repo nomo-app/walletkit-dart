@@ -1,5 +1,4 @@
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 

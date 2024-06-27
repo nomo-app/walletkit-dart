@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract class InternalContract {
@@ -15,13 +15,25 @@ abstract class InternalContract {
   });
 
   Future<String> interact({
-    required ContractFunction function,
-    required List<dynamic> params,
+    required ContractFunctionWithValues function,
     required Uint8List seed,
     required String sender,
     EvmFeeInformation? feeInfo,
+    BigInt? value,
   }) async {
-    final functionData = function.encodeFunction(params).hexToBytes;
+    final functionData = function.buildDataField();
+
+    if (value != null) {
+      assert(
+        function.stateMutability == StateMutability.payable,
+        'Function is not payable and cannot accept a value',
+      );
+    } else {
+      assert(
+        function.stateMutability == StateMutability.nonpayable,
+        'Function is payable and requires a value to be sent',
+      );
+    }
 
     return await rpc.buildAndBroadcastTransaction(
       sender: sender,
@@ -29,16 +41,30 @@ abstract class InternalContract {
       seed: seed,
       feeInfo: feeInfo,
       data: functionData,
-      value: BigInt.zero,
+      value: value ?? BigInt.zero,
     );
   }
 
-  Future<String> read({
-    required ContractFunction function,
+  Future<ContractFunctionWithValuesAndOutputs> read({
+    required ContractFunctionWithValues function,
     BlockNum? atBlock,
-    required List<dynamic> params,
   }) async {
-    final data = function.encodeFunction(params).hexToBytes;
-    return rpc.client.call(contractAddress: contractAddress, data: data);
+    assert(
+      function.stateMutability == StateMutability.pure ||
+          function.stateMutability == StateMutability.view,
+      "Function is not view or pure",
+    );
+
+    final data = function.buildDataField();
+
+    final String result =
+        await rpc.client.call(contractAddress: contractAddress, data: data);
+
+    final resultBuffer = result.hexToBytesWithPrefix;
+
+    return ContractFunctionWithValuesAndOutputs.decode(
+      data: resultBuffer,
+      function: function,
+    );
   }
 }
