@@ -45,6 +45,7 @@ class ExternalContractFunction {
           "hex_signature": _,
           "bytes_signature": _,
         }) {
+      // TODO: Parse Tuples
       final opening = text_signature.indexOf("(");
       final closing = text_signature.indexOf(")");
       final name = text_signature.substring(0, opening);
@@ -173,6 +174,7 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
     // if (localResult != null) {
     //   //return localResult;
     // }
+    // TODO: Comment back in
 
     /// Fetch the function from 4byte.directory
     final externalResult =
