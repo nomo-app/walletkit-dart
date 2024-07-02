@@ -59,13 +59,6 @@ const avinocETH = EthBasedTokenEntity(
   decimals: 18,
   chainID: 1,
 );
-const avinocZSC = EthBasedTokenEntity(
-  name: 'AVINOC',
-  symbol: 'AVINOC ZEN20',
-  contractAddress: "0xF1cA9cb74685755965c7458528A36934Df52A3EF",
-  decimals: 18,
-  chainID: 1,
-);
 const zeniqETHToken = EthBasedTokenEntity(
   name: 'ZENIQ',
   symbol: 'ZENIQ @ETH',
@@ -96,6 +89,13 @@ const zeniqSmart = EvmEntity(
   name: 'ZENIQ',
   symbol: 'ZENIQ Token',
   decimals: 18,
+);
+const avinocZSC = EthBasedTokenEntity(
+  name: 'AVINOC',
+  symbol: 'AVINOC ZEN20',
+  contractAddress: "0xF1cA9cb74685755965c7458528A36934Df52A3EF",
+  decimals: 18,
+  chainID: 383414847825,
 );
 const tupanToken = EthBasedTokenEntity(
   name: 'Tupan Community Token',
