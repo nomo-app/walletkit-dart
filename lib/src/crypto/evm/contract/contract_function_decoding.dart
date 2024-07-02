@@ -27,7 +27,8 @@ List<FunctionParamWithValue> decodeDataField({
           final (value, off) = type.decode(headerOffset, data);
           max_offset = max(max_offset, off);
           return value;
-        }.call()
+        }.call(),
+      _ => throw Exception('Invalid type: ${param.type}'),
     };
 
     final decodedParam = FunctionParamWithValue.fromParam(param, decodedValue);

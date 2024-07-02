@@ -47,10 +47,11 @@ class ExternalContractFunction {
         }) {
       // TODO: Parse Tuples
       final opening = text_signature.indexOf("(");
-      final closing = text_signature.indexOf(")");
+      final closing = text_signature.lastIndexOf(")");
       final name = text_signature.substring(0, opening);
-      final params_s =
-          text_signature.substring(opening + 1, closing).split(",");
+      final params_s = text_signature
+          .substring(opening + 1, closing)
+          .split(RegExp(r',(?![^()]*\))'));
       final params = [
         for (final param in params_s)
           FunctionParam(

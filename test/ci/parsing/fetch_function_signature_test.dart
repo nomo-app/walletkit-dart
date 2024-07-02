@@ -87,11 +87,13 @@ void main() {
 
     final contractFunction =
         await ContractFunctionWithValues.decodeRawWithFetch(
-            data: dataString.hexToBytesWithPrefix);
+      data: dataString.hexToBytesWithPrefix,
+    );
 
     print(contractFunction);
   });
 
+  ///
   /// uint256[][]
   ///
   test("Test Nested Array", () async {});

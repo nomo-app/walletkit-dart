@@ -162,6 +162,9 @@ sealed class FunctionParamType<T> {
     }
     return false;
   }
+
+  ArrayFunctionParamType<T> get arrayType =>
+      ArrayFunctionParamType("${name}[]", this);
 }
 
 abstract class BaseFunctionParamType<T> extends FunctionParamType<T> {
@@ -170,9 +173,6 @@ abstract class BaseFunctionParamType<T> extends FunctionParamType<T> {
   T decode(Uint8List data);
 
   Uint8List encode(T value);
-
-  ArrayFunctionParamType<T> get arrayType =>
-      ArrayFunctionParamType("${name}[]", this);
 }
 
 abstract class DynamicFunctionParamType<T> extends FunctionParamType<T> {
@@ -181,9 +181,19 @@ abstract class DynamicFunctionParamType<T> extends FunctionParamType<T> {
   (T, int) decode(int offset, Uint8List data);
 
   Uint8List encode(T value);
+}
 
-  ArrayFunctionParamType<T> get arrayType =>
-      ArrayFunctionParamType("${name}[]", this);
+///
+/// Tuple
+///
+final class TupleFunctionParamType<T extends Record>
+    extends FunctionParamType<T> {
+  const TupleFunctionParamType(String name) : super(name, T);
+
+  @override
+  Uint8List encode(T value) {
+    throw UnimplementedError();
+  }
 }
 
 ///
@@ -222,7 +232,8 @@ final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
               final (value, off) = type.decode(headerOffset, data);
               max_offset = max(max_offset, off);
               return value;
-            }.call()
+            }.call(),
+          _ => throw Exception('Invalid type: $itemType'),
         },
       );
     }
