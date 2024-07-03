@@ -3,6 +3,7 @@ library function_parameter_type;
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -126,22 +127,22 @@ sealed class FunctionParamType<T> {
 
   const FunctionParamType(this.name, this.internalType);
 
-  bool get isDynamic =>
-      this is ArrayFunctionParamType || this is DynamicFunctionParamType;
+  bool get isDynamic => this is DynamicFunctionParamType;
 
   static FunctionParamType fromString(String name) {
-    if (name.contains('[]')) {
+    if (name.endsWith('[]')) {
       final itemTypeName = name.substring(0, name.length - 2);
-      final itemParamType = _elementaryTypes.singleWhere(
-        (element) => element.name == itemTypeName,
-        orElse: () => throw Exception('Invalid type: $name'),
-      );
-      final arrayParamType = switch (itemParamType) {
-        BaseFunctionParamType type => type.arrayType,
-        DynamicFunctionParamType type => type.arrayType,
-        _ => throw Exception('Invalid type: $name'),
-      };
-      return arrayParamType;
+      final itemParamType = fromString(itemTypeName);
+      return itemParamType.arrayType;
+    }
+
+    if (name.startsWith('(') && name.endsWith(')')) {
+      final nameWithoutParentheses = name.substring(1, name.length - 1);
+      final tupleTypes =
+          ExternalContractFunction.extractParams(nameWithoutParentheses)
+              .map((e) => fromString(e))
+              .toList();
+      return TupleFunctionParamType(name, tupleTypes);
     }
 
     return _elementaryTypes.singleWhere(
@@ -171,39 +172,71 @@ abstract class BaseFunctionParamType<T> extends FunctionParamType<T> {
   const BaseFunctionParamType(String name) : super(name, T);
 
   T decode(Uint8List data);
-
-  Uint8List encode(T value);
 }
 
 abstract class DynamicFunctionParamType<T> extends FunctionParamType<T> {
   const DynamicFunctionParamType(String name) : super(name, T);
 
   (T, int) decode(int offset, Uint8List data);
-
-  Uint8List encode(T value);
 }
 
 ///
 /// Tuple
 ///
-final class TupleFunctionParamType<T extends Record>
-    extends FunctionParamType<T> {
-  const TupleFunctionParamType(String name) : super(name, T);
+final class TupleFunctionParamType
+    extends DynamicFunctionParamType<List<dynamic>> {
+  final List<FunctionParamType> types;
+
+  const TupleFunctionParamType(super.name, this.types);
 
   @override
-  Uint8List encode(T value) {
-    throw UnimplementedError();
+  Uint8List encode(List<dynamic> value) {
+    final builder = DataFieldBuilder(
+      fields: {
+        for (var i = 0; i < types.length; i++) types[i]: value[i],
+      },
+    );
+    return builder.buildDataField();
+  }
+
+  (List<dynamic>, int) decode(int offset, Uint8List data) {
+    final values = <dynamic>[];
+    int initial_offset = offset;
+    int max_offset = 0;
+
+    for (var i = 0; i < types.length; i++) {
+      final type = types[i];
+      final data_field = data.sublist(offset, offset + 32);
+      offset += 32;
+
+      final decodedValue = switch (type) {
+        BaseFunctionParamType type => type.decode(data_field),
+        DynamicFunctionParamType type => () {
+            final headerOffset = FunctionParamInt().decode(data_field).toInt();
+            final (value, off) =
+                type.decode(initial_offset + headerOffset, data);
+            max_offset = max(max_offset, off);
+            return value;
+          }.call(),
+      };
+
+      values.add(decodedValue);
+    }
+
+    max_offset = max(max_offset, offset);
+
+    return (values, max_offset);
   }
 }
 
 ///
 /// Array
 ///
-final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
+final class ArrayFunctionParamType<T>
+    extends DynamicFunctionParamType<List<T>> {
   final FunctionParamType<T> itemType;
 
-  const ArrayFunctionParamType(String name, this.itemType)
-      : super(name, List<T>);
+  const ArrayFunctionParamType(String name, this.itemType) : super(name);
 
   (List<T>, int) decode(int offset, Uint8List data) {
     final length = FunctionParamInt().decode(data.sublist(offset, offset + 32));
@@ -214,26 +247,27 @@ final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
     int max_offset = 0;
     for (var i = 0; i < length.toInt(); i++) {
       final data_field = data.sublist(offset, offset + 32);
-      offset += 32;
 
       values.add(
         switch (itemType) {
-          BaseFunctionParamType type => type.decode(data_field),
+          BaseFunctionParamType type => () {
+              offset += 32;
+              return type.decode(data_field);
+            }.call(),
+          TupleFunctionParamType type => () {
+              final (value, off) = type.decode(offset, data);
+              offset =
+                  off; // As all tuples inside of an array are the same size we can just use the last offset as the beginning of the next tuple
+              return value;
+            }.call(),
           DynamicFunctionParamType type => () {
               final headerOffset =
                   FunctionParamInt().decode(data_field).toInt() + array_offset;
               final (value, off) = type.decode(headerOffset, data);
               max_offset = max(max_offset, off);
+              offset += 32;
               return value;
             }.call(),
-          ArrayFunctionParamType type => () {
-              final headerOffset =
-                  FunctionParamInt().decode(data_field).toInt() + array_offset;
-              final (value, off) = type.decode(headerOffset, data);
-              max_offset = max(max_offset, off);
-              return value;
-            }.call(),
-          _ => throw Exception('Invalid type: $itemType'),
         },
       );
     }

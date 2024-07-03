@@ -80,21 +80,136 @@ void main() {
   });
 
   test("Test Tuples", () async {
-    // Fallback Test Case with nested tuple: https://etherscan.io/tx/0x17531ea3be7d2d61391ac22c8bf1bedaa557af05704a1597691a94098e1cb312
-    // https://etherscan.io/tx/0x70118425d4e2570d09cf2a63ca852213a9e021a9cc06061b64e8aacb1c496336
-    const String dataString =
-        "0x12aa3caf000000000000000000000000e37e799d5077682fa0a244d46e5649f71457bd090000000000000000000000004116f14b6d462b32a1c10f98049e4b1765e34fa9000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000e37e799d5077682fa0a244d46e5649f71457bd0900000000000000000000000003f8c406db9c9f839817d415dd22b154593349cd00000000000000000000000000000000000000000000d3c21bcecceda10000000000000000000000000000000000000000000000000000000b4c5e0c818dc5770000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000001600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000019d00000000000000000000000000017f00016900011f0000e300006800004e802026678dcd4116f14b6d462b32a1c10f98049e4b1765e34fa9382ffce2287252f930e1c8dc9328dac5bf282ba100000000000000000000000000000000000000000000021e19e0c9bab24000000020d6bdbf784116f14b6d462b32a1c10f98049e4b1765e34fa90c204116f14b6d462b32a1c10f98049e4b1765e34fa996f87f02ca861d55a0af0d70e3a3aadef134e5ba6ae4071198002dc6c096f87f02ca861d55a0af0d70e3a3aadef134e5ba0000000000000000000000000000000000000000000000000b4c5e0c818dc5774116f14b6d462b32a1c10f98049e4b1765e34fa94101c02aaa39b223fe8d0a0e5c4f27ead9083c756cc200042e1a7d4d000000000000000000000000000000000000000000000000000000000000000000a0f2fa6b66eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee0000000000000000000000000000000000000000000000000ba5d2712e77c3a800000000000000000005274b30f4cdd8c0611111111254eeb25477b68fb85ed929f73a9605820000009a635db5";
+    // https://etherscan.io/tx/0x17531ea3be7d2d61391ac22c8bf1bedaa557af05704a1597691a94098e1cb312
+    String dataString =
+        "0x3dbe1c55000000000000000000000000d08bb564b3af10c657d00b2e97c1611e3692b8ca000000000000000000000000a96febd6c5faf7739d3149bfb43211ec6844a37c00000000000000000000000000000000000000000000000006296034c935583000000000000000000000000000000000000000000000000003403fc6762f6e1b00000000000000000000000000000000000000000000000000000000000000a00000000000000000000000007a4effd87c2f3c55ca251080b1343b605f327e3a0000000000000000000000000000000000000000000000000c34d5d6fdb280d30000000000000000000000007a4effd87c2f3c55ca251080b1343b605f327e3a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 
-    final contractFunction =
-        await ContractFunctionWithValues.decodeRawWithFetch(
+    var contractFunction = await ContractFunctionWithValues.decodeRawWithFetch(
       data: dataString.hexToBytesWithPrefix,
     );
 
-    print(contractFunction);
+    expect(contractFunction.name, "addLiquiditySingleTokenKeepYt");
+    expect(contractFunction.parameters[0].type, FunctionParamAddress());
+    expect(contractFunction.parameters[0].value,
+        "0xD08Bb564b3Af10c657d00b2E97C1611E3692B8CA".toLowerCase());
+    expect(contractFunction.parameters[1].type, FunctionParamAddress());
+    expect(contractFunction.parameters[1].value,
+        "0xa96febd6c5faf7739d3149bfb43211ec6844a37c".toLowerCase());
+    expect(contractFunction.parameters[2].type, FunctionParamUint256());
+    expect(
+        contractFunction.parameters[2].value, BigInt.from(443991818102986800));
+    expect(contractFunction.parameters[3].type, FunctionParamUint256());
+    expect(
+        contractFunction.parameters[3].value, BigInt.from(234257302242160155));
+    expect(
+      contractFunction.parameters[4].type,
+      TupleFunctionParamType(
+          "(address,uint256,address,address,(uint8,address,bytes,bool))", [
+        FunctionParamAddress(),
+        FunctionParamUint256(),
+        FunctionParamAddress(),
+        FunctionParamAddress(),
+        TupleFunctionParamType(
+          "",
+          [
+            FunctionParamAddress(),
+            FunctionParamUint256(),
+            FunctionParamAddress(),
+            FunctionParamAddress(),
+            TupleFunctionParamType(
+              "(uint8,address,bytes,bool)",
+              [
+                FunctionParamUint8(),
+                FunctionParamAddress(),
+                FunctionParamBytes(),
+                FunctionParamBool(),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    );
+    expect(
+      contractFunction.parameters[4].value,
+      [
+        "0x7a4effd87c2f3c55ca251080b1343b605f327e3a",
+        BigInt.from(879562946600141011),
+        "0x7a4effd87c2f3c55ca251080b1343b605f327e3a",
+        "0x0000000000000000000000000000000000000000",
+        [
+          BigInt.zero,
+          "0x0000000000000000000000000000000000000000",
+          Uint8List(0),
+          false,
+        ],
+      ],
+    );
+
+    // https://etherscan.io/tx/0x70118425d4e2570d09cf2a63ca852213a9e021a9cc06061b64e8aacb1c496336
+    dataString =
+        "0x3f8fc2330000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000458179a8c5c75673d733f714ccce11ccfcd35e22139addd9c270318fa9067500c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001af78260b41491153b1cca7d54b4b968db26d3e67b881abfa451f1e030b9731db000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000017815cf042f814bba091dd59f4a9f2565d0361621ca00a8b63b050ec045f4e1a50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000117c90af00aedee74edcb44be829ed64b3b72bdacb789e94ec88e1c3415ec35e400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001";
+
+    contractFunction = await ContractFunctionWithValues.decodeRawWithFetch(
+      data: dataString.hexToBytesWithPrefix,
+      function: ExternalContractFunction.fromString(
+        textSignature: "cancelTrades((bytes32,uint256,uint256)[])",
+      ),
+    );
+
+    expect(contractFunction.name, "cancelTrades");
+    expect(
+      contractFunction.parameters[0].type,
+      ArrayFunctionParamType(
+        "(bytes32,uint256,uint256)[]",
+        TupleFunctionParamType(
+          "(bytes32,uint256,uint256)",
+          [
+            FunctionParamBytes32(),
+            FunctionParamUint256(),
+            FunctionParamUint256(),
+          ],
+        ),
+      ),
+    );
+    expect(
+      contractFunction.parameters[0].value,
+      [
+        [
+          "0x58179a8c5c75673d733f714ccce11ccfcd35e22139addd9c270318fa9067500c"
+              .hexToBytesWithPrefix,
+          BigInt.from(0),
+          BigInt.from(1),
+        ],
+        [
+          "0xaf78260b41491153b1cca7d54b4b968db26d3e67b881abfa451f1e030b9731db"
+              .hexToBytesWithPrefix,
+          BigInt.from(0),
+          BigInt.from(1),
+        ],
+        [
+          "0x7815cf042f814bba091dd59f4a9f2565d0361621ca00a8b63b050ec045f4e1a5"
+              .hexToBytesWithPrefix,
+          BigInt.from(0),
+          BigInt.from(1),
+        ],
+        [
+          "0x17c90af00aedee74edcb44be829ed64b3b72bdacb789e94ec88e1c3415ec35e4"
+              .hexToBytesWithPrefix,
+          BigInt.from(0),
+          BigInt.from(1),
+        ],
+      ],
+    );
   });
 
   ///
   /// uint256[][]
   ///
   test("Test Nested Array", () async {});
+
+  test("adssad", () {
+    ExternalContractFunction.extractParams(
+      "address,address,uint256,uint256,(address,address,(uint8,bool)), (bool, bool), (bool, (bool, bool))",
+    );
+  });
 }

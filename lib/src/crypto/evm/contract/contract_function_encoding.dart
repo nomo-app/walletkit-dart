@@ -8,36 +8,53 @@ const int size_unit = 32;
 final Uint8List empty_bytes = Uint8List.fromList(List.filled(size_unit, -1));
 
 class DataFieldBuilder {
-  final ContractFunctionWithValues function;
   final BufferBuilder buffer = BufferBuilder();
 
+  final Map<FunctionParamType, dynamic> fields;
+
+  final Uint8List? selector;
+
   DataFieldBuilder({
-    required this.function,
+    required this.fields,
+    this.selector,
   });
 
+  factory DataFieldBuilder.fromFunction({
+    required ContractFunctionWithValues function,
+  }) {
+    return DataFieldBuilder(
+      fields: {
+        for (final paramWithValue in function.parameters)
+          paramWithValue.type: paramWithValue.value,
+      },
+      selector: function.functionSelector,
+    );
+  }
+
   Uint8List buildDataField() {
-    final dynamicHeaderOffsets = List.filled(function.parameters.length, -1);
+    final dynamicHeaderOffsets = List.filled(fields.length, -1);
 
-    assert(function.functionSelector.length == 4);
+    assert(selector == null || selector!.length == 4);
 
-    for (var i = 0; i < function.parameters.length; i++) {
-      final param = function.parameters[i];
-      if (param.isDynamic) {
+    for (var i = 0; i < fields.length; i++) {
+      final type = fields.keys.elementAt(i);
+
+      if (type.isDynamic) {
         dynamicHeaderOffsets[i] = buffer.length;
         _addField(empty_bytes);
         continue;
       }
-
-      final encoded = param.type.encode(param.value);
+      final value = fields[type];
+      final encoded = type.encode(value);
       _addField(encoded);
     }
 
     /// Update Dynamic Fields
-    for (var i = 0; i < function.parameters.length; i++) {
-      final param = function.parameters[i];
+    for (var i = 0; i < fields.length; i++) {
+      final type = fields.keys.elementAt(i);
 
       /// Skip if not dynamic
-      if (param.isDynamic == false) continue;
+      if (type.isDynamic == false) continue;
 
       final headerOffset = dynamicHeaderOffsets[i]; // Get offset of placeholder
       assert(headerOffset != -1);
@@ -47,12 +64,13 @@ class DataFieldBuilder {
       _replace(header, headerOffset);
 
       /// Write dynamic field
-      final encoded = param.type.encode(param.value);
+      final value = fields[type];
+      final encoded = type.encode(value);
       _addField(encoded);
     }
 
     return Uint8List.fromList([
-      ...function.functionSelector,
+      if (selector != null) ...selector!,
       ...buffer.asBytes(),
     ]);
   }

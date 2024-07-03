@@ -36,6 +36,29 @@ class ExternalContractFunction {
     return functionSelector.toHex;
   }
 
+  factory ExternalContractFunction.fromString({
+    required String textSignature,
+  }) {
+    final opening = textSignature.indexOf("(");
+    final closing = textSignature.lastIndexOf(")");
+    final name = textSignature.substring(0, opening);
+    final params_s = extractParams(
+      textSignature.substring(opening + 1, closing),
+    );
+    final params = [
+      for (final param in params_s)
+        FunctionParam(
+          name: param,
+          type: FunctionParamType.fromString(param),
+        ),
+    ];
+
+    return ExternalContractFunction(
+      name: name,
+      parameters: params,
+    );
+  }
+
   factory ExternalContractFunction.fromJSON(Json json) {
     if (json
         case {
@@ -45,28 +68,54 @@ class ExternalContractFunction {
           "hex_signature": _,
           "bytes_signature": _,
         }) {
-      // TODO: Parse Tuples
-      final opening = text_signature.indexOf("(");
-      final closing = text_signature.lastIndexOf(")");
-      final name = text_signature.substring(0, opening);
-      final params_s = text_signature
-          .substring(opening + 1, closing)
-          .split(RegExp(r',(?![^()]*\))'));
-      final params = [
-        for (final param in params_s)
-          FunctionParam(
-            name: param,
-            type: FunctionParamType.fromString(param),
-          ),
-      ];
-
-      return ExternalContractFunction(
-        name: name,
-        parameters: params,
-      );
+      return ExternalContractFunction.fromString(textSignature: text_signature);
     }
 
     throw UnsupportedError("Unsupported JSON: ${json}");
+  }
+
+  static List<String> extractParams(String text) {
+    text = text.trim().replaceAll(' ', '');
+    var opening = text.indexOf("(");
+
+    final values = <String>[];
+    final start = opening < 1 ? text : text.substring(0, opening - 1);
+
+    if (start.isNotEmpty) {
+      if (start.startsWith('('))
+        values.add(start);
+      else if (start.contains(','))
+        values.addAll(start.split(','));
+      else
+        values.add(start);
+    }
+    if (opening > 1) {
+      var closing = -1;
+      var nested = 0;
+      for (var i = opening; i < text.length; i++) {
+        final char = text[i];
+        if (char == "(") {
+          nested++;
+          continue;
+        }
+        if (char == ")") {
+          nested--;
+          if (nested == 0) {
+            closing = i;
+            break;
+          }
+        }
+      }
+
+      var tuple = text.substring(opening, closing + 1);
+      values.add(tuple);
+
+      if (closing + 1 < text.length) {
+        values.addAll(extractParams(text.substring(closing + 1)));
+      }
+    }
+
+    return values;
   }
 }
 
@@ -153,7 +202,7 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
   }) : super(parameters: parameters);
 
   Uint8List buildDataField() {
-    final dataFieldBuilder = DataFieldBuilder(function: this);
+    final dataFieldBuilder = DataFieldBuilder.fromFunction(function: this);
     return dataFieldBuilder.buildDataField();
   }
 
@@ -166,9 +215,14 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
   ///
   static Future<ExternalContractFunctionWithValues> decodeRawWithFetch({
     required Uint8List data,
+    ExternalContractFunction? function,
   }) async {
     assert(data.length >= 4, "Invalid data length");
     final function_selector = data.sublist(0, 4).toHex;
+
+    if (function != null) {
+      return _decodeExternal(data: data, function: function);
+    }
 
     // final localResult = decodeRaw(data: data);
 

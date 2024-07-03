@@ -9,7 +9,7 @@ void main() {
     "Function Parameter Encoding and Decoding",
     () async {
       var function = uniswap_v2_router_abi.getFunction("getAmountsOut")!;
-      var dataFieldBuilder = DataFieldBuilder(
+      var dataFieldBuilder = DataFieldBuilder.fromFunction(
         function: function.addValues(values: [
           1.toBigInt,
           [
