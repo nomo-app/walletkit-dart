@@ -81,7 +81,7 @@
   final response = await read(
     function: function.addValues(values: []),
   );
-  return response.outputs.first.castValue&lt;int&gt;();
+  return response.outputs.first.castValue&lt;BigInt&gt;().toInt();
 }</code></pre>
 </section>
 
