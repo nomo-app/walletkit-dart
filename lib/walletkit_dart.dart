@@ -55,11 +55,7 @@ export 'src/domain/entities/address_type.dart';
 
 export 'src/crypto/evm/rlp.dart';
 
-export 'src/crypto/evm/function_signature.dart';
-
 export 'src/crypto/evm/transaction/raw_evm_transaction.dart';
-
-export 'src/crypto/evm/function_argument_decoding.dart';
 
 export 'src/crypto/utxo/proof_of_payment.dart';
 
@@ -69,3 +65,9 @@ export 'src/crypto/tron/domain/tron_http_repository.dart';
 export 'src/crypto/tron/domain/tronscan_repository.dart';
 export 'src/crypto/tron/tron_transaction.dart';
 export 'src/crypto/tron/tron_address.dart';
+
+export 'src/crypto/evm/contract/internal_contract.dart';
+export 'src/crypto/evm/contract/contract_abi.dart';
+export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_router.dart';
+export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_factory.dart';
+export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_pair.dart';

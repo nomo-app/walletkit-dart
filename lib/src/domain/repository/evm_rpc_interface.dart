@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
@@ -393,8 +395,7 @@ final class EvmRpcInterface {
 
   Future<String> readContract({
     required String contractAddress,
-    required ContractFunction function,
-    required List<dynamic> params,
+    required ContractFunctionWithValues function,
   }) async {
     assert(
       function.stateMutability == StateMutability.view ||
@@ -402,7 +403,7 @@ final class EvmRpcInterface {
       "Invalid function",
     );
 
-    final data = function.encodeFunction(params).hexToBytes;
+    final data = function.buildDataField();
 
     return await client.call(
       contractAddress: contractAddress,
@@ -415,8 +416,7 @@ final class EvmRpcInterface {
   ///
   Future<String> interactWithContract({
     required String contractAddress,
-    required ContractFunction function,
-    required List<dynamic> params,
+    required ContractFunctionWithValues function,
     required String sender,
     required Uint8List seed,
     required EvmFeeInformation? feeInfo,
@@ -431,7 +431,7 @@ final class EvmRpcInterface {
     };
     assert(valid, "Invalid value for state mutability of function");
 
-    final data = function.encodeFunction(params).hexToBytes;
+    final data = function.buildDataField();
 
     return await buildAndBroadcastTransaction(
       sender: sender,
@@ -483,12 +483,24 @@ final class EvmRpcInterface {
     required String contractAddress,
     required Uint8List seed,
   }) async {
-    final function = ContractFunction(
+    final function = ContractFunctionWithValues(
       name: "transferFrom",
       parameters: [
-        FunctionParam(name: "from", type: FunctionParamType.address),
-        FunctionParam(name: "to", type: FunctionParamType.address),
-        FunctionParam(name: "tokenId", type: FunctionParamType.uint),
+        FunctionParamWithValue(
+          name: "from",
+          type: FunctionParamAddress(),
+          value: from,
+        ),
+        FunctionParamWithValue(
+          name: "to",
+          type: FunctionParamAddress(),
+          value: recipient,
+        ),
+        FunctionParamWithValue(
+          name: "tokenId",
+          type: FunctionParamInt(),
+          value: tokenId,
+        ),
       ],
       stateMutability: StateMutability.nonpayable,
       outputs: [],
@@ -497,7 +509,6 @@ final class EvmRpcInterface {
     return await interactWithContract(
       contractAddress: contractAddress,
       function: function,
-      params: [from, recipient, tokenId],
       sender: from,
       seed: seed,
       feeInfo: null,
