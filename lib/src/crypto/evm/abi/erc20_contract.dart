@@ -316,7 +316,7 @@ class ERC20Contract extends InternalContract {
     final response = await read(
       function: function.addValues(values: []),
     );
-    return response.outputs.first.castValue<int>();
+    return response.outputs.first.castValue<BigInt>().toInt();
   }
 
   Future<BigInt> balanceOf({required String address}) async {
