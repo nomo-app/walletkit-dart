@@ -7,6 +7,8 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const _openchainEndpoint = "https://api.openchain.xyz/signature-database/v1";
 const _4byteEndpoint = "https://www.4byte.directory/api/v1";
 
+Map<String, ExternalContractFunction> _functionCache = {};
+
 class FunctionSelectorRepository {
   static Future<ExternalContractFunction?> fetchSelector(
     String selector, {
@@ -32,6 +34,11 @@ class FunctionSelectorRepository {
     String selector,
   ) async {
     selector = selector.startsWith("0x") ? selector : "0x$selector";
+
+    if (_functionCache.containsKey(selector)) {
+      return _functionCache[selector];
+    }
+
     final response = await HTTPService.client.get(
       Uri.parse(
         "$_openchainEndpoint/lookup?function=$selector&filter=true",
@@ -56,7 +63,12 @@ class FunctionSelectorRepository {
 
         if (name == null) return null;
 
-        return ExternalContractFunction.fromString(textSignature: name);
+        final function =
+            ExternalContractFunction.fromString(textSignature: name);
+
+        _functionCache[selector] = function;
+
+        return function;
       }
 
       return null;
@@ -68,9 +80,15 @@ class FunctionSelectorRepository {
   static Future<ExternalContractFunction?> fetchSelector4Byte(
     String selector,
   ) async {
+    selector = selector.startsWith("0x") ? selector : "0x$selector";
+
+    if (_functionCache.containsKey(selector)) {
+      return _functionCache[selector];
+    }
+
     final response = await HTTPService.client.get(
       Uri.parse(
-        "$_4byteEndpoint/signatures/?hex_signature=${selector.startsWith("0x") ? selector : "0x$selector"}",
+        "$_4byteEndpoint/signatures/?hex_signature=$selector",
       ),
     );
     if (response.statusCode == 200) {
@@ -84,6 +102,10 @@ class FunctionSelectorRepository {
 
       // TODO: Maybe return a List of all Functions so that we can display all possible functions
       final function = getLowestIdFunction(responseData["results"]);
+
+      if (function != null) {
+        _functionCache[selector] = function;
+      }
 
       return function;
     }
