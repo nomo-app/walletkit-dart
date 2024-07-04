@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:test/test.dart';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
