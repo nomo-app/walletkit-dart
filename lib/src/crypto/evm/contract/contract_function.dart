@@ -4,7 +4,7 @@ import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encodin
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
-import 'package:walletkit_dart/src/domain/repository/4byte_repository.dart';
+import 'package:walletkit_dart/src/domain/repository/function_selector_repository.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -59,27 +59,17 @@ class ExternalContractFunction {
     );
   }
 
-  factory ExternalContractFunction.fromJSON(Json json) {
-    if (json
-        case {
-          "id": int _,
-          "created_at": _,
-          "text_signature": String text_signature,
-          "hex_signature": _,
-          "bytes_signature": _,
-        }) {
-      return ExternalContractFunction.fromString(textSignature: text_signature);
-    }
-
-    throw UnsupportedError("Unsupported JSON: ${json}");
-  }
-
   static List<String> extractParams(String text) {
     text = text.trim().replaceAll(' ', '');
+
     var opening = text.indexOf("(");
 
     final values = <String>[];
-    final start = opening < 1 ? text : text.substring(0, opening - 1);
+    final start = opening == -1
+        ? text
+        : opening == 0
+            ? ""
+            : text.substring(0, opening - 1);
 
     if (start.isNotEmpty) {
       if (start.startsWith('('))
@@ -89,29 +79,31 @@ class ExternalContractFunction {
       else
         values.add(start);
     }
-    if (opening > 1) {
+    if (opening != -1) {
       var closing = -1;
       var nested = 0;
       for (var i = opening; i < text.length; i++) {
         final char = text[i];
-        if (char == "(") {
-          nested++;
-          continue;
+        if (nested == 0 && char == ',') {
+          closing = i;
+          break;
         }
-        if (char == ")") {
-          nested--;
-          if (nested == 0) {
-            closing = i;
-            break;
-          }
-        }
+
+        if (char == "(") nested++;
+        if (char == ")") nested--;
       }
 
-      var tuple = text.substring(opening, closing + 1);
+      if (closing == -1) closing = text.length;
+
+      var tuple = text.substring(opening, closing);
       values.add(tuple);
 
-      if (closing + 1 < text.length) {
-        values.addAll(extractParams(text.substring(closing + 1)));
+      if (closing < text.length) {
+        values.addAll(
+          extractParams(
+            text.substring(closing + 1),
+          ),
+        );
       }
     }
 
@@ -224,16 +216,15 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
       return _decodeExternal(data: data, function: function);
     }
 
-    // final localResult = decodeRaw(data: data);
+    final localResult = decodeRaw(data: data);
 
-    // if (localResult != null) {
-    //   //return localResult;
-    // }
-    // TODO: Comment back in
+    if (localResult != null) {
+      return localResult;
+    }
 
     /// Fetch the function from 4byte.directory
     final externalResult =
-        await FourByteRepository.fetchSelector(function_selector);
+        await FunctionSelectorRepository.fetchSelector(function_selector);
 
     if (externalResult != null) {
       return _decodeExternal(data: data, function: externalResult);
@@ -317,7 +308,14 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
       "Invalid function selector",
     );
 
-    final dataWithoutSelector = data.sublist(4);
+    var dataWithoutSelector = data.sublist(4);
+
+    if (dataWithoutSelector.length % 32 != 0) {
+      dataWithoutSelector = dataWithoutSelector.sublist(
+        0,
+        dataWithoutSelector.length - (dataWithoutSelector.length % 32),
+      );
+    }
 
     final decodedParams = decodeDataField(
       data: dataWithoutSelector,

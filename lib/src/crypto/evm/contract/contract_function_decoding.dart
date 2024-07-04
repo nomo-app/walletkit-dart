@@ -11,25 +11,21 @@ List<FunctionParamWithValue> decodeDataField({
   final decodedParams = <FunctionParamWithValue>[];
   int offset = 0;
   int max_offset = 0;
-  params.forEach((param) {
-    final data_field = data.sublist(offset, offset + size_unit);
+  for (final param in params) {
+    final decoded = decodeParameter(
+      data: data,
+      type: param.type,
+      offset: offset,
+      max_offset: max_offset,
+    );
 
-    final decodedValue = switch (param.type) {
-      BaseFunctionParamType type => type.decode(data_field),
-      DynamicFunctionParamType type => () {
-          final headerOffset = FunctionParamInt().decode(data_field).toInt();
-          final (value, off) = type.decode(headerOffset, data);
-          max_offset = max(max_offset, off);
-          return value;
-        }.call(),
-    };
+    offset = decoded.offset;
+    max_offset = max(max_offset, decoded.max_offset);
 
-    final decodedParam = FunctionParamWithValue.fromParam(param, decodedValue);
-
-    offset += size_unit;
+    final decodedParam = FunctionParamWithValue.fromParam(param, decoded.value);
 
     decodedParams.add(decodedParam);
-  });
+  }
 
   max_offset = max(max_offset, offset);
 
@@ -38,4 +34,66 @@ List<FunctionParamWithValue> decodeDataField({
   }
 
   return decodedParams;
+}
+
+({dynamic value, int offset, int max_offset}) decodeParameter({
+  required Uint8List data,
+  required FunctionParamType type,
+  required int offset,
+  required int max_offset,
+  int header_offset_increment = 0,
+}) {
+  final data_field = data.sublist(offset, offset + size_unit);
+  final value = switch (type) {
+    BaseFunctionParamType type => () {
+        offset += size_unit;
+        return type.decode(data_field);
+      }.call(),
+    TupleFunctionParamType type => () {
+        if (type.isDynamic) {
+          final headerOffset = FunctionParamInt().decode(data_field).toInt() +
+              header_offset_increment;
+          final (value, off) = type.decode(headerOffset, data);
+          max_offset = max(max_offset, off);
+          offset += size_unit;
+          return value;
+        }
+
+        /// Tuple is not dynamic
+        final (value, off) = type.decode(offset, data);
+        offset = off;
+        return value;
+      }.call(),
+    ArrayFunctionParamType type => () {
+        if (type.isDynamic) {
+          final headerOffset = FunctionParamInt().decode(data_field).toInt() +
+              header_offset_increment;
+          final (value, off) = type.decode(headerOffset, data);
+          max_offset = max(max_offset, off);
+          offset += size_unit;
+          return value;
+        }
+
+        /// Array is not dynamic
+        final (value, off) = type.decode(offset, data);
+        offset = off;
+        return value;
+      }.call(),
+    DynamicFunctionParamType type => () {
+        final headerOffset = FunctionParamInt().decode(data_field).toInt() +
+            header_offset_increment;
+        final (value, off) = type.decode(headerOffset, data);
+        max_offset = max(max_offset, off);
+        offset += size_unit;
+        return value;
+      }.call(),
+  };
+
+  max_offset = max(max_offset, offset);
+
+  return (
+    value: value,
+    offset: offset,
+    max_offset: max_offset,
+  );
 }

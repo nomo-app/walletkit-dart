@@ -16,12 +16,12 @@ final class FunctionParamInt extends BaseFunctionParamType<BigInt> {
     if (value.bitLength > 256) {
       throw Exception('Value is too big');
     }
-    final byteData = ByteData(32);
+    final byteData = ByteData(size_unit);
     final bytes = value.toRadixString(16).padLeft(64, '0');
     final bytesList = bytes.hexToBytes;
 
     for (var i = 0; i < bytesList.length; i++) {
-      byteData.setUint8(32 - bytesList.length + i, bytesList[i]);
+      byteData.setUint8(size_unit - bytesList.length + i, bytesList[i]);
     }
 
     return byteData.buffer.asUint8List();
