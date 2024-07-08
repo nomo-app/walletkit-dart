@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/common/abis/erc20.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 // import 'package:bip39/bip39.dart' as bip39;
@@ -21,7 +22,7 @@ Future<TokenInfo?> getTokenInfo({
 
   try {
     final result = await Future.wait([
-      tokenContract.getDecimals(),
+      tokenContract.decimals(),
       tokenContract.getName(),
       tokenContract.getSymbol(),
       tokenContract.getSupply(),

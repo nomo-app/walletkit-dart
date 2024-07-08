@@ -1,20 +1,15 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
-import 'package:walletkit_dart/src/crypto/evm/abi/avinoc_staking_contract.dart';
-import 'package:walletkit_dart/src/crypto/evm/abi/demoContract.dart';
-import 'package:walletkit_dart/src/crypto/evm/abi/erc721_contract.dart';
-import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
 
-List<ContractABI> abiList = [
-  contractAbiDemoContract,
-  contractAbiNomoDevToken,
-  contractAbiErc20,
-  contractAbiErc721,
-  avinocStakingAbi
-];
+// List<ContractABI> abiList = [
+//   contractAbiDemoContract,
+//   contractAbiNomoDevToken,
+//   contractAbiErc20,
+//   contractAbiErc721,
+//   avinocStakingAbi
+// ];
 
 class ContractABI {
   final List<ContractFunction> functions;
@@ -68,12 +63,16 @@ class ContractABI {
           outputs.add(FunctionParam.fromMap(param));
         }
       }
+      final constant = item['constant'] as bool;
+      final payable = item['payable'] as bool;
       functions.add(
         ContractFunction(
           name: name,
           parameters: parameters,
           stateMutability: stateMutability,
           outputs: outputs,
+          constant: constant,
+          payable: payable,
         ),
       );
     }

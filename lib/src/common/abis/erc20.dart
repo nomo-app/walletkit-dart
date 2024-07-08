@@ -1,8 +1,7 @@
-import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
+import 'package:walletkit_dart/src/common/contract_generation_abi.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
 
-final contractAbiErc20 = ContractABI.fromAbi('''[
+@ContractGeneration('''[
   {
     "constant": true,
     "inputs": [],
@@ -224,119 +223,10 @@ final contractAbiErc20 = ContractABI.fromAbi('''[
     "type": "event"
   }
 ]
- ''');
-
+ ''')
 class ERC20Contract extends InternalContract {
-  ERC20Contract({
+  const ERC20Contract({
     required super.contractAddress,
     required super.rpc,
-  }) : super(
-          abi: contractAbiErc20,
-        );
-
-  Future<String> transfer({
-    required String sender,
-    required String to,
-    required BigInt value,
-    required Uint8List seed,
-    EvmFeeInformation? feeInfo,
-  }) async {
-    final function = abi.functions[7];
-    assert(function.functionSelectorHex == "a9059cbb");
-    return await interact(
-      function: function.addValues(values: [to, value]),
-      seed: seed,
-      sender: sender,
-      feeInfo: feeInfo,
-    );
-  }
-
-  Future<String> approve({
-    required String sender,
-    required String spender,
-    required BigInt value,
-    required Uint8List seed,
-    EvmFeeInformation? feeInfo,
-  }) async {
-    final function = abi.functions[1];
-    assert(function.functionSelectorHex == "095ea7b3");
-
-    return await interact(
-      function: function.addValues(values: [spender, value]),
-      seed: seed,
-      sender: sender,
-      feeInfo: feeInfo,
-    );
-  }
-
-  Future<BigInt> getBalance(String address, {BlockNum? atBlock}) async {
-    final function = abi.functions[5];
-    assert(function.functionSelectorHex == "70a08231");
-
-    final response = await read(
-      function: function.addValues(values: [address]),
-      atBlock: atBlock,
-    );
-    return response.outputs.first.castValue<BigInt>();
-  }
-
-  Future<String> getName() async {
-    final function = abi.functions[0];
-    assert(function.functionSelectorHex == "06fdde03");
-
-    final response = await read(
-      function: function.addValues(values: []),
-    );
-
-    return response.outputs.first.castValue<String>();
-  }
-
-  Future<String> getSymbol() async {
-    final function = abi.functions[6];
-    assert(function.functionSelectorHex == "95d89b41");
-    final response = await read(
-      function: function.addValues(values: []),
-    );
-
-    return response.outputs.first.castValue<String>();
-  }
-
-  Future<BigInt> getSupply() async {
-    final function = abi.functions[2];
-    assert(function.functionSelectorHex == "18160ddd");
-    final response = await read(
-      function: function.addValues(values: []),
-    );
-    return response.outputs.first.castValue<BigInt>();
-  }
-
-  Future<int> getDecimals() async {
-    final function = abi.functions[4];
-    assert(function.functionSelectorHex == "313ce567");
-    final response = await read(
-      function: function.addValues(values: []),
-    );
-    return response.outputs.first.castValue<BigInt>().toInt();
-  }
-
-  Future<BigInt> balanceOf({required String address}) async {
-    final function = abi.functions[5];
-    assert(function.functionSelectorHex == "70a08231");
-    final response = await read(
-      function: function.addValues(values: []),
-    );
-    return response.outputs.first.castValue<BigInt>();
-  }
-
-  Future<BigInt> allowance({
-    required String owner,
-    required String spender,
-  }) async {
-    final function = abi.functions[8];
-    assert(function.functionSelectorHex == "dd62ed3e");
-    final response = await read(
-      function: function.addValues(values: []),
-    );
-    return response.outputs.first.castValue<BigInt>();
-  }
+  });
 }
