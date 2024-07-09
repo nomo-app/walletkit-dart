@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the UniswapV2Router constructor from Class UniswapV2Router from the uniswap_v2_router library, for the Dart programming language.">
-  <title>UniswapV2Router constructor - UniswapV2Router - uniswap_v2_router library - Dart API</title>
+  <meta name="description" content="API docs for the getSupply method from the ERC20Contract class, for the Dart programming language.">
+  <title>getSupply method - ERC20Contract class - erc20_contract library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_router/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_router-library.html">src&#47;crypto&#47;evm&#47;abi&#47;uniswap_v2&#47;uniswap_v2_router.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_router/UniswapV2Router-class.html">UniswapV2Router</a></li>
-    <li class="self-crumb">UniswapV2Router constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract-library.html">src&#47;crypto&#47;evm&#47;abi&#47;erc20_contract.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
+    <li class="self-crumb">getSupply method</li>
   </ol>
-  <div class="self-name">UniswapV2Router</div>
+  <div class="self-name">getSupply</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -51,34 +51,38 @@
 </header>
 <main>
 
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_router&#47;UniswapV2Router-class-sidebar.html"
-      data-below-sidebar="">
-      <div>
-<h1><span class="kind-constructor">UniswapV2Router</span> constructor 
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract&#47;ERC20Contract-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">getSupply</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">UniswapV2Router</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-rpc"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">rpc</span>, </span></li>
-<li><span class="parameter" id="-param-contractAddress"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">contractAddress</span>, </span></li>
-</ol>})
-    </section>
 
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
+<span class="name ">getSupply</span>(<wbr>)
+
+      
+
+    </section>
     
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">UniswapV2Router({
-  required super.rpc,
-  required super.contractAddress,
-}) : super(
-        abi: uniswap_v2_router_abi,
-      );</code></pre>
+  <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; getSupply() async {
+  final function = abi.functions[2];
+  assert(function.functionSelectorHex == &quot;18160ddd&quot;);
+  final response = await read(
+    function: function.addValues(values: []),
+  );
+  return response.outputs.first.castValue&lt;BigInt&gt;();
+}</code></pre>
 </section>
 
 
@@ -94,18 +98,18 @@
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_router/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_router-library.html">uniswap_v2_router</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_router/UniswapV2Router-class.html">UniswapV2Router</a></li>
-    <li class="self-crumb">UniswapV2Router constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract-library.html">erc20_contract</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></li>
+    <li class="self-crumb">getSupply method</li>
 </ol>
 
 
-    <h5>UniswapV2Router class</h5>
+    <h5>ERC20Contract class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-left-->
+  </div><!--/.sidebar-offcanvas-->
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-  </div><!--/.sidebar-offcanvas-->
+</div><!--/.sidebar-offcanvas-->
 
 </main>
 
