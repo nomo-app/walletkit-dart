@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
+import 'package:walletkit_dart/src/common/http_repository.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
@@ -152,6 +153,15 @@ base class EvmRpcClient {
     return blockNumber.toInt();
   }
 
+  Future<JSON> getBlockByNumber(int blockNumber) async {
+    final response = await _call<Json>(
+      'eth_getBlockByNumber',
+      args: [blockNumber.toHexWithPrefix, false],
+    );
+
+    return response;
+  }
+
   ///
   /// Returns the Logs
   ///
@@ -201,13 +211,13 @@ base class EvmRpcClient {
   ///
   /// Get the transaction receipt
   ///
-  Future<Json> getTransactionReceipt(String txHash) async {
+  Future<Json?> getTransactionReceipt(String txHash) async {
     final response = await _call<Json?>(
       'eth_getTransactionReceipt',
       args: [txHash],
     );
 
-    return response ?? {};
+    return response;
   }
 
   ///

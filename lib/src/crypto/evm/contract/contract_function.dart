@@ -154,16 +154,21 @@ class ContractFunction extends ExternalContractFunction
   ContractFunctionWithValues addValues({
     required List<dynamic> values,
   }) {
+    assert(values.length == parameters.length, "Provided values are invalid");
+
     final paramsWithValues = <FunctionParamWithValue>[];
     for (var i = 0; i < parameters.length; i++) {
       final param = parameters[i];
       final value = values[i];
 
-      // if (param.type.internalType != value.runtimeType) {
-      //   throw Exception(
-      //     "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
-      //   );
-      // }
+      if (param.type.internalType != value.runtimeType) {
+        if (param.type.internalType == BigInt &&
+            value.runtimeType.toString() == "_BigIntImpl") {
+        } else
+          throw Exception(
+            "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
+          );
+      }
 
       final paramWithValue = FunctionParamWithValue.fromParam(param, value);
       paramsWithValues.add(paramWithValue);

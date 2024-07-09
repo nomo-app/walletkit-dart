@@ -71,3 +71,5 @@ export 'src/crypto/evm/contract/contract_abi.dart';
 export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_router.dart';
 export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_factory.dart';
 export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_pair.dart';
+
+export 'src/crypto/evm/transaction/internal_evm_transaction.dart';

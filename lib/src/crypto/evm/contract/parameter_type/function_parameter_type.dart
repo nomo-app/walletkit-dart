@@ -203,9 +203,9 @@ final class TupleFunctionParamType extends FunctionParamType<List<dynamic>> {
   @override
   Uint8List encode(List<dynamic> value) {
     final builder = DataFieldBuilder(
-      fields: {
-        for (var i = 0; i < types.length; i++) types[i]: value[i],
-      },
+      fields: [
+        for (var i = 0; i < types.length; i++) (types[i], value[i]),
+      ],
     );
     return builder.buildDataField();
   }

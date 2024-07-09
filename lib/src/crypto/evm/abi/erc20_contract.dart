@@ -269,6 +269,22 @@ class ERC20Contract extends InternalContract {
     );
   }
 
+  Future<RawEVMTransaction> approveTx({
+    required String sender,
+    required String spender,
+    required BigInt value,
+    EvmFeeInformation? feeInfo,
+  }) async {
+    final function = abi.functions[1];
+    assert(function.functionSelectorHex == "095ea7b3");
+
+    return await buildTransactionForFunction(
+      function: function.addValues(values: [spender, value]),
+      sender: sender,
+      feeInfo: feeInfo,
+    );
+  }
+
   Future<BigInt> getBalance(String address, {BlockNum? atBlock}) async {
     final function = abi.functions[5];
     assert(function.functionSelectorHex == "70a08231");
@@ -335,7 +351,7 @@ class ERC20Contract extends InternalContract {
     final function = abi.functions[8];
     assert(function.functionSelectorHex == "dd62ed3e");
     final response = await read(
-      function: function.addValues(values: []),
+      function: function.addValues(values: [owner, spender]),
     );
     return response.outputs.first.castValue<BigInt>();
   }

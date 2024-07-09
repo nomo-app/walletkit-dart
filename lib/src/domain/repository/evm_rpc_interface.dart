@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:walletkit_dart/src/common/http_repository.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
@@ -328,12 +329,10 @@ final class EvmRpcInterface {
   /// Used to create a raw Transactions
   /// Fetches the gasPrice and gasLimit from the network
   /// Fetches the nonce from the network
-  /// Signs the transaction
   ///
-  Future<InternalEVMTransaction> buildTransaction({
+  Future<RawEVMTransaction> buildUnsignedTransaction({
     required String sender,
     required String recipient,
-    required Uint8List seed,
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
@@ -357,6 +356,30 @@ final class EvmRpcInterface {
       value: value ?? BigInt.zero,
       chainId: type.chainId.toBigInt,
       data: data,
+    );
+    return unsignedTx;
+  }
+
+  ///
+  /// Used to create a raw Transactions
+  /// Fetches the gasPrice and gasLimit from the network
+  /// Fetches the nonce from the network
+  /// Signs the transaction
+  ///
+  Future<InternalEVMTransaction> buildTransaction({
+    required String sender,
+    required String recipient,
+    required Uint8List seed,
+    required EvmFeeInformation? feeInfo,
+    required Uint8List? data,
+    required BigInt? value,
+  }) async {
+    final unsignedTx = await buildUnsignedTransaction(
+      sender: sender,
+      recipient: recipient,
+      feeInfo: feeInfo,
+      data: data,
+      value: value,
     );
 
     final signedTx = InternalEVMTransaction.signTransaction(
@@ -740,7 +763,7 @@ final class EvmRpcInterface {
     if (txStatusCache[hash] == null ||
         txStatusCache[hash] == ConfirmationStatus.pending) {
       final json = await client.getTransactionReceipt(hash);
-      txStatusCache[hash] = _confirmationStatusFromJson(json);
+      txStatusCache[hash] = _confirmationStatusFromJson(json ?? {});
     }
     return txStatusCache[hash]!;
   }
@@ -757,5 +780,32 @@ final class EvmRpcInterface {
     }
 
     return ConfirmationStatus.pending;
+  }
+
+  ///
+  /// Get Current Block
+  ///
+  Future<JSON> getCurrentBlock() async {
+    final blockNumber = await client.getBlockNumber();
+    return await client.getBlockByNumber(blockNumber);
+  }
+
+  Future<bool> waitForTxConfirmation(
+    String hash, {
+    Duration interval = const Duration(seconds: 5),
+  }) async {
+    while (true) {
+      await Future.delayed(interval);
+
+      final receipt = await client.getTransactionReceipt(hash);
+
+      switch (receipt?['status']) {
+        case '0x1':
+          return true;
+        case '0x0':
+          return false;
+        default:
+      }
+    }
   }
 }
