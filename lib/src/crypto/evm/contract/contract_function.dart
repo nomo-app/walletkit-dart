@@ -161,14 +161,14 @@ class ContractFunction extends ExternalContractFunction
       final param = parameters[i];
       final value = values[i];
 
-      if (param.type.internalType != value.runtimeType) {
-        if (param.type.internalType == BigInt &&
-            value.runtimeType.toString() == "_BigIntImpl") {
-        } else
-          throw Exception(
-            "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
-          );
-      }
+      // if (param.type.internalType != value.runtimeType) {
+      //   if (param.type.internalType == BigInt &&
+      //       value.runtimeType.toString() == "_BigIntImpl") {
+      //   } else
+      //     throw Exception(
+      //       "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
+      //     );
+      // }
 
       final paramWithValue = FunctionParamWithValue.fromParam(param, value);
       paramsWithValues.add(paramWithValue);
