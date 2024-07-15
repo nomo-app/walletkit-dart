@@ -30,21 +30,13 @@ abstract base class EVMTransaction extends GenericTransaction {
     }
   }
 
-  // Future<FunctionSignatureWithArgs?> get getFunctionSignature async {
-  //   if (!_cachedFunctionSigs.containsKey(hash)) {
-  //     try {
-  //       _cachedFunctionSigs[hash] = FunctionSignatureWithArgs.fromData(input);
-  //     } catch (e) {
-  //       try {
-  //         _cachedFunctionSigs[hash] =
-  //             await FunctionSignatureWithArgs.fetchFunctionSignature(input);
-  //       } catch (e) {
-  //         return null;
-  //       }
-  //     }
-  //   }
-  //   return _cachedFunctionSigs[hash];
-  // }
+  Future<ExternalContractFunctionWithValues?> get getFunctionSignature async {
+    if (!_cachedFunctionSigs.containsKey(hash)) {
+      _cachedFunctionSigs[hash] =
+          await ContractFunctionWithValues.decodeRawWithFetch(data: input);
+    }
+    return _cachedFunctionSigs[hash];
+  }
 
   @override
   Map<String, dynamic> toJson() {
@@ -64,4 +56,4 @@ abstract base class EVMTransaction extends GenericTransaction {
   }
 }
 
-// Map<String, FunctionSignatureWithArgs> _cachedFunctionSigs = {};
+Map<String, ExternalContractFunctionWithValues> _cachedFunctionSigs = {};
