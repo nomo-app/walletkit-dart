@@ -51,15 +51,24 @@ class InternalEVMTransaction extends RawEVMTransaction {
   }
 
   factory InternalEVMTransaction.signTransaction(
-      RawEVMTransaction transaction, Uint8List privateKey) {
+    RawEVMTransaction transaction,
+    Uint8List privateKey,
+  ) {
     final serializedTx = transaction.serializeTransaction;
 
     final signature = Signature.createSignature(
       serializedTx,
       privateKey,
-      chainId: transaction.chainId!.toInt(),
+      chainId: transaction.chainId?.toInt(),
     );
 
+    return InternalEVMTransaction.appendSignature(transaction, signature);
+  }
+
+  factory InternalEVMTransaction.appendSignature(
+    RawEVMTransaction transaction,
+    Signature signature,
+  ) {
     return InternalEVMTransaction(
       nonce: transaction.nonce,
       gasPrice: transaction.gasPrice,
@@ -67,6 +76,7 @@ class InternalEVMTransaction extends RawEVMTransaction {
       to: transaction.to,
       value: transaction.value,
       data: transaction.data,
+      chainId: transaction.chainId,
       v: signature.v,
       r: signature.r,
       s: signature.s,

@@ -56,7 +56,7 @@ class RawEVMTransaction {
    * 
    * @throws {Exception}  If the message hash is invalid or the result length is less than 5
    */
-  factory RawEVMTransaction.getFromMessageHex(String messageHex) {
+  factory RawEVMTransaction.fromHex(String messageHex) {
     final message = Uint8List.fromList(
       hex.decode(
         messageHex.replaceFirst("0x", ""),
