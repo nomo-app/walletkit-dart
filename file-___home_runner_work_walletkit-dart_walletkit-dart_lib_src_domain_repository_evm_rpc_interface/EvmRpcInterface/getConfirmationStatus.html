@@ -80,7 +80,7 @@
   if (txStatusCache[hash] == null ||
       txStatusCache[hash] == ConfirmationStatus.pending) {
     final json = await client.getTransactionReceipt(hash);
-    txStatusCache[hash] = _confirmationStatusFromJson(json ?? {});
+    txStatusCache[hash] = _confirmationStatusFromJson(json);
   }
   return txStatusCache[hash]!;
 }</code></pre>
