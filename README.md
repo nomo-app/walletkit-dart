@@ -1,9 +1,12 @@
 # WalletKit-Dart
 
-See the [api-docs](https://dev.nomo.app/walletkit-dart) for a list of individual functions.
 
-WalletKit-Dart provides features for interacting with Bitcoin/Ethereum/Tron/ZENIQ/ZENIQ Smartchain/Polygon/Binance Smartchain/Litecoin/Bitcoin Cash/Eurocoin.
+WalletKit-Dart provides features for interacting with Bitcoin/Ethereum/Tron/ZENIQ/ZENIQ Smartchain/Polygon/Binance Smartchain/Litecoin/Bitcoin Cash/Eurocoin as well as several layer 2 chains.
 If needed, it is easy to expand WalletKit-Dart with other chains.
+
+See the [Uniswap WebOn](https://github.com/nomo-app/uniswap-webon) or the Unit-tests for a practical example how to use WalletKit-Dart.
+
+See the [api-docs](https://dev.nomo.app/walletkit-dart) for a list of individual functions.
 
 ## Features
 
