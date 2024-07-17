@@ -152,31 +152,29 @@ class Amount extends Equatable {
     );
   }
 
+  // Division operator
   Amount operator /(Amount other) {
-    if (decimals == other.decimals) {
-      return Amount(
-        value: value ~/ other.value,
-        decimals: decimals,
-      );
-    }
-    final precision = max(decimals, other.decimals);
-
-    if (decimals > other.decimals) {
-      final newOther = other.convertToDecimals(decimals);
-      final shiftedA = value * BigInt.from(10).pow(precision);
-      final shiftedResult = shiftedA ~/ newOther.value;
-      return Amount(
-        value: shiftedResult,
-        decimals: decimals,
-      );
+    if (other.value == BigInt.zero) {
+      throw ArgumentError('Cannot divide by zero.');
     }
 
-    final newThis = convertToDecimals(other.decimals);
-    final shiftedA = newThis.value * BigInt.from(10).pow(precision);
-    final shiftedResult = shiftedA ~/ other.value;
+    // Determine the maximum decimals between the two amounts
+    int maxDecimals = max(decimals, other.decimals);
+
+    // Scale both amounts to the same decimal level
+    BigInt scaledThisValue =
+        value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue =
+        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+    // Perform the division
+    BigInt resultValue =
+        (scaledThisValue * BigInt.from(pow(10, maxDecimals))) ~/
+            scaledOtherValue;
+
     return Amount(
-      value: shiftedResult,
-      decimals: other.decimals,
+      value: resultValue,
+      decimals: maxDecimals,
     );
   }
 
