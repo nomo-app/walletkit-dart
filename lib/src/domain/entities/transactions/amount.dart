@@ -138,17 +138,43 @@ class Amount extends Equatable {
     );
   }
 
+  // Plus operator
   Amount operator +(Amount other) {
+    // Determine the maximum decimals between the two amounts
+    int maxDecimals = max(decimals, other.decimals);
+
+    // Scale both amounts to the same decimal level
+    BigInt scaledThisValue =
+        value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue =
+        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+    // Perform the addition
+    BigInt resultValue = scaledThisValue + scaledOtherValue;
+
     return Amount(
-      value: value + other.value,
-      decimals: decimals,
+      value: resultValue,
+      decimals: maxDecimals,
     );
   }
 
+  // Minus operator
   Amount operator -(Amount other) {
+    // Determine the maximum decimals between the two amounts
+    int maxDecimals = max(decimals, other.decimals);
+
+    // Scale both amounts to the same decimal level
+    BigInt scaledThisValue =
+        value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue =
+        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+    // Perform the subtraction
+    BigInt resultValue = scaledThisValue - scaledOtherValue;
+
     return Amount(
-      value: value - other.value,
-      decimals: decimals,
+      value: resultValue,
+      decimals: maxDecimals,
     );
   }
 

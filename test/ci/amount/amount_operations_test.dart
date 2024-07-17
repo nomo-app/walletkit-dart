@@ -19,44 +19,180 @@ void main() {
       expect(amount.value, equals(1100000000000000000.toBigInt));
     });
 
-    test('Multiplication', () {
-      var a = Amount(value: BigInt.from(2), decimals: 2);
-      var b = Amount(value: BigInt.from(3), decimals: 2);
-      var result = a * b;
-      var dResult = a.displayDouble * b.displayDouble;
+    group('Amount multiplication operator', () {
+      test('multiplication with the same decimals', () {
+        Amount amount1 = Amount(value: BigInt.from(1000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(2000), decimals: 18);
 
-      expect(result.value, equals(BigInt.from(6)));
-      expect(result.decimals, equals(4));
-      expect(result.displayDouble, dResult);
+        Amount result = amount1 * amount2;
+        expect(
+            result.value, BigInt.from(2000000)); // 2,000,000 with 36 decimals
+        expect(result.decimals, 36);
+      });
 
-      a = Amount(value: BigInt.from(22323), decimals: 2);
-      b = Amount(value: BigInt.from(312), decimals: 4);
-      result = a * b;
-      dResult = a.displayDouble * b.displayDouble;
+      test('multiplication with different decimals', () {
+        Amount amount1 = Amount(value: BigInt.from(1000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(2), decimals: 15);
 
-      expect(result.value, equals(BigInt.from(6964776)));
-      expect(result.decimals, equals(6));
-      expect(result.displayDouble, dResult);
+        Amount result = amount1 * amount2;
+
+        expect(result.value, BigInt.from(2000)); // 2,000 with 33 decimals
+        expect(result.decimals, 33); // sum of 18 + 15
+      });
+
+      test('multiplication by zero', () {
+        Amount amount1 = Amount(value: BigInt.from(1000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(0), decimals: 18);
+
+        Amount result = amount1 * amount2;
+        expect(result.value, BigInt.from(0)); // 0 with 36 decimals
+        expect(result.decimals, 36);
+      });
+
+      test('large number multiplication', () {
+        Amount amount1 =
+            Amount(value: BigInt.parse('1000000000000000000'), decimals: 18);
+        Amount amount2 =
+            Amount(value: BigInt.parse('2000000000000000000'), decimals: 18);
+
+        Amount result = amount1 * amount2;
+        expect(
+            result.value,
+            BigInt.parse(
+                '2000000000000000000000000000000000000')); // large number with 36 decimals
+        expect(result.decimals, 36);
+      });
+
+      test('multiplication where decimals are a factor', () {
+        Amount amount1 = Amount(value: BigInt.from(1000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(1), decimals: 17);
+
+        Amount result = amount1 * amount2;
+        expect(result.value, BigInt.from(1000)); // 1,000 with 35 decimals
+        expect(result.decimals, 35);
+      });
+
+      test('Multiplication', () {
+        var a = Amount(value: BigInt.from(2), decimals: 2);
+        var b = Amount(value: BigInt.from(3), decimals: 2);
+        var result = a * b;
+        var dResult = a.displayDouble * b.displayDouble;
+
+        expect(result.value, equals(BigInt.from(6)));
+        expect(result.decimals, equals(4));
+        expect(result.displayDouble, dResult);
+
+        a = Amount(value: BigInt.from(22323), decimals: 2);
+        b = Amount(value: BigInt.from(312), decimals: 4);
+        result = a * b;
+        dResult = a.displayDouble * b.displayDouble;
+
+        expect(result.value, equals(BigInt.from(6964776)));
+        expect(result.decimals, equals(6));
+        expect(result.displayDouble, dResult);
+      });
     });
 
-    test('Addition', () {
-      final a = Amount(value: BigInt.from(2), decimals: 2);
-      final b = Amount(value: BigInt.from(3), decimals: 2);
+    group('Amount plus operator', () {
+      test('addition with the same decimals', () {
+        Amount amount1 = Amount(value: BigInt.from(10000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(2000), decimals: 18);
 
-      final result = a + b;
+        Amount result = amount1 + amount2;
+        expect(result.value, BigInt.from(12000)); // 12000 with 18 decimals
+        expect(result.decimals, 18);
+      });
 
-      expect(result.value, equals(BigInt.from(5)));
-      expect(result.decimals, equals(2));
+      test('addition with different decimals', () {
+        Amount amount1 = Amount(value: BigInt.from(10000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(2), decimals: 15);
+
+        Amount result = amount1 + amount2;
+
+        expect(result.value, BigInt.from(12000)); // 12000 with 18 decimals
+        expect(result.decimals, 18);
+      });
+
+      test('addition resulting in zero', () {
+        Amount amount1 = Amount(value: BigInt.from(0), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(0), decimals: 18);
+
+        Amount result = amount1 + amount2;
+        expect(result.value, BigInt.from(0)); // 0 with 18 decimals
+        expect(result.decimals, 18);
+      });
+
+      test('large number addition', () {
+        Amount amount1 = Amount(
+            value: BigInt.parse('1000000000000000000000000'), decimals: 18);
+        Amount amount2 = Amount(
+            value: BigInt.parse('1000000000000000000000000'), decimals: 18);
+
+        Amount result = amount1 + amount2;
+        expect(
+            result.value,
+            BigInt.parse(
+                '2000000000000000000000000')); // 2,000,000 with 18 decimals
+        expect(result.decimals, 18);
+      });
+
+      test('addition where decimals are a factor', () {
+        Amount amount1 = Amount(value: BigInt.from(1000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(1), decimals: 17);
+
+        Amount result = amount1 + amount2;
+        expect(result.value, BigInt.from(1010)); // 1010 with 18 decimals
+        expect(result.decimals, 18);
+      });
     });
 
-    test('Subtraction', () {
-      final a = Amount(value: BigInt.from(3), decimals: 2);
-      final b = Amount(value: BigInt.from(2), decimals: 2);
+    group('Amount minus operator', () {
+      test('subtraction with the same decimals', () {
+        Amount amount1 = Amount(value: BigInt.from(10000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(2000), decimals: 18);
 
-      final result = a - b;
+        Amount result = amount1 - amount2;
+        expect(result.value, BigInt.from(8000)); // 8000 with 18 decimals
+        expect(result.decimals, 18);
+      });
 
-      expect(result.value, equals(BigInt.from(1)));
-      expect(result.decimals, equals(2));
+      test('subtraction with different decimals', () {
+        Amount amount1 = Amount(value: BigInt.from(10000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(2), decimals: 15);
+
+        Amount result = amount1 - amount2;
+
+        expect(result.value, BigInt.from(8000)); // 8000 with 18 decimals
+        expect(result.decimals,
+            18); // because we are normalizing to max decimals initially
+      });
+
+      test('subtraction resulting in zero', () {
+        Amount amount1 = Amount(value: BigInt.from(10000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(10000), decimals: 18);
+
+        Amount result = amount1 - amount2;
+        expect(result.value, BigInt.from(0)); // 0 with 18 decimals
+        expect(result.decimals, 18);
+      });
+
+      test('subtraction resulting in negative value', () {
+        Amount amount1 = Amount(value: BigInt.from(1000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(2000), decimals: 18);
+
+        Amount result = amount1 - amount2;
+        expect(result.value, BigInt.from(-1000)); // -1000 with 18 decimals
+        expect(result.decimals, 18);
+      });
+
+      test('subtraction where decimals are a factor', () {
+        Amount amount1 = Amount(value: BigInt.from(1000), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.from(1), decimals: 17);
+
+        Amount result = amount1 - amount2;
+        expect(result.value, BigInt.from(990)); // 990 with 18 decimals
+        expect(result.decimals, 18);
+      });
     });
 
     group('Amount division operator', () {
