@@ -662,17 +662,17 @@ final uniswap_v2_pair_abi = ContractABI.fromAbi('''
 ''');
 
 class UniswapV2Pair extends InternalContract {
-  final EthBasedTokenEntity token0;
-  final EthBasedTokenEntity token1;
+  final EthBasedTokenEntity tokenA;
+  final EthBasedTokenEntity tokenB;
 
   UniswapV2Pair({
+    required this.tokenA,
+    required this.tokenB,
     required super.contractAddress,
     required super.rpc,
-    required this.token0,
-    required this.token1,
   }) : super(abi: uniswap_v2_pair_abi);
 
-  Future<(Amount, Amount)> getReserves() async {
+  Future<(BigInt, BigInt)> getReserves() async {
     final function = abi.getFunction('getReserves')!;
 
     final response = await read(
@@ -680,14 +680,28 @@ class UniswapV2Pair extends InternalContract {
     );
 
     return (
-      Amount(
-        value: response.outputs[0].value as BigInt,
-        decimals: token0.decimals,
-      ),
-      Amount(
-        value: response.outputs[1].value as BigInt,
-        decimals: token1.decimals,
-      ),
+      response.outputs[0].value as BigInt,
+      response.outputs[1].value as BigInt,
     );
+  }
+
+  Future<String> token0() async {
+    final function = abi.getFunction('token0')!;
+
+    final response = await read(
+      function: function.addValues(values: []),
+    );
+
+    return response.outputs[0].value as String;
+  }
+
+  Future<String> token1() async {
+    final function = abi.getFunction('token1')!;
+
+    final response = await read(
+      function: function.addValues(values: []),
+    );
+
+    return response.outputs[0].value as String;
   }
 }
