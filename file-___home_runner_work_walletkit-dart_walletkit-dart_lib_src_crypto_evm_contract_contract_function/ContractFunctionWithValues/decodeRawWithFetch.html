@@ -88,37 +88,41 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
   required Uint8List data,
   ExternalContractFunction? function,
 }) async {
-  assert(data.length &gt;= 4, &quot;Invalid data length&quot;);
-  final function_selector = data.sublist(0, 4).toHex;
+  try {
+    assert(data.length &gt;= 4, &quot;Invalid data length&quot;);
+    final function_selector = data.sublist(0, 4).toHex;
 
-  if (function != null) {
-    return _decodeExternal(data: data, function: function);
+    if (function != null) {
+      return _decodeExternal(data: data, function: function);
+    }
+
+    final localResult = decodeRaw(data: data);
+
+    if (localResult != null) {
+      return localResult;
+    }
+
+    &#47;&#47;&#47; Fetch the function from 4byte.directory
+    final externalResult =
+        await FunctionSelectorRepository.fetchSelector(function_selector);
+
+    if (externalResult != null) {
+      return _decodeExternal(data: data, function: externalResult);
+    }
+
+    &#47;&#47; Fallback
+    return ExternalContractFunctionWithValues(
+      name: &quot;Unknown&quot;,
+      parameters: [
+        FunctionParamWithValue.fromParam&lt;Uint8List&gt;(
+          FunctionParam(name: &quot;data&quot;, type: FunctionParamBytes()),
+          data,
+        ),
+      ],
+    );
+  } catch (e) {
+    throw FunctionDecodingException(&quot;Error decoding function: $e&quot;);
   }
-
-  final localResult = decodeRaw(data: data);
-
-  if (localResult != null) {
-    return localResult;
-  }
-
-  &#47;&#47;&#47; Fetch the function from 4byte.directory
-  final externalResult =
-      await FunctionSelectorRepository.fetchSelector(function_selector);
-
-  if (externalResult != null) {
-    return _decodeExternal(data: data, function: externalResult);
-  }
-
-  &#47;&#47; Fallback
-  return ExternalContractFunctionWithValues(
-    name: &quot;Unknown&quot;,
-    parameters: [
-      FunctionParamWithValue.fromParam&lt;Uint8List&gt;(
-        FunctionParam(name: &quot;data&quot;, type: FunctionParamBytes()),
-        data,
-      ),
-    ],
-  );
 }</code></pre>
 </section>
 
