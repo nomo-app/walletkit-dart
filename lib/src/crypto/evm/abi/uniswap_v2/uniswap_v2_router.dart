@@ -1258,4 +1258,22 @@ class UniswapV2Router extends InternalContract {
 
     return result;
   }
+
+  Future<BigInt> quote({
+    required BigInt amountA,
+    required BigInt reserveA,
+    required BigInt reserveB,
+  }) async {
+    final function = abi.getFunction("quote")!;
+
+    final result = await read(
+      function: function.addValues(values: [
+        amountA,
+        reserveA,
+        reserveB,
+      ]),
+    );
+
+    return result.outputs.first.value as BigInt;
+  }
 }
