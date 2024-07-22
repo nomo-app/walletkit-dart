@@ -77,30 +77,27 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Amount operator &#47;(Amount other) {
-  if (decimals == other.decimals) {
-    return Amount(
-      value: value ~&#47; other.value,
-      decimals: decimals,
-    );
-  }
-  final precision = max(decimals, other.decimals);
-
-  if (decimals &gt; other.decimals) {
-    final newOther = other.convertToDecimals(decimals);
-    final shiftedA = value * BigInt.from(10).pow(precision);
-    final shiftedResult = shiftedA ~&#47; newOther.value;
-    return Amount(
-      value: shiftedResult,
-      decimals: decimals,
-    );
+  if (other.value == BigInt.zero) {
+    throw ArgumentError(&#39;Cannot divide by zero.&#39;);
   }
 
-  final newThis = convertToDecimals(other.decimals);
-  final shiftedA = newThis.value * BigInt.from(10).pow(precision);
-  final shiftedResult = shiftedA ~&#47; other.value;
+  &#47;&#47; Determine the maximum decimals between the two amounts
+  int maxDecimals = max(decimals, other.decimals);
+
+  &#47;&#47; Scale both amounts to the same decimal level
+  BigInt scaledThisValue =
+      value * BigInt.from(pow(10, maxDecimals - decimals));
+  BigInt scaledOtherValue =
+      other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+  &#47;&#47; Perform the division
+  BigInt resultValue =
+      (scaledThisValue * BigInt.from(pow(10, maxDecimals))) ~&#47;
+          scaledOtherValue;
+
   return Amount(
-    value: shiftedResult,
-    decimals: other.decimals,
+    value: resultValue,
+    decimals: maxDecimals,
   );
 }</code></pre>
 </section>
