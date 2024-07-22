@@ -124,6 +124,10 @@ class RawEVMTransaction {
   }
 
   String get serializedTransactionHex {
-    return "0x" + serializeTransaction.toHex;
+    return "0x${serializeTransaction.toHex}";
+  }
+
+  BigInt get gasFee {
+    return gasPrice * gasLimit;
   }
 }

@@ -212,37 +212,41 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
     required Uint8List data,
     ExternalContractFunction? function,
   }) async {
-    assert(data.length >= 4, "Invalid data length");
-    final function_selector = data.sublist(0, 4).toHex;
+    try {
+      assert(data.length >= 4, "Invalid data length");
+      final function_selector = data.sublist(0, 4).toHex;
 
-    if (function != null) {
-      return _decodeExternal(data: data, function: function);
+      if (function != null) {
+        return _decodeExternal(data: data, function: function);
+      }
+
+      final localResult = decodeRaw(data: data);
+
+      if (localResult != null) {
+        return localResult;
+      }
+
+      /// Fetch the function from 4byte.directory
+      final externalResult =
+          await FunctionSelectorRepository.fetchSelector(function_selector);
+
+      if (externalResult != null) {
+        return _decodeExternal(data: data, function: externalResult);
+      }
+
+      // Fallback
+      return ExternalContractFunctionWithValues(
+        name: "Unknown",
+        parameters: [
+          FunctionParamWithValue.fromParam<Uint8List>(
+            FunctionParam(name: "data", type: FunctionParamBytes()),
+            data,
+          ),
+        ],
+      );
+    } catch (e) {
+      throw FunctionDecodingException("Error decoding function: $e");
     }
-
-    final localResult = decodeRaw(data: data);
-
-    if (localResult != null) {
-      return localResult;
-    }
-
-    /// Fetch the function from 4byte.directory
-    final externalResult =
-        await FunctionSelectorRepository.fetchSelector(function_selector);
-
-    if (externalResult != null) {
-      return _decodeExternal(data: data, function: externalResult);
-    }
-
-    // Fallback
-    return ExternalContractFunctionWithValues(
-      name: "Unknown",
-      parameters: [
-        FunctionParamWithValue.fromParam<Uint8List>(
-          FunctionParam(name: "data", type: FunctionParamBytes()),
-          data,
-        ),
-      ],
-    );
   }
 
   ///
@@ -365,5 +369,27 @@ class ContractFunctionWithValuesAndOutputs extends ContractFunctionWithValues {
       parameters: function.parameters,
       stateMutability: function.stateMutability,
     );
+  }
+}
+
+class FunctionSelectorException implements Exception {
+  final String message;
+
+  FunctionSelectorException(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
+}
+
+class FunctionDecodingException implements Exception {
+  final String message;
+
+  FunctionDecodingException(this.message);
+
+  @override
+  String toString() {
+    return message;
   }
 }
