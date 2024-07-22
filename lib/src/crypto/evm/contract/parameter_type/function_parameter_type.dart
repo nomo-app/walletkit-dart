@@ -3,7 +3,6 @@ library function_parameter_type;
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';

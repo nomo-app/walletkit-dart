@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/src/domain/repository/function_selector_repository.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';

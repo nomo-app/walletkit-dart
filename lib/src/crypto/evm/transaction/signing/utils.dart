@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:pointycastle/ecc/api.dart';
 import 'package:pointycastle/ecc/curves/secp256k1.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;
-import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 final params = ECCurve_secp256k1();

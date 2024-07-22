@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/common/http_repository.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart';
 
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
