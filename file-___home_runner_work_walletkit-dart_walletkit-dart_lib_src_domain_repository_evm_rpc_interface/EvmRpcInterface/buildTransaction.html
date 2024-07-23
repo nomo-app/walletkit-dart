@@ -95,25 +95,12 @@ Signs the transaction</p>
   required Uint8List? data,
   required BigInt? value,
 }) async {
-  final (gasPrice, gasLimit) = feeInfo != null
-      ? (feeInfo.gasPrice, feeInfo.gasLimit)
-      : await estimateNetworkFees(
-          recipient: recipient,
-          sender: sender,
-          data: data,
-          value: value,
-        );
-
-  final nonce = await client.getTransactionCount(sender);
-
-  final unsignedTx = RawEVMTransaction(
-    nonce: nonce,
-    gasPrice: gasPrice.value,
-    gasLimit: gasLimit.toBI,
-    to: recipient,
-    value: value ?? BigInt.zero,
-    chainId: type.chainId.toBigInt,
+  final unsignedTx = await buildUnsignedTransaction(
+    sender: sender,
+    recipient: recipient,
+    feeInfo: feeInfo,
     data: data,
+    value: value,
   );
 
   final signedTx = InternalEVMTransaction.signTransaction(
