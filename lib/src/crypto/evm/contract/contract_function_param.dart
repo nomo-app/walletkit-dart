@@ -1,7 +1,7 @@
 import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 
 class FunctionParam {
-  final String name;
+  final String? name;
   final FunctionParamType type;
   final bool? indexed;
 

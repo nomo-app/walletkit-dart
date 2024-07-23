@@ -65,9 +65,8 @@ base class EvmRpcClient {
     return count;
   }
 
-  Future<InternalEVMTransaction> getTransactionByHash(
-    String messageHash,
-  ) async {
+  Future<InternalEVMTransaction> getTransactionByHash(String messageHash,
+      [int? chainId]) async {
     final response = await _call<Json>(
       'eth_getTransactionByHash',
       args: [messageHash],
@@ -75,7 +74,7 @@ base class EvmRpcClient {
 
     final v = response['v'].toString().toIntOrNull ?? 0;
 
-    final chainIDV = extractChainId(v);
+    final chainIDV = chainId ?? extractChainId(v);
     return InternalEVMTransaction(
       nonce: response['nonce'].toString().toBigInt,
       gasPrice: response['gasPrice'].toString().toBigInt,

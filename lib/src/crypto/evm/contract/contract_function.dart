@@ -46,7 +46,7 @@ class ExternalContractFunction {
     final params = [
       for (final param in params_s)
         FunctionParam(
-          name: param,
+          name: null,
           type: FunctionParamType.fromString(param),
         ),
     ];
