@@ -62,7 +62,7 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">GenericTransaction.fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span></span></li>
+      <span class="name ">GenericTransaction.fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">json</span></span></li>
 </ol>)
     </section>
 
@@ -72,20 +72,20 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory GenericTransaction.fromJson(Json json) {
+  <pre class="language-dart"><code class="language-dart">factory GenericTransaction.fromJson(Map json) {
   return switch (json) {
     {
       &#39;hash&#39;: String hash,
       &#39;block&#39;: int block,
       &#39;confirmations&#39;: int confirmations,
       &#39;timeMilli&#39;: int timeMilli,
-      &#39;amount&#39;: Json amount,
-      &#39;fee&#39;: Json? fee,
+      &#39;amount&#39;: Map amount,
+      &#39;fee&#39;: Map? fee,
       &#39;sender&#39;: String sender,
       &#39;recipient&#39;: String recipient,
       &#39;transferMethod&#39;: int transferMethod,
       &#39;status&#39;: int status,
-      &#39;token&#39;: Json token,
+      &#39;token&#39;: Map token,
       &#39;input&#39;: String input,
       &#39;decodedInput&#39;: Json? decodedInput,
     } =&gt;
@@ -111,13 +111,13 @@
       &#39;block&#39;: int block,
       &#39;confirmations&#39;: int confirmations,
       &#39;timeMilli&#39;: int timeMilli,
-      &#39;amount&#39;: Json amount,
-      &#39;fee&#39;: Json? fee,
+      &#39;amount&#39;: Map amount,
+      &#39;fee&#39;: Map? fee,
       &#39;sender&#39;: String sender,
       &#39;recipient&#39;: String recipient,
       &#39;transferMethod&#39;: int transferMethod,
       &#39;status&#39;: int status,
-      &#39;token&#39;: Json token,
+      &#39;token&#39;: Map token,
       &#39;id&#39;: String id,
       &#39;version&#39;: int version,
       &#39;inputs&#39;: JsonList inputs,
@@ -140,7 +140,7 @@
         outputs: outputs.map((e) =&gt; ElectrumOutput.fromJson(e)).toList(),
         token: TokenEntity.fromJson(token),
       ),
-    _ =&gt; throw UnimplementedError(),
+    _ =&gt; throw UnimplementedError(&quot;Unknown json: $json&quot;),
   };
 }</code></pre>
 </section>

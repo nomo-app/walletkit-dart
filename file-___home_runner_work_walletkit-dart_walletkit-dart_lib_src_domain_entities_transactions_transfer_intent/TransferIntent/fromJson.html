@@ -64,7 +64,7 @@
       
 
 <span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a></span>
-<span class="name ">fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span></span></li>
+<span class="name ">fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">json</span></span></li>
 </ol>)
 
       
@@ -76,12 +76,12 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static TransferIntent fromJson(Json json) {
+  <pre class="language-dart"><code class="language-dart">static TransferIntent fromJson(Map json) {
   return switch (json) {
     {
       &#39;recipient&#39;: String recipient,
-      &#39;amount&#39;: Json amount,
-      &#39;token&#39;: Json token,
+      &#39;amount&#39;: Map amount,
+      &#39;token&#39;: Map token,
       &#39;fee&#39;: Json? fee,
       &#39;memo&#39;: String? memo,
     } =&gt;
