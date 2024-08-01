@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:typed_data';
-import 'package:hive/hive.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
+part of 'generic_transaction.dart';
 
-abstract base class EVMTransaction extends GenericTransaction {
-  @HiveField(11)
+base class EVMTransaction extends GenericTransaction {
   final Uint8List input;
 
   const EVMTransaction({
@@ -30,13 +26,13 @@ abstract base class EVMTransaction extends GenericTransaction {
     }
   }
 
-  Future<ExternalContractFunctionWithValues?> get getFunctionSignature async {
-    if (!_cachedFunctionSigs.containsKey(hash)) {
-      _cachedFunctionSigs[hash] =
-          await ContractFunctionWithValues.decodeRawWithFetch(data: input);
-    }
-    return _cachedFunctionSigs[hash];
-  }
+  // Future<ExternalContractFunctionWithValues?> get getFunctionSignature async {
+  //   if (!_cachedFunctionSigs.containsKey(hash)) {
+  //     _cachedFunctionSigs[hash] =
+  //         await ContractFunctionWithValues.decodeRawWithFetch(data: input);
+  //   }
+  //   return _cachedFunctionSigs[hash];
+  // }
 
   @override
   Map<String, dynamic> toJson() {
@@ -46,14 +42,13 @@ abstract base class EVMTransaction extends GenericTransaction {
       'confirmations': confirmations,
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
-      if (fee != null) 'fee': fee!.toJson(),
+      'fee': fee?.toJson(),
       'sender': sender,
       'recipient': recipient,
-      'transferMethod': transferMethod.toString(),
-      'status': status.toString(),
+      'transferMethod': transferMethod.index,
+      'status': status.index,
       'input': input.toHex,
+      'token': token.toJson(),
     };
   }
 }
-
-Map<String, ExternalContractFunctionWithValues> _cachedFunctionSigs = {};

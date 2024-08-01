@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/evm_transaction.dart';
@@ -8,9 +5,6 @@ import 'package:walletkit_dart/src/domain/entities/transactions/generic_transact
 import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 
-part "zsc_transaction.g.dart";
-
-@HiveType(typeId: 2)
 final class ZeniqSmartChainTransaction extends EVMTransaction {
   const ZeniqSmartChainTransaction({
     required super.hash,

@@ -1,16 +1,10 @@
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 
-part 'amount.g.dart';
-
-@HiveType(typeId: 12)
 class Amount extends Equatable {
-  @HiveField(0)
   final BigInt value;
-  @HiveField(1)
   final int decimals;
 
   const Amount({
@@ -117,6 +111,13 @@ class Amount extends Equatable {
       'value': value.toString(),
       'decimals': decimals,
     };
+  }
+
+  factory Amount.fromJson(Map<String, dynamic> json) {
+    return Amount(
+      value: BigInt.parse(json['value']),
+      decimals: json['decimals'],
+    );
   }
 
   Amount convertToDecimals(int newDecimals) {

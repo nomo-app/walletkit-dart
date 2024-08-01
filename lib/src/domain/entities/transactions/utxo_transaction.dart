@@ -1,30 +1,11 @@
-import 'dart:typed_data';
-
-import 'package:convert/convert.dart';
-import 'package:hive/hive.dart';
-import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
-import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
-
-part "utxo_transaction.g.dart";
-
-typedef Json = Map<String, dynamic>;
-
-typedef JsonList = List<dynamic>;
-
-typedef JsonListNested = List<Json>;
+part of 'generic_transaction.dart';
 
 const String ADDRESS_NOT_SUPPORTED = "Address not supported";
 
-@HiveType(typeId: 3)
 final class UTXOTransaction extends GenericTransaction {
-  @HiveField(11)
   final String id;
-  @HiveField(12)
   final List<ElectrumInput> inputs;
-  @HiveField(13)
   final List<ElectrumOutput> outputs;
-  @HiveField(14)
   final int version;
 
   const UTXOTransaction({
@@ -173,30 +154,26 @@ final class UTXOTransaction extends GenericTransaction {
       'confirmations': confirmations,
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
-      if (fee != null) 'fee': fee!.toJson(),
+      'fee': fee?.toJson(),
       'sender': sender,
       'recipient': recipient,
-      'transferMethod': transferMethod.toString(),
-      'status': status.toString(),
+      'transferMethod': transferMethod.index,
+      'status': status.index,
       'id': id,
       'version': version,
+      'token': token.toJson(),
+      'inputs': inputs.map((e) => e.toJson()).toList(),
+      'outputs': outputs.map((e) => e.toJson()).toList(),
     };
   }
 }
 
-@HiveType(typeId: 4)
 class ElectrumInput {
-  @HiveField(0)
   final String? scriptSig;
-  @HiveField(1)
   final int? sequence;
-  @HiveField(2)
   final String? txid;
-  @HiveField(3)
   final int? vout;
-  @HiveField(4)
   final List<String>? txinwitness;
-  @HiveField(5)
   final String? coinbase;
 
   bool get isCoinbase => coinbase != null;
@@ -299,28 +276,48 @@ class ElectrumInput {
           vout: vout,
           sequence: weight,
         ),
+      {
+        'scriptSig': String? scriptSig,
+        'sequence': int? sequence,
+        'txid': String? txid,
+        'vout': int? vout,
+        'txinwitness': List<String>? txinwitness,
+        'coinbase': String? coinbase,
+      } =>
+        ElectrumInput(
+          scriptSig: scriptSig,
+          sequence: sequence,
+          txid: txid,
+          vout: vout,
+          txinwitness: txinwitness,
+          coinbase: coinbase,
+        ),
       _ => throw Exception("Could not parse ElectrumInput from $json"),
+    };
+  }
+
+  Json toJson() {
+    return {
+      'scriptSig': scriptSig,
+      'sequence': sequence,
+      'txid': txid,
+      'vout': vout,
+      'txinwitness': txinwitness,
+      'coinbase': coinbase,
     };
   }
 }
 
-@HiveType(typeId: 5)
 class ElectrumOutput {
-  @HiveField(0)
   final ElectrumScriptPubKey scriptPubKey;
-  @HiveField(1)
   final bool belongsToUs;
-  @HiveField(2)
   final bool spent;
-  @HiveField(3)
   final BigInt value;
-  @HiveField(4)
   final int n;
 
   ///
   /// Only available if [belongsToUs] is true
   ///
-  @HiveField(5)
   final NodeWithAddress node;
 
   const ElectrumOutput({
@@ -398,6 +395,17 @@ class ElectrumOutput {
     );
   }
 
+  Json toJson() {
+    return {
+      'value': value,
+      'n': n,
+      'spent': spent,
+      'belongsToUs': belongsToUs,
+      'scriptPubKey': scriptPubKey.toJson(),
+      'node': node.toJson(),
+    };
+  }
+
   @override
   String toString() {
     return 'ElectrumOutput{scriptPubKey: $scriptPubKey, belongsToUs: $belongsToUs, spent: $spent, value: $value, n: $n, node: $node}';
@@ -417,25 +425,13 @@ int toSatoshiValue(num val) {
   return (val * 1E8).toInt();
 }
 
-@HiveType(typeId: 6)
 class ElectrumScriptPubKey {
-  @HiveField(0)
-  final List<String>? addresses;
-  @HiveField(1)
-  final String? asm;
-  @HiveField(2)
   final String hexString;
-  @HiveField(3)
-  final int? reqSigs;
-  @HiveField(4)
-  final String? type;
+  final String type;
 
-  const ElectrumScriptPubKey({
-    this.addresses,
-    this.asm,
+  const ElectrumScriptPubKey._({
     required this.hexString,
-    this.reqSigs,
-    this.type,
+    required this.type,
   });
 
   bool get isP2SH => type == 'scripthash';
@@ -444,14 +440,8 @@ class ElectrumScriptPubKey {
   bool get isSegwit => type == 'witness_v0_keyhash';
 
   factory ElectrumScriptPubKey.fromJson(Map<String, dynamic> json) {
-    final addresses =
-        (json['addresses'] as List<dynamic>?)?.whereType<String>().toList();
-
-    return ElectrumScriptPubKey(
-      addresses: addresses,
-      asm: json['asm'] as String,
+    return ElectrumScriptPubKey._(
       hexString: json['hex'] as String,
-      reqSigs: json['reqSigs'] as int?,
       type: json['type'] as String,
     );
   }
@@ -459,16 +449,15 @@ class ElectrumScriptPubKey {
   Uint8List get lockingScript {
     return Uint8List.fromList(hex.decode(hexString));
   }
-}
 
-extension JsonUtil on Json {
-  dynamic get(String key) {
-    if (containsKey(key)) return this[key];
-    return null;
+  Json toJson() {
+    return {
+      'hex': hexString,
+      'type': type,
+    };
   }
 }
 
-@HiveType(typeId: 21)
 final class NotAvaialableUTXOTransaction extends UTXOTransaction {
   NotAvaialableUTXOTransaction(String hash, int block, TokenEntity token)
       : super(

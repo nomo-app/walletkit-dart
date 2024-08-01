@@ -57,6 +57,72 @@ class TokenEntity extends Equatable {
         btcCoin || ltcCoin || zeniqCoin || bchCoin || ec8Coin => true,
         _ => false,
       };
+
+  Map<String, dynamic> toJson() {
+    return switch (this) {
+      EthBasedTokenEntity ethBasedToken => {
+          'name': ethBasedToken.name,
+          'symbol': ethBasedToken.symbol,
+          'decimals': ethBasedToken.decimals,
+          'contractAddress': ethBasedToken.contractAddress,
+        },
+      EvmEntity evmEntity => {
+          'name': evmEntity.name,
+          'symbol': evmEntity.symbol,
+          'decimals': evmEntity.decimals,
+          'chainID': evmEntity.chainID,
+        },
+      TokenEntity tokenEntity => {
+          'name': tokenEntity.name,
+          'symbol': tokenEntity.symbol,
+          'decimals': tokenEntity.decimals,
+        },
+    };
+  }
+
+  factory TokenEntity.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        'name': String name,
+        'symbol': String symbol,
+        'decimals': int decimals,
+        'chainID': int chainID,
+        'contractAddress': String contractAddress,
+      } =>
+        EthBasedTokenEntity(
+          name: name,
+          symbol: symbol,
+          decimals: decimals,
+          chainID: chainID,
+          contractAddress: contractAddress,
+          stakingNft: null,
+          allowDeletion: true,
+        ),
+      {
+        'name': String name,
+        'symbol': String symbol,
+        'decimals': int decimals,
+        'chainID': int chainID,
+      } =>
+        EvmEntity(
+          name: name,
+          symbol: symbol,
+          decimals: decimals,
+          chainID: chainID,
+        ),
+      {
+        'name': String name,
+        'symbol': String symbol,
+        'decimals': int decimals,
+      } =>
+        TokenEntity(
+          name: name,
+          symbol: symbol,
+          decimals: decimals,
+        ),
+      _ => throw Exception("Invalid TokenEntity JSON"),
+    };
+  }
 }
 
 @HiveType(typeId: 8)

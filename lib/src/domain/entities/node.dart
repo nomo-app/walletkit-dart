@@ -1,10 +1,12 @@
 import 'package:bip32/bip32.dart';
 import 'package:hive/hive.dart';
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 /// TODO: Make sure this only has the privateKey when used for signing. Else EpubKey should be used.
 
 sealed class NodeWithAddress {
+  final int type;
   final BIP32? bip32Node;
 
   @HiveField(0)
@@ -85,6 +87,48 @@ sealed class NodeWithAddress {
     throw UnsupportedError("unexpected chainIndex");
   }
 
+  Json toJson() => {
+        'type': type,
+        'address': address,
+        'derivationPath': derivationPath,
+        'addresses': addresses,
+        'walletPurpose': walletPurpose,
+        'publicKey': publicKey,
+      };
+
+  factory NodeWithAddress.fromJson(Json json) {
+    if (json
+        case {
+          'type': int type,
+          'address': String address,
+          'derivationPath': String derivationPath,
+          'addresses': Map<AddressType, String> addresses,
+          'walletPurpose': HDWalletPurpose? walletPurpose,
+          'publicKey': String publicKey,
+        }) {
+      return switch (type) {
+        0 => ReceiveNode(
+            address: address,
+            derivationPath: derivationPath,
+            addresses: addresses,
+            walletPurpose: walletPurpose,
+            publicKey: publicKey,
+          ),
+        1 => ChangeNode(
+            address: address,
+            derivationPath: derivationPath,
+            addresses: addresses,
+            walletPurpose: walletPurpose,
+            publicKey: publicKey,
+          ),
+        2 => EmptyNode(),
+        _ => throw UnimplementedError(),
+      };
+    }
+
+    throw UnimplementedError();
+  }
+
   const NodeWithAddress({
     this.bip32Node,
     this.walletPurpose,
@@ -92,6 +136,7 @@ sealed class NodeWithAddress {
     required this.derivationPath,
     required this.addresses,
     required this.publicKey,
+    required this.type,
   });
 }
 
@@ -104,7 +149,7 @@ final class ReceiveNode extends NodeWithAddress {
     required super.addresses,
     required super.walletPurpose,
     required super.publicKey,
-  });
+  }) : super(type: 0);
 }
 
 @HiveType(typeId: 16)
@@ -116,7 +161,7 @@ final class ChangeNode extends NodeWithAddress {
     required super.addresses,
     required super.walletPurpose,
     required super.publicKey,
-  });
+  }) : super(type: 1);
 }
 
 @HiveType(typeId: 17)
@@ -129,6 +174,7 @@ final class EmptyNode extends NodeWithAddress {
           addresses: const {},
           walletPurpose: HDWalletPurpose.BIP44,
           publicKey: "",
+          type: 2,
         );
 }
 

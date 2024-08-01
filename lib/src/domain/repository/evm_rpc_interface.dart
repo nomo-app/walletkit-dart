@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/http_repository.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';

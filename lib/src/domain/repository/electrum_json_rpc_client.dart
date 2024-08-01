@@ -1,3 +1,4 @@
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
 import 'package:walletkit_dart/src/domain/repository/models/electrum_peer.dart';
 import 'package:walletkit_dart/src/domain/repository/models/electrum_transaction.dart';
