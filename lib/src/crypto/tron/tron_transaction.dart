@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
-import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/common/http_repository.dart';
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart';
 
 import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
@@ -11,8 +11,6 @@ import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
 export 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart'
     show Transaction_raw;
 export 'package:walletkit_dart/src/crypto/tron/tron_contract_type.dart';
-
-part 'tron_transaction.g.dart';
 
 const energyPrice = 420; // Price per energy unit in SUN
 const bandWidthPrice = 1000; // Price per bandwidth unit in SUN
@@ -217,7 +215,6 @@ Uint8List createTxSignature({
   return (node.privateKey!, node.publicKeyUncompressed);
 }
 
-@HiveType(typeId: 26)
 final class TronTransaction extends EVMTransaction {
   const TronTransaction({
     required super.hash,

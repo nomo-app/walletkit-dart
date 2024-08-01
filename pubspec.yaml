@@ -18,6 +18,7 @@ dependencies:
   pointycastle: ^3.7.3
   crypto: ^3.0.1
   http: ^1.1.0
+  hive: ^2.2.3
   bip39:
     path: packages/bip39
   dotenv: ^4.2.0
