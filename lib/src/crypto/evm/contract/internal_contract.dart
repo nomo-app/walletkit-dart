@@ -4,12 +4,10 @@ import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract class InternalContract {
-  final ContractABI abi;
   final String contractAddress;
   final EvmRpcInterface rpc;
 
   const InternalContract({
-    required this.abi,
     required this.contractAddress,
     required this.rpc,
   });

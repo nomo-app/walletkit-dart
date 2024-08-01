@@ -143,12 +143,16 @@ class ContractFunction extends ExternalContractFunction
     with LocalContractFunctionMixin {
   final StateMutability stateMutability;
   final List<FunctionParam> outputs;
+  final bool payable;
+  final bool constant;
 
   const ContractFunction({
     required super.name,
     required super.parameters,
     required this.stateMutability,
     required this.outputs,
+    required this.payable,
+    required this.constant,
   });
 
   ContractFunctionWithValues addValues({
