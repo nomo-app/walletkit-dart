@@ -229,6 +229,7 @@ final class TronTransaction extends EVMTransaction {
     required super.token,
     required super.status,
     required super.input,
+    super.decodedInput,
   });
 
   static TronTransaction? fromJson(

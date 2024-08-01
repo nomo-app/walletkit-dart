@@ -429,7 +429,7 @@ class ElectrumScriptPubKey {
   final String hexString;
   final String type;
 
-  const ElectrumScriptPubKey._({
+  const ElectrumScriptPubKey({
     required this.hexString,
     required this.type,
   });
@@ -440,7 +440,7 @@ class ElectrumScriptPubKey {
   bool get isSegwit => type == 'witness_v0_keyhash';
 
   factory ElectrumScriptPubKey.fromJson(Map<String, dynamic> json) {
-    return ElectrumScriptPubKey._(
+    return ElectrumScriptPubKey(
       hexString: json['hex'] as String,
       type: json['type'] as String,
     );

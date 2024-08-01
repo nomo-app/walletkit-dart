@@ -25,7 +25,7 @@ final class FunctionParamBytes extends DynamicFunctionParamType<Uint8List> {
 abstract class FunctionParamBytesBase extends BaseFunctionParamType<Uint8List> {
   final int size;
 
-  const FunctionParamBytesBase(String name, this.size) : super(name);
+  const FunctionParamBytesBase(super.name, this.size);
 
   @override
   Uint8List encode(Uint8List value) {

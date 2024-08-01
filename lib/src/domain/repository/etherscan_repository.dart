@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract class EtherscanRepository {
@@ -311,10 +312,8 @@ class EVMExplorer extends EtherscanRepository {
   Future<List<ERC721Entity>> fetchEtherscanNFTs({
     required String address,
   }) async {
-    var endpoint = "$base?module=account&action=tokennfttx" +
-        "&address=" +
-        address +
-        "&startblock=0&sort=asc";
+    var endpoint =
+        "$base?module=account&action=tokennfttx&address=$address&startblock=0&sort=asc";
 
     final rawResult =
         await _fetchEtherscanWithRatelimitRetries(endpoint) as List<dynamic>;

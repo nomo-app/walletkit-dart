@@ -2,6 +2,7 @@ part of 'generic_transaction.dart';
 
 base class EVMTransaction extends GenericTransaction {
   final Uint8List input;
+  final ExternalContractFunctionWithValues? decodedInput;
 
   const EVMTransaction({
     required super.hash,
@@ -16,6 +17,7 @@ base class EVMTransaction extends GenericTransaction {
     required super.token,
     required super.status,
     required this.input,
+    required this.decodedInput,
   });
 
   String? get uTF8Input {
@@ -26,13 +28,13 @@ base class EVMTransaction extends GenericTransaction {
     }
   }
 
-  // Future<ExternalContractFunctionWithValues?> get getFunctionSignature async {
-  //   if (!_cachedFunctionSigs.containsKey(hash)) {
-  //     _cachedFunctionSigs[hash] =
-  //         await ContractFunctionWithValues.decodeRawWithFetch(data: input);
-  //   }
-  //   return _cachedFunctionSigs[hash];
-  // }
+  Future<ExternalContractFunctionWithValues?> get getFunctionSignature async {
+    if (!_cachedFunctionSigs.containsKey(hash)) {
+      _cachedFunctionSigs[hash] =
+          await ContractFunctionWithValues.decodeRawWithFetch(data: input);
+    }
+    return _cachedFunctionSigs[hash];
+  }
 
   @override
   Map<String, dynamic> toJson() {
@@ -52,3 +54,5 @@ base class EVMTransaction extends GenericTransaction {
     };
   }
 }
+
+Map<String, ExternalContractFunctionWithValues> _cachedFunctionSigs = {};

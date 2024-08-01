@@ -93,6 +93,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
         'status': int status,
         'token': Json token,
         'input': String input,
+        'decodedInput': Json? decodedInput,
       } =>
         EVMTransaction(
           hash: hash,
@@ -107,6 +108,9 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
           status: ConfirmationStatus.fromJson(status),
           input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
           token: TokenEntity.fromJson(token),
+          decodedInput: decodedInput != null
+              ? ExternalContractFunctionWithValues.fromJson(decodedInput)
+              : null,
         ),
       {
         'hash': String hash,

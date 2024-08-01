@@ -1,4 +1,5 @@
 import 'package:walletkit_dart/src/common/http_repository.dart';
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const _tronScanBaseUrl = "https://apilist.tronscanapi.com/api";

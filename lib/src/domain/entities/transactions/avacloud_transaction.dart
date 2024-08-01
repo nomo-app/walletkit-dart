@@ -16,6 +16,7 @@ final class AvalancheTransaction extends EVMTransaction {
     required super.token,
     required super.status,
     required super.input,
+    super.decodedInput,
   });
 
   factory AvalancheTransaction.fromJson(

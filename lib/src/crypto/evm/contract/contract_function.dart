@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
 import 'package:walletkit_dart/src/domain/repository/function_selector_repository.dart';
@@ -121,6 +122,31 @@ class ExternalContractFunctionWithValues extends ExternalContractFunction {
     required this.parameters,
     required super.name,
   }) : super(parameters: parameters);
+
+  Json toJson() {
+    return {
+      "name": name,
+      "parameters": parameters.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  factory ExternalContractFunctionWithValues.fromJson(
+      Map<String, dynamic> json) {
+    if (json
+        case {
+          "name": String name,
+          "parameters": List<dynamic> parameters,
+        }) {
+      return ExternalContractFunctionWithValues(
+        name: name,
+        parameters: [
+          for (final param in parameters)
+            FunctionParamWithValue.fromJson(param as Map<String, dynamic>),
+        ],
+      );
+    }
+    throw Exception("Invalid json");
+  }
 }
 
 ///
