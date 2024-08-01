@@ -78,20 +78,20 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
 
   Map<String, dynamic> toJson();
 
-  factory GenericTransaction.fromJson(Json json) {
+  factory GenericTransaction.fromJson(Map json) {
     return switch (json) {
       {
         'hash': String hash,
         'block': int block,
         'confirmations': int confirmations,
         'timeMilli': int timeMilli,
-        'amount': Json amount,
-        'fee': Json? fee,
+        'amount': Map amount,
+        'fee': Map? fee,
         'sender': String sender,
         'recipient': String recipient,
         'transferMethod': int transferMethod,
         'status': int status,
-        'token': Json token,
+        'token': Map token,
         'input': String input,
         'decodedInput': Json? decodedInput,
       } =>
@@ -117,13 +117,13 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
         'block': int block,
         'confirmations': int confirmations,
         'timeMilli': int timeMilli,
-        'amount': Json amount,
-        'fee': Json? fee,
+        'amount': Map amount,
+        'fee': Map? fee,
         'sender': String sender,
         'recipient': String recipient,
         'transferMethod': int transferMethod,
         'status': int status,
-        'token': Json token,
+        'token': Map token,
         'id': String id,
         'version': int version,
         'inputs': JsonList inputs,
@@ -146,7 +146,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
           outputs: outputs.map((e) => ElectrumOutput.fromJson(e)).toList(),
           token: TokenEntity.fromJson(token),
         ),
-      _ => throw UnimplementedError(),
+      _ => throw UnimplementedError("Unknown json: $json"),
     };
   }
 }

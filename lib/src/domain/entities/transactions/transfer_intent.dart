@@ -90,12 +90,12 @@ class TransferIntent<T extends FeeInformation?> {
     };
   }
 
-  static TransferIntent fromJson(Json json) {
+  static TransferIntent fromJson(Map json) {
     return switch (json) {
       {
         'recipient': String recipient,
-        'amount': Json amount,
-        'token': Json token,
+        'amount': Map amount,
+        'token': Map token,
         'fee': Json? fee,
         'memo': String? memo,
       } =>

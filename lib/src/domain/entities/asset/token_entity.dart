@@ -80,7 +80,7 @@ class TokenEntity extends Equatable {
     };
   }
 
-  factory TokenEntity.fromJson(Map<String, dynamic> json) {
+  factory TokenEntity.fromJson(Map json) {
     return switch (json) {
       {
         'name': String name,

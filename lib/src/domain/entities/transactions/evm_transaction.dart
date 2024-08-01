@@ -51,6 +51,7 @@ base class EVMTransaction extends GenericTransaction {
       'status': status.index,
       'input': input.toHex,
       'token': token.toJson(),
+      'decodedInput': decodedInput?.toJson(),
     };
   }
 }

@@ -40,26 +40,26 @@ sealed class FeeInformation {
 
   Json toJson();
 
-  factory FeeInformation.fromJson(Json json) {
+  factory FeeInformation.fromJson(Map json) {
     return switch (json) {
       {
         'gasLimit': int gasLimit,
-        'gasPrice': Json gasPrice,
+        'gasPrice': Map gasPrice,
       } =>
         EvmFeeInformation(
           gasLimit: gasLimit,
           gasPrice: Amount.fromJson(gasPrice),
         ),
       {
-        'feePerByte': Json feePerByte,
-        'fee': Json? fee,
+        'feePerByte': Map feePerByte,
+        'fee': Map? fee,
       } =>
         UtxoFeeInformation(
           feePerByte: Amount.fromJson(feePerByte),
           fee: fee != null ? Amount.fromJson(fee) : null,
         ),
       {
-        'feeLimit': Json feeLimit,
+        'feeLimit': Map feeLimit,
       } =>
         TronFeeInformation(
           feeLimit: Amount.fromJson(feeLimit),

@@ -113,7 +113,7 @@ class Amount extends Equatable {
     };
   }
 
-  factory Amount.fromJson(Map<String, dynamic> json) {
+  factory Amount.fromJson(Map json) {
     return Amount(
       value: BigInt.parse(json['value']),
       decimals: json['decimals'],
