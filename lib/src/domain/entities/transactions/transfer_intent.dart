@@ -1,24 +1,16 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:hive/hive.dart';
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-part 'transfer_intent.g.dart';
-
-@HiveType(typeId: 22)
 class TransferIntent<T extends FeeInformation?> {
-  @HiveField(0)
   final TokenEntity token;
-  @HiveField(1)
   final String recipient;
-  @HiveField(2)
   final Amount amount;
 
   /// If null, the fee will be calculated by the network
-  @HiveField(3)
   final T? feeInfo;
 
-  @HiveField(4)
   final String? memo;
 
   const TransferIntent({
@@ -94,6 +86,27 @@ class TransferIntent<T extends FeeInformation?> {
       'amount': amount.toJson(),
       'token': token.symbol,
       'fee': feeInfo?.toJson(),
+      'memo': memo,
+    };
+  }
+
+  static TransferIntent fromJson(Json json) {
+    return switch (json) {
+      {
+        'recipient': String recipient,
+        'amount': Json amount,
+        'token': Json token,
+        'fee': Json? fee,
+        'memo': String? memo,
+      } =>
+        TransferIntent(
+          recipient: recipient,
+          amount: Amount.fromJson(amount),
+          feeInfo: fee == null ? null : FeeInformation.fromJson(fee),
+          token: TokenEntity.fromJson(token),
+          memo: memo,
+        ),
+      _ => throw FormatException('Unknown TransferIntent'),
     };
   }
 

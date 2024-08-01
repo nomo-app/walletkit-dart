@@ -1,8 +1,5 @@
-import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-
-part 'fee.g.dart';
 
 enum FeePriority {
   custom('Custom'),
@@ -42,13 +39,38 @@ sealed class FeeInformation {
   const FeeInformation();
 
   Json toJson();
+
+  factory FeeInformation.fromJson(Json json) {
+    return switch (json) {
+      {
+        'gasLimit': int gasLimit,
+        'gasPrice': Json gasPrice,
+      } =>
+        EvmFeeInformation(
+          gasLimit: gasLimit,
+          gasPrice: Amount.fromJson(gasPrice),
+        ),
+      {
+        'feePerByte': Json feePerByte,
+        'fee': Json? fee,
+      } =>
+        UtxoFeeInformation(
+          feePerByte: Amount.fromJson(feePerByte),
+          fee: fee != null ? Amount.fromJson(fee) : null,
+        ),
+      {
+        'feeLimit': Json feeLimit,
+      } =>
+        TronFeeInformation(
+          feeLimit: Amount.fromJson(feeLimit),
+        ),
+      _ => throw FormatException('Unknown FeeInformation'),
+    };
+  }
 }
 
-@HiveType(typeId: 23)
 final class EvmFeeInformation extends FeeInformation {
-  @HiveField(0)
   final int gasLimit;
-  @HiveField(1)
   final Amount gasPrice;
 
   const EvmFeeInformation({
@@ -78,12 +100,8 @@ final class EvmFeeInformation extends FeeInformation {
   }
 }
 
-@HiveType(typeId: 24)
 final class UtxoFeeInformation extends FeeInformation {
-  @HiveField(0)
   final Amount feePerByte;
-
-  @HiveField(1)
   final Amount? fee;
 
   const UtxoFeeInformation({
@@ -94,14 +112,12 @@ final class UtxoFeeInformation extends FeeInformation {
   Json toJson() {
     return {
       'feePerByte': feePerByte.toJson(),
-      if (fee != null) 'fee': fee?.toJson(),
+      'fee': fee?.toJson(),
     };
   }
 }
 
-@HiveType(typeId: 27)
 final class TronFeeInformation extends FeeInformation {
-  @HiveField(0)
   final Amount feeLimit;
 
   const TronFeeInformation({
