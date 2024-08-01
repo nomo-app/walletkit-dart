@@ -87,6 +87,7 @@
       &#39;status&#39;: int status,
       &#39;token&#39;: Json token,
       &#39;input&#39;: String input,
+      &#39;decodedInput&#39;: Json? decodedInput,
     } =&gt;
       EVMTransaction(
         hash: hash,
@@ -101,6 +102,9 @@
         status: ConfirmationStatus.fromJson(status),
         input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
         token: TokenEntity.fromJson(token),
+        decodedInput: decodedInput != null
+            ? ExternalContractFunctionWithValues.fromJson(decodedInput)
+            : null,
       ),
     {
       &#39;hash&#39;: String hash,
