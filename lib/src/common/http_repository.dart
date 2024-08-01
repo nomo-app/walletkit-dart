@@ -7,8 +7,8 @@ import 'package:walletkit_dart/src/common/http_client.dart';
 typedef JSON = Map<String, dynamic>;
 typedef JSONList = List<Map<String, dynamic>>;
 
-const retryInterval = Duration(seconds: 1);
-const timeoutDuration = Duration(seconds: 10);
+const retryInterval = Duration(seconds: 10);
+const timeoutDuration = Duration(seconds: 35);
 
 abstract class HTTPRepository {
   final List<String> apiKeys;
