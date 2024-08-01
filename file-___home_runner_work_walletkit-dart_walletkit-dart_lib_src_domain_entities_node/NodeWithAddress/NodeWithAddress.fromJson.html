@@ -62,7 +62,7 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">NodeWithAddress.fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span></span></li>
+      <span class="name ">NodeWithAddress.fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">json</span></span></li>
 </ol>)
     </section>
 
@@ -72,29 +72,43 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory NodeWithAddress.fromJson(Json json) {
+  <pre class="language-dart"><code class="language-dart">factory NodeWithAddress.fromJson(Map json) {
   if (json
       case {
         &#39;type&#39;: int type,
         &#39;address&#39;: String address,
         &#39;derivationPath&#39;: String derivationPath,
-        &#39;addresses&#39;: Map&lt;AddressType, String&gt; addresses,
-        &#39;walletPurpose&#39;: HDWalletPurpose? walletPurpose,
+        &#39;addresses&#39;: Map addresses,
+        &#39;walletPurpose&#39;: int? walletPurpose,
         &#39;publicKey&#39;: String publicKey,
       }) {
     return switch (type) {
       0 =&gt; ReceiveNode(
           address: address,
           derivationPath: derivationPath,
-          addresses: addresses,
-          walletPurpose: walletPurpose,
+          addresses: addresses.map(
+            (key, value) =&gt; MapEntry(
+              AddressType.values[key as int],
+              value as String,
+            ),
+          ),
+          walletPurpose: walletPurpose != null
+              ? HDWalletPurpose.values[walletPurpose]
+              : null,
           publicKey: publicKey,
         ),
       1 =&gt; ChangeNode(
           address: address,
           derivationPath: derivationPath,
-          addresses: addresses,
-          walletPurpose: walletPurpose,
+          addresses: addresses.map(
+            (key, value) =&gt; MapEntry(
+              AddressType.values[key as int],
+              value as String,
+            ),
+          ),
+          walletPurpose: walletPurpose != null
+              ? HDWalletPurpose.values[walletPurpose]
+              : null,
           publicKey: publicKey,
         ),
       2 =&gt; EmptyNode(),
