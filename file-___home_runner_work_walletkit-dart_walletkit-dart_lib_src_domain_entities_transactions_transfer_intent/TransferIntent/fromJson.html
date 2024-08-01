@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the write method from the AddressTypeAdapter class, for the Dart programming language.">
-  <title>write method - AddressTypeAdapter class - address_type library - Dart API</title>
+  <meta name="description" content="API docs for the fromJson method from the TransferIntent class, for the Dart programming language.">
+  <title>fromJson method - TransferIntent class - transfer_intent library - Dart API</title>
 
 
   
@@ -29,11 +29,11 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type-library.html">src&#47;domain&#47;entities&#47;address_type.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/AddressTypeAdapter-class.html">AddressTypeAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">src&#47;domain&#47;entities&#47;transactions&#47;transfer_intent.dart</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
+    <li class="self-crumb">fromJson static method</li>
   </ol>
-  <div class="self-name">write</div>
+  <div class="self-name">fromJson</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,23 +54,17 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type&#47;AddressTypeAdapter-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent&#47;TransferIntent-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">write</span> method 
+<h1><span class="kind-method">fromJson</span> static method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
 
-<span class="returntype">void</span>
-<span class="name ">write</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="write-param-writer"><span class="type-annotation">dynamic</span> <span class="parameter-name">writer</span>, </span></li>
-<li><span class="parameter" id="write-param-obj"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/AddressType.html">AddressType</a></span> <span class="parameter-name">obj</span></span></li>
+<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent</a></span>
+<span class="name ">fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span></span></li>
 </ol>)
 
       
@@ -82,31 +76,24 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-void write(BinaryWriter writer, AddressType obj) {
-  switch (obj) {
-    case AddressType.legacy:
-      writer.writeByte(0);
-      break;
-    case AddressType.segwit:
-      writer.writeByte(1);
-      break;
-    case AddressType.taproot:
-      writer.writeByte(2);
-      break;
-    case AddressType.compatibility:
-      writer.writeByte(3);
-      break;
-    case AddressType.cashaddr:
-      writer.writeByte(4);
-      break;
-    case AddressType.evm:
-      writer.writeByte(5);
-      break;
-    case AddressType.tron:
-      writer.writeByte(6);
-      break;
-  }
+  <pre class="language-dart"><code class="language-dart">static TransferIntent fromJson(Json json) {
+  return switch (json) {
+    {
+      &#39;recipient&#39;: String recipient,
+      &#39;amount&#39;: Json amount,
+      &#39;token&#39;: Json token,
+      &#39;fee&#39;: Json? fee,
+      &#39;memo&#39;: String? memo,
+    } =&gt;
+      TransferIntent(
+        recipient: recipient,
+        amount: Amount.fromJson(amount),
+        feeInfo: fee == null ? null : FeeInformation.fromJson(fee),
+        token: TokenEntity.fromJson(token),
+        memo: memo,
+      ),
+    _ =&gt; throw FormatException(&#39;Unknown TransferIntent&#39;),
+  };
 }</code></pre>
 </section>
 
@@ -123,13 +110,13 @@ void write(BinaryWriter writer, AddressType obj) {
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type-library.html">address_type</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_address_type/AddressTypeAdapter-class.html">AddressTypeAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent-library.html">transfer_intent</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_transfer_intent/TransferIntent-class.html">TransferIntent<span class="signature">&lt;<wbr><span class="type-parameter">T extends dynamic</span>&gt;</span></a></li>
+    <li class="self-crumb">fromJson static method</li>
 </ol>
 
 
-    <h5>AddressTypeAdapter class</h5>
+    <h5>TransferIntent class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
