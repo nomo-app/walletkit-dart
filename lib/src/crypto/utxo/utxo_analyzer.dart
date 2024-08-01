@@ -604,7 +604,7 @@ Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({
         client: client,
         endpoints: endpoints,
         token: coin,
-        timeout: Duration(seconds: 3),
+        timeout: Duration(seconds: 5),
       );
 
       if (tx == null) {

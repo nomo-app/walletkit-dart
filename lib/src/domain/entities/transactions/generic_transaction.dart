@@ -38,6 +38,9 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
     required this.status,
   });
 
+  EVMTransaction? get evmTx =>
+      this is EVMTransaction ? this as EVMTransaction : null;
+
   BigInt get value => amount.value;
 
   BigInt get totalValue => value + (fee?.value ?? BigInt.zero);
@@ -93,7 +96,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
         'status': int status,
         'token': Map token,
         'input': String input,
-        'decodedInput': Json? decodedInput,
+        'decodedInput': Map? decodedInput,
       } =>
         EVMTransaction(
           hash: hash,

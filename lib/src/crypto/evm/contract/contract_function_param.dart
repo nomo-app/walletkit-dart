@@ -73,7 +73,7 @@ class FunctionParamWithValue<T> extends FunctionParam {
     };
   }
 
-  factory FunctionParamWithValue.fromJson(Map<String, dynamic> map) {
+  factory FunctionParamWithValue.fromJson(Map map) {
     return FunctionParamWithValue(
       value: map['value'],
       name: map['name'],

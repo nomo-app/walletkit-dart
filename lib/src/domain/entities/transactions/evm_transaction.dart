@@ -36,6 +36,24 @@ base class EVMTransaction extends GenericTransaction {
     return _cachedFunctionSigs[hash];
   }
 
+  EVMTransaction copyWith({ExternalContractFunctionWithValues? decodedInput}) {
+    return EVMTransaction(
+      hash: hash,
+      block: block,
+      confirmations: confirmations,
+      timeMilli: timeMilli,
+      amount: amount,
+      fee: fee,
+      sender: sender,
+      recipient: recipient,
+      transferMethod: transferMethod,
+      status: status,
+      input: input,
+      token: token,
+      decodedInput: decodedInput ?? this.decodedInput,
+    );
+  }
+
   @override
   Map<String, dynamic> toJson() {
     return {

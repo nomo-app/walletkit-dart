@@ -218,7 +218,7 @@ class ElectrumInput {
     ];
   }
 
-  factory ElectrumInput.fromJson(Json json) {
+  factory ElectrumInput.fromJson(Map json) {
     return switch (json) {
       {
         "txinwitness": [String sig, String pubKey],
@@ -332,7 +332,26 @@ class ElectrumOutput {
   /// Zeniq: { value_coin || value_satoshi: int, ... }
   /// Bitcoin: { value: float, ... }
 
-  factory ElectrumOutput.fromJson(Map<String, dynamic> json) {
+  factory ElectrumOutput.fromJson(Map json) {
+    if (json
+        case {
+          'value': BigInt value,
+          'n': int n,
+          'spent': bool spent,
+          'belongsToUs': bool belongsToUs,
+          'scriptPubKey': Map scriptPubKey,
+          'node': Map node,
+        }) {
+      return ElectrumOutput(
+        value: value,
+        n: n,
+        spent: spent,
+        belongsToUs: belongsToUs,
+        scriptPubKey: ElectrumScriptPubKey.fromJson(scriptPubKey),
+        node: NodeWithAddress.fromJson(node),
+      );
+    }
+
     final valIsSatoshi =
         json.containsKey('value_satoshi') || json.containsKey('value_int');
 
@@ -348,7 +367,7 @@ class ElectrumOutput {
       value: value,
       n: n,
       scriptPubKey: ElectrumScriptPubKey.fromJson(
-        json['scriptPubKey'] as Map<String, dynamic>,
+        json['scriptPubKey'],
       ),
       node: EmptyNode(),
     );
@@ -439,7 +458,7 @@ class ElectrumScriptPubKey {
   bool get isP2WSH => type == 'witness_v0_scripthash';
   bool get isSegwit => type == 'witness_v0_keyhash';
 
-  factory ElectrumScriptPubKey.fromJson(Map<String, dynamic> json) {
+  factory ElectrumScriptPubKey.fromJson(Map json) {
     return ElectrumScriptPubKey(
       hexString: json['hex'] as String,
       type: json['type'] as String,

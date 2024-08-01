@@ -130,8 +130,7 @@ class ExternalContractFunctionWithValues extends ExternalContractFunction {
     };
   }
 
-  factory ExternalContractFunctionWithValues.fromJson(
-      Map<String, dynamic> json) {
+  factory ExternalContractFunctionWithValues.fromJson(Map json) {
     if (json
         case {
           "name": String name,
@@ -141,7 +140,7 @@ class ExternalContractFunctionWithValues extends ExternalContractFunction {
         name: name,
         parameters: [
           for (final param in parameters)
-            FunctionParamWithValue.fromJson(param as Map<String, dynamic>),
+            FunctionParamWithValue.fromJson(param),
         ],
       );
     }
@@ -271,6 +270,8 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
         ],
       );
     } catch (e) {
+      // Fallback
+
       throw FunctionDecodingException("Error decoding function: $e");
     }
   }

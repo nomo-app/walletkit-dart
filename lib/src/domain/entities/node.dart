@@ -91,34 +91,50 @@ sealed class NodeWithAddress {
         'type': type,
         'address': address,
         'derivationPath': derivationPath,
-        'addresses': addresses,
-        'walletPurpose': walletPurpose,
+        'addresses': addresses.map(
+          (key, value) => MapEntry(key.index, value),
+        ),
+        'walletPurpose': walletPurpose?.index,
         'publicKey': publicKey,
       };
 
-  factory NodeWithAddress.fromJson(Json json) {
+  factory NodeWithAddress.fromJson(Map json) {
     if (json
         case {
           'type': int type,
           'address': String address,
           'derivationPath': String derivationPath,
-          'addresses': Map<AddressType, String> addresses,
-          'walletPurpose': HDWalletPurpose? walletPurpose,
+          'addresses': Map addresses,
+          'walletPurpose': int? walletPurpose,
           'publicKey': String publicKey,
         }) {
       return switch (type) {
         0 => ReceiveNode(
             address: address,
             derivationPath: derivationPath,
-            addresses: addresses,
-            walletPurpose: walletPurpose,
+            addresses: addresses.map(
+              (key, value) => MapEntry(
+                AddressType.values[key as int],
+                value as String,
+              ),
+            ),
+            walletPurpose: walletPurpose != null
+                ? HDWalletPurpose.values[walletPurpose]
+                : null,
             publicKey: publicKey,
           ),
         1 => ChangeNode(
             address: address,
             derivationPath: derivationPath,
-            addresses: addresses,
-            walletPurpose: walletPurpose,
+            addresses: addresses.map(
+              (key, value) => MapEntry(
+                AddressType.values[key as int],
+                value as String,
+              ),
+            ),
+            walletPurpose: walletPurpose != null
+                ? HDWalletPurpose.values[walletPurpose]
+                : null,
             publicKey: publicKey,
           ),
         2 => EmptyNode(),
