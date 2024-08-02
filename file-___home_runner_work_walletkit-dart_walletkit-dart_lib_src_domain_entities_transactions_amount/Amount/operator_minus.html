@@ -77,9 +77,21 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Amount operator -(Amount other) {
+  &#47;&#47; Determine the maximum decimals between the two amounts
+  int maxDecimals = max(decimals, other.decimals);
+
+  &#47;&#47; Scale both amounts to the same decimal level
+  BigInt scaledThisValue =
+      value * BigInt.from(pow(10, maxDecimals - decimals));
+  BigInt scaledOtherValue =
+      other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+  &#47;&#47; Perform the subtraction
+  BigInt resultValue = scaledThisValue - scaledOtherValue;
+
   return Amount(
-    value: value - other.value,
-    decimals: decimals,
+    value: resultValue,
+    decimals: maxDecimals,
   );
 }</code></pre>
 </section>

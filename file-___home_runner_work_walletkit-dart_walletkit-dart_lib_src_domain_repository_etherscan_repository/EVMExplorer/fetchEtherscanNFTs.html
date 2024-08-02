@@ -82,10 +82,8 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ERC721Entity&gt;&gt; fetchEtherscanNFTs({
   required String address,
 }) async {
-  var endpoint = &quot;$base?module=account&amp;action=tokennfttx&quot; +
-      &quot;&amp;address=&quot; +
-      address +
-      &quot;&amp;startblock=0&amp;sort=asc&quot;;
+  var endpoint =
+      &quot;$base?module=account&amp;action=tokennfttx&amp;address=$address&amp;startblock=0&amp;sort=asc&quot;;
 
   final rawResult =
       await _fetchEtherscanWithRatelimitRetries(endpoint) as List&lt;dynamic&gt;;
