@@ -84,7 +84,7 @@
   final function = abi.functions[8];
   assert(function.functionSelectorHex == &quot;dd62ed3e&quot;);
   final response = await read(
-    function: function.addValues(values: [owner, spender]),
+    function: function.addValues(values: []),
   );
   return response.outputs.first.castValue&lt;BigInt&gt;();
 }</code></pre>

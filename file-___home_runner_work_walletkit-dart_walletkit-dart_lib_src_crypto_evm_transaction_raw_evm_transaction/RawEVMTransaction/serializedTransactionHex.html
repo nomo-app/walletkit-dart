@@ -78,7 +78,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String get serializedTransactionHex {
-  return &quot;0x${serializeTransaction.toHex}&quot;;
+  return &quot;0x&quot; + serializeTransaction.toHex;
 }</code></pre>
 </section>
 

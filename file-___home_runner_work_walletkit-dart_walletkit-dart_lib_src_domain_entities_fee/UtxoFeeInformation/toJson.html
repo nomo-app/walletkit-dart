@@ -78,7 +78,7 @@
   <pre class="language-dart"><code class="language-dart">Json toJson() {
   return {
     &#39;feePerByte&#39;: feePerByte.toJson(),
-    &#39;fee&#39;: fee?.toJson(),
+    if (fee != null) &#39;fee&#39;: fee?.toJson(),
   };
 }</code></pre>
 </section>
