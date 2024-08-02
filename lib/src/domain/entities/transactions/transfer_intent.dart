@@ -84,7 +84,7 @@ class TransferIntent<T extends FeeInformation?> {
     return {
       'recipient': recipient,
       'amount': amount.toJson(),
-      'token': token.symbol,
+      'token': token.toJson(),
       'fee': feeInfo?.toJson(),
       'memo': memo,
     };
@@ -106,7 +106,7 @@ class TransferIntent<T extends FeeInformation?> {
           token: TokenEntity.fromJson(token),
           memo: memo,
         ),
-      _ => throw FormatException('Unknown TransferIntent'),
+      _ => throw FormatException('Unknown TransferIntent: $json'),
     };
   }
 
