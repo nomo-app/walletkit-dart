@@ -12,10 +12,12 @@ const erc20TransferSig = "a9059cbb";
 base class EvmRpcClient {
   final JsonRPC _rpc;
   final Duration rateLimitTimeout;
+  final void Function(RPCError e, StackTrace s, String url)? onRpcError;
 
   EvmRpcClient(
     String rpcUrl, {
     this.rateLimitTimeout = const Duration(seconds: 30),
+    this.onRpcError,
   }) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
 
   String get rpcUrl => _rpc.url;
@@ -41,6 +43,10 @@ base class EvmRpcClient {
       if (e.errorCode == -32600) {
         lastFailedTime = DateTime.now();
         throw RateLimitingException("Rate limited");
+      }
+
+      if (onRpcError != null) {
+        onRpcError!(e, s, rpcUrl);
       }
 
       Logger.logError(e, s: s, hint: 'EvmRpcClient RPCError');
