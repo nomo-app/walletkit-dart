@@ -12,7 +12,7 @@ const _batchSize = 10;
 
 final class EvmRpcInterface {
   final EvmRpcClient client;
-  final EVMNetworkType type;
+
   final Map<int, int> blockTimestampCache = {};
   final Map<String, ConfirmationStatus> txStatusCache = {};
 
