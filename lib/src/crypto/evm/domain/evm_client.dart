@@ -11,11 +11,11 @@ const erc20TransferSig = "a9059cbb";
 
 base class EvmRpcClient {
   final JsonRPC _rpc;
-  final Duration timeout;
+  final Duration rateLimitTimeout;
 
   EvmRpcClient(
     String rpcUrl, {
-    this.timeout = const Duration(seconds: 30),
+    this.rateLimitTimeout = const Duration(seconds: 30),
   }) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
 
   String get rpcUrl => _rpc.url;
@@ -25,7 +25,7 @@ base class EvmRpcClient {
 
   bool isRateLimited() {
     if (lastFailedTime == null) return false;
-    return DateTime.now().difference(lastFailedTime!) < timeout;
+    return DateTime.now().difference(lastFailedTime!) < rateLimitTimeout;
   }
 
   Future<T> _call<T>(String function, {List<dynamic>? args}) async {
@@ -38,7 +38,7 @@ base class EvmRpcClient {
       final result = response.result as T;
       return result;
     } on RPCError catch (e, s) {
-      if (e.errorCode == -32000) {
+      if (e.errorCode == -32600) {
         lastFailedTime = DateTime.now();
         throw RateLimitingException("Rate limited");
       }
