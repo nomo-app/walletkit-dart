@@ -69,3 +69,5 @@ export 'src/crypto/tron/domain/tron_http_repository.dart';
 export 'src/crypto/tron/domain/tronscan_repository.dart';
 export 'src/crypto/tron/tron_transaction.dart';
 export 'src/crypto/tron/tron_address.dart';
+
+export 'src/common/json_rpc.dart';
