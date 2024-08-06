@@ -4,7 +4,6 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 
 void main() {
-  final moonbeamRPC = EvmRpcInterface(MoonbeamNetwork);
   test("MoonBeam send test", () async {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,

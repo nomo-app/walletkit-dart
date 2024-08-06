@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
+import 'package:walletkit_dart/src/crypto/evm/domain/queued_rpc_interface.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
@@ -10,17 +13,35 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const _maxTxNumber = 100;
 const _batchSize = 10;
 
-final class EvmRpcInterface {
-  final EvmRpcClient client;
+final class EvmRpcInterface extends QueuedRpcInterface {
+  final EVMNetworkType type;
 
   final Map<int, int> blockTimestampCache = {};
   final Map<String, ConfirmationStatus> txStatusCache = {};
 
-  EvmRpcInterface(this.type) : client = EvmRpcClient(type.rpcUrl);
+  EvmRpcInterface({
+    required super.clients,
+    required this.type,
+  });
 
-  EvmRpcInterface.fromURL(String rpcURL)
-      : client = EvmRpcClient(rpcURL),
-        type = ETHEREUM_NETWORK();
+  ///
+  /// eth_call
+  ///
+  Future<String> call({
+    String? sender,
+    required String contractAddress,
+    required Uint8List data,
+    BlockNum? atBlock,
+  }) {
+    return performTask(
+      (client) => client.call(
+        sender: sender,
+        contractAddress: contractAddress,
+        data: data,
+        atBlock: atBlock,
+      ),
+    );
+  }
 
   ///
   /// Fetch Balance
@@ -28,7 +49,7 @@ final class EvmRpcInterface {
   Future<Amount> fetchBalance({
     required String address,
   }) async {
-    final balance = await client.getBalance(address);
+    final balance = await performTask((client) => client.getBalance(address));
     return Amount(
       value: balance,
       decimals: type.coin.decimals,
@@ -66,7 +87,9 @@ final class EvmRpcInterface {
     }
 
 // binary search for circumventing issue VGI-1719
-    final lastBlock = await client.getBlockNumber();
+    final lastBlock = await performTask(
+      (client) => client.getBlockNumber(),
+    );
     int start = block;
     int end = lastBlock;
 
@@ -103,17 +126,21 @@ final class EvmRpcInterface {
         "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
     final topicAddress =
         address.replaceFirst("0x", "0x000000000000000000000000");
-    final incomingTransfersFuture = client.getLogs(
-      fromBlock: _block,
-      toBlock: "latest",
-      address: nftContractAddress,
-      topics: [eventSignature, null, topicAddress, null],
+    final incomingTransfersFuture = performTask(
+      (client) => client.getLogs(
+        fromBlock: _block,
+        toBlock: "latest",
+        address: nftContractAddress,
+        topics: [eventSignature, null, topicAddress, null],
+      ),
     );
-    final outgoingTransfersFuture = client.getLogs(
-      fromBlock: _block,
-      toBlock: "latest",
-      address: nftContractAddress,
-      topics: [eventSignature, topicAddress, null, null],
+    final outgoingTransfersFuture = performTask(
+      (client) => client.getLogs(
+        fromBlock: _block,
+        toBlock: "latest",
+        address: nftContractAddress,
+        topics: [eventSignature, topicAddress, null, null],
+      ),
     );
     final results = await Future.wait(
       [incomingTransfersFuture, outgoingTransfersFuture],
@@ -150,17 +177,21 @@ final class EvmRpcInterface {
       "0x",
       "0x000000000000000000000000",
     );
-    final outgoingTransfersFuture = client.getLogs(
-      fromBlock: _block,
-      toBlock: "latest",
-      address: token.contractAddress,
-      topics: [eventSignature, topicAddress],
+    final outgoingTransfersFuture = performTask(
+      (client) => client.getLogs(
+        fromBlock: _block,
+        toBlock: "latest",
+        address: token.contractAddress,
+        topics: [eventSignature, topicAddress],
+      ),
     );
-    final incomingTransfersFuture = client.getLogs(
-      fromBlock: _block,
-      toBlock: "latest",
-      address: token.contractAddress,
-      topics: [eventSignature, null, topicAddress],
+    final incomingTransfersFuture = performTask(
+      (client) => client.getLogs(
+        fromBlock: _block,
+        toBlock: "latest",
+        address: token.contractAddress,
+        topics: [eventSignature, null, topicAddress],
+      ),
     );
     final res = await Future.wait(
       [outgoingTransfersFuture, incomingTransfersFuture],
@@ -195,7 +226,9 @@ final class EvmRpcInterface {
       outgoingTransfers.length + incomingTransfers.length <= _maxTxNumber,
     ); // sanity check
 
-    final currentBlockNumber = await client.getBlockNumber();
+    final currentBlockNumber = await performTask(
+      (client) => client.getBlockNumber(),
+    );
     final transfers = [
       ...await Future.wait(
         outgoingTransfers.map(
@@ -227,18 +260,47 @@ final class EvmRpcInterface {
     required Uint8List? data,
     required BigInt? value,
   }) async {
-    return await client.getGasPrice().then(
-          (gasPrice) async => (
-            Amount(value: gasPrice, decimals: 18),
-            await estimateGasLimit(
-              recipient: recipient,
-              sender: sender,
-              data: data,
-              gasPrice: gasPrice,
-              value: value,
-            )
+    return await performTask(
+      (client) => client.getGasPrice().then(
+            (gasPrice) async => (
+              Amount(value: gasPrice, decimals: 18),
+              await estimateGasLimit(
+                recipient: recipient,
+                sender: sender,
+                data: data,
+                gasPrice: gasPrice,
+                value: value,
+              )
+            ),
           ),
-        );
+    );
+  }
+
+  ///
+  /// Get Gas Price
+  ///
+  Future<BigInt> getGasPrice() async {
+    return await performTask(
+      (client) => client.getGasPrice(),
+    );
+  }
+
+  ///
+  /// Get Transaction Count (Nonce)
+  ///
+  Future<BigInt> getTransactionCount(String address) async {
+    return await performTask(
+      (client) => client.getTransactionCount(address),
+    );
+  }
+
+  ///
+  /// Get Transaction By Hash
+  ///
+  Future<InternalEVMTransaction> getTransactionByHash(String hash) async {
+    return await performTask(
+      (client) => client.getTransactionByHash(hash),
+    );
   }
 
   ///
@@ -258,7 +320,9 @@ final class EvmRpcInterface {
       value: intent.amount.value,
     );
 
-    final balance = await client.getBalance(toChecksumAddress(from));
+    final balance = await fetchBalance(address: toChecksumAddress(from)).then(
+      (amount) => amount.value,
+    );
 
     final estimatedFee = tx.gasPrice * tx.gasLimit;
 
@@ -266,9 +330,7 @@ final class EvmRpcInterface {
       throw Failure("Insufficient funds to pay native gas fee");
     }
 
-    return await client.sendRawTransaction(
-      tx.serializedTransactionHex,
-    );
+    return await sendRawTransaction(tx.serializedTransactionHex);
   }
 
   ///
@@ -345,7 +407,9 @@ final class EvmRpcInterface {
             value: value,
           );
 
-    final nonce = await client.getTransactionCount(sender);
+    final nonce = await performTask(
+      (client) => client.getTransactionCount(sender),
+    );
 
     final unsignedTx = RawEVMTransaction(
       nonce: nonce,
@@ -367,6 +431,12 @@ final class EvmRpcInterface {
     return signedTx;
   }
 
+  Future<String> sendRawTransaction(String serializedTransactionHex) {
+    return performTask(
+      (client) => client.sendRawTransaction(serializedTransactionHex),
+    );
+  }
+
   Future<String> buildAndBroadcastTransaction({
     required String sender,
     required String recipient,
@@ -384,9 +454,7 @@ final class EvmRpcInterface {
       value: value,
     );
 
-    final result = await client.sendRawTransaction(
-      signedTx.serializedTransactionHex,
-    );
+    final result = await sendRawTransaction(signedTx.serializedTransactionHex);
 
     return result;
   }
@@ -404,7 +472,7 @@ final class EvmRpcInterface {
 
     final data = function.encodeFunction(params).hexToBytes;
 
-    return await client.call(
+    return await call(
       contractAddress: contractAddress,
       data: data,
     );
@@ -446,31 +514,25 @@ final class EvmRpcInterface {
   Future<int> estimateGasLimit({
     required String sender,
     required String recipient,
-    required Uint8List? data,
-    required BigInt? value,
-    required BigInt? gasPrice,
+    Uint8List? data,
+    BigInt? value,
+    BigInt? gasPrice,
   }) async {
-    final dataHex = data != null ? "0x" + data.toHex : null;
+    final dataHex = data != null ? "0x${data.toHex}" : null;
 
-    // if (type is ZKSYNC_NETWORK) {
-    //   return await client
-    //       .estimateZkSyncFee(
-    //         from: sender,
-    //         to: recipient,
-    //         data: dataHex,
-    //       )
-    //       .then((value) => value.toInt());
-    // }
-
-    return await client
-        .estimateGasLimit(
-          from: sender,
-          to: recipient,
-          data: dataHex,
-          amount: value,
-          gasPrice: gasPrice,
-        )
-        .then((value) => value.toInt());
+    return await performTask(
+      (client) => client
+          .estimateGasLimit(
+            from: sender,
+            to: recipient,
+            data: dataHex,
+            amount: value,
+            gasPrice: gasPrice,
+          )
+          .then(
+            (value) => value.toInt(),
+          ),
+    );
   }
 
   ///
@@ -639,11 +701,13 @@ final class EvmRpcInterface {
     required String address,
     required int block,
   }) async {
-    final result = await client.queryTxByAddr(
-      address: address,
-      startBlock: "latest",
-      endBlock: block.toHexWithPrefix,
-      maxTx: _maxTxNumber,
+    final result = await performTask(
+      (client) => client.queryTxByAddr(
+        address: address,
+        startBlock: "latest",
+        endBlock: block.toHexWithPrefix,
+        maxTx: _maxTxNumber,
+      ),
     );
 
     final rawTxs = [
@@ -652,7 +716,9 @@ final class EvmRpcInterface {
 
     Logger.log(rawTxs.length.toString() + " ZSC TXs found");
 
-    final currentBlockNumber = await client.getBlockNumber();
+    final currentBlockNumber = await performTask(
+      (client) => client.getBlockNumber(),
+    );
     final txs = <ZeniqSmartChainTransaction>[];
     while (rawTxs.isNotEmpty) {
       final _txs = await Future.wait([
@@ -719,8 +785,9 @@ final class EvmRpcInterface {
 
   Future<int> _getBlockTimestamp(int blockNumber) async {
     if (blockTimestampCache[blockNumber] == null) {
-      blockTimestampCache[blockNumber] =
-          await client.getBlockTimestamp(blockNumber);
+      blockTimestampCache[blockNumber] = await performTask(
+        (client) => client.getBlockTimestamp(blockNumber),
+      );
     }
     return blockTimestampCache[blockNumber]!;
   }
@@ -728,7 +795,9 @@ final class EvmRpcInterface {
   Future<ConfirmationStatus> getConfirmationStatus(String hash) async {
     if (txStatusCache[hash] == null ||
         txStatusCache[hash] == ConfirmationStatus.pending) {
-      final json = await client.getTransactionReceipt(hash);
+      final json = await performTask(
+        (client) => client.getTransactionReceipt(hash),
+      );
       txStatusCache[hash] = _confirmationStatusFromJson(json);
     }
     return txStatusCache[hash]!;

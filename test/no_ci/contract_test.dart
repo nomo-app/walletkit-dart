@@ -226,7 +226,7 @@ void main() {
         "type": "event"
     }
 ]''';
-  final arbitrumRPC = EvmRpcInterface(ArbitrumNetwork);
+
   final testSeed = loadFromEnv("DEV_SEED");
 
   final ercContract = ERC20Contract(

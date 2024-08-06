@@ -112,10 +112,6 @@ Future<T> _fetchAvaTransactionWithRateLimits<T>(
 class EVMExplorer extends EtherscanRepository {
   const EVMExplorer(super.base, super.apiKeys);
 
-  EVMExplorer.fromType(EVMNetworkType type)
-      : assert(type.blockExplorer != null, "No block explorer defined"),
-        super(type.blockExplorer!.$1, type.blockExplorer!.$2);
-
   ///
   /// Fetch all Transactions for the given [token] on the given [address] for Avalanche
   ///

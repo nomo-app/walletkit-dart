@@ -4,15 +4,9 @@ import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/predefined_assets.dart';
 import 'package:walletkit_dart/src/domain/repository/etherscan_repository.dart';
 
+import '../../utils.dart';
+
 void main() {
-  final etherscan = EVMExplorer(etherscanBaseEndpoint, [etherscanApiKey]);
-  final bnbScan = EVMExplorer(bnbScanBaseEndpoint, [bnbScanApiKey]);
-  final arbiScan = EVMExplorer(arbitrumScanBaseEndpoint, [arbitrumScanApiKey]);
-  final baseScan = EVMExplorer(baseScanEndpoint, [baseScanApiKey]);
-  final moonScan = EVMExplorer(moonbeamScanBaseEndpoint, [moonbeamScanApiKey]);
-  final avaCloud = EVMExplorer(avalancheAPIEndpoint, [avalancheAPIKey]);
-  final optiScan = EVMExplorer(optimismScanEndpoint, [optimismAPIKey]);
-  final zkSyncScan = EVMExplorer(zksyncAPIEndpoint, [zksyncAPIKey]);
   test('Test Ethereum Etherscan Fetching', () async {
     ///
     /// Balances
@@ -62,12 +56,12 @@ void main() {
     /// Balances
     ///
 
-    final balance = await bnbScan.fetchBalance(rejectEVM, binanceSmart);
+    final balance = await bscscan.fetchBalance(rejectEVM, binanceSmart);
 
     print('BNB Balance: $balance');
 
     final zeniqBSCBalance =
-        await bnbScan.fetchBalance(rejectEVM, zeniqBSCToken);
+        await bscscan.fetchBalance(rejectEVM, zeniqBSCToken);
 
     print('Zeniq BSC Balance: $zeniqBSCBalance');
 
@@ -75,7 +69,7 @@ void main() {
     /// Transactions
     ///
 
-    final transactions = await bnbScan.fetchTransactions(
+    final transactions = await bscscan.fetchTransactions(
       address: rejectEVM,
       token: binanceSmart,
     );
@@ -84,7 +78,7 @@ void main() {
 
     print('BNB Transactions: $transactions');
 
-    final zeniqBSCTokenTransactions = await bnbScan.fetchERC20Transactions(
+    final zeniqBSCTokenTransactions = await bscscan.fetchERC20Transactions(
       address: rejectEVM,
       token: zeniqBSCToken,
       currency: binanceSmart,
@@ -98,7 +92,7 @@ void main() {
     /// ERC721
     ///
 
-    final erc721 = await bnbScan.fetchEtherscanNFTs(address: rejectEVM);
+    final erc721 = await bscscan.fetchEtherscanNFTs(address: rejectEVM);
 
     print('ERC721: $erc721');
   });
@@ -110,18 +104,19 @@ void main() {
   });
 
   test("Test Arbitrum Fetching", () async {
-    final balance = await arbiScan.fetchBalance(arbitrumTestWallet, ethNative);
+    final balance =
+        await arbitrumscan.fetchBalance(arbitrumTestWallet, ethNative);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-    final transactions = await arbiScan.fetchTransactions(
+    final transactions = await arbitrumscan.fetchTransactions(
       address: arbitrumTestWallet,
       token: ethNative,
     );
 
     expect(transactions, isNotEmpty);
 
-    final erc20T = await arbiScan.fetchERC20Transactions(
+    final erc20T = await arbitrumscan.fetchERC20Transactions(
       address: arbitrumTestWallet,
       token: arbitrum,
       currency: ethNative,
@@ -130,7 +125,7 @@ void main() {
   });
 
   test("Test Avalanche Fetching", () async {
-    final transactions = await avaCloud.fetchAvaTransactions(
+    final transactions = await avalancheScan.fetchAvaTransactions(
       address: arbitrumTestWallet,
       token: ethNative,
     );
@@ -139,18 +134,18 @@ void main() {
   });
 
   test('Test Base Fetching', () async {
-    final balance = await baseScan.fetchBalance(arbitrumTestWallet, ethNative);
+    final balance = await basescan.fetchBalance(arbitrumTestWallet, ethNative);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-    final transactions = await baseScan.fetchTransactions(
+    final transactions = await basescan.fetchTransactions(
       address: arbitrumTestWallet,
       token: ethNative,
     );
 
     expect(transactions, isNotEmpty);
 
-    final erc20Transactions = await baseScan.fetchERC20Transactions(
+    final erc20Transactions = await basescan.fetchERC20Transactions(
       address: arbitrumTestWallet,
       token: mathToken,
       currency: ethNative,
@@ -159,46 +154,49 @@ void main() {
     expect(erc20Transactions, isNotEmpty);
 
     final erc20balance =
-        await baseScan.fetchBalance(arbitrumTestWallet, mathToken);
+        await basescan.fetchBalance(arbitrumTestWallet, mathToken);
     expect(erc20balance, greaterThan(BigInt.zero));
   });
 
   test("Test MoonBeam Fetching", () async {
-    final balance = await moonScan.fetchBalance(arbitrumTestWallet, ethNative);
+    final balance =
+        await moonbeamscan.fetchBalance(arbitrumTestWallet, ethNative);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-    final transactions = await moonScan.fetchTransactions(
+    final transactions = await moonbeamscan.fetchTransactions(
       address: arbitrumTestWallet,
       token: ethNative,
     );
 
     expect(transactions, isNotEmpty);
 
-    final erc20T = await moonScan.fetchERC20Transactions(
+    final erc20T = await moonbeamscan.fetchERC20Transactions(
       address: arbitrumTestWallet,
       token: frax,
       currency: ethNative,
     );
     expect(erc20T, isNotEmpty);
 
-    final fraxBalance = await moonScan.fetchBalance(arbitrumTestWallet, frax);
+    final fraxBalance =
+        await moonbeamscan.fetchBalance(arbitrumTestWallet, frax);
 
     expect(fraxBalance, greaterThan(BigInt.zero));
   });
 
   test('Test Optimism Fetching', () async {
-    final balance = await optiScan.fetchBalance(arbitrumTestWallet, ethNative);
+    final balance =
+        await optimismscan.fetchBalance(arbitrumTestWallet, ethNative);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-    final transactions = await optiScan.fetchTransactions(
+    final transactions = await optimismscan.fetchTransactions(
       address: arbitrumTestWallet,
       token: ethNative,
     );
     expect(transactions, isNotEmpty);
 
-    final erc20T = await optiScan.fetchERC20Transactions(
+    final erc20T = await optimismscan.fetchERC20Transactions(
       address: arbitrumTestWallet,
       token: optimism,
       currency: ethNative,
@@ -206,25 +204,25 @@ void main() {
     expect(erc20T, isNotEmpty);
 
     final optimismBalance =
-        await optiScan.fetchBalance(arbitrumTestWallet, optimism);
+        await optimismscan.fetchBalance(arbitrumTestWallet, optimism);
 
     expect(optimismBalance, greaterThan(BigInt.zero));
   });
 
   test('Test zkSync Fetching', () async {
     final balance =
-        await zkSyncScan.fetchBalance(arbitrumTestWallet, ethNative);
+        await zksyncscan.fetchBalance(arbitrumTestWallet, ethNative);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
     print(balance);
-    final transactions = await zkSyncScan.fetchTransactions(
+    final transactions = await zksyncscan.fetchTransactions(
       address: arbitrumTestWallet,
       token: ethNative,
     );
     expect(transactions, isNotEmpty);
 
-    final erc20T = await zkSyncScan.fetchERC20Transactions(
+    final erc20T = await zksyncscan.fetchERC20Transactions(
       address: arbitrumTestWallet,
       token: wbtcZKSync,
       currency: ethNative,
@@ -233,7 +231,7 @@ void main() {
     expect(erc20T, isNotEmpty);
 
     final wbtcBalance =
-        await zkSyncScan.fetchBalance(arbitrumTestWallet, wbtcZKSync);
+        await zksyncscan.fetchBalance(arbitrumTestWallet, wbtcZKSync);
 
     expect(wbtcBalance, greaterThan(BigInt.zero));
   });

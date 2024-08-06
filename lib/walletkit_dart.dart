@@ -3,7 +3,7 @@
 /// More dartdocs go here.
 
 export 'src/crypto/utxo/send.dart';
-export 'src/crypto/evm/evm_client.dart';
+export 'src/crypto/evm/domain/evm_client.dart';
 export 'src/crypto/wallet_utils.dart';
 export 'src/domain/constants.dart';
 export 'src/domain/entities/asset/token_entity.dart';
@@ -16,7 +16,7 @@ export 'src/domain/entities/tx_gasFee_entity.dart';
 export 'src/domain/entities/erc721_entity.dart';
 export 'src/crypto/utxo/utxo_analyzer.dart';
 export 'src/domain/entities/asset/staking_nft_entity.dart';
-export 'src/domain/repository/evm_rpc_interface.dart';
+export 'src/crypto/evm/domain/evm_rpc_interface.dart';
 export 'src/domain/repository/etherscan_repository.dart';
 export 'src/domain/predefined_assets.dart';
 export 'src/crypto/evm/transaction/signing/utils.dart';

@@ -4,7 +4,6 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 
 void main() {
-  final optimismRPC = EvmRpcInterface(OptimismNetwork);
   final testSeed = loadFromEnv("DEV_SEED");
   test('Test Optimism send', () async {
     final intent = TransferIntent<EvmFeeInformation>(

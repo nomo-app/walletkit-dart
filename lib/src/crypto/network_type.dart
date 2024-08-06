@@ -364,16 +364,6 @@ class ETHEREUM_NETWORK extends EVMNetworkType {
           chainId: 1,
           coin: ethNative,
           messagePrefix: "\x19Ethereum Signed Message:\n",
-          // rpcUrl:
-          //     "https://mainnet.infura.io/v3/b6bf7d3508c941499b10025c0776eaf8",
-          // blockExplorer: (
-          //   etherscanBaseEndpoint,
-          //   const [
-          //     "RD46SK1466WA991RZ9NZ8ASECAC2GS2YKM",
-          //     "DPN46Q23SK62Q135FWJ8VHH9MGN7VGJ166",
-          //     "AC72N833U9MKUNXS44MV27T3HKEN4WYYT3"
-          //   ]
-          // ),
           blockTime: 12,
         );
 }
@@ -386,7 +376,6 @@ class ZENIQ_SMART_NETWORK extends EVMNetworkType {
           chainId: 383414847825,
           coin: zeniqSmart,
           messagePrefix: "\x19Zeniq Signed Message:\n",
-          // rpcUrl: zeniqSmartRPCEndpoint,
           blockTime: 3,
         );
 }
@@ -397,8 +386,6 @@ class BNB_NETWORK extends EVMNetworkType {
   const BNB_NETWORK()
       : super(
           chainId: 56,
-          // rpcUrl: "https://bsc-dataseed.binance.org/",
-          // blockExplorer: (bnbScanBaseEndpoint, const [bnbScanApiKey]),
           coin: binanceSmart,
           messagePrefix: "\x19Binance Chain Signed Message:\n",
           blockTime: 3,
@@ -411,8 +398,6 @@ class POLYGON_NETWORK extends EVMNetworkType {
   const POLYGON_NETWORK()
       : super(
           chainId: 137,
-          // rpcUrl: "https://polygon-bor.publicnode.com/",
-          // blockExplorer: (polygonScanBaseEndpoint, const [polygonScanApiKey]),
           coin: polygon,
           messagePrefix: "\x19Polygon Signed Message:\n",
           blockTime: 2,
@@ -426,19 +411,9 @@ class POLYGON_NETWORK extends EVMNetworkType {
 const TRON_Network = TRON_NETWORK();
 
 class TRON_NETWORK extends EVMNetworkType {
-  // final (String, Iterable<String>) httpApi;
-
   const TRON_NETWORK()
       : super(
           chainId: -1,
-          // rpcUrl: "https://api.trongrid.io/jsonrpc",
-          // blockExplorer: (
-          //   "https://apilist.tronscanapi.com/api",
-          //   const [
-          //     "a875e9b5-2d45-410c-ade9-49ee456be28a",
-          //     "0eb54755-e150-40d3-8d1a-f8ab389b845a",
-          //   ],
-          // ),
           coin: tron,
           messagePrefix: "\x19Tron Signed Message:\n",
           blockTime: 3,
@@ -464,8 +439,6 @@ class ARBITRUM_NETWORK extends EVMNetworkType {
   const ARBITRUM_NETWORK()
       : super(
           chainId: 42161,
-          // rpcUrl: "https://arbitrum.llamarpc.com",
-          // blockExplorer: (arbitrumScanBaseEndpoint, const [arbitrumScanApiKey]),
           coin: arbitrum,
           messagePrefix: "\x19Arbitrum Signed Message:\n",
           blockTime: 2,
@@ -478,8 +451,6 @@ class BASE_NETWORK extends EVMNetworkType {
   const BASE_NETWORK()
       : super(
           chainId: 8453,
-          // rpcUrl: "https://base.llamarpc.com",
-          // blockExplorer: (baseScanEndpoint, const [baseScanApiKey]),
           coin: ethBase,
           messagePrefix: "\x19Base Chain Signed Message:\n",
           blockTime: 2,
@@ -492,8 +463,6 @@ class MOONBEAM_NETWORK extends EVMNetworkType {
   const MOONBEAM_NETWORK()
       : super(
           chainId: 1284,
-          // rpcUrl: "https://moonbeam-rpc.publicnode.com",
-          // blockExplorer: (moonbeamScanBaseEndpoint, const [moonbeamScanApiKey]),
           coin: moonbeam,
           messagePrefix: "\x19Moonbeam Signed Message:\n",
           blockTime: 2,
@@ -507,8 +476,6 @@ class AVALANCHE_NETWORK extends EVMNetworkType {
       : super(
           chainId: 43114,
           coin: avalanche,
-          // rpcUrl: "https://api.avax.network/ext/bc/C/rpc",
-          // blockExplorer: (avalancheAPIEndpoint, const [avalancheAPIKey]),
           messagePrefix: "\x19Avalanche Signed Message:\n",
           blockTime: 2,
         );
@@ -522,8 +489,6 @@ class OPTIMISM_NETWORK extends EVMNetworkType {
           chainId: 10,
           coin: optimism,
           messagePrefix: "\x19Optimism Signed Message:\n",
-          // rpcUrl: "https://optimism.llamarpc.com",
-          // blockExplorer: (optimismScanEndpoint, const [optimismAPIKey]),
           blockTime: 2,
         );
 }
@@ -536,8 +501,6 @@ class ZKSYNC_NETWORK extends EVMNetworkType {
           chainId: 324,
           coin: ethzkSync,
           messagePrefix: "\x19ZKSync Signed Message:\n",
-          // rpcUrl: "https://zksync-era.blockpi.network/v1/rpc/public",
-          // blockExplorer: (zksyncAPIEndpoint, const [zksyncAPIKey]),
           blockTime: 2,
         );
 }

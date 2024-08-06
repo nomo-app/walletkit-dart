@@ -39,6 +39,6 @@ abstract class InternalContract {
     required List<dynamic> params,
   }) async {
     final data = function.encodeFunction(params).hexToBytes;
-    return rpc.client.call(contractAddress: contractAddress, data: data);
+    return rpc.call(contractAddress: contractAddress, data: data);
   }
 }

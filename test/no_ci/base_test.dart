@@ -4,7 +4,6 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 
 void main() {
-  final baseRPC = EvmRpcInterface(BaseNetwork);
   test("Try to send Ethereum Base", () async {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,

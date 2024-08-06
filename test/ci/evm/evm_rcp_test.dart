@@ -3,8 +3,10 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
+import '../../utils.dart';
+
 void main() {
-  final zeniqSmartRpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
+  final zeniqSmartRpcInterface = zeniqSmartChainRPC;
   test('ZeniqSmartChain Fetching rejectWallet', () async {
     final zscTransactions =
         await zeniqSmartRpcInterface.fetchAllTransactionsZSC(
@@ -62,8 +64,7 @@ void main() {
   });
 
   test('fetch Staking ZEN721 transfers', () async {
-    final rpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
-    final txs = await rpcInterface.fetchZEN721Transfers(
+    final txs = await zeniqSmartRpcInterface.fetchZEN721Transfers(
       nftContractAddress: smartChainStakingContract,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
@@ -74,8 +75,7 @@ void main() {
   });
 
   test('fetch AVINOC ZSC transfers', () async {
-    final rpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
-    final txs = await rpcInterface.fetchZEN20Transfers(
+    final txs = await zeniqSmartRpcInterface.fetchZEN20Transfers(
       token: avinocZSC,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
@@ -83,8 +83,7 @@ void main() {
   });
 
   test('fetch TUPAN transfers', () async {
-    final rpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
-    final txs = await rpcInterface.fetchZEN20Transfers(
+    final txs = await zeniqSmartRpcInterface.fetchZEN20Transfers(
       token: tupanToken,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
@@ -92,13 +91,11 @@ void main() {
   });
 
   test('estimate Gas Limit', () async {
-    final rpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
-
     var data = erc20TransferSig +
         spoilEVM.substring(2).padLeft(64, '0') +
         BigInt.from(0).toHex.padLeft(64, '0');
 
-    var gasLimit = await rpcInterface.estimateGasLimit(
+    var gasLimit = await zeniqSmartRpcInterface.estimateGasLimit(
       sender: rejectEVM,
       recipient: avinocZSC.contractAddress,
       gasPrice: null,
@@ -110,7 +107,7 @@ void main() {
 
     data = "Test memo";
 
-    gasLimit = await rpcInterface.estimateGasLimit(
+    gasLimit = await zeniqSmartRpcInterface.estimateGasLimit(
       sender: rejectEVM,
       recipient: spoilEVM,
       gasPrice: null,
@@ -124,9 +121,7 @@ void main() {
   });
 
   test('Arbitrum Test', () async {
-    final rpcInterface = EvmRpcInterface(ArbitrumNetwork);
-
-    final balance = await rpcInterface.fetchBalance(
+    final balance = await arbitrumRPC.fetchBalance(
       address: arbitrumTestWallet,
     );
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
@@ -147,15 +142,13 @@ void main() {
   // });
 
   test('MoonBeam Test', () async {
-    final rpcInterface = EvmRpcInterface(MoonbeamNetwork);
-
-    final balance = await rpcInterface.fetchBalance(
+    final balance = await moonbeamRPC.fetchBalance(
       address: arbitrumTestWallet,
     );
 
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
 
-    final fraxBalance = await rpcInterface.fetchTokenBalance(
+    final fraxBalance = await moonbeamRPC.fetchTokenBalance(
       arbitrumTestWallet,
       frax,
     );
@@ -164,9 +157,7 @@ void main() {
   });
 
   test('Avalanche Test', () async {
-    final rpcInterface = EvmRpcInterface(AvalancheNetwork);
-
-    final balance = await rpcInterface.fetchBalance(
+    final balance = await avalancheRPC.fetchBalance(
       address: arbitrumTestWallet,
     );
 
@@ -175,14 +166,13 @@ void main() {
   });
 
   test('Optimism Test', () async {
-    final rpcInterface = EvmRpcInterface(OptimismNetwork);
-    final balance = await rpcInterface.fetchBalance(
+    final balance = await optimismRPC.fetchBalance(
       address: arbitrumTestWallet,
     );
 
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
 
-    final opBalance = await rpcInterface.fetchTokenBalance(
+    final opBalance = await optimismRPC.fetchTokenBalance(
       arbitrumTestWallet,
       optimism,
     );
@@ -190,14 +180,13 @@ void main() {
     expect(opBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
   test('zkSync Test', () async {
-    final rpcInterface = EvmRpcInterface(ZKSyncNetwork);
-    final balance = await rpcInterface.fetchBalance(
+    final balance = await zksyncRPC.fetchBalance(
       address: arbitrumTestWallet,
     );
 
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
 
-    final wbtcBalance = await rpcInterface.fetchTokenBalance(
+    final wbtcBalance = await zksyncRPC.fetchTokenBalance(
       arbitrumTestWallet,
       wbtcZKSync,
     );
