@@ -53,6 +53,8 @@ class TronScanRepository extends HTTPRepository {
     String? method,
     List<String>? tokens,
   }) async {
+    assert(limit <= 50, "Limit must be less than or equal to 50");
+
     final data = [];
 
     int? totalLength;

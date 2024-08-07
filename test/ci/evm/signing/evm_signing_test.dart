@@ -15,7 +15,6 @@ void main() {
 
   final testSeed = loadFromEnv("DEV_SEED");
   final privateKey = derivePrivateKeyETH(testSeed);
-  final arbRPC = EvmRpcInterface(ArbitrumNetwork);
 
   test('Sign Evm TX', () {
     final signature = Signature.createSignature(message, privateKey);
@@ -48,8 +47,9 @@ void main() {
   });
 
   test('Simulate TX', () async {
-    final testTx = await arbRPC.client.getTransactionByHash(
-        "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b");
+    final testTx = await arbitrumRPC.getTransactionByHash(
+      "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b",
+    );
     print("TestTx: $testTx");
 
     print("ChainID ${testTx.chainId}");

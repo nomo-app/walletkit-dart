@@ -1,30 +1,54 @@
 import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
-import 'package:walletkit_dart/src/common/http_repository.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
-import 'package:walletkit_dart/src/domain/repository/json_rpc.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const erc20TransferSig = "a9059cbb";
 
 base class EvmRpcClient {
   final JsonRPC _rpc;
+  final Duration rateLimitTimeout;
+  final void Function(RPCError e, StackTrace s, String url)? onRpcError;
 
-  EvmRpcClient(String rpcUrl) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
+  EvmRpcClient(
+    String rpcUrl, {
+    this.rateLimitTimeout = const Duration(seconds: 30),
+    this.onRpcError,
+  }) : _rpc = JsonRPC(rpcUrl, HTTPService.client);
 
   String get rpcUrl => _rpc.url;
   HTTPClient get httpClient => HTTPService.client;
 
+  DateTime? lastFailedTime;
+
+  bool isRateLimited() {
+    if (lastFailedTime == null) return false;
+    return DateTime.now().difference(lastFailedTime!) < rateLimitTimeout;
+  }
+
   Future<T> _call<T>(String function, {List<dynamic>? args}) async {
+    if (isRateLimited()) {
+      throw RateLimitingException('RPC $rpcUrl is rate limited');
+    }
+
     try {
       final response = await _rpc.call(function, args);
       final result = response.result as T;
       return result;
     } on RPCError catch (e, s) {
-      Logger.logError(e, s: s, hint: 'EvmRpcClient');
+      if (e.errorCode == -32600) {
+        lastFailedTime = DateTime.now();
+        throw RateLimitingException("Rate limited");
+      }
+
+      if (onRpcError != null) {
+        onRpcError!(e, s, rpcUrl);
+      }
+
+      Logger.logError(e, s: s, hint: 'EvmRpcClient RPCError');
       rethrow;
     } catch (e, s) {
       Logger.logError(e, s: s, hint: 'EvmRpcClient');
@@ -46,7 +70,7 @@ base class EvmRpcClient {
         {
           if (sender != null) 'from': sender,
           'to': contractAddress,
-          'data': "0x" + data.toHex,
+          'data': "0x${data.toHex}",
         },
         atBlock?.toBlockParam() ?? 'latest',
       ],
@@ -66,8 +90,10 @@ base class EvmRpcClient {
     return count;
   }
 
-  Future<InternalEVMTransaction> getTransactionByHash(String messageHash,
-      [int? chainId]) async {
+  Future<InternalEVMTransaction> getTransactionByHash(
+    String messageHash, [
+    int? chainId,
+  ]) async {
     final response = await _call<Json>(
       'eth_getTransactionByHash',
       args: [messageHash],
@@ -88,6 +114,15 @@ base class EvmRpcClient {
       r: response['r'].toString().toBigInt,
       s: response['s'].toString().toBigInt,
     );
+  }
+
+  Future<Json> getBlockByNumber(int blockNumber) async {
+    final response = await _call<Json>(
+      'eth_getBlockByNumber',
+      args: [blockNumber.toHexWithPrefix, false],
+    );
+
+    return response;
   }
 
   Future<String> sendRawTransaction(String rawTx) async {
@@ -152,15 +187,6 @@ base class EvmRpcClient {
     return blockNumber.toInt();
   }
 
-  Future<JSON> getBlockByNumber(int blockNumber) async {
-    final response = await _call<Json>(
-      'eth_getBlockByNumber',
-      args: [blockNumber.toHexWithPrefix, false],
-    );
-
-    return response;
-  }
-
   ///
   /// Returns the Logs
   ///
@@ -216,7 +242,7 @@ base class EvmRpcClient {
       args: [txHash],
     );
 
-    return response;
+    return response ?? {};
   }
 
   ///
@@ -289,4 +315,15 @@ dynamic dynToHex(dynamic value) {
   if (value is String) return value;
 
   throw Exception('Could not convert $value to hex');
+}
+
+class RateLimitingException implements Exception {
+  final String message;
+
+  RateLimitingException(this.message);
+
+  @override
+  String toString() {
+    return 'RateLimitingException: $message';
+  }
 }

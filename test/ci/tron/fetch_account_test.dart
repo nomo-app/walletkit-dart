@@ -1,15 +1,12 @@
+@Timeout(Duration(minutes: 5))
 import 'dart:convert';
-
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+import '../../utils.dart';
 import 'derive_address_test.dart';
 
 void main() {
   test('Test Tronscan', () async {
-    final tronScan = TronScanRepository(
-      apiKeys: TRON_Network.blockExplorer!.$2.toList(),
-    );
-
     final block = await tronScan.getLatestBlock();
 
     print(block);
@@ -130,9 +127,7 @@ void main() {
   });
 
   test('Solidity RPC', () async {
-    final rpc = EvmRpcInterface(TRON_NETWORK());
-
-    final balance = await rpc.fetchBalance(
+    final balance = await tronSolidityRPC.fetchBalance(
       address: "0x7F9DC8311E51C1685764BBB0F5CEAC7AD79B0128",
     );
 
@@ -152,13 +147,12 @@ void main() {
     print(resource);
   });
 
-  test('Fetch Tron Balance ', () async {
-    final tronScan = TronScanRepository(
-      apiKeys: TRON_Network.blockExplorer!.$2.toList(),
+  test('Fetch Tron Transaction List over TronScan ', () async {
+    final scanTxs = await tronScan.getTransactions(
+      address: tronAddress,
+      token: tron,
+      limit: 50,
     );
-
-    final scanTxs =
-        await tronScan.getTransactions(address: tronAddress, token: tron);
 
     expect(scanTxs.length, greaterThanOrEqualTo(52));
   });

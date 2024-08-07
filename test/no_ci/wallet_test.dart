@@ -11,11 +11,10 @@ import '../ci/fetching/fetch_utxo_transactions_test.dart';
 void main() {
   final devSeed = loadDevSeedFromEnv();
   final testSeed = loadFromEnv("DEV_SEED");
-  final zeniqSmartRpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
 
   // Some sort of to low nonce error
   test('Test ZeniqSmart Sending: 1 Zeniq to Spoil Wallet', () async {
-    final hash = await zeniqSmartRpcInterface.sendCoin(
+    final hash = await zeniqSmartChainRPC.sendCoin(
       intent: TransferIntent(
         recipient: arbitrumTestWallet,
         amount: Amount.convert(value: 0.1, decimals: zeniqSmart.decimals),
@@ -31,7 +30,7 @@ void main() {
   });
 
   test('Test ZeniqSmart Sending: 0.001 Avinoc ZSC to Spoil Wallet', () async {
-    final hash = await zeniqSmartRpcInterface.sendERC20Token(
+    final hash = await zeniqSmartChainRPC.sendERC20Token(
       intent: TransferIntent(
         recipient: arbitrumTestWallet,
         amount: Amount.convert(value: 0.001, decimals: avinocZSC.decimals),

@@ -2,7 +2,7 @@ name: UI-KIT CI/CD
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
   push:
     branches:
       - main
@@ -11,42 +11,44 @@ on:
 env:
   REJECT_SEED: ${{ secrets.REJECT_SEED }}
   TRON_SEED: ${{ secrets.TRON_SEED }}
+  ETHERSCAN_API_KEYS: ${{ secrets.ETHERSCAN_API_KEYS }}
+  TRONSCAN_API_KEYS: ${{ secrets.TRONSCAN_API_KEYS }}
 
 jobs:
   lint:
-   name: Static code analysis and run unit tests
-   runs-on: ubuntu-latest
-   steps:
-     - uses: actions/checkout@v3
-     - uses: subosito/flutter-action@v1
-     - run: git submodule update --init --recursive
-     - run: flutter pub get
-     - run: cd packages/bip39 && flutter pub get
-     - run: cd ..
-     - run: cd ..
-     - name: Lint analysis
-       run: flutter analyze
-     - name: ci tests
-       run: dart test test/ci
-  
+    name: Static code analysis and run unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v1
+      - run: git submodule update --init --recursive
+      - run: flutter pub get
+      - run: cd packages/bip39 && flutter pub get
+      - run: cd ..
+      - run: cd ..
+      - name: Lint analysis
+        run: flutter analyze
+      - name: ci tests
+        run: dart test test/ci
+
   generate-docs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
 
-    - name: Install dartdoc
-      run: flutter pub global activate dartdoc
+      - name: Install dartdoc
+        run: flutter pub global activate dartdoc
 
-    - name: Generate API docs
-      run: flutter pub global run dartdoc
+      - name: Generate API docs
+        run: flutter pub global run dartdoc
 
-    - name: Copy Docs output
-      run: cp -R doc/api docs
+      - name: Copy Docs output
+        run: cp -R doc/api docs
 
-    - name: Deploy to Github Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.ACTION_GITHUB_TOKEN }}
-        publish_dir: ./docs
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACTION_GITHUB_TOKEN }}
+          publish_dir: ./docs

@@ -7,8 +7,8 @@ import 'package:walletkit_dart/src/common/http_client.dart';
 typedef JSON = Map<String, dynamic>;
 typedef JSONList = List<Map<String, dynamic>>;
 
-const retryInterval = Duration(seconds: 1);
-const timeoutDuration = Duration(seconds: 10);
+const retryInterval = Duration(seconds: 3);
+const timeoutDuration = Duration(seconds: 35);
 
 abstract class HTTPRepository {
   final List<String> apiKeys;
@@ -38,7 +38,7 @@ abstract class HTTPRepository {
 
   Future<T> getCall<T>(String url) async {
     final uri = Uri.parse(url);
-    String? apiKey = _getApiKey(0);
+    String? apiKey = _getApiKey(apiKeys.length);
     for (int i = 0; true; i++) {
       try {
         return await _getCall<T>(uri, apiKey: apiKey);

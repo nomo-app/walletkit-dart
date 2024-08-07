@@ -4,7 +4,6 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 
 void main() {
-  final zkSyncRPC = EvmRpcInterface(ZKSyncNetwork);
   final testSeed = loadFromEnv("DEV_SEED");
   test('Test zkSync wbtc send', () async {
     final intent = TransferIntent<EvmFeeInformation>(
@@ -15,7 +14,7 @@ void main() {
       memo: null,
     );
 
-    final hash = await zkSyncRPC.sendERC20Token(
+    final hash = await zksyncRPC.sendERC20Token(
       intent: intent,
       seed: testSeed,
       from: arbitrumTestWallet,
@@ -33,7 +32,7 @@ void main() {
       memo: null,
     );
 
-    final hashETH = await zkSyncRPC.sendCoin(
+    final hashETH = await zksyncRPC.sendCoin(
       intent: intentETH,
       from: arbitrumTestWallet,
       seed: testSeed,

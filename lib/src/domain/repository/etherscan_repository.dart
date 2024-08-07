@@ -17,7 +17,10 @@ abstract class EtherscanRepository {
   String get _balanceTokenEndpoint =>
       "$base?module=account&action=tokenbalance&tag=latest";
 
-  String get apiyKey {
+  String? get apiKey {
+    if (apiKeys.isEmpty) {
+      return null;
+    }
     Random random = Random();
     int index = random.nextInt(apiKeys.length);
     return apiKeys.elementAt(index);
@@ -25,7 +28,7 @@ abstract class EtherscanRepository {
 
   Duration get randomWaitTime {
     Random random = Random();
-    int index = random.nextInt(3) + 2;
+    int index = random.nextInt(4) + 2;
     return Duration(seconds: index);
   }
 
@@ -38,8 +41,8 @@ abstract class EtherscanRepository {
     String endpoint = rawEndpoint;
 
     for (var i = 0; i < maxRetries; i++) {
-      if (useApiKey) {
-        endpoint = "$rawEndpoint&apikey=$apiyKey";
+      if (useApiKey && apiKey != null) {
+        endpoint = "$rawEndpoint&apikey=$apiKey";
       } else {
         endpoint = rawEndpoint;
       }
@@ -77,6 +80,8 @@ abstract class EtherscanRepository {
           }
         }
       }
+      Logger.log(response.body);
+
       final waitTime = randomWaitTime;
 
       await Future.delayed(waitTime);
@@ -87,15 +92,18 @@ abstract class EtherscanRepository {
 
 Future<T> _fetchAvaTransactionWithRateLimits<T>(
   final String rawEndpoint,
-  final String apiKey, {
+  final String? apiKey, {
   int maxRetries = 10,
   Duration waitTime = const Duration(seconds: 5),
 }) async {
   for (var i = 0; i < maxRetries; i++) {
-    final response = await HTTPService.getWithHeaders(rawEndpoint, headers: {
-      'Content-Type': 'application/json',
-      'x-glacier-api-key': apiKey
-    });
+    final response = await HTTPService.getWithHeaders(
+      rawEndpoint,
+      headers: {
+        'Content-Type': 'application/json',
+        if (apiKey != null) 'x-glacier-api-key': apiKey
+      },
+    );
 
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
@@ -113,10 +121,6 @@ Future<T> _fetchAvaTransactionWithRateLimits<T>(
 class EVMExplorer extends EtherscanRepository {
   const EVMExplorer(super.base, super.apiKeys);
 
-  EVMExplorer.fromType(EVMNetworkType type)
-      : assert(type.blockExplorer != null, "No block explorer defined"),
-        super(type.blockExplorer!.$1, type.blockExplorer!.$2);
-
   ///
   /// Fetch all Transactions for the given [token] on the given [address] for Avalanche
   ///
@@ -130,7 +134,7 @@ class EVMExplorer extends EtherscanRepository {
     }
 
     final txResults = await _fetchAvaTransactionWithRateLimits(
-        "$base$address/transactions", apiyKey);
+        "$base$address/transactions", apiKey);
     return [
       for (final tx in txResults)
         AvalancheTransaction.fromJson(
