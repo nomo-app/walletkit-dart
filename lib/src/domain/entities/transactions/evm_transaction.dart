@@ -1,11 +1,8 @@
-import 'dart:convert';
-import 'dart:typed_data';
-import 'package:hive/hive.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
+part of 'generic_transaction.dart';
 
-abstract base class EVMTransaction extends GenericTransaction {
-  @HiveField(11)
+base class EVMTransaction extends GenericTransaction {
   final Uint8List input;
+  final ExternalContractFunctionWithValues? decodedInput;
 
   const EVMTransaction({
     required super.hash,
@@ -20,6 +17,7 @@ abstract base class EVMTransaction extends GenericTransaction {
     required super.token,
     required super.status,
     required this.input,
+    required this.decodedInput,
   });
 
   String? get uTF8Input {
@@ -30,21 +28,31 @@ abstract base class EVMTransaction extends GenericTransaction {
     }
   }
 
-  // Future<FunctionSignatureWithArgs?> get getFunctionSignature async {
-  //   if (!_cachedFunctionSigs.containsKey(hash)) {
-  //     try {
-  //       _cachedFunctionSigs[hash] = FunctionSignatureWithArgs.fromData(input);
-  //     } catch (e) {
-  //       try {
-  //         _cachedFunctionSigs[hash] =
-  //             await FunctionSignatureWithArgs.fetchFunctionSignature(input);
-  //       } catch (e) {
-  //         return null;
-  //       }
-  //     }
-  //   }
-  //   return _cachedFunctionSigs[hash];
-  // }
+  Future<ExternalContractFunctionWithValues?> get getFunctionSignature async {
+    if (!_cachedFunctionSigs.containsKey(hash)) {
+      _cachedFunctionSigs[hash] =
+          await ContractFunctionWithValues.decodeRawWithFetch(data: input);
+    }
+    return _cachedFunctionSigs[hash];
+  }
+
+  EVMTransaction copyWith({ExternalContractFunctionWithValues? decodedInput}) {
+    return EVMTransaction(
+      hash: hash,
+      block: block,
+      confirmations: confirmations,
+      timeMilli: timeMilli,
+      amount: amount,
+      fee: fee,
+      sender: sender,
+      recipient: recipient,
+      transferMethod: transferMethod,
+      status: status,
+      input: input,
+      token: token,
+      decodedInput: decodedInput ?? this.decodedInput,
+    );
+  }
 
   @override
   Map<String, dynamic> toJson() {
@@ -54,14 +62,16 @@ abstract base class EVMTransaction extends GenericTransaction {
       'confirmations': confirmations,
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
-      if (fee != null) 'fee': fee!.toJson(),
+      'fee': fee?.toJson(),
       'sender': sender,
       'recipient': recipient,
-      'transferMethod': transferMethod.toString(),
-      'status': status.toString(),
+      'transferMethod': transferMethod.index,
+      'status': status.index,
       'input': input.toHex,
+      'token': token.toJson(),
+      'decodedInput': decodedInput?.toJson(),
     };
   }
 }
 
-// Map<String, FunctionSignatureWithArgs> _cachedFunctionSigs = {};
+Map<String, ExternalContractFunctionWithValues> _cachedFunctionSigs = {};

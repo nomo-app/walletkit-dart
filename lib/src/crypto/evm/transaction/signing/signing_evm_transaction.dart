@@ -18,6 +18,16 @@ class Signature {
     return 'Signature{r: $r, s: $s, v: $v}';
   }
 
+  factory Signature.fromHex(String hex) => Signature.fromBytes(hex.hexToBytes);
+
+  factory Signature.fromBytes(Uint8List bytes) {
+    final r = bytes.sublist(0, 32).toBigInt(littleEndian: false);
+    final s = bytes.sublist(32, 64).toBigInt(littleEndian: false);
+    final v = bytes[64];
+
+    return Signature(r, s, v);
+  }
+
   factory Signature.fromRSV(BigInt r, BigInt s, int v) {
     return Signature(r, s, v);
   }
@@ -78,7 +88,7 @@ class Signature {
     final concat = uint8ListFromList(prefixBytes + payload);
 
     final signature = Signature.createSignature(concat, privateKey);
-    return signature.toBytes();
+    return signature.bytes;
   }
 
   bool isValidETHSignature(
@@ -91,10 +101,14 @@ class Signature {
     return recoverdPublicKey.toHex == publicKey.toHex;
   }
 
-  Uint8List toBytes() {
+  Uint8List get bytes {
     final rBytes = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(r));
     final sBytes = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(s));
 
     return Uint8List.fromList([...rBytes, ...sBytes, v]);
+  }
+
+  String get hex {
+    return bytes.toHex;
   }
 }

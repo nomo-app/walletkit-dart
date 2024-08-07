@@ -2,11 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/src/crypto/evm/domain/queued_rpc_interface.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
@@ -390,12 +386,10 @@ final class EvmRpcInterface extends QueuedRpcInterface {
   /// Used to create a raw Transactions
   /// Fetches the gasPrice and gasLimit from the network
   /// Fetches the nonce from the network
-  /// Signs the transaction
   ///
-  Future<InternalEVMTransaction> buildTransaction({
+  Future<RawEVMTransaction> buildUnsignedTransaction({
     required String sender,
     required String recipient,
-    required Uint8List seed,
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
@@ -421,6 +415,30 @@ final class EvmRpcInterface extends QueuedRpcInterface {
       value: value ?? BigInt.zero,
       chainId: type.chainId.toBigInt,
       data: data,
+    );
+    return unsignedTx;
+  }
+
+  ///
+  /// Used to create a raw Transactions
+  /// Fetches the gasPrice and gasLimit from the network
+  /// Fetches the nonce from the network
+  /// Signs the transaction
+  ///
+  Future<InternalEVMTransaction> buildTransaction({
+    required String sender,
+    required String recipient,
+    required Uint8List seed,
+    required EvmFeeInformation? feeInfo,
+    required Uint8List? data,
+    required BigInt? value,
+  }) async {
+    final unsignedTx = await buildUnsignedTransaction(
+      sender: sender,
+      recipient: recipient,
+      feeInfo: feeInfo,
+      data: data,
+      value: value,
     );
 
     final signedTx = InternalEVMTransaction.signTransaction(
@@ -809,7 +827,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
       final json = await performTask(
         (client) => client.getTransactionReceipt(hash),
       );
-      txStatusCache[hash] = _confirmationStatusFromJson(json);
+      txStatusCache[hash] = _confirmationStatusFromJson(json ?? {});
     }
     return txStatusCache[hash]!;
   }
@@ -826,5 +844,45 @@ final class EvmRpcInterface extends QueuedRpcInterface {
     }
 
     return ConfirmationStatus.pending;
+  }
+
+  ///
+  /// Get Current Block
+  ///
+  Future<Json> getCurrentBlock() async {
+    final blockNumber = await getBlockNumber();
+    return await performTask(
+      (client) => client.getBlockByNumber(blockNumber),
+    );
+  }
+
+  ///
+  /// Get Block Number
+  ///
+  Future<int> getBlockNumber() async {
+    return await performTask(
+      (client) => client.getBlockNumber(),
+    );
+  }
+
+  Future<bool> waitForTxConfirmation(
+    String hash, {
+    Duration interval = const Duration(seconds: 5),
+  }) async {
+    while (true) {
+      await Future.delayed(interval);
+
+      final receipt = await performTask(
+        (client) => client.getTransactionReceipt(hash),
+      );
+
+      switch (receipt?['status']) {
+        case '0x1':
+          return true;
+        case '0x0':
+          return false;
+        default:
+      }
+    }
   }
 }

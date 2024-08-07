@@ -9,9 +9,7 @@ export 'src/domain/constants.dart';
 export 'src/domain/entities/asset/token_entity.dart';
 export 'src/domain/extensions.dart';
 export 'src/domain/entities/transactions/generic_transaction.dart';
-export 'src/domain/entities/transactions/utxo_transaction.dart';
 export 'src/domain/entities/transactions/etherscan_transaction.dart';
-export 'src/domain/entities/transactions/evm_transaction.dart';
 export 'src/domain/entities/tx_gasFee_entity.dart';
 export 'src/domain/entities/erc721_entity.dart';
 export 'src/crypto/utxo/utxo_analyzer.dart';
@@ -73,3 +71,12 @@ export 'src/crypto/evm/contract/contract_abi.dart';
 export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_router.dart';
 export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_factory.dart';
 export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_pair.dart';
+
+export 'src/crypto/evm/transaction/internal_evm_transaction.dart';
+export 'src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
+
+export 'src/crypto/evm/contract/contract_function.dart';
+export 'src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
+export 'src/crypto/evm/contract/contract_function_param.dart';
+
+export 'src/common/types.dart';

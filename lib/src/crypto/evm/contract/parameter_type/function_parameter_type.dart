@@ -3,7 +3,6 @@ library function_parameter_type;
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
@@ -203,9 +202,9 @@ final class TupleFunctionParamType extends FunctionParamType<List<dynamic>> {
   @override
   Uint8List encode(List<dynamic> value) {
     final builder = DataFieldBuilder(
-      fields: {
-        for (var i = 0; i < types.length; i++) types[i]: value[i],
-      },
+      fields: [
+        for (var i = 0; i < types.length; i++) (types[i], value[i]),
+      ],
     );
     return builder.buildDataField();
   }

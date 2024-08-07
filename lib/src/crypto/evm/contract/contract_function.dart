@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_param.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/src/domain/repository/function_selector_repository.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -48,7 +46,7 @@ class ExternalContractFunction {
     final params = [
       for (final param in params_s)
         FunctionParam(
-          name: param,
+          name: null,
           type: FunctionParamType.fromString(param),
         ),
     ];
@@ -123,6 +121,30 @@ class ExternalContractFunctionWithValues extends ExternalContractFunction {
     required this.parameters,
     required super.name,
   }) : super(parameters: parameters);
+
+  Json toJson() {
+    return {
+      "name": name,
+      "parameters": parameters.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  factory ExternalContractFunctionWithValues.fromJson(Map json) {
+    if (json
+        case {
+          "name": String name,
+          "parameters": List<dynamic> parameters,
+        }) {
+      return ExternalContractFunctionWithValues(
+        name: name,
+        parameters: [
+          for (final param in parameters)
+            FunctionParamWithValue.fromJson(param),
+        ],
+      );
+    }
+    throw Exception("Invalid json");
+  }
 }
 
 ///
@@ -154,15 +176,20 @@ class ContractFunction extends ExternalContractFunction
   ContractFunctionWithValues addValues({
     required List<dynamic> values,
   }) {
+    assert(values.length == parameters.length, "Provided values are invalid");
+
     final paramsWithValues = <FunctionParamWithValue>[];
     for (var i = 0; i < parameters.length; i++) {
       final param = parameters[i];
       final value = values[i];
 
       // if (param.type.internalType != value.runtimeType) {
-      //   throw Exception(
-      //     "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
-      //   );
+      //   if (param.type.internalType == BigInt &&
+      //       value.runtimeType.toString() == "_BigIntImpl") {
+      //   } else
+      //     throw Exception(
+      //       "Invalid type for param: ${param.name}. Expected: ${param.type.internalType} Got: ${value.runtimeType}",
+      //     );
       // }
 
       final paramWithValue = FunctionParamWithValue.fromParam(param, value);
@@ -209,37 +236,43 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
     required Uint8List data,
     ExternalContractFunction? function,
   }) async {
-    assert(data.length >= 4, "Invalid data length");
-    final function_selector = data.sublist(0, 4).toHex;
+    try {
+      assert(data.length >= 4, "Invalid data length");
+      final function_selector = data.sublist(0, 4).toHex;
 
-    if (function != null) {
-      return _decodeExternal(data: data, function: function);
+      if (function != null) {
+        return _decodeExternal(data: data, function: function);
+      }
+
+      final localResult = decodeRaw(data: data);
+
+      if (localResult != null) {
+        return localResult;
+      }
+
+      /// Fetch the function from 4byte.directory
+      final externalResult =
+          await FunctionSelectorRepository.fetchSelector(function_selector);
+
+      if (externalResult != null) {
+        return _decodeExternal(data: data, function: externalResult);
+      }
+
+      // Fallback
+      return ExternalContractFunctionWithValues(
+        name: "Unknown",
+        parameters: [
+          FunctionParamWithValue.fromParam<Uint8List>(
+            FunctionParam(name: "data", type: FunctionParamBytes()),
+            data,
+          ),
+        ],
+      );
+    } catch (e) {
+      // Fallback
+
+      throw FunctionDecodingException("Error decoding function: $e");
     }
-
-    final localResult = decodeRaw(data: data);
-
-    if (localResult != null) {
-      return localResult;
-    }
-
-    /// Fetch the function from 4byte.directory
-    final externalResult =
-        await FunctionSelectorRepository.fetchSelector(function_selector);
-
-    if (externalResult != null) {
-      return _decodeExternal(data: data, function: externalResult);
-    }
-
-    // Fallback
-    return ExternalContractFunctionWithValues(
-      name: "Unknown",
-      parameters: [
-        FunctionParamWithValue.fromParam<Uint8List>(
-          FunctionParam(name: "data", type: FunctionParamBytes()),
-          data,
-        ),
-      ],
-    );
   }
 
   ///
@@ -362,5 +395,27 @@ class ContractFunctionWithValuesAndOutputs extends ContractFunctionWithValues {
       parameters: function.parameters,
       stateMutability: function.stateMutability,
     );
+  }
+}
+
+class FunctionSelectorException implements Exception {
+  final String message;
+
+  FunctionSelectorException(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
+}
+
+class FunctionDecodingException implements Exception {
+  final String message;
+
+  FunctionDecodingException(this.message);
+
+  @override
+  String toString() {
+    return message;
   }
 }

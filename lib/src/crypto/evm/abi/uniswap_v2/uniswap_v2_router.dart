@@ -1,5 +1,5 @@
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
+import 'dart:typed_data';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 final uniswap_v2_router_abi = ContractABI.fromAbi("""
 [
@@ -985,21 +985,6 @@ class UniswapV2Router extends InternalContract {
           abi: uniswap_v2_router_abi,
         );
 
-  // Future<BigInt> getAmountOut({
-  //   required BigInt amountIn,
-  //   required BigInt reserveIn,
-  //   required BigInt reserveOut,
-  // }) async {
-  //   final function = abi.functions[6];
-
-  //   final result = await read(
-  //     function: function,
-  //     params: [amountIn, reserveIn, reserveOut],
-  //   );
-
-  //   return result[0] as BigInt;
-  // }
-
   Future<List<BigInt>> getAmountsOut({
     required BigInt amountIn,
     required List<String> path,
@@ -1015,87 +1000,280 @@ class UniswapV2Router extends InternalContract {
     ];
   }
 
-  // Future<BigInt> getAmountIn({
-  //   required BigInt amountOut,
-  //   required BigInt reserveIn,
-  //   required BigInt reserveOut,
-  // }) async {
-  //   final function = abi.functions[5];
+  Future<List<BigInt>> getAmountsIn({
+    required BigInt amountOut,
+    required List<String> path,
+  }) async {
+    final function = abi.getFunction("getAmountsIn")!;
 
-  //   final result = await read(
-  //     function: function,
-  //     params: [amountOut, reserveIn, reserveOut],
-  //   );
+    final result = await read(
+      function: function.addValues(values: [amountOut, path]),
+    );
 
-  //   return result[0] as BigInt;
-  // }
+    return [
+      for (final r in result.outputs.first.value) r as BigInt,
+    ];
+  }
 
-  // Future<String> swapExactEthForTokens({
-  //   required BigInt amountIn,
-  //   required BigInt amountOutMin,
-  //   required List<String> path,
-  //   required String to,
-  //   required BigInt deadline,
-  //   required Uint8List seed,
-  //   required String sender,
-  // }) async {
-  //   final function = abi.functions[17];
+  Future<String> swapExactEthForTokens({
+    required BigInt amountIn,
+    required BigInt amountOutMin,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required Uint8List seed,
+    required String sender,
+    EvmFeeInformation? feeInformation,
+  }) async {
+    final function = abi.getFunction("swapExactETHForTokens")!;
 
-  //   final result = await interact(
-  //     seed: seed,
-  //     value: amountIn,
-  //     function: function,
-  //     params: [
-  //       amountOutMin,
-  //       path,
-  //       to,
-  //       deadline,
-  //     ],
-  //     sender: sender,
-  //   );
+    final result = await interact(
+      seed: seed,
+      value: amountIn,
+      function: function.addValues(values: [amountOutMin, path, to, deadline]),
+      sender: sender,
+      feeInfo: feeInformation,
+    );
 
-  //   return result;
-  // }
+    return result;
+  }
 
-  // Future<String> swapExactTokensForEth({
-  //   required BigInt amountIn,
-  //   required BigInt amountOutMin,
-  //   required List<String> path,
-  //   required String to,
-  //   required BigInt deadline,
-  //   required Uint8List seed,
-  //   required String sender,
-  // }) async {
-  //   final function = abi.functions[19];
+  Future<RawEVMTransaction> swapExactEthForTokensTransaction({
+    required BigInt amountIn,
+    required BigInt amountOutMin,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+    EvmFeeInformation? feeInformation,
+  }) async {
+    final function = abi.getFunction("swapExactETHForTokens")!;
 
-  //   final result = await interact(
-  //     seed: seed,
-  //     sender: sender,
-  //     function: function,
-  //     params: [amountIn, amountOutMin, path, to, deadline],
-  //   );
+    final result = await buildTransactionForFunction(
+      value: amountIn,
+      function: function.addValues(values: [amountOutMin, path, to, deadline]),
+      sender: sender,
+      feeInfo: feeInformation,
+    );
 
-  //   return result;
-  // }
+    return result;
+  }
 
-  // Future<String> swapExactTokenForTokens({
-  //   required BigInt amountIn,
-  //   required BigInt amountOutMin,
-  //   required List<String> path,
-  //   required String to,
-  //   required BigInt deadline,
-  //   required Uint8List seed,
-  //   required String sender,
-  // }) async {
-  //   final function = abi.functions[21];
+  Future<String> swapExactTokensForEth({
+    required BigInt amountIn,
+    required BigInt amountOutMin,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required Uint8List seed,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapExactTokensForETH")!;
 
-  //   final result = await interact(
-  //     seed: seed,
-  //     sender: sender,
-  //     function: function,
-  //     params: [amountIn, amountOutMin, path, to, deadline],
-  //   );
+    final result = await interact(
+      seed: seed,
+      sender: sender,
+      function: function
+          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+    );
 
-  //   return result;
-  // }
+    return result;
+  }
+
+  Future<RawEVMTransaction> swapExactTokensForEthTx({
+    required BigInt amountIn,
+    required BigInt amountOutMin,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapExactTokensForETH")!;
+
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function
+          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+    );
+
+    return result;
+  }
+
+  Future<String> swapExactTokenForTokens({
+    required BigInt amountIn,
+    required BigInt amountOutMin,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required Uint8List seed,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapExactTokensForTokens")!;
+
+    final result = await interact(
+      seed: seed,
+      sender: sender,
+      function: function
+          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+    );
+
+    return result;
+  }
+
+  Future<RawEVMTransaction> swapExactTokenForTokensTx({
+    required BigInt amountIn,
+    required BigInt amountOutMin,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapExactTokensForTokens")!;
+
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function
+          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+    );
+
+    return result;
+  }
+
+  Future<String> swapEthForExactTokens({
+    required BigInt amountOut,
+    required BigInt amountInMax,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required Uint8List seed,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapETHForExactTokens")!;
+
+    final result = await interact(
+      seed: seed,
+      sender: sender,
+      function: function.addValues(values: [amountOut, path, to, deadline]),
+      value: amountInMax,
+    );
+
+    return result;
+  }
+
+  Future<RawEVMTransaction> swapEthForExactTokensTx({
+    required BigInt amountOut,
+    required BigInt amountInMax,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapETHForExactTokens")!;
+
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function.addValues(values: [amountOut, path, to, deadline]),
+      value: amountInMax,
+    );
+
+    return result;
+  }
+
+  Future<String> swapTokenForExactEth({
+    required BigInt amountOut,
+    required BigInt amountInMax,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required Uint8List seed,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapTokensForExactETH")!;
+
+    final result = await interact(
+      seed: seed,
+      sender: sender,
+      function: function
+          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+    );
+
+    return result;
+  }
+
+  Future<RawEVMTransaction> swapTokenForExactEthTx({
+    required BigInt amountOut,
+    required BigInt amountInMax,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapTokensForExactETH")!;
+
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function
+          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+    );
+
+    return result;
+  }
+
+  Future<String> swapTokenForExactTokens({
+    required BigInt amountOut,
+    required BigInt amountInMax,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required Uint8List seed,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapTokensForExactTokens")!;
+
+    final result = await interact(
+      seed: seed,
+      sender: sender,
+      function: function
+          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+    );
+
+    return result;
+  }
+
+  Future<RawEVMTransaction> swapTokenForExactTokensTx({
+    required BigInt amountOut,
+    required BigInt amountInMax,
+    required List<String> path,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("swapTokensForExactTokens")!;
+
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function
+          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+    );
+
+    return result;
+  }
+
+  Future<BigInt> quote({
+    required BigInt amountA,
+    required BigInt reserveA,
+    required BigInt reserveB,
+  }) async {
+    final function = abi.getFunction("quote")!;
+
+    final result = await read(
+      function: function.addValues(values: [
+        amountA,
+        reserveA,
+        reserveB,
+      ]),
+    );
+
+    return result.outputs.first.value as BigInt;
+  }
 }

@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/contract/contract_function.dart';
-import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 import 'package:walletkit_dart/src/utils/buffer.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -10,7 +8,7 @@ final Uint8List empty_bytes = Uint8List.fromList(List.filled(size_unit, -1));
 class DataFieldBuilder {
   final BufferBuilder buffer = BufferBuilder();
 
-  final Map<FunctionParamType, dynamic> fields;
+  final List<(FunctionParamType, dynamic)> fields;
 
   final Uint8List? selector;
 
@@ -23,10 +21,10 @@ class DataFieldBuilder {
     required ContractFunctionWithValues function,
   }) {
     return DataFieldBuilder(
-      fields: {
+      fields: [
         for (final paramWithValue in function.parameters)
-          paramWithValue.type: paramWithValue.value,
-      },
+          (paramWithValue.type, paramWithValue.value)
+      ],
       selector: function.functionSelector,
     );
   }
@@ -37,21 +35,24 @@ class DataFieldBuilder {
     assert(selector == null || selector!.length == 4);
 
     for (var i = 0; i < fields.length; i++) {
-      final type = fields.keys.elementAt(i);
+      final field = fields[i];
+
+      final type = field.$1;
 
       if (type.isDynamic) {
         dynamicHeaderOffsets[i] = buffer.length;
         _addField(empty_bytes);
         continue;
       }
-      final value = fields[type];
+      final value = field.$2;
       final encoded = type.encode(value);
       _addField(encoded);
     }
 
     /// Update Dynamic Fields
     for (var i = 0; i < fields.length; i++) {
-      final type = fields.keys.elementAt(i);
+      final field = fields[i];
+      final type = field.$1;
 
       /// Skip if not dynamic
       if (type.isDynamic == false) continue;
@@ -64,7 +65,7 @@ class DataFieldBuilder {
       _replace(header, headerOffset);
 
       /// Write dynamic field
-      final value = fields[type];
+      final value = field.$2;
       final encoded = type.encode(value);
       _addField(encoded);
     }

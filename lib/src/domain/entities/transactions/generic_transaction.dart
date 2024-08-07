@@ -1,33 +1,26 @@
 library generic_transaction;
 
-import 'package:hive/hive.dart';
-import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
+import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
-part 'generic_transaction.g.dart';
+part 'evm_transaction.dart';
+part 'utxo_transaction.dart';
 
-base class GenericTransaction implements Comparable<GenericTransaction> {
-  @HiveField(0)
+sealed class GenericTransaction implements Comparable<GenericTransaction> {
   final String hash;
-  @HiveField(1)
   final int block;
-  @HiveField(2)
   final int confirmations;
-  @HiveField(3)
   final int timeMilli;
-  @HiveField(4)
   final TokenEntity token;
-  @HiveField(5)
   final Amount amount;
-  @HiveField(6)
   final Amount? fee;
-  @HiveField(7)
   final String sender;
-  @HiveField(8)
   final String recipient;
-  @HiveField(9)
   final TransactionTransferMethod transferMethod;
-  @HiveField(10)
   final ConfirmationStatus status;
 
   const GenericTransaction({
@@ -43,6 +36,9 @@ base class GenericTransaction implements Comparable<GenericTransaction> {
     required this.token,
     required this.status,
   });
+
+  EVMTransaction? get evmTx =>
+      this is EVMTransaction ? this as EVMTransaction : null;
 
   BigInt get value => amount.value;
 
@@ -82,37 +78,91 @@ base class GenericTransaction implements Comparable<GenericTransaction> {
         other.block == block;
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'hash': hash,
-      'block': block,
-      'confirmations': confirmations,
-      'timeMilli': timeMilli,
-      'amount': amount.toJson(),
-      if (fee != null) 'fee': fee!.toJson(),
-      'sender': sender,
-      'recipient': recipient,
-      'transferMethod': transferMethod.displayName,
-      'status': status.displayName,
+  Map<String, dynamic> toJson();
+
+  factory GenericTransaction.fromJson(Map json) {
+    return switch (json) {
+      {
+        'hash': String hash,
+        'block': int block,
+        'confirmations': int confirmations,
+        'timeMilli': int timeMilli,
+        'amount': Map amount,
+        'fee': Map? fee,
+        'sender': String sender,
+        'recipient': String recipient,
+        'transferMethod': int transferMethod,
+        'status': int status,
+        'token': Map token,
+        'input': String input,
+        'decodedInput': Map? decodedInput,
+      } =>
+        EVMTransaction(
+          hash: hash,
+          block: block,
+          confirmations: confirmations,
+          timeMilli: timeMilli,
+          amount: Amount.fromJson(amount),
+          fee: fee != null ? Amount.fromJson(fee) : null,
+          sender: sender,
+          recipient: recipient,
+          transferMethod: TransactionTransferMethod.fromJson(transferMethod),
+          status: ConfirmationStatus.fromJson(status),
+          input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
+          token: TokenEntity.fromJson(token),
+          decodedInput: decodedInput != null
+              ? ExternalContractFunctionWithValues.fromJson(decodedInput)
+              : null,
+        ),
+      {
+        'hash': String hash,
+        'block': int block,
+        'confirmations': int confirmations,
+        'timeMilli': int timeMilli,
+        'amount': Map amount,
+        'fee': Map? fee,
+        'sender': String sender,
+        'recipient': String recipient,
+        'transferMethod': int transferMethod,
+        'status': int status,
+        'token': Map token,
+        'id': String id,
+        'version': int version,
+        'inputs': JsonList inputs,
+        'outputs': JsonList outputs,
+      } =>
+        UTXOTransaction(
+          hash: hash,
+          block: block,
+          confirmations: confirmations,
+          timeMilli: timeMilli,
+          amount: Amount.fromJson(amount),
+          fee: fee != null ? Amount.fromJson(fee) : null,
+          sender: sender,
+          recipient: recipient,
+          transferMethod: TransactionTransferMethod.fromJson(transferMethod),
+          status: ConfirmationStatus.fromJson(status),
+          id: id,
+          version: version,
+          inputs: inputs.map((e) => ElectrumInput.fromJson(e)).toList(),
+          outputs: outputs.map((e) => ElectrumOutput.fromJson(e)).toList(),
+          token: TokenEntity.fromJson(token),
+        ),
+      _ => throw UnimplementedError("Unknown json: $json"),
     };
   }
 }
 
-@HiveType(typeId: 18)
 enum ConfirmationStatus {
-  @HiveField(0)
   notSubmitted("not_submitted"),
 
   /// Transaction is not confirmed yet
-  @HiveField(1)
   pending("pending"),
 
   /// Transaction is confirmed
-  @HiveField(2)
   confirmed("confirmed"),
 
   /// Transaction is failed
-  @HiveField(3)
   failed("failed");
 
   /// TODO: When is a transaction failed?
@@ -136,20 +186,20 @@ enum ConfirmationStatus {
     return ConfirmationStatus.failed;
   }
 
+  static ConfirmationStatus fromJson(int status) => values[status];
+
   final String displayName;
 
   const ConfirmationStatus(this.displayName);
 }
 
-@HiveType(typeId: 9)
 enum TransactionTransferMethod {
-  @HiveField(0)
   receive("receive"),
-  @HiveField(1)
+
   send("send"),
-  @HiveField(2)
+
   own("own"),
-  @HiveField(3)
+
   unknown("unknown");
 
   static TransactionTransferMethod fromAddress(
@@ -167,4 +217,6 @@ enum TransactionTransferMethod {
   final String displayName;
 
   const TransactionTransferMethod(this.displayName);
+
+  static TransactionTransferMethod fromJson(int index) => values[index];
 }

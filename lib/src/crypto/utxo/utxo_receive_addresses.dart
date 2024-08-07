@@ -1,4 +1,4 @@
-import 'package:walletkit_dart/src/domain/entities/transactions/utxo_transaction.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 String findUnusedAddress({
   required Iterable<String> addresses,

@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const erc20TransferSig = "a9059cbb";
@@ -91,8 +90,9 @@ base class EvmRpcClient {
   }
 
   Future<InternalEVMTransaction> getTransactionByHash(
-    String messageHash,
-  ) async {
+    String messageHash, [
+    int? chainId,
+  ]) async {
     final response = await _call<Json>(
       'eth_getTransactionByHash',
       args: [messageHash],
@@ -100,7 +100,7 @@ base class EvmRpcClient {
 
     final v = response['v'].toString().toIntOrNull ?? 0;
 
-    final chainIDV = extractChainId(v);
+    final chainIDV = chainId ?? extractChainId(v);
     return InternalEVMTransaction(
       nonce: response['nonce'].toString().toBigInt,
       gasPrice: response['gasPrice'].toString().toBigInt,
@@ -113,6 +113,15 @@ base class EvmRpcClient {
       r: response['r'].toString().toBigInt,
       s: response['s'].toString().toBigInt,
     );
+  }
+
+  Future<Json> getBlockByNumber(int blockNumber) async {
+    final response = await _call<Json>(
+      'eth_getBlockByNumber',
+      args: [blockNumber.toHexWithPrefix, false],
+    );
+
+    return response;
   }
 
   Future<String> sendRawTransaction(String rawTx) async {
@@ -226,7 +235,7 @@ base class EvmRpcClient {
   ///
   /// Get the transaction receipt
   ///
-  Future<Json> getTransactionReceipt(String txHash) async {
+  Future<Json?> getTransactionReceipt(String txHash) async {
     final response = await _call<Json?>(
       'eth_getTransactionReceipt',
       args: [txHash],

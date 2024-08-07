@@ -1,16 +1,10 @@
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
-import 'package:hive/hive.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 
-part 'amount.g.dart';
-
-@HiveType(typeId: 12)
 class Amount extends Equatable {
-  @HiveField(0)
   final BigInt value;
-  @HiveField(1)
   final int decimals;
 
   const Amount({
@@ -119,6 +113,13 @@ class Amount extends Equatable {
     };
   }
 
+  factory Amount.fromJson(Map json) {
+    return Amount(
+      value: BigInt.parse(json['value']),
+      decimals: json['decimals'],
+    );
+  }
+
   Amount convertToDecimals(int newDecimals) {
     if (newDecimals == decimals) return this;
 
@@ -138,45 +139,69 @@ class Amount extends Equatable {
     );
   }
 
+  // Plus operator
   Amount operator +(Amount other) {
+    // Determine the maximum decimals between the two amounts
+    int maxDecimals = max(decimals, other.decimals);
+
+    // Scale both amounts to the same decimal level
+    BigInt scaledThisValue =
+        value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue =
+        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+    // Perform the addition
+    BigInt resultValue = scaledThisValue + scaledOtherValue;
+
     return Amount(
-      value: value + other.value,
-      decimals: decimals,
+      value: resultValue,
+      decimals: maxDecimals,
     );
   }
 
+  // Minus operator
   Amount operator -(Amount other) {
+    // Determine the maximum decimals between the two amounts
+    int maxDecimals = max(decimals, other.decimals);
+
+    // Scale both amounts to the same decimal level
+    BigInt scaledThisValue =
+        value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue =
+        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+    // Perform the subtraction
+    BigInt resultValue = scaledThisValue - scaledOtherValue;
+
     return Amount(
-      value: value - other.value,
-      decimals: decimals,
+      value: resultValue,
+      decimals: maxDecimals,
     );
   }
 
+  // Division operator
   Amount operator /(Amount other) {
-    if (decimals == other.decimals) {
-      return Amount(
-        value: value ~/ other.value,
-        decimals: decimals,
-      );
-    }
-    final precision = max(decimals, other.decimals);
-
-    if (decimals > other.decimals) {
-      final newOther = other.convertToDecimals(decimals);
-      final shiftedA = value * BigInt.from(10).pow(precision);
-      final shiftedResult = shiftedA ~/ newOther.value;
-      return Amount(
-        value: shiftedResult,
-        decimals: decimals,
-      );
+    if (other.value == BigInt.zero) {
+      throw ArgumentError('Cannot divide by zero.');
     }
 
-    final newThis = convertToDecimals(other.decimals);
-    final shiftedA = newThis.value * BigInt.from(10).pow(precision);
-    final shiftedResult = shiftedA ~/ other.value;
+    // Determine the maximum decimals between the two amounts
+    int maxDecimals = max(decimals, other.decimals);
+
+    // Scale both amounts to the same decimal level
+    BigInt scaledThisValue =
+        value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue =
+        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+
+    // Perform the division
+    BigInt resultValue =
+        (scaledThisValue * BigInt.from(pow(10, maxDecimals))) ~/
+            scaledOtherValue;
+
     return Amount(
-      value: shiftedResult,
-      decimals: other.decimals,
+      value: resultValue,
+      decimals: maxDecimals,
     );
   }
 
@@ -205,3 +230,40 @@ extension AmountUtil on int {
     return Amount.from(value: this, decimals: decimals);
   }
 }
+
+extension AmountUtilDouble on double {
+  int get decimals {
+    final parts = toString().split('.');
+
+    return parts.length == 1 ? 0 : parts[1].length;
+  }
+
+  // operator *(Amount other) {
+}
+
+extension AmountUtilBigInt on BigInt {
+  BigInt multiply(double other) {
+    final _other = shiftLeftBigInt(other, other.decimals);
+    final result = this * _other;
+
+    return discardRightBigInt(
+      result,
+      other.decimals,
+    );
+  }
+
+  BigInt shiftLeft(int decimalPlaces) =>
+      this * BigInt.from(pow(10, decimalPlaces));
+
+  BigInt shiftRight(int decimalPlaces) =>
+      this ~/ BigInt.from(pow(10, decimalPlaces));
+}
+
+BigInt shiftLeftBigInt(num num1, int decimalPlaces) =>
+    BigInt.from(num1 * pow(10, decimalPlaces));
+
+BigInt discardRightBigInt(BigInt num1, int decimalPlaces) =>
+    num1 ~/ BigInt.from(pow(10, decimalPlaces));
+
+double shiftRightBigInt(BigInt num1, int decimalPlaces) =>
+    num1.toInt() / pow(10, decimalPlaces);

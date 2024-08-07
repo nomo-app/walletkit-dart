@@ -1,11 +1,6 @@
 import 'dart:typed_data';
-
-import 'package:hive/hive.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-part "avacloud_transaction.g.dart";
-
-@HiveType(typeId: 28)
 final class AvalancheTransaction extends EVMTransaction {
   const AvalancheTransaction({
     required super.hash,
@@ -21,6 +16,7 @@ final class AvalancheTransaction extends EVMTransaction {
     required super.token,
     required super.status,
     required super.input,
+    super.decodedInput,
   });
 
   factory AvalancheTransaction.fromJson(

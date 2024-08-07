@@ -8,8 +8,7 @@ void main() {
   const String unsignedTxFromNomo = // from nomo.signEvmTransaction
       "0xf38207488502540be4008252089405870f1507d820212e921e1f39f14660336231d188016345785d8a0000808559454e49518080";
   test('parse hex transaction', () {
-    final RawEVMTransaction tx =
-        RawEVMTransaction.getFromMessageHex(unsignedTxFromNomo);
+    final RawEVMTransaction tx = RawEVMTransaction.fromHex(unsignedTxFromNomo);
 
     expect(tx.nonce, BigInt.from(1864));
     expect(tx.gasPrice, BigInt.from(10000000000));
@@ -41,8 +40,7 @@ void main() {
   });
 
   test('serialize tx', () {
-    final RawEVMTransaction tx =
-        RawEVMTransaction.getFromMessageHex(unsignedTxFromNomo);
+    final RawEVMTransaction tx = RawEVMTransaction.fromHex(unsignedTxFromNomo);
 
     final messageHex = tx.serializedTransactionHex;
 

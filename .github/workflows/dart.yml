@@ -13,6 +13,7 @@ env:
   TRON_SEED: ${{ secrets.TRON_SEED }}
   ETHERSCAN_API_KEYS: ${{ secrets.ETHERSCAN_API_KEYS }}
   TRONSCAN_API_KEYS: ${{ secrets.TRONSCAN_API_KEYS }}
+  DEV_SEED: ${{ secrets.DEV_SEED }}
 
 jobs:
   lint:

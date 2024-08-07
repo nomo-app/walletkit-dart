@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
@@ -36,8 +34,7 @@ void main() {
   });
 
   test('Sign RawTx and parse it to InternalEVMTransaction', () {
-    final rawTransaction =
-        RawEVMTransaction.getFromMessageHex(unsignedTxFromNomo);
+    final rawTransaction = RawEVMTransaction.fromHex(unsignedTxFromNomo);
 
     print(rawTransaction);
 
@@ -101,6 +98,8 @@ void main() {
     final signedTx = InternalEVMTransaction.signTransaction(rawTx, privateKey);
 
     final signedTxHex = signedTx.serializedTransactionHex;
+
+    print(signedTxHex);
 
     final hash = await arbitrumRPC.sendRawTransaction(signedTxHex);
 

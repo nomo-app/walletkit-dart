@@ -1,7 +1,8 @@
+import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 
 class FunctionParam {
-  final String name;
+  final String? name;
   final FunctionParamType type;
   final bool? indexed;
 
@@ -60,6 +61,24 @@ class FunctionParamWithValue<T> extends FunctionParam {
       name: name,
       type: type,
       indexed: indexed,
+    );
+  }
+
+  Json toJson() {
+    return {
+      'name': name,
+      'indexed': indexed,
+      'type': type.name,
+      'value': value,
+    };
+  }
+
+  factory FunctionParamWithValue.fromJson(Map map) {
+    return FunctionParamWithValue(
+      value: map['value'],
+      name: map['name'],
+      indexed: map['indexed'] as bool? ?? false,
+      type: FunctionParamType.fromString(map['type']),
     );
   }
 }
