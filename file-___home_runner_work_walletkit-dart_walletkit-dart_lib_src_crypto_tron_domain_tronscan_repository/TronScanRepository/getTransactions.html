@@ -93,6 +93,8 @@
   String? method,
   List&lt;String&gt;? tokens,
 }) async {
+  assert(limit &lt;= 50, &quot;Limit must be less than or equal to 50&quot;);
+
   final data = [];
 
   int? totalLength;

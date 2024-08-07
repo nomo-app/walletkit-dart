@@ -91,7 +91,7 @@
   }
 
   final txResults = await _fetchAvaTransactionWithRateLimits(
-      &quot;$base$address&#47;transactions&quot;, apiyKey);
+      &quot;$base$address&#47;transactions&quot;, apiKey);
   return [
     for (final tx in txResults)
       AvalancheTransaction.fromJson(
