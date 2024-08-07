@@ -1,5 +1,5 @@
+@Timeout(Duration(minutes: 5))
 import 'dart:convert';
-
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../../utils.dart';
@@ -147,9 +147,12 @@ void main() {
     print(resource);
   });
 
-  test('Fetch Tron Balance ', () async {
-    final scanTxs =
-        await tronScan.getTransactions(address: tronAddress, token: tron);
+  test('Fetch Tron Transaction List over TronScan ', () async {
+    final scanTxs = await tronScan.getTransactions(
+      address: tronAddress,
+      token: tron,
+      limit: 50,
+    );
 
     expect(scanTxs.length, greaterThanOrEqualTo(52));
   });

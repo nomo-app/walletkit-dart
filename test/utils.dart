@@ -73,7 +73,10 @@ final tronScan = TronScanRepository(
   ],
 );
 
-final etherscan = EVMExplorer(etherscanBaseEndpoint, []);
+final etherscan = EVMExplorer(
+  etherscanBaseEndpoint,
+  loadListFromEnv("ETHERSCAN_API_KEYS"),
+);
 final polygonscan = EVMExplorer(polygonScanBaseEndpoint, []);
 final bscscan = EVMExplorer(bnbScanBaseEndpoint, []);
 final arbitrumscan = EVMExplorer(arbitrumScanBaseEndpoint, []);
@@ -105,4 +108,10 @@ Uint8List loadFromEnv(String envName) {
       .toList(); // Convert to list of integers
   Uint8List seed = Uint8List.fromList(intList);
   return seed;
+}
+
+List<String> loadListFromEnv(String key) {
+  var env = DotEnv(includePlatformEnvironment: true)..load();
+  final seedString = env[key]!.split(",");
+  return seedString;
 }

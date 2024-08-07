@@ -129,7 +129,8 @@ void main() {
       token: ethNative,
     );
 
-    print(transactions.length);
+    expect(transactions, isNotEmpty);
+    expect(transactions.length, greaterThanOrEqualTo(10));
   });
 
   test('Test Base Fetching', () async {
