@@ -1,12 +1,13 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
+import '../../utils.dart';
+
 void main() {
-  final zeniqSmartRpcInterface = EvmRpcInterface(ZeniqSmartNetwork);
   test('Get Token Info for Avinoc', () async {
     final tokenInfo = await getTokenInfo(
       contractAddress: avinocZSC.contractAddress,
-      rpc: zeniqSmartRpcInterface,
+      rpc: zeniqSmartChainRPC,
     );
 
     expect(tokenInfo, isNotNull);

@@ -58,7 +58,7 @@ abstract class InternalContract {
     final data = function.buildDataField();
 
     final String result =
-        await rpc.client.call(contractAddress: contractAddress, data: data);
+        await rpc.call(contractAddress: contractAddress, data: data);
 
     final resultBuffer = result.hexToBytesWithPrefix;
 

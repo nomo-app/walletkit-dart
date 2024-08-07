@@ -20,12 +20,15 @@ Future<TokenInfo?> getTokenInfo({
   );
 
   try {
-    final result = await Future.wait([
-      tokenContract.getDecimals(),
-      tokenContract.getName(),
-      tokenContract.getSymbol(),
-      tokenContract.getSupply(),
-    ]);
+    final result = await Future.wait(
+      [
+        tokenContract.getDecimals(),
+        tokenContract.getName(),
+        tokenContract.getSymbol(),
+        tokenContract.getSupply(),
+      ],
+      eagerError: true,
+    );
     int decimals = result[0] as int;
     String name = result[1] as String;
     String symbol = result[2] as String;

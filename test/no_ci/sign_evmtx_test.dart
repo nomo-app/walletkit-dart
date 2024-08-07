@@ -10,8 +10,7 @@ import '../utils.dart';
 void main() {
   const String unsignedTxFromNomo = // from nomo.signEvmTransaction
       "f38207488502540be4008252089405870f1507d820212e921e1f39f14660336231d188016345785d8a0000808559454e49518080";
-  final arbRPC = EvmRpcInterface(ArbitrumNetwork);
-  final ethRPC = EvmRpcInterface(EthereumNetwork);
+
   final message =
       Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
 
@@ -49,7 +48,7 @@ void main() {
   });
 
   test('Simulate TX', () async {
-    final testTx = await arbRPC.client.getTransactionByHash(
+    final testTx = await arbitrumRPC.getTransactionByHash(
         "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b");
     print("TestTx: $testTx");
 
@@ -77,10 +76,13 @@ void main() {
   });
 
   test('Broadcast evm raw tx', () async {
-    const to = "0xa7fa4bb0bba164f999e8c7b83c9da96a3be44616";
-    final gasLimit = await arbRPC.client.estimateGasLimit(to: to);
-    final gasPrice = await arbRPC.client.getGasPrice();
-    final nonce = await arbRPC.client.getTransactionCount(to);
+    const to = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
+    final gasLimit = await arbitrumRPC.estimateGasLimit(
+      recipient: to,
+      sender: to,
+    );
+    final gasPrice = await arbitrumRPC.getGasPrice();
+    final nonce = await arbitrumRPC.getTransactionCount(to);
     final amount = Amount.convert(value: 0.001, decimals: 18);
     final value = amount.value;
     final data = Uint8List.fromList([]);
@@ -89,7 +91,7 @@ void main() {
     final rawTx = RawEVMTransaction(
       nonce: nonce,
       gasPrice: gasPrice,
-      gasLimit: gasLimit,
+      gasLimit: gasLimit.toBigInt,
       to: to,
       value: value,
       data: data,
@@ -100,7 +102,7 @@ void main() {
 
     final signedTxHex = signedTx.serializedTransactionHex;
 
-    final hash = await arbRPC.client.sendRawTransaction(signedTxHex);
+    final hash = await arbitrumRPC.sendRawTransaction(signedTxHex);
 
     print("Hash: $hash");
   });
@@ -114,7 +116,7 @@ void main() {
       memo: "Hello my friend",
     );
 
-    final hash = await arbRPC.sendCoin(
+    final hash = await arbitrumRPC.sendCoin(
       intent: intent,
       from: arbitrumTestWallet,
       seed: testSeed,
@@ -124,7 +126,7 @@ void main() {
   });
 
   test('send erc721 token from reject to spoil', () async {
-    final hash = await ethRPC.sendERC721Nft(
+    final hash = await ethereumRPC.sendERC721Nft(
       recipient: spoilEVM,
       from: rejectEVM,
       seed: testSeed,
