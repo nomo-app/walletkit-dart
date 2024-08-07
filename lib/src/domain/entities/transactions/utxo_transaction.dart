@@ -336,6 +336,34 @@ class ElectrumOutput {
   /// Bitcoin: { value: float, ... }
 
   factory ElectrumOutput.fromJson(Map<String, dynamic> json) {
+    if (json
+        case {
+          "scriptPubKey": Json scriptPubKey,
+          "belongsToUs": bool belongsToUs,
+          "spent": bool spent,
+          "value": String value,
+          "n": int n,
+          "derivationPath": String derivationPath,
+        }) {
+      final valueBI = BigInt.tryParse(value) ?? BigInt.zero;
+
+      return ElectrumOutput(
+        value: valueBI,
+        n: n,
+        node: ReceiveNode(
+          address: "",
+          derivationPath: derivationPath,
+          addresses: {},
+          walletPurpose:
+              HDWalletPurpose.NO_STRUCTURE, // TODO: Check if this ok to do.
+          publicKey: "publicKey",
+        ),
+        belongsToUs: belongsToUs,
+        spent: spent,
+        scriptPubKey: ElectrumScriptPubKey.fromJson(scriptPubKey),
+      );
+    }
+
     final valIsSatoshi =
         json.containsKey('value_satoshi') || json.containsKey('value_int');
 
@@ -402,6 +430,17 @@ class ElectrumOutput {
   String toString() {
     return 'ElectrumOutput{scriptPubKey: $scriptPubKey, belongsToUs: $belongsToUs, spent: $spent, value: $value, n: $n, node: $node}';
   }
+
+  Json toJson() {
+    return {
+      'scriptPubKey': scriptPubKey.toJson(),
+      'belongsToUs': belongsToUs,
+      'spent': spent,
+      'value': value.toString(),
+      'n': n,
+      'derivationPath': node.derivationPath,
+    };
+  }
 }
 
 int toSatoshiValue(num val) {
@@ -458,6 +497,16 @@ class ElectrumScriptPubKey {
 
   Uint8List get lockingScript {
     return Uint8List.fromList(hex.decode(hexString));
+  }
+
+  Json toJson() {
+    return {
+      'addresses': addresses,
+      'asm': asm,
+      'hex': hexString,
+      'reqSigs': reqSigs,
+      'type': type,
+    };
   }
 }
 
