@@ -48,11 +48,10 @@ void main() {
 
     final hash = await baseRPC.interactWithContract(
       contractAddress: mathToken.contractAddress,
-      function: contract_function!,
-      params: [
+      function: contract_function!.addValues(values: [
         arbitrumTestWallet,
         Amount.convert(value: 3, decimals: 18).value
-      ],
+      ]),
       sender: arbitrumTestWallet,
       seed: testSeed,
       feeInfo: null,
