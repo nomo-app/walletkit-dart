@@ -4,7 +4,6 @@ import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/transaction/internal_evm_transaction.dart';
-import 'package:walletkit_dart/src/common/json_rpc.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const erc20TransferSig = "a9059cbb";

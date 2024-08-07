@@ -2,7 +2,6 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/predefined_assets.dart';
-import 'package:walletkit_dart/src/domain/repository/etherscan_repository.dart';
 
 import '../../utils.dart';
 
