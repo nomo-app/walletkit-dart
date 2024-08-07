@@ -65,7 +65,7 @@ class EvmEntity extends TokenEntity {
   final int chainID;
 
   @override
-  List<Object> get props => [name, symbol, decimals, chainID];
+  List<Object> get props => [chainID];
 
   @override
   String get identifier => "$name:$symbol:$decimals:$chainID";
@@ -110,7 +110,7 @@ class EthBasedTokenEntity extends TokenEntity {
   String get identifier => "$name:$symbol:$decimals:$contractAddress:$chainID";
 
   @override
-  List<Object> get props => [name, symbol, contractAddress, decimals, chainID];
+  List<Object> get props => [contractAddress, chainID];
 
   factory EthBasedTokenEntity.fromJson(
     Map<String, dynamic> json, {
