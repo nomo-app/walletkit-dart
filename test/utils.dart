@@ -67,10 +67,7 @@ final tronSolidityRPC = EvmRpcInterface(
 ///
 
 final tronScan = TronScanRepository(
-  apiKeys: [
-    "a875e9b5-2d45-410c-ade9-49ee456be28a",
-    "0eb54755-e150-40d3-8d1a-f8ab389b845a",
-  ],
+  apiKeys: loadListFromEnv("TRONSCAN_API_KEYS"),
 );
 
 final etherscan = EVMExplorer(
@@ -112,6 +109,7 @@ Uint8List loadFromEnv(String envName) {
 
 List<String> loadListFromEnv(String key) {
   var env = DotEnv(includePlatformEnvironment: true)..load();
+
   final seedString = env[key]!.split(",");
   return seedString;
 }
