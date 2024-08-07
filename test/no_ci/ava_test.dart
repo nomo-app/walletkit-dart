@@ -4,7 +4,6 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 
 void main() {
-  final avalacheRPC = EvmRpcInterface(AvalancheNetwork);
   test("Avalanche send test", () async {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
@@ -15,7 +14,7 @@ void main() {
     );
     final testSeed = loadFromEnv("DEV_SEED");
 
-    final hash = await avalacheRPC.sendCoin(
+    final hash = await avalancheRPC.sendCoin(
       intent: intent,
       from: arbitrumTestWallet,
       seed: testSeed,
@@ -34,7 +33,7 @@ void main() {
     );
     final testSeed = loadFromEnv("DEV_SEED");
 
-    final hash = await avalacheRPC.sendERC20Token(
+    final hash = await avalancheRPC.sendERC20Token(
       intent: intent,
       from: arbitrumTestWallet,
       seed: testSeed,

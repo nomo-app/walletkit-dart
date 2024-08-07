@@ -4,7 +4,7 @@ import 'package:walletkit_dart/src/domain/repository/models/electrum_transaction
 import 'package:walletkit_dart/src/domain/repository/utxo_in_memory_cache.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-import 'json_rpc_client.dart';
+import '../../common/json_rpc_client.dart';
 
 class ElectrumXClient {
   final TcpJsonRpcClient _client;

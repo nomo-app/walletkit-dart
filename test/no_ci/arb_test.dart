@@ -4,7 +4,6 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../utils.dart';
 
 void main() {
-  final arbitrumRPC = EvmRpcInterface(ArbitrumNetwork);
   final testSeed = loadFromEnv("DEV_SEED");
   //Test to send Arbitrum
   // test("Try to send Arbitrum", () async {
