@@ -72,20 +72,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">const TRON_NETWORK()
-    : httpApi = (
-        &quot;https:&#47;&#47;api.trongrid.io&quot;,
-        const [&quot;1d06fa37-79bf-4250-a4aa-9656a92a71b0&quot;]
-      ),
-      super(
-        chainId: 1,
-        rpcUrl: &quot;https:&#47;&#47;api.trongrid.io&#47;jsonrpc&quot;,
-        blockExplorer: (
-          &quot;https:&#47;&#47;apilist.tronscanapi.com&#47;api&quot;,
-          const [
-            &quot;a875e9b5-2d45-410c-ade9-49ee456be28a&quot;,
-            &quot;0eb54755-e150-40d3-8d1a-f8ab389b845a&quot;,
-          ],
-        ),
+    : super(
+        chainId: -1,
         coin: tron,
         messagePrefix: &quot;\x19Tron Signed Message:\n&quot;,
         blockTime: 3,
