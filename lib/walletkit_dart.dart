@@ -78,3 +78,5 @@ export 'src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
 export 'src/crypto/evm/contract/contract_function.dart';
 export 'src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 export 'src/crypto/evm/contract/contract_function_param.dart';
+
+export 'src/common/types.dart';
