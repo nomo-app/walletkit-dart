@@ -1,6 +1,5 @@
 import 'package:bip32/bip32.dart';
 import 'package:hive/hive.dart';
-import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 /// TODO: Make sure this only has the privateKey when used for signing. Else EpubKey should be used.

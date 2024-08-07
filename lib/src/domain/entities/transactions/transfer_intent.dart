@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 class TransferIntent<T extends FeeInformation?> {

@@ -1,4 +1,3 @@
-import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 enum FeePriority {

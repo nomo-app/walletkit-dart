@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
-import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const _openchainEndpoint = "https://api.openchain.xyz/signature-database/v1";

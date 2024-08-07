@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/domain/queued_rpc_interface.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';

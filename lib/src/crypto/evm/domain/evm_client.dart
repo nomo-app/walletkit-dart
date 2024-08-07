@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
