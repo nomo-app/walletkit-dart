@@ -64,8 +64,9 @@
       
 
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a></span>
-<span class="name ">getTransactionByHash</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getTransactionByHash-param-messageHash"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">messageHash</span></span></li>
-</ol>)
+<span class="name ">getTransactionByHash</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getTransactionByHash-param-messageHash"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">messageHash</span>, [</span></li>
+<li><span class="parameter" id="getTransactionByHash-param-chainId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainId</span></span></li>
+</ol>])
 
       
 
@@ -77,8 +78,9 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;InternalEVMTransaction&gt; getTransactionByHash(
-  String messageHash,
-) async {
+  String messageHash, [
+  int? chainId,
+]) async {
   final response = await _call&lt;Json&gt;(
     &#39;eth_getTransactionByHash&#39;,
     args: [messageHash],
@@ -86,7 +88,7 @@
 
   final v = response[&#39;v&#39;].toString().toIntOrNull ?? 0;
 
-  final chainIDV = extractChainId(v);
+  final chainIDV = chainId ?? extractChainId(v);
   return InternalEVMTransaction(
     nonce: response[&#39;nonce&#39;].toString().toBigInt,
     gasPrice: response[&#39;gasPrice&#39;].toString().toBigInt,

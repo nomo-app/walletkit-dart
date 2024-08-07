@@ -82,7 +82,7 @@
     final json = await performTask(
       (client) =&gt; client.getTransactionReceipt(hash),
     );
-    txStatusCache[hash] = _confirmationStatusFromJson(json);
+    txStatusCache[hash] = _confirmationStatusFromJson(json ?? {});
   }
   return txStatusCache[hash]!;
 }</code></pre>

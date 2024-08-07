@@ -79,7 +79,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;Json&gt; getTransactionReceipt(String txHash) async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;Json?&gt; getTransactionReceipt(String txHash) async {
   final response = await _call&lt;Json?&gt;(
     &#39;eth_getTransactionReceipt&#39;,
     args: [txHash],

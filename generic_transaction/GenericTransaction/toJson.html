@@ -31,7 +31,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../generic_transaction/generic_transaction-library.html">src&#47;domain&#47;entities&#47;transactions&#47;generic_transaction.dart</a></li>
     <li><a href="../../generic_transaction/GenericTransaction-class.html">GenericTransaction</a></li>
-    <li class="self-crumb">toJson method</li>
+    <li class="self-crumb">toJson abstract method</li>
   </ol>
   <div class="self-name">toJson</div>
   <form class="search navbar-right" role="search">
@@ -57,7 +57,7 @@
     data-above-sidebar="generic_transaction&#47;GenericTransaction-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">toJson</span> method 
+<h1><span class="kind-method">toJson</span> abstract method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -75,20 +75,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Map&lt;String, dynamic&gt; toJson() {
-  return {
-    &#39;hash&#39;: hash,
-    &#39;block&#39;: block,
-    &#39;confirmations&#39;: confirmations,
-    &#39;timeMilli&#39;: timeMilli,
-    &#39;amount&#39;: amount.toJson(),
-    if (fee != null) &#39;fee&#39;: fee!.toJson(),
-    &#39;sender&#39;: sender,
-    &#39;recipient&#39;: recipient,
-    &#39;transferMethod&#39;: transferMethod.displayName,
-    &#39;status&#39;: status.displayName,
-  };
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">Map&lt;String, dynamic&gt; toJson();</code></pre>
 </section>
 
 
@@ -106,7 +93,7 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../generic_transaction/generic_transaction-library.html">generic_transaction</a></li>
     <li><a href="../../generic_transaction/GenericTransaction-class.html">GenericTransaction</a></li>
-    <li class="self-crumb">toJson method</li>
+    <li class="self-crumb">toJson abstract method</li>
 </ol>
 
 
