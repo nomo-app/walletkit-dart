@@ -64,6 +64,7 @@ class TokenEntity extends Equatable {
           'name': ethBasedToken.name,
           'symbol': ethBasedToken.symbol,
           'decimals': ethBasedToken.decimals,
+          'chainID': ethBasedToken.chainID,
           'contractAddress': ethBasedToken.contractAddress,
         },
       EvmEntity evmEntity => {
