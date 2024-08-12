@@ -258,20 +258,16 @@ final class EvmRpcInterface extends QueuedRpcInterface {
     required Uint8List? data,
     required BigInt? value,
   }) async {
-    return await performTask(
-      (client) => client.getGasPrice().then(
-            (gasPrice) async => (
-              Amount(value: gasPrice, decimals: 18),
-              await estimateGasLimit(
-                recipient: recipient,
-                sender: sender,
-                data: data,
-                gasPrice: gasPrice,
-                value: value,
-              )
-            ),
-          ),
+    final gasPrice = await getGasPrice();
+    final gasLimit = await estimateGasLimit(
+      recipient: recipient,
+      sender: sender,
+      data: data,
+      value: value,
+      gasPrice: gasPrice,
     );
+
+    return (Amount(value: gasPrice, decimals: 18), gasLimit);
   }
 
   ///
