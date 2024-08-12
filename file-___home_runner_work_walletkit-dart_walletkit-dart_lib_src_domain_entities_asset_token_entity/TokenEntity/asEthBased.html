@@ -77,12 +77,8 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">EthBasedTokenEntity? get asEthBased {
-  if (this is EthBasedTokenEntity) {
-    return this as EthBasedTokenEntity;
-  }
-  return null;
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">EthBasedTokenEntity? get asEthBased =&gt;
+    this is EthBasedTokenEntity ? this as EthBasedTokenEntity : null;</code></pre>
 </section>
 
   </section>

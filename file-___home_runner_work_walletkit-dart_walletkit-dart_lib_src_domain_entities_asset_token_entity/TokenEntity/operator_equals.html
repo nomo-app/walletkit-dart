@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the write method from the TokenEntityAdapter class, for the Dart programming language.">
-  <title>write method - TokenEntityAdapter class - token_entity library - Dart API</title>
+  <meta name="description" content="API docs for the operator == method from the TokenEntity class, for the Dart programming language.">
+  <title>operator == method - TokenEntity class - token_entity library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">src&#47;domain&#47;entities&#47;asset&#47;token_entity.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/TokenEntityAdapter-class.html">TokenEntityAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/TokenEntity-class.html">TokenEntity</a></li>
+    <li class="self-crumb">operator == method</li>
   </ol>
-  <div class="self-name">write</div>
+  <div class="self-name">operator ==</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,10 +54,10 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity&#47;TokenEntityAdapter-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity&#47;TokenEntity-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">write</span> method 
+<h1><span class="kind-method">operator ==</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -68,30 +68,56 @@
     </ol>
   </div>
 
-<span class="returntype">void</span>
-<span class="name ">write</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="write-param-writer"><span class="type-annotation">dynamic</span> <span class="parameter-name">writer</span>, </span></li>
-<li><span class="parameter" id="write-param-obj"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/TokenEntity-class.html">TokenEntity</a></span> <span class="parameter-name">obj</span></span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+<span class="name ">operator ==</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span></li>
 </ol>)
 
-      
+      <div class="features"><span class="feature">override</span></div>
 
     </section>
     
+<section class="desc markdown">
+  <p>The equality operator.</p>
+<p>The default behavior for all <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>s is to return true if and
+only if this object and <code>other</code> are the same object.</p>
+<p>Override this method to specify a different equality relation on
+a class. The overriding method must still be an equivalence relation.
+That is, it must be:</p>
+<ul>
+<li>
+<p>Total: It must return a boolean for all arguments. It should never throw.</p>
+</li>
+<li>
+<p>Reflexive: For all objects <code>o</code>, <code>o == o</code> must be true.</p>
+</li>
+<li>
+<p>Symmetric: For all objects <code>o1</code> and <code>o2</code>, <code>o1 == o2</code> and <code>o2 == o1</code> must
+either both be true, or both be false.</p>
+</li>
+<li>
+<p>Transitive: For all objects <code>o1</code>, <code>o2</code>, and <code>o3</code>, if <code>o1 == o2</code> and
+<code>o2 == o3</code> are true, then <code>o1 == o3</code> must be true.</p>
+</li>
+</ul>
+<p>The method should also be consistent over time,
+so whether two objects are equal should only change
+if at least one of the objects was modified.</p>
+<p>If a subclass overrides the equality operator, it should override
+the <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/TokenEntity/hashCode.html">hashCode</a> method as well to maintain consistency.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-void write(BinaryWriter writer, TokenEntity obj) {
-  writer
-    ..writeByte(3)
-    ..writeByte(0)
-    ..write(obj.name)
-    ..writeByte(1)
-    ..write(obj.symbol)
-    ..writeByte(2)
-    ..write(obj.decimals);
+bool operator ==(Object other) {
+  if (identical(this, other)) return true;
+
+  return other is TokenEntity &amp;&amp;
+      other.name == name &amp;&amp;
+      other.symbol == symbol &amp;&amp;
+      other.decimals == decimals;
 }</code></pre>
 </section>
 
@@ -109,12 +135,12 @@ void write(BinaryWriter writer, TokenEntity obj) {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">token_entity</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/TokenEntityAdapter-class.html">TokenEntityAdapter</a></li>
-    <li class="self-crumb">write method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/TokenEntity-class.html">TokenEntity</a></li>
+    <li class="self-crumb">operator == method</li>
 </ol>
 
 
-    <h5>TokenEntityAdapter class</h5>
+    <h5>TokenEntity class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 

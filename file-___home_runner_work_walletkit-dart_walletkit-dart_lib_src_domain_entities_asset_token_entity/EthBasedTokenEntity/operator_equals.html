@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the operator == method from the EvmEntityAdapter class, for the Dart programming language.">
-  <title>operator == method - EvmEntityAdapter class - token_entity library - Dart API</title>
+  <meta name="description" content="API docs for the operator == method from the EthBasedTokenEntity class, for the Dart programming language.">
+  <title>operator == method - EthBasedTokenEntity class - token_entity library - Dart API</title>
 
 
   
@@ -30,7 +30,7 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">src&#47;domain&#47;entities&#47;asset&#47;token_entity.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntityAdapter-class.html">EvmEntityAdapter</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EthBasedTokenEntity-class.html">EthBasedTokenEntity</a></li>
     <li class="self-crumb">operator == method</li>
   </ol>
   <div class="self-name">operator ==</div>
@@ -54,7 +54,7 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity&#47;EvmEntityAdapter-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity&#47;EthBasedTokenEntity-class-sidebar.html"
     data-below-sidebar="">
     <div>
 <h1><span class="kind-method">operator ==</span> method 
@@ -103,7 +103,7 @@ either both be true, or both be false.</p>
 so whether two objects are equal should only change
 if at least one of the objects was modified.</p>
 <p>If a subclass overrides the equality operator, it should override
-the <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntityAdapter/hashCode.html">hashCode</a> method as well to maintain consistency.</p>
+the <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EthBasedTokenEntity/hashCode.html">hashCode</a> method as well to maintain consistency.</p>
 </section>
 
 
@@ -111,11 +111,13 @@ the <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_sr
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-bool operator ==(Object other) =&gt;
-    identical(this, other) ||
-    other is EvmEntityAdapter &amp;&amp;
-        runtimeType == other.runtimeType &amp;&amp;
-        typeId == other.typeId;</code></pre>
+bool operator ==(Object other) {
+  if (identical(this, other)) return true;
+
+  return other is EthBasedTokenEntity &amp;&amp;
+      other.contractAddress == contractAddress &amp;&amp;
+      other.chainID == chainID;
+}</code></pre>
 </section>
 
 
@@ -132,12 +134,12 @@ bool operator ==(Object other) =&gt;
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity-library.html">token_entity</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EvmEntityAdapter-class.html">EvmEntityAdapter</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_asset_token_entity/EthBasedTokenEntity-class.html">EthBasedTokenEntity</a></li>
     <li class="self-crumb">operator == method</li>
 </ol>
 
 
-    <h5>EvmEntityAdapter class</h5>
+    <h5>EthBasedTokenEntity class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
