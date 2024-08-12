@@ -1,9 +1,7 @@
 import 'dart:math';
-
-import 'package:equatable/equatable.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 
-class Amount extends Equatable {
+class Amount {
   final BigInt value;
   final int decimals;
 
@@ -99,7 +97,16 @@ class Amount extends Equatable {
   }
 
   @override
-  List<Object?> get props => [value, decimals];
+  int get hashCode => value.hashCode ^ decimals.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Amount &&
+        other.value == value &&
+        other.decimals == decimals;
+  }
 
   @override
   String toString() {
