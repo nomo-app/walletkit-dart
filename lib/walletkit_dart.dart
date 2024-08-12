@@ -13,7 +13,6 @@ export 'src/domain/entities/transactions/etherscan_transaction.dart';
 export 'src/domain/entities/tx_gasFee_entity.dart';
 export 'src/domain/entities/erc721_entity.dart';
 export 'src/crypto/utxo/utxo_analyzer.dart';
-export 'src/domain/entities/asset/staking_nft_entity.dart';
 export 'src/crypto/evm/domain/evm_rpc_interface.dart';
 export 'src/domain/repository/etherscan_repository.dart';
 export 'src/domain/predefined_assets.dart';
