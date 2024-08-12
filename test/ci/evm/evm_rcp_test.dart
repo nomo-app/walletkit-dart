@@ -193,4 +193,17 @@ void main() {
 
     expect(wbtcBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
+
+  test('Fetch Network Fees', () async {
+    final fees = await zeniqSmartRpcInterface.estimateNetworkFees(
+      recipient: rejectEVM,
+      data: null,
+      sender: rejectEVM,
+      value: BigInt.one,
+    );
+
+    expect(fees, isNotNull);
+    expect(fees.$1.value, equals(BigInt.from(10000000000))); // 10 Gwei
+    expect(fees.$2, greaterThanOrEqualTo(21000));
+  });
 }
