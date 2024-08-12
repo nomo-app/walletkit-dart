@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the ExternalContractFunctionWithValues.fromJson constructor from Class ExternalContractFunctionWithValues from the contract_function library, for the Dart programming language.">
-  <title>ExternalContractFunctionWithValues.fromJson constructor - ExternalContractFunctionWithValues - contract_function library - Dart API</title>
+  <meta name="description" content="API docs for the UnknownExternalContractFunction constructor from Class UnknownExternalContractFunction from the contract_function library, for the Dart programming language.">
+  <title>UnknownExternalContractFunction constructor - UnknownExternalContractFunction - contract_function library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function-library.html">src&#47;crypto&#47;evm&#47;contract&#47;contract_function.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a></li>
-    <li class="self-crumb">ExternalContractFunctionWithValues.fromJson factory constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function/UnknownExternalContractFunction-class.html">UnknownExternalContractFunction</a></li>
+    <li class="self-crumb">UnknownExternalContractFunction constructor</li>
   </ol>
-  <div class="self-name">ExternalContractFunctionWithValues.fromJson</div>
+  <div class="self-name">UnknownExternalContractFunction</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,15 +54,15 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function&#47;ExternalContractFunctionWithValues-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function&#47;UnknownExternalContractFunction-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">ExternalContractFunctionWithValues.fromJson</span> constructor 
+<h1><span class="kind-constructor">UnknownExternalContractFunction</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">ExternalContractFunctionWithValues.fromJson</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">json</span></span></li>
+      <span class="name ">UnknownExternalContractFunction</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span></span></li>
 </ol>)
     </section>
 
@@ -72,31 +72,13 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory ExternalContractFunctionWithValues.fromJson(Map json) {
-  if (json
-      case {
-        &quot;name&quot;: String name,
-        &quot;parameters&quot;: List&lt;dynamic&gt; parameters,
-      }) {
-    return ExternalContractFunctionWithValues(
-      name: name,
-      parameters: [
-        for (final param in parameters)
-          FunctionParamWithValue.fromJson(param),
-      ],
-    );
-  }
-  if (json case {&quot;name&quot;: String name, &quot;data&quot;: String data}) {
-    final dataBytes = data.hexToBytes;
-    return switch (name) {
-      &quot;Unknown&quot; =&gt; UnknownExternalContractFunction(dataBytes),
-      &quot;NotDecodable&quot; =&gt; NotDecodableExternalContractFunction(dataBytes),
-      _ =&gt; throw Exception(&quot;Invalid json&quot;),
-    };
-  }
-
-  throw Exception(&quot;Invalid json&quot;);
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">UnknownExternalContractFunction(this.data)
+    : super(name: &quot;Unknown&quot;, parameters: [
+        FunctionParamWithValue.fromParam&lt;Uint8List&gt;(
+          FunctionParam(name: &quot;data&quot;, type: FunctionParamBytes()),
+          data,
+        ),
+      ]);</code></pre>
 </section>
 
 
@@ -113,12 +95,12 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function-library.html">contract_function</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a></li>
-    <li class="self-crumb">ExternalContractFunctionWithValues.fromJson factory constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_contract_contract_function/UnknownExternalContractFunction-class.html">UnknownExternalContractFunction</a></li>
+    <li class="self-crumb">UnknownExternalContractFunction constructor</li>
 </ol>
 
 
-    <h5>ExternalContractFunctionWithValues class</h5>
+    <h5>UnknownExternalContractFunction class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
 

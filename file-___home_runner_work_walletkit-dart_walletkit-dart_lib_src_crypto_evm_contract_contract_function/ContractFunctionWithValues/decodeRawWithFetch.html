@@ -110,20 +110,9 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
       return _decodeExternal(data: data, function: externalResult);
     }
 
-    &#47;&#47; Fallback
-    return ExternalContractFunctionWithValues(
-      name: &quot;Unknown&quot;,
-      parameters: [
-        FunctionParamWithValue.fromParam&lt;Uint8List&gt;(
-          FunctionParam(name: &quot;data&quot;, type: FunctionParamBytes()),
-          data,
-        ),
-      ],
-    );
+    return UnknownExternalContractFunction(data);
   } catch (e) {
-    &#47;&#47; Fallback
-
-    throw FunctionDecodingException(&quot;Error decoding function: $e&quot;);
+    return NotDecodableExternalContractFunction(data);
   }
 }</code></pre>
 </section>
