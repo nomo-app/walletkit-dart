@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_encoding.dart';
@@ -143,6 +144,15 @@ class ExternalContractFunctionWithValues extends ExternalContractFunction {
         ],
       );
     }
+    if (json case {"name": String name, "data": String data}) {
+      final dataBytes = data.hexToBytes;
+      return switch (name) {
+        "Unknown" => UnknownExternalContractFunction(dataBytes),
+        "NotDecodable" => NotDecodableExternalContractFunction(dataBytes),
+        _ => throw Exception("Invalid json"),
+      };
+    }
+
     throw Exception("Invalid json");
   }
 }
@@ -258,20 +268,9 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
         return _decodeExternal(data: data, function: externalResult);
       }
 
-      // Fallback
-      return ExternalContractFunctionWithValues(
-        name: "Unknown",
-        parameters: [
-          FunctionParamWithValue.fromParam<Uint8List>(
-            FunctionParam(name: "data", type: FunctionParamBytes()),
-            data,
-          ),
-        ],
-      );
+      return UnknownExternalContractFunction(data);
     } catch (e) {
-      // Fallback
-
-      throw FunctionDecodingException("Error decoding function: $e");
+      return NotDecodableExternalContractFunction(data);
     }
   }
 
@@ -417,5 +416,81 @@ class FunctionDecodingException implements Exception {
   @override
   String toString() {
     return message;
+  }
+}
+
+class UnknownExternalContractFunction
+    extends ExternalContractFunctionWithValues {
+  final Uint8List data;
+
+  UnknownExternalContractFunction(this.data)
+      : super(name: "Unknown", parameters: [
+          FunctionParamWithValue.fromParam<Uint8List>(
+            FunctionParam(name: "data", type: FunctionParamBytes()),
+            data,
+          ),
+        ]);
+
+  @override
+  Uint8List get functionSelector {
+    return data.sublist(0, 4);
+  }
+
+  @override
+  String get functionSelectorHex {
+    return functionSelector.toHex;
+  }
+
+  @override
+  String get function => name;
+
+  String get UTF8 {
+    return utf8.decode(data);
+  }
+
+  @override
+  Json toJson() {
+    return {
+      "name": name,
+      "data": data.toHex,
+    };
+  }
+}
+
+class NotDecodableExternalContractFunction
+    extends ExternalContractFunctionWithValues {
+  final Uint8List data;
+
+  NotDecodableExternalContractFunction(this.data)
+      : super(name: "NotDecodable", parameters: [
+          FunctionParamWithValue.fromParam<Uint8List>(
+            FunctionParam(name: "data", type: FunctionParamBytes()),
+            data,
+          ),
+        ]);
+
+  @override
+  Uint8List get functionSelector {
+    return data.sublist(0, 4);
+  }
+
+  @override
+  String get functionSelectorHex {
+    return functionSelector.toHex;
+  }
+
+  @override
+  String get function => name;
+
+  String get UTF8 {
+    return utf8.decode(data);
+  }
+
+  @override
+  Json toJson() {
+    return {
+      "name": name,
+      "data": data.toHex,
+    };
   }
 }
