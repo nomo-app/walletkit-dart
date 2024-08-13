@@ -662,12 +662,7 @@ final uniswap_v2_pair_abi = ContractABI.fromAbi('''
 ''');
 
 class UniswapV2Pair extends InternalContract {
-  final EthBasedTokenEntity tokenA;
-  final EthBasedTokenEntity tokenB;
-
   UniswapV2Pair({
-    required this.tokenA,
-    required this.tokenB,
     required super.contractAddress,
     required super.rpc,
   }) : super(abi: uniswap_v2_pair_abi);

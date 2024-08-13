@@ -214,4 +214,20 @@ class UniswapV2Factory extends InternalContract {
 
     return result.outputs.first.value as String;
   }
+
+  Future<BigInt> allPairsLength() async {
+    final function = abi.getFunction("allPairsLength")!;
+    final result = await read(
+      function: function.addValues(values: []),
+    );
+    return result.outputs.first.value as BigInt;
+  }
+
+  Future<String> allPairs(BigInt index) async {
+    final function = abi.getFunction("allPairs")!;
+    final result = await read(
+      function: function.addValues(values: [index]),
+    );
+    return result.outputs.first.value as String;
+  }
 }
