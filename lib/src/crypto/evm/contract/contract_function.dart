@@ -471,6 +471,7 @@ class NotDecodableExternalContractFunction
 
   @override
   Uint8List get functionSelector {
+    if (data.length < 4) return Uint8List(0);
     return data.sublist(0, 4);
   }
 
