@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:walletkit_dart/src/common/types.dart';
 import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
@@ -21,7 +23,7 @@ final class ZeniqSmartChainTransaction extends EVMTransaction {
     super.decodedInput,
   });
 
-  factory ZeniqSmartChainTransaction.fromJson(
+  factory ZeniqSmartChainTransaction.fromTransferEventJson(
     Json json, {
     required TokenEntity token,
     required TransactionTransferMethod transferMethod,
@@ -49,8 +51,6 @@ final class ZeniqSmartChainTransaction extends EVMTransaction {
       final sender = "0x${topics_s[1].substring(26)}";
       final recipient = "0x${topics_s[2].substring(26)}";
 
-      final input = data.hexToBytesWithPrefix;
-
       return ZeniqSmartChainTransaction(
         hash: transactionHash,
         block: block_i,
@@ -63,7 +63,7 @@ final class ZeniqSmartChainTransaction extends EVMTransaction {
         transferMethod: transferMethod,
         token: token,
         status: status,
-        input: input,
+        input: Uint8List(0),
       );
     }
 

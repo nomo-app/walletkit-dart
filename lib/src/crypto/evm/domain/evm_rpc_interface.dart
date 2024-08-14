@@ -700,7 +700,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
     final confirmations = currentBlockNumber - blockNumber;
     final status = await getConfirmationStatus(hash);
 
-    return ZeniqSmartChainTransaction.fromJson(
+    return ZeniqSmartChainTransaction.fromTransferEventJson(
       transferLog,
       token: token,
       transferMethod: direction,
