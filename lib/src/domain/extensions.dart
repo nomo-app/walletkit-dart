@@ -58,6 +58,14 @@ extension BufferUtil on Uint8List {
 extension ConvUtil on String {
   Uint8List get hexToBytes => Uint8List.fromList(hex.decode(this));
 
+  Uint8List? get hexToBytesOrNull {
+    try {
+      return hexToBytes;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Uint8List get hexToBytesWithPrefix => substring(2).hexToBytes;
 
   Uint8List? get hexToBytesWithPrefixOrNull {

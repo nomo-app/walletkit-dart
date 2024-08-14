@@ -108,7 +108,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
           recipient: recipient,
           transferMethod: TransactionTransferMethod.fromJson(transferMethod),
           status: ConfirmationStatus.fromJson(status),
-          input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
+          input: input.hexToBytesOrNull ?? Uint8List(0),
           token: TokenEntity.fromJson(token),
           decodedInput: decodedInput != null
               ? ExternalContractFunctionWithValues.fromJson(decodedInput)
