@@ -1276,4 +1276,35 @@ class UniswapV2Router extends InternalContract {
 
     return result.outputs.first.value as BigInt;
   }
+
+  Future<String> addLiquidity({
+    required String tokenA,
+    required String tokenB,
+    required BigInt amountADesired,
+    required BigInt amountBDesired,
+    required BigInt amountAMin,
+    required BigInt amountBMin,
+    required String to,
+    required BigInt deadline,
+    required Uint8List seed,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("addLiquidity")!;
+
+    final result = await interact(
+      seed: seed,
+      sender: sender,
+      function: function.addValues(values: [
+        tokenA,
+        tokenB,
+        amountADesired,
+        amountBDesired,
+        amountAMin,
+        amountBMin,
+        to,
+        deadline,
+      ]),
+    );
+    return result;
+  }
 }
