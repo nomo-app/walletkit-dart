@@ -69,9 +69,10 @@ class JsonRPC extends RpcService {
       throw RPCError(code, message, errorData);
     }
 
-    final id = data['id'] as int;
+    final id_d = data['id'];
+    final id = id_d is int ? id_d : int.tryParse(id_d as String);
     final result = data['result'];
-    return RPCResponse(id, result);
+    return RPCResponse(id ?? -1, result);
   }
 }
 
