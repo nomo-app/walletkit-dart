@@ -119,9 +119,10 @@ Future&lt;RPCResponse&gt; call(String function, [List&lt;dynamic&gt;? params]) a
     throw RPCError(code, message, errorData);
   }
 
-  final id = data[&#39;id&#39;] as int;
+  final id_d = data[&#39;id&#39;];
+  final id = id_d is int ? id_d : int.tryParse(id_d as String);
   final result = data[&#39;result&#39;];
-  return RPCResponse(id, result);
+  return RPCResponse(id ?? -1, result);
 }</code></pre>
 </section>
 
