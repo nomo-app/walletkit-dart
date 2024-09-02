@@ -10,7 +10,7 @@ const erc20TransferSig = "a9059cbb";
 base class EvmRpcClient {
   final JsonRPC _rpc;
   final Duration rateLimitTimeout;
-  final void Function(RPCError e, StackTrace s, String url)? onRpcError;
+  final void Function(Object e, StackTrace s, String url)? onRpcError;
 
   EvmRpcClient(
     String rpcUrl, {
@@ -51,6 +51,9 @@ base class EvmRpcClient {
       rethrow;
     } catch (e, s) {
       Logger.logError(e, s: s, hint: 'EvmRpcClient');
+      if (onRpcError != null) {
+        onRpcError!(e, s, rpcUrl);
+      }
       rethrow;
     }
   }
