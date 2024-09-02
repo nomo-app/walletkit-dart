@@ -51,9 +51,7 @@ base class EvmRpcClient {
       rethrow;
     } catch (e, s) {
       Logger.logError(e, s: s, hint: 'EvmRpcClient');
-      throw Exception(
-        e.toString(),
-      );
+      rethrow;
     }
   }
 
