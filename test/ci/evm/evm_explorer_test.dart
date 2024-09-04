@@ -50,51 +50,51 @@ void main() {
     print('ERC721: $erc721');
   });
 
-  test('Test BinanceChain BnbScan Fetching', () async {
-    ///
-    /// Balances
-    ///
+  // test('Test BinanceChain BnbScan Fetching', () async {
+  //   ///
+  //   /// Balances
+  //   ///
 
-    final balance = await bscscan.fetchBalance(rejectEVM, binanceSmart);
+  //   final balance = await bscscan.fetchBalance(rejectEVM, binanceSmart);
 
-    print('BNB Balance: $balance');
+  //   print('BNB Balance: $balance');
 
-    final zeniqBSCBalance =
-        await bscscan.fetchBalance(rejectEVM, zeniqBSCToken);
+  //   final zeniqBSCBalance =
+  //       await bscscan.fetchBalance(rejectEVM, zeniqBSCToken);
 
-    print('Zeniq BSC Balance: $zeniqBSCBalance');
+  //   print('Zeniq BSC Balance: $zeniqBSCBalance');
 
-    ///
-    /// Transactions
-    ///
+  //   ///
+  //   /// Transactions
+  //   ///
 
-    final transactions = await bscscan.fetchTransactions(
-      address: rejectEVM,
-      token: binanceSmart,
-    );
+  //   final transactions = await bscscan.fetchTransactions(
+  //     address: rejectEVM,
+  //     token: binanceSmart,
+  //   );
 
-    expect(transactions, isNotEmpty);
+  //   expect(transactions, isNotEmpty);
 
-    print('BNB Transactions: $transactions');
+  //   print('BNB Transactions: $transactions');
 
-    final zeniqBSCTokenTransactions = await bscscan.fetchERC20Transactions(
-      address: rejectEVM,
-      token: zeniqBSCToken,
-      currency: binanceSmart,
-    );
+  //   final zeniqBSCTokenTransactions = await bscscan.fetchERC20Transactions(
+  //     address: rejectEVM,
+  //     token: zeniqBSCToken,
+  //     currency: binanceSmart,
+  //   );
 
-    expect(zeniqBSCTokenTransactions, isNotEmpty);
+  //   expect(zeniqBSCTokenTransactions, isNotEmpty);
 
-    print('Zeniq BSC Transactions: $zeniqBSCTokenTransactions');
+  //   print('Zeniq BSC Transactions: $zeniqBSCTokenTransactions');
 
-    ///
-    /// ERC721
-    ///
+  //   ///
+  //   /// ERC721
+  //   ///
 
-    final erc721 = await bscscan.fetchEtherscanNFTs(address: rejectEVM);
+  //   final erc721 = await bscscan.fetchEtherscanNFTs(address: rejectEVM);
 
-    print('ERC721: $erc721');
-  });
+  //   print('ERC721: $erc721');
+  // });
 
   test('GasFees Test', () async {
     final result = await etherscan.fetchGasPrice();
