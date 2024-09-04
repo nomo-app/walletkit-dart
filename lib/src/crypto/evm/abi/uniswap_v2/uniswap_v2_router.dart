@@ -1277,7 +1277,7 @@ class UniswapV2Router extends InternalContract {
     return result.outputs.first.value as BigInt;
   }
 
-  Future<String> addLiquidity({
+  Future<RawEVMTransaction> addLiquidityTx({
     required String tokenA,
     required String tokenB,
     required BigInt amountADesired,
@@ -1286,13 +1286,10 @@ class UniswapV2Router extends InternalContract {
     required BigInt amountBMin,
     required String to,
     required BigInt deadline,
-    required Uint8List seed,
     required String sender,
   }) async {
     final function = abi.getFunction("addLiquidity")!;
-
-    final result = await interact(
-      seed: seed,
+    final result = await buildTransactionForFunction(
       sender: sender,
       function: function.addValues(values: [
         tokenA,
@@ -1301,6 +1298,36 @@ class UniswapV2Router extends InternalContract {
         amountBDesired,
         amountAMin,
         amountBMin,
+        to,
+        deadline,
+      ]),
+      feeInfo: EvmFeeInformation(
+        gasLimit: 3E5.toInt(),
+        gasPrice: Amount(value: 1E10.toInt().toBigInt, decimals: 18),
+      ),
+    );
+    return result;
+  }
+
+  Future<RawEVMTransaction> addLiquidityETHTx({
+    required String token,
+    required BigInt amountTokenDesired,
+    required BigInt amountETHMin,
+    required BigInt amountTokenMin,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+    required BigInt amountETHDesired,
+  }) async {
+    final function = abi.getFunction("addLiquidityETH")!;
+    final result = await buildTransactionForFunction(
+      value: amountETHDesired,
+      sender: sender,
+      function: function.addValues(values: [
+        token,
+        amountTokenDesired,
+        amountTokenMin,
+        amountETHMin,
         to,
         deadline,
       ]),
