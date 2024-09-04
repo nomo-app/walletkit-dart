@@ -69,7 +69,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>sbch_queryTxByAddr</p>
+  <p>zeniq_queryTxByAddr</p>
 </section>
 
 
@@ -83,7 +83,7 @@
   num maxTx = 10000,
 }) async {
   final response = await _call&lt;JsonList&gt;(
-    &#39;sbch_queryTxByAddr&#39;,
+    &#39;zeniq_queryTxByAddr&#39;,
     args: [
       address,
       dynToHex(startBlock),
