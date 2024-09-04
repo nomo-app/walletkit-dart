@@ -202,7 +202,7 @@ const bnbScanBaseEndpoint = "https://api.bscscan.com/api";
 const etherscanBaseEndpoint = "https://api.etherscan.io/api";
 const polygonScanBaseEndpoint = "https://api.polygonscan.com/api";
 
-const zeniqSmartRPCEndpoint = "https://smart.zeniq.network:9545";
+const zeniqSmartRPCEndpoint = "https://api.zeniq.network";
 
 ///
 /// Arbitrum
