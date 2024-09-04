@@ -212,7 +212,7 @@ base class EvmRpcClient {
   }
 
   ///
-  /// sbch_queryTxByAddr
+  /// zeniq_queryTxByAddr
   ///
   Future<JsonList> queryTxByAddr({
     required String address,
@@ -221,7 +221,7 @@ base class EvmRpcClient {
     num maxTx = 10000,
   }) async {
     final response = await _call<JsonList>(
-      'sbch_queryTxByAddr',
+      'zeniq_queryTxByAddr',
       args: [
         address,
         dynToHex(startBlock),
