@@ -699,4 +699,14 @@ class UniswapV2Pair extends InternalContract {
 
     return response.outputs[0].value as String;
   }
+
+  Future<BigInt> balanceOf(String address) async {
+    final function = abi.getFunction('balanceOf')!;
+
+    final response = await read(
+      function: function.addValues(values: [address]),
+    );
+
+    return response.outputs[0].value as BigInt;
+  }
 }
