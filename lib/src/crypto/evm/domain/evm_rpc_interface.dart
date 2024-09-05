@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/src/crypto/evm/abi/ens/ens_registry_contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/abi/ens/ens_resolver_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/domain/queued_rpc_interface.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/transaction_information.dart';
@@ -859,5 +861,26 @@ final class EvmRpcInterface extends QueuedRpcInterface {
         default:
       }
     }
+  }
+
+  Future<String> resolveENS({
+    required String name,
+    required String contractAddress,
+  }) async {
+    final contract = EnsRegistryContract(
+      rpc: this,
+      contractAddress: contractAddress,
+    );
+
+    final resolverAddress = await contract.resolver(name: name);
+
+    final resolver = EnsResolverContract(
+      contractAddress: resolverAddress,
+      rpc: this,
+    );
+
+    final addr = await resolver.addr(name: name);
+
+    return addr;
   }
 }
