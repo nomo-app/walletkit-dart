@@ -884,7 +884,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
     }
   }
 
-  Future<String> resolveENS({
+  Future<String?> resolveENS({
     required String name,
     required String contractAddress,
   }) async {
@@ -894,6 +894,10 @@ final class EvmRpcInterface extends QueuedRpcInterface {
     );
 
     final resolverAddress = await contract.resolver(name: name);
+
+    if (resolverAddress == null) {
+      return null;
+    }
 
     final resolver = EnsResolverContract(
       contractAddress: resolverAddress,
