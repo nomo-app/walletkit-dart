@@ -709,4 +709,14 @@ class UniswapV2Pair extends InternalContract {
 
     return response.outputs[0].value as BigInt;
   }
+
+  Future<BigInt> totalSupply() async {
+    final function = abi.getFunction('totalSupply')!;
+
+    final response = await read(
+      function: function.addValues(values: []),
+    );
+
+    return response.outputs[0].value as BigInt;
+  }
 }
