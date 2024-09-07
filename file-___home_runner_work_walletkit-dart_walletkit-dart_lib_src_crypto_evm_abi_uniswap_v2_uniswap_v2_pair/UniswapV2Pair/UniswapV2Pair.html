@@ -57,7 +57,9 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">UniswapV2Pair</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-contractAddress"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">contractAddress</span>, </span></li>
+      <span class="name ">UniswapV2Pair</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-tokenA"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tokenA</span>, </span></li>
+<li><span class="parameter" id="-param-tokenB"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tokenB</span>, </span></li>
+<li><span class="parameter" id="-param-contractAddress"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">contractAddress</span>, </span></li>
 <li><span class="parameter" id="-param-rpc"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">rpc</span>, </span></li>
 </ol>})
     </section>
@@ -68,6 +70,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">UniswapV2Pair({
+  required this.tokenA,
+  required this.tokenB,
   required super.contractAddress,
   required super.rpc,
 }) : super(abi: uniswap_v2_pair_abi);</code></pre>
