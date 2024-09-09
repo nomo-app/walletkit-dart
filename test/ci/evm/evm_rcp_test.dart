@@ -165,20 +165,21 @@ void main() {
     expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
   });
 
-  test('Optimism Test', () async {
-    final balance = await optimismRPC.fetchBalance(
-      address: arbitrumTestWallet,
-    );
+  // TODO: Add API Key & Change RPC
+  // test('Optimism Test', () async {
+  //   final balance = await optimismRPC.fetchBalance(
+  //     address: arbitrumTestWallet,
+  //   );
 
-    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  //   expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
 
-    final opBalance = await optimismRPC.fetchTokenBalance(
-      arbitrumTestWallet,
-      optimism,
-    );
+  //   final opBalance = await optimismRPC.fetchTokenBalance(
+  //     arbitrumTestWallet,
+  //     optimism,
+  //   );
 
-    expect(opBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
-  });
+  //   expect(opBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
+  // });
   test('zkSync Test', () async {
     final balance = await zksyncRPC.fetchBalance(
       address: arbitrumTestWallet,

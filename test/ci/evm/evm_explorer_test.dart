@@ -185,31 +185,30 @@ void main() {
     expect(fraxBalance, greaterThan(BigInt.zero));
   });
 
-  // TODO: Need Api Key
-  // test('Test Optimism Fetching', () async {
-  //   final balance =
-  //       await optimismscan.fetchBalance(arbitrumTestWallet, ethNative);
+  test('Test Optimism Fetching', () async {
+    final balance =
+        await optimismscan.fetchBalance(arbitrumTestWallet, ethNative);
 
-  //   expect(balance, greaterThanOrEqualTo(BigInt.zero));
+    expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-  //   final transactions = await optimismscan.fetchTransactions(
-  //     address: arbitrumTestWallet,
-  //     token: ethNative,
-  //   );
-  //   expect(transactions, isNotEmpty);
+    final transactions = await optimismscan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: ethNative,
+    );
+    expect(transactions, isNotEmpty);
 
-  //   final erc20T = await optimismscan.fetchERC20Transactions(
-  //     address: arbitrumTestWallet,
-  //     token: optimism,
-  //     currency: ethNative,
-  //   );
-  //   expect(erc20T, isNotEmpty);
+    final erc20T = await optimismscan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: optimism,
+      currency: ethNative,
+    );
+    expect(erc20T, isNotEmpty);
 
-  //   final optimismBalance =
-  //       await optimismscan.fetchBalance(arbitrumTestWallet, optimism);
+    final optimismBalance =
+        await optimismscan.fetchBalance(arbitrumTestWallet, optimism);
 
-  //   expect(optimismBalance, greaterThan(BigInt.zero));
-  // });
+    expect(optimismBalance, greaterThan(BigInt.zero));
+  });
 
   test('Test zkSync Fetching', () async {
     final balance =
