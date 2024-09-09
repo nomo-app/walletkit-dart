@@ -19,7 +19,7 @@ class Amount {
     required num value,
     required int decimals,
   }) {
-    var value_s = value.toString();
+    var value_s = value.toStringAsFixed(decimals);
 
     final parts = value_s.split('.');
 

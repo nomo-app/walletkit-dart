@@ -719,4 +719,29 @@ class UniswapV2Pair extends InternalContract {
 
     return response.outputs[0].value as BigInt;
   }
+
+  Future<RawEVMTransaction> approveTx({
+    required String sender,
+    required String spender,
+    required BigInt value,
+    EvmFeeInformation? feeInfo,
+  }) async {
+    final function = abi.getFunction('approve')!;
+    return await buildTransactionForFunction(
+      function: function.addValues(values: [spender, value]),
+      sender: sender,
+      feeInfo: feeInfo,
+    );
+  }
+
+  Future<BigInt> allowance({
+    required String owner,
+    required String spender,
+  }) async {
+    final function = abi.getFunction('allowance')!;
+    final response = await read(
+      function: function.addValues(values: [owner, spender]),
+    );
+    return response.outputs.first.castValue<BigInt>();
+  }
 }
