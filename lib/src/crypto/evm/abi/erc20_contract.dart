@@ -269,7 +269,7 @@ class ERC20Contract extends InternalContract {
     );
   }
 
-  Future<RawEVMTransaction> approveTx({
+  Future<RawEvmTransaction> approveTx({
     required String sender,
     required String spender,
     required BigInt value,

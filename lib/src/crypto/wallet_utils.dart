@@ -48,10 +48,21 @@ Future<TokenInfo?> getTokenInfo({
 }
 
 Uint8List publicKeyToAddress(Uint8List publicKey) {
-  assert(publicKey.length == 64);
-  final hashed = keccak256(publicKey);
-  assert(hashed.length == 32);
-  return hashed.sublist(12, 32);
+  // 1. Ensure the public key is in the correct format
+  if (publicKey.length == 64) {
+    // If public key is 64 bytes, prepend 0x04 to indicate uncompressed key
+    publicKey = Uint8List.fromList([4, ...publicKey]);
+  } else if (publicKey.length != 65) {
+    throw ArgumentError(
+        'Invalid public key length. Expected 65 bytes (or 64 bytes without prefix).');
+  }
+
+  // 2. Take Keccak-256 hash of the public key
+  final hash =
+      keccak256(publicKey.sublist(1)); // Remove the 0x04 prefix before hashing
+
+  // 3. Take the last 20 bytes of the hash
+  return hash.sublist(12, 32);
 }
 
 String pubKeytoChecksumETHAddress(Uint8List seed) {

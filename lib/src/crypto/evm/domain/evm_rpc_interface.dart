@@ -291,7 +291,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
   ///
   /// Get Transaction By Hash
   ///
-  Future<InternalEVMTransaction> getTransactionByHash(String hash) async {
+  Future<RawEvmTransaction> getTransactionByHash(String hash) async {
     return await performTask(
       (client) => client.getTransactionByHash(hash),
     );
@@ -318,13 +318,11 @@ final class EvmRpcInterface extends QueuedRpcInterface {
       (amount) => amount.value,
     );
 
-    final estimatedFee = tx.gasPrice * tx.gasLimit;
-
-    if (balance < estimatedFee + tx.value) {
+    if (balance < tx.gasFee + tx.value) {
       throw Failure("Insufficient funds to pay native gas fee");
     }
 
-    return await sendRawTransaction(tx.serializedTransactionHex);
+    return await sendRawTransaction(tx.serialized.toHex);
   }
 
   ///
@@ -353,29 +351,6 @@ final class EvmRpcInterface extends QueuedRpcInterface {
       value: intent.amount.value,
       feeInfo: intent.feeInfo,
     );
-
-    // final data = contractAbiErc20.encodedFunctionForString(
-    //   'transfer',
-    //   [
-    //     intent.recipient,
-    //     intent.amount.value,
-    //   ],
-    // );
-
-    // final signedTx = await buildTransaction(
-    //   sender: from,
-    //   recipient: tokenContractAddress,
-    //   seed: seed,
-    //   feeInfo: intent.feeInfo,
-    //   data: data,
-    //   value: BigInt.zero,
-    // );
-
-    // final result = await client.sendRawTransaction(
-    //   signedTx.serializedTransactionHex,
-    // );
-
-    // return result;
   }
 
   ///
@@ -383,7 +358,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
   /// Fetches the gasPrice and gasLimit from the network
   /// Fetches the nonce from the network
   ///
-  Future<RawEVMTransaction> buildUnsignedTransaction({
+  Future<RawEvmTransaction> buildUnsignedTransaction({
     required String sender,
     required String recipient,
     required EvmFeeInformation? feeInfo,
@@ -403,16 +378,16 @@ final class EvmRpcInterface extends QueuedRpcInterface {
       (client) => client.getTransactionCount(sender),
     );
 
-    final unsignedTx = RawEVMTransaction(
+    /// TODO: Allow Configuration for which Transaction Type to use
+    /// Currently using Type 0
+    return RawEVMTransactionType0.unsigned(
       nonce: nonce,
       gasPrice: gasPrice.value,
       gasLimit: gasLimit.toBI,
       to: recipient,
       value: value ?? BigInt.zero,
-      chainId: type.chainId.toBigInt,
-      data: data,
+      data: data ?? Uint8List(0),
     );
-    return unsignedTx;
   }
 
   ///
@@ -421,7 +396,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
   /// Fetches the nonce from the network
   /// Signs the transaction
   ///
-  Future<InternalEVMTransaction> buildTransaction({
+  Future<RawEvmTransaction> buildTransaction({
     required String sender,
     required String recipient,
     required Uint8List seed,
@@ -437,12 +412,16 @@ final class EvmRpcInterface extends QueuedRpcInterface {
       value: value,
     );
 
-    final signedTx = InternalEVMTransaction.signTransaction(
-      unsignedTx,
-      derivePrivateKeyETH(
-        seed,
-      ), // TODO: Derivation shouldnt happen here as it will block the main thread
+    final signature = Signature.createSignature(
+      switch (unsignedTx) {
+        RawEVMTransactionType0() => unsignedTx.serializedUnsigned(type.chainId),
+        RawEVMTransactionType1() => unsignedTx.serializedUnsigned,
+        RawEVMTransactionType2() => unsignedTx.serializedUnsigned,
+      },
+      derivePrivateKeyETH(seed),
     );
+
+    final signedTx = unsignedTx.addSignature(signature);
 
     return signedTx;
   }
@@ -470,7 +449,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
       value: value,
     );
 
-    final result = await sendRawTransaction(signedTx.serializedTransactionHex);
+    final result = await sendRawTransaction(signedTx.serialized.toHex);
 
     return result;
   }

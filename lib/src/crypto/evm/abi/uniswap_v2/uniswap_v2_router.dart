@@ -1038,7 +1038,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> swapExactEthForTokensTransaction({
+  Future<RawEvmTransaction> swapExactEthForTokensTransaction({
     required BigInt amountIn,
     required BigInt amountOutMin,
     required List<String> path,
@@ -1080,7 +1080,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> swapExactTokensForEthTx({
+  Future<RawEvmTransaction> swapExactTokensForEthTx({
     required BigInt amountIn,
     required BigInt amountOutMin,
     required List<String> path,
@@ -1120,7 +1120,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> swapExactTokenForTokensTx({
+  Future<RawEvmTransaction> swapExactTokenForTokensTx({
     required BigInt amountIn,
     required BigInt amountOutMin,
     required List<String> path,
@@ -1160,7 +1160,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> swapEthForExactTokensTx({
+  Future<RawEvmTransaction> swapEthForExactTokensTx({
     required BigInt amountOut,
     required BigInt amountInMax,
     required List<String> path,
@@ -1200,7 +1200,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> swapTokenForExactEthTx({
+  Future<RawEvmTransaction> swapTokenForExactEthTx({
     required BigInt amountOut,
     required BigInt amountInMax,
     required List<String> path,
@@ -1240,7 +1240,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> swapTokenForExactTokensTx({
+  Future<RawEvmTransaction> swapTokenForExactTokensTx({
     required BigInt amountOut,
     required BigInt amountInMax,
     required List<String> path,

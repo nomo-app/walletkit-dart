@@ -118,7 +118,7 @@ Uint8List _encode(dynamic object) {
  * 
  * @returns {String}
  */
-String encode(dynamic object) {
+String rlpEncode(dynamic object) {
   return _encode(object).toHex;
 }
 

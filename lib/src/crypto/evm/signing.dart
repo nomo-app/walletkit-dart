@@ -8,20 +8,20 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const stakingPartnerAddress =
     "0x6B984d04761E5CCD16e3ed54a51F1454f950F0E3"; // this address is configured in the AVINOC-staking-contract and the Safir-backoffice holds a private key for this address
 
-(InternalEVMTransaction, Signature) signEvmTransaction({
+(RawEvmTransaction, Signature) signEvmTransaction({
   required String messageHex,
   required Uint8List seed,
 }) {
   final privateKey = derivePrivateKeyETH(seed);
-  final rawTx = RawEVMTransaction.fromHex(messageHex);
+  final rawTx = RawEVMTransactionType0.fromHex(messageHex);
 
   final signature = Signature.createSignature(
-    rawTx.serializeTransaction,
+    rawTx.serialized,
     privateKey,
     chainId: rawTx.chainId?.toInt(),
   );
 
-  final signedTx = InternalEVMTransaction.appendSignature(rawTx, signature);
+  final signedTx = rawTx.addSignature(signature);
 
   return (signedTx, signature);
 }
