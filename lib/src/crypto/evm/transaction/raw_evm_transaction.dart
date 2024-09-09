@@ -187,6 +187,20 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
     );
   }
 
+  RawEVMTransactionType0 sign({
+    required Uint8List privateKey,
+    required int chainId,
+  }) {
+    final signature = Signature.createSignature(
+      serializedUnsigned(chainId),
+      privateKey,
+      txType: TransactionType.Legacy,
+      chainId: chainId,
+    );
+
+    return addSignature(signature);
+  }
+
   factory RawEVMTransactionType0.fromHex(String messageHex) {
     final rawTxHex = messageHex.replaceFirst("0x", "");
     final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
@@ -312,6 +326,18 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
       signatureR: signature.rBytes,
       signatureS: signature.sBytes,
     );
+  }
+
+  RawEVMTransactionType1 sign({
+    required Uint8List privateKey,
+  }) {
+    final signature = Signature.createSignature(
+      serializedUnsigned,
+      privateKey,
+      txType: TransactionType.Type1,
+    );
+
+    return addSignature(signature);
   }
 
   @override
@@ -522,6 +548,18 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
       signatureR: signature.rBytes,
       signatureS: signature.sBytes,
     );
+  }
+
+  RawEVMTransactionType2 sign({
+    required Uint8List privateKey,
+  }) {
+    final signature = Signature.createSignature(
+      serializedUnsigned,
+      privateKey,
+      txType: TransactionType.Type2,
+    );
+
+    return addSignature(signature);
   }
 
   factory RawEVMTransactionType2.fromHex(String rawTxHex) {
