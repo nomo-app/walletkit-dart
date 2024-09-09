@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the RawEVMTransactionType0.unsigned constructor from Class RawEVMTransactionType0 from the raw_evm_transaction library, for the Dart programming language.">
-  <title>RawEVMTransactionType0.unsigned constructor - RawEVMTransactionType0 - raw_evm_transaction library - Dart API</title>
+  <meta name="description" content="API docs for the RawEVMTransactionType2.fromUnsignedHex constructor from Class RawEVMTransactionType2 from the raw_evm_transaction library, for the Dart programming language.">
+  <title>RawEVMTransactionType2.fromUnsignedHex constructor - RawEVMTransactionType2 - raw_evm_transaction library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">src&#47;crypto&#47;evm&#47;transaction&#47;raw_evm_transaction.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransactionType0-class.html">RawEVMTransactionType0</a></li>
-    <li class="self-crumb">RawEVMTransactionType0.unsigned constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransactionType2-class.html">RawEVMTransactionType2</a></li>
+    <li class="self-crumb">RawEVMTransactionType2.fromUnsignedHex factory constructor</li>
   </ol>
-  <div class="self-name">RawEVMTransactionType0.unsigned</div>
+  <div class="self-name">RawEVMTransactionType2.fromUnsignedHex</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -49,22 +49,16 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction&#47;RawEVMTransactionType0-class-sidebar.html"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction&#47;RawEVMTransactionType2-class-sidebar.html"
       data-below-sidebar="">
       <div>
-<h1><span class="kind-constructor">RawEVMTransactionType0.unsigned</span> constructor 
+<h1><span class="kind-constructor">RawEVMTransactionType2.fromUnsignedHex</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">RawEVMTransactionType0.unsigned</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="unsigned-param-nonce"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">nonce</span>, </span></li>
-<li><span class="parameter" id="unsigned-param-gasLimit"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">gasLimit</span>, </span></li>
-<li><span class="parameter" id="unsigned-param-to"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">to</span>, </span></li>
-<li><span class="parameter" id="unsigned-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span>, </span></li>
-<li><span class="parameter" id="unsigned-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span></li>
-<li><span class="parameter" id="unsigned-param-gasPrice"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">gasPrice</span>, </span></li>
-<li><span class="parameter" id="unsigned-param-chainId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainId</span>, </span></li>
-</ol>})
+      <span class="name ">RawEVMTransactionType2.fromUnsignedHex</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromUnsignedHex-param-rawTxHex"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">rawTxHex</span></span></li>
+</ol>)
     </section>
     
 
@@ -72,17 +66,49 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">RawEVMTransactionType0.unsigned({
-  required super.nonce,
-  required super.gasLimit,
-  required super.to,
-  required super.value,
-  required super.data,
-  required this.gasPrice,
-  int? chainId,
-})  : r = BigInt.zero,
-      s = BigInt.zero,
-      v = chainId != null ? chainId * 2 + 35 : 27;</code></pre>
+  <pre class="language-dart"><code class="language-dart">factory RawEVMTransactionType2.fromUnsignedHex(String rawTxHex) {
+  rawTxHex = rawTxHex.replaceFirst(&quot;0x&quot;, &quot;&quot;); &#47;&#47; Remove the 0x prefix
+  assert(rawTxHex.startsWith(&quot;02&quot;), &quot;Invalid Type 1 Transaction&quot;);
+  rawTxHex = rawTxHex.substring(2); &#47;&#47; Remove the type prefix
+
+  final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
+
+  if (rlpDecoded is! List) {
+    throw Exception(&quot;Error RLP decoding transaction: $rlpDecoded&quot;);
+  }
+
+  if (rlpDecoded.length &lt; 9) {
+    throw Exception(&quot;Invalid transaction, missing fields: $rlpDecoded&quot;);
+  }
+
+  final chainId = parseAsHexInt(rlpDecoded[0]);
+  final nonce = parseAsHexBigInt(rlpDecoded[1]);
+  final maxPriorityFeePerGas = parseAsHexBigInt(rlpDecoded[2]);
+  final maxFeePerGas = parseAsHexBigInt(rlpDecoded[3]);
+  final gasLimit = parseAsHexBigInt(rlpDecoded[4]);
+  final to = &quot;0x&quot; + rlpDecoded[5];
+  final value = parseAsHexBigInt(rlpDecoded[6]);
+  final data = (rlpDecoded[7] as String).hexToBytes;
+  final accessList = [
+    for (final item in rlpDecoded[8])
+      (
+        address: &quot;0x&quot; + item[0],
+        storageKeys: (item[1] as List&lt;dynamic&gt;).whereType&lt;String&gt;().toList(),
+      )
+  ];
+
+  return RawEVMTransactionType2.unsigned(
+    nonce: nonce,
+    gasLimit: gasLimit,
+    to: to,
+    value: value,
+    data: data,
+    chainId: chainId,
+    maxFeePerGas: maxFeePerGas,
+    maxPriorityFeePerGas: maxPriorityFeePerGas,
+    accessList: accessList,
+  );
+}</code></pre>
 </section>
 
 
@@ -97,11 +123,11 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">raw_evm_transaction</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransactionType0-class.html">RawEVMTransactionType0</a></li>
-    <li class="self-crumb">RawEVMTransactionType0.unsigned constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransactionType2-class.html">RawEVMTransactionType2</a></li>
+    <li class="self-crumb">RawEVMTransactionType2.fromUnsignedHex factory constructor</li>
 </ol>
 
-    <h5>RawEVMTransactionType0 class</h5>
+    <h5>RawEVMTransactionType2 class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-left-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
