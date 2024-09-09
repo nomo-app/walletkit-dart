@@ -34,42 +34,16 @@ void main() {
   });
 
   test('Sign RawTx and parse it to InternalEVMTransaction', () {
-    final rawTransaction = RawEVMTransaction.fromHex(unsignedTxFromNomo);
+    final rawTransaction = RawEVMTransactionType0.fromHex(unsignedTxFromNomo);
 
     print(rawTransaction);
 
-    final signedTx =
-        InternalEVMTransaction.signTransaction(rawTransaction, privateKey);
-
-    print(signedTx);
-  });
-
-  test('Simulate TX', () async {
-    final testTx = await arbitrumRPC.getTransactionByHash(
-        "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b");
-    print("TestTx: $testTx");
-
-    print("ChainID ${testTx.chainId}");
-    print(testTx.serializeTransaction.toHex);
-
-    final rawUnsignedTx = RawEVMTransaction(
-      nonce: testTx.nonce,
-      gasPrice: testTx.gasPrice,
-      gasLimit: testTx.gasLimit,
-      to: testTx.to,
-      value: testTx.value,
-      data: testTx.data,
-      chainId: testTx.chainId,
+    final signedTx = rawTransaction.sign(
+      privateKey: privateKey,
+      chainId: ZeniqSmartNetwork.chainId,
     );
 
-    final signedTx =
-        InternalEVMTransaction.signTransaction(rawUnsignedTx, privateKey);
-
-    final signedTxHex = signedTx.serializedTransactionHex;
-
-    expect(testTx.chainId, 42161.toBigInt);
-    expect(signedTxHex,
-        "0xf86d1683989680830186a094a7fa4bb0bba164f999e8c7b83c9da96a3be4461687038d7ea4c680008083014985a01182f44be301418adb401ccca9c9d3236fe1f3de066ff2f425296262b9a4ce14a02e1a9afb021a6dc36fd94c18a5e43e1fa1a6870743dd1786a9cde3f3547eefa6");
+    print(signedTx);
   });
 
   test('Broadcast evm raw tx', () async {
@@ -83,25 +57,59 @@ void main() {
     final amount = Amount.convert(value: 0.001, decimals: 18);
     final value = amount.value;
     final data = Uint8List.fromList([]);
-    final chainId = BigInt.from(42161);
+    const chainId = 42161;
 
-    final rawTx = RawEVMTransaction(
+    final signedTx = RawEVMTransactionType0.unsigned(
       nonce: nonce,
       gasPrice: gasPrice,
       gasLimit: gasLimit.toBigInt,
       to: to,
       value: value,
       data: data,
+    ).sign(
+      privateKey: privateKey,
       chainId: chainId,
     );
 
-    final signedTx = InternalEVMTransaction.signTransaction(rawTx, privateKey);
-
-    final signedTxHex = signedTx.serializedTransactionHex;
+    final signedTxHex = signedTx.serialized.toHex;
 
     print(signedTxHex);
 
-    final hash = await arbitrumRPC.sendRawTransaction(signedTxHex);
+    final hash = await arbitrumRPC.sendRawTransaction("0x" + signedTxHex);
+
+    print("Hash: $hash");
+  });
+
+  test('Broadcast evm raw tx type2', () async {
+    const to = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
+    final gasLimit = await arbitrumRPC.estimateGasLimit(
+      recipient: to,
+      sender: to,
+    );
+    final gasPrice = await arbitrumRPC.getGasPrice();
+    final nonce = await arbitrumRPC.getTransactionCount(to);
+    final amount = Amount.convert(value: 0.001, decimals: 18);
+    final value = amount.value;
+    final data = Uint8List.fromList([]);
+    const chainId = 42161;
+
+    final signedTx = RawEVMTransactionType2.unsigned(
+      nonce: nonce,
+      maxFeePerGas: gasPrice,
+      maxPriorityFeePerGas: BigInt.zero,
+      gasLimit: gasLimit.toBigInt,
+      to: to,
+      value: value,
+      data: data,
+      chainId: chainId,
+      accessList: [],
+    ).sign(privateKey: privateKey);
+
+    final signedTxHex = signedTx.serialized.toHex;
+
+    print(signedTxHex);
+
+    final hash = await arbitrumRPC.sendRawTransaction("0x" + signedTxHex);
 
     print("Hash: $hash");
   });

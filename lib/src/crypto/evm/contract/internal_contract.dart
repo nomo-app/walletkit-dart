@@ -44,7 +44,7 @@ abstract class InternalContract {
     );
   }
 
-  Future<RawEVMTransaction> buildTransactionForFunction({
+  Future<RawEvmTransaction> buildTransactionForFunction({
     required ContractFunctionWithValues function,
     required String sender,
     EvmFeeInformation? feeInfo,

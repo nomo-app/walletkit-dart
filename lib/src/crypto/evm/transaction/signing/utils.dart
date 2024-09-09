@@ -16,24 +16,41 @@ BigInt bytesToUnsignedInt(Uint8List bytes) {
   return p_utils.decodeBigIntWithSign(1, bytes);
 }
 
-Uint8List recoverPublicKey(Uint8List payload, Signature signature) {
+Uint8List recoverPublicKey(
+  Uint8List payload,
+  Signature signature, {
+  bool hasSignatureYParity = false,
+}) {
   final r = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(signature.r));
   final s = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(signature.s));
 
   assert(r.length == 32);
   assert(s.length == 32);
 
-  final header = signature.v & 0xFF;
+  final v = signature.v;
+  int chainId = 0;
+  int recoveryId;
 
-  if (header < 27 || header > 34) {
-    throw Exception('Invalid header');
+  // Type 1 and Type 2 Transactions
+  if (hasSignatureYParity) {
+    recoveryId = signature.v; // Since V is the signature parity which is 0 or 1
+  } else {
+    // Handle both pre-EIP-155 and EIP-155 v values
+    if (v == 27 || v == 28) {
+      recoveryId = v - 27;
+    } else {
+      chainId = (v - 35) ~/ 2;
+      recoveryId = v - (2 * chainId + 35);
+    }
+  }
+
+  if (recoveryId != 0 && recoveryId != 1) {
+    throw Exception('Invalid recovery id');
   }
 
   final sig = ECSignature(signature.r, signature.s);
 
-  final recID = header - 27;
-
-  final pubKey = _recoverFromSignature(recID, sig, payload, params);
+  final pubKey = _recoverFromSignature(recoveryId, sig, payload, params);
 
   if (pubKey == null) {
     throw Exception('Failed to recover public key');

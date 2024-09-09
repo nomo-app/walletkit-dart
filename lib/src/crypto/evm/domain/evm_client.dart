@@ -90,7 +90,7 @@ base class EvmRpcClient {
     return count;
   }
 
-  Future<InternalEVMTransaction> getTransactionByHash(
+  Future<RawEvmTransaction> getTransactionByHash(
     String messageHash, [
     int? chainId,
   ]) async {
@@ -99,21 +99,24 @@ base class EvmRpcClient {
       args: [messageHash],
     );
 
-    final v = response['v'].toString().toIntOrNull ?? 0;
+    final type_i = response['type'].toString().toInt;
+    final type = TransactionType.fromInt(type_i.toInt());
 
-    final chainIDV = chainId ?? extractChainId(v);
-    return InternalEVMTransaction(
-      nonce: response['nonce'].toString().toBigInt,
-      gasPrice: response['gasPrice'].toString().toBigInt,
-      gasLimit: response['gas'].toString().toBigInt,
-      to: response['to'],
-      value: response['value'].toString().toBigInt,
-      data: response['input'].toString().hexToBytesWithPrefixOrNull,
-      chainId: chainIDV.toBigInt,
-      v: v,
-      r: response['r'].toString().toBigInt,
-      s: response['s'].toString().toBigInt,
-    );
+    return switch (type) {
+      TransactionType.Legacy => RawEVMTransactionType0(
+          nonce: response['nonce'].toString().toBigInt,
+          gasPrice: response['gasPrice'].toString().toBigInt,
+          gasLimit: response['gas'].toString().toBigInt,
+          to: response['to'],
+          value: response['value'].toString().toBigInt,
+          data: response['input'].toString().hexToBytesWithPrefixOrNull ??
+              Uint8List(0),
+          v: response['v'].toString().toInt,
+          r: response['r'].toString().toBigInt,
+          s: response['s'].toString().toBigInt,
+        ),
+      _ => throw UnsupportedError('Unsupported transaction type: $type'),
+    };
   }
 
   Future<Json> getBlockByNumber(int blockNumber) async {

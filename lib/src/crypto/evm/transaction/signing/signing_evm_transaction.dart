@@ -6,10 +6,32 @@ import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;
 
+enum TransactionType {
+  Legacy(0),
+  Type1(1),
+  Type2(2);
+
+  final int value;
+
+  const TransactionType(this.value);
+
+  static TransactionType fromInt(int value) {
+    return switch (value) {
+      0 => TransactionType.Legacy,
+      1 => TransactionType.Type1,
+      2 => TransactionType.Type2,
+      _ => throw Exception('Invalid TransactionType value: $value'),
+    };
+  }
+}
+
 class Signature {
   final BigInt r;
   final BigInt s;
   final int v;
+
+  Uint8List get rBytes => padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(r));
+  Uint8List get sBytes => padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(s));
 
   const Signature(this.r, this.s, this.v);
 
@@ -35,7 +57,7 @@ class Signature {
   factory Signature.createSignature(
     Uint8List payload,
     Uint8List privateKey, {
-    bool isEIP1559 = false,
+    TransactionType txType = TransactionType.Legacy,
     int? chainId,
     bool hashPayload = true,
   }) {
@@ -63,20 +85,17 @@ class Signature {
     if (rcID == null) {
       throw Exception('Failed to calculate recovery id');
     }
-    final signature = Signature(sig.r, sig.s, rcID + 27);
 
-    int chainIdV;
+    final int v = switch (txType) {
+      TransactionType.Legacy =>
+        chainId != null ? (rcID + (chainId * 2 + 35)) : (rcID + 27),
+      TransactionType.Type1 || TransactionType.Type2 => rcID,
+    };
 
-    if (isEIP1559) {
-      chainIdV = signature.v - 27;
-    } else {
-      chainIdV = chainId != null
-          ? (signature.v - 27 + (chainId * 2 + 35))
-          : signature.v;
-    }
-
-    return Signature(signature.r, signature.s, chainIdV);
+    return Signature(sig.r, sig.s, v);
   }
+
+  int get yParity => v % 2;
 
   static const _messagePrefix = '\u0019Ethereum Signed Message:\n';
 
