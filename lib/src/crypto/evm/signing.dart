@@ -13,13 +13,25 @@ const stakingPartnerAddress =
   required Uint8List seed,
 }) {
   final privateKey = derivePrivateKeyETH(seed);
-  final rawTx = RawEVMTransactionType0.fromHex(messageHex);
+  final rawTx = RawEvmTransaction.fromUnsignedHex(messageHex);
 
-  final signature = Signature.createSignature(
-    rawTx.serialized,
-    privateKey,
-    chainId: rawTx.chainId?.toInt(),
-  );
+  final signature = switch (rawTx) {
+    RawEVMTransactionType0 type0 => Signature.createSignature(
+        type0.serializedUnsigned(type0.chainId),
+        privateKey,
+        chainId: type0.chainId,
+      ),
+    RawEVMTransactionType1 type1 => Signature.createSignature(
+        type1.serializedUnsigned,
+        privateKey,
+        txType: TransactionType.Type1,
+      ),
+    RawEVMTransactionType2 type2 => Signature.createSignature(
+        type2.serializedUnsigned,
+        privateKey,
+        txType: TransactionType.Type2,
+      ),
+  };
 
   final signedTx = rawTx.addSignature(signature);
 
