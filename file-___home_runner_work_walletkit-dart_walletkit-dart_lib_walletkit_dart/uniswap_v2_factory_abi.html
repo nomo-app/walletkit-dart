@@ -67,8 +67,201 @@
         
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">final uniswap_v2_factory_abi = ContractABI.fromAbi(
-    &#39;[{&quot;inputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;_feeToSetter&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;nonpayable&quot;,&quot;type&quot;:&quot;constructor&quot;},{&quot;anonymous&quot;:false,&quot;inputs&quot;:[{&quot;indexed&quot;:true,&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;token0&quot;,&quot;type&quot;:&quot;address&quot;},{&quot;indexed&quot;:true,&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;token1&quot;,&quot;type&quot;:&quot;address&quot;},{&quot;indexed&quot;:false,&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;pair&quot;,&quot;type&quot;:&quot;address&quot;},{&quot;indexed&quot;:false,&quot;internalType&quot;:&quot;uint256&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;uint256&quot;}],&quot;name&quot;:&quot;PairCreated&quot;,&quot;type&quot;:&quot;event&quot;},{&quot;constant&quot;:true,&quot;inputs&quot;:[{&quot;internalType&quot;:&quot;uint256&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;uint256&quot;}],&quot;name&quot;:&quot;allPairs&quot;,&quot;outputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;},{&quot;constant&quot;:true,&quot;inputs&quot;:[],&quot;name&quot;:&quot;allPairsLength&quot;,&quot;outputs&quot;:[{&quot;internalType&quot;:&quot;uint256&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;uint256&quot;}],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;},{&quot;constant&quot;:false,&quot;inputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;tokenA&quot;,&quot;type&quot;:&quot;address&quot;},{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;tokenB&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;name&quot;:&quot;createPair&quot;,&quot;outputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;pair&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;nonpayable&quot;,&quot;type&quot;:&quot;function&quot;},{&quot;constant&quot;:true,&quot;inputs&quot;:[],&quot;name&quot;:&quot;feeTo&quot;,&quot;outputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;},{&quot;constant&quot;:true,&quot;inputs&quot;:[],&quot;name&quot;:&quot;feeToSetter&quot;,&quot;outputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;},{&quot;constant&quot;:true,&quot;inputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;address&quot;},{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;name&quot;:&quot;getPair&quot;,&quot;outputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;view&quot;,&quot;type&quot;:&quot;function&quot;},{&quot;constant&quot;:false,&quot;inputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;_feeTo&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;name&quot;:&quot;setFeeTo&quot;,&quot;outputs&quot;:[],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;nonpayable&quot;,&quot;type&quot;:&quot;function&quot;},{&quot;constant&quot;:false,&quot;inputs&quot;:[{&quot;internalType&quot;:&quot;address&quot;,&quot;name&quot;:&quot;_feeToSetter&quot;,&quot;type&quot;:&quot;address&quot;}],&quot;name&quot;:&quot;setFeeToSetter&quot;,&quot;outputs&quot;:[],&quot;payable&quot;:false,&quot;stateMutability&quot;:&quot;nonpayable&quot;,&quot;type&quot;:&quot;function&quot;}]&#39;);</code></pre>
+  <pre class="language-dart"><code class="language-dart">final uniswap_v2_factory_abi = ContractABI.fromAbi(&#39;&#39;&#39;[
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;_feeToSetter&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;_WZENIQ&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;constructor&quot;
+    },
+    {
+      &quot;anonymous&quot;: false,
+      &quot;inputs&quot;: [
+        {
+          &quot;indexed&quot;: true,
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;token0&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;indexed&quot;: true,
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;token1&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;indexed&quot;: false,
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;pair&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;indexed&quot;: false,
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;PairCreated&quot;,
+      &quot;type&quot;: &quot;event&quot;
+    },
+    {
+      &quot;inputs&quot;: [],
+      &quot;name&quot;: &quot;WZENIQ&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;allPairs&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [],
+      &quot;name&quot;: &quot;allPairsLength&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenA&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenB&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;createPair&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;pair&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [],
+      &quot;name&quot;: &quot;feeTo&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [],
+      &quot;name&quot;: &quot;feeToSetter&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;getPair&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;_feeTo&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;setFeeTo&quot;,
+      &quot;outputs&quot;: [],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;_feeToSetter&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;setFeeToSetter&quot;,
+      &quot;outputs&quot;: [],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    }
+  ]
+    &#39;&#39;&#39;);</code></pre>
 </section>
 
 
