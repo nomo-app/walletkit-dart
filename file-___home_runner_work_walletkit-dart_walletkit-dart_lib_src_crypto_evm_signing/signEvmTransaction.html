@@ -71,20 +71,20 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">(InternalEVMTransaction, Signature) signEvmTransaction({
+  <pre class="language-dart"><code class="language-dart">(RawEvmTransaction, Signature) signEvmTransaction({
   required String messageHex,
   required Uint8List seed,
 }) {
   final privateKey = derivePrivateKeyETH(seed);
-  final rawTx = RawEVMTransaction.fromHex(messageHex);
+  final rawTx = RawEVMTransactionType0.fromHex(messageHex);
 
   final signature = Signature.createSignature(
-    rawTx.serializeTransaction,
+    rawTx.serialized,
     privateKey,
     chainId: rawTx.chainId?.toInt(),
   );
 
-  final signedTx = InternalEVMTransaction.appendSignature(rawTx, signature);
+  final signedTx = rawTx.addSignature(signature);
 
   return (signedTx, signature);
 }</code></pre>

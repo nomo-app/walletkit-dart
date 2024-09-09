@@ -92,7 +92,7 @@
     value: value,
   );
 
-  final result = await sendRawTransaction(signedTx.serializedTransactionHex);
+  final result = await sendRawTransaction(signedTx.serialized.toHex);
 
   return result;
 }</code></pre>

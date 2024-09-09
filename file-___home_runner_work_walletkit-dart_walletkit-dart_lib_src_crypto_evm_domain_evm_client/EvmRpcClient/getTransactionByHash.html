@@ -71,7 +71,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;InternalEVMTransaction&gt; getTransactionByHash(
+  <pre class="language-dart"><code class="language-dart">Future&lt;RawEvmTransaction&gt; getTransactionByHash(
   String messageHash, [
   int? chainId,
 ]) async {
@@ -80,21 +80,24 @@
     args: [messageHash],
   );
 
-  final v = response[&#39;v&#39;].toString().toIntOrNull ?? 0;
+  final type_i = response[&#39;type&#39;].toString().toInt;
+  final type = TransactionType.fromInt(type_i.toInt());
 
-  final chainIDV = chainId ?? extractChainId(v);
-  return InternalEVMTransaction(
-    nonce: response[&#39;nonce&#39;].toString().toBigInt,
-    gasPrice: response[&#39;gasPrice&#39;].toString().toBigInt,
-    gasLimit: response[&#39;gas&#39;].toString().toBigInt,
-    to: response[&#39;to&#39;],
-    value: response[&#39;value&#39;].toString().toBigInt,
-    data: response[&#39;input&#39;].toString().hexToBytesWithPrefixOrNull,
-    chainId: chainIDV.toBigInt,
-    v: v,
-    r: response[&#39;r&#39;].toString().toBigInt,
-    s: response[&#39;s&#39;].toString().toBigInt,
-  );
+  return switch (type) {
+    TransactionType.Legacy =&gt; RawEVMTransactionType0(
+        nonce: response[&#39;nonce&#39;].toString().toBigInt,
+        gasPrice: response[&#39;gasPrice&#39;].toString().toBigInt,
+        gasLimit: response[&#39;gas&#39;].toString().toBigInt,
+        to: response[&#39;to&#39;],
+        value: response[&#39;value&#39;].toString().toBigInt,
+        data: response[&#39;input&#39;].toString().hexToBytesWithPrefixOrNull ??
+            Uint8List(0),
+        v: response[&#39;v&#39;].toString().toInt,
+        r: response[&#39;r&#39;].toString().toBigInt,
+        s: response[&#39;s&#39;].toString().toBigInt,
+      ),
+    _ =&gt; throw UnsupportedError(&#39;Unsupported transaction type: $type&#39;),
+  };
 }</code></pre>
 </section>
 

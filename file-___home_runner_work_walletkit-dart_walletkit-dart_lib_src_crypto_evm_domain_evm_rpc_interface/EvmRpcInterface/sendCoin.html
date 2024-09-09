@@ -93,13 +93,11 @@
     (amount) =&gt; amount.value,
   );
 
-  final estimatedFee = tx.gasPrice * tx.gasLimit;
-
-  if (balance &lt; estimatedFee + tx.value) {
+  if (balance &lt; tx.gasFee + tx.value) {
     throw Failure(&quot;Insufficient funds to pay native gas fee&quot;);
   }
 
-  return await sendRawTransaction(tx.serializedTransactionHex);
+  return await sendRawTransaction(tx.serialized.toHex);
 }</code></pre>
 </section>
 

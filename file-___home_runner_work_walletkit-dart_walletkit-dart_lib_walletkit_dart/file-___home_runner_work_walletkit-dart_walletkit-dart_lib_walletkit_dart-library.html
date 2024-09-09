@@ -1914,14 +1914,6 @@ Valid uint are: 8 through 256 with increments of 8
   
 </dd>
 
-          <dt id="InternalEVMTransaction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_internal_evm_transaction/InternalEVMTransaction-class.html">InternalEVMTransaction</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
           <dt id="JsonRPC">
   <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_common_json_rpc/JsonRPC-class.html">JsonRPC</a></span> 
 
@@ -2034,8 +2026,32 @@ Valid uint are: 8 through 256 with increments of 8
   
 </dd>
 
-          <dt id="RawEVMTransaction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransaction-class.html">RawEVMTransaction</a></span> 
+          <dt id="RawEvmTransaction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEvmTransaction-class.html">RawEvmTransaction</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="RawEVMTransactionType0">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransactionType0-class.html">RawEVMTransactionType0</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="RawEVMTransactionType1">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransactionType1-class.html">RawEVMTransactionType1</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="RawEVMTransactionType2">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/RawEVMTransactionType2-class.html">RawEVMTransactionType2</a></span> 
 
 </dt>
 <dd>
@@ -2339,6 +2355,14 @@ and the corresponding result as sent by the server.
 
           <dt id="TransactionTransferMethod">
   <span class="name "><a href="../generic_transaction/TransactionTransferMethod.html">TransactionTransferMethod</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="TransactionType">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_signing_evm_transaction/TransactionType.html">TransactionType</a></span> 
 
 </dt>
 <dd>
@@ -4916,19 +4940,6 @@ including the leading 02 or 03
 
 </dd>
 
-          <dt id="encode" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/encode.html">encode</a></span><span class="signature">(<wbr><span class="parameter" id="encode-param-object"><span class="type-annotation">dynamic</span> <span class="parameter-name">object</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  @param {dynamic} object
-  
-
-</dd>
-
           <dt id="encodeVarint" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_utils_eurocoin_signing/encodeVarint.html">encodeVarint</a></span><span class="signature">(<wbr><span class="parameter" id="encodeVarint-param-value"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">value</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
@@ -5257,7 +5268,7 @@ If not we rebroadcast the transaction until at least half of the nodes have the 
 </dd>
 
           <dt id="recoverPublicKey" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/recoverPublicKey.html">recoverPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="recoverPublicKey-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="recoverPublicKey-param-signature"><span class="type-annotation">dynamic</span> <span class="parameter-name">signature</span></span>)
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/recoverPublicKey.html">recoverPublicKey</a></span><span class="signature">(<wbr><span class="parameter" id="recoverPublicKey-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="recoverPublicKey-param-signature"><span class="type-annotation">dynamic</span> <span class="parameter-name">signature</span>, {</span><span class="parameter" id="recoverPublicKey-param-hasSignatureYParity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hasSignatureYParity</span> = <span class="default-value">false</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
   </span>
   
@@ -5265,6 +5276,19 @@ If not we rebroadcast the transaction until at least half of the nodes have the 
 </dt>
 <dd>
   
+  
+
+</dd>
+
+          <dt id="rlpEncode" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/rlpEncode.html">rlpEncode</a></span><span class="signature">(<wbr><span class="parameter" id="rlpEncode-param-object"><span class="type-annotation">dynamic</span> <span class="parameter-name">object</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  @param {dynamic} object
   
 
 </dd>
@@ -5579,6 +5603,21 @@ If not we rebroadcast the transaction until at least half of the nodes have the 
 
 
           
+  <dt id="AccessListItem" class="">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/AccessListItem.html">AccessListItem</a></span>
+    = (<span class="field">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="field-name">address</span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="field-name">storageKeys</span>}</span>)
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+
+          
   <dt id="BipNode" class="">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_utxo_derivation/BipNode.html">BipNode</a></span>
     = dynamic
@@ -5785,7 +5824,6 @@ If not we rebroadcast the transaction until at least half of the nodes have the 
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface-library.html">src/crypto/evm/domain/evm_rpc_interface</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_rlp-library.html">src/crypto/evm/rlp</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_signing-library.html">src/crypto/evm/signing</a></li>
-      <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_internal_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_internal_evm_transaction-library.html">src/crypto/evm/transaction/internal_evm_transaction</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_raw_evm_transaction-library.html">src/crypto/evm/transaction/raw_evm_transaction</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_signing_evm_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_signing_evm_transaction-library.html">src/crypto/evm/transaction/signing/signing_evm_transaction</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_utils-library.html">src/crypto/evm/transaction/signing/utils</a></li>

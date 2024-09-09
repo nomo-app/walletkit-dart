@@ -71,10 +71,21 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Uint8List publicKeyToAddress(Uint8List publicKey) {
-  assert(publicKey.length == 64);
-  final hashed = keccak256(publicKey);
-  assert(hashed.length == 32);
-  return hashed.sublist(12, 32);
+  &#47;&#47; 1. Ensure the public key is in the correct format
+  if (publicKey.length == 64) {
+    &#47;&#47; If public key is 64 bytes, prepend 0x04 to indicate uncompressed key
+    publicKey = Uint8List.fromList([4, ...publicKey]);
+  } else if (publicKey.length != 65) {
+    throw ArgumentError(
+        &#39;Invalid public key length. Expected 65 bytes (or 64 bytes without prefix).&#39;);
+  }
+
+  &#47;&#47; 2. Take Keccak-256 hash of the public key
+  final hash =
+      keccak256(publicKey.sublist(1)); &#47;&#47; Remove the 0x04 prefix before hashing
+
+  &#47;&#47; 3. Take the last 20 bytes of the hash
+  return hash.sublist(12, 32);
 }</code></pre>
 </section>
 

@@ -81,7 +81,7 @@ Signs the transaction</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;InternalEVMTransaction&gt; buildTransaction({
+  <pre class="language-dart"><code class="language-dart">Future&lt;RawEvmTransaction&gt; buildTransaction({
   required String sender,
   required String recipient,
   required Uint8List seed,
@@ -97,12 +97,16 @@ Signs the transaction</p>
     value: value,
   );
 
-  final signedTx = InternalEVMTransaction.signTransaction(
-    unsignedTx,
-    derivePrivateKeyETH(
-      seed,
-    ), &#47;&#47; TODO: Derivation shouldnt happen here as it will block the main thread
+  final signature = Signature.createSignature(
+    switch (unsignedTx) {
+      RawEVMTransactionType0() =&gt; unsignedTx.serializedUnsigned(type.chainId),
+      RawEVMTransactionType1() =&gt; unsignedTx.serializedUnsigned,
+      RawEVMTransactionType2() =&gt; unsignedTx.serializedUnsigned,
+    },
+    derivePrivateKeyETH(seed),
   );
+
+  final signedTx = unsignedTx.addSignature(signature);
 
   return signedTx;
 }</code></pre>

@@ -58,9 +58,10 @@
     <section class="multi-line-signature">
         
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
-<span class="name ">recoverPublicKey</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="recoverPublicKey-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span></li>
-<li><span class="parameter" id="recoverPublicKey-param-signature"><span class="type-annotation">dynamic</span> <span class="parameter-name">signature</span></span></li>
-</ol>)
+<span class="name ">recoverPublicKey</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="recoverPublicKey-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span></li>
+<li><span class="parameter" id="recoverPublicKey-param-signature"><span class="type-annotation">dynamic</span> <span class="parameter-name">signature</span>, {</span></li>
+<li><span class="parameter" id="recoverPublicKey-param-hasSignatureYParity"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hasSignatureYParity</span> = <span class="default-value">false</span>, </span></li>
+</ol>})
 
         
 
@@ -71,24 +72,41 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Uint8List recoverPublicKey(Uint8List payload, Signature signature) {
+  <pre class="language-dart"><code class="language-dart">Uint8List recoverPublicKey(
+  Uint8List payload,
+  Signature signature, {
+  bool hasSignatureYParity = false,
+}) {
   final r = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(signature.r));
   final s = padUint8ListTo32(p_utils.encodeBigIntAsUnsigned(signature.s));
 
   assert(r.length == 32);
   assert(s.length == 32);
 
-  final header = signature.v &amp; 0xFF;
+  final v = signature.v;
+  int chainId = 0;
+  int recoveryId;
 
-  if (header &lt; 27 || header &gt; 34) {
-    throw Exception(&#39;Invalid header&#39;);
+  &#47;&#47; Type 1 and Type 2 Transactions
+  if (hasSignatureYParity) {
+    recoveryId = signature.v; &#47;&#47; Since V is the signature parity which is 0 or 1
+  } else {
+    &#47;&#47; Handle both pre-EIP-155 and EIP-155 v values
+    if (v == 27 || v == 28) {
+      recoveryId = v - 27;
+    } else {
+      chainId = (v - 35) ~&#47; 2;
+      recoveryId = v - (2 * chainId + 35);
+    }
+  }
+
+  if (recoveryId != 0 &amp;&amp; recoveryId != 1) {
+    throw Exception(&#39;Invalid recovery id&#39;);
   }
 
   final sig = ECSignature(signature.r, signature.s);
 
-  final recID = header - 27;
-
-  final pubKey = _recoverFromSignature(recID, sig, payload, params);
+  final pubKey = _recoverFromSignature(recoveryId, sig, payload, params);
 
   if (pubKey == null) {
     throw Exception(&#39;Failed to recover public key&#39;);

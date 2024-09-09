@@ -59,7 +59,7 @@
       
       <span class="name ">Signature.createSignature</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="createSignature-param-payload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span></li>
 <li><span class="parameter" id="createSignature-param-privateKey"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span>, {</span></li>
-<li><span class="parameter" id="createSignature-param-isEIP1559"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isEIP1559</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="createSignature-param-txType"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_transaction_signing_signing_evm_transaction/TransactionType.html">TransactionType</a></span> <span class="parameter-name">txType</span> = <span class="default-value">TransactionType.Legacy</span>, </span></li>
 <li><span class="parameter" id="createSignature-param-chainId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainId</span>, </span></li>
 <li><span class="parameter" id="createSignature-param-hashPayload"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hashPayload</span> = <span class="default-value">true</span>, </span></li>
 </ol>})
@@ -73,7 +73,7 @@
   <pre class="language-dart"><code class="language-dart">factory Signature.createSignature(
   Uint8List payload,
   Uint8List privateKey, {
-  bool isEIP1559 = false,
+  TransactionType txType = TransactionType.Legacy,
   int? chainId,
   bool hashPayload = true,
 }) {
@@ -101,19 +101,14 @@
   if (rcID == null) {
     throw Exception(&#39;Failed to calculate recovery id&#39;);
   }
-  final signature = Signature(sig.r, sig.s, rcID + 27);
 
-  int chainIdV;
+  final int v = switch (txType) {
+    TransactionType.Legacy =&gt;
+      chainId != null ? (rcID + (chainId * 2 + 35)) : (rcID + 27),
+    TransactionType.Type1 || TransactionType.Type2 =&gt; rcID,
+  };
 
-  if (isEIP1559) {
-    chainIdV = signature.v - 27;
-  } else {
-    chainIdV = chainId != null
-        ? (signature.v - 27 + (chainId * 2 + 35))
-        : signature.v;
-  }
-
-  return Signature(signature.r, signature.s, chainIdV);
+  return Signature(sig.r, sig.s, v);
 }</code></pre>
 </section>
 

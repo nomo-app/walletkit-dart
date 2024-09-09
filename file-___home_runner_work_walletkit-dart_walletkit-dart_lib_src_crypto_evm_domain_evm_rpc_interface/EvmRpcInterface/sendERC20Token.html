@@ -98,29 +98,6 @@
     value: intent.amount.value,
     feeInfo: intent.feeInfo,
   );
-
-  &#47;&#47; final data = contractAbiErc20.encodedFunctionForString(
-  &#47;&#47;   &#39;transfer&#39;,
-  &#47;&#47;   [
-  &#47;&#47;     intent.recipient,
-  &#47;&#47;     intent.amount.value,
-  &#47;&#47;   ],
-  &#47;&#47; );
-
-  &#47;&#47; final signedTx = await buildTransaction(
-  &#47;&#47;   sender: from,
-  &#47;&#47;   recipient: tokenContractAddress,
-  &#47;&#47;   seed: seed,
-  &#47;&#47;   feeInfo: intent.feeInfo,
-  &#47;&#47;   data: data,
-  &#47;&#47;   value: BigInt.zero,
-  &#47;&#47; );
-
-  &#47;&#47; final result = await client.sendRawTransaction(
-  &#47;&#47;   signedTx.serializedTransactionHex,
-  &#47;&#47; );
-
-  &#47;&#47; return result;
 }</code></pre>
 </section>
 
