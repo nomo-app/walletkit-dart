@@ -11,16 +11,27 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 const _maxTxNumber = 100;
 const _batchSize = 10;
 
-final class EvmRpcInterface extends QueuedRpcInterface {
+final class EvmRpcInterface {
   final EVMNetworkType type;
-
   final Map<int, int> blockTimestampCache = {};
   final Map<String, ConfirmationStatus> txStatusCache = {};
 
+  final RpcManager _manager;
+
   EvmRpcInterface({
-    required super.clients,
+    bool useQueuedManager = true,
+    required List<EvmRpcClient> clients,
     required this.type,
-  });
+  }) : _manager = useQueuedManager
+            ? QueuedRpcManager(clients: clients)
+            : SimpleRpcManager(clients: clients);
+
+  Future<T> performTask<T>(
+    Future<T> Function(EvmRpcClient client) task, {
+    Duration timeout = const Duration(seconds: 30),
+    int? maxTries,
+  }) =>
+      _manager.performTask(task, timeout: timeout, maxTries: maxTries);
 
   ///
   /// eth_call

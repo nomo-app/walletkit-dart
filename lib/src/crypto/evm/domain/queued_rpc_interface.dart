@@ -3,11 +3,46 @@ import 'dart:async';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-abstract class QueuedRpcInterface {
+abstract class RpcManager {
   final List<EvmRpcClient> clients;
 
-  QueuedRpcInterface({
+  const RpcManager({
     required this.clients,
+  });
+
+  Future<T> performTask<T>(
+    Future<T> Function(EvmRpcClient client) task, {
+    Duration timeout = const Duration(seconds: 30),
+    int? maxTries,
+  });
+}
+
+final class SimpleRpcManager extends RpcManager {
+  SimpleRpcManager({
+    required super.clients,
+  });
+
+  Future<T> performTask<T>(
+    Future<T> Function(EvmRpcClient client) task, {
+    Duration timeout = const Duration(seconds: 30),
+    int? maxTries,
+  }) async {
+    for (final client in clients) {
+      try {
+        final result = await task(client).timeout(timeout);
+        return result;
+      } catch (e, s) {
+        Logger.logError(e, s: s, hint: 'RPC Task Error');
+      }
+    }
+
+    throw Exception("All clients failed to perform the task");
+  }
+}
+
+final class QueuedRpcManager extends RpcManager {
+  QueuedRpcManager({
+    required super.clients,
   });
 
   final taskQueue = TaskQueue<dynamic, EvmRpcClient>();
