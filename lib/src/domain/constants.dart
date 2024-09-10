@@ -265,4 +265,6 @@ enum GasLimits {
   BigInt get asBigInt => BigInt.from(value);
 }
 
-const TRON_ADDRESS_PREFIX = 0x41; /// Base58 address prefix for Tron = 'T'
+const TRON_ADDRESS_PREFIX = 0x41; // Base58 address prefix for Tron = 'T'
+
+const nullAddress = "0x0000000000000000000000000000000000000000";

@@ -43,7 +43,11 @@ class EnsRegistryContract extends InternalContract {
         function: function.addValues(values: [node]),
       );
 
-      return result.outputs.first.value as String;
+      final resolver = result.outputs.first.value as String;
+      if (resolver == nullAddress) {
+        return null;
+      }
+      return resolver;
     } on RangeError {
       return null;
     }
