@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the EvmRpcInterface constructor from Class EvmRpcInterface from the evm_rpc_interface library, for the Dart programming language.">
-  <title>EvmRpcInterface constructor - EvmRpcInterface - evm_rpc_interface library - Dart API</title>
+  <meta name="description" content="API docs for the performTask method from the EvmRpcInterface class, for the Dart programming language.">
+  <title>performTask method - EvmRpcInterface class - evm_rpc_interface library - Dart API</title>
 
 
   
@@ -27,9 +27,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface-library.html">src&#47;crypto&#47;evm&#47;domain&#47;evm_rpc_interface.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface/EvmRpcInterface-class.html">EvmRpcInterface</a></li>
-    <li class="self-crumb">EvmRpcInterface constructor</li>
+    <li class="self-crumb">performTask&lt;<wbr><span class="type-parameter">T</span>&gt; method</li>
   </ol>
-  <div class="self-name">EvmRpcInterface</div>
+  <div class="self-name">performTask</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,21 +46,26 @@
   </div>
 </header>
 <main>
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface&#47;EvmRpcInterface-class-sidebar.html"
-      data-below-sidebar="">
-      <div>
-<h1><span class="kind-constructor">EvmRpcInterface</span> constructor 
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface&#47;EvmRpcInterface-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">performTask&lt;<wbr><span class="type-parameter">T</span>&gt;</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">EvmRpcInterface</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-useQueuedManager"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">useQueuedManager</span> = <span class="default-value">true</span>, </span></li>
-<li><span class="parameter" id="-param-clients"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">clients</span>, </span></li>
-<li><span class="parameter" id="-param-type"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">type</span>, </span></li>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+<span class="name ">performTask</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"> <li><span class="parameter" id="performTask-param-task"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">task</span>(<ol class="parameter-list single-line"> <li><span class="parameter" id="param-client"><span class="type-annotation">dynamic</span> <span class="parameter-name">client</span></span></li>
+</ol>), {</span></li>
+<li><span class="parameter" id="performTask-param-timeout"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span> = <span class="default-value">const Duration(seconds: 30)</span>, </span></li>
+<li><span class="parameter" id="performTask-param-maxTries"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">maxTries</span>, </span></li>
 </ol>})
+
+      
+
     </section>
     
 
@@ -68,13 +73,12 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">EvmRpcInterface({
-  bool useQueuedManager = true,
-  required List&lt;EvmRpcClient&gt; clients,
-  required this.type,
-}) : _manager = useQueuedManager
-          ? QueuedRpcManager(clients: clients)
-          : SimpleRpcManager(clients: clients);</code></pre>
+  <pre class="language-dart"><code class="language-dart">Future&lt;T&gt; performTask&lt;T&gt;(
+  Future&lt;T&gt; Function(EvmRpcClient client) task, {
+  Duration timeout = const Duration(seconds: 30),
+  int? maxTries,
+}) =&gt;
+    _manager.performTask(task, timeout: timeout, maxTries: maxTries);</code></pre>
 </section>
 
 
@@ -90,14 +94,14 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface-library.html">evm_rpc_interface</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_domain_evm_rpc_interface/EvmRpcInterface-class.html">EvmRpcInterface</a></li>
-    <li class="self-crumb">EvmRpcInterface constructor</li>
+    <li class="self-crumb">performTask&lt;<wbr><span class="type-parameter">T</span>&gt; method</li>
 </ol>
 
     <h5>EvmRpcInterface class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-left-->
-  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
 </main>
 <footer>
   <span class="no-break">
