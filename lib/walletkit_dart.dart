@@ -78,3 +78,5 @@ export 'src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
 export 'src/crypto/evm/contract/contract_function_param.dart';
 
 export 'src/common/types.dart';
+export 'src/crypto/evm/abi/ens/ens_registry_contract.dart';
+export 'src/crypto/evm/abi/ens/ens_resolver_contract.dart';

@@ -418,7 +418,13 @@ final class EvmRpcInterface extends QueuedRpcInterface {
         RawEVMTransactionType1() => unsignedTx.serializedUnsigned,
         RawEVMTransactionType2() => unsignedTx.serializedUnsigned,
       },
+      txType: switch (unsignedTx) {
+        RawEVMTransactionType0() => TransactionType.Legacy,
+        RawEVMTransactionType1() => TransactionType.Type1,
+        RawEVMTransactionType2() => TransactionType.Type2,
+      },
       derivePrivateKeyETH(seed),
+      chainId: type.chainId,
     );
 
     final signedTx = unsignedTx.addSignature(signature);
@@ -427,6 +433,9 @@ final class EvmRpcInterface extends QueuedRpcInterface {
   }
 
   Future<String> sendRawTransaction(String serializedTransactionHex) {
+    serializedTransactionHex = serializedTransactionHex.startsWith("0x")
+        ? serializedTransactionHex
+        : "0x$serializedTransactionHex";
     return performTask(
       (client) => client.sendRawTransaction(serializedTransactionHex),
     );
@@ -859,5 +868,30 @@ final class EvmRpcInterface extends QueuedRpcInterface {
         default:
       }
     }
+  }
+
+  Future<String?> resolveENS({
+    required String name,
+    required String contractAddress,
+  }) async {
+    final contract = EnsRegistryContract(
+      rpc: this,
+      contractAddress: contractAddress,
+    );
+
+    final resolverAddress = await contract.resolver(name: name);
+
+    if (resolverAddress == null) {
+      return null;
+    }
+
+    final resolver = EnsResolverContract(
+      contractAddress: resolverAddress,
+      rpc: this,
+    );
+
+    final addr = await resolver.addr(name: name);
+
+    return addr;
   }
 }
