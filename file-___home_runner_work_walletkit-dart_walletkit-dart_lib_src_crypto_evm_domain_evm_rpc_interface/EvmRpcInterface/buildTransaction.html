@@ -103,7 +103,13 @@ Signs the transaction</p>
       RawEVMTransactionType1() =&gt; unsignedTx.serializedUnsigned,
       RawEVMTransactionType2() =&gt; unsignedTx.serializedUnsigned,
     },
+    txType: switch (unsignedTx) {
+      RawEVMTransactionType0() =&gt; TransactionType.Legacy,
+      RawEVMTransactionType1() =&gt; TransactionType.Type1,
+      RawEVMTransactionType2() =&gt; TransactionType.Type2,
+    },
     derivePrivateKeyETH(seed),
+    chainId: type.chainId,
   );
 
   final signedTx = unsignedTx.addSignature(signature);

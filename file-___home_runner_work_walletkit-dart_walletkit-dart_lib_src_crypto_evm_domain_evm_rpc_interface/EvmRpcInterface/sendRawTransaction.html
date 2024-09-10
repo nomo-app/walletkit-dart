@@ -71,6 +71,9 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; sendRawTransaction(String serializedTransactionHex) {
+  serializedTransactionHex = serializedTransactionHex.startsWith(&quot;0x&quot;)
+      ? serializedTransactionHex
+      : &quot;0x$serializedTransactionHex&quot;;
   return performTask(
     (client) =&gt; client.sendRawTransaction(serializedTransactionHex),
   );
