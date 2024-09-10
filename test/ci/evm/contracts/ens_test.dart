@@ -48,14 +48,14 @@ void main() {
     "High Level Impl Zeniq",
     () async {
       final address = await zeniqSmartChainRPC.resolveENS(
-        name: "voo.znq",
+        name: "michaelrossmann.znq",
         contractAddress: znsRegistryContractAddress,
       );
 
-      expect(address, "0xd8da6bf26964af9d7eed9e03e53415d37aa96045");
+      expect(address, "0xa7fa4bb0bba164f999e8c7b83c9da96a3be44616");
 
       final address2 = await zeniqSmartChainRPC.resolveENS(
-        name: "asdasdasdasdasd.eth",
+        name: "asdasdasdasdasd.znq",
         contractAddress: znsRegistryContractAddress,
       );
 

@@ -1,6 +1,7 @@
 import 'package:walletkit_dart/src/crypto/evm/abi/ens/ens_registry_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/contract_abi.dart';
 import 'package:walletkit_dart/src/crypto/evm/contract/internal_contract.dart';
+import 'package:walletkit_dart/src/domain/constants.dart';
 
 final ensResoloverABI = ContractABI.fromAbi('''[
   {
@@ -683,7 +684,7 @@ class EnsResolverContract extends InternalContract {
           abi: ensResoloverABI,
         );
 
-  Future<String> addr({required String name}) async {
+  Future<String?> addr({required String name}) async {
     final function = abi.functions[1];
 
     assert(function.functionSelectorHex == "3b3b57de");
@@ -694,6 +695,12 @@ class EnsResolverContract extends InternalContract {
       function: function.addValues(values: [node]),
     );
 
-    return result.outputs.first.value as String;
+    final address = result.outputs.first.value as String;
+
+    if (address == nullAddress) {
+      return null;
+    }
+
+    return address;
   }
 }
