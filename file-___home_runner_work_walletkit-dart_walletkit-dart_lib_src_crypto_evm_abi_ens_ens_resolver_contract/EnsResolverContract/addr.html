@@ -57,7 +57,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>&gt;</span></span>
 <span class="name ">addr</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="addr-param-name"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span></li>
 </ol>})
 
@@ -70,7 +70,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; addr({required String name}) async {
+  <pre class="language-dart"><code class="language-dart">Future&lt;String?&gt; addr({required String name}) async {
   final function = abi.functions[1];
 
   assert(function.functionSelectorHex == &quot;3b3b57de&quot;);
@@ -81,7 +81,13 @@
     function: function.addValues(values: [node]),
   );
 
-  return result.outputs.first.value as String;
+  final address = result.outputs.first.value as String;
+
+  if (address == nullAddress) {
+    return null;
+  }
+
+  return address;
 }</code></pre>
 </section>
 
