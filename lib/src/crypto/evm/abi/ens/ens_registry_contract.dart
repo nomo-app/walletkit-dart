@@ -9,6 +9,8 @@ final ensRegistryAbi = ContractABI.fromAbi(
 const ensRegistryMainnetContractAddress =
     "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
 
+const znsRegistryContractAddress = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
+
 class EnsRegistryContract extends InternalContract {
   EnsRegistryContract({
     required super.contractAddress,
@@ -24,16 +26,27 @@ class EnsRegistryContract extends InternalContract {
     );
   }
 
-  Future<String> resolver({required String name}) async {
+  factory EnsRegistryContract.smartchain({required EvmRpcInterface rpc}) {
+    return EnsRegistryContract(
+      contractAddress: znsRegistryContractAddress,
+      rpc: rpc,
+    );
+  }
+
+  Future<String?> resolver({required String name}) async {
     final function = abi.getFunction('resolver')!;
 
     final node = namehash(name);
 
-    final result = await read(
-      function: function.addValues(values: [node]),
-    );
+    try {
+      final result = await read(
+        function: function.addValues(values: [node]),
+      );
 
-    return result.outputs.first.value as String;
+      return result.outputs.first.value as String;
+    } on RangeError {
+      return null;
+    }
   }
 }
 

@@ -15,7 +15,7 @@ void main() {
       expect(resolverAddress, "0x231b0ee14048e9dccd1d247744d114a4eb5e8e63");
 
       final resolver = EnsResolverContract(
-        contractAddress: resolverAddress,
+        contractAddress: resolverAddress!,
         rpc: ethereumRPC,
       );
 
@@ -34,6 +34,32 @@ void main() {
       );
 
       expect(address, "0xd8da6bf26964af9d7eed9e03e53415d37aa96045");
+
+      final address2 = await ethereumRPC.resolveENS(
+        name: "asdasdasdasdasd.eth",
+        contractAddress: znsRegistryContractAddress,
+      );
+
+      expect(address2, null);
+    },
+  );
+
+  test(
+    "High Level Impl Zeniq",
+    () async {
+      final address = await zeniqSmartChainRPC.resolveENS(
+        name: "voo.znq",
+        contractAddress: znsRegistryContractAddress,
+      );
+
+      expect(address, "0xd8da6bf26964af9d7eed9e03e53415d37aa96045");
+
+      final address2 = await zeniqSmartChainRPC.resolveENS(
+        name: "asdasdasdasdasd.eth",
+        contractAddress: znsRegistryContractAddress,
+      );
+
+      expect(address2, null);
     },
   );
 }
