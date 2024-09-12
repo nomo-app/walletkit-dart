@@ -874,6 +874,7 @@ final class EvmRpcInterface extends QueuedRpcInterface {
     required String name,
     required String contractAddress,
   }) async {
+    name = name.toLowerCase();
     final contract = EnsRegistryContract(
       rpc: this,
       contractAddress: contractAddress,
