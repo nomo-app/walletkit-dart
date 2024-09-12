@@ -9,7 +9,7 @@ final ensRegistryAbi = ContractABI.fromAbi(
 const ensRegistryMainnetContractAddress =
     "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e";
 
-const znsRegistryContractAddress = "0x3E8DF048A58544A24DbF8bc3B34D58beC95Bc724";
+const znsRegistryContractAddress = "0xa0446c88240bCA2A8E0f68C93aa365d25B198aA4";
 
 class EnsRegistryContract extends InternalContract {
   EnsRegistryContract({
