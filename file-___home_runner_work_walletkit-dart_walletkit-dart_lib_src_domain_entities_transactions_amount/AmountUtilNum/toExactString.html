@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the Amount.convert constructor from Class Amount from the amount library, for the Dart programming language.">
-  <title>Amount.convert constructor - Amount - amount library - Dart API</title>
+  <meta name="description" content="API docs for the toExactString property from the AmountUtilNum extension, for the Dart programming language.">
+  <title>toExactString property - AmountUtilNum extension - amount library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">src&#47;domain&#47;entities&#47;transactions&#47;amount.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount-class.html">Amount</a></li>
-    <li class="self-crumb">Amount.convert factory constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/AmountUtilNum.html">AmountUtilNum</a></li>
+    <li class="self-crumb">toExactString property</li>
   </ol>
-  <div class="self-name">Amount.convert</div>
+  <div class="self-name">toExactString</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,64 +46,74 @@
   </div>
 </header>
 <main>
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount&#47;Amount-class-sidebar.html"
-      data-below-sidebar="">
-      <div>
-<h1><span class="kind-constructor">Amount.convert</span> constructor 
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount&#47;AmountUtilNum-extension-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-property">toExactString</span> property 
 </h1></div>
 
+    
+
+    
+        
+  <section id="getter">
     <section class="multi-line-signature">
       
-      <span class="name ">Amount.convert</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="convert-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/num-class.html">num</a></span> <span class="parameter-name">value</span>, </span></li>
-<li><span class="parameter" id="convert-param-decimals"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">decimals</span>, </span></li>
-</ol>})
+      <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+      get
+      <span class="name ">toExactString</span>
+      
+
     </section>
     
-<section class="desc markdown">
-  <p>Converts the given value to the smallest unit of the currency</p>
-</section>
-
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory Amount.convert({
-  required num value,
-  required int decimals,
-}) {
-  var value_s = value.toExactString;
-
-  final parts = value_s.split(&#39;.&#39;);
-
-  var dec = parts.length == 1 ? 0 : parts[1].length;
-
-  if (dec &gt; decimals) {
-    value_s = value_s.substring(0, value_s.length - (dec - decimals));
-    dec = decimals;
+  <pre class="language-dart"><code class="language-dart">String get toExactString {
+  &#47;&#47; https:&#47;&#47;stackoverflow.com&#47;questions&#47;62989638&#47;convert-long-double-to-string-without-scientific-notation-dart
+  double value = this.toDouble();
+  var sign = &quot;&quot;;
+  if (value &lt; 0) {
+    value = -value;
+    sign = &quot;-&quot;;
   }
-
-  var value_int = BigInt.tryParse(value_s.replaceAll(&#39;.&#39;, &#39;&#39;));
-
-  if (value_int == null) {
-    throw Exception(&#39;Invalid value: $value&#39;);
-  }
-
-  value_int = value_int * BigInt.from(10).pow(decimals.toInt() - dec);
-
-  return Amount(
-    value: value_int,
-    decimals: decimals,
+  var string = value.toString();
+  var e = string.lastIndexOf(&#39;e&#39;);
+  if (e &lt; 0) return &quot;$sign$string&quot;;
+  var hasComma = string.indexOf(&#39;.&#39;) == 1;
+  var offset = int.parse(
+    string.substring(e + (string.startsWith(&#39;-&#39;, e + 1) ? 1 : 2)),
   );
+  var digits = string.substring(0, 1);
+
+  if (hasComma) {
+    digits += string.substring(2, e);
+  }
+
+  if (offset &lt; 0) {
+    return &quot;${sign}0.${&quot;0&quot; * ~offset}$digits&quot;;
+  }
+  if (offset &gt; 0) {
+    if (offset &gt;= digits.length) {
+      return sign + digits.padRight(offset + 1, &quot;0&quot;);
+    }
+    return &quot;$sign${digits.substring(0, offset + 1)}&quot;
+        &quot;.${digits.substring(offset + 1)}&quot;;
+  }
+  return digits;
 }</code></pre>
 </section>
 
+  </section>
 
-  </div> <!-- /.main-content -->
-  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+
+</div> <!-- /.main-content -->
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -112,15 +122,15 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount-library.html">amount</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/Amount-class.html">Amount</a></li>
-    <li class="self-crumb">Amount.convert factory constructor</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_transactions_amount/AmountUtilNum.html">AmountUtilNum</a></li>
+    <li class="self-crumb">toExactString property</li>
 </ol>
 
-    <h5>Amount class</h5>
-    <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-left-->
-  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-  </div><!--/.sidebar-offcanvas-->
+  <h5>AmountUtilNum extension on <a href="https://api.flutter.dev/flutter/dart-core/num-class.html">num</a></h5>
+  <div id="dartdoc-sidebar-left-content"></div>
+</div><!--/.sidebar-offcanvas-->
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
 </main>
 <footer>
   <span class="no-break">
