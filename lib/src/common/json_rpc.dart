@@ -57,6 +57,10 @@ class JsonRPC extends RpcService {
       body: json.encode(requestPayload),
     );
 
+    if (response.statusCode != 200) {
+      throw HttpError(response.statusCode, response.body);
+    }
+
     final data = json.decode(response.body) as Map<String, dynamic>;
 
     if (data.containsKey('error')) {
@@ -106,5 +110,21 @@ class RPCError implements Exception {
   @override
   String toString() {
     return 'RPCError: got code $errorCode with msg "$message".';
+  }
+}
+
+class HttpError implements Exception {
+  /// Constructor.
+  const HttpError(this.statusCode, this.message);
+
+  /// Status code.
+  final int statusCode;
+
+  /// Message.
+  final String message;
+
+  @override
+  String toString() {
+    return 'HttpError: got code $statusCode with msg "$message".';
   }
 }

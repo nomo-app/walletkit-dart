@@ -6,31 +6,54 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import '../../utils.dart';
 
 void main() {
-  final zeniqSmartRpcInterface = zeniqSmartChainRPC;
+  test(
+    "Eth RPC",
+    () async {
+      final ethereumRPC = EvmRpcInterface(
+        type: EthereumNetwork,
+        useQueuedManager: true,
+        awaitRefresh: true,
+        clients: [
+          EvmRpcClient('https://rpc.notadegen.com/eth'), // Could be not working
+          EvmRpcClient(
+              'https://rpc.notadegen.com/asdasdasda'), // Definitely not working
+          EvmRpcClient('https://eth.llamarpc.com'),
+          EvmRpcClient('https://rpc.ankr.com/eth'),
+        ],
+      );
+
+      try {
+        final block = await ethereumRPC.getBlockNumber();
+        expect(block, greaterThan(20764294));
+        print(block);
+      } catch (e) {
+        print(e);
+      }
+    },
+  );
+
   test('ZeniqSmartChain Fetching rejectWallet', () async {
-    final zscTransactions =
-        await zeniqSmartRpcInterface.fetchAllTransactionsZSC(
+    final zscTransactions = await zeniqSmartChainRPC.fetchAllTransactionsZSC(
       address: rejectEVM,
     );
 
     expect(zscTransactions.length, 100);
     print('ZSC Transactions: ${zscTransactions.length}');
 
-    final zscBalance = await zeniqSmartRpcInterface.fetchBalance(
+    final zscBalance = await zeniqSmartChainRPC.fetchBalance(
       address: rejectEVM,
     );
 
     print('ZSC Balance: $zscBalance');
 
-    final avinocZSCBalance = await zeniqSmartRpcInterface.fetchTokenBalance(
+    final avinocZSCBalance = await zeniqSmartChainRPC.fetchTokenBalance(
       rejectEVM,
       avinocZSC,
     );
 
     print('AVINOC ZSC Balance: $avinocZSCBalance');
 
-    final avinocZSCTransactions =
-        await zeniqSmartRpcInterface.fetchZEN20Transfers(
+    final avinocZSCTransactions = await zeniqSmartChainRPC.fetchZEN20Transfers(
       token: avinocZSC,
       address: rejectEVM,
     );
@@ -38,7 +61,7 @@ void main() {
     expect(avinocZSCTransactions.length, 100);
     print('AVINOC ZSC Transactions: ${avinocZSCTransactions.length}');
 
-    final erc721 = await zeniqSmartRpcInterface.fetchZEN721Transfers(
+    final erc721 = await zeniqSmartChainRPC.fetchZEN721Transfers(
       address: rejectEVM,
       nftContractAddress: smartChainStakingContract,
     );
@@ -53,8 +76,7 @@ void main() {
   test('ZSC fetch set-merge and cache performance', () async {
     Set<GenericTransaction> set = {};
     for (int i = 0; i < 4; i++) {
-      final zscTransactions =
-          await zeniqSmartRpcInterface.fetchAllTransactionsZSC(
+      final zscTransactions = await zeniqSmartChainRPC.fetchAllTransactionsZSC(
         address: rejectEVM,
       );
       expect(zscTransactions.length, 100);
@@ -64,7 +86,7 @@ void main() {
   });
 
   test('fetch Staking ZEN721 transfers', () async {
-    final txs = await zeniqSmartRpcInterface.fetchZEN721Transfers(
+    final txs = await zeniqSmartChainRPC.fetchZEN721Transfers(
       nftContractAddress: smartChainStakingContract,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
@@ -75,7 +97,7 @@ void main() {
   });
 
   test('fetch AVINOC ZSC transfers', () async {
-    final txs = await zeniqSmartRpcInterface.fetchZEN20Transfers(
+    final txs = await zeniqSmartChainRPC.fetchZEN20Transfers(
       token: avinocZSC,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
@@ -83,7 +105,7 @@ void main() {
   });
 
   test('fetch TUPAN transfers', () async {
-    final txs = await zeniqSmartRpcInterface.fetchZEN20Transfers(
+    final txs = await zeniqSmartChainRPC.fetchZEN20Transfers(
       token: tupanToken,
       address: "0x05870f1507d820212E921e1f39f14660336231D1",
     );
@@ -95,7 +117,7 @@ void main() {
         spoilEVM.substring(2).padLeft(64, '0') +
         BigInt.from(0).toHex.padLeft(64, '0');
 
-    var gasLimit = await zeniqSmartRpcInterface.estimateGasLimit(
+    var gasLimit = await zeniqSmartChainRPC.estimateGasLimit(
       sender: rejectEVM,
       recipient: avinocZSC.contractAddress,
       gasPrice: null,
@@ -107,7 +129,7 @@ void main() {
 
     data = "Test memo";
 
-    gasLimit = await zeniqSmartRpcInterface.estimateGasLimit(
+    gasLimit = await zeniqSmartChainRPC.estimateGasLimit(
       sender: rejectEVM,
       recipient: spoilEVM,
       gasPrice: null,
@@ -196,7 +218,7 @@ void main() {
   });
 
   test('Fetch Network Fees', () async {
-    final fees = await zeniqSmartRpcInterface.estimateNetworkFees(
+    final fees = await zeniqSmartChainRPC.estimateNetworkFees(
       recipient: rejectEVM,
       data: null,
       sender: rejectEVM,

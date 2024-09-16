@@ -14,7 +14,8 @@ final ethereumRPC = EvmRpcInterface(
 
 final zeniqSmartChainRPC = EvmRpcInterface(
   type: ZeniqSmartNetwork,
-  clients: [EvmRpcClient('https://smart.zeniq.network:9545')],
+  clients: [EvmRpcClient('https://api.zeniq.network')],
+  useQueuedManager: false,
 );
 
 final polygonRPC = EvmRpcInterface(
