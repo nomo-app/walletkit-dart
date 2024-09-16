@@ -1276,4 +1276,86 @@ class UniswapV2Router extends InternalContract {
 
     return result.outputs.first.value as BigInt;
   }
+
+  Future<RawEvmTransaction> addLiquidityTx({
+    required String tokenA,
+    required String tokenB,
+    required BigInt amountADesired,
+    required BigInt amountBDesired,
+    required BigInt amountAMin,
+    required BigInt amountBMin,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("addLiquidity")!;
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function.addValues(values: [
+        tokenA,
+        tokenB,
+        amountADesired,
+        amountBDesired,
+        amountAMin,
+        amountBMin,
+        to,
+        deadline,
+      ]),
+      feeInfo: EvmFeeInformation(
+        gasLimit: 3E5.toInt(),
+        gasPrice: Amount(value: 1E10.toInt().toBigInt, decimals: 18),
+      ),
+    );
+    return result;
+  }
+
+  Future<RawEvmTransaction> addLiquidityETHTx({
+    required String token,
+    required BigInt amountTokenDesired,
+    required BigInt amountETHMin,
+    required BigInt amountTokenMin,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+    required BigInt amountETHDesired,
+  }) async {
+    final function = abi.getFunction("addLiquidityETH")!;
+    final result = await buildTransactionForFunction(
+      value: amountETHDesired,
+      sender: sender,
+      function: function.addValues(values: [
+        token,
+        amountTokenDesired,
+        amountTokenMin,
+        amountETHMin,
+        to,
+        deadline,
+      ]),
+    );
+    return result;
+  }
+
+  Future<RawEvmTransaction> removeLiquidityETHTx({
+    required String token,
+    required BigInt liquidity,
+    required BigInt amountTokenMin,
+    required BigInt amountETHMin,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("removeLiquidityETH")!;
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function.addValues(values: [
+        token,
+        liquidity,
+        amountTokenMin,
+        amountETHMin,
+        to,
+        deadline,
+      ]),
+    );
+    return result;
+  }
 }

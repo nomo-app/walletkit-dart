@@ -662,12 +662,7 @@ final uniswap_v2_pair_abi = ContractABI.fromAbi('''
 ''');
 
 class UniswapV2Pair extends InternalContract {
-  final EthBasedTokenEntity tokenA;
-  final EthBasedTokenEntity tokenB;
-
   UniswapV2Pair({
-    required this.tokenA,
-    required this.tokenB,
     required super.contractAddress,
     required super.rpc,
   }) : super(abi: uniswap_v2_pair_abi);
@@ -703,5 +698,50 @@ class UniswapV2Pair extends InternalContract {
     );
 
     return response.outputs[0].value as String;
+  }
+
+  Future<BigInt> balanceOf(String address) async {
+    final function = abi.getFunction('balanceOf')!;
+
+    final response = await read(
+      function: function.addValues(values: [address]),
+    );
+
+    return response.outputs[0].value as BigInt;
+  }
+
+  Future<BigInt> totalSupply() async {
+    final function = abi.getFunction('totalSupply')!;
+
+    final response = await read(
+      function: function.addValues(values: []),
+    );
+
+    return response.outputs[0].value as BigInt;
+  }
+
+  Future<RawEvmTransaction> approveTx({
+    required String sender,
+    required String spender,
+    required BigInt value,
+    EvmFeeInformation? feeInfo,
+  }) async {
+    final function = abi.getFunction('approve')!;
+    return await buildTransactionForFunction(
+      function: function.addValues(values: [spender, value]),
+      sender: sender,
+      feeInfo: feeInfo,
+    );
+  }
+
+  Future<BigInt> allowance({
+    required String owner,
+    required String spender,
+  }) async {
+    final function = abi.getFunction('allowance')!;
+    final response = await read(
+      function: function.addValues(values: [owner, spender]),
+    );
+    return response.outputs.first.castValue<BigInt>();
   }
 }
