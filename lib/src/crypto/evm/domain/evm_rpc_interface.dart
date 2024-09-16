@@ -15,16 +15,37 @@ final class EvmRpcInterface {
   final EVMNetworkType type;
   final Map<int, int> blockTimestampCache = {};
   final Map<String, ConfirmationStatus> txStatusCache = {};
-
   final RpcManager _manager;
 
+  Future<void> get refreshFuture => _manager.refreshFuture;
+
+  ///
+  /// [clients] - A list of clients to use for the manager
+  /// [useQueuedManager] - If true, the manager will use a QueuedRpcManager and requests will be queued
+  /// [awaitRefresh] - If true, the manager will wait for the clients to be refreshed before performing a task
+  /// [refreshIntervall] - The rate at which the clients are refreshed if null the clients will only be refreshed once
+  /// [eagerError] - If true a task will throw the first error it encounters, if false it will try all clients before throwing an error
+  ///
   EvmRpcInterface({
     bool useQueuedManager = true,
+    bool awaitRefresh = true,
+    Duration? refreshIntervall,
+    bool eagerError = false,
     required List<EvmRpcClient> clients,
     required this.type,
   }) : _manager = useQueuedManager
-            ? QueuedRpcManager(clients: clients)
-            : SimpleRpcManager(clients: clients);
+            ? QueuedRpcManager(
+                awaitRefresh: awaitRefresh,
+                clientRefreshRate: refreshIntervall,
+                allClients: clients,
+                eagerError: eagerError,
+              )
+            : SimpleRpcManager(
+                awaitRefresh: awaitRefresh,
+                clientRefreshRate: refreshIntervall,
+                allClients: clients,
+                eagerError: eagerError,
+              );
 
   Future<T> performTask<T>(
     Future<T> Function(EvmRpcClient client) task, {

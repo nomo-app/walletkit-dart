@@ -4,11 +4,57 @@ import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 abstract class RpcManager {
-  final List<EvmRpcClient> clients;
+  /// All clients available to the manager
+  final List<EvmRpcClient> allClients;
 
-  const RpcManager({
-    required this.clients,
-  });
+  final bool eagerError;
+
+  /// Whether to wait for the clients to be refreshed before performing a task
+  final bool awaitRefresh;
+
+  /// Clients which successfully returned the current block number
+  List<EvmRpcClient> clients;
+
+  /// The rate at which the clients are refreshed
+  final Duration? clientRefreshRate;
+
+  Completer<void> _refreshCompleter = Completer();
+
+  /// Future that completes when the clients are refreshed at least once
+  Future<void> get refreshFuture => _refreshCompleter.future;
+
+  RpcManager({
+    required this.allClients,
+    required this.eagerError,
+    required this.awaitRefresh,
+    required this.clientRefreshRate,
+  }) : clients = List.from(allClients) {
+    refreshClients();
+    if (clientRefreshRate != null) {
+      Timer.periodic(clientRefreshRate!, (_) => refreshClients());
+    }
+  }
+
+  void refreshClients() async {
+    final futures = allClients.map((client) async {
+      try {
+        await client.getBlockNumber().timeout(const Duration(seconds: 1));
+        return client;
+      } catch (e, s) {
+        Logger.logError(e, s: s, hint: 'Client Refresh Error');
+        return null;
+      }
+    });
+
+    final results = await Future.wait(futures);
+
+    clients = results.whereType<EvmRpcClient>().toList();
+
+    if (!_refreshCompleter.isCompleted) {
+      _refreshCompleter.complete();
+    }
+    Logger.log('Refreshed clients: ${clients.length}');
+  }
 
   Future<T> performTask<T>(
     Future<T> Function(EvmRpcClient client) task, {
@@ -19,7 +65,10 @@ abstract class RpcManager {
 
 final class SimpleRpcManager extends RpcManager {
   SimpleRpcManager({
-    required super.clients,
+    required super.allClients,
+    required super.awaitRefresh,
+    required super.clientRefreshRate,
+    required super.eagerError,
   });
 
   Future<T> performTask<T>(
@@ -27,22 +76,41 @@ final class SimpleRpcManager extends RpcManager {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
   }) async {
-    for (final client in clients) {
+    if (awaitRefresh) await refreshFuture;
+
+    final currentClients = [...clients];
+
+    if (clients.isEmpty) {
+      throw Exception("No working clients available");
+    }
+
+    final errors = <String, (Object, StackTrace)>{};
+
+    for (final client in currentClients) {
       try {
         final result = await task(client).timeout(timeout);
         return result;
       } catch (e, s) {
+        errors[client.rpcUrl] = (e, s);
+
+        if (eagerError) {
+          throw Exception("Error performing task: $errors");
+        }
+
         Logger.logError(e, s: s, hint: 'RPC Task Error');
       }
     }
 
-    throw Exception("All clients failed to perform the task");
+    throw Exception("All clients failed to perform the task: $errors");
   }
 }
 
 final class QueuedRpcManager extends RpcManager {
   QueuedRpcManager({
-    required super.clients,
+    required super.allClients,
+    required super.awaitRefresh,
+    required super.clientRefreshRate,
+    required super.eagerError,
   });
 
   final taskQueue = TaskQueue<dynamic, EvmRpcClient>();
@@ -54,11 +122,22 @@ final class QueuedRpcManager extends RpcManager {
     if (isWorking) return;
     isWorking = true;
 
+    if (awaitRefresh) await refreshFuture;
+
+    final currentClients = [...clients];
+
+    final errors = <String, (Object, StackTrace)>{};
+
     while (taskQueue.isNotEmpty) {
       final task = taskQueue.dequeue();
       if (task == null) continue;
 
-      final currentClient = clients[currentClientIndex];
+      if (currentClients.isEmpty) {
+        task.completer.completeError(Exception("No working clients available"));
+        continue;
+      }
+
+      final currentClient = currentClients[currentClientIndex];
 
       try {
         task.startTime ??= DateTime.now();
@@ -68,15 +147,29 @@ final class QueuedRpcManager extends RpcManager {
 
         final result = await task.task(currentClient).timeout(task.timeout);
         task.completer.complete(result);
+        errors.clear(); // Clear errors if the task was successful
       } catch (e, s) {
-        if (e is RateLimitingException) {
-          // If the client is rate limited, switch to the next client
-          currentClientIndex = (currentClientIndex + 1) % clients.length;
-          taskQueue.enqueue(task);
+        errors[currentClient.rpcUrl] = (e, s);
+        if (eagerError) {
+          final error = Exception("Error performing task: $errors");
+          task.completer.completeError(error);
+          errors.clear();
           continue;
         }
-        Logger.logError(e, s: s, hint: 'RPC Task Error');
-        task.completer.completeError(e, s);
+
+        if (task.tries == currentClients.length) {
+          final error =
+              Exception("All clients failed to perform the task: $errors");
+          errors.clear();
+          Logger.logError(error, hint: 'RPC Task Error');
+          task.completer.completeError(error);
+          continue;
+        }
+
+        // Switch to the next client
+        currentClientIndex = (currentClientIndex + 1) % currentClients.length;
+        taskQueue.enqueue(task);
+        continue;
       }
     }
 
