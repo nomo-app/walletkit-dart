@@ -19,7 +19,7 @@ class Amount {
     required num value,
     required int decimals,
   }) {
-    var value_s = value.toString();
+    var value_s = value.toExactString;
 
     final parts = value_s.split('.');
 
@@ -246,6 +246,42 @@ extension AmountUtilDouble on double {
   }
 
   // operator *(Amount other) {
+}
+
+extension AmountUtilNum on num {
+  String get toExactString {
+    // https://stackoverflow.com/questions/62989638/convert-long-double-to-string-without-scientific-notation-dart
+    double value = this.toDouble();
+    var sign = "";
+    if (value < 0) {
+      value = -value;
+      sign = "-";
+    }
+    var string = value.toString();
+    var e = string.lastIndexOf('e');
+    if (e < 0) return "$sign$string";
+    var hasComma = string.indexOf('.') == 1;
+    var offset = int.parse(
+      string.substring(e + (string.startsWith('-', e + 1) ? 1 : 2)),
+    );
+    var digits = string.substring(0, 1);
+
+    if (hasComma) {
+      digits += string.substring(2, e);
+    }
+
+    if (offset < 0) {
+      return "${sign}0.${"0" * ~offset}$digits";
+    }
+    if (offset > 0) {
+      if (offset >= digits.length) {
+        return sign + digits.padRight(offset + 1, "0");
+      }
+      return "$sign${digits.substring(0, offset + 1)}"
+          ".${digits.substring(offset + 1)}";
+    }
+    return digits;
+  }
 }
 
 extension AmountUtilBigInt on BigInt {

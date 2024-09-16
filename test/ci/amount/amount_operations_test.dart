@@ -17,6 +17,21 @@ void main() {
       amount = Amount.convert(value: eth_amount_double, decimals: 18);
 
       expect(amount.value, equals(1100000000000000000.toBigInt));
+
+      const eth_amount_double_2 = 0.0000000000000001;
+      expect(eth_amount_double_2.toString(), "1e-16");
+      expect(eth_amount_double_2.toExactString, '0.0000000000000001');
+
+      amount = Amount.convert(value: eth_amount_double_2, decimals: 18);
+
+      expect(amount.value, equals(100.toBigInt));
+
+      const eth_amount_double_3 = 0.000000000000000001;
+      expect(eth_amount_double_3.toString(), "1e-18");
+      expect(eth_amount_double_3.toExactString, '0.000000000000000001');
+
+      amount = Amount.convert(value: eth_amount_double_3, decimals: 18);
+      expect(amount.value, equals(1.toBigInt));
     });
 
     group('Amount multiplication operator', () {
