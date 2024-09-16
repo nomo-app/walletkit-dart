@@ -64,7 +64,7 @@
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="UniswapV2Pair" class="callable">
-          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/UniswapV2Pair.html">UniswapV2Pair</a></span><span class="signature">({<span class="parameter" id="-param-tokenA"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tokenA</span>, </span><span class="parameter" id="-param-tokenB"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">tokenB</span>, </span><span class="parameter" id="-param-contractAddress"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="-param-rpc"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">rpc</span></span>})</span>
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/UniswapV2Pair.html">UniswapV2Pair</a></span><span class="signature">({<span class="parameter" id="-param-contractAddress"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="-param-rpc"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">rpc</span></span>})</span>
         </dt>
         <dd>
           
@@ -73,7 +73,7 @@
   </section>
     
   <section
-      class="summary offset-anchor"
+      class="summary offset-anchor inherited"
       id="instance-properties">
     <h2>Properties</h2>
     <dl class="properties">
@@ -101,30 +101,6 @@
 
 </dd>
 
-        <dt id="tokenA" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/tokenA.html">tokenA</a></span>
-  <span class="signature">&#8594; dynamic</span>
-  
-
-</dt>
-<dd>
-  
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
-        <dt id="tokenB" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/tokenB.html">tokenB</a></span>
-  <span class="signature">&#8594; dynamic</span>
-  
-
-</dt>
-<dd>
-  
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
     </dl>
   </section>
     
@@ -133,6 +109,45 @@
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
+        <dt id="allowance" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/allowance.html">allowance</a></span><span class="signature">(<wbr>{<span class="parameter" id="allowance-param-owner"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">owner</span>, </span><span class="parameter" id="allowance-param-spender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">spender</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="approveTx" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/approveTx.html">approveTx</a></span><span class="signature">(<wbr>{<span class="parameter" id="approveTx-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="approveTx-param-spender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">spender</span>, </span><span class="parameter" id="approveTx-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span>, </span><span class="parameter" id="approveTx-param-feeInfo"><span class="type-annotation">dynamic</span> <span class="parameter-name">feeInfo</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="balanceOf" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/balanceOf.html">balanceOf</a></span><span class="signature">(<wbr><span class="parameter" id="balanceOf-param-address"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
         <dt id="getReserves" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/getReserves.html">getReserves</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span></span>)</span>&gt;</span></span>
@@ -195,6 +210,19 @@
 <dd class="inherited">
   A string representation of this object.
   <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="totalSupply" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_abi_uniswap_v2_uniswap_v2_pair/UniswapV2Pair/totalSupply.html">totalSupply</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
 
 </dd>
 
