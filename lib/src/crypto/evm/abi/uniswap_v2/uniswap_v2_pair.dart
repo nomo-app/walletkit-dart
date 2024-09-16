@@ -720,7 +720,7 @@ class UniswapV2Pair extends InternalContract {
     return response.outputs[0].value as BigInt;
   }
 
-  Future<RawEVMTransaction> approveTx({
+  Future<RawEvmTransaction> approveTx({
     required String sender,
     required String spender,
     required BigInt value,

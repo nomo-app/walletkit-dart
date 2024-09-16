@@ -1277,7 +1277,7 @@ class UniswapV2Router extends InternalContract {
     return result.outputs.first.value as BigInt;
   }
 
-  Future<RawEVMTransaction> addLiquidityTx({
+  Future<RawEvmTransaction> addLiquidityTx({
     required String tokenA,
     required String tokenB,
     required BigInt amountADesired,
@@ -1309,7 +1309,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> addLiquidityETHTx({
+  Future<RawEvmTransaction> addLiquidityETHTx({
     required String token,
     required BigInt amountTokenDesired,
     required BigInt amountETHMin,
@@ -1335,7 +1335,7 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
-  Future<RawEVMTransaction> removeLiquidityETHTx({
+  Future<RawEvmTransaction> removeLiquidityETHTx({
     required String token,
     required BigInt liquidity,
     required BigInt amountTokenMin,
