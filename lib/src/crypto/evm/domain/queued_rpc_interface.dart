@@ -18,7 +18,7 @@ abstract class RpcManager {
   /// The rate at which the clients are refreshed
   final Duration? clientRefreshRate;
 
-  Completer<void> _refreshCompleter = Completer();
+  final Completer<void> _refreshCompleter = Completer();
 
   /// Future that completes when the clients are refreshed at least once
   Future<void> get refreshFuture => _refreshCompleter.future;
@@ -38,7 +38,7 @@ abstract class RpcManager {
   void refreshClients() async {
     final futures = allClients.map((client) async {
       try {
-        await client.getBlockNumber().timeout(Duration(seconds: 10));
+        await client.getBlockNumber().timeout(const Duration(seconds: 10));
         return client;
       } catch (e, s) {
         Logger.logError(e, s: s, hint: 'Client Refresh Error');
