@@ -38,7 +38,7 @@ abstract class RpcManager {
   void refreshClients() async {
     final futures = allClients.map((client) async {
       try {
-        await client.getBlockNumber().timeout(const Duration(seconds: 1));
+        await client.getBlockNumber().timeout(Duration(seconds: 10));
         return client;
       } catch (e, s) {
         Logger.logError(e, s: s, hint: 'Client Refresh Error');
@@ -53,7 +53,7 @@ abstract class RpcManager {
     if (!_refreshCompleter.isCompleted) {
       _refreshCompleter.complete();
     }
-    Logger.log('Refreshed clients: ${clients.length}');
+    Logger.log('Selected clients: ${clients.map((e) => e.rpcUrl).toList()}');
   }
 
   Future<T> performTask<T>(
