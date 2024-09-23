@@ -5,16 +5,13 @@ import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
+enum Sorting { asc, desc }
+
 abstract class EtherscanRepository {
   final String base;
   final Iterable<String> apiKeys;
 
   const EtherscanRepository(this.base, this.apiKeys);
-
-  String get _balanceEndpoint => "$base?module=account&action=balance";
-
-  String get _balanceTokenEndpoint =>
-      "$base?module=account&action=tokenbalance&tag=latest";
 
   String? get apiKey {
     if (apiKeys.isEmpty) {
@@ -31,10 +28,13 @@ abstract class EtherscanRepository {
     return Duration(seconds: index);
   }
 
+  Map<String, String> buildRequestHeaders() => {
+        'Content-Type': 'application/json',
+      };
+
   Future<T> _fetchEtherscanWithRatelimitRetries<T>(
     final String rawEndpoint, {
     int maxRetries = 10,
-    Duration waitTime = const Duration(seconds: 5),
   }) async {
     bool useApiKey = false;
     String endpoint = rawEndpoint;
@@ -51,7 +51,10 @@ abstract class EtherscanRepository {
         'EtherscanRepository',
       );
 
-      final response = await HTTPService.client.get(Uri.parse(endpoint));
+      final response = await HTTPService.client.get(
+        Uri.parse(endpoint),
+        headers: buildRequestHeaders(),
+      );
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
@@ -89,86 +92,66 @@ abstract class EtherscanRepository {
   }
 }
 
-Future<T> _fetchAvaTransactionWithRateLimits<T>(
-  final String rawEndpoint,
-  final String? apiKey, {
-  int maxRetries = 10,
-  Duration waitTime = const Duration(seconds: 5),
-}) async {
-  for (var i = 0; i < maxRetries; i++) {
-    final response = await HTTPService.getWithHeaders(
-      rawEndpoint,
-      headers: {
-        'Content-Type': 'application/json',
-        if (apiKey != null) 'x-glacier-api-key': apiKey
-      },
-    );
+class EtherscanExplorer extends EtherscanRepository {
+  const EtherscanExplorer(super.base, super.apiKeys);
 
-    if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+  String get gasOracleEndpoint => "$base?module=gastracker&action=gasoracle";
 
-      final result = body['transactions'];
+  String buildBalanceEndpoint(String address) =>
+      "$base?module=account&action=balance&address=$address"
+          .addOptionalParameter('tag', 'latest');
 
-      return result;
-    }
+  String buildTokenBalanceEndpoint(String address, String contractAddress) =>
+      "$base?module=account&action=tokenbalance&address=$address&contractaddress=$contractAddress"
+          .addOptionalParameter('tag', 'latest');
 
-    await Future.delayed(waitTime);
-  }
-  throw Exception("Failed to fetch $rawEndpoint");
-}
-
-class EVMExplorer extends EtherscanRepository {
-  const EVMExplorer(super.base, super.apiKeys);
-
-  ///
-  /// Fetch all Transactions for the given [token] on the given [address] for Avalanche
-  ///
-  Future<List<AvalancheTransaction>> fetchAvaTransactions({
-    required EvmEntity token,
+  String buildTransactionEndpoint({
     required String address,
-    int? lastBlock,
-  }) async {
-    if (lastBlock != null) {
-      lastBlock++;
-    }
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) =>
+      "$base?module=account&action=txlist&address=$address"
+          .addOptionalParameter('startblock', startblock)
+          .addOptionalParameter('endblock', endblock)
+          .addOptionalParameter('page', page)
+          .addOptionalParameter('offset', offset)
+          .addOptionalParameter('sort', sorting?.name);
 
-    final txResults = await _fetchAvaTransactionWithRateLimits(
-        "$base$address/transactions", apiKey);
-    return [
-      for (final tx in txResults)
-        AvalancheTransaction.fromJson(
-          tx,
-          token: token,
-          address: address,
-        )
-    ];
-  }
+  String buildERC20TransactionEndpoint({
+    required String address,
+    required String contractAddress,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) =>
+      "$base?module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
+          .addOptionalParameter('startblock', startblock)
+          .addOptionalParameter('endblock', endblock)
+          .addOptionalParameter('page', page)
+          .addOptionalParameter('offset', offset)
+          .addOptionalParameter('sort', sorting?.name);
 
-  ///
-  ///Fetch all ERC20 Transactions for a given [token] and [address] for Avalanche
-  ///
-  // Future<List<AvalancheTransaction>> fetchAvaERC20Transactions({
-  //   required EthBasedTokenEntity token,
-  //   required EvmEntity currency,
-  //   required String address,
-  //   int? lastBlock,
-  // }) async {
-  //   if (lastBlock != null) {
-  //     lastBlock++;
-  //   }
-
-  //   final txResults = await _fetchAvaTransactionWithRateLimits(
-  //       "$base$address/transactions", apiyKey);
-  //   return [
-  //     for (final tx in txResults)
-  //       AvalancheTransaction.fromJsonErc20(
-  //         tx,
-  //         token: token,
-  //         address: address,
-  //         currency: currency,
-  //       )
-  //   ];
-  // }
+  String buildERC721TransactionEndpoint({
+    required String address,
+    String? contractAddress,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) =>
+      "$base?module=account&action=tokennfttx&address=$address"
+          .addOptionalParameter('contractaddress', contractAddress)
+          .addOptionalParameter('startblock', startblock)
+          .addOptionalParameter('endblock', endblock)
+          .addOptionalParameter('page', page)
+          .addOptionalParameter('offset', offset)
+          .addOptionalParameter('sort', sorting?.name);
 
   ///
   /// Fetch all Transactions for the given [token] on the given [address]
@@ -176,14 +159,22 @@ class EVMExplorer extends EtherscanRepository {
   Future<List<EtherscanTransaction>> fetchTransactions({
     required EvmEntity token,
     required String address,
-    int? lastBlock,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
   }) async {
-    if (lastBlock != null) {
-      lastBlock++;
-    }
+    final endpoint = buildTransactionEndpoint(
+      address: address,
+      startblock: startblock,
+      endblock: endblock,
+      page: page,
+      offset: offset,
+      sorting: sorting,
+    );
 
-    final txResults = await _fetchEtherscanWithRatelimitRetries(
-        '$base?module=account&action=txlist&address=$address&sort=desc&startblock=$lastBlock');
+    final txResults = await _fetchEtherscanWithRatelimitRetries(endpoint);
     return [
       for (final tx in txResults)
         EtherscanTransaction.fromJson(
@@ -201,15 +192,23 @@ class EVMExplorer extends EtherscanRepository {
     required EthBasedTokenEntity token,
     required EvmEntity currency,
     required String address,
-    int? lastBlock,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
   }) async {
-    if (lastBlock != null) {
-      lastBlock++;
-    }
-
-    final txResults = await _fetchEtherscanWithRatelimitRetries(
-      '$base?module=account&action=tokentx&address=$address&contractaddress=${token.contractAddress}&sort=desc&startblock=$lastBlock',
+    final endpoint = buildERC20TransactionEndpoint(
+      address: address,
+      contractAddress: token.contractAddress,
+      startblock: startblock,
+      endblock: endblock,
+      page: page,
+      offset: offset,
+      sorting: sorting,
     );
+
+    final txResults = await _fetchEtherscanWithRatelimitRetries(endpoint);
     return [
       for (final tx in txResults)
         EtherscanTransaction.fromJsonErc20(
@@ -221,85 +220,28 @@ class EVMExplorer extends EtherscanRepository {
     ];
   }
 
-  // Future<ConfirmationStatus> fetchTxStatus(String hash) async {
-  //   final result = await _fetchEtherscanWithRatelimitRetries(
-  //       "$base?module=transaction&action=getstatus&txhash=$hash");
+  Future<BigInt> fetchBalance({
+    required String address,
+  }) async {
+    final endpoint = buildBalanceEndpoint(address);
+    final result = await _fetchEtherscanWithRatelimitRetries<String>(endpoint);
 
-  //   if (result
-  //       case {
-  //         "status": String status,
-  //         "message": String _,
-  //       }) {
-  //     if (status == "1") {
-  //       return ConfirmationStatus.confirmed;
-  //     }
-  //     return ConfirmationStatus.failed;
-  //   }
+    final balance = BigInt.tryParse(result);
 
-  //   if (result
-  //       case {
-  //         "isError": String isError,
-  //         "errDescription": String _,
-  //       }) {
-  //     if (isError == "0") {
-  //       return ConfirmationStatus.confirmed;
-  //     }
-  //     return ConfirmationStatus.failed;
-  //   }
+    if (balance == null) {
+      throw Exception('Failed to parse balance: $result');
+    }
 
-  //   throw Exception("Failed to fetch tx status");
-  // }
+    return balance;
+  }
 
-  ///
-  /// Fetch all ERC20 Transactions for a given [token] and [address]
-  ///
-  // Future<Map<String, Set<GenericTransaction>>?> fetchAllERC20Transactions({
-  //   required EvmEntity token,
-  //   int? lastBlockId,
-  // }) async {
-  //   // print("lastBlockId " + lastBlockId.toString());
-  //   var endpoint = "$_allERC20TransactionEndpoint&address=$address";
-  //   if (lastBlockId != null) {
-  //     lastBlockId++;
-  //     endpoint += "&startblock=$lastBlockId";
-  //   }
-  //   final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
+  Future<BigInt> fetchTokenBalance({
+    required String address,
+    required String contractAddress,
+  }) async {
+    final endpoint = buildTokenBalanceEndpoint(address, contractAddress);
+    final result = await _fetchEtherscanWithRatelimitRetries<String>(endpoint);
 
-  //   if (result == null || result.isEmpty) {
-  //     return null;
-  //   }
-
-  //   Map<String, Set<GenericTransaction>> data = {};
-
-  //   for (Map<String, dynamic> m in result) {
-  //     final transaction = GenericTransaction.fromJson(
-  //       m,
-  //       token,
-  //       address,
-  //     );
-  //     // data[transaction.contractAddress] = {
-  //     //   ...?data[transaction.contractAddress],
-  //     //   transaction,
-  //     // };
-  //   }
-
-  //   return data;
-  // }
-
-  ///
-  /// Fetch the Balance of a [token] given  for a given [address]
-  ///
-  Future<BigInt> fetchBalance(
-    String address,
-    TokenEntity token,
-  ) async {
-    final endpoint = switch (token) {
-      EthBasedTokenEntity token =>
-        "$_balanceTokenEndpoint&address=$address&contractaddress=${token.contractAddress}",
-      _ => "$_balanceEndpoint&address=$address",
-    };
-
-    final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
     final balance = BigInt.tryParse(result);
 
     if (balance == null) {
@@ -310,90 +252,63 @@ class EVMExplorer extends EtherscanRepository {
   }
 
   ///
+  /// Fetch the Balance of a [token] given  for a given [address]
+  ///
+  Future<Amount> fetchBalanceForToken(
+    String address,
+    TokenEntity token,
+  ) async =>
+      switch (token) {
+        EthBasedTokenEntity erc20 => fetchTokenBalance(
+            address: address,
+            contractAddress: erc20.contractAddress,
+          ).then((balance) => Amount(value: balance, decimals: erc20.decimals)),
+        TokenEntity coin => fetchBalance(
+            address: address,
+          ).then((balance) => Amount(value: balance, decimals: coin.decimals)),
+      };
+
+  ///
   /// Fetch a list of all ERC721 Tokens for a given [address]
   ///
   Future<List<ERC721Entity>> fetchEtherscanNFTs({
     required String address,
+    String? contractAddress,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
   }) async {
-    var endpoint =
-        "$base?module=account&action=tokennfttx&address=$address&startblock=0&sort=asc";
+    final endpoint = buildERC721TransactionEndpoint(
+      address: address,
+      contractAddress: contractAddress,
+      startblock: startblock,
+      endblock: endblock,
+      page: page,
+      offset: offset,
+      sorting: sorting,
+    );
 
-    final rawResult =
+    final result =
         await _fetchEtherscanWithRatelimitRetries(endpoint) as List<dynamic>;
-    final result = _extractOwnedNFTsOutOfNFTTransactions(address, rawResult);
 
-    return result.map((json) {
-      return ERC721Entity.fromJson(json);
-    }).toList();
+    return [
+      for (final tx in result) ERC721Entity.fromJson(tx),
+    ];
   }
 
   ///
   /// Fetch Gas Prices
   ///
   Future<EvmNetworkFees> fetchGasPrice() async {
-    final endpoint = "$base?module=gastracker&action=gasoracle";
-    final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
+    final result = await _fetchEtherscanWithRatelimitRetries(gasOracleEndpoint);
     if (result is! Json) {
       throw Exception("Failed to fetch gas price");
     }
     final entity = EvmNetworkFees.fromJson(result);
 
     return entity;
-  }
-
-  ///
-  /// Utils
-  ///
-
-  List<dynamic> _extractOwnedNFTsOutOfNFTTransactions(
-    String ethAddress,
-    List<dynamic> nftTransactions,
-  ) {
-    final Map<String, int> sentAwayTimestamps =
-        _extractMapFromTokenIDToTimestamp(nftTransactions, (from, to) {
-      return (from.toLowerCase() == ethAddress.toLowerCase() &&
-          to.toLowerCase() != ethAddress.toLowerCase());
-    });
-    final Map<String, int> receivedTimestamps =
-        _extractMapFromTokenIDToTimestamp(nftTransactions, (from, to) {
-      return to.toLowerCase() == ethAddress.toLowerCase();
-    });
-
-    return nftTransactions.where((tx) {
-      final String tokenID = tx['tokenID'];
-      final int timeStamp = int.parse(tx["timeStamp"]);
-      final int? timeOfReceive = receivedTimestamps[tokenID];
-      if (timeOfReceive == null) {
-        return true; // should never happen
-      }
-      if (timeStamp != timeOfReceive) {
-        return false; // deduplication
-      }
-      final int? timeOfSend = sentAwayTimestamps[tokenID];
-      return timeOfSend == null || timeOfSend <= timeOfReceive;
-    }).toList();
-  }
-
-  Map<String, int> _extractMapFromTokenIDToTimestamp(
-    List<dynamic> nftTransactions,
-    bool Function(String, String) filter,
-  ) {
-    final Map<String, int> map = {};
-    for (final tx in nftTransactions) {
-      final from = tx["from"];
-      final to = tx["to"];
-      if (from is String == false || to is String == false) {
-        continue;
-      }
-      if (filter(from, to)) {
-        final String tokenID = tx['tokenID'];
-        final int timeStamp = int.parse(tx["timeStamp"]);
-        if (map.containsKey(tokenID) == false || map[tokenID]! < timeStamp) {
-          map[tokenID] = timeStamp;
-        }
-      }
-    }
-    return map;
   }
 
   Future<int?> fetchEstimatedTime(int gasPrice) async {
@@ -423,4 +338,13 @@ Future<List<T>> batchFutures<T>(
   }
 
   return results;
+}
+
+extension URLBuilder on String {
+  String addOptionalParameter(String key, dynamic value) {
+    if (value == null) {
+      return this;
+    }
+    return "$this&$key=$value";
+  }
 }

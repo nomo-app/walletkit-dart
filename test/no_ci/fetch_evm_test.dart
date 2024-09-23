@@ -7,7 +7,7 @@ void main() {
   test('Test EVM Wallet', () async {
     const address = "0x935B5aBa58344b8914F1287C0760f9863b311c79";
 
-    final balance = await etherscan.fetchBalance(address, ethNative);
+    final balance = await etherscan.fetchBalance(address: address);
     print('ETH Balance: $balance');
 
     final smartChainBalance =

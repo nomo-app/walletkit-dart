@@ -8,7 +8,7 @@ void main() {
   test(
     'Test ZeniqScan Fetching',
     () async {
-      final zeniqScanExplorer = EVMExplorer(
+      final zeniqScanExplorer = EtherscanExplorer(
         'https://zeniqscan.com/api',
         [],
       );
@@ -18,15 +18,14 @@ void main() {
       ///
 
       final balance = await zeniqScanExplorer.fetchBalance(
-        rejectEVM,
-        zeniqSmart,
+        address: rejectEVM,
       );
 
       expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-      final avinocBalance = await zeniqScanExplorer.fetchBalance(
-        rejectEVM,
-        avinocZSC,
+      final avinocBalance = await zeniqScanExplorer.fetchTokenBalance(
+        address: rejectEVM,
+        contractAddress: avinocZSC.contractAddress,
       );
 
       expect(avinocBalance, greaterThanOrEqualTo(BigInt.zero));
@@ -57,11 +56,16 @@ void main() {
     /// Balances
     ///
 
-    final balance = await etherscan.fetchBalance(rejectEVM, ethNative);
+    final balance = await etherscan.fetchBalance(
+      address: rejectEVM,
+    );
 
     print('ETH Balance: $balance');
 
-    final wbtcBalance = await etherscan.fetchBalance(rejectEVM, wbtcToken);
+    final wbtcBalance = await etherscan.fetchTokenBalance(
+      address: rejectEVM,
+      contractAddress: wbtcToken.contractAddress,
+    );
 
     print('WBTC Balance: $wbtcBalance');
 
@@ -150,7 +154,7 @@ void main() {
 
   test("Test Arbitrum Fetching", () async {
     final balance =
-        await arbitrumscan.fetchBalance(arbitrumTestWallet, ethNative);
+        await arbitrumscan.fetchBalance(address: arbitrumTestWallet);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
@@ -170,13 +174,34 @@ void main() {
   });
 
   test("Test Avalanche Fetching", () async {
-    final transactions = await avalancheScan.fetchAvaTransactions(
+    final balance = await avalancheScan.fetchBalance(
       address: arbitrumTestWallet,
-      token: ethNative,
+    );
+    expect(balance, greaterThanOrEqualTo(BigInt.zero));
+
+    final transactions = await avalancheScan.fetchTransactions(
+      address: arbitrumTestWallet,
+      token: avalanche,
     );
 
     expect(transactions, isNotEmpty);
     expect(transactions.length, greaterThanOrEqualTo(10));
+
+    final tokenBalance = await avalancheScan.fetchTokenBalance(
+      address: arbitrumTestWallet,
+      contractAddress: wrappedETH.contractAddress,
+    );
+
+    expect(tokenBalance, greaterThan(BigInt.zero));
+
+    final tokenTransactions = await avalancheScan.fetchERC20Transactions(
+      address: arbitrumTestWallet,
+      token: wrappedETH,
+      currency: avalanche,
+    );
+
+    expect(tokenTransactions, isNotEmpty);
+    expect(tokenTransactions.length, greaterThanOrEqualTo(4));
   });
 
   // TODO: Need Api Key
@@ -207,7 +232,7 @@ void main() {
 
   test("Test MoonBeam Fetching", () async {
     final balance =
-        await moonbeamscan.fetchBalance(arbitrumTestWallet, ethNative);
+        await moonbeamscan.fetchBalance(address: arbitrumTestWallet);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
@@ -225,15 +250,18 @@ void main() {
     );
     expect(erc20T, isNotEmpty);
 
-    final fraxBalance =
-        await moonbeamscan.fetchBalance(arbitrumTestWallet, frax);
+    final fraxBalance = await moonbeamscan.fetchTokenBalance(
+      address: arbitrumTestWallet,
+      contractAddress: frax.contractAddress,
+    );
 
     expect(fraxBalance, greaterThan(BigInt.zero));
   });
 
   test('Test Optimism Fetching', () async {
-    final balance =
-        await optimismscan.fetchBalance(arbitrumTestWallet, ethNative);
+    final balance = await optimismscan.fetchBalance(
+      address: arbitrumTestWallet,
+    );
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
@@ -250,15 +278,16 @@ void main() {
     );
     expect(erc20T, isNotEmpty);
 
-    final optimismBalance =
-        await optimismscan.fetchBalance(arbitrumTestWallet, optimism);
+    final optimismBalance = await optimismscan.fetchTokenBalance(
+      address: arbitrumTestWallet,
+      contractAddress: optimism.contractAddress,
+    );
 
     expect(optimismBalance, greaterThan(BigInt.zero));
   });
 
   test('Test zkSync Fetching', () async {
-    final balance =
-        await zksyncscan.fetchBalance(arbitrumTestWallet, ethNative);
+    final balance = await zksyncscan.fetchBalance(address: arbitrumTestWallet);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
@@ -277,8 +306,10 @@ void main() {
 
     expect(erc20T, isNotEmpty);
 
-    final wbtcBalance =
-        await zksyncscan.fetchBalance(arbitrumTestWallet, wbtcZKSync);
+    final wbtcBalance = await zksyncscan.fetchTokenBalance(
+      address: arbitrumTestWallet,
+      contractAddress: wbtcZKSync.contractAddress,
+    );
 
     expect(wbtcBalance, greaterThan(BigInt.zero));
   });

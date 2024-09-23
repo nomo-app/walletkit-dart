@@ -5,7 +5,7 @@ import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
 import 'package:walletkit_dart/src/domain/entities/transactions/generic_transaction.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 
-final class EtherscanTransaction extends EVMTransaction {
+base class EtherscanTransaction extends EVMTransaction {
   const EtherscanTransaction({
     required super.hash,
     required super.block,
