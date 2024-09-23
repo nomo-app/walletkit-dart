@@ -3,27 +3,27 @@ import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
 ///
 /// UTXO Assets
 ///
-const zeniqCoin = TokenEntity(
+const zeniqCoin = CoinEntity(
   name: 'ZENIQ',
   symbol: 'ZENIQ Coin',
   decimals: 8,
 );
-const btcCoin = TokenEntity(
+const btcCoin = CoinEntity(
   name: 'Bitcoin',
   symbol: 'BTC',
   decimals: 8,
 );
-const bchCoin = TokenEntity(
+const bchCoin = CoinEntity(
   name: 'Bitcoin Cash',
   symbol: 'BCH',
   decimals: 8,
 );
-const ltcCoin = TokenEntity(
+const ltcCoin = CoinEntity(
   name: 'Litecoin',
   symbol: 'LTC',
   decimals: 8,
 );
-const ec8Coin = TokenEntity(
+const ec8Coin = CoinEntity(
   name: 'Eurocoin',
   symbol: 'EURO',
   decimals: 5,
@@ -32,48 +32,48 @@ const ec8Coin = TokenEntity(
 ///
 /// Ethereum Assets
 ///
-const ethNative = EvmEntity(
+const ethNative = EvmCoinEntity(
   chainID: 1,
   name: 'Ethereum',
   symbol: 'ETH',
   decimals: 18,
 );
-const wbtcToken = EthBasedTokenEntity(
+const wbtcToken = ERC20Entity(
   name: 'Wrapped BTC',
   symbol: 'WBTC',
   contractAddress: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
   decimals: 8,
   chainID: 1,
 );
-const usdcToken = EthBasedTokenEntity(
+const usdcToken = ERC20Entity(
   name: 'USD Coin',
   symbol: 'USDC',
   contractAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
   decimals: 6,
   chainID: 1,
 );
-const avinocETH = EthBasedTokenEntity(
+const avinocETH = ERC20Entity(
   name: 'AVINOC ETH',
   symbol: 'AVINOC ERC20',
   contractAddress: "0xF1cA9cb74685755965c7458528A36934Df52A3EF",
   decimals: 18,
   chainID: 1,
 );
-const zeniqETHToken = EthBasedTokenEntity(
+const zeniqETHToken = ERC20Entity(
   name: 'ZENIQ',
   symbol: 'ZENIQ @ETH',
   contractAddress: "0x5b52bfB8062Ce664D74bbCd4Cd6DC7Df53Fd7233",
   decimals: 18,
   chainID: 1,
 );
-const daiToken = EthBasedTokenEntity(
+const daiToken = ERC20Entity(
   name: 'Dai Stablecoin',
   symbol: 'DAI',
   contractAddress: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
   decimals: 18,
   chainID: 1,
 );
-const usdtToken = EthBasedTokenEntity(
+const usdtToken = ERC20Entity(
   name: 'Tether USD',
   symbol: 'USDT',
   contractAddress: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -84,69 +84,69 @@ const usdtToken = EthBasedTokenEntity(
 ///
 /// ZSC Assets
 ///
-const zeniqSmart = EvmEntity(
+const zeniqSmart = EvmCoinEntity(
   chainID: 383414847825,
   name: 'ZENIQ',
   symbol: 'ZENIQ Token',
   decimals: 18,
 );
-const wrappedZeniqSmart = EthBasedTokenEntity(
+const wrappedZeniqSmart = ERC20Entity(
   name: 'Wrapped ZENIQ',
   symbol: 'WZENIQ',
   decimals: 18,
   contractAddress: "0x74DC1C4ec10abE9F5C8A3EabF1A90b97cDc3Ead8",
   chainID: 383414847825,
 );
-const avinocZSC = EthBasedTokenEntity(
+const avinocZSC = ERC20Entity(
   name: 'AVINOC',
   symbol: 'AVINOC ZEN20',
   contractAddress: "0xF1cA9cb74685755965c7458528A36934Df52A3EF",
   decimals: 18,
   chainID: 383414847825,
 );
-const tupanToken = EthBasedTokenEntity(
+const tupanToken = ERC20Entity(
   name: 'Tupan Community Token',
   symbol: 'TUPAN',
   contractAddress: "0x12056546AC468aAd5f9D7Fab9f62D3d97ef95b9A",
   decimals: 18,
   chainID: 383414847825,
 );
-const iLoveSafirToken = EthBasedTokenEntity(
+const iLoveSafirToken = ERC20Entity(
   name: "I♡SAFIR",
   symbol: "SAFIR",
   contractAddress: "0xcBd3Dd9a52Beea3D0E4B9356f478e7EEd69438Bf",
   decimals: 18,
   chainID: 383414847825,
 );
-const sidiToken = EthBasedTokenEntity(
+const sidiToken = ERC20Entity(
   name: "SIDI Token",
   symbol: "SIDI",
   contractAddress: "0xB4EB994f25d3E7E60802fe19f37bc8D5246C26D6",
   decimals: 18,
   chainID: 383414847825,
 );
-const digitalGoldToken = EthBasedTokenEntity(
+const digitalGoldToken = ERC20Entity(
   name: "Digital Gold Token",
   symbol: "DGT",
   contractAddress: "0xE88CD091695aa5fce94065e5Df044d6444A40cd4",
   decimals: 18,
   chainID: 383414847825,
 );
-const regardlessToken = EthBasedTokenEntity(
+const regardlessToken = ERC20Entity(
   name: "Regardless Community Token",
   symbol: "REGA",
   contractAddress: "0xAf4f8cE05AF30bb8e06a8AFec762609d2394BCd7",
   decimals: 18,
   chainID: 383414847825,
 );
-const tDroneToken = EthBasedTokenEntity(
+const tDroneToken = ERC20Entity(
   name: "TDrone Token",
   symbol: "TDRONE",
   contractAddress: "0x4cb0550c8b6765c15E77ad8b65189D4B865B4cb0",
   decimals: 18,
   chainID: 383414847825,
 );
-const vooToken = EthBasedTokenEntity(
+const vooToken = ERC20Entity(
   name: "Voo Token",
   symbol: "VOO",
   contractAddress: "0x12466A65aac83FE1B10F43e43ed21FC81BEF4bb8",
@@ -157,13 +157,13 @@ const vooToken = EthBasedTokenEntity(
 ///
 /// Binance Chain Assets
 ///
-const binanceSmart = EvmEntity(
+const binanceSmart = EvmCoinEntity(
   chainID: 56,
   name: 'BNB',
   symbol: 'BNB',
   decimals: 18,
 );
-const zeniqBSCToken = EthBasedTokenEntity(
+const zeniqBSCToken = ERC20Entity(
   name: 'ZENIQ',
   symbol: 'ZENIQ @BSC',
   contractAddress: "0x5b52bfB8062Ce664D74bbCd4Cd6DC7Df53Fd7233",
@@ -174,14 +174,14 @@ const zeniqBSCToken = EthBasedTokenEntity(
 ///
 /// Polygon Assets
 ///
-const polygon = EvmEntity(
+const polygon = EvmCoinEntity(
   chainID: 137,
   name: 'Polygon',
   symbol: 'MATIC',
   decimals: 18,
 );
 
-const cLFi = EthBasedTokenEntity(
+const cLFi = ERC20Entity(
   name: 'CLFi',
   symbol: 'CLFI',
   decimals: 8,
@@ -189,7 +189,7 @@ const cLFi = EthBasedTokenEntity(
   chainID: 137,
 );
 
-const LFi = EthBasedTokenEntity(
+const LFi = ERC20Entity(
   name: 'LFi',
   symbol: 'LFi',
   decimals: 8,
@@ -201,13 +201,13 @@ const LFi = EthBasedTokenEntity(
 /// Tron Assets
 ///
 
-const tron = TokenEntity(
+const tron = CoinEntity(
   name: 'Tron',
   symbol: 'TRX',
   decimals: 6,
 );
 
-const tronUSDT = EthBasedTokenEntity(
+const tronUSDT = ERC20Entity(
   name: 'Tether USD',
   symbol: 'USDT',
   decimals: 6,
@@ -218,7 +218,7 @@ const tronUSDT = EthBasedTokenEntity(
 ///
 /// Arbitrum Assets
 ///
-const arbitrum = EthBasedTokenEntity(
+const arbitrum = ERC20Entity(
   name: 'Arbitrum',
   symbol: 'ARB',
   decimals: 18,
@@ -226,7 +226,7 @@ const arbitrum = EthBasedTokenEntity(
   chainID: 42161,
 );
 
-const ethArbitrum = EvmEntity(
+const ethArbitrum = EvmCoinEntity(
   chainID: 42161,
   name: "Ethereum",
   symbol: "ETH",
@@ -236,14 +236,14 @@ const ethArbitrum = EvmEntity(
 ///
 /// Avalanche Assets
 ///
-const avalanche = EvmEntity(
+const avalanche = EvmCoinEntity(
   chainID: 43114,
   name: 'Avalanche',
   symbol: 'AVAX',
   decimals: 18,
 );
 
-const wrappedETH = EthBasedTokenEntity(
+const wrappedETH = ERC20Entity(
   name: "Wrapped ETH",
   symbol: "WETH.e",
   decimals: 18,
@@ -254,14 +254,14 @@ const wrappedETH = EthBasedTokenEntity(
 ///
 /// Base Assets
 ///
-const ethBase = EvmEntity(
+const ethBase = EvmCoinEntity(
   chainID: 8453,
   name: "Ethereum",
   symbol: "ETH",
   decimals: 18,
 );
 
-const mathToken = EthBasedTokenEntity(
+const mathToken = ERC20Entity(
   name: "MATH Token",
   symbol: "MATH",
   decimals: 18,
@@ -272,13 +272,13 @@ const mathToken = EthBasedTokenEntity(
 ///
 /// Moonbeam Assets
 ///
-const moonbeam = EvmEntity(
+const moonbeam = EvmCoinEntity(
   chainID: 1284,
   name: 'Moonbeam',
   symbol: 'GLMR',
   decimals: 18,
 );
-const frax = EthBasedTokenEntity(
+const frax = ERC20Entity(
   name: "Frax",
   symbol: "FRAX",
   decimals: 18,
@@ -289,7 +289,7 @@ const frax = EthBasedTokenEntity(
 ///
 /// Optimism Assets
 ///
-const optimism = EthBasedTokenEntity(
+const optimism = ERC20Entity(
   name: "Optimism",
   symbol: "OP",
   decimals: 18,
@@ -297,7 +297,7 @@ const optimism = EthBasedTokenEntity(
   chainID: 10,
 );
 
-const ethOptimism = EvmEntity(
+const ethOptimism = EvmCoinEntity(
   chainID: 10,
   name: "Ethereum",
   symbol: "ETH",
@@ -307,14 +307,14 @@ const ethOptimism = EvmEntity(
 ///
 ///ZKSync Assets
 ///
-const ethzkSync = EvmEntity(
+const ethzkSync = EvmCoinEntity(
   chainID: 324,
   name: "Ethereum",
   symbol: "ETH",
   decimals: 18,
 );
 
-const wbtcZKSync = EthBasedTokenEntity(
+const wbtcZKSync = ERC20Entity(
   name: "Wrapped BTC",
   symbol: "WBTC",
   decimals: 8,

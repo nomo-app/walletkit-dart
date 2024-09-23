@@ -15,7 +15,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
   final int block;
   final int confirmations;
   final int timeMilli;
-  final TokenEntity token;
+  final CoinEntity token;
   final Amount amount;
   final Amount? fee;
   final String sender;
@@ -109,7 +109,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
           transferMethod: TransactionTransferMethod.fromJson(transferMethod),
           status: ConfirmationStatus.fromJson(status),
           input: input.hexToBytesOrNull ?? Uint8List(0),
-          token: TokenEntity.fromJson(token),
+          token: CoinEntity.fromJson(token),
           decodedInput: decodedInput != null
               ? ExternalContractFunctionWithValues.fromJson(decodedInput)
               : null,
@@ -146,7 +146,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
           version: version,
           inputs: inputs.map((e) => ElectrumInput.fromJson(e)).toList(),
           outputs: outputs.map((e) => ElectrumOutput.fromJson(e)).toList(),
-          token: TokenEntity.fromJson(token),
+          token: CoinEntity.fromJson(token),
         ),
       _ => throw UnimplementedError("Unknown json: $json"),
     };

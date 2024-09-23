@@ -10,7 +10,7 @@ import 'package:walletkit_dart/src/domain/extensions.dart';
 
 Future<List<(String, int)>> getBestHealthEndpointsWithRetry({
   required Iterable<(String, int)> endpointPool,
-  required TokenEntity token,
+  required CoinEntity token,
   int max = 10,
   int min = 2,
   int maxRetries = 4,
@@ -51,7 +51,7 @@ Future<List<(String, int)>> getBestHealthEndpointsWithRetry({
 
 Future<List<(String, int)>> _getBestHealthEndpoints({
   required Iterable<(String, int)> endpoints,
-  required TokenEntity token,
+  required CoinEntity token,
   int maxClients = 10,
   Duration maxLatency = const Duration(milliseconds: 1500),
 }) async {
@@ -105,7 +105,7 @@ Future<List<(String, int)>> _getBestHealthEndpoints({
 Future<(double, int)?> getResponseTimeForHost(
   final (String, int) host, {
   required Duration maxLatency,
-  required TokenEntity token,
+  required CoinEntity token,
 }) async {
   Stopwatch stopwatch = Stopwatch()..start();
   final client = await createElectrumXClient(
@@ -126,7 +126,7 @@ Future<(double, int)?> getResponseTimeForHost(
 
 Future<List<ElectrumXClient>> createClients({
   required List<(String, int)> endpoints,
-  required TokenEntity token,
+  required CoinEntity token,
 }) async {
   return (await Future.wait([
     for (final entry in endpoints)
@@ -149,7 +149,7 @@ Future<List<ElectrumXClient>> createClients({
 Future<ElectrumXClient?> createElectrumXClient({
   required String endpoint,
   required int port,
-  required TokenEntity token,
+  required CoinEntity token,
 }) async {
   final tcpJsonRpcClient = TcpJsonRpcClient(
     isZeniq: token == zeniqCoin,
@@ -164,7 +164,7 @@ Future<ElectrumXClient?> createElectrumXClient({
 Future<ElectrumXClient?> createRandomElectrumXClient({
   required List<(String, int)> endpoints,
   required List<(String, int)> excludedEndpoints,
-  required TokenEntity token,
+  required CoinEntity token,
 }) async {
   endpoints.shuffle();
 
@@ -188,7 +188,7 @@ Future<(T?, ElectrumXClient?, NoWorkingHostsException?)>
   Future<T> Function(ElectrumXClient) fetchFunction, {
   required ElectrumXClient? client,
   required Iterable<(String, int)> endpoints,
-  required TokenEntity token,
+  required CoinEntity token,
   Duration timeout = const Duration(milliseconds: 3000),
   bool cleanup = true,
 }) async {

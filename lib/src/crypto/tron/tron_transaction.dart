@@ -233,7 +233,7 @@ final class TronTransaction extends EVMTransaction {
 
   static TronTransaction? fromJson(
     Json json,
-    TokenEntity token,
+    CoinEntity token,
     String walletAddress,
   ) {
     /// TRC20 Transaction TRONSCAN

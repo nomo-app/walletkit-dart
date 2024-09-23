@@ -34,7 +34,7 @@ final class UTXOTransaction extends GenericTransaction {
     Amount? amount,
     String? sender,
     String? recipient,
-    TokenEntity? token,
+    CoinEntity? token,
     TransactionTransferMethod? transferMethod,
     int? confirmations,
     List<ElectrumInput>? inputs,
@@ -478,7 +478,7 @@ class ElectrumScriptPubKey {
 }
 
 final class NotAvaialableUTXOTransaction extends UTXOTransaction {
-  NotAvaialableUTXOTransaction(String hash, int block, TokenEntity token)
+  NotAvaialableUTXOTransaction(String hash, int block, CoinEntity token)
       : super(
           block: block,
           hash: hash,

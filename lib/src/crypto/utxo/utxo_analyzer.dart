@@ -27,7 +27,7 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
   required List<NodeWithAddress> cachedNodes,
   required Set<ElectrumTransactionInfo> allTxs,
   required Iterable<NodeWithAddress> nodes,
-  required TokenEntity coin,
+  required CoinEntity coin,
   required UTXONetworkType networkType,
   required Iterable<AddressType> addressTypes,
   required List<(String, int)> endpoints,

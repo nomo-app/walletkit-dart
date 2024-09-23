@@ -11,7 +11,6 @@ export 'src/domain/extensions.dart';
 export 'src/domain/entities/transactions/generic_transaction.dart';
 export 'src/domain/entities/transactions/etherscan_transaction.dart';
 export 'src/domain/entities/tx_gasFee_entity.dart';
-export 'src/domain/entities/erc721_entity.dart';
 export 'src/crypto/utxo/utxo_analyzer.dart';
 export 'src/crypto/evm/domain/evm_rpc_interface.dart';
 export 'src/domain/repository/etherscan_repository.dart';
@@ -43,8 +42,6 @@ export 'src/crypto/utxo/utxo_receive_addresses.dart';
 export 'src/domain/entities/transactions/zsc_transaction.dart';
 
 export 'src/domain/entities/node.dart';
-
-export 'src/domain/entities/transactions/avacloud_transaction.dart';
 
 export 'src/domain/entities/hd_wallet_type.dart';
 

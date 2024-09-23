@@ -1,18 +1,19 @@
 import 'dart:math';
 import 'package:walletkit_dart/src/domain/predefined_assets.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
-const TokenEntity nullToken = TokenEntity(
+const CoinEntity nullToken = CoinEntity(
   name: '',
   symbol: '',
   decimals: 0,
 );
 
-class TokenEntity {
+class CoinEntity {
   final String name;
   final String symbol;
   final int decimals;
 
-  const TokenEntity({
+  const CoinEntity({
     required this.name,
     required this.symbol,
     required this.decimals,
@@ -22,11 +23,11 @@ class TokenEntity {
 
   String get identifier => "$name:$symbol:$decimals";
 
-  EthBasedTokenEntity? get asEthBased =>
-      this is EthBasedTokenEntity ? this as EthBasedTokenEntity : null;
+  ERC20Entity? get asEthBased =>
+      this is ERC20Entity ? this as ERC20Entity : null;
 
-  bool get isEvm => this is EvmEntity;
-  bool get isERC20 => this is EthBasedTokenEntity;
+  bool get isEvm => this is EvmCoinEntity;
+  bool get isERC20 => this is ERC20Entity;
   bool get isUTXO => switch (this) {
         btcCoin || ltcCoin || zeniqCoin || bchCoin || ec8Coin => true,
         _ => false,
@@ -39,7 +40,7 @@ class TokenEntity {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TokenEntity &&
+    return other is CoinEntity &&
         other.name == name &&
         other.symbol == symbol &&
         other.decimals == decimals;
@@ -47,20 +48,20 @@ class TokenEntity {
 
   Map<String, dynamic> toJson() {
     return switch (this) {
-      EthBasedTokenEntity ethBasedToken => {
+      ERC20Entity ethBasedToken => {
           'name': ethBasedToken.name,
           'symbol': ethBasedToken.symbol,
           'decimals': ethBasedToken.decimals,
           'chainID': ethBasedToken.chainID,
           'contractAddress': ethBasedToken.contractAddress,
         },
-      EvmEntity evmEntity => {
+      EvmCoinEntity evmEntity => {
           'name': evmEntity.name,
           'symbol': evmEntity.symbol,
           'decimals': evmEntity.decimals,
           'chainID': evmEntity.chainID,
         },
-      TokenEntity tokenEntity => {
+      CoinEntity tokenEntity => {
           'name': tokenEntity.name,
           'symbol': tokenEntity.symbol,
           'decimals': tokenEntity.decimals,
@@ -68,7 +69,7 @@ class TokenEntity {
     };
   }
 
-  factory TokenEntity.fromJson(Map json) {
+  factory CoinEntity.fromJson(Map json) {
     return switch (json) {
       {
         'name': String name,
@@ -77,7 +78,7 @@ class TokenEntity {
         'chainID': int chainID,
         'contractAddress': String contractAddress,
       } =>
-        EthBasedTokenEntity(
+        ERC20Entity(
           name: name,
           symbol: symbol,
           decimals: decimals,
@@ -91,7 +92,7 @@ class TokenEntity {
         'decimals': int decimals,
         'chainID': int chainID,
       } =>
-        EvmEntity(
+        EvmCoinEntity(
           name: name,
           symbol: symbol,
           decimals: decimals,
@@ -102,7 +103,7 @@ class TokenEntity {
         'symbol': String symbol,
         'decimals': int decimals,
       } =>
-        TokenEntity(
+        CoinEntity(
           name: name,
           symbol: symbol,
           decimals: decimals,
@@ -112,7 +113,7 @@ class TokenEntity {
   }
 }
 
-class EvmEntity extends TokenEntity {
+class EvmCoinEntity extends CoinEntity {
   final int chainID;
 
   @override
@@ -125,10 +126,10 @@ class EvmEntity extends TokenEntity {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is EvmEntity && other.chainID == chainID;
+    return other is EvmCoinEntity && other.chainID == chainID;
   }
 
-  const EvmEntity({
+  const EvmCoinEntity({
     required super.name,
     required super.symbol,
     required super.decimals,
@@ -136,41 +137,42 @@ class EvmEntity extends TokenEntity {
   });
 }
 
-class EthBasedTokenEntity extends TokenEntity {
+class ERC20Entity extends EvmCoinEntity {
   final String contractAddress;
   final bool? allowDeletion;
-  final int chainID;
 
-  const EthBasedTokenEntity({
+  const ERC20Entity({
     required super.name,
     required super.symbol,
     required super.decimals,
+    required super.chainID,
     required this.contractAddress,
-    required this.chainID,
     this.allowDeletion,
   });
+
+  String get lowerCaseAddress => contractAddress.toLowerCase();
 
   @override
   String get identifier => "$name:$symbol:$decimals:$contractAddress:$chainID";
 
   @override
-  int get hashCode => contractAddress.hashCode ^ chainID.hashCode;
+  int get hashCode => lowerCaseAddress.hashCode ^ chainID.hashCode;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is EthBasedTokenEntity &&
-        other.contractAddress == contractAddress &&
+    return other is ERC20Entity &&
+        other.lowerCaseAddress == lowerCaseAddress &&
         other.chainID == chainID;
   }
 
-  factory EthBasedTokenEntity.fromJson(
+  factory ERC20Entity.fromJson(
     Map<String, dynamic> json, {
     required bool allowDeletion,
     required int chainID,
   }) {
-    return EthBasedTokenEntity(
+    return ERC20Entity(
       name: json['name'],
       symbol: json['symbol'],
       decimals: json['decimals'],
@@ -180,7 +182,7 @@ class EthBasedTokenEntity extends TokenEntity {
     );
   }
 
-  EthBasedTokenEntity copyWith({
+  ERC20Entity copyWith({
     String? name,
     String? symbol,
     int? decimals,
@@ -188,7 +190,7 @@ class EthBasedTokenEntity extends TokenEntity {
     bool? allowDeletion,
     int? chainID,
   }) {
-    return EthBasedTokenEntity(
+    return ERC20Entity(
       name: name ?? this.name,
       symbol: symbol ?? this.symbol,
       decimals: decimals ?? this.decimals,
@@ -196,5 +198,34 @@ class EthBasedTokenEntity extends TokenEntity {
       allowDeletion: allowDeletion ?? this.allowDeletion,
       chainID: chainID ?? this.chainID,
     );
+  }
+}
+
+class ERC721Entity extends EvmCoinEntity {
+  final String contractAddress;
+  final BigInt tokenId;
+
+  const ERC721Entity({
+    required super.name,
+    required super.symbol,
+    required super.chainID,
+    required this.contractAddress,
+    required this.tokenId,
+  }) : super(decimals: 0);
+
+  String get lowerCaseAddress => contractAddress.toLowerCase();
+
+  @override
+  int get hashCode =>
+      lowerCaseAddress.hashCode ^ chainID.hashCode ^ tokenId.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ERC721Entity &&
+        other.lowerCaseAddress == lowerCaseAddress &&
+        other.chainID == chainID &&
+        other.tokenId == tokenId;
   }
 }

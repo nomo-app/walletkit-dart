@@ -211,7 +211,7 @@ class TronHTTPRepository extends HTTPRepository {
 
   Future<Amount> getTRC20Balance({
     required String address,
-    required EthBasedTokenEntity trc20,
+    required ERC20Entity trc20,
   }) async {
     final addressParameter = base58ToEVM(address, false).padLeft(64, '0');
     final result = await triggerConstantContract(

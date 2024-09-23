@@ -1,8 +1,8 @@
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-final Map<TokenEntity, UtxoInMemoryCache> _utxoCaches = {};
+final Map<CoinEntity, UtxoInMemoryCache> _utxoCaches = {};
 
-UtxoInMemoryCache getUtxoInMemoryCache(TokenEntity coin) {
+UtxoInMemoryCache getUtxoInMemoryCache(CoinEntity coin) {
   if (_utxoCaches[coin] == null) {
     _utxoCaches[coin] = UtxoInMemoryCache();
   }

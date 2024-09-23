@@ -201,7 +201,7 @@ const spoilEVM = "0x1464935f48CA992D1a0bEAA2358471D7Cb6374E5";
 const bnbScanBaseEndpoint = "https://api.bscscan.com/api";
 const etherscanBaseEndpoint = "https://api.etherscan.io/api";
 const polygonScanBaseEndpoint = "https://api.polygonscan.com/api";
-
+const zeniqScanEnpoint = "https://zeniqscan.com/api";
 const zeniqSmartRPCEndpoint = "https://api.zeniq.network";
 
 ///
@@ -224,7 +224,7 @@ const baseScanEndpoint = "https://api.basescan.org/api";
 /// Avalanche
 ///
 const avalancheAPIEndpoint =
-    "https://glacier-api.avax.network/v1/chains/43114/addresses/";
+    "https://api.routescan.io/v2/network/mainnet/evm/43114/etherscan/api";
 
 ///
 /// Optimism

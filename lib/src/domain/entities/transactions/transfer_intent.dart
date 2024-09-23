@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 class TransferIntent<T extends FeeInformation?> {
-  final TokenEntity token;
+  final CoinEntity token;
   final String recipient;
   final Amount amount;
 
@@ -102,7 +102,7 @@ class TransferIntent<T extends FeeInformation?> {
           recipient: recipient,
           amount: Amount.fromJson(amount),
           feeInfo: fee == null ? null : FeeInformation.fromJson(fee),
-          token: TokenEntity.fromJson(token),
+          token: CoinEntity.fromJson(token),
           memo: memo,
         ),
       _ => throw FormatException('Unknown TransferIntent: $json'),
