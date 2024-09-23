@@ -91,7 +91,7 @@ final class EvmRpcInterface {
   ///
   Future<Amount> fetchTokenBalance(
     String address,
-    EthBasedTokenEntity token,
+    ERC20Entity token,
   ) async {
     final erc20Contract = ERC20Contract(
       contractAddress: token.contractAddress,
@@ -146,55 +146,55 @@ final class EvmRpcInterface {
   ///
   /// Fetch ERC721 Tokens
   ///
-  Future<List<ERC721Entity>> fetchZEN721Transfers({
-    required String nftContractAddress,
-    required String address,
-  }) async {
-    const String _block = "0x0";
-// keccak256("Transfer(address,address,uint256)") = 0xddf2...
-    const eventSignature =
-        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
-    final topicAddress =
-        address.replaceFirst("0x", "0x000000000000000000000000");
-    final incomingTransfersFuture = performTask(
-      (client) => client.getLogs(
-        fromBlock: _block,
-        toBlock: "latest",
-        address: nftContractAddress,
-        topics: [eventSignature, null, topicAddress, null],
-      ),
-    );
-    final outgoingTransfersFuture = performTask(
-      (client) => client.getLogs(
-        fromBlock: _block,
-        toBlock: "latest",
-        address: nftContractAddress,
-        topics: [eventSignature, topicAddress, null, null],
-      ),
-    );
-    final results = await Future.wait(
-      [incomingTransfersFuture, outgoingTransfersFuture],
-    );
-    final transferLogs = _extractOwnedNFTsFromTransferLogs(
-      address: address,
-      incomingTransfers: results[0],
-      outgoingTransfers: results[1],
-    );
-    return transferLogs
-        .map(
-          (transferLog) => _mapTransferLogToERC721Entity(
-            transferLog: transferLog,
-            nftContractAddress: nftContractAddress,
-          ),
-        )
-        .toList();
-  }
+//   Future<List<ERC721Entity>> fetchZEN721Transfers({
+//     required String nftContractAddress,
+//     required String address,
+//   }) async {
+//     const String _block = "0x0";
+// // keccak256("Transfer(address,address,uint256)") = 0xddf2...
+//     const eventSignature =
+//         "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+//     final topicAddress =
+//         address.replaceFirst("0x", "0x000000000000000000000000");
+//     final incomingTransfersFuture = performTask(
+//       (client) => client.getLogs(
+//         fromBlock: _block,
+//         toBlock: "latest",
+//         address: nftContractAddress,
+//         topics: [eventSignature, null, topicAddress, null],
+//       ),
+//     );
+//     final outgoingTransfersFuture = performTask(
+//       (client) => client.getLogs(
+//         fromBlock: _block,
+//         toBlock: "latest",
+//         address: nftContractAddress,
+//         topics: [eventSignature, topicAddress, null, null],
+//       ),
+//     );
+//     final results = await Future.wait(
+//       [incomingTransfersFuture, outgoingTransfersFuture],
+//     );
+//     final transferLogs = _extractOwnedNFTsFromTransferLogs(
+//       address: address,
+//       incomingTransfers: results[0],
+//       outgoingTransfers: results[1],
+//     );
+//     return transferLogs
+//         .map(
+//           (transferLog) => _mapTransferLogToERC721Entity(
+//             transferLog: transferLog,
+//             nftContractAddress: nftContractAddress,
+//           ),
+//         )
+//         .toList();
+//   }
 
   ///
   /// Fetch ERC721 Transacions
   ///
   Future<List<ZeniqSmartChainTransaction>> fetchZEN20Transfers({
-    required EthBasedTokenEntity token,
+    required ERC20Entity token,
     required String address,
     int? block,
   }) async {
@@ -365,10 +365,10 @@ final class EvmRpcInterface {
     required String from,
     required Uint8List seed,
   }) async {
-    assert(intent.token is EthBasedTokenEntity);
+    assert(intent.token is ERC20Entity);
     assert(intent.memo == null);
 
-    final erc20 = intent.token as EthBasedTokenEntity;
+    final erc20 = intent.token as ERC20Entity;
     final tokenContractAddress = erc20.contractAddress;
 
     final erc20Contract = ERC20Contract(
@@ -682,31 +682,31 @@ final class EvmRpcInterface {
     return map;
   }
 
-  ERC721Entity _mapTransferLogToERC721Entity({
-    required dynamic transferLog,
-    required String nftContractAddress,
-  }) {
-    final blockNumber = int.parse(transferLog["blockNumber"]);
-    final from = _getTransferSource(transferLog);
-    final to = _getTransferTarget(transferLog);
-    final tokenID = _getTokenID(transferLog);
-// some of those fields are largely ignored
-    return ERC721Entity(
-      blockNumber: blockNumber,
-      hash: transferLog["transactionHash"],
-      tokenID: tokenID,
-      contractAddress: nftContractAddress,
-      to: to,
-      from: from,
-      tokenName: avinocZSC.name,
-      dateTime: DateTime.now(),
-    );
-  }
+//   ERC721Entity _mapTransferLogToERC721Entity({
+//     required dynamic transferLog,
+//     required String nftContractAddress,
+//   }) {
+//     final blockNumber = int.parse(transferLog["blockNumber"]);
+//     final from = _getTransferSource(transferLog);
+//     final to = _getTransferTarget(transferLog);
+//     final tokenID = _getTokenID(transferLog);
+// // some of those fields are largely ignored
+//     return ERC721Entity(
+//       blockNumber: blockNumber,
+//       hash: transferLog["transactionHash"],
+//       tokenID: tokenID,
+//       contractAddress: nftContractAddress,
+//       to: to,
+//       from: from,
+//       tokenName: avinocZSC.name,
+//       dateTime: DateTime.now(),
+//     );
+//   }
 
   Future<ZeniqSmartChainTransaction> _mapTransferLogToZSCTransaction({
     required Json transferLog,
     required TransactionTransferMethod direction,
-    required TokenEntity token,
+    required CoinEntity token,
     required int currentBlockNumber,
   }) async {
     final blockNumber = int.parse(transferLog["blockNumber"]);

@@ -44,7 +44,7 @@ class TronScanRepository extends HTTPRepository {
 
   Future<Set<EVMTransaction>> getTransactions({
     required String address,
-    required TokenEntity token,
+    required CoinEntity token,
     int limit = 10,
     int? startTimestamp,
     int? endTimestamp,
@@ -153,7 +153,7 @@ class TronScanRepository extends HTTPRepository {
 
   Future<Set<EVMTransaction>> getTRC20TransferList({
     required String address,
-    required EthBasedTokenEntity trc20,
+    required ERC20Entity trc20,
     int start = 0,
     int limit = 20,
     int direction = 0,

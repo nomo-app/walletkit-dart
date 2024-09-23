@@ -23,7 +23,7 @@ class ElectrumTransactionInfo {
   int get hashCode => hash.hashCode;
 
   NotAvaialableUTXOTransaction getNotAvailableUTXOTransaction(
-      TokenEntity token) {
+      CoinEntity token) {
     return NotAvaialableUTXOTransaction(hash, height, token);
   }
 }

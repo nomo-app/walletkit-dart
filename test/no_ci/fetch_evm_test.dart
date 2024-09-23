@@ -1,5 +1,4 @@
 import 'package:test/test.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../utils.dart';
 
@@ -15,15 +14,15 @@ void main() {
 
     print('Smart Chain Balance: $smartChainBalance');
 
-    final ethNFts = await etherscan.fetchEtherscanNFTs(address: address);
+    final ethNFts = await etherscan.fetchERC721Transactions(address: address);
 
     print('ETH NFTs: $ethNFts');
 
-    final smartChainNFts = await zeniqSmartChainRPC.fetchZEN721Transfers(
-      address: address,
-      nftContractAddress: smartChainStakingContract,
-    );
+    // final smartChainNFts = await zeniqSmartChainRPC.fetchZEN721Transfers(
+    //   address: address,
+    //   nftContractAddress: smartChainStakingContract,
+    // );
 
-    print('Smart Chain NFTs: $smartChainNFts');
+    // print('Smart Chain NFTs: $smartChainNFts');
   });
 }

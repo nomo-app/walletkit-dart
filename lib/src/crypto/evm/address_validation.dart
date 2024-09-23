@@ -44,7 +44,7 @@ enum AddressError {
  */
 AddressError? validateAddress({
   required String address,
-  required TokenEntity token,
+  required CoinEntity token,
 }) {
   return switch (token) {
     _ when token.isUTXO =>
@@ -70,7 +70,7 @@ AddressError? validateAddress({
 
 (AddressError?, UTXONetworkType?) validateUTXOAddress({
   required String address,
-  required TokenEntity? token,
+  required CoinEntity? token,
 }) {
   if (address.trim().length != address.length) {
     return (AddressError.WHITESPACE, null);

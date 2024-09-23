@@ -70,6 +70,7 @@ final tronSolidityRPC = EvmRpcInterface(
 final zeniqScan = EtherscanExplorer(
   zeniqScanEnpoint,
   [],
+  zeniqSmart,
 );
 
 final tronScan = TronScanRepository(
@@ -79,15 +80,17 @@ final tronScan = TronScanRepository(
 final etherscan = EtherscanExplorer(
   etherscanBaseEndpoint,
   loadListFromEnv("ETHERSCAN_API_KEYS"),
+  ethNative,
 );
-final polygonscan = EtherscanExplorer(polygonScanBaseEndpoint, []);
-final bscscan = EtherscanExplorer(bnbScanBaseEndpoint, []);
-final arbitrumscan = EtherscanExplorer(arbitrumScanBaseEndpoint, []);
-final moonbeamscan = EtherscanExplorer(moonbeamScanBaseEndpoint, []);
-final basescan = EtherscanExplorer(baseScanEndpoint, []);
-final optimismscan = EtherscanExplorer(optimismScanEndpoint, []);
-final zksyncscan = EtherscanExplorer(zksyncAPIEndpoint, []);
-final avalancheScan = EtherscanExplorer(avalancheAPIEndpoint, []);
+final polygonscan = EtherscanExplorer(polygonScanBaseEndpoint, [], polygon);
+final bscscan = EtherscanExplorer(bnbScanBaseEndpoint, [], binanceSmart);
+final arbitrumscan =
+    EtherscanExplorer(arbitrumScanBaseEndpoint, [], ethArbitrum);
+final moonbeamscan = EtherscanExplorer(moonbeamScanBaseEndpoint, [], moonbeam);
+final basescan = EtherscanExplorer(baseScanEndpoint, [], ethBase);
+final optimismscan = EtherscanExplorer(optimismScanEndpoint, [], ethOptimism);
+final zksyncscan = EtherscanExplorer(zksyncAPIEndpoint, [], ethzkSync);
+final avalancheScan = EtherscanExplorer(avalancheAPIEndpoint, [], avalanche);
 
 ///
 /// Utils

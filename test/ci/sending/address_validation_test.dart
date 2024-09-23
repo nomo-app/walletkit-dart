@@ -252,7 +252,7 @@ void main() {
   });
 }
 
-void _addressValidationsEVM(TokenEntity coin) {
+void _addressValidationsEVM(CoinEntity coin) {
   expect(
       validateAddress(
           address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),

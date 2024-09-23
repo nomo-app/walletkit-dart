@@ -24,7 +24,7 @@ base class EtherscanTransaction extends EVMTransaction {
 
   factory EtherscanTransaction.fromJson(
     Json json, {
-    required TokenEntity token,
+    required CoinEntity token,
     required String address,
   }) {
     if (json
@@ -82,8 +82,7 @@ base class EtherscanTransaction extends EVMTransaction {
 
   factory EtherscanTransaction.fromJsonErc20(
     Json json, {
-    required TokenEntity token,
-    required EvmEntity currency,
+    required EvmCoinEntity currency,
     required String address,
   }) {
     if (json
@@ -98,11 +97,24 @@ base class EtherscanTransaction extends EVMTransaction {
           'gasUsed': String gasUsed_s,
           'gasPrice': String gasPrice_s,
           'input': String input,
+          'contractAddress': String contractAddress,
+          'tokenDecimal': String decimals_s,
+          'tokenSymbol': String symbol,
+          'tokenName': String name,
         }) {
       final block = block_s.toIntOrNull ?? -1;
       final confirmations = block_s.toIntOrNull ?? -1;
 
       final timeMilli = timeStamp_s.toIntOrNull ?? -1;
+
+      final token = ERC20Entity(
+        name: name,
+        symbol: symbol,
+        decimals: decimals_s.toIntOrNull ?? 18,
+        contractAddress: contractAddress,
+        chainID: currency.chainID,
+      );
+
       final amount = Amount(
         value: BigInt.tryParse(value_s) ?? BigInt.from(-1),
         decimals: token.decimals,
@@ -129,6 +141,72 @@ base class EtherscanTransaction extends EVMTransaction {
         token: token,
         status: ConfirmationStatus.fromConfirmations(confirmations),
         input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
+      );
+    }
+    throw UnsupportedError("Invalid JSON for EtherscanTransaction");
+  }
+
+  factory EtherscanTransaction.fromJsonErc721(
+    Json json, {
+    required EvmCoinEntity currency,
+    required String address,
+  }) {
+    if (json
+        case {
+          'blockNumber': String block_s,
+          'timeStamp': String timeStamp_s,
+          'hash': String hash,
+          'from': String from,
+          'to': String to,
+          'gas': String _,
+          'gasUsed': String gasUsed_s,
+          'gasPrice': String gasPrice_s,
+          'contractAddress': String contractAddress,
+          'tokenID': String tokenID_s,
+          'tokenName': String name,
+          'tokenSymbol': String symbol,
+          'tokenDecimal': String _,
+        }) {
+      final block = block_s.toIntOrNull ?? -1;
+      final confirmations = block_s.toIntOrNull ?? -1;
+
+      final timeMilli = timeStamp_s.toIntOrNull ?? -1;
+
+      final tokenId = BigInt.tryParse(tokenID_s) ?? BigInt.from(-1);
+      final token = ERC721Entity(
+        name: name,
+        symbol: symbol,
+        contractAddress: contractAddress,
+        chainID: currency.chainID,
+        tokenId: tokenId,
+      );
+
+      final amount = Amount(
+        value: BigInt.zero,
+        decimals: 0,
+      );
+
+      final fee = Amount(
+        value: gasPrice_s.toBigInt * gasUsed_s.toBigInt,
+        decimals: currency.decimals,
+      );
+
+      final transferMethod =
+          TransactionTransferMethod.fromAddress(address, to, from);
+
+      return EtherscanTransaction(
+        hash: hash,
+        block: block,
+        confirmations: confirmations,
+        timeMilli: timeMilli * 1000,
+        amount: amount,
+        fee: fee,
+        sender: from,
+        recipient: to,
+        transferMethod: transferMethod,
+        token: token,
+        status: ConfirmationStatus.fromConfirmations(confirmations),
+        input: Uint8List(0),
       );
     }
     throw UnsupportedError("Invalid JSON for EtherscanTransaction");

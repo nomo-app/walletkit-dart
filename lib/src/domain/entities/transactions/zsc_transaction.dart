@@ -25,7 +25,7 @@ final class ZeniqSmartChainTransaction extends EVMTransaction {
 
   factory ZeniqSmartChainTransaction.fromTransferEventJson(
     Json json, {
-    required TokenEntity token,
+    required CoinEntity token,
     required TransactionTransferMethod transferMethod,
     required int confirmations,
     required int timestamp,

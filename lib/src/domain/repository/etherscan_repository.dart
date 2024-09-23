@@ -93,7 +93,9 @@ abstract class EtherscanRepository {
 }
 
 class EtherscanExplorer extends EtherscanRepository {
-  const EtherscanExplorer(super.base, super.apiKeys);
+  final EvmCoinEntity currency;
+
+  const EtherscanExplorer(super.base, super.apiKeys, this.currency);
 
   String get gasOracleEndpoint => "$base?module=gastracker&action=gasoracle";
 
@@ -157,7 +159,6 @@ class EtherscanExplorer extends EtherscanRepository {
   /// Fetch all Transactions for the given [token] on the given [address]
   ///
   Future<List<EtherscanTransaction>> fetchTransactions({
-    required EvmEntity token,
     required String address,
     int? startblock,
     int? endblock,
@@ -179,7 +180,7 @@ class EtherscanExplorer extends EtherscanRepository {
       for (final tx in txResults)
         EtherscanTransaction.fromJson(
           tx,
-          token: token,
+          token: currency,
           address: address,
         )
     ];
@@ -189,8 +190,7 @@ class EtherscanExplorer extends EtherscanRepository {
   /// Fetch all ERC20 Transactions for a given [token] and [address]
   ///
   Future<List<EtherscanTransaction>> fetchERC20Transactions({
-    required EthBasedTokenEntity token,
-    required EvmEntity currency,
+    required String contractAddress,
     required String address,
     int? startblock,
     int? endblock,
@@ -200,7 +200,7 @@ class EtherscanExplorer extends EtherscanRepository {
   }) async {
     final endpoint = buildERC20TransactionEndpoint(
       address: address,
-      contractAddress: token.contractAddress,
+      contractAddress: contractAddress,
       startblock: startblock,
       endblock: endblock,
       page: page,
@@ -213,7 +213,6 @@ class EtherscanExplorer extends EtherscanRepository {
       for (final tx in txResults)
         EtherscanTransaction.fromJsonErc20(
           tx,
-          token: token,
           address: address,
           currency: currency,
         )
@@ -256,14 +255,14 @@ class EtherscanExplorer extends EtherscanRepository {
   ///
   Future<Amount> fetchBalanceForToken(
     String address,
-    TokenEntity token,
+    CoinEntity token,
   ) async =>
       switch (token) {
-        EthBasedTokenEntity erc20 => fetchTokenBalance(
+        ERC20Entity erc20 => fetchTokenBalance(
             address: address,
             contractAddress: erc20.contractAddress,
           ).then((balance) => Amount(value: balance, decimals: erc20.decimals)),
-        TokenEntity coin => fetchBalance(
+        CoinEntity coin => fetchBalance(
             address: address,
           ).then((balance) => Amount(value: balance, decimals: coin.decimals)),
       };
@@ -271,7 +270,7 @@ class EtherscanExplorer extends EtherscanRepository {
   ///
   /// Fetch a list of all ERC721 Tokens for a given [address]
   ///
-  Future<List<ERC721Entity>> fetchEtherscanNFTs({
+  Future<List<EtherscanTransaction>> fetchERC721Transactions({
     required String address,
     String? contractAddress,
     int? startblock,
@@ -294,7 +293,12 @@ class EtherscanExplorer extends EtherscanRepository {
         await _fetchEtherscanWithRatelimitRetries(endpoint) as List<dynamic>;
 
     return [
-      for (final tx in result) ERC721Entity.fromJson(tx),
+      for (final tx in result)
+        EtherscanTransaction.fromJsonErc721(
+          tx,
+          currency: currency,
+          address: address,
+        ),
     ];
   }
 

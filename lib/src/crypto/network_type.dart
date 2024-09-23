@@ -5,7 +5,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 sealed class NetworkType {
   final String messagePrefix;
-  final TokenEntity coin;
+  final CoinEntity coin;
 
   /// Block time in seconds
   final int blockTime;
