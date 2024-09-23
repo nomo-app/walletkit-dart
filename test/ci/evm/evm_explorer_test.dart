@@ -1,11 +1,57 @@
 @Timeout(Duration(seconds: 600))
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/domain/constants.dart';
-import 'package:walletkit_dart/src/domain/predefined_assets.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../utils.dart';
 
 void main() {
+  test(
+    'Test ZeniqScan Fetching',
+    () async {
+      final zeniqScanExplorer = EVMExplorer(
+        'https://zeniqscan.com/api',
+        [],
+      );
+
+      ///
+      /// Balances
+      ///
+
+      final balance = await zeniqScanExplorer.fetchBalance(
+        rejectEVM,
+        zeniqSmart,
+      );
+
+      expect(balance, greaterThanOrEqualTo(BigInt.zero));
+
+      final avinocBalance = await zeniqScanExplorer.fetchBalance(
+        rejectEVM,
+        avinocZSC,
+      );
+
+      expect(avinocBalance, greaterThanOrEqualTo(BigInt.zero));
+
+      ///
+      /// Transactions
+      ///
+
+      final transactions = await zeniqScanExplorer.fetchTransactions(
+        address: rejectEVM,
+        token: zeniqSmart,
+      );
+
+      expect(transactions, isNotEmpty);
+
+      final avinocTransactions = await zeniqScanExplorer.fetchERC20Transactions(
+        address: rejectEVM,
+        token: avinocZSC,
+        currency: zeniqSmart,
+      );
+
+      expect(avinocTransactions, isNotEmpty);
+    },
+  );
+
   test('Test Ethereum Etherscan Fetching', () async {
     ///
     /// Balances

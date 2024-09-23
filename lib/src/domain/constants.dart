@@ -201,7 +201,7 @@ const spoilEVM = "0x1464935f48CA992D1a0bEAA2358471D7Cb6374E5";
 const bnbScanBaseEndpoint = "https://api.bscscan.com/api";
 const etherscanBaseEndpoint = "https://api.etherscan.io/api";
 const polygonScanBaseEndpoint = "https://api.polygonscan.com/api";
-
+const zeniqScanEnpoint = "https://zeniqscan.com/api";
 const zeniqSmartRPCEndpoint = "https://api.zeniq.network";
 
 ///

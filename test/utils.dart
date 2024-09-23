@@ -67,6 +67,11 @@ final tronSolidityRPC = EvmRpcInterface(
 /// Explorers
 ///
 
+final zeniqScan = EVMExplorer(
+  zeniqScanEnpoint,
+  [],
+);
+
 final tronScan = TronScanRepository(
   apiKeys: loadListFromEnv("TRONSCAN_API_KEYS"),
 );
