@@ -615,72 +615,72 @@ final class EvmRpcInterface {
   /// UTILS
   ///
 
-  BigInt _getTokenID(dynamic transferLog) {
-    return BigInt.parse(transferLog["topics"][3]);
-  }
+  // BigInt _getTokenID(dynamic transferLog) {
+  //   return BigInt.parse(transferLog["topics"][3]);
+  // }
 
-  String _getTransferTarget(dynamic transferLog) {
-    return transferLog["topics"][2]
-        .replaceFirst("0x000000000000000000000000", "0x");
-  }
+  // String _getTransferTarget(dynamic transferLog) {
+  //   return transferLog["topics"][2]
+  //       .replaceFirst("0x000000000000000000000000", "0x");
+  // }
 
-  String _getTransferSource(dynamic transferLog) {
-    return transferLog["topics"][1]
-        .replaceFirst("0x000000000000000000000000", "0x");
-  }
+  // String _getTransferSource(dynamic transferLog) {
+  //   return transferLog["topics"][1]
+  //       .replaceFirst("0x000000000000000000000000", "0x");
+  // }
 
-  int _getBlockNumber(dynamic transferLog) {
-    return int.parse(transferLog["blockNumber"]);
-  }
+  // int _getBlockNumber(dynamic transferLog) {
+  //   return int.parse(transferLog["blockNumber"]);
+  // }
 
-  List<dynamic> _extractOwnedNFTsFromTransferLogs({
-    required String address,
-    required List<dynamic> incomingTransfers,
-    required List<dynamic> outgoingTransfers,
-  }) {
-    final Map<BigInt, int> sentAwayTimestamps =
-        _extractMapFromTokenIDToBlockNumber(outgoingTransfers, (from, to) {
-      return (from.toLowerCase() == address.toLowerCase() &&
-          to.toLowerCase() != address.toLowerCase());
-    });
-    final Map<BigInt, int> receivedTimestamps =
-        _extractMapFromTokenIDToBlockNumber(incomingTransfers, (from, to) {
-      return to.toLowerCase() == address.toLowerCase();
-    });
+  // List<dynamic> _extractOwnedNFTsFromTransferLogs({
+  //   required String address,
+  //   required List<dynamic> incomingTransfers,
+  //   required List<dynamic> outgoingTransfers,
+  // }) {
+  //   final Map<BigInt, int> sentAwayTimestamps =
+  //       _extractMapFromTokenIDToBlockNumber(outgoingTransfers, (from, to) {
+  //     return (from.toLowerCase() == address.toLowerCase() &&
+  //         to.toLowerCase() != address.toLowerCase());
+  //   });
+  //   final Map<BigInt, int> receivedTimestamps =
+  //       _extractMapFromTokenIDToBlockNumber(incomingTransfers, (from, to) {
+  //     return to.toLowerCase() == address.toLowerCase();
+  //   });
 
-    return incomingTransfers.where((transferLog) {
-      final BigInt tokenID = _getTokenID(transferLog);
-      final int timeStamp = _getBlockNumber(transferLog);
-      final int? timeOfReceive = receivedTimestamps[tokenID];
-      if (timeOfReceive == null) {
-        return true; // should never happen
-      }
-      if (timeStamp != timeOfReceive) {
-        return false; // deduplication
-      }
-      final int? timeOfSend = sentAwayTimestamps[tokenID];
-      return timeOfSend == null || timeOfSend <= timeOfReceive;
-    }).toList();
-  }
+  //   return incomingTransfers.where((transferLog) {
+  //     final BigInt tokenID = _getTokenID(transferLog);
+  //     final int timeStamp = _getBlockNumber(transferLog);
+  //     final int? timeOfReceive = receivedTimestamps[tokenID];
+  //     if (timeOfReceive == null) {
+  //       return true; // should never happen
+  //     }
+  //     if (timeStamp != timeOfReceive) {
+  //       return false; // deduplication
+  //     }
+  //     final int? timeOfSend = sentAwayTimestamps[tokenID];
+  //     return timeOfSend == null || timeOfSend <= timeOfReceive;
+  //   }).toList();
+  // }
 
-  Map<BigInt, int> _extractMapFromTokenIDToBlockNumber(
-    List<dynamic> transferLogs,
-    bool Function(String, String) filter,
-  ) {
-    final Map<BigInt, int> map = {};
-    for (final log in transferLogs) {
-      final from = _getTransferSource(log);
-      final to = _getTransferTarget(log);
-      if (filter(from, to)) {
-        final BigInt tokenID = _getTokenID(log);
-        final int blockNumber = _getBlockNumber(log);
-        if (map.containsKey(tokenID) == false || map[tokenID]! < blockNumber) {
-          map[tokenID] = blockNumber;
-        }
-      }
-    }
-    return map;
-  }
+  // Map<BigInt, int> _extractMapFromTokenIDToBlockNumber(
+  //   List<dynamic> transferLogs,
+  //   bool Function(String, String) filter,
+  // ) {
+  //   final Map<BigInt, int> map = {};
+  //   for (final log in transferLogs) {
+  //     final from = _getTransferSource(log);
+  //     final to = _getTransferTarget(log);
+  //     if (filter(from, to)) {
+  //       final BigInt tokenID = _getTokenID(log);
+  //       final int blockNumber = _getBlockNumber(log);
+  //       if (map.containsKey(tokenID) == false || map[tokenID]! < blockNumber) {
+  //         map[tokenID] = blockNumber;
+  //       }
+  //     }
+  //   }
+  //   return map;
+  // }
 
 //   ERC721Entity _mapTransferLogToERC721Entity({
 //     required dynamic transferLog,
