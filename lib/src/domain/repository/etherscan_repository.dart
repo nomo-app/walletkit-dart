@@ -352,3 +352,42 @@ extension URLBuilder on String {
     return "$this&$key=$value";
   }
 }
+
+class ZeniqScanExplorer extends EtherscanExplorer {
+  const ZeniqScanExplorer(super.base, super.apiKeys, super.currency);
+
+  @override
+  String buildTransactionEndpoint({
+    required String address,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) {
+    return "$base?module=account&action=txlist&address=$address"
+        .addOptionalParameter('start_block', startblock)
+        .addOptionalParameter('end_block', endblock)
+        .addOptionalParameter('page', page)
+        .addOptionalParameter('offset', offset)
+        .addOptionalParameter('sort', sorting?.name);
+  }
+
+  @override
+  String buildERC20TransactionEndpoint({
+    required String address,
+    required String contractAddress,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) {
+    return "$base?module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
+        .addOptionalParameter('start_block', startblock)
+        .addOptionalParameter('end_block', endblock)
+        .addOptionalParameter('page', page)
+        .addOptionalParameter('offset', offset)
+        .addOptionalParameter('sort', sorting?.name);
+  }
+}

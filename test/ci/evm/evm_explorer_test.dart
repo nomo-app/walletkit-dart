@@ -8,23 +8,17 @@ void main() {
   test(
     'Test ZeniqScan Fetching',
     () async {
-      final zeniqScanExplorer = EtherscanExplorer(
-        'https://zeniqscan.com/api',
-        [],
-        zeniqSmart,
-      );
-
       ///
       /// Balances
       ///
 
-      final balance = await zeniqScanExplorer.fetchBalance(
+      final balance = await zeniqScan.fetchBalance(
         address: rejectEVM,
       );
 
       expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-      final avinocBalance = await zeniqScanExplorer.fetchTokenBalance(
+      final avinocBalance = await zeniqScan.fetchTokenBalance(
         address: rejectEVM,
         contractAddress: avinocZSC.contractAddress,
       );
@@ -35,13 +29,22 @@ void main() {
       /// Transactions
       ///
 
-      final transactions =
-          await zeniqScanExplorer.fetchTransactions(address: rejectEVM);
+      var transactions = await zeniqScan.fetchTransactions(
+        address: rejectEVM,
+      );
 
       expect(transactions, isNotEmpty);
       expect(transactions.first.token, zeniqSmart);
 
-      final avinocTransactions = await zeniqScanExplorer.fetchERC20Transactions(
+      transactions = await zeniqScan.fetchTransactions(
+        address: rejectEVM,
+        startblock: 0,
+        endblock: 1000000,
+      );
+
+      expect(transactions.length, equals(31));
+
+      final avinocTransactions = await zeniqScan.fetchERC20Transactions(
         address: rejectEVM,
         contractAddress: avinocZSC.contractAddress,
       );

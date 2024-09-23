@@ -67,7 +67,7 @@ final tronSolidityRPC = EvmRpcInterface(
 /// Explorers
 ///
 
-final zeniqScan = EtherscanExplorer(
+final zeniqScan = ZeniqScanExplorer(
   zeniqScanEnpoint,
   [],
   zeniqSmart,
