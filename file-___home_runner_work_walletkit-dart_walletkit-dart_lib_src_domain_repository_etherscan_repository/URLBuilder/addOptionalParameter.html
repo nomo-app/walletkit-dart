@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchEtherscanNFTs method from the EVMExplorer class, for the Dart programming language.">
-  <title>fetchEtherscanNFTs method - EVMExplorer class - etherscan_repository library - Dart API</title>
+  <meta name="description" content="API docs for the addOptionalParameter method from the URLBuilder extension, for the Dart programming language.">
+  <title>addOptionalParameter method - URLBuilder extension - etherscan_repository library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src&#47;domain&#47;repository&#47;etherscan_repository.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
-    <li class="self-crumb">fetchEtherscanNFTs method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/URLBuilder.html">URLBuilder</a></li>
+    <li class="self-crumb">addOptionalParameter method</li>
   </ol>
-  <div class="self-name">fetchEtherscanNFTs</div>
+  <div class="self-name">addOptionalParameter</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -49,43 +49,33 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EVMExplorer-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;URLBuilder-extension-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">fetchEtherscanNFTs</span> method 
+<h1><span class="kind-method">addOptionalParameter</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
-<span class="name ">fetchEtherscanNFTs</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchEtherscanNFTs-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
-</ol>})
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">addOptionalParameter</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="addOptionalParameter-param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">key</span>, </span></li>
+<li><span class="parameter" id="addOptionalParameter-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span></li>
+</ol>)
 
       
 
     </section>
     
-<section class="desc markdown">
-  <p>Fetch a list of all ERC721 Tokens for a given <code>address</code></p>
-</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ERC721Entity&gt;&gt; fetchEtherscanNFTs({
-  required String address,
-}) async {
-  var endpoint =
-      &quot;$base?module=account&amp;action=tokennfttx&amp;address=$address&amp;startblock=0&amp;sort=asc&quot;;
-
-  final rawResult =
-      await _fetchEtherscanWithRatelimitRetries(endpoint) as List&lt;dynamic&gt;;
-  final result = _extractOwnedNFTsOutOfNFTTransactions(address, rawResult);
-
-  return result.map((json) {
-    return ERC721Entity.fromJson(json);
-  }).toList();
+  <pre class="language-dart"><code class="language-dart">String addOptionalParameter(String key, dynamic value) {
+  if (value == null) {
+    return this;
+  }
+  return &quot;$this&amp;$key=$value&quot;;
 }</code></pre>
 </section>
 
@@ -101,11 +91,11 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
-    <li class="self-crumb">fetchEtherscanNFTs method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/URLBuilder.html">URLBuilder</a></li>
+    <li class="self-crumb">addOptionalParameter method</li>
 </ol>
 
-    <h5>EVMExplorer class</h5>
+    <h5>URLBuilder extension on <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">

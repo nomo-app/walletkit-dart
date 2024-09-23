@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchGasPrice method from the EVMExplorer class, for the Dart programming language.">
-  <title>fetchGasPrice method - EVMExplorer class - etherscan_repository library - Dart API</title>
+  <meta name="description" content="API docs for the EtherscanExplorer constructor from Class EtherscanExplorer from the etherscan_repository library, for the Dart programming language.">
+  <title>EtherscanExplorer constructor - EtherscanExplorer - etherscan_repository library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src&#47;domain&#47;repository&#47;etherscan_repository.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
-    <li class="self-crumb">fetchGasPrice method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
+    <li class="self-crumb">EtherscanExplorer const constructor</li>
   </ol>
-  <div class="self-name">fetchGasPrice</div>
+  <div class="self-name">EtherscanExplorer</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,42 +46,28 @@
   </div>
 </header>
 <main>
-<div
-    id="dartdoc-main-content"
-    class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EVMExplorer-class-sidebar.html"
-    data-below-sidebar="">
-    <div>
-<h1><span class="kind-method">fetchGasPrice</span> method 
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EtherscanExplorer-class-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-constructor">EtherscanExplorer</span> constructor 
 </h1></div>
 
     <section class="multi-line-signature">
-      
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a></span>
-<span class="name ">fetchGasPrice</span>(<wbr>)
-
-      
-
+      const
+      <span class="name ">EtherscanExplorer</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="-param-base"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">base</span>, </span></li>
+<li><span class="parameter" id="-param-apiKeys"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">apiKeys</span></span></li>
+</ol>)
     </section>
     
-<section class="desc markdown">
-  <p>Fetch Gas Prices</p>
-</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;EvmNetworkFees&gt; fetchGasPrice() async {
-  final endpoint = &quot;$base?module=gastracker&amp;action=gasoracle&quot;;
-  final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
-  if (result is! Json) {
-    throw Exception(&quot;Failed to fetch gas price&quot;);
-  }
-  final entity = EvmNetworkFees.fromJson(result);
-
-  return entity;
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">const EtherscanExplorer(super.base, super.apiKeys);</code></pre>
 </section>
 
 
@@ -96,15 +82,15 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
-    <li class="self-crumb">fetchGasPrice method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
+    <li class="self-crumb">EtherscanExplorer const constructor</li>
 </ol>
 
-    <h5>EVMExplorer class</h5>
+    <h5>EtherscanExplorer class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-->
+  </div><!--/.sidebar-offcanvas-left-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-</div><!--/.sidebar-offcanvas-->
+  </div><!--/.sidebar-offcanvas-->
 </main>
 <footer>
   <span class="no-break">

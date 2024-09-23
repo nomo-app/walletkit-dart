@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchTransactions method from the EVMExplorer class, for the Dart programming language.">
-  <title>fetchTransactions method - EVMExplorer class - etherscan_repository library - Dart API</title>
+  <meta name="description" content="API docs for the fetchTransactions method from the EtherscanExplorer class, for the Dart programming language.">
+  <title>fetchTransactions method - EtherscanExplorer class - etherscan_repository library - Dart API</title>
 
 
   
@@ -26,7 +26,7 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src&#47;domain&#47;repository&#47;etherscan_repository.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
     <li class="self-crumb">fetchTransactions method</li>
   </ol>
   <div class="self-name">fetchTransactions</div>
@@ -49,7 +49,7 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EVMExplorer-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EtherscanExplorer-class-sidebar.html"
     data-below-sidebar="">
     <div>
 <h1><span class="kind-method">fetchTransactions</span> method 
@@ -60,7 +60,11 @@
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
 <span class="name ">fetchTransactions</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchTransactions-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span></li>
 <li><span class="parameter" id="fetchTransactions-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
-<li><span class="parameter" id="fetchTransactions-param-lastBlock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">lastBlock</span>, </span></li>
+<li><span class="parameter" id="fetchTransactions-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span></li>
+<li><span class="parameter" id="fetchTransactions-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span></li>
+<li><span class="parameter" id="fetchTransactions-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span></li>
+<li><span class="parameter" id="fetchTransactions-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span></li>
+<li><span class="parameter" id="fetchTransactions-param-sorting"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span>, </span></li>
 </ol>})
 
       
@@ -68,51 +72,32 @@
     </section>
     
 <section class="desc markdown">
-  <p>Fetch all ERC20 Transactions for a given <code>token</code> and <code>address</code> for Avalanche</p>
-<p>Fetch all Transactions for the given <code>token</code> on the given <code>address</code></p>
+  <p>Fetch all Transactions for the given <code>token</code> on the given <code>address</code></p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">&#47;&#47; Future&lt;List&lt;AvalancheTransaction&gt;&gt; fetchAvaERC20Transactions({
-&#47;&#47;   required EthBasedTokenEntity token,
-&#47;&#47;   required EvmEntity currency,
-&#47;&#47;   required String address,
-&#47;&#47;   int? lastBlock,
-&#47;&#47; }) async {
-&#47;&#47;   if (lastBlock != null) {
-&#47;&#47;     lastBlock++;
-&#47;&#47;   }
-
-&#47;&#47;   final txResults = await _fetchAvaTransactionWithRateLimits(
-&#47;&#47;       &quot;$base$address&#47;transactions&quot;, apiyKey);
-&#47;&#47;   return [
-&#47;&#47;     for (final tx in txResults)
-&#47;&#47;       AvalancheTransaction.fromJsonErc20(
-&#47;&#47;         tx,
-&#47;&#47;         token: token,
-&#47;&#47;         address: address,
-&#47;&#47;         currency: currency,
-&#47;&#47;       )
-&#47;&#47;   ];
-&#47;&#47; }
-
-&#47;&#47;&#47;
-&#47;&#47;&#47; Fetch all Transactions for the given [token] on the given [address]
-&#47;&#47;&#47;
-Future&lt;List&lt;EtherscanTransaction&gt;&gt; fetchTransactions({
+  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;EtherscanTransaction&gt;&gt; fetchTransactions({
   required EvmEntity token,
   required String address,
-  int? lastBlock,
+  int? startblock,
+  int? endblock,
+  int? page,
+  int? offset,
+  Sorting? sorting,
 }) async {
-  if (lastBlock != null) {
-    lastBlock++;
-  }
+  final endpoint = buildTransactionEndpoint(
+    address: address,
+    startblock: startblock,
+    endblock: endblock,
+    page: page,
+    offset: offset,
+    sorting: sorting,
+  );
 
-  final txResults = await _fetchEtherscanWithRatelimitRetries(
-      &#39;$base?module=account&amp;action=txlist&amp;address=$address&amp;sort=desc&amp;startblock=$lastBlock&#39;);
+  final txResults = await _fetchEtherscanWithRatelimitRetries(endpoint);
   return [
     for (final tx in txResults)
       EtherscanTransaction.fromJson(
@@ -136,11 +121,11 @@ Future&lt;List&lt;EtherscanTransaction&gt;&gt; fetchTransactions({
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
     <li class="self-crumb">fetchTransactions method</li>
 </ol>
 
-    <h5>EVMExplorer class</h5>
+    <h5>EtherscanExplorer class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">

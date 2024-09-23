@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchAvaTransactions method from the EVMExplorer class, for the Dart programming language.">
-  <title>fetchAvaTransactions method - EVMExplorer class - etherscan_repository library - Dart API</title>
+  <meta name="description" content="API docs for the fetchEtherscanNFTs method from the EtherscanExplorer class, for the Dart programming language.">
+  <title>fetchEtherscanNFTs method - EtherscanExplorer class - etherscan_repository library - Dart API</title>
 
 
   
@@ -26,10 +26,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src&#47;domain&#47;repository&#47;etherscan_repository.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
-    <li class="self-crumb">fetchAvaTransactions method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
+    <li class="self-crumb">fetchEtherscanNFTs method</li>
   </ol>
-  <div class="self-name">fetchAvaTransactions</div>
+  <div class="self-name">fetchEtherscanNFTs</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -49,18 +49,22 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EVMExplorer-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EtherscanExplorer-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">fetchAvaTransactions</span> method 
+<h1><span class="kind-method">fetchEtherscanNFTs</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
-<span class="name ">fetchAvaTransactions</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchAvaTransactions-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span></li>
-<li><span class="parameter" id="fetchAvaTransactions-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
-<li><span class="parameter" id="fetchAvaTransactions-param-lastBlock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">lastBlock</span>, </span></li>
+<span class="name ">fetchEtherscanNFTs</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchEtherscanNFTs-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
+<li><span class="parameter" id="fetchEtherscanNFTs-param-contractAddress"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">contractAddress</span>, </span></li>
+<li><span class="parameter" id="fetchEtherscanNFTs-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span></li>
+<li><span class="parameter" id="fetchEtherscanNFTs-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span></li>
+<li><span class="parameter" id="fetchEtherscanNFTs-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span></li>
+<li><span class="parameter" id="fetchEtherscanNFTs-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span></li>
+<li><span class="parameter" id="fetchEtherscanNFTs-param-sorting"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span>, </span></li>
 </ol>})
 
       
@@ -68,31 +72,37 @@
     </section>
     
 <section class="desc markdown">
-  <p>Fetch all Transactions for the given <code>token</code> on the given <code>address</code> for Avalanche</p>
+  <p>Fetch a list of all ERC721 Tokens for a given <code>address</code></p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;AvalancheTransaction&gt;&gt; fetchAvaTransactions({
-  required EvmEntity token,
+  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ERC721Entity&gt;&gt; fetchEtherscanNFTs({
   required String address,
-  int? lastBlock,
+  String? contractAddress,
+  int? startblock,
+  int? endblock,
+  int? page,
+  int? offset,
+  Sorting? sorting,
 }) async {
-  if (lastBlock != null) {
-    lastBlock++;
-  }
+  final endpoint = buildERC721TransactionEndpoint(
+    address: address,
+    contractAddress: contractAddress,
+    startblock: startblock,
+    endblock: endblock,
+    page: page,
+    offset: offset,
+    sorting: sorting,
+  );
 
-  final txResults = await _fetchAvaTransactionWithRateLimits(
-      &quot;$base$address&#47;transactions&quot;, apiKey);
+  final result =
+      await _fetchEtherscanWithRatelimitRetries(endpoint) as List&lt;dynamic&gt;;
+
   return [
-    for (final tx in txResults)
-      AvalancheTransaction.fromJson(
-        tx,
-        token: token,
-        address: address,
-      )
+    for (final tx in result) ERC721Entity.fromJson(tx),
   ];
 }</code></pre>
 </section>
@@ -109,11 +119,11 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
-    <li class="self-crumb">fetchAvaTransactions method</li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
+    <li class="self-crumb">fetchEtherscanNFTs method</li>
 </ol>
 
-    <h5>EVMExplorer class</h5>
+    <h5>EtherscanExplorer class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fetchBalance method from the EVMExplorer class, for the Dart programming language.">
-  <title>fetchBalance method - EVMExplorer class - etherscan_repository library - Dart API</title>
+  <meta name="description" content="API docs for the fetchBalance method from the EtherscanExplorer class, for the Dart programming language.">
+  <title>fetchBalance method - EtherscanExplorer class - etherscan_repository library - Dart API</title>
 
 
   
@@ -26,7 +26,7 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src&#47;domain&#47;repository&#47;etherscan_repository.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
     <li class="self-crumb">fetchBalance method</li>
   </ol>
   <div class="self-name">fetchBalance</div>
@@ -49,7 +49,7 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EVMExplorer-class-sidebar.html"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EtherscanExplorer-class-sidebar.html"
     data-below-sidebar="">
     <div>
 <h1><span class="kind-method">fetchBalance</span> method 
@@ -58,70 +58,24 @@
     <section class="multi-line-signature">
       
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
-<span class="name ">fetchBalance</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fetchBalance-param-address"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
-<li><span class="parameter" id="fetchBalance-param-token"><span class="type-annotation">dynamic</span> <span class="parameter-name">token</span></span></li>
-</ol>)
+<span class="name ">fetchBalance</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchBalance-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
+</ol>})
 
       
 
     </section>
     
-<section class="desc markdown">
-  <p>Fetch all ERC20 Transactions for a given <code>token</code> and <code>address</code></p>
-<p>Fetch the Balance of a <code>token</code> given  for a given <code>address</code></p>
-</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">&#47;&#47; Future&lt;Map&lt;String, Set&lt;GenericTransaction&gt;&gt;?&gt; fetchAllERC20Transactions({
-&#47;&#47;   required EvmEntity token,
-&#47;&#47;   int? lastBlockId,
-&#47;&#47; }) async {
-&#47;&#47;   &#47;&#47; print(&quot;lastBlockId &quot; + lastBlockId.toString());
-&#47;&#47;   var endpoint = &quot;$_allERC20TransactionEndpoint&amp;address=$address&quot;;
-&#47;&#47;   if (lastBlockId != null) {
-&#47;&#47;     lastBlockId++;
-&#47;&#47;     endpoint += &quot;&amp;startblock=$lastBlockId&quot;;
-&#47;&#47;   }
-&#47;&#47;   final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
+  <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; fetchBalance({
+  required String address,
+}) async {
+  final endpoint = buildBalanceEndpoint(address);
+  final result = await _fetchEtherscanWithRatelimitRetries&lt;String&gt;(endpoint);
 
-&#47;&#47;   if (result == null || result.isEmpty) {
-&#47;&#47;     return null;
-&#47;&#47;   }
-
-&#47;&#47;   Map&lt;String, Set&lt;GenericTransaction&gt;&gt; data = {};
-
-&#47;&#47;   for (Map&lt;String, dynamic&gt; m in result) {
-&#47;&#47;     final transaction = GenericTransaction.fromJson(
-&#47;&#47;       m,
-&#47;&#47;       token,
-&#47;&#47;       address,
-&#47;&#47;     );
-&#47;&#47;     &#47;&#47; data[transaction.contractAddress] = {
-&#47;&#47;     &#47;&#47;   ...?data[transaction.contractAddress],
-&#47;&#47;     &#47;&#47;   transaction,
-&#47;&#47;     &#47;&#47; };
-&#47;&#47;   }
-
-&#47;&#47;   return data;
-&#47;&#47; }
-
-&#47;&#47;&#47;
-&#47;&#47;&#47; Fetch the Balance of a [token] given  for a given [address]
-&#47;&#47;&#47;
-Future&lt;BigInt&gt; fetchBalance(
-  String address,
-  TokenEntity token,
-) async {
-  final endpoint = switch (token) {
-    EthBasedTokenEntity token =&gt;
-      &quot;$_balanceTokenEndpoint&amp;address=$address&amp;contractaddress=${token.contractAddress}&quot;,
-    _ =&gt; &quot;$_balanceEndpoint&amp;address=$address&quot;,
-  };
-
-  final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
   final balance = BigInt.tryParse(result);
 
   if (balance == null) {
@@ -144,11 +98,11 @@ Future&lt;BigInt&gt; fetchBalance(
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EVMExplorer-class.html">EVMExplorer</a></li>
+    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer-class.html">EtherscanExplorer</a></li>
     <li class="self-crumb">fetchBalance method</li>
 </ol>
 
-    <h5>EVMExplorer class</h5>
+    <h5>EtherscanExplorer class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
