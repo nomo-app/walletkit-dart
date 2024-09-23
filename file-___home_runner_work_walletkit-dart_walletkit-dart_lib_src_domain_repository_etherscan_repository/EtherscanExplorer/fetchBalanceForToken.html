@@ -76,14 +76,14 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;Amount&gt; fetchBalanceForToken(
   String address,
-  TokenEntity token,
+  CoinEntity token,
 ) async =&gt;
     switch (token) {
-      EthBasedTokenEntity erc20 =&gt; fetchTokenBalance(
+      ERC20Entity erc20 =&gt; fetchTokenBalance(
           address: address,
           contractAddress: erc20.contractAddress,
         ).then((balance) =&gt; Amount(value: balance, decimals: erc20.decimals)),
-      TokenEntity coin =&gt; fetchBalance(
+      CoinEntity coin =&gt; fetchBalance(
           address: address,
         ).then((balance) =&gt; Amount(value: balance, decimals: coin.decimals)),
     };</code></pre>

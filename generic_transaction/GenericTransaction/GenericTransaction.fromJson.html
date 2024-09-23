@@ -95,7 +95,7 @@
         transferMethod: TransactionTransferMethod.fromJson(transferMethod),
         status: ConfirmationStatus.fromJson(status),
         input: input.hexToBytesOrNull ?? Uint8List(0),
-        token: TokenEntity.fromJson(token),
+        token: CoinEntity.fromJson(token),
         decodedInput: decodedInput != null
             ? ExternalContractFunctionWithValues.fromJson(decodedInput)
             : null,
@@ -132,7 +132,7 @@
         version: version,
         inputs: inputs.map((e) =&gt; ElectrumInput.fromJson(e)).toList(),
         outputs: outputs.map((e) =&gt; ElectrumOutput.fromJson(e)).toList(),
-        token: TokenEntity.fromJson(token),
+        token: CoinEntity.fromJson(token),
       ),
     _ =&gt; throw UnimplementedError(&quot;Unknown json: $json&quot;),
   };

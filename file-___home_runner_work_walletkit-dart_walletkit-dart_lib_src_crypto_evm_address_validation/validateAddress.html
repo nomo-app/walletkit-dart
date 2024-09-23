@@ -76,7 +76,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">AddressError? validateAddress({
   required String address,
-  required TokenEntity token,
+  required CoinEntity token,
 }) {
   return switch (token) {
     _ when token.isUTXO =&gt;

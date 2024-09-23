@@ -86,7 +86,7 @@
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="EtherscanExplorer" class="callable">
-          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/EtherscanExplorer.html">EtherscanExplorer</a></span><span class="signature">(<span class="parameter" id="-param-base"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">base</span>, </span><span class="parameter" id="-param-apiKeys"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">apiKeys</span></span>)</span>
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/EtherscanExplorer.html">EtherscanExplorer</a></span><span class="signature">(<span class="parameter" id="-param-base"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">base</span>, </span><span class="parameter" id="-param-apiKeys"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">apiKeys</span>, </span><span class="parameter" id="-param-currency"><span class="type-annotation">dynamic</span> <span class="parameter-name">currency</span></span>)</span>
         </dt>
         <dd>
           
@@ -133,6 +133,18 @@
 <dd class="inherited">
   
   <div class="features"><span class="feature">final</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="currency" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/currency.html">currency</a></span>
+  <span class="signature">&#8594; dynamic</span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -297,7 +309,7 @@
 </dd>
 
         <dt id="fetchERC20Transactions" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/fetchERC20Transactions.html">fetchERC20Transactions</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchERC20Transactions-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span><span class="parameter" id="fetchERC20Transactions-param-currency"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">currency</span>, </span><span class="parameter" id="fetchERC20Transactions-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchERC20Transactions-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span><span class="parameter" id="fetchERC20Transactions-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span><span class="parameter" id="fetchERC20Transactions-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span><span class="parameter" id="fetchERC20Transactions-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span><span class="parameter" id="fetchERC20Transactions-param-sorting"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span></span>})
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/fetchERC20Transactions.html">fetchERC20Transactions</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchERC20Transactions-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="fetchERC20Transactions-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchERC20Transactions-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span><span class="parameter" id="fetchERC20Transactions-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span><span class="parameter" id="fetchERC20Transactions-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span><span class="parameter" id="fetchERC20Transactions-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span><span class="parameter" id="fetchERC20Transactions-param-sorting"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
   </span>
   
@@ -305,6 +317,19 @@
 </dt>
 <dd>
   Fetch all ERC20 Transactions for a given <code>token</code> and <code>address</code>
+  
+
+</dd>
+
+        <dt id="fetchERC721Transactions" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/fetchERC721Transactions.html">fetchERC721Transactions</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchERC721Transactions-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchERC721Transactions-param-contractAddress"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="fetchERC721Transactions-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span><span class="parameter" id="fetchERC721Transactions-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span><span class="parameter" id="fetchERC721Transactions-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span><span class="parameter" id="fetchERC721Transactions-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span><span class="parameter" id="fetchERC721Transactions-param-sorting"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fetch a list of all ERC721 Tokens for a given <code>address</code>
   
 
 </dd>
@@ -318,19 +343,6 @@
 </dt>
 <dd>
   
-  
-
-</dd>
-
-        <dt id="fetchEtherscanNFTs" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/fetchEtherscanNFTs.html">fetchEtherscanNFTs</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchEtherscanNFTs-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchEtherscanNFTs-param-contractAddress"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="fetchEtherscanNFTs-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span><span class="parameter" id="fetchEtherscanNFTs-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span><span class="parameter" id="fetchEtherscanNFTs-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span><span class="parameter" id="fetchEtherscanNFTs-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span><span class="parameter" id="fetchEtherscanNFTs-param-sorting"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span></span>})
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Fetch a list of all ERC721 Tokens for a given <code>address</code>
   
 
 </dd>
@@ -362,7 +374,7 @@
 </dd>
 
         <dt id="fetchTransactions" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/fetchTransactions.html">fetchTransactions</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchTransactions-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span><span class="parameter" id="fetchTransactions-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchTransactions-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span><span class="parameter" id="fetchTransactions-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span><span class="parameter" id="fetchTransactions-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span><span class="parameter" id="fetchTransactions-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span><span class="parameter" id="fetchTransactions-param-sorting"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span></span>})
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanExplorer/fetchTransactions.html">fetchTransactions</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchTransactions-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchTransactions-param-startblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">startblock</span>, </span><span class="parameter" id="fetchTransactions-param-endblock"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">endblock</span>, </span><span class="parameter" id="fetchTransactions-param-page"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">page</span>, </span><span class="parameter" id="fetchTransactions-param-offset"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">offset</span>, </span><span class="parameter" id="fetchTransactions-param-sorting"><span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/Sorting.html">Sorting</a>?</span> <span class="parameter-name">sorting</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>&gt;</span></span>
   </span>
   

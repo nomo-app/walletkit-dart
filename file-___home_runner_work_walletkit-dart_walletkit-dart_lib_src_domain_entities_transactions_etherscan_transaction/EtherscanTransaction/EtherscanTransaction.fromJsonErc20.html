@@ -58,7 +58,6 @@
     <section class="multi-line-signature">
       
       <span class="name ">EtherscanTransaction.fromJsonErc20</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="fromJsonErc20-param-json"><span class="type-annotation">dynamic</span> <span class="parameter-name">json</span>, {</span></li>
-<li><span class="parameter" id="fromJsonErc20-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span></li>
 <li><span class="parameter" id="fromJsonErc20-param-currency"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">currency</span>, </span></li>
 <li><span class="parameter" id="fromJsonErc20-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span></li>
 </ol>})
@@ -71,8 +70,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory EtherscanTransaction.fromJsonErc20(
   Json json, {
-  required TokenEntity token,
-  required EvmEntity currency,
+  required EvmCoinEntity currency,
   required String address,
 }) {
   if (json
@@ -87,11 +85,24 @@
         &#39;gasUsed&#39;: String gasUsed_s,
         &#39;gasPrice&#39;: String gasPrice_s,
         &#39;input&#39;: String input,
+        &#39;contractAddress&#39;: String contractAddress,
+        &#39;tokenDecimal&#39;: String decimals_s,
+        &#39;tokenSymbol&#39;: String symbol,
+        &#39;tokenName&#39;: String name,
       }) {
     final block = block_s.toIntOrNull ?? -1;
     final confirmations = block_s.toIntOrNull ?? -1;
 
     final timeMilli = timeStamp_s.toIntOrNull ?? -1;
+
+    final token = ERC20Entity(
+      name: name,
+      symbol: symbol,
+      decimals: decimals_s.toIntOrNull ?? 18,
+      contractAddress: contractAddress,
+      chainID: currency.chainID,
+    );
+
     final amount = Amount(
       value: BigInt.tryParse(value_s) ?? BigInt.from(-1),
       decimals: token.decimals,

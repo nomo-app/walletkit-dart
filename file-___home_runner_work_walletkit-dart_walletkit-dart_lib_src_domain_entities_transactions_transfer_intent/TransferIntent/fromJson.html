@@ -83,7 +83,7 @@
         recipient: recipient,
         amount: Amount.fromJson(amount),
         feeInfo: fee == null ? null : FeeInformation.fromJson(fee),
-        token: TokenEntity.fromJson(token),
+        token: CoinEntity.fromJson(token),
         memo: memo,
       ),
     _ =&gt; throw FormatException(&#39;Unknown TransferIntent: $json&#39;),

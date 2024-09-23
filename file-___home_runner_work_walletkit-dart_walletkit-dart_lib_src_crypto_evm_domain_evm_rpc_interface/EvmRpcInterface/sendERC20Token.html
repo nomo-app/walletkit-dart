@@ -80,10 +80,10 @@
   required String from,
   required Uint8List seed,
 }) async {
-  assert(intent.token is EthBasedTokenEntity);
+  assert(intent.token is ERC20Entity);
   assert(intent.memo == null);
 
-  final erc20 = intent.token as EthBasedTokenEntity;
+  final erc20 = intent.token as ERC20Entity;
   final tokenContractAddress = erc20.contractAddress;
 
   final erc20Contract = ERC20Contract(

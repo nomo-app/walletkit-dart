@@ -73,7 +73,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;Amount&gt; getTRC20Balance({
   required String address,
-  required EthBasedTokenEntity trc20,
+  required ERC20Entity trc20,
 }) async {
   final addressParameter = base58ToEVM(address, false).padLeft(64, &#39;0&#39;);
   final result = await triggerConstantContract(

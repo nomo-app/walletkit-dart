@@ -68,15 +68,63 @@
     </section>
     
 <section class="desc markdown">
-  <p>Fetch ERC721 Transacions</p>
+  <p>Fetch ERC721 Tokens</p>
+<p>Fetch ERC721 Transacions</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;List&lt;ZeniqSmartChainTransaction&gt;&gt; fetchZEN20Transfers({
-  required EthBasedTokenEntity token,
+  <pre class="language-dart"><code class="language-dart">&#47;&#47;   Future&lt;List&lt;ERC721Entity&gt;&gt; fetchZEN721Transfers({
+&#47;&#47;     required String nftContractAddress,
+&#47;&#47;     required String address,
+&#47;&#47;   }) async {
+&#47;&#47;     const String _block = &quot;0x0&quot;;
+&#47;&#47; &#47;&#47; keccak256(&quot;Transfer(address,address,uint256)&quot;) = 0xddf2...
+&#47;&#47;     const eventSignature =
+&#47;&#47;         &quot;0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef&quot;;
+&#47;&#47;     final topicAddress =
+&#47;&#47;         address.replaceFirst(&quot;0x&quot;, &quot;0x000000000000000000000000&quot;);
+&#47;&#47;     final incomingTransfersFuture = performTask(
+&#47;&#47;       (client) =&gt; client.getLogs(
+&#47;&#47;         fromBlock: _block,
+&#47;&#47;         toBlock: &quot;latest&quot;,
+&#47;&#47;         address: nftContractAddress,
+&#47;&#47;         topics: [eventSignature, null, topicAddress, null],
+&#47;&#47;       ),
+&#47;&#47;     );
+&#47;&#47;     final outgoingTransfersFuture = performTask(
+&#47;&#47;       (client) =&gt; client.getLogs(
+&#47;&#47;         fromBlock: _block,
+&#47;&#47;         toBlock: &quot;latest&quot;,
+&#47;&#47;         address: nftContractAddress,
+&#47;&#47;         topics: [eventSignature, topicAddress, null, null],
+&#47;&#47;       ),
+&#47;&#47;     );
+&#47;&#47;     final results = await Future.wait(
+&#47;&#47;       [incomingTransfersFuture, outgoingTransfersFuture],
+&#47;&#47;     );
+&#47;&#47;     final transferLogs = _extractOwnedNFTsFromTransferLogs(
+&#47;&#47;       address: address,
+&#47;&#47;       incomingTransfers: results[0],
+&#47;&#47;       outgoingTransfers: results[1],
+&#47;&#47;     );
+&#47;&#47;     return transferLogs
+&#47;&#47;         .map(
+&#47;&#47;           (transferLog) =&gt; _mapTransferLogToERC721Entity(
+&#47;&#47;             transferLog: transferLog,
+&#47;&#47;             nftContractAddress: nftContractAddress,
+&#47;&#47;           ),
+&#47;&#47;         )
+&#47;&#47;         .toList();
+&#47;&#47;   }
+
+&#47;&#47;&#47;
+&#47;&#47;&#47; Fetch ERC721 Transacions
+&#47;&#47;&#47;
+Future&lt;List&lt;ZeniqSmartChainTransaction&gt;&gt; fetchZEN20Transfers({
+  required ERC20Entity token,
   required String address,
   int? block,
 }) async {

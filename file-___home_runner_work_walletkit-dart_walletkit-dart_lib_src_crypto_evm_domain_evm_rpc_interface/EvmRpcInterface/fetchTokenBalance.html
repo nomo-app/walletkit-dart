@@ -76,7 +76,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;Amount&gt; fetchTokenBalance(
   String address,
-  EthBasedTokenEntity token,
+  ERC20Entity token,
 ) async {
   final erc20Contract = ERC20Contract(
     contractAddress: token.contractAddress,
