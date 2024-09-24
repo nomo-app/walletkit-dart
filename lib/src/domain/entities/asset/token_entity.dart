@@ -41,9 +41,15 @@ class CoinEntity {
     if (identical(this, other)) return true;
 
     return other is CoinEntity &&
+        other is! EvmCoinEntity &&
         other.name == name &&
         other.symbol == symbol &&
         other.decimals == decimals;
+  }
+
+  @override
+  String toString() {
+    return '$name ($symbol)';
   }
 
   Map<String, dynamic> toJson() {
@@ -54,6 +60,7 @@ class CoinEntity {
           'decimals': ethBasedToken.decimals,
           'chainID': ethBasedToken.chainID,
           'contractAddress': ethBasedToken.contractAddress,
+          'allowDeletion': ethBasedToken.allowDeletion,
         },
       EvmCoinEntity evmEntity => {
           'name': evmEntity.name,
@@ -84,7 +91,7 @@ class CoinEntity {
           decimals: decimals,
           chainID: chainID,
           contractAddress: contractAddress,
-          allowDeletion: true,
+          allowDeletion: json['allowDeletion'] ?? true,
         ),
       {
         'name': String name,
@@ -126,7 +133,10 @@ class EvmCoinEntity extends CoinEntity {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is EvmCoinEntity && other.chainID == chainID;
+    return other is EvmCoinEntity &&
+        other is! ERC20Entity &&
+        other is! ERC721Entity &&
+        other.chainID == chainID;
   }
 
   const EvmCoinEntity({
@@ -147,7 +157,7 @@ class ERC20Entity extends EvmCoinEntity {
     required super.decimals,
     required super.chainID,
     required this.contractAddress,
-    this.allowDeletion,
+    this.allowDeletion = false,
   });
 
   String get lowerCaseAddress => contractAddress.toLowerCase();
