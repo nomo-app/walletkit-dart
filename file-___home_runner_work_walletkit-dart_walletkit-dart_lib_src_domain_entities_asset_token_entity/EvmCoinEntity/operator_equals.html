@@ -108,7 +108,10 @@ the <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_sr
 bool operator ==(Object other) {
   if (identical(this, other)) return true;
 
-  return other is EvmCoinEntity &amp;&amp; other.chainID == chainID;
+  return other is EvmCoinEntity &amp;&amp;
+      other is! ERC20Entity &amp;&amp;
+      other is! ERC721Entity &amp;&amp;
+      other.chainID == chainID;
 }</code></pre>
 </section>
 

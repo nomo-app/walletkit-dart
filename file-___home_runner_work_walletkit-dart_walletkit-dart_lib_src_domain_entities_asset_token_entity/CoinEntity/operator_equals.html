@@ -109,6 +109,7 @@ bool operator ==(Object other) {
   if (identical(this, other)) return true;
 
   return other is CoinEntity &amp;&amp;
+      other is! EvmCoinEntity &amp;&amp;
       other.name == name &amp;&amp;
       other.symbol == symbol &amp;&amp;
       other.decimals == decimals;
