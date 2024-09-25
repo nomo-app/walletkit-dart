@@ -863,6 +863,21 @@ final class EvmRpcInterface {
   }
 
   ///
+  /// Get Transaction Receipt
+  ///
+  Future<EVMTransactionReceipt?> getTransactionReceipt(String hash) async {
+    final json = await performTask(
+      (client) => client.getTransactionReceipt(hash),
+    );
+
+    if (json == null) {
+      return null;
+    }
+
+    return EVMTransactionReceipt.fromJson(json);
+  }
+
+  ///
   /// Get Current Block
   ///
   Future<Json> getCurrentBlock() async {

@@ -21,6 +21,19 @@ class FunctionParam {
       indexed: map['indexed'] as bool? ?? false,
     );
   }
+
+  factory FunctionParam.fromTypeString(String type) {
+    return FunctionParam(
+      name: null,
+      type: FunctionParamType.fromString(type),
+      indexed: null,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'FunctionParam{name: $name, type: $type, indexed: $indexed}';
+  }
 }
 
 class FunctionParamWithValue<T> extends FunctionParam {
@@ -80,5 +93,10 @@ class FunctionParamWithValue<T> extends FunctionParam {
       indexed: map['indexed'] as bool? ?? false,
       type: FunctionParamType.fromString(map['type']),
     );
+  }
+
+  @override
+  String toString() {
+    return 'FunctionParamWithValue{name: $name, type: $type, indexed: $indexed, value: $value}';
   }
 }

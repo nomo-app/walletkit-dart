@@ -176,6 +176,11 @@ sealed class FunctionParamType<T> {
 
   ArrayFunctionParamType<T> getArrayType(int length) =>
       ArrayFunctionParamType("${name}[${length > 0 ? length : ''}]", this);
+
+  @override
+  String toString() {
+    return "$name($internalType)";
+  }
 }
 
 abstract class BaseFunctionParamType<T> extends FunctionParamType<T> {

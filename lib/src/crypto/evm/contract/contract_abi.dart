@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/avinoc_staking_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/demoContract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/erc721_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/abi/nomoDevToken_contract.dart';
+import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 final List<ContractABI> abiList = [
@@ -85,22 +87,68 @@ class ContractABI {
     return functions.singleWhereOrNull((e) => e.name == functionName);
   }
 
+  ContractEvent? getEvent(String eventName) {
+    return events.singleWhereOrNull((e) => e.name == eventName);
+  }
+
+  ContractEvent? getEventFromTopic(String topic) {
+    return events.singleWhereOrNull((e) => e.topicHex == topic);
+  }
+
   ContractFunction? getFunctionFromSelector(String selector) {
     return functions
         .singleWhereOrNull((e) => e.functionSelectorHex == selector);
   }
 }
 
-class ContractEvent {
-  final String name;
-  final List<FunctionParam> parameters;
+class ContractEvent extends ExternalContractEvent {
   final bool anonymous;
 
   const ContractEvent({
-    required this.name,
-    required this.parameters,
+    required super.name,
+    required super.parameters,
     required this.anonymous,
   });
+
+  List<FunctionParam> get nonIndexedParameters {
+    return parameters.where((param) => param.indexed == false).toList();
+  }
+
+  List<FunctionParam> get indexedParameters {
+    return parameters.where((param) => param.indexed == true).toList();
+  }
+}
+
+class ExternalContractEvent {
+  final String name;
+  final List<FunctionParam> parameters;
+
+  const ExternalContractEvent({
+    required this.name,
+    required this.parameters,
+  });
+
+  factory ExternalContractEvent.fromTextSignature(String signature) {
+    final parts = signature.split("(");
+
+    final name = parts[0];
+    final params = parts[1]
+        .substring(0, parts[1].length - 1)
+        .split(",")
+        .map(FunctionParam.fromTypeString)
+        .toList();
+
+    return ExternalContractEvent(name: name, parameters: params);
+  }
+
+  String get function {
+    final params = parameters.map((e) => e.type.name).join(',');
+    return "$name($params)";
+  }
+
+  Uint8List get topic => keccakUtf8(function);
+
+  String get topicHex => topic.toHex;
 }
 
 enum StateMutability {

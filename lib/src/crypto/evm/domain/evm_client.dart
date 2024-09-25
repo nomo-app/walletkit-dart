@@ -1,9 +1,10 @@
 import 'dart:typed_data';
-
 import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/block_number.dart';
+import 'package:walletkit_dart/src/crypto/evm/contract/contract_function_decoding.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+import 'package:collection/collection.dart';
 
 const erc20TransferSig = "a9059cbb";
 
@@ -328,5 +329,184 @@ class RateLimitingException implements Exception {
   @override
   String toString() {
     return 'RateLimitingException: $message';
+  }
+}
+
+class EVMTransactionReceipt {
+  final String transactionHash;
+  final int transactionIndex;
+  final String blockHash;
+  final int blockNumber;
+  final String from;
+  final String? to;
+  final int cumulativeGasUsed;
+  final int gasUsed;
+  final String? contractAddress;
+  final List<EVMTransactionLog> logs;
+  final Uint8List logsBloom;
+  final int? effectiveGasPrice;
+  final int type;
+
+  final int? status; // Post Byzantium
+  final Uint8List? root; // Pre Byzantium
+
+  const EVMTransactionReceipt({
+    required this.transactionHash,
+    required this.transactionIndex,
+    required this.blockHash,
+    required this.blockNumber,
+    required this.from,
+    required this.to,
+    required this.cumulativeGasUsed,
+    required this.gasUsed,
+    required this.contractAddress,
+    required this.logs,
+    required this.logsBloom,
+    required this.type,
+    required this.effectiveGasPrice,
+    this.status,
+    this.root,
+  });
+
+  List<EVMTransactionLog> getLogForTopic(String topic) {
+    return logs.where((log) => log.topics.first == topic).toList();
+  }
+
+  factory EVMTransactionReceipt.fromJson(Json json) {
+    if (json
+        case {
+          "transactionHash": String transactionHash,
+          "transactionIndex": String transactionIndex,
+          "to": String? to,
+          "from": String from,
+          "blockHash": String blockHash,
+          "blockNumber": String blockNumber,
+          "cumulativeGasUsed": String cumulativeGasUsed,
+          "gasUsed": String gasUsed,
+          "contractAddress": String? contractAddress,
+          "logs": List<dynamic> logs_json,
+          "logsBloom": String logsBloom,
+        }) {
+      final logs =
+          logs_json.map((json) => EVMTransactionLog.fromJson(json)).toList();
+
+      final type = (json['type'] as String?)?.toIntOrNull ?? 0;
+
+      final effectiveGasPrice =
+          (json['effectiveGasPrice'] as String?)?.toIntOrNull;
+
+      final status = (json['status'] as String?)?.toIntOrNull;
+
+      final root = (json['root'] as String?)?.hexToBytesWithPrefix;
+
+      return EVMTransactionReceipt(
+        transactionHash: transactionHash,
+        transactionIndex: transactionIndex.toInt,
+        blockHash: blockHash,
+        blockNumber: blockNumber.toInt,
+        from: from,
+        to: to,
+        cumulativeGasUsed: cumulativeGasUsed.toInt,
+        gasUsed: gasUsed.toInt,
+        contractAddress: contractAddress,
+        logs: logs,
+        logsBloom: logsBloom.hexToBytesWithPrefix,
+        type: type,
+        effectiveGasPrice: effectiveGasPrice,
+        status: status,
+        root: root,
+      );
+    }
+
+    throw UnimplementedError();
+  }
+}
+
+class EVMTransactionLog {
+  final String address;
+  final List<String> topics;
+  final Uint8List data;
+  final int blockNumber;
+  final String blockHash;
+  final int transactionIndex;
+  final String transactionHash;
+  final int logIndex;
+  final bool removed;
+
+  const EVMTransactionLog({
+    required this.address,
+    required this.topics,
+    required this.data,
+    required this.blockNumber,
+    required this.blockHash,
+    required this.transactionIndex,
+    required this.transactionHash,
+    required this.logIndex,
+    required this.removed,
+  });
+
+  Uint8List get topicData {
+    final topicsData = [for (final topic in topics) topic.hexToBytesWithPrefix];
+
+    return topicsData.fold(
+      Uint8List(0),
+      (data1, data2) => Uint8List.fromList(
+        [...data1, ...data2],
+      ),
+    );
+  }
+
+  factory EVMTransactionLog.fromJson(Json json) {
+    if (json
+        case {
+          "address": String address,
+          "topics": List<dynamic> topics_json,
+          "data": String data,
+          "blockNumber": String blockNumber,
+          "blockHash": String blockHash,
+          "transactionIndex": String transactionIndex,
+          "transactionHash": String transactionHash,
+          "logIndex": String logIndex,
+          "removed": bool removed,
+        }) {
+      final topics = topics_json.map((e) => e.toString()).toList();
+      return EVMTransactionLog(
+        address: address,
+        topics: topics,
+        data: data.hexToBytesWithPrefix,
+        blockNumber: blockNumber.toInt,
+        blockHash: blockHash,
+        transactionIndex: transactionIndex.toInt,
+        transactionHash: transactionHash,
+        logIndex: logIndex.toInt,
+        removed: removed,
+      );
+    }
+
+    throw UnimplementedError();
+  }
+
+  List<FunctionParamWithValue> decode(
+    ContractEvent event,
+  ) {
+    final eventSignature = event.topicHex;
+    final topicEventSignature = topicData.sublist(0, 32).toHex;
+
+    assert(
+      eventSignature == topicEventSignature,
+      "Event signature does not match",
+    );
+
+    final nonIndexParams = decodeDataField(
+      data: data,
+      params: event.nonIndexedParameters,
+    );
+
+    final indexedParams = decodeDataField(
+      data: topicData.sublist(32),
+      params: event.indexedParameters,
+    );
+
+    return [...indexedParams, ...nonIndexParams];
   }
 }

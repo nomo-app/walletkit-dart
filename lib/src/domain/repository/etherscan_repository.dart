@@ -7,6 +7,19 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 enum Sorting { asc, desc }
 
+enum TopicOperator { and, or }
+
+class Block {
+  final String value;
+
+  Block.number(int number) : value = number.toString();
+
+  Block.latest() : value = 'latest';
+
+  @override
+  String toString() => value;
+}
+
 abstract class EtherscanRepository {
   final String base;
   final Iterable<String> apiKeys;
@@ -98,6 +111,42 @@ class EtherscanExplorer extends EtherscanRepository {
   const EtherscanExplorer(super.base, super.apiKeys, this.currency);
 
   String get gasOracleEndpoint => "$base?module=gastracker&action=gasoracle";
+
+  String get txReceiptEndpoint =>
+      "$base?module=transaction&action=gettxreceiptstatus";
+
+  String buildEventLogsByAddressEnpoint({
+    required String address,
+    required Block? fromBlock,
+    required Block? toBlock,
+    String? topic0,
+    TopicOperator? topic0_1_opr,
+    TopicOperator? topic0_2_opr,
+    TopicOperator? topic0_3_opr,
+    String? topic1,
+    TopicOperator? topic1_2_opr,
+    TopicOperator? topic1_3_opr,
+    String? topic2,
+    TopicOperator? topic2_3_opr,
+    String? topic3,
+    int? page,
+    int? offset,
+  }) =>
+      "$base?module=logs&action=getLogs&address=$address"
+          .addOptionalParameter('fromBlock', fromBlock)
+          .addOptionalParameter('toBlock', toBlock)
+          .addOptionalParameter('page', page)
+          .addOptionalParameter('offset', offset)
+          .addOptionalParameter('topic0', topic0)
+          .addOptionalParameter('topic0_1_opr', topic0_1_opr?.name)
+          .addOptionalParameter('topic0_2_opr', topic0_2_opr?.name)
+          .addOptionalParameter('topic0_3_opr', topic0_3_opr?.name)
+          .addOptionalParameter('topic1', topic1)
+          .addOptionalParameter('topic1_2_opr', topic1_2_opr?.name)
+          .addOptionalParameter('topic1_3_opr', topic1_3_opr?.name)
+          .addOptionalParameter('topic2', topic2)
+          .addOptionalParameter('topic2_3_opr', topic2_3_opr?.name)
+          .addOptionalParameter('topic3', topic3);
 
   String buildBalanceEndpoint(String address) =>
       "$base?module=account&action=balance&address=$address"
@@ -299,6 +348,68 @@ class EtherscanExplorer extends EtherscanRepository {
           currency: currency,
           address: address,
         ),
+    ];
+  }
+
+  ///
+  /// Fetch Tx Receipt
+  ///
+  Future<bool> fetchTransactionStatus(String txHash) async {
+    final endpoint = "$txReceiptEndpoint&txhash=$txHash";
+    final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
+
+    if (result is! Json) {
+      throw Exception("Failed to fetch tx receipt");
+    }
+
+    final status = result['status'];
+
+    return status == "1";
+  }
+
+  ///
+  /// Fetch Event Logs for a given [address]
+  ///
+  Future<List<EVMTransactionLog>> fetchEventLogsByAddress({
+    required String address,
+    required Block? fromBlock,
+    required Block? toBlock,
+    String? topic0,
+    TopicOperator? topic0_1_opr,
+    TopicOperator? topic0_2_opr,
+    TopicOperator? topic0_3_opr,
+    String? topic1,
+    TopicOperator? topic1_2_opr,
+    TopicOperator? topic1_3_opr,
+    String? topic2,
+    TopicOperator? topic2_3_opr,
+    String? topic3,
+    int? page,
+    int? offset,
+  }) async {
+    final endpoint = buildEventLogsByAddressEnpoint(
+      address: address,
+      topic0: topic0,
+      topic0_1_opr: topic0_1_opr,
+      topic1: topic1,
+      topic1_2_opr: topic1_2_opr,
+      topic2: topic2,
+      topic2_3_opr: topic2_3_opr,
+      topic3: topic3,
+      fromBlock: fromBlock,
+      toBlock: toBlock,
+      page: page,
+      offset: offset,
+    );
+
+    final result = await _fetchEtherscanWithRatelimitRetries(endpoint);
+
+    if (result is! List) {
+      throw Exception("Failed to fetch event logs");
+    }
+
+    return [
+      for (final log in result) EVMTransactionLog.fromJson(log),
     ];
   }
 
