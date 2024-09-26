@@ -1,3 +1,4 @@
+[![TestSuite](https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml/badge.svg?branch=main)](https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml)
 # WalletKit-Dart
 
 
