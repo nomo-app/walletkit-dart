@@ -114,7 +114,14 @@ Future<(double, int)?> getResponseTimeForHost(
     token: token,
   );
   if (client == null) return null;
-  final block = await client.getCurrentBlock();
+  final int? block;
+  try {
+    block = await client.getCurrentBlock();
+  } catch (e) {
+    print("Error: $e");
+    return null;
+  }
+
   await client.disconnect();
   stopwatch.stop();
 
