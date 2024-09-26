@@ -1,4 +1,4 @@
-name: UI-KIT CI/CD
+name: TestSuite
 
 on:
   schedule:
