@@ -7,95 +7,123 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 enum Sorting { asc, desc }
 
-abstract class EtherscanRepository {
+class EtherscanRepository {
   final String base;
-  final Iterable<String> apiKeys;
+  final List<String> apiKeys;
+  final Map<String, bool> endpointNeedsApiKey = {};
+  final Map<String, DateTime> apiKeyExcludedUntil = {};
 
-  const EtherscanRepository(this.base, this.apiKeys);
+  EtherscanRepository(this.base, this.apiKeys);
 
-  String? get apiKey {
-    if (apiKeys.isEmpty) {
-      return null;
+  String? _getRandomApiKey() {
+    if (apiKeys.isEmpty) return null;
+    final now = DateTime.now();
+    final availableKeys = apiKeys.where((key) {
+      final excludedUntil = apiKeyExcludedUntil[key];
+      return excludedUntil == null || now.isAfter(excludedUntil);
+    }).toList();
+    if (availableKeys.isEmpty) return null;
+    return availableKeys[Random().nextInt(availableKeys.length)];
+  }
+
+  bool _needsApiKey(String endpoint) {
+    return endpointNeedsApiKey[endpoint] ?? false;
+  }
+
+  void _setNeedsApiKey(String endpoint, bool needs) {
+    endpointNeedsApiKey[endpoint] = needs;
+  }
+
+  void _excludeApiKey(String apiKey) {
+    Logger.log("Excluding API key $apiKey for 1 hour");
+    apiKeyExcludedUntil[apiKey] = DateTime.now().add(Duration(hours: 1));
+  }
+
+  Duration _getRandomWaitTime() => Duration(seconds: Random().nextInt(3) + 2);
+
+  Map<String, String> _buildRequestHeaders() =>
+      {'Content-Type': 'application/json'};
+
+  String getBaseEtherscanEndpoint(String fullUrl) {
+    Uri uri = Uri.parse(fullUrl);
+
+    // Extract the scheme, host, and path
+    String baseUrl = '${uri.scheme}://${uri.host}${uri.path}';
+
+    // Get the query parameters
+    Map<String, String> queryParams = uri.queryParameters;
+
+    // Check if 'module' and 'action' parameters exist
+    if (queryParams.containsKey('module') &&
+        queryParams.containsKey('action')) {
+      String module = queryParams['module']!;
+      String action = queryParams['action']!;
+
+      // Construct the base endpoint
+      return '$baseUrl?module=$module&action=$action';
+    } else {
+      // If 'module' or 'action' is missing, return the original URL
+      return fullUrl;
     }
-    Random random = Random();
-    int index = random.nextInt(apiKeys.length);
-    return apiKeys.elementAt(index);
   }
-
-  Duration get randomWaitTime {
-    Random random = Random();
-    int index = random.nextInt(4) + 2;
-    return Duration(seconds: index);
-  }
-
-  Map<String, String> buildRequestHeaders() => {
-        'Content-Type': 'application/json',
-      };
 
   Future<T> _fetchEtherscanWithRatelimitRetries<T>(
-    final String rawEndpoint, {
+    String rawEndpoint, {
     int maxRetries = 10,
   }) async {
-    bool useApiKey = false;
-    String endpoint = rawEndpoint;
+    final baseEndpoint = getBaseEtherscanEndpoint(rawEndpoint);
 
     for (var i = 0; i < maxRetries; i++) {
-      if (useApiKey && apiKey != null) {
-        endpoint = "$rawEndpoint&apikey=$apiKey";
-      } else {
-        endpoint = rawEndpoint;
-      }
+      String endpoint = rawEndpoint;
+      String? currentApiKey;
 
-      Logger.logFetch(
-        'Fetch of $endpoint ($i of $maxRetries)',
-        'EtherscanRepository',
-      );
+      if (_needsApiKey(baseEndpoint)) {
+        currentApiKey = _getRandomApiKey();
+        if (currentApiKey == null) {
+          Logger.logError("No available API keys");
+          throw Exception("No available API keys");
+        }
+        endpoint = "$rawEndpoint&apikey=$currentApiKey";
+      }
 
       final response = await HTTPService.client.get(
         Uri.parse(endpoint),
-        headers: buildRequestHeaders(),
+        headers: _buildRequestHeaders(),
       );
 
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
-        int status = int.tryParse(body['status']) ?? -1;
-
+        int status = int.tryParse(body['status'] ?? '') ?? -1;
         final result = body['result'];
 
-        if (status == 1) {
-          return result;
-        }
+        if (status == 1) return result;
 
         if (status == 0) {
-          String message = body['message'];
+          if (result == "Missing/Invalid API Key") {
+            _setNeedsApiKey(baseEndpoint, true);
+          }
 
-          switch (message) {
-            case "NOTOK":
-              if (result.contains("API Key") && !useApiKey) {
-                useApiKey = true;
-              } else {
-                useApiKey = false;
-              }
-              break;
-            default:
-              return result;
+          if (result.contains("Max daily rate limit")) {
+            if (currentApiKey != null) {
+              _excludeApiKey(currentApiKey);
+            }
           }
         }
       }
-      Logger.log(response.body);
 
-      final waitTime = randomWaitTime;
-
-      await Future.delayed(waitTime);
+      if (currentApiKey != null) {
+        await Future.delayed(_getRandomWaitTime());
+      }
     }
-    throw Exception("Failed to fetch $endpoint");
+
+    throw Exception("Failed to fetch $rawEndpoint after $maxRetries retries");
   }
 }
 
 class EtherscanExplorer extends EtherscanRepository {
   final EvmCoinEntity currency;
 
-  const EtherscanExplorer(super.base, super.apiKeys, this.currency);
+  EtherscanExplorer(super.base, super.apiKeys, this.currency);
 
   String get gasOracleEndpoint => "$base?module=gastracker&action=gasoracle";
 
@@ -354,7 +382,7 @@ extension URLBuilder on String {
 }
 
 class ZeniqScanExplorer extends EtherscanExplorer {
-  const ZeniqScanExplorer(super.base, super.apiKeys, super.currency);
+  ZeniqScanExplorer(super.base, super.apiKeys, super.currency);
 
   @override
   String buildTransactionEndpoint({
