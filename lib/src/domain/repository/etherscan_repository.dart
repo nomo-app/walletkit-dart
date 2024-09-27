@@ -98,16 +98,19 @@ class EtherscanRepository {
 
         if (status == 1) return result;
 
+        Logger.logError("Failed to fetch $rawEndpoint: $result");
+
         if (status == 0) {
           if (result == "Missing/Invalid API Key") {
             _setNeedsApiKey(baseEndpoint, true);
-          }
-
-          if (result.contains("Max daily rate limit")) {
+          } else if (result.contains("Max daily rate limit")) {
             if (currentApiKey != null) {
               _excludeApiKey(currentApiKey);
             }
           }
+
+          String message = body['message'];
+          if (message != "NOTOK") return result;
         }
       }
 
