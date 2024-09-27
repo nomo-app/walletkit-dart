@@ -13,7 +13,15 @@ class EtherscanRepository {
   final Map<String, bool> endpointNeedsApiKey = {};
   final Map<String, DateTime> apiKeyExcludedUntil = {};
 
-  EtherscanRepository(this.base, this.apiKeys);
+  final Duration noApiKeyRetryIntervall;
+  final Duration apiKeyRetryIntervall;
+
+  EtherscanRepository(
+    this.base,
+    this.apiKeys, {
+    this.noApiKeyRetryIntervall = const Duration(seconds: 5),
+    this.apiKeyRetryIntervall = const Duration(seconds: 3),
+  });
 
   String? _getRandomApiKey() {
     if (apiKeys.isEmpty) return null;
@@ -38,8 +46,6 @@ class EtherscanRepository {
     Logger.log("Excluding API key $apiKey for 1 hour");
     apiKeyExcludedUntil[apiKey] = DateTime.now().add(Duration(hours: 1));
   }
-
-  Duration _getRandomWaitTime() => Duration(seconds: Random().nextInt(3) + 2);
 
   Map<String, String> _buildRequestHeaders() =>
       {'Content-Type': 'application/json'};
@@ -73,17 +79,26 @@ class EtherscanRepository {
   }) async {
     final baseEndpoint = getBaseEtherscanEndpoint(rawEndpoint);
 
+    bool maybeUseApiKey = false;
+
     for (var i = 0; i < maxRetries; i++) {
       String endpoint = rawEndpoint;
       String? currentApiKey;
 
       if (_needsApiKey(baseEndpoint)) {
+        maybeUseApiKey = false;
         currentApiKey = _getRandomApiKey();
         if (currentApiKey == null) {
           Logger.logError("No available API keys");
           throw Exception("No available API keys");
         }
         endpoint = "$rawEndpoint&apikey=$currentApiKey";
+      } else if (maybeUseApiKey) {
+        maybeUseApiKey = false;
+        currentApiKey = _getRandomApiKey();
+        if (currentApiKey != null) {
+          endpoint = "$rawEndpoint&apikey=$currentApiKey";
+        }
       }
 
       final response = await HTTPService.client.get(
@@ -101,18 +116,28 @@ class EtherscanRepository {
         if (status == 0) {
           if (result == "Missing/Invalid API Key") {
             _setNeedsApiKey(baseEndpoint, true);
-          }
-
-          if (result.contains("Max daily rate limit")) {
+          } else if (result.contains("Max daily rate limit")) {
             if (currentApiKey != null) {
               _excludeApiKey(currentApiKey);
             }
+            if (_getRandomApiKey() == null) {
+              await Future.delayed(noApiKeyRetryIntervall);
+            } else {
+              maybeUseApiKey = true; // Try again with an API key
+            }
+          } else if (result.contains('for higher rate limit')) {
+            if (_getRandomApiKey() == null) {
+              await Future.delayed(noApiKeyRetryIntervall);
+            } else {
+              maybeUseApiKey = true; // Try again with an API key
+            }
+          } else if (result.contains("Max calls per sec")) {
+            await Future.delayed(apiKeyRetryIntervall);
+          } else {
+            String message = body['message'];
+            if (message != "NOTOK") return result;
           }
         }
-      }
-
-      if (currentApiKey != null) {
-        await Future.delayed(_getRandomWaitTime());
       }
     }
 
