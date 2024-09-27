@@ -12,6 +12,7 @@ class EtherscanRepository {
   final List<String> apiKeys;
   final Map<String, bool> endpointNeedsApiKey = {};
   final Map<String, DateTime> apiKeyExcludedUntil = {};
+  final List<String> invalidApiKeys = [];
 
   final Duration noApiKeyRetryIntervall;
   final Duration apiKeyRetryIntervall;
@@ -27,7 +28,9 @@ class EtherscanRepository {
     if (apiKeys.isEmpty) return null;
     final now = DateTime.now();
     final availableKeys = apiKeys.where((key) {
+      if (invalidApiKeys.contains(key)) return false;
       final excludedUntil = apiKeyExcludedUntil[key];
+
       return excludedUntil == null || now.isAfter(excludedUntil);
     }).toList();
     if (availableKeys.isEmpty) return null;
@@ -116,6 +119,13 @@ class EtherscanRepository {
         if (status == 0) {
           if (result == "Missing/Invalid API Key") {
             _setNeedsApiKey(baseEndpoint, true);
+          } else if (result.contains('Invalid API Key')) {
+            invalidApiKeys.add(currentApiKey!);
+            if (_getRandomApiKey() == null) {
+              await Future.delayed(noApiKeyRetryIntervall);
+            } else {
+              maybeUseApiKey = true; // Try again with an API key
+            }
           } else if (result.contains("Max daily rate limit")) {
             if (currentApiKey != null) {
               _excludeApiKey(currentApiKey);
