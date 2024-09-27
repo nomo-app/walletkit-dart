@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the randomWaitTime property from the EtherscanRepository class, for the Dart programming language.">
-  <title>randomWaitTime property - EtherscanRepository class - etherscan_repository library - Dart API</title>
+  <meta name="description" content="API docs for the getBaseEtherscanEndpoint method from the EtherscanRepository class, for the Dart programming language.">
+  <title>getBaseEtherscanEndpoint method - EtherscanRepository class - etherscan_repository library - Dart API</title>
 
 
   
@@ -27,9 +27,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">src&#47;domain&#47;repository&#47;etherscan_repository.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanRepository-class.html">EtherscanRepository</a></li>
-    <li class="self-crumb">randomWaitTime property</li>
+    <li class="self-crumb">getBaseEtherscanEndpoint method</li>
   </ol>
-  <div class="self-name">randomWaitTime</div>
+  <div class="self-name">getBaseEtherscanEndpoint</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -52,40 +52,52 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository&#47;EtherscanRepository-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-property">randomWaitTime</span> property 
+<h1><span class="kind-method">getBaseEtherscanEndpoint</span> method 
 </h1></div>
 
-    
-
-    
-        
-  <section id="getter">
     <section class="multi-line-signature">
       
-      <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a></span>
-      get
-      <span class="name ">randomWaitTime</span>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+<span class="name ">getBaseEtherscanEndpoint</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getBaseEtherscanEndpoint-param-fullUrl"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">fullUrl</span></span></li>
+</ol>)
+
       
 
     </section>
     
 
+
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Duration get randomWaitTime {
-  Random random = Random();
-  int index = random.nextInt(4) + 2;
-  return Duration(seconds: index);
+  <pre class="language-dart"><code class="language-dart">String getBaseEtherscanEndpoint(String fullUrl) {
+  Uri uri = Uri.parse(fullUrl);
+
+  &#47;&#47; Extract the scheme, host, and path
+  String baseUrl = &#39;${uri.scheme}:&#47;&#47;${uri.host}${uri.path}&#39;;
+
+  &#47;&#47; Get the query parameters
+  Map&lt;String, String&gt; queryParams = uri.queryParameters;
+
+  &#47;&#47; Check if &#39;module&#39; and &#39;action&#39; parameters exist
+  if (queryParams.containsKey(&#39;module&#39;) &amp;&amp;
+      queryParams.containsKey(&#39;action&#39;)) {
+    String module = queryParams[&#39;module&#39;]!;
+    String action = queryParams[&#39;action&#39;]!;
+
+    &#47;&#47; Construct the base endpoint
+    return &#39;$baseUrl?module=$module&amp;action=$action&#39;;
+  } else {
+    &#47;&#47; If &#39;module&#39; or &#39;action&#39; is missing, return the original URL
+    return fullUrl;
+  }
 }</code></pre>
 </section>
 
-  </section>
 
-
-</div> <!-- /.main-content -->
-<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -95,13 +107,13 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository-library.html">etherscan_repository</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_repository_etherscan_repository/EtherscanRepository-class.html">EtherscanRepository</a></li>
-    <li class="self-crumb">randomWaitTime property</li>
+    <li class="self-crumb">getBaseEtherscanEndpoint method</li>
 </ol>
 
-  <h5>EtherscanRepository class</h5>
-  <div id="dartdoc-sidebar-left-content"></div>
-</div><!--/.sidebar-offcanvas-->
-<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>EtherscanRepository class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 </main>
 <footer>
