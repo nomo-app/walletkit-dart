@@ -58,6 +58,7 @@ void main() {
     ///
     /// Balances
     ///
+    ///
 
     final balance = await etherscan.fetchBalance(
       address: rejectEVM,
@@ -106,12 +107,14 @@ void main() {
   //   /// Balances
   //   ///
 
-  //   final balance = await bscscan.fetchBalance(rejectEVM, binanceSmart);
+  //   final balance = await bscscan.fetchBalance(
+  //     address: rejectEVM,
+  //   );
 
   //   print('BNB Balance: $balance');
 
-  //   final zeniqBSCBalance =
-  //       await bscscan.fetchBalance(rejectEVM, zeniqBSCToken);
+  //   final zeniqBSCBalance = await bscscan.fetchTokenBalance(
+  //       address: rejectEVM, contractAddress: zeniqBSCToken.contractAddress);
 
   //   print('Zeniq BSC Balance: $zeniqBSCBalance');
 
@@ -121,7 +124,6 @@ void main() {
 
   //   final transactions = await bscscan.fetchTransactions(
   //     address: rejectEVM,
-  //     token: binanceSmart,
   //   );
 
   //   expect(transactions, isNotEmpty);
@@ -130,8 +132,7 @@ void main() {
 
   //   final zeniqBSCTokenTransactions = await bscscan.fetchERC20Transactions(
   //     address: rejectEVM,
-  //     token: zeniqBSCToken,
-  //     currency: binanceSmart,
+  //     contractAddress: zeniqBSCToken.contractAddress,
   //   );
 
   //   expect(zeniqBSCTokenTransactions, isNotEmpty);
@@ -142,7 +143,7 @@ void main() {
   //   /// ERC721
   //   ///
 
-  //   final erc721 = await bscscan.fetchEtherscanNFTs(address: rejectEVM);
+  //   final erc721 = await bscscan.fetchERC721Transactions(address: rejectEVM);
 
   //   print('ERC721: $erc721');
   // });
@@ -202,27 +203,26 @@ void main() {
 
   // TODO: Need Api Key
   // test('Test Base Fetching', () async {
-  //   final balance = await basescan.fetchBalance(arbitrumTestWallet, ethNative);
+  //   final balance = await basescan.fetchBalance(address: arbitrumTestWallet);
 
   //   expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
   //   final transactions = await basescan.fetchTransactions(
   //     address: arbitrumTestWallet,
-  //     token: ethNative,
   //   );
 
   //   expect(transactions, isNotEmpty);
 
   //   final erc20Transactions = await basescan.fetchERC20Transactions(
   //     address: arbitrumTestWallet,
-  //     token: mathToken,
-  //     currency: ethNative,
+  //     contractAddress: mathToken.contractAddress,
   //   );
 
   //   expect(erc20Transactions, isNotEmpty);
 
-  //   final erc20balance =
-  //       await basescan.fetchBalance(arbitrumTestWallet, mathToken);
+  //   final erc20balance = await basescan.fetchTokenBalance(
+  //       address: arbitrumTestWallet,
+  //       contractAddress: mathToken.contractAddress);
   //   expect(erc20balance, greaterThan(BigInt.zero));
   // });
 
