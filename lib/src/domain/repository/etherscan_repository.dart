@@ -94,6 +94,7 @@ class EtherscanRepository {
         }
         endpoint = "$rawEndpoint&apikey=$currentApiKey";
       } else if (maybeUseApiKey) {
+        maybeUseApiKey = false;
         currentApiKey = _getRandomApiKey();
         if (currentApiKey != null) {
           endpoint = "$rawEndpoint&apikey=$currentApiKey";
