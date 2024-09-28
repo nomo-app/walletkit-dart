@@ -99,7 +99,7 @@ const wrappedZeniqSmart = ERC20Entity(
 );
 const avinocZSC = ERC20Entity(
   name: 'AVINOC',
-  symbol: 'AVINOC ZEN20',
+  symbol: 'AVINOC',
   contractAddress: "0xF1cA9cb74685755965c7458528A36934Df52A3EF",
   decimals: 18,
   chainID: 383414847825,
