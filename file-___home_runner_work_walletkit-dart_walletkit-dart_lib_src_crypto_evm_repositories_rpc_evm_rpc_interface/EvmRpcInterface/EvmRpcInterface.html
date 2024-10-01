@@ -61,6 +61,7 @@
 <li><span class="parameter" id="-param-awaitRefresh"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">awaitRefresh</span> = <span class="default-value">true</span>, </span></li>
 <li><span class="parameter" id="-param-refreshIntervall"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a>?</span> <span class="parameter-name">refreshIntervall</span>, </span></li>
 <li><span class="parameter" id="-param-eagerError"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">eagerError</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-refreshType"><span class="type-annotation">dynamic</span> <span class="parameter-name">refreshType</span> = <span class="default-value">RefreshType.onTask</span>, </span></li>
 <li><span class="parameter" id="-param-clients"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">clients</span>, </span></li>
 <li><span class="parameter" id="-param-type"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">type</span>, </span></li>
 </ol>})
@@ -83,6 +84,7 @@
   bool awaitRefresh = true,
   Duration? refreshIntervall,
   bool eagerError = false,
+  RefreshType refreshType = RefreshType.onTask,
   required List&lt;EvmRpcClient&gt; clients,
   required this.type,
 }) : _manager = useQueuedManager
@@ -91,12 +93,14 @@
               clientRefreshRate: refreshIntervall,
               allClients: clients,
               eagerError: eagerError,
+              refreshType: refreshType,
             )
           : SimpleRpcManager(
               awaitRefresh: awaitRefresh,
               clientRefreshRate: refreshIntervall,
               allClients: clients,
               eagerError: eagerError,
+              refreshType: refreshType,
             );</code></pre>
 </section>
 
