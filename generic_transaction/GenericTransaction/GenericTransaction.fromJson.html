@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../generic_transaction/generic_transaction-library.html">src&#47;domain&#47;entities&#47;transactions&#47;generic_transaction.dart</a></li>
+    <li><a href="../../generic_transaction/generic_transaction-library.html">src&#47;domain&#47;entities&#47;generic_transaction.dart</a></li>
     <li><a href="../../generic_transaction/GenericTransaction-class.html">GenericTransaction</a></li>
     <li class="self-crumb">GenericTransaction.fromJson factory constructor</li>
   </ol>
@@ -69,71 +69,39 @@
   <pre class="language-dart"><code class="language-dart">factory GenericTransaction.fromJson(Map json) {
   return switch (json) {
     {
-      &#39;hash&#39;: String hash,
-      &#39;block&#39;: int block,
-      &#39;confirmations&#39;: int confirmations,
-      &#39;timeMilli&#39;: int timeMilli,
-      &#39;amount&#39;: Map amount,
-      &#39;fee&#39;: Map? fee,
-      &#39;sender&#39;: String sender,
-      &#39;recipient&#39;: String recipient,
-      &#39;transferMethod&#39;: int transferMethod,
-      &#39;status&#39;: int status,
-      &#39;token&#39;: Map token,
-      &#39;input&#39;: String input,
-      &#39;decodedInput&#39;: Map? decodedInput,
+      &#39;hash&#39;: String _,
+      &#39;block&#39;: int _,
+      &#39;confirmations&#39;: int _,
+      &#39;timeMilli&#39;: int _,
+      &#39;amount&#39;: Map _,
+      &#39;fee&#39;: Map? _,
+      &#39;sender&#39;: String _,
+      &#39;recipient&#39;: String _,
+      &#39;transferMethod&#39;: int _,
+      &#39;status&#39;: int _,
+      &#39;token&#39;: Map _,
+      &#39;input&#39;: String _,
+      &#39;decodedInput&#39;: Map? _,
     } =&gt;
-      EVMTransaction(
-        hash: hash,
-        block: block,
-        confirmations: confirmations,
-        timeMilli: timeMilli,
-        amount: Amount.fromJson(amount),
-        fee: fee != null ? Amount.fromJson(fee) : null,
-        sender: sender,
-        recipient: recipient,
-        transferMethod: TransactionTransferMethod.fromJson(transferMethod),
-        status: ConfirmationStatus.fromJson(status),
-        input: input.hexToBytesOrNull ?? Uint8List(0),
-        token: CoinEntity.fromJson(token),
-        decodedInput: decodedInput != null
-            ? ExternalContractFunctionWithValues.fromJson(decodedInput)
-            : null,
-      ),
+      EVMTransaction.fromJson(json),
     {
-      &#39;hash&#39;: String hash,
-      &#39;block&#39;: int block,
-      &#39;confirmations&#39;: int confirmations,
-      &#39;timeMilli&#39;: int timeMilli,
-      &#39;amount&#39;: Map amount,
-      &#39;fee&#39;: Map? fee,
-      &#39;sender&#39;: String sender,
-      &#39;recipient&#39;: String recipient,
-      &#39;transferMethod&#39;: int transferMethod,
-      &#39;status&#39;: int status,
-      &#39;token&#39;: Map token,
-      &#39;id&#39;: String id,
-      &#39;version&#39;: int version,
-      &#39;inputs&#39;: JsonList inputs,
-      &#39;outputs&#39;: JsonList outputs,
+      &#39;hash&#39;: String _,
+      &#39;block&#39;: int _,
+      &#39;confirmations&#39;: int _,
+      &#39;timeMilli&#39;: int _,
+      &#39;amount&#39;: Map _,
+      &#39;fee&#39;: Map? _,
+      &#39;sender&#39;: String _,
+      &#39;recipient&#39;: String _,
+      &#39;transferMethod&#39;: int _,
+      &#39;status&#39;: int _,
+      &#39;token&#39;: Map _,
+      &#39;id&#39;: String _,
+      &#39;version&#39;: int _,
+      &#39;inputs&#39;: JsonList _,
+      &#39;outputs&#39;: JsonList _,
     } =&gt;
-      UTXOTransaction(
-        hash: hash,
-        block: block,
-        confirmations: confirmations,
-        timeMilli: timeMilli,
-        amount: Amount.fromJson(amount),
-        fee: fee != null ? Amount.fromJson(fee) : null,
-        sender: sender,
-        recipient: recipient,
-        transferMethod: TransactionTransferMethod.fromJson(transferMethod),
-        status: ConfirmationStatus.fromJson(status),
-        id: id,
-        version: version,
-        inputs: inputs.map((e) =&gt; ElectrumInput.fromJson(e)).toList(),
-        outputs: outputs.map((e) =&gt; ElectrumOutput.fromJson(e)).toList(),
-        token: CoinEntity.fromJson(token),
-      ),
+      UTXOTransaction.fromJson(json),
     _ =&gt; throw UnimplementedError(&quot;Unknown json: $json&quot;),
   };
 }</code></pre>

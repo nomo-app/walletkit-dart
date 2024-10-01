@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../generic_transaction/generic_transaction-library.html">src&#47;domain&#47;entities&#47;transactions&#47;generic_transaction.dart</a></li>
+    <li><a href="../../generic_transaction/generic_transaction-library.html">src&#47;domain&#47;entities&#47;generic_transaction.dart</a></li>
     <li><a href="../../generic_transaction/ElectrumOutput-class.html">ElectrumOutput</a></li>
     <li class="self-crumb">ElectrumOutput.fromJson factory constructor</li>
   </ol>
@@ -73,7 +73,7 @@ Bitcoin: { value: float, ... }</p>
   <pre class="language-dart"><code class="language-dart">factory ElectrumOutput.fromJson(Map json) {
   if (json
       case {
-        &#39;value&#39;: BigInt value,
+        &#39;value&#39;: int value,
         &#39;n&#39;: int n,
         &#39;spent&#39;: bool spent,
         &#39;belongsToUs&#39;: bool belongsToUs,
@@ -81,7 +81,7 @@ Bitcoin: { value: float, ... }</p>
         &#39;node&#39;: Map node,
       }) {
     return ElectrumOutput(
-      value: value,
+      value: value.toBigInt,
       n: n,
       spent: spent,
       belongsToUs: belongsToUs,

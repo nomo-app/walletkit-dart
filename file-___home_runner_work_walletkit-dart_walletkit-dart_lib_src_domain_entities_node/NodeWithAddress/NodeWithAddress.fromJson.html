@@ -67,6 +67,12 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory NodeWithAddress.fromJson(Map json) {
+  final type = json[&#39;type&#39;] as int;
+
+  if (type == 2) {
+    return EmptyNode();
+  }
+
   if (json
       case {
         &#39;type&#39;: int type,
@@ -80,12 +86,10 @@
       0 =&gt; ReceiveNode(
           address: address,
           derivationPath: derivationPath,
-          addresses: addresses.map(
-            (key, value) =&gt; MapEntry(
-              AddressType.values[key as int],
-              value as String,
-            ),
-          ),
+          addresses: {
+            for (final MapEntry(:key, :value) in addresses.entries)
+              AddressType.fromIndex(int.parse(key as String)): value as String
+          },
           walletPurpose: walletPurpose != null
               ? HDWalletPurpose.values[walletPurpose]
               : null,
@@ -94,18 +98,15 @@
       1 =&gt; ChangeNode(
           address: address,
           derivationPath: derivationPath,
-          addresses: addresses.map(
-            (key, value) =&gt; MapEntry(
-              AddressType.values[key as int],
-              value as String,
-            ),
-          ),
+          addresses: {
+            for (final MapEntry(:key, :value) in addresses.entries)
+              AddressType.fromIndex(int.parse(key as String)): value as String
+          },
           walletPurpose: walletPurpose != null
               ? HDWalletPurpose.values[walletPurpose]
               : null,
           publicKey: publicKey,
         ),
-      2 =&gt; EmptyNode(),
       _ =&gt; throw UnimplementedError(),
     };
   }

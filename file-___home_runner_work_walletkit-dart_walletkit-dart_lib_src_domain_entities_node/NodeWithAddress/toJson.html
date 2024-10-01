@@ -73,9 +73,10 @@
       &#39;type&#39;: type,
       &#39;address&#39;: address,
       &#39;derivationPath&#39;: derivationPath,
-      &#39;addresses&#39;: addresses.map(
-        (key, value) =&gt; MapEntry(key.index, value),
-      ),
+      &#39;addresses&#39;: {
+        for (final entry in addresses.entries)
+          entry.key.index.toString(): entry.value,
+      },
       &#39;walletPurpose&#39;: walletPurpose?.index,
       &#39;publicKey&#39;: publicKey,
     };</code></pre>
