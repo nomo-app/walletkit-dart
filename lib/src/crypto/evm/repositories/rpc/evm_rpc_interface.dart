@@ -1,15 +1,10 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/crypto/evm/entities/block_number.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/raw_transaction/signature.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/raw_transaction/transaction_type.dart';
 import 'package:walletkit_dart/src/crypto/evm/repositories/rpc/queued_rpc_interface.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-
-const _maxTxNumber = 100;
-const _batchSize = 10;
 
 final class EvmRpcInterface {
   final EVMNetworkType type;

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/abi/avinoc_staking_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/abi/demoContract.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/abi/erc721_contract.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/abi/nomoDevToken_contract.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 

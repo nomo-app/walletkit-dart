@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:walletkit_dart/src/common/http_repository.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/raw_transaction/signature.dart';
 import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart';
 
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';

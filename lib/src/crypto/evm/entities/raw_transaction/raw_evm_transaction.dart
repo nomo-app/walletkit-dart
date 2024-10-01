@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/evm/entities/raw_transaction/signature.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/raw_transaction/transaction_type.dart';
 import 'package:walletkit_dart/src/utils/bigint_utils.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';

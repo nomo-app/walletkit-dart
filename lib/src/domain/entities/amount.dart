@@ -251,7 +251,7 @@ extension AmountUtilDouble on double {
 extension AmountUtilNum on num {
   String get toExactString {
     // https://stackoverflow.com/questions/62989638/convert-long-double-to-string-without-scientific-notation-dart
-    double value = this.toDouble();
+    double value = toDouble();
     var sign = "";
     if (value < 0) {
       value = -value;

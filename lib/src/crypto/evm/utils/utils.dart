@@ -3,7 +3,7 @@ import 'package:pointycastle/ecc/api.dart';
 import 'package:pointycastle/ecc/curves/secp256k1.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;
 import 'package:walletkit_dart/src/crypto/evm/entities/raw_transaction/signature.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/eurocoin_signing.dart';
 
 final params = ECCurve_secp256k1();
 
