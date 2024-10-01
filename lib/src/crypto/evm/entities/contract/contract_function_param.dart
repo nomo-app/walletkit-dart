@@ -69,7 +69,7 @@ class FunctionParamWithValue<T> extends FunctionParam {
       'name': name,
       'indexed': indexed,
       'type': type.name,
-      'value': value,
+      'value': value.toString(),
     };
   }
 
