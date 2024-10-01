@@ -113,16 +113,21 @@ class EtherscanRepository {
         if (status == 1) return result;
 
         if (status == 0) {
+          final result_s = result is String ? result : 'empty';
+          if (result == null) {
+            continue;
+          }
+
           if (result == "Missing/Invalid API Key") {
             _setNeedsApiKey(baseEndpoint, true);
-          } else if (result.contains('Invalid API Key')) {
+          } else if (result_s.contains('Invalid API Key')) {
             invalidApiKeys.add(currentApiKey!);
             if (_getRandomApiKey() == null) {
               await Future.delayed(noApiKeyRetryIntervall);
             } else {
               maybeUseApiKey = true; // Try again with an API key
             }
-          } else if (result.contains("Max daily rate limit")) {
+          } else if (result_s.contains("Max daily rate limit")) {
             if (currentApiKey != null) {
               _excludeApiKey(currentApiKey);
             }
@@ -131,13 +136,13 @@ class EtherscanRepository {
             } else {
               maybeUseApiKey = true; // Try again with an API key
             }
-          } else if (result.contains('for higher rate limit')) {
+          } else if (result_s.contains('for higher rate limit')) {
             if (_getRandomApiKey() == null) {
               await Future.delayed(noApiKeyRetryIntervall);
             } else {
               maybeUseApiKey = true; // Try again with an API key
             }
-          } else if (result.contains("Max calls per sec")) {
+          } else if (result_s.contains("Max calls per sec")) {
             await Future.delayed(apiKeyRetryIntervall);
           } else {
             String message = body['message'];
