@@ -3,9 +3,9 @@
 import 'package:test/test.dart';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
-import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
-import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
-import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 final seed = helloSeed;

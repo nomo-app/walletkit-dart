@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/evm/transaction/raw_evm_transaction.dart';
+import 'package:walletkit_dart/src/crypto/evm/entities/raw_transaction/raw_evm_transaction.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 

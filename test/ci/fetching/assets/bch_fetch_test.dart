@@ -1,8 +1,8 @@
 @Timeout(Duration(minutes: 5))
 
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
-import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../expected_utxo_tx_hashes.dart';

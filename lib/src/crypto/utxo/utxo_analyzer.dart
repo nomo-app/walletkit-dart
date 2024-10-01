@@ -2,10 +2,10 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/common/isolate_service.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/crypto/utxo/payments/p2h.dart';
-import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';
-import 'package:walletkit_dart/src/domain/repository/endpoint_utils.dart';
-import 'package:walletkit_dart/src/domain/repository/models/electrum_transaction.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
+import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/transactions/electrum_transaction.dart';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:walletkit_dart/walletkit_dart.dart';
 

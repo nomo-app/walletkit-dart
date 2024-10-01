@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/tron/tron_contract_type.dart';
-import 'package:walletkit_dart/src/crypto/tron/tron_parameter_type.dart';
-import 'package:walletkit_dart/src/domain/entities/transactions/amount.dart';
+import 'package:walletkit_dart/src/crypto/tron/entities/tron_parameter_type.dart';
+import 'package:walletkit_dart/src/crypto/tron/entities/tron_transaction.dart';
+import 'package:walletkit_dart/src/domain/entities/amount.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 
 import 'derive_address_test.dart';

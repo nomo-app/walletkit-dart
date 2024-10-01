@@ -8,7 +8,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:bip39/bip39.dart' as bip39;
 
-export './utxo/derivation.dart';
+export 'utxo/utils/derivation.dart';
 
 Future<TokenInfo?> getTokenInfo({
   required String contractAddress,

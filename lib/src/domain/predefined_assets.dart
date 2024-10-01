@@ -1,4 +1,4 @@
-import 'package:walletkit_dart/src/domain/entities/asset/token_entity.dart';
+import 'package:walletkit_dart/src/domain/entities/coin_entity.dart';
 
 ///
 /// UTXO Assets

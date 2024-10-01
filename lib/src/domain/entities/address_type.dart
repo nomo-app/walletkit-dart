@@ -5,5 +5,9 @@ enum AddressType {
   compatibility,
   cashaddr,
   evm,
-  tron,
+  tron;
+
+  static AddressType fromIndex(int index) {
+    return AddressType.values[index];
+  }
 }

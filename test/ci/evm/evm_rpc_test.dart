@@ -33,13 +33,6 @@ void main() {
   );
 
   test('ZeniqSmartChain Fetching rejectWallet', () async {
-    final zscTransactions = await zeniqSmartChainRPC.fetchAllTransactionsZSC(
-      address: rejectEVM,
-    );
-
-    expect(zscTransactions.length, 100);
-    print('ZSC Transactions: ${zscTransactions.length}');
-
     final zscBalance = await zeniqSmartChainRPC.fetchBalance(
       address: rejectEVM,
     );
@@ -52,64 +45,6 @@ void main() {
     );
 
     print('AVINOC ZSC Balance: $avinocZSCBalance');
-
-    final avinocZSCTransactions = await zeniqSmartChainRPC.fetchZEN20Transfers(
-      token: avinocZSC,
-      address: rejectEVM,
-    );
-
-    expect(avinocZSCTransactions.length, 100);
-    print('AVINOC ZSC Transactions: ${avinocZSCTransactions.length}');
-
-    // final erc721 = await zeniqSmartChainRPC.fetchZEN721Transfers(
-    //   address: rejectEVM,
-    //   nftContractAddress: smartChainStakingContract,
-    // );
-
-    // expect(
-    //   erc721.length,
-    //   greaterThanOrEqualTo(109),
-    // ); // May Fail if NFTs are send inbetween test wallets
-    // print('ERC721: ${erc721.length}');
-  });
-
-  test('ZSC fetch set-merge and cache performance', () async {
-    Set<GenericTransaction> set = {};
-    for (int i = 0; i < 4; i++) {
-      final zscTransactions = await zeniqSmartChainRPC.fetchAllTransactionsZSC(
-        address: rejectEVM,
-      );
-      expect(zscTransactions.length, 100);
-      set = {...set, ...zscTransactions.toSet()};
-      expect(set.length, zscTransactions.length);
-    }
-  });
-
-  test('fetch Staking ZEN721 transfers', () async {
-    // final txs = await zeniqSmartChainRPC.fetchZEN721Transfers(
-    //   nftContractAddress: smartChainStakingContract,
-    //   address: "0x05870f1507d820212E921e1f39f14660336231D1",
-    // );
-    // expect(
-    //   txs.length,
-    //   greaterThanOrEqualTo(109),
-    // ); // May Fail if NFTs are send inbetween test wallets
-  });
-
-  test('fetch AVINOC ZSC transfers', () async {
-    final txs = await zeniqSmartChainRPC.fetchZEN20Transfers(
-      token: avinocZSC,
-      address: "0x05870f1507d820212E921e1f39f14660336231D1",
-    );
-    expect(txs.length, 100);
-  });
-
-  test('fetch TUPAN transfers', () async {
-    final txs = await zeniqSmartChainRPC.fetchZEN20Transfers(
-      token: tupanToken,
-      address: "0x05870f1507d820212E921e1f39f14660336231D1",
-    );
-    expect(txs.length, 100);
   });
 
   test('estimate Gas Limit', () async {

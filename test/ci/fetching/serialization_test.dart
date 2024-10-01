@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction.dart';
-import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/raw_transaction.dart';
+import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 
 void main() {
   test('Fetch Tx and Parse', () async {
