@@ -3,9 +3,13 @@ import 'dart:async';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
+enum RefreshType { onInit, onTask }
+
 abstract class RpcManager {
   /// All clients available to the manager
   final List<EvmRpcClient> allClients;
+
+  final RefreshType refreshType;
 
   final bool eagerError;
 
@@ -15,7 +19,7 @@ abstract class RpcManager {
   /// Clients which successfully returned the current block number
   List<EvmRpcClient> clients;
 
-  /// The rate at which the clients are refreshed
+  /// The rate at which the clients are refreshed. Only applicable if [refreshType] is [RefreshType.onInit]
   final Duration? clientRefreshRate;
 
   final Completer<void> _refreshCompleter = Completer();
@@ -23,19 +27,26 @@ abstract class RpcManager {
   /// Future that completes when the clients are refreshed at least once
   Future<void> get refreshFuture => _refreshCompleter.future;
 
+  bool _isRefreshingClients = false;
+
   RpcManager({
     required this.allClients,
     required this.eagerError,
     required this.awaitRefresh,
     required this.clientRefreshRate,
+    required this.refreshType,
   }) : clients = List.from(allClients) {
-    refreshClients();
-    if (clientRefreshRate != null) {
-      Timer.periodic(clientRefreshRate!, (_) => refreshClients());
+    if (refreshType == RefreshType.onInit) {
+      refreshClients();
+      if (clientRefreshRate != null) {
+        Timer.periodic(clientRefreshRate!, (_) => refreshClients());
+      }
     }
   }
 
   void refreshClients() async {
+    if (_isRefreshingClients) return;
+    _isRefreshingClients = true;
     final futures = allClients.map((client) async {
       try {
         await client.getBlockNumber().timeout(const Duration(seconds: 10));
@@ -53,6 +64,7 @@ abstract class RpcManager {
     if (!_refreshCompleter.isCompleted) {
       _refreshCompleter.complete();
     }
+    _isRefreshingClients = false;
     Logger.log('Selected clients: ${clients.map((e) => e.rpcUrl).toList()}');
   }
 
@@ -69,6 +81,7 @@ final class SimpleRpcManager extends RpcManager {
     required super.awaitRefresh,
     required super.clientRefreshRate,
     required super.eagerError,
+    required super.refreshType,
   });
 
   Future<T> performTask<T>(
@@ -76,6 +89,11 @@ final class SimpleRpcManager extends RpcManager {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
   }) async {
+    if (refreshType == RefreshType.onTask &&
+        _refreshCompleter.isCompleted == false) {
+      refreshClients();
+    }
+
     if (awaitRefresh) await refreshFuture;
 
     final currentClients = [...clients];
@@ -111,6 +129,7 @@ final class QueuedRpcManager extends RpcManager {
     required super.awaitRefresh,
     required super.clientRefreshRate,
     required super.eagerError,
+    required super.refreshType,
   });
 
   final taskQueue = TaskQueue<dynamic, EvmRpcClient>();
@@ -121,6 +140,11 @@ final class QueuedRpcManager extends RpcManager {
   Future<void> workOnQueue() async {
     if (isWorking) return;
     isWorking = true;
+
+    if (refreshType == RefreshType.onTask &&
+        _refreshCompleter.isCompleted == false) {
+      refreshClients();
+    }
 
     if (awaitRefresh) await refreshFuture;
 

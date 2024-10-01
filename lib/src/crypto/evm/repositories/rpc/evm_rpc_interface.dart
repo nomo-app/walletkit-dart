@@ -26,6 +26,7 @@ final class EvmRpcInterface {
     bool awaitRefresh = true,
     Duration? refreshIntervall,
     bool eagerError = false,
+    RefreshType refreshType = RefreshType.onTask,
     required List<EvmRpcClient> clients,
     required this.type,
   }) : _manager = useQueuedManager
@@ -34,12 +35,14 @@ final class EvmRpcInterface {
                 clientRefreshRate: refreshIntervall,
                 allClients: clients,
                 eagerError: eagerError,
+                refreshType: refreshType,
               )
             : SimpleRpcManager(
                 awaitRefresh: awaitRefresh,
                 clientRefreshRate: refreshIntervall,
                 allClients: clients,
                 eagerError: eagerError,
+                refreshType: refreshType,
               );
 
   Future<T> performTask<T>(
