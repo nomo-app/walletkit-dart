@@ -75,7 +75,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">String get toExactString {
   &#47;&#47; https:&#47;&#47;stackoverflow.com&#47;questions&#47;62989638&#47;convert-long-double-to-string-without-scientific-notation-dart
-  double value = this.toDouble();
+  double value = toDouble();
   var sign = &quot;&quot;;
   if (value &lt; 0) {
     value = -value;
