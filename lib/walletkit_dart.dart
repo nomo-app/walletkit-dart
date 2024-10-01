@@ -1,79 +1,36 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
+library walletkit_dart;
 
-export 'src/crypto/utxo/send.dart';
-export 'src/crypto/evm/domain/evm_client.dart';
+export 'src/crypto/evm/evm.dart'; // EVM Module
+export 'src/crypto/utxo/utxo.dart'; // UTXO Module
+export 'src/crypto/tron/tron.dart'; // TRON Module
+
 export 'src/crypto/wallet_utils.dart';
-export 'src/domain/constants.dart';
-export 'src/domain/entities/asset/token_entity.dart';
-export 'src/domain/extensions.dart';
-export 'src/domain/entities/transactions/generic_transaction.dart';
-export 'src/domain/entities/transactions/etherscan_transaction.dart';
-export 'src/domain/entities/tx_gasFee_entity.dart';
-export 'src/crypto/utxo/utxo_analyzer.dart';
-export 'src/crypto/evm/domain/evm_rpc_interface.dart';
-export 'src/domain/repository/etherscan_repository.dart';
-export 'src/domain/predefined_assets.dart';
-export 'src/crypto/evm/transaction/signing/utils.dart';
-
-///
-///
-///
-
 export 'src/crypto/network_type.dart';
 
-export 'src/domain/entities/transactions/transfer_intent.dart';
-
+/// Entities
+export 'src/domain/entities/coin_entity.dart';
+export 'src/domain/entities/generic_transaction.dart';
+export 'src/domain/entities/tx_gasFee_entity.dart';
+export 'src/domain/entities/transfer_intent.dart';
 export 'src/domain/entities/fee.dart';
-
-export 'src/crypto/evm/address_validation.dart';
-export 'src/crypto/evm/signing.dart';
-export 'src/domain/entities/asset/token_info.dart';
-
-export 'src/domain/entities/transactions/amount.dart';
-
-export 'src/crypto/evm/abi/erc20_contract.dart';
-
-export 'src/crypto/utxo/utils/eurocoin_signing.dart';
-
-export 'src/crypto/utxo/utxo_receive_addresses.dart';
-
-export 'src/domain/entities/transactions/zsc_transaction.dart';
-
+export 'src/domain/entities/token_info.dart';
+export 'src/domain/entities/amount.dart';
 export 'src/domain/entities/node.dart';
-
 export 'src/domain/entities/hd_wallet_type.dart';
-
 export 'src/domain/entities/address_type.dart';
 
-export 'src/crypto/evm/rlp.dart';
-
-export 'src/crypto/evm/transaction/raw_evm_transaction.dart';
-
-export 'src/crypto/utxo/proof_of_payment.dart';
-
-export 'src/crypto/utxo/entities/raw_transaction.dart';
-
-export 'src/crypto/tron/domain/tron_http_repository.dart';
-export 'src/crypto/tron/domain/tronscan_repository.dart';
-export 'src/crypto/tron/tron_transaction.dart';
-export 'src/crypto/tron/tron_address.dart';
-
+/// Common
 export 'src/common/json_rpc.dart';
-
-export 'src/crypto/evm/contract/internal_contract.dart';
-export 'src/crypto/evm/contract/contract_abi.dart';
-export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_router.dart';
-export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_factory.dart';
-export 'src/crypto/evm/abi/uniswap_v2/uniswap_v2_pair.dart';
-
-export 'src/crypto/evm/transaction/signing/signing_evm_transaction.dart';
-
-export 'src/crypto/evm/contract/contract_function.dart';
-export 'src/crypto/evm/contract/parameter_type/function_parameter_type.dart';
-export 'src/crypto/evm/contract/contract_function_param.dart';
-
 export 'src/common/types.dart';
-export 'src/crypto/evm/abi/ens/ens_registry_contract.dart';
-export 'src/crypto/evm/abi/ens/ens_resolver_contract.dart';
+
+/// Utils
+export 'src/utils/address_validation.dart';
+
+/// Constants
+export 'src/domain/constants.dart';
+
+/// Extensions
+export 'src/domain/extensions.dart';
+
+/// Predefined Assets
+export 'src/domain/predefined_assets.dart';

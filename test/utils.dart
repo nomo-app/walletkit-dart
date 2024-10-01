@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dotenv/dotenv.dart';
+import 'package:walletkit_dart/src/crypto/evm/repositories/etherscan/etherscan_explorer.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 ///

@@ -79,14 +79,21 @@ sealed class NodeWithAddress {
         'type': type,
         'address': address,
         'derivationPath': derivationPath,
-        'addresses': addresses.map(
-          (key, value) => MapEntry(key.index, value),
-        ),
+        'addresses': {
+          for (final entry in addresses.entries)
+            entry.key.index.toString(): entry.value,
+        },
         'walletPurpose': walletPurpose?.index,
         'publicKey': publicKey,
       };
 
   factory NodeWithAddress.fromJson(Map json) {
+    final type = json['type'] as int;
+
+    if (type == 2) {
+      return EmptyNode();
+    }
+
     if (json
         case {
           'type': int type,
@@ -100,12 +107,10 @@ sealed class NodeWithAddress {
         0 => ReceiveNode(
             address: address,
             derivationPath: derivationPath,
-            addresses: addresses.map(
-              (key, value) => MapEntry(
-                AddressType.values[key as int],
-                value as String,
-              ),
-            ),
+            addresses: {
+              for (final MapEntry(:key, :value) in addresses.entries)
+                AddressType.fromIndex(int.parse(key as String)): value as String
+            },
             walletPurpose: walletPurpose != null
                 ? HDWalletPurpose.values[walletPurpose]
                 : null,
@@ -114,18 +119,15 @@ sealed class NodeWithAddress {
         1 => ChangeNode(
             address: address,
             derivationPath: derivationPath,
-            addresses: addresses.map(
-              (key, value) => MapEntry(
-                AddressType.values[key as int],
-                value as String,
-              ),
-            ),
+            addresses: {
+              for (final MapEntry(:key, :value) in addresses.entries)
+                AddressType.fromIndex(int.parse(key as String)): value as String
+            },
             walletPurpose: walletPurpose != null
                 ? HDWalletPurpose.values[walletPurpose]
                 : null,
             publicKey: publicKey,
           ),
-        2 => EmptyNode(),
         _ => throw UnimplementedError(),
       };
     }
@@ -167,6 +169,13 @@ final class ChangeNode extends NodeWithAddress {
 }
 
 final class EmptyNode extends NodeWithAddress {
+  @override
+  Json toJson() {
+    return {
+      "type": type,
+    };
+  }
+
   const EmptyNode()
       : super(
           bip32Node: null,

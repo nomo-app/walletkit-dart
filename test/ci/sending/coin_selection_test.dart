@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/utxo/payments/input_selection.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/payments/input_selection.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 

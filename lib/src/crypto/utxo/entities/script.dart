@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';

@@ -1,7 +1,7 @@
 @Timeout(Duration(minutes: 5))
 
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/domain/repository/electrum_json_rpc_client.dart';
+import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {

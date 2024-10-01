@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/tron/rpc/core/Tron.pb.dart' as tron;
-import 'package:walletkit_dart/src/crypto/tron/rpc/core/contract/balance_contract.pb.dart';
-import 'package:walletkit_dart/src/crypto/utxo/pubkey_to_address.dart';
+import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
+    as tron;
+import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/contract/balance_contract.pb.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/utils/base58.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import '../../utils.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/crypto/utxo/op_codes.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 
 const MAX_PUBKEYS_PER_MULTISIG = 20;

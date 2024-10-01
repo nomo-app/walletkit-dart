@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/evm/abi/ens/ens_registry_contract.dart';
-import 'package:walletkit_dart/src/crypto/evm/abi/ens/ens_resolver_contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/entities/abi/ens/ens_registry_contract.dart';
+import 'package:walletkit_dart/src/crypto/evm/entities/abi/ens/ens_resolver_contract.dart';
 
 import '../../../utils.dart';
 
