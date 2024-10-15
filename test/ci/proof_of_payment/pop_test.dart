@@ -223,6 +223,8 @@ void main() {
     publicKey = selectedTx.inputs[2].publicKey;
     result = popResult.verifiyPop(2, publicKey!);
     expect(result, true);
+
+    print(jsonEncode(popResult.toJson()));
   });
 
   test('Eurcoin Proof of Payment', () async {
@@ -299,6 +301,8 @@ void main() {
     var result = popResult.verifiyPop(0, publicKey!);
 
     expect(result, true);
+
+    print(jsonEncode(popResult.toJson()));
   });
 
   test('Zeniq Proof of Payment', () async {
@@ -375,5 +379,7 @@ void main() {
     var result = popResult.verifiyPop(0, publicKey!);
 
     expect(result, true);
+
+    print(jsonEncode(popResult.toJson()));
   });
 }

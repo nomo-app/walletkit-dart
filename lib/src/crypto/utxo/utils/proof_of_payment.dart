@@ -13,11 +13,17 @@ import 'ecurve.dart' as ecc;
 class POPResult {
   final Uint8List uPoPHash;
   final BTCRawTransaction upopTx;
+  final String originalTxId;
 
   /// Signatures of uPoPHash for each input used in the to be proven transaction
   final List<Uint8List> pops;
 
-  const POPResult(this.uPoPHash, this.upopTx, this.pops);
+  const POPResult(
+    this.uPoPHash,
+    this.upopTx,
+    this.pops,
+    this.originalTxId,
+  );
 
   bool verifiyPop(int index, Uint8List publicKey) {
     assert(index < pops.length);
@@ -26,7 +32,7 @@ class POPResult {
 
   Map<String, dynamic> toJson() {
     return {
-      "uPoPTxId": upopTx.txid,
+      "txId": originalTxId,
       "uPoP": upopTx.asHex,
       "uPoPHash": uPoPHash.toHex,
       "pops": [
@@ -140,5 +146,5 @@ Future<POPResult> proofOfPayment({
     for (final node in bip32Nodes) (node.sign(uPoPHash) as Uint8List),
   ];
 
-  return POPResult(uPoPHash, uPopTx, signatures);
+  return POPResult(uPoPHash, uPopTx, signatures, txid);
 }
