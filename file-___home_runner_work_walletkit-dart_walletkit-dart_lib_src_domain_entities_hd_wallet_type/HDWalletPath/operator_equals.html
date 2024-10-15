@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the HDWalletPath.fromPurpose constructor from Class HDWalletPath from the hd_wallet_type library, for the Dart programming language.">
-  <title>HDWalletPath.fromPurpose constructor - HDWalletPath - hd_wallet_type library - Dart API</title>
+  <meta name="description" content="API docs for the operator == method from the HDWalletPath class, for the Dart programming language.">
+  <title>operator == method - HDWalletPath class - hd_wallet_type library - Dart API</title>
 
 
   
@@ -27,9 +27,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type-library.html">src&#47;domain&#47;entities&#47;hd_wallet_type.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPath-class.html">HDWalletPath</a></li>
-    <li class="self-crumb">HDWalletPath.fromPurpose factory constructor</li>
+    <li class="self-crumb">operator == method</li>
   </ol>
-  <div class="self-name">HDWalletPath.fromPurpose</div>
+  <div class="self-name">operator ==</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -46,38 +46,70 @@
   </div>
 </header>
 <main>
-  <div
-      id="dartdoc-main-content"
-      class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type&#47;HDWalletPath-class-sidebar.html"
-      data-below-sidebar="">
-      <div>
-<h1><span class="kind-constructor">HDWalletPath.fromPurpose</span> constructor 
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type&#47;HDWalletPath-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">operator ==</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-      <span class="name ">HDWalletPath.fromPurpose</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromPurpose-param-purpose"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPurpose.html">HDWalletPurpose</a></span> <span class="parameter-name">purpose</span>, </span></li>
-<li><span class="parameter" id="fromPurpose-param-network"><span class="type-annotation">dynamic</span> <span class="parameter-name">network</span></span></li>
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+<span class="name ">operator ==</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span></li>
 </ol>)
+
+      <div class="features"><span class="feature">override</span></div>
+
     </section>
     
+<section class="desc markdown">
+  <p>The equality operator.</p>
+<p>The default behavior for all <a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a>s is to return true if and
+only if this object and <code>other</code> are the same object.</p>
+<p>Override this method to specify a different equality relation on
+a class. The overriding method must still be an equivalence relation.
+That is, it must be:</p>
+<ul>
+<li>
+<p>Total: It must return a boolean for all arguments. It should never throw.</p>
+</li>
+<li>
+<p>Reflexive: For all objects <code>o</code>, <code>o == o</code> must be true.</p>
+</li>
+<li>
+<p>Symmetric: For all objects <code>o1</code> and <code>o2</code>, <code>o1 == o2</code> and <code>o2 == o1</code> must
+either both be true, or both be false.</p>
+</li>
+<li>
+<p>Transitive: For all objects <code>o1</code>, <code>o2</code>, and <code>o3</code>, if <code>o1 == o2</code> and
+<code>o2 == o3</code> are true, then <code>o1 == o3</code> must be true.</p>
+</li>
+</ul>
+<p>The method should also be consistent over time,
+so whether two objects are equal should only change
+if at least one of the objects was modified.</p>
+<p>If a subclass overrides the equality operator, it should override
+the <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPath/hashCode.html">hashCode</a> method as well to maintain consistency.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">factory HDWalletPath.fromPurpose(
-  HDWalletPurpose purpose,
-  UTXONetworkType network,
-) {
-  final coinType = &quot;${network.coinType}&#39;&quot;;
-  return switch (purpose) {
-    HDWalletPurpose.NO_STRUCTURE =&gt; NSHDWalletPath(coinType),
-    HDWalletPurpose.BIP44 =&gt; Bip44HDWalletPath(coinType),
-    HDWalletPurpose.BIP49 =&gt; Bip49HDWalletPath(coinType),
-    HDWalletPurpose.BIP84 =&gt; Bip84HDWalletPath(coinType),
-  };
+  <pre class="language-dart"><code class="language-dart">@override
+bool operator ==(Object other) {
+  if (other is HDWalletPath) {
+    return other.basePath == basePath;
+  }
+  return false;
 }</code></pre>
 </section>
 
@@ -94,14 +126,14 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type-library.html">hd_wallet_type</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_domain_entities_hd_wallet_type/HDWalletPath-class.html">HDWalletPath</a></li>
-    <li class="self-crumb">HDWalletPath.fromPurpose factory constructor</li>
+    <li class="self-crumb">operator == method</li>
 </ol>
 
     <h5>HDWalletPath class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
-  </div><!--/.sidebar-offcanvas-left-->
-  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
   </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
 </main>
 <footer>
   <span class="no-break">

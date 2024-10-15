@@ -81,11 +81,12 @@
       networkType?.networkBIP.getForWalletType(walletPath.purpose);
 
   final parentNode = BipNode.fromSeed(seed, bipNetworkType);
-  final BipNode node = parentNode.derivePath(
-    walletPath == litecoinBip44HDPath
-        ? walletPath.account0Path
-        : walletPath.purpose.string,
-  ); &#47;&#47; TODO: Use base Path with Account
+  final derivationPath = switch (walletPath) {
+    litecoinBip44HDPath =&gt; walletPath.account0Path,
+    _ =&gt; walletPath.purpose.string,
+  };
+  final node =
+      parentNode.derivePath(derivationPath); &#47;&#47; TODO: Use base Path with Account
 
   return node;
 }</code></pre>
