@@ -16,6 +16,84 @@ import '../../utils.dart';
 
 void main() {
   test(
+    "Bitcoin Cash Proof of Payment",
+    () async {
+      final devSeed = loadDevSeedFromEnv();
+
+      final (txList, nodes) = await fetchUTXOTransactions(
+        networkType: BitcoincashNetwork,
+        seed: devSeed,
+        walletTypes: [bitcoinNSHDPath],
+        addressTypes: [AddressType.legacy, AddressType.cashaddr],
+      );
+      final selectedTx = txList.singleWhere(
+        (tx) =>
+            tx.hash ==
+            "cd99ffa2f22927bdfb30bc7619cba33d64db7458ff60295e66ad297bc5e99fdd",
+      );
+
+      final popResult = await proofOfPayment(
+        txid: selectedTx.hash,
+        nonce: rejectEVM,
+        nodes: nodes.toList(),
+        seed: devSeed,
+        networkType: BitcoincashNetwork,
+      );
+
+      /// Verify uPoPTx Structure
+
+      expect(popResult.upopTx.lockTime, 499999999);
+      expect(popResult.upopTx.outputs.length, 1);
+
+      final output = popResult.upopTx.outputs.first;
+
+      expect(output.value, BigInt.zero);
+
+      final outputScript = output.scriptPubKey;
+      var offset = 0;
+      final (op, off1) = outputScript.bytes.readUint8(offset);
+      offset += off1;
+      final (version, off2) = outputScript.bytes.readUint16(offset);
+      offset += off2;
+      final (txid, off3) = outputScript.readSlice(offset, 32);
+      offset += off3;
+      final (nonceBytes, _) = outputScript.readVarSlice(offset);
+
+      expect(op, OP_RETURN);
+      expect(version, 1);
+      expect(txid, selectedTx.hash.hexToBytes);
+      expect(nonceBytes, rejectEVM.hexToBytesWithPrefix);
+
+      for (var i = 0; i < popResult.upopTx.inputs.length; i++) {
+        final input = popResult.upopTx.inputs[i];
+        expect(input.sequence, 0x00000000);
+
+        final compareInput = selectedTx.inputs[i];
+
+        expect(input.txid.rev.toHex, compareInput.txid);
+        expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
+        expect(input.vout, compareInput.vout);
+      }
+
+      /// Verify Signatures
+
+      var publicKey = selectedTx.inputs.first.publicKey;
+      var result = popResult.verifiyPop(0, publicKey!);
+      expect(result, true);
+
+      publicKey = selectedTx.inputs[1].publicKey;
+      result = popResult.verifiyPop(1, publicKey!);
+      expect(result, true);
+
+      publicKey = selectedTx.inputs[2].publicKey;
+      result = popResult.verifiyPop(2, publicKey!);
+      expect(result, true);
+
+      print(jsonEncode(popResult.toJson()));
+    },
+  );
+
+  test(
     "Litecoin Proof of Payment Segwit Tx",
     () async {
       final devSeed = loadFromEnv('DEV_SEED');
