@@ -49,8 +49,8 @@ BipNode deriveMasterNodeFromSeed({
       networkType?.networkBIP.getForWalletType(walletPath.purpose);
 
   final parentNode = BipNode.fromSeed(seed, bipNetworkType);
-  final derivationPath = switch (walletPath) {
-    litecoinBip44HDPath => walletPath.account0Path,
+  final derivationPath = switch (walletPath.basePath) {
+    "m/44'/2'" => walletPath.account0Path,
     _ => walletPath.purpose.string,
   };
   final node =

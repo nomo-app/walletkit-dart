@@ -89,17 +89,6 @@ sealed class HDWalletPath {
       HDWalletPurpose.BIP84 => Bip84HDWalletPath(coinType),
     };
   }
-
-  @override
-  int get hashCode => basePath.hashCode;
-
-  @override
-  bool operator ==(Object other) {
-    if (other is HDWalletPath) {
-      return other.basePath == basePath;
-    }
-    return false;
-  }
 }
 
 final class NSHDWalletPath extends HDWalletPath {
