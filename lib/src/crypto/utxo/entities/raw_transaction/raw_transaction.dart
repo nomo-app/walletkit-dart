@@ -236,10 +236,11 @@ class BTCRawTransaction extends RawTransaction {
     offset += length;
 
     /// Segwit Flag
-    final isSegwit = buffer[offset] == SEGWIT_MARKER;
+    final isSegwit =
+        buffer[offset] == SEGWIT_MARKER && buffer[offset + 1] == SEGWIT_FLAG;
+
     if (isSegwit) {
       offset += 2;
-      throw UnimplementedError();
     }
 
     /// Inputs
@@ -269,7 +270,25 @@ class BTCRawTransaction extends RawTransaction {
 
     /// Witness
     if (isSegwit) {
-      throw UnimplementedError();
+      List<(Uint8List, BTCInput)> wittnessScripts = [];
+
+      for (final input in inputs) {
+        final (emptyScript, emptyScriptLength) = buffer.bytes.readUint8(offset);
+        if (emptyScript == 0x00) {
+          offset += emptyScriptLength;
+          continue;
+        }
+
+        final (wittnessScript, length) =
+            readScriptWittness(buffer: buffer, offset: offset);
+        wittnessScripts.add((wittnessScript, input));
+        offset += length;
+      }
+
+      for (final (wittnessScript, input) in wittnessScripts) {
+        final index = inputs.indexOf(input);
+        inputs[index] = input.addScript(wittnessScript: wittnessScript);
+      }
     }
 
     /// Locktime

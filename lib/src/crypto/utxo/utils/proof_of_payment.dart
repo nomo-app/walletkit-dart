@@ -23,6 +23,17 @@ class POPResult {
     assert(index < pops.length);
     return ecc.verify(uPoPHash, publicKey, pops[index]);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "uPoPTxId": upopTx.txid,
+      "uPoP": upopTx.asHex,
+      "uPoPHash": uPoPHash.toHex,
+      "pops": [
+        for (final pop in pops) pop.toHex,
+      ],
+    };
+  }
 }
 
 ///
@@ -120,6 +131,7 @@ Future<POPResult> proofOfPayment({
         childDerivationPath: node.derivationPath,
         walletPath: HDWalletPath.fromPurpose(
           node.walletPurpose!,
+          networkType,
         ), // TODO: Store HDWalletPath better
       ),
   ];

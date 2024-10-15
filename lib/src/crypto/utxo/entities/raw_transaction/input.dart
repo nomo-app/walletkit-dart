@@ -79,22 +79,39 @@ sealed class Input {
   bool get isP2PK =>
       previousScriptPubKey.length == 35 && previousScriptPubKey[0] == 0x21;
 
-  bool get isSegwit => isP2WPKH || isP2WSH;
+  bool get isSegwit => isP2WPKH || isP2WSH || hasWitness;
 
   bool get hasWitness => _wittnessScript != null;
 
   Uint8List get publicKeyFromSig {
-    if (_scriptSig == null) throw Exception("No ScriptSig");
-    final script = Script(_scriptSig!);
+    /// From ScriptSig (P2PKH, P2PK)
+    if (_scriptSig != null && _scriptSig!.isNotEmpty) {
+      final script = Script(_scriptSig!);
 
-    final publicKey = script.chunks[1].data;
-    if (publicKey == null) {
-      throw Exception("Invalid Public Key");
+      final publicKey = script.chunks[1].data;
+      if (publicKey == null) {
+        throw Exception("Invalid Public Key");
+      }
+      if (publicKey.length != 33) {
+        throw Exception("Invalid Public Key");
+      }
+      return publicKey;
     }
-    if (publicKey.length != 33) {
-      throw Exception("Invalid Public Key");
+
+    /// From Witness
+    if (_wittnessScript != null && _wittnessScript!.isNotEmpty) {
+      final chunks = decodeScriptWittness(wittnessScript: _wittnessScript!);
+      if (chunks.length != 2) {
+        throw Exception("Invalid Witness");
+      }
+      final publicKey = chunks[1];
+      if (publicKey.length != 33) {
+        throw Exception("Invalid Public Key");
+      }
+      return publicKey;
     }
-    return publicKey;
+
+    throw Exception("No ScriptSig or Witness found");
   }
 
   Input addScript({Uint8List? scriptSig, Uint8List? wittnessScript});
@@ -375,4 +392,53 @@ class EC8Input extends Input {
       value: BigInt.from(value),
     );
   }
+}
+
+(Uint8List, int) readScriptWittness({
+  required Uint8List buffer,
+  required int offset,
+}) {
+  final (count, off1) = buffer.bytes.readVarInt(offset);
+  offset += off1;
+
+  final scripts = <Uint8List>[];
+
+  for (var i = 0; i < count; i++) {
+    final (script, off2) = buffer.readVarSlice(offset);
+    offset += off2;
+    scripts.add(script);
+  }
+
+  final wittnessScript = [
+    count,
+    for (final script in scripts) ...[
+      script.length,
+      ...script,
+    ],
+  ].toUint8List;
+
+  return (wittnessScript, wittnessScript.length);
+}
+
+List<Uint8List> decodeScriptWittness({
+  required Uint8List wittnessScript,
+}) {
+  final scripts = <Uint8List>[];
+
+  var offset = 0;
+
+  final count = wittnessScript[offset];
+  offset += 1;
+
+  for (var i = 0; i < count; i++) {
+    final length = wittnessScript[offset];
+    offset += 1;
+
+    final script = wittnessScript.sublist(offset, offset + length);
+    offset += length;
+
+    scripts.add(script);
+  }
+
+  return scripts;
 }
