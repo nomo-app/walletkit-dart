@@ -178,7 +178,7 @@
     for (final node in bip32Nodes) (node.sign(uPoPHash) as Uint8List),
   ];
 
-  return POPResult(uPoPHash, uPopTx, signatures);
+  return POPResult(uPoPHash, uPopTx, signatures, txid);
 }</code></pre>
 </section>
 
