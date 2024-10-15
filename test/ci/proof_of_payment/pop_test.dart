@@ -80,7 +80,6 @@ void main() {
 
       /// Verify Signatures
       var publicKey = selectedTx.inputs.first.publicKey;
-      print(publicKey!.toHex);
       var result = popResult.verifiyPop(0, publicKey!);
       expect(result, true);
 
