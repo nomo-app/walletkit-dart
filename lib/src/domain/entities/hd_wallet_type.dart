@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:walletkit_dart/src/crypto/network_type.dart';
 
 const NS_PURPOSE = "m/0'";
 const BIP44_PURPOSE = "m/44'";
@@ -76,13 +77,28 @@ sealed class HDWalletPath {
     return "$basePath/$account'/$change/$index";
   }
 
-  factory HDWalletPath.fromPurpose(HDWalletPurpose purpose) {
+  factory HDWalletPath.fromPurpose(
+    HDWalletPurpose purpose,
+    UTXONetworkType network,
+  ) {
+    final coinType = "${network.coinType}'";
     return switch (purpose) {
-      HDWalletPurpose.NO_STRUCTURE => NSHDWalletPath(''),
-      HDWalletPurpose.BIP44 => Bip44HDWalletPath(''),
-      HDWalletPurpose.BIP49 => Bip49HDWalletPath(''),
-      HDWalletPurpose.BIP84 => Bip84HDWalletPath(''),
+      HDWalletPurpose.NO_STRUCTURE => NSHDWalletPath(coinType),
+      HDWalletPurpose.BIP44 => Bip44HDWalletPath(coinType),
+      HDWalletPurpose.BIP49 => Bip49HDWalletPath(coinType),
+      HDWalletPurpose.BIP84 => Bip84HDWalletPath(coinType),
     };
+  }
+
+  @override
+  int get hashCode => basePath.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is HDWalletPath) {
+      return other.basePath == basePath;
+    }
+    return false;
   }
 }
 

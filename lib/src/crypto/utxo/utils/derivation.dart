@@ -49,11 +49,12 @@ BipNode deriveMasterNodeFromSeed({
       networkType?.networkBIP.getForWalletType(walletPath.purpose);
 
   final parentNode = BipNode.fromSeed(seed, bipNetworkType);
-  final BipNode node = parentNode.derivePath(
-    walletPath == litecoinBip44HDPath
-        ? walletPath.account0Path
-        : walletPath.purpose.string,
-  ); // TODO: Use base Path with Account
+  final derivationPath = switch (walletPath) {
+    litecoinBip44HDPath => walletPath.account0Path,
+    _ => walletPath.purpose.string,
+  };
+  final node =
+      parentNode.derivePath(derivationPath); // TODO: Use base Path with Account
 
   return node;
 }
@@ -140,8 +141,8 @@ NodeWithAddress deriveChildNode({
 bip32.BIP32 deriveChildNodeFromPath({
   required Uint8List seed,
   required String childDerivationPath,
-  required UTXONetworkType networkType,
   required HDWalletPath walletPath,
+  UTXONetworkType? networkType,
 }) {
   final masterNode = deriveMasterNodeFromSeed(
     seed: seed,
