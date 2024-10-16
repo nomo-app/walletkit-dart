@@ -81,7 +81,7 @@
         &#39;from&#39;: String from,
         &#39;to&#39;: String to,
         &#39;value&#39;: String value_s,
-        &#39;gas&#39;: String _,
+        &#39;gas&#39;: String gas_s,
         &#39;gasUsed&#39;: String gasUsed_s,
         &#39;gasPrice&#39;: String gasPrice_s,
         &#39;input&#39;: String input,
@@ -113,6 +113,21 @@
       decimals: currency.decimals,
     );
 
+    final gas = Amount(
+      value: gas_s.toBigInt,
+      decimals: 0,
+    );
+
+    final gasUsed = Amount(
+      value: gasUsed_s.toBigInt,
+      decimals: 0,
+    );
+
+    final gasPrice = Amount(
+      value: gasPrice_s.toBigInt,
+      decimals: currency.decimals,
+    );
+
     final transferMethod =
         TransactionTransferMethod.fromAddress(address, to, from);
 
@@ -123,8 +138,11 @@
       timeMilli: timeMilli * 1000,
       amount: amount,
       fee: fee,
+      gasUsed: gasUsed,
       sender: from,
       recipient: to,
+      gas: gas,
+      gasPrice: gasPrice,
       transferMethod: transferMethod,
       token: token,
       status: ConfirmationStatus.fromConfirmations(confirmations),

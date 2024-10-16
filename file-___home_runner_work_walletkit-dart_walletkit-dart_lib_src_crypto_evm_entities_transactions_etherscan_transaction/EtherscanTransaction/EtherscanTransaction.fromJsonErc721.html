@@ -80,7 +80,7 @@
         &#39;hash&#39;: String hash,
         &#39;from&#39;: String from,
         &#39;to&#39;: String to,
-        &#39;gas&#39;: String _,
+        &#39;gas&#39;: String gas_s,
         &#39;gasUsed&#39;: String gasUsed_s,
         &#39;gasPrice&#39;: String gasPrice_s,
         &#39;contractAddress&#39;: String contractAddress,
@@ -113,6 +113,21 @@
       decimals: currency.decimals,
     );
 
+    final gasUsed = Amount(
+      value: gasUsed_s.toBigInt,
+      decimals: 0,
+    );
+
+    final gas = Amount(
+      value: gas_s.toBigInt,
+      decimals: 0,
+    );
+
+    final gasPrice = Amount(
+      value: gasPrice_s.toBigInt,
+      decimals: currency.decimals,
+    );
+
     final transferMethod =
         TransactionTransferMethod.fromAddress(address, to, from);
 
@@ -124,6 +139,9 @@
       amount: amount,
       fee: fee,
       sender: from,
+      gasPrice: gasPrice,
+      gas: gas,
+      gasUsed: gasUsed,
       recipient: to,
       transferMethod: transferMethod,
       token: token,
