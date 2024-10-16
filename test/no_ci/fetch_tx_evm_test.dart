@@ -11,7 +11,7 @@ void main() {
         address: spoilEVM,
       );
       print(transactions.last.gas);
-      print(transactions.last.gasPrice?.displayValue);
+      print(transactions.last.gasPrice.displayValue);
       print(transactions.last.gasUsed);
       print(transactions.last.hash);
       expect(transactions, isNotEmpty);

@@ -2,7 +2,7 @@ part of '../../../../domain/entities/generic_transaction.dart';
 
 base class EVMTransaction extends GenericTransaction {
   final Uint8List input;
-  final Amount? gasPrice;
+  final Amount gasPrice;
   final int gas;
   final int gasUsed;
   final ExternalContractFunctionWithValues? decodedInput;
@@ -72,7 +72,7 @@ base class EVMTransaction extends GenericTransaction {
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
       'fee': fee?.toJson(),
-      'gasPrice': gasPrice?.toJson(),
+      'gasPrice': gasPrice.toJson(),
       'sender': sender,
       'gas': gas,
       'gasUsed': gasUsed,
@@ -99,7 +99,7 @@ base class EVMTransaction extends GenericTransaction {
           'transferMethod': int transferMethod,
           'status': int status,
           'gas': int gas,
-          'gasPrice': Map? gasPrice,
+          'gasPrice': Map gasPrice,
           'gasUsed': int gasUsed,
           'token': Map token,
           'input': String input,
@@ -116,7 +116,7 @@ base class EVMTransaction extends GenericTransaction {
         gas: gas,
         recipient: recipient,
         gasUsed: gasUsed,
-        gasPrice: gasPrice != null ? Amount.fromJson(gasPrice) : null,
+        gasPrice: Amount.fromJson(gasPrice),
         transferMethod: TransactionTransferMethod.fromJson(transferMethod),
         status: ConfirmationStatus.fromJson(status),
         input: input.hexToBytesOrNull ?? Uint8List(0),
