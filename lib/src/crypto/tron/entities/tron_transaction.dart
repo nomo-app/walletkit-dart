@@ -1,8 +1,6 @@
 part of '../../../domain/entities/generic_transaction.dart';
 
-base class TronTransaction extends GenericTransaction {
-  final Uint8List input;
-
+base class TronTransaction extends EVMTransaction {
   const TronTransaction({
     required super.hash,
     required super.block,
@@ -15,7 +13,11 @@ base class TronTransaction extends GenericTransaction {
     required super.transferMethod,
     required super.token,
     required super.status,
-    required this.input,
+    required super.gasPrice,
+    required super.gasUsed,
+    required super.gas,
+    required super.decodedInput,
+    required super.input,
   });
 
   static TronTransaction? fromJson(
@@ -45,6 +47,10 @@ base class TronTransaction extends GenericTransaction {
         timeMilli: block_timestamp,
         recipient: to,
         sender: from,
+        decodedInput: null,
+        gas: null,
+        gasPrice: null,
+        gasUsed: null,
         amount: amount,
         fee: null,
         transferMethod: switch (direction) {
@@ -101,6 +107,10 @@ base class TronTransaction extends GenericTransaction {
         timeMilli: timestamp,
         amount: amount,
         fee: feeAmount,
+        decodedInput: null,
+        gas: null,
+        gasPrice: null,
+        gasUsed: null,
         sender: ownerAddress,
         recipient: toAddress,
         transferMethod: transferMethod,
@@ -156,6 +166,10 @@ base class TronTransaction extends GenericTransaction {
             ),
             fee: fee,
             sender: data.from,
+            gas: null,
+            gasPrice: null,
+            gasUsed: null,
+            decodedInput: null,
             recipient: data.to,
             transferMethod: data.from == walletAddress
                 ? TransactionTransferMethod.send
@@ -175,6 +189,10 @@ base class TronTransaction extends GenericTransaction {
             ),
             fee: fee,
             sender: data.from,
+            gas: null,
+            gasPrice: null,
+            gasUsed: null,
+            decodedInput: null,
             recipient: data.to,
             transferMethod: data.from == walletAddress
                 ? TransactionTransferMethod.send
@@ -188,23 +206,5 @@ base class TronTransaction extends GenericTransaction {
     }
 
     throw UnimplementedError();
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'hash': hash,
-      'block': block,
-      'confirmations': confirmations,
-      'timeMilli': timeMilli,
-      'amount': amount.toJson(),
-      'fee': fee?.toJson(),
-      'sender': sender,
-      'recipient': recipient,
-      'transferMethod': transferMethod.index,
-      'status': status.index,
-      'input': input.toHex,
-      'token': token.toJson(),
-    };
   }
 }
