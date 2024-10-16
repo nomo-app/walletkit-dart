@@ -113,16 +113,6 @@
       decimals: currency.decimals,
     );
 
-    final gasUsed = Amount(
-      value: gasUsed_s.toBigInt,
-      decimals: 0,
-    );
-
-    final gas = Amount(
-      value: gas_s.toBigInt,
-      decimals: 0,
-    );
-
     final gasPrice = Amount(
       value: gasPrice_s.toBigInt,
       decimals: currency.decimals,
@@ -140,8 +130,8 @@
       fee: fee,
       sender: from,
       gasPrice: gasPrice,
-      gas: gas,
-      gasUsed: gasUsed,
+      gas: gas_s.toInt,
+      gasUsed: gasUsed_s.toInt,
       recipient: to,
       transferMethod: transferMethod,
       token: token,

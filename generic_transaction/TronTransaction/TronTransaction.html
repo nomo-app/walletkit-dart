@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the TronTransaction constructor from Class TronTransaction from the tron_transaction library, for the Dart programming language.">
-  <title>TronTransaction constructor - TronTransaction - tron_transaction library - Dart API</title>
+  <meta name="description" content="API docs for the TronTransaction constructor from Class TronTransaction from the generic_transaction library, for the Dart programming language.">
+  <title>TronTransaction constructor - TronTransaction - generic_transaction library - Dart API</title>
 
 
   
@@ -25,8 +25,8 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_entities_tron_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_entities_tron_transaction-library.html">src&#47;crypto&#47;tron&#47;entities&#47;tron_transaction.dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_entities_tron_transaction/TronTransaction-class.html">TronTransaction</a></li>
+    <li><a href="../../generic_transaction/generic_transaction-library.html">src&#47;domain&#47;entities&#47;generic_transaction.dart</a></li>
+    <li><a href="../../generic_transaction/TronTransaction-class.html">TronTransaction</a></li>
     <li class="self-crumb">TronTransaction const constructor</li>
   </ol>
   <div class="self-name">TronTransaction</div>
@@ -49,7 +49,7 @@
   <div
       id="dartdoc-main-content"
       class="main-content"
-      data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_entities_tron_transaction&#47;TronTransaction-class-sidebar.html"
+      data-above-sidebar="generic_transaction&#47;TronTransaction-class-sidebar.html"
       data-below-sidebar="">
       <div>
 <h1><span class="kind-constructor">TronTransaction</span> constructor 
@@ -57,22 +57,18 @@
 
     <section class="multi-line-signature">
       const
-      <span class="name ">TronTransaction</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-hash"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">hash</span>, </span></li>
-<li><span class="parameter" id="-param-block"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">block</span>, </span></li>
-<li><span class="parameter" id="-param-confirmations"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">confirmations</span>, </span></li>
-<li><span class="parameter" id="-param-timeMilli"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">timeMilli</span>, </span></li>
+      <span class="name ">TronTransaction</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-hash"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">hash</span>, </span></li>
+<li><span class="parameter" id="-param-block"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">block</span>, </span></li>
+<li><span class="parameter" id="-param-confirmations"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">confirmations</span>, </span></li>
+<li><span class="parameter" id="-param-timeMilli"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">timeMilli</span>, </span></li>
 <li><span class="parameter" id="-param-amount"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">amount</span>, </span></li>
 <li><span class="parameter" id="-param-fee"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">fee</span>, </span></li>
-<li><span class="parameter" id="-param-sender"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">sender</span>, </span></li>
-<li><span class="parameter" id="-param-recipient"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">recipient</span>, </span></li>
-<li><span class="parameter" id="-param-transferMethod"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">transferMethod</span>, </span></li>
+<li><span class="parameter" id="-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span></li>
+<li><span class="parameter" id="-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span></li>
+<li><span class="parameter" id="-param-transferMethod"><span>required</span> <span class="type-annotation"><a href="../../generic_transaction/TransactionTransferMethod.html">TransactionTransferMethod</a></span> <span class="parameter-name">transferMethod</span>, </span></li>
 <li><span class="parameter" id="-param-token"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">token</span>, </span></li>
-<li><span class="parameter" id="-param-status"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">status</span>, </span></li>
-<li><span class="parameter" id="-param-input"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">input</span>, </span></li>
-<li><span class="parameter" id="-param-gasPrice"><span class="type-annotation">dynamic</span> <span class="parameter-name">gasPrice</span>, </span></li>
-<li><span class="parameter" id="-param-decodedInput"><span class="type-annotation">dynamic</span> <span class="parameter-name">decodedInput</span>, </span></li>
-<li><span class="parameter" id="-param-gas"><span class="type-annotation">dynamic</span> <span class="parameter-name">gas</span>, </span></li>
-<li><span class="parameter" id="-param-gasUsed"><span class="type-annotation">dynamic</span> <span class="parameter-name">gasUsed</span>, </span></li>
+<li><span class="parameter" id="-param-status"><span>required</span> <span class="type-annotation"><a href="../../generic_transaction/ConfirmationStatus.html">ConfirmationStatus</a></span> <span class="parameter-name">status</span>, </span></li>
+<li><span class="parameter" id="-param-input"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">input</span>, </span></li>
 </ol>})
     </section>
     
@@ -93,11 +89,7 @@
   required super.transferMethod,
   required super.token,
   required super.status,
-  required super.input,
-  super.gasPrice,
-  super.decodedInput,
-  super.gas,
-  super.gasUsed,
+  required this.input,
 });</code></pre>
 </section>
 
@@ -112,8 +104,8 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">walletkit_dart</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_entities_tron_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_entities_tron_transaction-library.html">tron_transaction</a></li>
-    <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_tron_entities_tron_transaction/TronTransaction-class.html">TronTransaction</a></li>
+    <li><a href="../../generic_transaction/generic_transaction-library.html">generic_transaction</a></li>
+    <li><a href="../../generic_transaction/TronTransaction-class.html">TronTransaction</a></li>
     <li class="self-crumb">TronTransaction const constructor</li>
 </ol>
 
