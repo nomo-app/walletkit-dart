@@ -1335,6 +1335,32 @@ class UniswapV2Router extends InternalContract {
     return result;
   }
 
+  Future<RawEvmTransaction> removeLiquidityTx({
+    required String tokenA,
+    required String tokenB,
+    required BigInt liquidity,
+    required BigInt amountAMin,
+    required BigInt amountBMin,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("removeLiquidity")!;
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function.addValues(values: [
+        tokenA,
+        tokenB,
+        liquidity,
+        amountAMin,
+        amountBMin,
+        to,
+        deadline,
+      ]),
+    );
+    return result;
+  }
+
   Future<RawEvmTransaction> removeLiquidityETHTx({
     required String token,
     required BigInt liquidity,
