@@ -207,4 +207,22 @@ base class TronTransaction extends EVMTransaction {
 
     throw UnimplementedError();
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'hash': hash,
+      'block': block,
+      'confirmations': confirmations,
+      'timeMilli': timeMilli,
+      'amount': amount.toJson(),
+      'fee': fee?.toJson(),
+      'sender': sender,
+      'recipient': recipient,
+      'transferMethod': transferMethod.index,
+      'status': status.index,
+      'input': input.toHex,
+      'token': token.toJson(),
+    };
+  }
 }

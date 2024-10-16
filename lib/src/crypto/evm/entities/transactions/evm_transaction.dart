@@ -72,7 +72,6 @@ base class EVMTransaction extends GenericTransaction {
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
       'fee': fee?.toJson(),
-      'gasPrice': gasPrice?.toJson(),
       'sender': sender,
       'gas': gas,
       'gasUsed': gasUsed,
