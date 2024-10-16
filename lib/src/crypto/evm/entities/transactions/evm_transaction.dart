@@ -2,9 +2,9 @@ part of '../../../../domain/entities/generic_transaction.dart';
 
 base class EVMTransaction extends GenericTransaction {
   final Uint8List input;
-  final Amount gasPrice;
-  final int gas;
-  final int gasUsed;
+  final Amount? gasPrice;
+  final int? gas;
+  final int? gasUsed;
   final ExternalContractFunctionWithValues? decodedInput;
 
   const EVMTransaction({
@@ -72,7 +72,6 @@ base class EVMTransaction extends GenericTransaction {
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
       'fee': fee?.toJson(),
-      'gasPrice': gasPrice.toJson(),
       'sender': sender,
       'gas': gas,
       'gasUsed': gasUsed,
