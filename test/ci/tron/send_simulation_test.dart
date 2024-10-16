@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/crypto/tron/entities/tron_transaction_utils.dart';
 import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
     as tron;
 import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/contract/balance_contract.pb.dart';

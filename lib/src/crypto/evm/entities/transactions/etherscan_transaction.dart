@@ -19,7 +19,10 @@ base class EtherscanTransaction extends EVMTransaction {
     required super.token,
     required super.status,
     required super.input,
+    required super.gasPrice,
     super.decodedInput,
+    required super.gas,
+    required super.gasUsed,
   });
 
   factory EtherscanTransaction.fromJson(
@@ -35,7 +38,7 @@ base class EtherscanTransaction extends EVMTransaction {
           'from': String from,
           'to': String to,
           'value': String value_s,
-          'gas': String _,
+          'gas': String gas_s,
           'gasUsed': String gasUsed_s,
           'gasPrice': String gasPrice_s,
           'txreceipt_status': String txreceipt_status_s,
@@ -56,6 +59,11 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: token.decimals,
       );
 
+      final gasPrice = Amount(
+        value: gasPrice_s.toBigInt,
+        decimals: token.decimals,
+      );
+
       final transferMethod =
           TransactionTransferMethod.fromAddress(address, to, from);
 
@@ -66,7 +74,10 @@ base class EtherscanTransaction extends EVMTransaction {
         timeMilli: timeMilli * 1000,
         amount: amount,
         fee: fee,
+        gasPrice: gasPrice,
+        gasUsed: gasUsed_s.toInt,
         sender: from,
+        gas: gas_s.toInt,
         recipient: to,
         transferMethod: transferMethod,
         token: token,
@@ -93,7 +104,7 @@ base class EtherscanTransaction extends EVMTransaction {
           'from': String from,
           'to': String to,
           'value': String value_s,
-          'gas': String _,
+          'gas': String gas_s,
           'gasUsed': String gasUsed_s,
           'gasPrice': String gasPrice_s,
           'input': String input,
@@ -125,6 +136,11 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: currency.decimals,
       );
 
+      final gasPrice = Amount(
+        value: gasPrice_s.toBigInt,
+        decimals: currency.decimals,
+      );
+
       final transferMethod =
           TransactionTransferMethod.fromAddress(address, to, from);
 
@@ -135,8 +151,11 @@ base class EtherscanTransaction extends EVMTransaction {
         timeMilli: timeMilli * 1000,
         amount: amount,
         fee: fee,
+        gasUsed: gasUsed_s.toInt,
         sender: from,
         recipient: to,
+        gas: gas_s.toInt,
+        gasPrice: gasPrice,
         transferMethod: transferMethod,
         token: token,
         status: ConfirmationStatus.fromConfirmations(confirmations),
@@ -158,7 +177,7 @@ base class EtherscanTransaction extends EVMTransaction {
           'hash': String hash,
           'from': String from,
           'to': String to,
-          'gas': String _,
+          'gas': String gas_s,
           'gasUsed': String gasUsed_s,
           'gasPrice': String gasPrice_s,
           'contractAddress': String contractAddress,
@@ -191,6 +210,11 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: currency.decimals,
       );
 
+      final gasPrice = Amount(
+        value: gasPrice_s.toBigInt,
+        decimals: currency.decimals,
+      );
+
       final transferMethod =
           TransactionTransferMethod.fromAddress(address, to, from);
 
@@ -202,6 +226,9 @@ base class EtherscanTransaction extends EVMTransaction {
         amount: amount,
         fee: fee,
         sender: from,
+        gasPrice: gasPrice,
+        gas: gas_s.toInt,
+        gasUsed: gasUsed_s.toInt,
         recipient: to,
         transferMethod: transferMethod,
         token: token,

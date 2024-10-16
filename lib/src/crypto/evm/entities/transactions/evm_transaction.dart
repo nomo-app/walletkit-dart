@@ -2,6 +2,9 @@ part of '../../../../domain/entities/generic_transaction.dart';
 
 base class EVMTransaction extends GenericTransaction {
   final Uint8List input;
+  final Amount gasPrice;
+  final int gas;
+  final int gasUsed;
   final ExternalContractFunctionWithValues? decodedInput;
 
   const EVMTransaction({
@@ -18,6 +21,9 @@ base class EVMTransaction extends GenericTransaction {
     required super.status,
     required this.input,
     required this.decodedInput,
+    required this.gasPrice,
+    required this.gas,
+    required this.gasUsed,
   });
 
   String? get uTF8Input {
@@ -44,6 +50,9 @@ base class EVMTransaction extends GenericTransaction {
       timeMilli: timeMilli,
       amount: amount,
       fee: fee,
+      gasPrice: gasPrice,
+      gas: gas,
+      gasUsed: gasUsed,
       sender: sender,
       recipient: recipient,
       transferMethod: transferMethod,
@@ -63,7 +72,10 @@ base class EVMTransaction extends GenericTransaction {
       'timeMilli': timeMilli,
       'amount': amount.toJson(),
       'fee': fee?.toJson(),
+      'gasPrice': gasPrice.toJson(),
       'sender': sender,
+      'gas': gas,
+      'gasUsed': gasUsed,
       'recipient': recipient,
       'transferMethod': transferMethod.index,
       'status': status.index,
@@ -86,6 +98,9 @@ base class EVMTransaction extends GenericTransaction {
           'recipient': String recipient,
           'transferMethod': int transferMethod,
           'status': int status,
+          'gas': int gas,
+          'gasPrice': Map gasPrice,
+          'gasUsed': int gasUsed,
           'token': Map token,
           'input': String input,
           'decodedInput': Map? decodedInput,
@@ -98,7 +113,10 @@ base class EVMTransaction extends GenericTransaction {
         amount: Amount.fromJson(amount),
         fee: fee != null ? Amount.fromJson(fee) : null,
         sender: sender,
+        gas: gas,
         recipient: recipient,
+        gasUsed: gasUsed,
+        gasPrice: Amount.fromJson(gasPrice),
         transferMethod: TransactionTransferMethod.fromJson(transferMethod),
         status: ConfirmationStatus.fromJson(status),
         input: input.hexToBytesOrNull ?? Uint8List(0),
