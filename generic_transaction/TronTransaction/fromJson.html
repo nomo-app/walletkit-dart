@@ -99,6 +99,10 @@
       timeMilli: block_timestamp,
       recipient: to,
       sender: from,
+      decodedInput: null,
+      gas: null,
+      gasPrice: null,
+      gasUsed: null,
       amount: amount,
       fee: null,
       transferMethod: switch (direction) {
@@ -155,6 +159,10 @@
       timeMilli: timestamp,
       amount: amount,
       fee: feeAmount,
+      decodedInput: null,
+      gas: null,
+      gasPrice: null,
+      gasUsed: null,
       sender: ownerAddress,
       recipient: toAddress,
       transferMethod: transferMethod,
@@ -210,6 +218,10 @@
           ),
           fee: fee,
           sender: data.from,
+          gas: null,
+          gasPrice: null,
+          gasUsed: null,
+          decodedInput: null,
           recipient: data.to,
           transferMethod: data.from == walletAddress
               ? TransactionTransferMethod.send
@@ -229,6 +241,10 @@
           ),
           fee: fee,
           sender: data.from,
+          gas: null,
+          gasPrice: null,
+          gasUsed: null,
+          decodedInput: null,
           recipient: data.to,
           transferMethod: data.from == walletAddress
               ? TransactionTransferMethod.send
