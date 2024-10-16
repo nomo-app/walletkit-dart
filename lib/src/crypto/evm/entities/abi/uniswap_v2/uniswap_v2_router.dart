@@ -1301,10 +1301,6 @@ class UniswapV2Router extends InternalContract {
         to,
         deadline,
       ]),
-      feeInfo: EvmFeeInformation(
-        gasLimit: 3E5.toInt(),
-        gasPrice: Amount(value: 1E10.toInt().toBigInt, decimals: 18),
-      ),
     );
     return result;
   }
