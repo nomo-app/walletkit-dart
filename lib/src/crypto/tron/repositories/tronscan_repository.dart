@@ -42,7 +42,7 @@ class TronScanRepository extends HTTPRepository {
     return "$baseURL/transaction?start=${start.asQueryString}&limit=${limit.asQueryString}&address=${address.asQueryString}&start_timestamp=${startTimestamp.asQueryString}&end_timestamp=${endTimestamp.asQueryString}&type=${type.asQueryString}&method=${method.asQueryString}&block=${block.asQueryString}&tokens=${tokens.asQueryString}";
   }
 
-  Future<Set<EVMTransaction>> getTransactions({
+  Future<Set<TronTransaction>> getTransactions({
     required String address,
     required CoinEntity token,
     int limit = 10,
@@ -151,7 +151,7 @@ class TronScanRepository extends HTTPRepository {
     return getCall<JSON>(endpoint);
   }
 
-  Future<Set<EVMTransaction>> getTRC20TransferList({
+  Future<Set<TronTransaction>> getTRC20TransferList({
     required String address,
     required ERC20Entity trc20,
     int start = 0,

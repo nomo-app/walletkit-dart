@@ -3,8 +3,8 @@ part of '../../../../domain/entities/generic_transaction.dart';
 base class EVMTransaction extends GenericTransaction {
   final Uint8List input;
   final Amount? gasPrice;
-  final Amount? gas;
-  final Amount? gasUsed;
+  final int gas;
+  final int gasUsed;
   final ExternalContractFunctionWithValues? decodedInput;
 
   const EVMTransaction({
@@ -74,8 +74,8 @@ base class EVMTransaction extends GenericTransaction {
       'fee': fee?.toJson(),
       'gasPrice': gasPrice?.toJson(),
       'sender': sender,
-      'gas': gas?.toJson(),
-      'gasUsed': gasUsed?.toJson(),
+      'gas': gas,
+      'gasUsed': gasUsed,
       'recipient': recipient,
       'transferMethod': transferMethod.index,
       'status': status.index,
@@ -98,9 +98,9 @@ base class EVMTransaction extends GenericTransaction {
           'recipient': String recipient,
           'transferMethod': int transferMethod,
           'status': int status,
-          'gas': Map? gas,
+          'gas': int gas,
           'gasPrice': Map? gasPrice,
-          'gasUsed': Map? gasUsed,
+          'gasUsed': int gasUsed,
           'token': Map token,
           'input': String input,
           'decodedInput': Map? decodedInput,
@@ -113,9 +113,9 @@ base class EVMTransaction extends GenericTransaction {
         amount: Amount.fromJson(amount),
         fee: fee != null ? Amount.fromJson(fee) : null,
         sender: sender,
-        gas: gas != null ? Amount.fromJson(gas) : null,
+        gas: gas,
         recipient: recipient,
-        gasUsed: gasUsed != null ? Amount.fromJson(gasUsed) : null,
+        gasUsed: gasUsed,
         gasPrice: gasPrice != null ? Amount.fromJson(gasPrice) : null,
         transferMethod: TransactionTransferMethod.fromJson(transferMethod),
         status: ConfirmationStatus.fromJson(status),

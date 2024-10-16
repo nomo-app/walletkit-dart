@@ -3,12 +3,17 @@ library generic_transaction;
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
+import 'package:walletkit_dart/src/common/http_repository.dart';
+import 'package:walletkit_dart/src/crypto/tron/entities/tron_contract_type.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
+    as tron;
 
 part '../../crypto/evm/entities/transactions/evm_transaction.dart';
 part '../../crypto/utxo/entities/transactions/utxo_transaction.dart';
+part '../../crypto/tron/entities/tron_transaction.dart';
 
 sealed class GenericTransaction implements Comparable<GenericTransaction> {
   final String hash;

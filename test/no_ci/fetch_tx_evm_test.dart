@@ -10,9 +10,9 @@ void main() {
       final transactions = await etherscan.fetchTransactions(
         address: spoilEVM,
       );
-      print(transactions.last.gas?.displayValue);
+      print(transactions.last.gas);
       print(transactions.last.gasPrice?.displayValue);
-      print(transactions.last.gasUsed?.displayValue);
+      print(transactions.last.gasUsed);
       print(transactions.last.hash);
       expect(transactions, isNotEmpty);
     },

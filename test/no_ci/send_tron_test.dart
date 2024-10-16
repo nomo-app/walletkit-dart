@@ -1,4 +1,6 @@
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/crypto/tron/entities/tron_contract_type.dart';
+import 'package:walletkit_dart/src/crypto/tron/entities/tron_transaction_utils.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../ci/tron/derive_address_test.dart';

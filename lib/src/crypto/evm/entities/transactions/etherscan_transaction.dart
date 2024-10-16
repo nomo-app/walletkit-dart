@@ -59,16 +59,6 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: token.decimals,
       );
 
-      final gas = Amount(
-        value: gas_s.toBigInt,
-        decimals: 0,
-      );
-
-      final gasUsed = Amount(
-        value: gasUsed_s.toBigInt,
-        decimals: 0,
-      );
-
       final gasPrice = Amount(
         value: gasPrice_s.toBigInt,
         decimals: token.decimals,
@@ -85,9 +75,9 @@ base class EtherscanTransaction extends EVMTransaction {
         amount: amount,
         fee: fee,
         gasPrice: gasPrice,
-        gasUsed: gasUsed,
+        gasUsed: gasUsed_s.toInt,
         sender: from,
-        gas: gas,
+        gas: gas_s.toInt,
         recipient: to,
         transferMethod: transferMethod,
         token: token,
@@ -146,16 +136,6 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: currency.decimals,
       );
 
-      final gas = Amount(
-        value: gas_s.toBigInt,
-        decimals: 0,
-      );
-
-      final gasUsed = Amount(
-        value: gasUsed_s.toBigInt,
-        decimals: 0,
-      );
-
       final gasPrice = Amount(
         value: gasPrice_s.toBigInt,
         decimals: currency.decimals,
@@ -171,10 +151,10 @@ base class EtherscanTransaction extends EVMTransaction {
         timeMilli: timeMilli * 1000,
         amount: amount,
         fee: fee,
-        gasUsed: gasUsed,
+        gasUsed: gasUsed_s.toInt,
         sender: from,
         recipient: to,
-        gas: gas,
+        gas: gas_s.toInt,
         gasPrice: gasPrice,
         transferMethod: transferMethod,
         token: token,
@@ -230,16 +210,6 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: currency.decimals,
       );
 
-      final gasUsed = Amount(
-        value: gasUsed_s.toBigInt,
-        decimals: 0,
-      );
-
-      final gas = Amount(
-        value: gas_s.toBigInt,
-        decimals: 0,
-      );
-
       final gasPrice = Amount(
         value: gasPrice_s.toBigInt,
         decimals: currency.decimals,
@@ -257,8 +227,8 @@ base class EtherscanTransaction extends EVMTransaction {
         fee: fee,
         sender: from,
         gasPrice: gasPrice,
-        gas: gas,
-        gasUsed: gasUsed,
+        gas: gas_s.toInt,
+        gasUsed: gasUsed_s.toInt,
         recipient: to,
         transferMethod: transferMethod,
         token: token,
