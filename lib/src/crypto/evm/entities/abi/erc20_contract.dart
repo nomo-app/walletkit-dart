@@ -240,7 +240,6 @@ class ERC20Contract extends InternalContract {
     required BigInt value,
     required Uint8List seed,
     EvmFeeInformation? feeInfo,
-    BigInt? maxPriorityFeePerGas,
     List<AccessListItem>? accessList,
   }) async {
     final function = abi.functions[7];
@@ -251,7 +250,6 @@ class ERC20Contract extends InternalContract {
       sender: sender,
       feeInfo: feeInfo,
       accessList: accessList,
-      maxPriorityFeePerGas: maxPriorityFeePerGas,
     );
   }
 

@@ -118,10 +118,9 @@ void main() {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
-      feeInfo: null,
+      feeInfo: EvmType2FeeInformation.zero,
       token: arbitrum,
       memo: null,
-      maxPriorityFeePerGas: BigInt.from(1),
     );
 
     final hash = await arbitrumRPC.sendERC20Token(
@@ -136,10 +135,14 @@ void main() {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
-      feeInfo: null,
+      // feeInfo: EvmType2FeeInformation.zero,
+      feeInfo: EvmType2FeeInformation(
+        gasLimit: null,
+        gasPrice: null,
+        maxPriorityFeePerGas: Amount.convert(value: 0.00001, decimals: 9),
+      ),
       token: ethArbitrum,
       memo: null,
-      maxPriorityFeePerGas: BigInt.zero,
     );
 
     final hash = await arbitrumRPC.sendCoin(
@@ -154,7 +157,7 @@ void main() {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
-      feeInfo: null,
+      feeInfo: EvmFeeInformation.zero,
       token: ethArbitrum,
       memo: null,
       accessList: [],
@@ -173,7 +176,7 @@ void main() {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
-      feeInfo: null,
+      feeInfo: EvmFeeInformation.zero,
       token: ethArbitrum,
       memo: "Hello my friend",
     );

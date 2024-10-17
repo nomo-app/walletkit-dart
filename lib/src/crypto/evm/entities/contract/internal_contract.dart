@@ -19,7 +19,6 @@ abstract class InternalContract {
     required String sender,
     EvmFeeInformation? feeInfo,
     BigInt? value,
-    BigInt? maxPriorityFeePerGas,
     List<AccessListItem>? accessList,
   }) async {
     final functionData = function.buildDataField();
@@ -40,10 +39,9 @@ abstract class InternalContract {
       sender: sender,
       recipient: contractAddress,
       seed: seed,
-      feeInfo: feeInfo,
+      feeInfo: feeInfo ?? EvmFeeInformation.zero,
       data: functionData,
       value: value ?? BigInt.zero,
-      maxPriorityFeePerGas: maxPriorityFeePerGas,
       accessList: accessList,
     );
   }
@@ -71,7 +69,7 @@ abstract class InternalContract {
     return await rpc.buildUnsignedTransaction(
       sender: sender,
       recipient: contractAddress,
-      feeInfo: feeInfo,
+      feeInfo: feeInfo ?? EvmFeeInformation.zero,
       data: functionData,
       value: value ?? BigInt.zero,
     );
