@@ -152,14 +152,36 @@ final class EvmRpcInterface {
     required String from,
     required Uint8List seed,
   }) async {
-    final tx = await buildTransaction(
-      sender: from,
-      recipient: intent.recipient,
-      seed: seed,
-      feeInfo: intent.feeInfo,
-      data: intent.encodedMemo,
-      value: intent.amount.value,
-    );
+    final tx = switch (intent) {
+      TransferIntent(isType2: true) => await buildTransaction(
+          sender: from,
+          recipient: intent.recipient,
+          seed: seed,
+          feeInfo: intent.feeInfo,
+          data: intent.encodedMemo,
+          value: intent.amount.value,
+          maxFeePerGas: intent.maxFeePerGas,
+          maxPriorityFeePerGas: intent.maxPriorityFeePerGas,
+          accessList: intent.accessList,
+        ),
+      TransferIntent(isType1: true, isType2: false) => await buildTransaction(
+          sender: from,
+          recipient: intent.recipient,
+          seed: seed,
+          feeInfo: intent.feeInfo,
+          data: intent.encodedMemo,
+          value: intent.amount.value,
+          accessList: intent.accessList,
+        ),
+      TransferIntent(isType2: false, isType1: false) => await buildTransaction(
+          sender: from,
+          recipient: intent.recipient,
+          seed: seed,
+          feeInfo: intent.feeInfo,
+          data: intent.encodedMemo,
+          value: intent.amount.value,
+        ),
+    };
 
     final balance = await fetchBalance(address: toChecksumAddress(from)).then(
       (amount) => amount.value,
@@ -204,6 +226,7 @@ final class EvmRpcInterface {
   /// Used to create a raw Transactions
   /// Fetches the gasPrice and gasLimit from the network
   /// Fetches the nonce from the network
+  /// If Transaction Type is not provided, it will use Legacy
   ///
   Future<RawEvmTransaction> buildUnsignedTransaction({
     required String sender,
@@ -211,6 +234,9 @@ final class EvmRpcInterface {
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
+    BigInt? maxFeePerGas,
+    BigInt? maxPriorityFeePerGas,
+    List<AccessListItem>? accessList,
   }) async {
     final (gasPrice, gasLimit) = feeInfo != null
         ? (feeInfo.gasPrice, feeInfo.gasLimit)
@@ -225,8 +251,33 @@ final class EvmRpcInterface {
       (client) => client.getTransactionCount(sender),
     );
 
-    /// TODO: Allow Configuration for which Transaction Type to use
-    /// Currently using Type 0
+    if (maxPriorityFeePerGas != null) {
+      return RawEVMTransactionType2.unsigned(
+        nonce: nonce,
+        maxFeePerGas: gasPrice.value,
+        maxPriorityFeePerGas: maxPriorityFeePerGas,
+        gasLimit: gasLimit.toBI,
+        to: recipient,
+        value: value ?? BigInt.zero,
+        data: data ?? Uint8List(0),
+        chainId: type.chainId,
+        accessList: accessList ?? [],
+      );
+    }
+
+    if (accessList != null) {
+      return RawEVMTransactionType1.unsigned(
+        nonce: nonce,
+        gasPrice: gasPrice.value,
+        gasLimit: gasLimit.toBI,
+        to: recipient,
+        value: value ?? BigInt.zero,
+        data: data ?? Uint8List(0),
+        accessList: accessList,
+        chainId: type.chainId,
+      );
+    }
+
     return RawEVMTransactionType0.unsigned(
       nonce: nonce,
       gasPrice: gasPrice.value,
@@ -250,6 +301,9 @@ final class EvmRpcInterface {
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
+    BigInt? maxFeePerGas,
+    BigInt? maxPriorityFeePerGas,
+    List<AccessListItem>? accessList,
   }) async {
     final unsignedTx = await buildUnsignedTransaction(
       sender: sender,
@@ -257,6 +311,9 @@ final class EvmRpcInterface {
       feeInfo: feeInfo,
       data: data,
       value: value,
+      maxFeePerGas: maxFeePerGas,
+      maxPriorityFeePerGas: maxPriorityFeePerGas,
+      accessList: accessList,
     );
 
     final signature = Signature.createSignature(

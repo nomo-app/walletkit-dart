@@ -11,6 +11,9 @@ class TransferIntent<T extends FeeInformation?> {
   final T? feeInfo;
 
   final String? memo;
+  final BigInt? maxFeePerGas;
+  final BigInt? maxPriorityFeePerGas;
+  final List<AccessListItem>? accessList;
 
   const TransferIntent({
     required this.recipient,
@@ -18,7 +21,13 @@ class TransferIntent<T extends FeeInformation?> {
     required this.feeInfo,
     required this.token,
     required this.memo,
+    this.maxFeePerGas,
+    this.maxPriorityFeePerGas,
+    this.accessList,
   });
+
+  bool get isType2 => maxPriorityFeePerGas != null;
+  bool get isType1 => accessList != null;
 
   Amount? get fee {
     if (feeInfo is EvmFeeInformation) {

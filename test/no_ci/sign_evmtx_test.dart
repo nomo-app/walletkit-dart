@@ -114,6 +114,44 @@ void main() {
     print("Hash: $hash");
   });
 
+  test("try to send arb typ2", () async {
+    final intent = TransferIntent<EvmFeeInformation>(
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 0.001, decimals: 18),
+      feeInfo: null,
+      token: ethArbitrum,
+      memo: null,
+      maxFeePerGas: BigInt.zero,
+      maxPriorityFeePerGas: BigInt.zero,
+    );
+
+    final hash = await arbitrumRPC.sendCoin(
+      intent: intent,
+      from: arbitrumTestWallet,
+      seed: testSeed,
+    );
+    print("Hash: $hash");
+  });
+
+  test("try to send arb typ1", () async {
+    final intent = TransferIntent<EvmFeeInformation>(
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 0.001, decimals: 18),
+      feeInfo: null,
+      token: ethArbitrum,
+      memo: null,
+      accessList: [],
+    );
+
+    final hash = await arbitrumRPC.sendCoin(
+      intent: intent,
+      from: arbitrumTestWallet,
+      seed: testSeed,
+    );
+
+    print("Hash: $hash");
+  });
+
   test('Send Coin (EthARB)', () async {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
