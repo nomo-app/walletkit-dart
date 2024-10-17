@@ -160,7 +160,6 @@ final class EvmRpcInterface {
           feeInfo: intent.feeInfo,
           data: intent.encodedMemo,
           value: intent.amount.value,
-          maxFeePerGas: intent.maxFeePerGas,
           maxPriorityFeePerGas: intent.maxPriorityFeePerGas,
           accessList: intent.accessList,
         ),
@@ -219,6 +218,8 @@ final class EvmRpcInterface {
       to: intent.recipient,
       value: intent.amount.value,
       feeInfo: intent.feeInfo,
+      maxPriorityFeePerGas: intent.maxPriorityFeePerGas,
+      accessList: intent.accessList,
     );
   }
 
@@ -234,7 +235,6 @@ final class EvmRpcInterface {
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
-    BigInt? maxFeePerGas,
     BigInt? maxPriorityFeePerGas,
     List<AccessListItem>? accessList,
   }) async {
@@ -301,7 +301,6 @@ final class EvmRpcInterface {
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
-    BigInt? maxFeePerGas,
     BigInt? maxPriorityFeePerGas,
     List<AccessListItem>? accessList,
   }) async {
@@ -311,7 +310,6 @@ final class EvmRpcInterface {
       feeInfo: feeInfo,
       data: data,
       value: value,
-      maxFeePerGas: maxFeePerGas,
       maxPriorityFeePerGas: maxPriorityFeePerGas,
       accessList: accessList,
     );
@@ -352,6 +350,8 @@ final class EvmRpcInterface {
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
+    BigInt? maxPriorityFeePerGas,
+    List<AccessListItem>? accessList,
   }) async {
     final signedTx = await buildTransaction(
       sender: sender,
@@ -360,6 +360,8 @@ final class EvmRpcInterface {
       feeInfo: feeInfo,
       data: data,
       value: value,
+      maxPriorityFeePerGas: maxPriorityFeePerGas,
+      accessList: accessList,
     );
 
     final result = await sendRawTransaction(signedTx.serialized.toHex);

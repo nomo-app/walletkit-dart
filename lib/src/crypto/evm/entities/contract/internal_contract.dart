@@ -19,6 +19,8 @@ abstract class InternalContract {
     required String sender,
     EvmFeeInformation? feeInfo,
     BigInt? value,
+    BigInt? maxPriorityFeePerGas,
+    List<AccessListItem>? accessList,
   }) async {
     final functionData = function.buildDataField();
 
@@ -41,6 +43,8 @@ abstract class InternalContract {
       feeInfo: feeInfo,
       data: functionData,
       value: value ?? BigInt.zero,
+      maxPriorityFeePerGas: maxPriorityFeePerGas,
+      accessList: accessList,
     );
   }
 

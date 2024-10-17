@@ -119,9 +119,26 @@ void main() {
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
       feeInfo: null,
+      token: arbitrum,
+      memo: null,
+      maxPriorityFeePerGas: BigInt.from(1),
+    );
+
+    final hash = await arbitrumRPC.sendERC20Token(
+      intent: intent,
+      from: arbitrumTestWallet,
+      seed: testSeed,
+    );
+    print("Hash: $hash");
+  });
+
+  test("try to send arb eth typ2", () async {
+    final intent = TransferIntent<EvmFeeInformation>(
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 0.001, decimals: 18),
+      feeInfo: null,
       token: ethArbitrum,
       memo: null,
-      maxFeePerGas: BigInt.zero,
       maxPriorityFeePerGas: BigInt.zero,
     );
 
@@ -133,7 +150,7 @@ void main() {
     print("Hash: $hash");
   });
 
-  test("try to send arb typ1", () async {
+  test("try to send arb eth typ1", () async {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),

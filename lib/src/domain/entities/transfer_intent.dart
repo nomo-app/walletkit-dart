@@ -11,7 +11,6 @@ class TransferIntent<T extends FeeInformation?> {
   final T? feeInfo;
 
   final String? memo;
-  final BigInt? maxFeePerGas;
   final BigInt? maxPriorityFeePerGas;
   final List<AccessListItem>? accessList;
 
@@ -21,7 +20,6 @@ class TransferIntent<T extends FeeInformation?> {
     required this.feeInfo,
     required this.token,
     required this.memo,
-    this.maxFeePerGas,
     this.maxPriorityFeePerGas,
     this.accessList,
   });
