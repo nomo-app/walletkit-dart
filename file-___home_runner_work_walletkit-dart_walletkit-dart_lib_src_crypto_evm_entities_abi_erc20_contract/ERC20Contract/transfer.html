@@ -63,7 +63,6 @@
 <li><span class="parameter" id="transfer-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">value</span>, </span></li>
 <li><span class="parameter" id="transfer-param-seed"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">seed</span>, </span></li>
 <li><span class="parameter" id="transfer-param-feeInfo"><span class="type-annotation">dynamic</span> <span class="parameter-name">feeInfo</span>, </span></li>
-<li><span class="parameter" id="transfer-param-maxPriorityFeePerGas"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">maxPriorityFeePerGas</span>, </span></li>
 <li><span class="parameter" id="transfer-param-accessList"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">accessList</span>, </span></li>
 </ol>})
 
@@ -82,7 +81,6 @@
   required BigInt value,
   required Uint8List seed,
   EvmFeeInformation? feeInfo,
-  BigInt? maxPriorityFeePerGas,
   List&lt;AccessListItem&gt;? accessList,
 }) async {
   final function = abi.functions[7];
@@ -93,7 +91,6 @@
     sender: sender,
     feeInfo: feeInfo,
     accessList: accessList,
-    maxPriorityFeePerGas: maxPriorityFeePerGas,
   );
 }</code></pre>
 </section>

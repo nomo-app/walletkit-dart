@@ -80,36 +80,15 @@
   required String from,
   required Uint8List seed,
 }) async {
-  final tx = switch (intent) {
-    TransferIntent(isType2: true) =&gt; await buildTransaction(
-        sender: from,
-        recipient: intent.recipient,
-        seed: seed,
-        feeInfo: intent.feeInfo,
-        data: intent.encodedMemo,
-        value: intent.amount.value,
-        maxPriorityFeePerGas: intent.maxPriorityFeePerGas,
-        accessList: intent.accessList,
-      ),
-    TransferIntent(isType1: true, isType2: false) =&gt; await buildTransaction(
-        sender: from,
-        recipient: intent.recipient,
-        seed: seed,
-        feeInfo: intent.feeInfo,
-        data: intent.encodedMemo,
-        value: intent.amount.value,
-        accessList: intent.accessList,
-      ),
-    TransferIntent(isType2: false, isType1: false) =&gt; await buildTransaction(
-        sender: from,
-        recipient: intent.recipient,
-        seed: seed,
-        feeInfo: intent.feeInfo,
-        data: intent.encodedMemo,
-        value: intent.amount.value,
-      ),
-  };
-
+  final tx = await buildTransaction(
+    sender: from,
+    recipient: intent.recipient,
+    seed: seed,
+    feeInfo: intent.feeInfo,
+    data: intent.encodedMemo,
+    value: intent.amount.value,
+    accessList: intent.accessList,
+  );
   final balance = await fetchBalance(address: toChecksumAddress(from)).then(
     (amount) =&gt; amount.value,
   );
