@@ -63,6 +63,7 @@
 <li><span class="parameter" id="buildUnsignedTransaction-param-feeInfo"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">feeInfo</span>, </span></li>
 <li><span class="parameter" id="buildUnsignedTransaction-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span></li>
 <li><span class="parameter" id="buildUnsignedTransaction-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span>, </span></li>
+<li><span class="parameter" id="buildUnsignedTransaction-param-accessList"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">accessList</span>, </span></li>
 </ol>})
 
       
@@ -72,7 +73,8 @@
 <section class="desc markdown">
   <p>Used to create a raw Transactions
 Fetches the gasPrice and gasLimit from the network
-Fetches the nonce from the network</p>
+Fetches the nonce from the network
+If Transaction Type is not provided, it will use Legacy</p>
 </section>
 
 
@@ -82,33 +84,77 @@ Fetches the nonce from the network</p>
   <pre class="language-dart"><code class="language-dart">Future&lt;RawEvmTransaction&gt; buildUnsignedTransaction({
   required String sender,
   required String recipient,
-  required EvmFeeInformation? feeInfo,
+  required EvmFeeInformation feeInfo,
   required Uint8List? data,
   required BigInt? value,
+  List&lt;AccessListItem&gt;? accessList,
 }) async {
-  final (gasPrice, gasLimit) = feeInfo != null
-      ? (feeInfo.gasPrice, feeInfo.gasLimit)
-      : await estimateNetworkFees(
+  final (gasPrice, gasLimit) = switch ((feeInfo.gasPrice, feeInfo.gasLimit)) {
+    (null, int gasLimit) =&gt; (
+        Amount(value: await getGasPrice(), decimals: 18),
+        gasLimit
+      ),
+    (Amount gasPrice, null) =&gt; (
+        gasPrice,
+        await estimateGasLimit(
           recipient: recipient,
           sender: sender,
           data: data,
           value: value,
-        );
+        )
+      ),
+    _ =&gt; await estimateNetworkFees(
+        recipient: recipient, sender: sender, data: data, value: value),
+  };
 
   final nonce = await performTask(
     (client) =&gt; client.getTransactionCount(sender),
   );
 
-  &#47;&#47;&#47; TODO: Allow Configuration for which Transaction Type to use
-  &#47;&#47;&#47; Currently using Type 0
-  return RawEVMTransactionType0.unsigned(
-    nonce: nonce,
-    gasPrice: gasPrice.value,
-    gasLimit: gasLimit.toBI,
-    to: recipient,
-    value: value ?? BigInt.zero,
-    data: data ?? Uint8List(0),
-  );
+  if (type is ZENIQ_SMART_NETWORK) {
+    return RawEVMTransactionType0.unsigned(
+      nonce: nonce,
+      gasPrice: gasPrice.value,
+      gasLimit: gasLimit.toBI,
+      to: recipient,
+      value: value ?? BigInt.zero,
+      data: data ?? Uint8List(0),
+    );
+  }
+
+  return switch (feeInfo) {
+    EvmType2FeeInformation() =&gt; RawEVMTransactionType2.unsigned(
+        nonce: nonce,
+        maxFeePerGas: gasPrice.value,
+        maxPriorityFeePerGas:
+            feeInfo.maxPriorityFeePerGas?.value ?? Amount.zero.value,
+        gasLimit: gasLimit.toBI,
+        to: recipient,
+        value: value ?? BigInt.zero,
+        data: data ?? Uint8List(0),
+        accessList: accessList ?? [],
+        chainId: type.chainId,
+      ),
+    EvmFeeInformation() =&gt; accessList != null
+        ? RawEVMTransactionType1.unsigned(
+            nonce: nonce,
+            gasPrice: gasPrice.value,
+            gasLimit: gasLimit.toBI,
+            to: recipient,
+            value: value ?? BigInt.zero,
+            data: data ?? Uint8List(0),
+            accessList: accessList,
+            chainId: type.chainId,
+          )
+        : RawEVMTransactionType0.unsigned(
+            nonce: nonce,
+            gasPrice: gasPrice.value,
+            gasLimit: gasLimit.toBI,
+            to: recipient,
+            value: value ?? BigInt.zero,
+            data: data ?? Uint8List(0),
+          ),
+  };
 }</code></pre>
 </section>
 

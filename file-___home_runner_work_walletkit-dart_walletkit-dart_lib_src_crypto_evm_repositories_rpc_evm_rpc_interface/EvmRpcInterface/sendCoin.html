@@ -87,8 +87,8 @@
     feeInfo: intent.feeInfo,
     data: intent.encodedMemo,
     value: intent.amount.value,
+    accessList: intent.accessList,
   );
-
   final balance = await fetchBalance(address: toChecksumAddress(from)).then(
     (amount) =&gt; amount.value,
   );
