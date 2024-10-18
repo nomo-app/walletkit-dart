@@ -139,13 +139,30 @@ void main() {
       feeInfo: EvmType2FeeInformation(
         gasLimit: null,
         gasPrice: null,
-        maxPriorityFeePerGas: Amount.convert(value: 0.00001, decimals: 9),
+        maxPriorityFeePerGas: Amount.convert(value: 0.0001, decimals: 9),
       ),
       token: ethArbitrum,
       memo: null,
     );
 
     final hash = await arbitrumRPC.sendCoin(
+      intent: intent,
+      from: arbitrumTestWallet,
+      seed: testSeed,
+    );
+    print("Hash: $hash");
+  });
+
+  test("check if zeniq only sends type 0", () async {
+    final intent = TransferIntent<EvmFeeInformation>(
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 0.001, decimals: 18),
+      feeInfo: EvmType2FeeInformation.zero,
+      token: zeniqSmart,
+      memo: null,
+    );
+
+    final hash = await zeniqSmartChainRPC.sendCoin(
       intent: intent,
       from: arbitrumTestWallet,
       seed: testSeed,

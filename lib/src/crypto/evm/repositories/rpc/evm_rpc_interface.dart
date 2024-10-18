@@ -237,6 +237,17 @@ final class EvmRpcInterface {
       (client) => client.getTransactionCount(sender),
     );
 
+    if (type is ZENIQ_SMART_NETWORK) {
+      return RawEVMTransactionType0.unsigned(
+        nonce: nonce,
+        gasPrice: gasPrice.value,
+        gasLimit: gasLimit.toBI,
+        to: recipient,
+        value: value ?? BigInt.zero,
+        data: data ?? Uint8List(0),
+      );
+    }
+
     return switch (feeInfo) {
       EvmType2FeeInformation() => RawEVMTransactionType2.unsigned(
           nonce: nonce,
