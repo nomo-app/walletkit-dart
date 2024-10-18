@@ -69,8 +69,8 @@ sealed class FeeInformation {
 }
 
 final class EvmFeeInformation extends FeeInformation {
-  final int gasLimit;
-  final Amount gasPrice;
+  final int? gasLimit;
+  final Amount? gasPrice;
 
   const EvmFeeInformation({
     required this.gasLimit,
@@ -78,13 +78,14 @@ final class EvmFeeInformation extends FeeInformation {
   });
 
   Amount get fee {
-    return gasPrice * Amount.convert(value: gasLimit, decimals: 0);
+    return gasPrice ??
+        Amount.zero * Amount.convert(value: gasLimit ?? 0, decimals: 0);
   }
 
   Json toJson() {
     return {
       'gasLimit': gasLimit,
-      'gasPrice': gasPrice.toJson(),
+      'gasPrice': gasPrice?.toJson() ?? Amount.zero.toJson(),
     };
   }
 
@@ -95,6 +96,48 @@ final class EvmFeeInformation extends FeeInformation {
     return EvmFeeInformation(
       gasLimit: gasLimit ?? this.gasLimit,
       gasPrice: gasPrice ?? this.gasPrice,
+    );
+  }
+
+  static EvmFeeInformation get zero {
+    return EvmFeeInformation(gasLimit: null, gasPrice: null);
+  }
+}
+
+final class EvmType2FeeInformation extends EvmFeeInformation {
+  final Amount? maxPriorityFeePerGas;
+
+  const EvmType2FeeInformation({
+    required super.gasLimit,
+    required super.gasPrice,
+    required this.maxPriorityFeePerGas,
+  });
+
+  static EvmType2FeeInformation get zero {
+    return EvmType2FeeInformation(
+      gasLimit: null,
+      gasPrice: null,
+      maxPriorityFeePerGas: null,
+    );
+  }
+
+  Json toJson() {
+    return {
+      'gasLimit': gasLimit,
+      'maxPriorityFeePerGas': maxPriorityFeePerGas.toString(),
+      'gasPrice': gasPrice?.toJson() ?? Amount.zero.toJson(),
+    };
+  }
+
+  EvmType2FeeInformation copyWith({
+    int? gasLimit,
+    Amount? gasPrice,
+    Amount? maxPriorityFeePerGas,
+  }) {
+    return EvmType2FeeInformation(
+      gasLimit: gasLimit ?? this.gasLimit,
+      gasPrice: gasPrice ?? this.gasPrice,
+      maxPriorityFeePerGas: maxPriorityFeePerGas ?? this.maxPriorityFeePerGas,
     );
   }
 }

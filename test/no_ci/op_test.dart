@@ -9,7 +9,7 @@ void main() {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
-      feeInfo: null,
+      feeInfo: EvmFeeInformation.zero,
       token: optimism,
       memo: null,
     );
@@ -27,7 +27,7 @@ void main() {
     final intentETH = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 0.001, decimals: 18),
-      feeInfo: null,
+      feeInfo: EvmFeeInformation.zero,
       token: ethOptimism,
       memo: null,
     );
