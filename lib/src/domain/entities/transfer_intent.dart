@@ -100,7 +100,7 @@ class TransferIntent<T extends FeeInformation?> {
         'recipient': String recipient,
         'amount': Map amount,
         'token': Map token,
-        'fee': Json? fee,
+        'fee': Map? fee,
         'memo': String? memo,
       } =>
         TransferIntent(
