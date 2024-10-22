@@ -96,7 +96,7 @@
   return await rpc.buildUnsignedTransaction(
     sender: sender,
     recipient: contractAddress,
-    feeInfo: feeInfo,
+    feeInfo: feeInfo ?? EvmFeeInformation.zero,
     data: functionData,
     value: value ?? BigInt.zero,
   );
