@@ -101,7 +101,7 @@
     sender: sender,
     recipient: contractAddress,
     seed: seed,
-    feeInfo: feeInfo,
+    feeInfo: feeInfo ?? EvmFeeInformation.zero,
     data: data,
     value: value ?? BigInt.zero,
   );
