@@ -8,9 +8,10 @@ class TransferIntent<T extends FeeInformation?> {
   final Amount amount;
 
   /// If null, the fee will be calculated by the network
-  final T? feeInfo;
+  final T feeInfo;
 
   final String? memo;
+  final List<AccessListItem>? accessList;
 
   const TransferIntent({
     required this.recipient,
@@ -18,7 +19,11 @@ class TransferIntent<T extends FeeInformation?> {
     required this.feeInfo,
     required this.token,
     required this.memo,
+    this.accessList,
   });
+
+  bool get isType2 => feeInfo is EvmType2FeeInformation;
+  bool get isType1 => accessList != null;
 
   Amount? get fee {
     if (feeInfo is EvmFeeInformation) {
@@ -95,7 +100,7 @@ class TransferIntent<T extends FeeInformation?> {
         'recipient': String recipient,
         'amount': Map amount,
         'token': Map token,
-        'fee': Json? fee,
+        'fee': Map? fee,
         'memo': String? memo,
       } =>
         TransferIntent(

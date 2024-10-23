@@ -159,8 +159,8 @@ final class EvmRpcInterface {
       feeInfo: intent.feeInfo,
       data: intent.encodedMemo,
       value: intent.amount.value,
+      accessList: intent.accessList,
     );
-
     final balance = await fetchBalance(address: toChecksumAddress(from)).then(
       (amount) => amount.value,
     );
@@ -197,6 +197,7 @@ final class EvmRpcInterface {
       to: intent.recipient,
       value: intent.amount.value,
       feeInfo: intent.feeInfo,
+      accessList: intent.accessList,
     );
   }
 
@@ -204,37 +205,87 @@ final class EvmRpcInterface {
   /// Used to create a raw Transactions
   /// Fetches the gasPrice and gasLimit from the network
   /// Fetches the nonce from the network
+  /// If Transaction Type is not provided, it will use Legacy
   ///
   Future<RawEvmTransaction> buildUnsignedTransaction({
     required String sender,
     required String recipient,
-    required EvmFeeInformation? feeInfo,
+    required EvmFeeInformation feeInfo,
     required Uint8List? data,
     required BigInt? value,
+    List<AccessListItem>? accessList,
   }) async {
-    final (gasPrice, gasLimit) = feeInfo != null
-        ? (feeInfo.gasPrice, feeInfo.gasLimit)
-        : await estimateNetworkFees(
+    final (gasPrice, gasLimit) = switch ((feeInfo.gasPrice, feeInfo.gasLimit)) {
+      (null, int gasLimit) => (
+          Amount(value: await getGasPrice(), decimals: 18),
+          gasLimit
+        ),
+      (Amount gasPrice, null) => (
+          gasPrice,
+          await estimateGasLimit(
             recipient: recipient,
             sender: sender,
             data: data,
             value: value,
-          );
+          )
+        ),
+      _ => await estimateNetworkFees(
+          recipient: recipient, sender: sender, data: data, value: value),
+    };
 
     final nonce = await performTask(
       (client) => client.getTransactionCount(sender),
     );
 
-    /// TODO: Allow Configuration for which Transaction Type to use
-    /// Currently using Type 0
-    return RawEVMTransactionType0.unsigned(
-      nonce: nonce,
-      gasPrice: gasPrice.value,
-      gasLimit: gasLimit.toBI,
-      to: recipient,
-      value: value ?? BigInt.zero,
-      data: data ?? Uint8List(0),
-    );
+    if (type is ZENIQ_SMART_NETWORK) {
+      return RawEVMTransactionType0.unsigned(
+        nonce: nonce,
+        gasPrice: gasPrice.value,
+        gasLimit: gasLimit.toBI,
+        to: recipient,
+        value: value ?? BigInt.zero,
+        data: data ?? Uint8List(0),
+      );
+    }
+
+    if (feeInfo is EvmType2FeeInformation &&
+        gasPrice.value < feeInfo.maxPriorityFeePerGas!.value) {
+      throw Failure("Gas price is less than max priority fee");
+    }
+
+    return switch (feeInfo) {
+      EvmType2FeeInformation() => RawEVMTransactionType2.unsigned(
+          nonce: nonce,
+          maxFeePerGas: gasPrice.value,
+          maxPriorityFeePerGas:
+              feeInfo.maxPriorityFeePerGas?.value ?? Amount.zero.value,
+          gasLimit: gasLimit.toBI,
+          to: recipient,
+          value: value ?? BigInt.zero,
+          data: data ?? Uint8List(0),
+          accessList: accessList ?? [],
+          chainId: type.chainId,
+        ),
+      EvmFeeInformation() => accessList != null
+          ? RawEVMTransactionType1.unsigned(
+              nonce: nonce,
+              gasPrice: gasPrice.value,
+              gasLimit: gasLimit.toBI,
+              to: recipient,
+              value: value ?? BigInt.zero,
+              data: data ?? Uint8List(0),
+              accessList: accessList,
+              chainId: type.chainId,
+            )
+          : RawEVMTransactionType0.unsigned(
+              nonce: nonce,
+              gasPrice: gasPrice.value,
+              gasLimit: gasLimit.toBI,
+              to: recipient,
+              value: value ?? BigInt.zero,
+              data: data ?? Uint8List(0),
+            ),
+    };
   }
 
   ///
@@ -247,9 +298,10 @@ final class EvmRpcInterface {
     required String sender,
     required String recipient,
     required Uint8List seed,
-    required EvmFeeInformation? feeInfo,
+    required EvmFeeInformation feeInfo,
     required Uint8List? data,
     required BigInt? value,
+    List<AccessListItem>? accessList,
   }) async {
     final unsignedTx = await buildUnsignedTransaction(
       sender: sender,
@@ -257,6 +309,7 @@ final class EvmRpcInterface {
       feeInfo: feeInfo,
       data: data,
       value: value,
+      accessList: accessList,
     );
 
     final signature = Signature.createSignature(
@@ -292,9 +345,10 @@ final class EvmRpcInterface {
     required String sender,
     required String recipient,
     required Uint8List seed,
-    required EvmFeeInformation? feeInfo,
+    required EvmFeeInformation feeInfo,
     required Uint8List? data,
     required BigInt? value,
+    List<AccessListItem>? accessList,
   }) async {
     final signedTx = await buildTransaction(
       sender: sender,
@@ -303,6 +357,7 @@ final class EvmRpcInterface {
       feeInfo: feeInfo,
       data: data,
       value: value,
+      accessList: accessList,
     );
 
     final result = await sendRawTransaction(signedTx.serialized.toHex);
@@ -354,7 +409,7 @@ final class EvmRpcInterface {
       sender: sender,
       recipient: contractAddress,
       seed: seed,
-      feeInfo: feeInfo,
+      feeInfo: feeInfo ?? EvmFeeInformation.zero,
       data: data,
       value: value ?? BigInt.zero,
     );
@@ -422,7 +477,7 @@ final class EvmRpcInterface {
       function: function,
       sender: from,
       seed: seed,
-      feeInfo: null,
+      feeInfo: EvmFeeInformation.zero,
     );
   }
 

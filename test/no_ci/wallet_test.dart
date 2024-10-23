@@ -18,7 +18,7 @@ void main() {
       intent: TransferIntent(
         recipient: arbitrumTestWallet,
         amount: Amount.convert(value: 0.1, decimals: zeniqSmart.decimals),
-        feeInfo: null,
+        feeInfo: EvmFeeInformation.zero,
         token: zeniqSmart,
         memo: null,
       ),
@@ -34,7 +34,7 @@ void main() {
       intent: TransferIntent(
         recipient: arbitrumTestWallet,
         amount: Amount.convert(value: 0.001, decimals: avinocZSC.decimals),
-        feeInfo: null,
+        feeInfo: EvmFeeInformation.zero,
         token: avinocZSC,
         memo: null,
       ),

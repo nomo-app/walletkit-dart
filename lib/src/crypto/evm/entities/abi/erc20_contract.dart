@@ -240,6 +240,7 @@ class ERC20Contract extends InternalContract {
     required BigInt value,
     required Uint8List seed,
     EvmFeeInformation? feeInfo,
+    List<AccessListItem>? accessList,
   }) async {
     final function = abi.functions[7];
     assert(function.functionSelectorHex == "a9059cbb");
@@ -248,6 +249,7 @@ class ERC20Contract extends InternalContract {
       seed: seed,
       sender: sender,
       feeInfo: feeInfo,
+      accessList: accessList,
     );
   }
 
