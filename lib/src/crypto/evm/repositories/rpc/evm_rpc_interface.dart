@@ -248,6 +248,11 @@ final class EvmRpcInterface {
       );
     }
 
+    if (feeInfo is EvmType2FeeInformation &&
+        gasPrice.value < feeInfo.maxPriorityFeePerGas!.value) {
+      throw Failure("Gas price is less than max priority fee");
+    }
+
     return switch (feeInfo) {
       EvmType2FeeInformation() => RawEVMTransactionType2.unsigned(
           nonce: nonce,
