@@ -216,6 +216,14 @@ class Amount {
     return value > other.value;
   }
 
+  bool operator >=(Amount other) {
+    return value >= other.value;
+  }
+
+  bool operator <=(Amount other) {
+    return value <= other.value;
+  }
+
   bool operator <(Amount other) {
     return value < other.value;
   }
