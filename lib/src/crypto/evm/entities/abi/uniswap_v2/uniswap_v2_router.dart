@@ -1301,10 +1301,6 @@ class UniswapV2Router extends InternalContract {
         to,
         deadline,
       ]),
-      feeInfo: EvmFeeInformation(
-        gasLimit: 3E5.toInt(),
-        gasPrice: Amount(value: 1E10.toInt().toBigInt, decimals: 18),
-      ),
     );
     return result;
   }
@@ -1328,6 +1324,32 @@ class UniswapV2Router extends InternalContract {
         amountTokenDesired,
         amountTokenMin,
         amountETHMin,
+        to,
+        deadline,
+      ]),
+    );
+    return result;
+  }
+
+  Future<RawEvmTransaction> removeLiquidityTx({
+    required String tokenA,
+    required String tokenB,
+    required BigInt liquidity,
+    required BigInt amountAMin,
+    required BigInt amountBMin,
+    required String to,
+    required BigInt deadline,
+    required String sender,
+  }) async {
+    final function = abi.getFunction("removeLiquidity")!;
+    final result = await buildTransactionForFunction(
+      sender: sender,
+      function: function.addValues(values: [
+        tokenA,
+        tokenB,
+        liquidity,
+        amountAMin,
+        amountBMin,
         to,
         deadline,
       ]),

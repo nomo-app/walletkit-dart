@@ -38,3 +38,7 @@ export 'entities/abi/ens/ens_resolver_contract.dart';
 export 'entities/abi/uniswap_v2/uniswap_v2_factory.dart';
 export 'entities/abi/uniswap_v2/uniswap_v2_pair.dart';
 export 'entities/abi/uniswap_v2/uniswap_v2_router.dart';
+// ZeniqSwap V2
+export 'entities/abi/zeniqswap_v2/zeniqswap_v2_factory.dart';
+export 'entities/abi/zeniqswap_v2/zeniqswap_v2_pair.dart';
+export 'entities/abi/zeniqswap_v2/zeniqswap_v2_router.dart';
