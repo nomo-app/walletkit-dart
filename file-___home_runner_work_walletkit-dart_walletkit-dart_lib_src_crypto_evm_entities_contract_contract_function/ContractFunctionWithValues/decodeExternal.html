@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the decodeRawWithFetch method from the ContractFunctionWithValues class, for the Dart programming language.">
-  <title>decodeRawWithFetch method - ContractFunctionWithValues class - contract_function library - Dart API</title>
+  <meta name="description" content="API docs for the decodeExternal method from the ContractFunctionWithValues class, for the Dart programming language.">
+  <title>decodeExternal method - ContractFunctionWithValues class - contract_function library - Dart API</title>
 
 
   
@@ -27,9 +27,9 @@
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function-library.html">src&#47;crypto&#47;evm&#47;entities&#47;contract&#47;contract_function.dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a></li>
-    <li class="self-crumb">decodeRawWithFetch static method</li>
+    <li class="self-crumb">decodeExternal static method</li>
   </ol>
-  <div class="self-name">decodeRawWithFetch</div>
+  <div class="self-name">decodeExternal</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -52,14 +52,14 @@
     data-above-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function&#47;ContractFunctionWithValues-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">decodeRawWithFetch</span> static method 
+<h1><span class="kind-method">decodeExternal</span> static method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a></span>&gt;</span></span>
-<span class="name ">decodeRawWithFetch</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="decodeRawWithFetch-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span></li>
-<li><span class="parameter" id="decodeRawWithFetch-param-function"><span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a>?</span> <span class="parameter-name">function</span>, </span></li>
+<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a></span>
+<span class="name ">decodeExternal</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="decodeExternal-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span></li>
+<li><span class="parameter" id="decodeExternal-param-function"><span>required</span> <span class="type-annotation"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a></span> <span class="parameter-name">function</span>, </span></li>
 </ol>})
 
       
@@ -67,47 +67,44 @@
     </section>
     
 <section class="desc markdown">
-  <p>Try to decode the raw data using the <a href="../../walletkit_dart/abiList.html">abiList</a>
-If the function is not found locally it will try to fetch the function from an external source (4byte.directory)
-If the function is not found, return null
-If a local function is found, return a <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a>
-If an external function is found, return a <a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a></p>
+  <p>Try to decode the raw data using the <code>function</code> and return the decoded function
+If the decoding of the data with information from the <code>function</code> fails, an exception is thrown</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static Future&lt;ExternalContractFunctionWithValues&gt; decodeRawWithFetch({
+  <pre class="language-dart"><code class="language-dart">static ExternalContractFunctionWithValues decodeExternal({
   required Uint8List data,
-  ExternalContractFunction? function,
-}) async {
-  try {
-    assert(data.length &gt;= 4, &quot;Invalid data length&quot;);
-    final function_selector = data.sublist(0, 4).toHex;
+  required ExternalContractFunction function,
+}) {
+  assert(data.length &gt;= 4, &quot;Invalid data length&quot;);
+  final function_selector = data.sublist(0, 4).toHex;
 
-    if (function != null) {
-      return decodeExternal(data: data, function: function);
-    }
+  assert(
+    function_selector == function.functionSelectorHex,
+    &quot;Invalid function selector&quot;,
+  );
 
-    final localResult = decodeRaw(data: data);
+  var dataWithoutSelector = data.sublist(4);
 
-    if (localResult != null) {
-      return localResult;
-    }
-
-    &#47;&#47;&#47; Fetch the function from 4byte.directory
-    final externalResult =
-        await FunctionSelectorRepository.fetchSelector(function_selector);
-
-    if (externalResult != null) {
-      return decodeExternal(data: data, function: externalResult);
-    }
-
-    return UnknownExternalContractFunction(data);
-  } catch (e) {
-    return NotDecodableExternalContractFunction(data);
+  if (dataWithoutSelector.length % 32 != 0) {
+    dataWithoutSelector = dataWithoutSelector.sublist(
+      0,
+      dataWithoutSelector.length - (dataWithoutSelector.length % 32),
+    );
   }
+
+  final decodedParams = decodeDataField(
+    data: dataWithoutSelector,
+    params: function.parameters,
+  );
+
+  return ExternalContractFunctionWithValues(
+    parameters: decodedParams,
+    name: function.name,
+  );
 }</code></pre>
 </section>
 
@@ -124,7 +121,7 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
     <li><a href="../../index.html">walletkit_dart</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function-library.html">contract_function</a></li>
     <li><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a></li>
-    <li class="self-crumb">decodeRawWithFetch static method</li>
+    <li class="self-crumb">decodeExternal static method</li>
 </ol>
 
     <h5>ContractFunctionWithValues class</h5>
