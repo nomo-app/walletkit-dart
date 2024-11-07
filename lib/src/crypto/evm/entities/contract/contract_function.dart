@@ -45,10 +45,10 @@ class ExternalContractFunction {
       textSignature.substring(opening + 1, closing),
     );
     final params = [
-      for (final param in params_s)
+      for (final (type_s, name) in params_s)
         FunctionParam(
-          name: null,
-          type: FunctionParamType.fromString(param),
+          name: name,
+          type: FunctionParamType.fromString(type_s),
         ),
     ];
 
@@ -58,12 +58,12 @@ class ExternalContractFunction {
     );
   }
 
-  static List<String> extractParams(String text) {
-    text = text.trim().replaceAll(' ', '');
+  static List<(String type, String? name)> extractParams(String text) {
+    text = text.trim();
 
     var opening = text.indexOf("(");
 
-    final values = <String>[];
+    final values = <(String type, String? name)>[];
     final start = opening == -1
         ? text
         : opening == 0
@@ -71,12 +71,15 @@ class ExternalContractFunction {
             : text.substring(0, opening - 1);
 
     if (start.isNotEmpty) {
-      if (start.startsWith('('))
-        values.add(start);
-      else if (start.contains(','))
-        values.addAll(start.split(','));
-      else
-        values.add(start);
+      if (start.startsWith('(')) {
+        values.add(start.splitParam());
+      } else if (start.contains(',')) {
+        values.addAll(
+          start.split(',').map((s) => s.splitParam()),
+        );
+      } else {
+        values.add(start.splitParam());
+      }
     }
     if (opening != -1) {
       var closing = -1;
@@ -94,7 +97,7 @@ class ExternalContractFunction {
 
       if (closing == -1) closing = text.length;
 
-      var tuple = text.substring(opening, closing);
+      var tuple = text.substring(opening, closing).splitParam();
       values.add(tuple);
 
       if (closing < text.length) {
@@ -251,7 +254,7 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
       final function_selector = data.sublist(0, 4).toHex;
 
       if (function != null) {
-        return _decodeExternal(data: data, function: function);
+        return decodeExternal(data: data, function: function);
       }
 
       final localResult = decodeRaw(data: data);
@@ -265,7 +268,7 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
           await FunctionSelectorRepository.fetchSelector(function_selector);
 
       if (externalResult != null) {
-        return _decodeExternal(data: data, function: externalResult);
+        return decodeExternal(data: data, function: externalResult);
       }
 
       return UnknownExternalContractFunction(data);
@@ -280,12 +283,15 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
   ///
   static ContractFunctionWithValues? decodeRaw({
     required Uint8List data,
+    List<ContractABI>? abis,
   }) {
     assert(data.length >= 4, "Invalid data length");
 
     final function_selector = data.sublist(0, 4).toHex;
 
-    final validAbis = abiList.where(
+    final _abiList = [...abiList, ...?abis];
+
+    final validAbis = _abiList.where(
       (abi) => abi.getFunctionFromSelector(function_selector) != null,
     );
 
@@ -315,7 +321,7 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
     required Uint8List data,
     required ContractFunction function,
   }) {
-    final external = _decodeExternal(data: data, function: function);
+    final external = decodeExternal(data: data, function: function);
     return ContractFunctionWithValues(
       name: external.name,
       parameters: external.parameters,
@@ -328,7 +334,7 @@ class ContractFunctionWithValues extends ExternalContractFunctionWithValues
   /// Try to decode the raw data using the [function] and return the decoded function
   /// If the decoding of the data with information from the [function] fails, an exception is thrown
   ///
-  static ExternalContractFunctionWithValues _decodeExternal({
+  static ExternalContractFunctionWithValues decodeExternal({
     required Uint8List data,
     required ExternalContractFunction function,
   }) {
@@ -493,5 +499,17 @@ class NotDecodableExternalContractFunction
       "name": name,
       "data": data.toHex,
     };
+  }
+}
+
+extension on String {
+  (String type, String? name) splitParam() {
+    final string = trim();
+
+    final splitted = string.split(' ');
+
+    if (splitted.length != 2) return (string, null);
+
+    return (splitted[0], splitted[1]);
   }
 }

@@ -150,7 +150,7 @@ sealed class FunctionParamType<T> {
       final nameWithoutParentheses = name.substring(1, name.length - 1);
       final tupleTypes =
           ExternalContractFunction.extractParams(nameWithoutParentheses)
-              .map((e) => fromString(e))
+              .map((e) => fromString(e.$1))
               .toList();
       return TupleFunctionParamType(name, tupleTypes);
     }
