@@ -81,15 +81,22 @@ final etherscan = EtherscanExplorer(
   loadListFromEnv("ETHERSCAN_API_KEYS"),
   ethNative,
 );
-final polygonscan = EtherscanExplorer(polygonScanBaseEndpoint, [], polygon);
-final bscscan = EtherscanExplorer(bnbScanBaseEndpoint, [], binanceSmart);
-final arbitrumscan =
-    EtherscanExplorer(arbitrumScanBaseEndpoint, [], ethArbitrum);
-final moonbeamscan = EtherscanExplorer(moonbeamScanBaseEndpoint, [], moonbeam);
-final basescan = EtherscanExplorer(baseScanEndpoint, [], ethBase);
-final optimismscan = EtherscanExplorer(optimismScanEndpoint, [], ethOptimism);
-final zksyncscan = EtherscanExplorer(zksyncAPIEndpoint, [], ethzkSync);
-final avalancheScan = EtherscanExplorer(avalancheAPIEndpoint, [], avalanche);
+final polygonscan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), polygon);
+final bscscan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), binanceSmart);
+final arbitrumscan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), ethArbitrum);
+final moonbeamscan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), moonbeam);
+final basescan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), ethBase);
+final optimismscan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), ethOptimism);
+final zksyncscan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), ethzkSync);
+final avalancheScan = EtherscanExplorer(
+    etherscanBaseEndpoint, loadListFromEnv("ETHERSCAN_API_KEYS"), avalanche);
 
 ///
 /// Utils

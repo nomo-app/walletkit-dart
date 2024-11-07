@@ -65,7 +65,7 @@ class EtherscanRepository {
       String action = queryParams['action']!;
 
       // Construct the base endpoint
-      return '$baseUrl?module=$module&action=$action';
+      return '$baseUrl&module=$module&action=$action';
     } else {
       // If 'module' or 'action' is missing, return the original URL
       return fullUrl;

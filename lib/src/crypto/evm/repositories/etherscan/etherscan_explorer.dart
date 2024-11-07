@@ -12,14 +12,15 @@ class EtherscanExplorer extends EtherscanRepository {
 
   EtherscanExplorer(super.base, super.apiKeys, this.currency);
 
-  String get gasOracleEndpoint => "$base?module=gastracker&action=gasoracle";
+  @override
+  String get base => "${super.base}?chainid=${currency.chainID}";
 
   String buildBalanceEndpoint(String address) =>
-      "$base?module=account&action=balance&address=$address"
+      "$base&module=account&action=balance&address=$address"
           .addOptionalParameter('tag', 'latest');
 
   String buildTokenBalanceEndpoint(String address, String contractAddress) =>
-      "$base?module=account&action=tokenbalance&address=$address&contractaddress=$contractAddress"
+      "$base&module=account&action=tokenbalance&address=$address&contractaddress=$contractAddress"
           .addOptionalParameter('tag', 'latest');
 
   String buildTransactionEndpoint({
@@ -30,7 +31,7 @@ class EtherscanExplorer extends EtherscanRepository {
     int? offset,
     Sorting? sorting,
   }) =>
-      "$base?module=account&action=txlist&address=$address"
+      "$base&module=account&action=txlist&address=$address"
           .addOptionalParameter('startblock', startblock)
           .addOptionalParameter('endblock', endblock)
           .addOptionalParameter('page', page)
@@ -46,7 +47,7 @@ class EtherscanExplorer extends EtherscanRepository {
     int? offset,
     Sorting? sorting,
   }) =>
-      "$base?module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
+      "$base&module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
           .addOptionalParameter('startblock', startblock)
           .addOptionalParameter('endblock', endblock)
           .addOptionalParameter('page', page)
@@ -62,7 +63,7 @@ class EtherscanExplorer extends EtherscanRepository {
     int? offset,
     Sorting? sorting,
   }) =>
-      "$base?module=account&action=tokennfttx&address=$address"
+      "$base&module=account&action=tokennfttx&address=$address"
           .addOptionalParameter('contractaddress', contractAddress)
           .addOptionalParameter('startblock', startblock)
           .addOptionalParameter('endblock', endblock)
@@ -221,6 +222,8 @@ class EtherscanExplorer extends EtherscanRepository {
   /// Fetch Gas Prices
   ///
   Future<EvmNetworkFees> fetchGasPrice() async {
+    final gasOracleEndpoint = "${base}&module=gastracker&action=gasoracle";
+
     final result = await fetchEtherscanWithRatelimitRetries(gasOracleEndpoint);
     if (result is! Json) {
       throw Exception("Failed to fetch gas price");
@@ -232,7 +235,7 @@ class EtherscanExplorer extends EtherscanRepository {
 
   Future<int?> fetchEstimatedTime(int gasPrice) async {
     final endpoint =
-        "$base?module=gastracker&action=gasestimate&gasprice=$gasPrice";
+        "$base&module=gastracker&action=gasestimate&gasprice=$gasPrice";
     final result = await fetchEtherscanWithRatelimitRetries(endpoint);
     if (result is! String) {
       throw Exception("Failed to fetch gas price");
@@ -280,7 +283,7 @@ class ZeniqScanExplorer extends EtherscanExplorer {
     int? offset,
     Sorting? sorting,
   }) {
-    return "$base?module=account&action=txlist&address=$address"
+    return "$base&module=account&action=txlist&address=$address"
         .addOptionalParameter('start_block', startblock)
         .addOptionalParameter('end_block', endblock)
         .addOptionalParameter('page', page)
@@ -298,7 +301,7 @@ class ZeniqScanExplorer extends EtherscanExplorer {
     int? offset,
     Sorting? sorting,
   }) {
-    return "$base?module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
+    return "$base&module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
         .addOptionalParameter('start_block', startblock)
         .addOptionalParameter('end_block', endblock)
         .addOptionalParameter('page', page)
