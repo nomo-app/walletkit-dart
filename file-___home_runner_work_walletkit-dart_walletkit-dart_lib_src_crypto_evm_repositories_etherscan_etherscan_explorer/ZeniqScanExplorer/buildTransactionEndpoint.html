@@ -89,7 +89,7 @@ String buildTransactionEndpoint({
   int? offset,
   Sorting? sorting,
 }) {
-  return &quot;$base?module=account&amp;action=txlist&amp;address=$address&quot;
+  return &quot;$base&amp;module=account&amp;action=txlist&amp;address=$address&quot;
       .addOptionalParameter(&#39;start_block&#39;, startblock)
       .addOptionalParameter(&#39;end_block&#39;, endblock)
       .addOptionalParameter(&#39;page&#39;, page)
