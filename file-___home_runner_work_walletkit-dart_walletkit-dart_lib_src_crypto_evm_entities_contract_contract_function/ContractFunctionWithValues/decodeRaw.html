@@ -59,7 +59,6 @@
       
 <span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a>?</span>
 <span class="name ">decodeRaw</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="decodeRaw-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span></li>
-<li><span class="parameter" id="decodeRaw-param-abis"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">abis</span>, </span></li>
 </ol>})
 
       
@@ -77,15 +76,12 @@ If the function is not found, return null</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static ContractFunctionWithValues? decodeRaw({
   required Uint8List data,
-  List&lt;ContractABI&gt;? abis,
 }) {
   assert(data.length &gt;= 4, &quot;Invalid data length&quot;);
 
   final function_selector = data.sublist(0, 4).toHex;
 
-  final _abiList = [...abiList, ...?abis];
-
-  final validAbis = _abiList.where(
+  final validAbis = abiList.where(
     (abi) =&gt; abi.getFunctionFromSelector(function_selector) != null,
   );
 

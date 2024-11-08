@@ -85,7 +85,7 @@
     final nameWithoutParentheses = name.substring(1, name.length - 1);
     final tupleTypes =
         ExternalContractFunction.extractParams(nameWithoutParentheses)
-            .map((e) =&gt; fromString(e.$1))
+            .map((e) =&gt; fromString(e))
             .toList();
     return TupleFunctionParamType(name, tupleTypes);
   }

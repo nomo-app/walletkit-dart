@@ -76,10 +76,10 @@
     textSignature.substring(opening + 1, closing),
   );
   final params = [
-    for (final (type_s, name) in params_s)
+    for (final param in params_s)
       FunctionParam(
-        name: name,
-        type: FunctionParamType.fromString(type_s),
+        name: null,
+        type: FunctionParamType.fromString(param),
       ),
   ];
 

@@ -87,7 +87,7 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
     final function_selector = data.sublist(0, 4).toHex;
 
     if (function != null) {
-      return decodeExternal(data: data, function: function);
+      return _decodeExternal(data: data, function: function);
     }
 
     final localResult = decodeRaw(data: data);
@@ -101,7 +101,7 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
         await FunctionSelectorRepository.fetchSelector(function_selector);
 
     if (externalResult != null) {
-      return decodeExternal(data: data, function: externalResult);
+      return _decodeExternal(data: data, function: externalResult);
     }
 
     return UnknownExternalContractFunction(data);
