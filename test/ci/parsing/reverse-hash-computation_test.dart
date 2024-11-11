@@ -43,7 +43,7 @@ void main() {
     expect(functionSignature, isNotNull);
 
     expect(
-        functionSignature!.parameters.first.value,
+        functionSignature.parameters.first.value,
         [
           8644,
           8717,
@@ -102,7 +102,7 @@ void main() {
 
     expect(functionSignature, isNotNull);
 
-    expect(functionSignature!.name, "mint");
+    expect(functionSignature.name, "mint");
 
     expect(functionSignature.parameters[0].name, "_to");
     expect(functionSignature.parameters[0].type, FunctionParamAddress());
