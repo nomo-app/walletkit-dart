@@ -57,7 +57,7 @@
 
     <section class="multi-line-signature">
       
-<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a></span>
+<span class="returntype"><a href="../../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a>?</span>
 <span class="name ">fromTextSignature</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fromTextSignature-param-textSignature"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">textSignature</span>, </span></li>
 </ol>})
 
@@ -70,32 +70,41 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">static ExternalContractFunction fromTextSignature({
+  <pre class="language-dart"><code class="language-dart">static ExternalContractFunction? fromTextSignature({
   required String textSignature,
 }) {
   final opening = textSignature.indexOf(&quot;(&quot;);
   final closing = textSignature.lastIndexOf(&quot;)&quot;);
 
   if (opening == -1 || closing == -1) {
-    throw Exception(&quot;Invalid text signature: $textSignature&quot;);
+    return null;
   }
 
-  final name = textSignature.substring(0, opening);
-  final params_s = extractParams(
-    textSignature.substring(opening + 1, closing),
-  );
-  final params = [
-    for (final (type_s, name) in params_s)
-      FunctionParam(
-        name: name,
-        type: FunctionParamType.fromString(type_s),
-      ),
-  ];
+  try {
+    final name = textSignature.substring(0, opening);
+    final params_s = extractParams(
+      textSignature.substring(opening + 1, closing),
+    );
+    final params = [
+      for (final (type_s, name) in params_s)
+        FunctionParam(
+          name: name,
+          type: FunctionParamType.fromString(type_s),
+        ),
+    ];
 
-  return ExternalContractFunction(
-    name: name,
-    parameters: params,
-  );
+    return ExternalContractFunction(
+      name: name,
+      parameters: params,
+    );
+  } catch (e, s) {
+    Logger.logError(
+      e,
+      s: s,
+      hint: &quot;Failed to parse function text signature: $textSignature&quot;,
+    );
+    return null;
+  }
 }</code></pre>
 </section>
 

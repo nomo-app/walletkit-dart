@@ -87,13 +87,10 @@ If the function is not found, return null</p>
 
   if (text_signarure == null) return UnknownContractFunction(data: data);
 
-  final ExternalContractFunction function;
-  try {
-    function =
-        ContractFunction.fromTextSignature(textSignature: text_signarure);
-  } catch (e) {
-    return UnknownContractFunction(data: data);
-  }
+  final function =
+      ContractFunction.fromTextSignature(textSignature: text_signarure);
+
+  if (function == null) return UnknownContractFunction(data: data);
 
   return ContractFunction.decode(
     data: data,
