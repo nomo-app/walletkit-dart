@@ -93,12 +93,21 @@
     paramsWithValues.add(paramWithValue);
   }
 
-  return ContractFunctionWithValues(
-    name: name,
-    parameters: paramsWithValues,
-    stateMutability: stateMutability,
-    outputs: outputs,
-  );
+  return switch (this) {
+    ErrorContractFunctionMixin() =&gt;
+      throw Exception(&quot;Cannot add values to $this&quot;),
+    LocalContractFunctionMixin functionMixin =&gt;
+      LocalContractFunctionWithValues(
+        name: name,
+        parameters: paramsWithValues,
+        stateMutability: functionMixin.stateMutability,
+        outputTypes: functionMixin.outputTypes,
+      ),
+    ExternalContractFunctionMixin _ =&gt; ExternalContractFunctionWithValues(
+        name: name,
+        parameters: paramsWithValues,
+      ),
+  };
 }</code></pre>
 </section>
 

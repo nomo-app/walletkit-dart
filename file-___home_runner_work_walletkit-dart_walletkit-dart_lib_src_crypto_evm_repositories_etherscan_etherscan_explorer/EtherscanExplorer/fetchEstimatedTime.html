@@ -72,7 +72,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;int?&gt; fetchEstimatedTime(int gasPrice) async {
   final endpoint =
-      &quot;$base?module=gastracker&amp;action=gasestimate&amp;gasprice=$gasPrice&quot;;
+      &quot;$base&amp;module=gastracker&amp;action=gasestimate&amp;gasprice=$gasPrice&quot;;
   final result = await fetchEtherscanWithRatelimitRetries(endpoint);
   if (result is! String) {
     throw Exception(&quot;Failed to fetch gas price&quot;);

@@ -68,7 +68,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory ContractABI.fromAbi(String jsonAbi) {
   final abi = jsonDecode(jsonAbi);
-  final functions = &lt;ContractFunction&gt;[];
+  final functions = &lt;LocalContractFunction&gt;[];
   final events = &lt;ContractEvent&gt;[];
   for (final item in abi) {
     final type = item[&#39;type&#39;];
@@ -87,7 +87,7 @@
       final parameters = &lt;FunctionParam&gt;[];
 
       for (final param in item[&quot;inputs&quot;]) {
-        parameters.add(FunctionParam.fromMap(param));
+        parameters.add(FunctionParam.fromJson(param));
       }
       events.add(
         ContractEvent(
@@ -105,19 +105,19 @@
     final outputs = &lt;FunctionParam&gt;[];
 
     for (final param in item[&quot;inputs&quot;]) {
-      parameters.add(FunctionParam.fromMap(param));
+      parameters.add(FunctionParam.fromJson(param));
     }
     if (item[&quot;outputs&quot;] != null) {
       for (final param in item[&quot;outputs&quot;]) {
-        outputs.add(FunctionParam.fromMap(param));
+        outputs.add(FunctionParam.fromJson(param));
       }
     }
     functions.add(
-      ContractFunction(
+      LocalContractFunction(
         name: name,
         parameters: parameters,
         stateMutability: stateMutability,
-        outputs: outputs,
+        outputTypes: outputs,
       ),
     );
   }
