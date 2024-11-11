@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/contract/contract_function_decoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/repositories/function_selector_repository.dart';
@@ -73,32 +74,41 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
     };
   }
 
-  static ExternalContractFunction fromTextSignature({
+  static ExternalContractFunction? fromTextSignature({
     required String textSignature,
   }) {
     final opening = textSignature.indexOf("(");
     final closing = textSignature.lastIndexOf(")");
 
     if (opening == -1 || closing == -1) {
-      throw Exception("Invalid text signature: $textSignature");
+      return null;
     }
 
-    final name = textSignature.substring(0, opening);
-    final params_s = extractParams(
-      textSignature.substring(opening + 1, closing),
-    );
-    final params = [
-      for (final (type_s, name) in params_s)
-        FunctionParam(
-          name: name,
-          type: FunctionParamType.fromString(type_s),
-        ),
-    ];
+    try {
+      final name = textSignature.substring(0, opening);
+      final params_s = extractParams(
+        textSignature.substring(opening + 1, closing),
+      );
+      final params = [
+        for (final (type_s, name) in params_s)
+          FunctionParam(
+            name: name,
+            type: FunctionParamType.fromString(type_s),
+          ),
+      ];
 
-    return ExternalContractFunction(
-      name: name,
-      parameters: params,
-    );
+      return ExternalContractFunction(
+        name: name,
+        parameters: params,
+      );
+    } catch (e, s) {
+      Logger.logError(
+        e,
+        s: s,
+        hint: "Failed to parse function text signature: $textSignature",
+      );
+      return null;
+    }
   }
 
   Json toJson() {
@@ -186,13 +196,10 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
 
     if (text_signarure == null) return UnknownContractFunction(data: data);
 
-    final ExternalContractFunction function;
-    try {
-      function =
-          ContractFunction.fromTextSignature(textSignature: text_signarure);
-    } catch (e) {
-      return UnknownContractFunction(data: data);
-    }
+    final function =
+        ContractFunction.fromTextSignature(textSignature: text_signarure);
+
+    if (function == null) return UnknownContractFunction(data: data);
 
     return ContractFunction.decode(
       data: data,

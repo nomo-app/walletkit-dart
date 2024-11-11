@@ -65,6 +65,8 @@ class FunctionSelectorRepository {
         final function =
             ContractFunction.fromTextSignature(textSignature: name);
 
+        if (function == null) return null;
+
         _functionCache[selector] = function;
 
         return function;

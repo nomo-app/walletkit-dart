@@ -11,6 +11,8 @@ void main() {
         textSignature: textSignature,
       );
 
+      expect(contractFunction!, isNotNull);
+
       expect(contractFunction.parameters.first.type, FunctionParamAddress());
       expect(contractFunction.parameters.first.name, null);
 
@@ -27,6 +29,7 @@ void main() {
       final contractFunction = ContractFunction.fromTextSignature(
         textSignature: textSignature,
       );
+      expect(contractFunction!, isNotNull);
 
       expect(contractFunction.parameters.first.type, FunctionParamAddress());
       expect(contractFunction.parameters.first.name, "_to");
