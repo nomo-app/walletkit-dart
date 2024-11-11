@@ -70,13 +70,13 @@ base class EtherscanTransaction extends EVMTransaction {
 
       final contractFunction = switch (functionName) {
         "" => null,
-        _ => ExternalContractFunction.fromString(textSignature: functionName)
+        _ => ContractFunction.fromTextSignature(textSignature: functionName)
       };
 
-      ExternalContractFunctionWithValues? decodedInput;
+      ContractFunctionWithValues? decodedInput;
       if (contractFunction != null) {
         try {
-          decodedInput = ContractFunctionWithValues.decodeExternal(
+          decodedInput = ContractFunction.decode(
             data: input,
             function: contractFunction,
           );

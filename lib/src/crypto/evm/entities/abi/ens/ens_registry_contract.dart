@@ -39,7 +39,7 @@ class EnsRegistryContract extends InternalContract {
     final node = namehash(name);
 
     try {
-      final result = await read(
+      final result = await readSafe(
         function: function.addValues(values: [node]),
       );
 

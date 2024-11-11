@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
+  const functionMap = {"asd": "asd"};
   test('extract functionSignature mint from the transaction', () {
     const String unsignedTxFromNomo = // from nomo.signEvmTransaction
         "0xf86982074b8504a817c80083029810946d3be2fca848393ee83b2a1d65b312889cacf5e680b84440c10f1900000000000000000000000005870f1507d820212e921e1f39f14660336231d10000000000000000000000000000000000000000000000000000000000f34344";
@@ -18,10 +19,11 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
+    final functionSignature =
+        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
-    expect(functionSignature!.name, "mint");
+    expect(functionSignature.name, "mint");
     expect(functionSignature.parameters[0].type, FunctionParamAddress());
     expect(functionSignature.parameters[0].value,
         "0x05870f1507d820212e921e1f39f14660336231d1");
@@ -35,7 +37,8 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
+    final functionSignature =
+        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
 
@@ -94,7 +97,8 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
+    final functionSignature =
+        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
 

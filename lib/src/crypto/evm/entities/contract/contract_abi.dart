@@ -1,30 +1,16 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/abi/avinoc_staking_contract.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/abi/demoContract.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/abi/nomoDevToken_contract.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-final List<ContractABI> abiList = [
-  contractAbiDemoContract,
-  contractAbiNomoDevToken,
-  contractAbiErc20,
-  contractAbiErc721,
-  avinocStakingAbi,
-  uniswap_v2_factory_abi,
-  uniswap_v2_pair_abi,
-  uniswap_v2_router_abi,
-];
-
 class ContractABI {
-  final List<ContractFunction> functions;
+  final List<LocalContractFunction> functions;
   final List<ContractEvent> events;
 
   const ContractABI(this.functions, this.events);
 
   factory ContractABI.fromAbi(String jsonAbi) {
     final abi = jsonDecode(jsonAbi);
-    final functions = <ContractFunction>[];
+    final functions = <LocalContractFunction>[];
     final events = <ContractEvent>[];
     for (final item in abi) {
       final type = item['type'];
@@ -43,7 +29,7 @@ class ContractABI {
         final parameters = <FunctionParam>[];
 
         for (final param in item["inputs"]) {
-          parameters.add(FunctionParam.fromMap(param));
+          parameters.add(FunctionParam.fromJson(param));
         }
         events.add(
           ContractEvent(
@@ -61,30 +47,30 @@ class ContractABI {
       final outputs = <FunctionParam>[];
 
       for (final param in item["inputs"]) {
-        parameters.add(FunctionParam.fromMap(param));
+        parameters.add(FunctionParam.fromJson(param));
       }
       if (item["outputs"] != null) {
         for (final param in item["outputs"]) {
-          outputs.add(FunctionParam.fromMap(param));
+          outputs.add(FunctionParam.fromJson(param));
         }
       }
       functions.add(
-        ContractFunction(
+        LocalContractFunction(
           name: name,
           parameters: parameters,
           stateMutability: stateMutability,
-          outputs: outputs,
+          outputTypes: outputs,
         ),
       );
     }
     return ContractABI(functions, events);
   }
 
-  ContractFunction? getFunction(String functionName) {
+  LocalContractFunction? getFunction(String functionName) {
     return functions.singleWhereOrNull((e) => e.name == functionName);
   }
 
-  ContractFunction? getFunctionFromSelector(String selector) {
+  LocalContractFunction? getFunctionFromSelector(String selector) {
     return functions
         .singleWhereOrNull((e) => e.functionSelectorHex == selector);
   }

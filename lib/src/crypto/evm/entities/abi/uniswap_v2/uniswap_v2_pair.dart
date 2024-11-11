@@ -670,7 +670,7 @@ class UniswapV2Pair extends InternalContract {
   Future<(BigInt, BigInt)> getReserves() async {
     final function = abi.getFunction('getReserves')!;
 
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
 
@@ -683,7 +683,7 @@ class UniswapV2Pair extends InternalContract {
   Future<String> token0() async {
     final function = abi.getFunction('token0')!;
 
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
 
@@ -693,7 +693,7 @@ class UniswapV2Pair extends InternalContract {
   Future<String> token1() async {
     final function = abi.getFunction('token1')!;
 
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
 
@@ -703,7 +703,7 @@ class UniswapV2Pair extends InternalContract {
   Future<BigInt> balanceOf(String address) async {
     final function = abi.getFunction('balanceOf')!;
 
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: [address]),
     );
 
@@ -713,7 +713,7 @@ class UniswapV2Pair extends InternalContract {
   Future<BigInt> totalSupply() async {
     final function = abi.getFunction('totalSupply')!;
 
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
 
@@ -739,7 +739,7 @@ class UniswapV2Pair extends InternalContract {
     required String spender,
   }) async {
     final function = abi.getFunction('allowance')!;
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: [owner, spender]),
     );
     return response.outputs.first.castValue<BigInt>();

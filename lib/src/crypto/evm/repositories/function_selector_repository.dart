@@ -63,7 +63,7 @@ class FunctionSelectorRepository {
         if (name == null) return null;
 
         final function =
-            ExternalContractFunction.fromString(textSignature: name);
+            ContractFunction.fromTextSignature(textSignature: name);
 
         _functionCache[selector] = function;
 
@@ -122,7 +122,7 @@ class FunctionSelectorRepository {
           "hex_signature": _,
           "bytes_signature": _,
         } in results) {
-      return ExternalContractFunction.fromString(
+      return ContractFunction.fromTextSignature(
         textSignature: text_signature,
       );
     }

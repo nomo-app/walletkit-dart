@@ -5,7 +5,7 @@ base class EVMTransaction extends GenericTransaction {
   final Amount? gasPrice;
   final int? gas;
   final int? gasUsed;
-  final ExternalContractFunctionWithValues? decodedInput;
+  final ContractFunctionWithValues? decodedInput;
 
   const EVMTransaction({
     required super.hash,
@@ -32,14 +32,6 @@ base class EVMTransaction extends GenericTransaction {
     } catch (e) {
       return null;
     }
-  }
-
-  Future<ExternalContractFunctionWithValues?> get getFunctionSignature async {
-    if (!_cachedFunctionSigs.containsKey(hash)) {
-      _cachedFunctionSigs[hash] =
-          await ContractFunctionWithValues.decodeRawWithFetch(data: input);
-    }
-    return _cachedFunctionSigs[hash];
   }
 
   EVMTransaction copyWith({ExternalContractFunctionWithValues? decodedInput}) {
@@ -122,12 +114,10 @@ base class EVMTransaction extends GenericTransaction {
         input: input.hexToBytesOrNull ?? Uint8List(0),
         token: CoinEntity.fromJson(token),
         decodedInput: decodedInput != null
-            ? ExternalContractFunctionWithValues.fromJson(decodedInput)
+            ? ContractFunctionWithValues.fromJson(decodedInput)
             : null,
       );
     }
     throw Exception("Could not parse EVMTransaction from $json");
   }
 }
-
-Map<String, ExternalContractFunctionWithValues> _cachedFunctionSigs = {};

@@ -991,7 +991,7 @@ class UniswapV2Router extends InternalContract {
   }) async {
     final function = abi.getFunction("getAmountsOut")!;
 
-    final result = await read(
+    final result = await readSafe(
       function: function.addValues(values: [amountIn, path]),
     );
 
@@ -1006,7 +1006,7 @@ class UniswapV2Router extends InternalContract {
   }) async {
     final function = abi.getFunction("getAmountsIn")!;
 
-    final result = await read(
+    final result = await readSafe(
       function: function.addValues(values: [amountOut, path]),
     );
 
@@ -1266,7 +1266,7 @@ class UniswapV2Router extends InternalContract {
   }) async {
     final function = abi.getFunction("quote")!;
 
-    final result = await read(
+    final result = await readSafe(
       function: function.addValues(values: [
         amountA,
         reserveA,

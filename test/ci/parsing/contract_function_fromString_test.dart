@@ -7,7 +7,7 @@ void main() {
     () {
       const textSignature = "transfer(address,uint256)";
 
-      final contractFunction = ExternalContractFunction.fromString(
+      final contractFunction = ContractFunction.fromTextSignature(
         textSignature: textSignature,
       );
 
@@ -24,7 +24,7 @@ void main() {
     () {
       const textSignature = "transfer(address _to, uint256 _value)";
 
-      final contractFunction = ExternalContractFunction.fromString(
+      final contractFunction = ContractFunction.fromTextSignature(
         textSignature: textSignature,
       );
 
