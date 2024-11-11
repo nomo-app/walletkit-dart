@@ -87,7 +87,7 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
   if (functionMap != null) {
     final localResult = decodeRaw(data: data, functionMap: functionMap);
 
-    if (localResult is! UnknownContractFunction ||
+    if (localResult is! UnknownContractFunction &amp;&amp;
         localResult is! NotDecodableContractFunction) {
       return localResult;
     }

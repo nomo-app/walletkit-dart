@@ -75,6 +75,11 @@
 }) {
   final opening = textSignature.indexOf(&quot;(&quot;);
   final closing = textSignature.lastIndexOf(&quot;)&quot;);
+
+  if (opening == -1 || closing == -1) {
+    throw Exception(&quot;Invalid text signature: $textSignature&quot;);
+  }
+
   final name = textSignature.substring(0, opening);
   final params_s = extractParams(
     textSignature.substring(opening + 1, closing),
