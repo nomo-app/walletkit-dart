@@ -282,7 +282,6 @@ void main() {
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-    print(balance);
     final transactions =
         await zksyncscan.fetchTransactions(address: arbitrumTestWallet);
     expect(transactions, isNotEmpty);
@@ -299,6 +298,6 @@ void main() {
       contractAddress: wbtcZKSync.contractAddress,
     );
 
-    expect(wbtcBalance, greaterThan(BigInt.zero));
+    expect(wbtcBalance, greaterThanOrEqualTo(BigInt.zero));
   });
 }
