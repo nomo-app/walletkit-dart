@@ -4,7 +4,12 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
-  const functionMap = {"asd": "asd"};
+  const functionMap = {
+    "40c10f19": "mint(address,uint256)",
+    "6ba4c138": "claim(uint256[])",
+    "d63a47d6":
+        "mint(address _to,uint256 _amount,bytes[] _amounts,bool _collect,address[] _addresses,int256 _intParam)",
+  };
   test('extract functionSignature mint from the transaction', () {
     const String unsignedTxFromNomo = // from nomo.signEvmTransaction
         "0xf86982074b8504a817c80083029810946d3be2fca848393ee83b2a1d65b312889cacf5e680b84440c10f1900000000000000000000000005870f1507d820212e921e1f39f14660336231d10000000000000000000000000000000000000000000000000000000000f34344";

@@ -78,6 +78,11 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
   }) {
     final opening = textSignature.indexOf("(");
     final closing = textSignature.lastIndexOf(")");
+
+    if (opening == -1 || closing == -1) {
+      throw Exception("Invalid text signature: $textSignature");
+    }
+
     final name = textSignature.substring(0, opening);
     final params_s = extractParams(
       textSignature.substring(opening + 1, closing),
@@ -147,7 +152,7 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
     if (functionMap != null) {
       final localResult = decodeRaw(data: data, functionMap: functionMap);
 
-      if (localResult is! UnknownContractFunction ||
+      if (localResult is! UnknownContractFunction &&
           localResult is! NotDecodableContractFunction) {
         return localResult;
       }
@@ -181,8 +186,13 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
 
     if (text_signarure == null) return UnknownContractFunction(data: data);
 
-    final function =
-        ContractFunction.fromTextSignature(textSignature: text_signarure);
+    final ExternalContractFunction function;
+    try {
+      function =
+          ContractFunction.fromTextSignature(textSignature: text_signarure);
+    } catch (e) {
+      return UnknownContractFunction(data: data);
+    }
 
     return ContractFunction.decode(
       data: data,

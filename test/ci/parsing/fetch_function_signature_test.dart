@@ -151,7 +151,7 @@ void main() {
     contractFunction = await ContractFunction.decodeRawWithFetch(
       data: dataString.hexToBytesWithPrefix,
       functionMap: {
-        "0x3f8fc233": "cancelTrades((bytes32,uint256,uint256)[])",
+        "3f8fc233": "cancelTrades((bytes32,uint256,uint256)[])",
       },
     );
 
@@ -424,7 +424,7 @@ void main() {
     final contractFunction = await ContractFunction.decodeRawWithFetch(
       data: dataString.hexToBytesWithPrefix,
       functionMap: {
-        "0x2289b18c": "g(uint256[][],string[])",
+        "2289b18c": "g(uint256[][],string[])",
       },
     );
 
