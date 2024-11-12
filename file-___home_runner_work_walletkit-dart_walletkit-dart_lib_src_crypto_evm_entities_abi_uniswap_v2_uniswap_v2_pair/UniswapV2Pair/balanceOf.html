@@ -73,7 +73,7 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; balanceOf(String address) async {
   final function = abi.getFunction(&#39;balanceOf&#39;)!;
 
-  final response = await readSafe(
+  final response = await read(
     function: function.addValues(values: [address]),
   );
 

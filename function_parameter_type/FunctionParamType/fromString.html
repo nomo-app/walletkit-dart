@@ -83,9 +83,10 @@
 
   if (name.startsWith(&#39;(&#39;) &amp;&amp; name.endsWith(&#39;)&#39;)) {
     final nameWithoutParentheses = name.substring(1, name.length - 1);
-    final tupleTypes = extractParams(nameWithoutParentheses)
-        .map((e) =&gt; fromString(e.$1))
-        .toList();
+    final tupleTypes =
+        ExternalContractFunction.extractParams(nameWithoutParentheses)
+            .map((e) =&gt; fromString(e))
+            .toList();
     return TupleFunctionParamType(name, tupleTypes);
   }
 

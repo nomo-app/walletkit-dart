@@ -72,7 +72,8 @@
 
 </dt>
 <dd>
-  
+  An Object that represents a contract function generated from an ABI
+Used for Encoding a datafield and after executing decoding the output
 </dd>
 
           <dt id="ContractFunctionWithValues">
@@ -88,15 +89,9 @@
 
 </dt>
 <dd>
-  
-</dd>
-
-          <dt id="ErrorContractFunctionMixin">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ErrorContractFunctionMixin-class.html">ErrorContractFunctionMixin</a></span> 
-
-</dt>
-<dd>
-  
+  An Object that represents a contract function generated from an ABI
+Has the List<functionparamwithvalue> parameters with wich the function was called
+Has the List<functionparam> outputs with the outputs of said executed function</functionparam></functionparamwithvalue>
 </dd>
 
           <dt id="ExternalContractFunction">
@@ -109,15 +104,6 @@ And hence only have the function name, selector and the parameters
 Only used for decoding existing datafields
 </dd>
 
-          <dt id="ExternalContractFunctionMixin">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionMixin-class.html">ExternalContractFunctionMixin</a></span> 
-
-</dt>
-<dd>
-  A mixin for External Contract Functions
-Does not have any additional properties just a marker
-</dd>
-
           <dt id="ExternalContractFunctionWithValues">
   <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a></span> 
 
@@ -128,65 +114,39 @@ And hence only have the function name, selector and the parameters
 Created after decoding the datafield with <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a>
 </dd>
 
-          <dt id="ExternalContractFunctionWithValuesAndOutputs">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValuesAndOutputs-class.html">ExternalContractFunctionWithValuesAndOutputs</a></span> 
+          <dt id="NotDecodableExternalContractFunction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/NotDecodableExternalContractFunction-class.html">NotDecodableExternalContractFunction</a></span> 
 
 </dt>
 <dd>
   
 </dd>
 
-          <dt id="LocalContractFunction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunction-class.html">LocalContractFunction</a></span> 
+          <dt id="UnknownExternalContractFunction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/UnknownExternalContractFunction-class.html">UnknownExternalContractFunction</a></span> 
 
 </dt>
 <dd>
-  An Object that represents a contract function generated from an ABI
-Used for Encoding a datafield and after executing decoding the output
+  
 </dd>
 
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="mixins">
+      <h2>Mixins</h2>
+      <dl>
           <dt id="LocalContractFunctionMixin">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionMixin-class.html">LocalContractFunctionMixin</a></span> 
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionMixin-mixin.html">LocalContractFunctionMixin</a></span> 
 
 </dt>
 <dd>
-  A mixin for Locale Contract Functions
+  A mixin for <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction-class.html">ContractFunction</a> and <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a>
 Used to get the stateMutability and outputs of the function
 These are only available in the local contract functions
 </dd>
 
-          <dt id="LocalContractFunctionWithValues">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionWithValues-class.html">LocalContractFunctionWithValues</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
-          <dt id="LocalContractFunctionWithValuesAndOutputs">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionWithValuesAndOutputs-class.html">LocalContractFunctionWithValuesAndOutputs</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
-          <dt id="NotDecodableContractFunction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/NotDecodableContractFunction-class.html">NotDecodableContractFunction</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
-          <dt id="UnknownContractFunction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/UnknownContractFunction-class.html">UnknownContractFunction</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
       </dl>
     </section>
 
@@ -194,26 +154,6 @@ These are only available in the local contract functions
 
 
 
-
-
-    <section class="summary offset-anchor" id="functions">
-      <h2>Functions</h2>
-      <dl class="callables">
-          <dt id="extractParams" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/extractParams.html">extractParams</a></span><span class="signature">(<wbr><span class="parameter" id="extractParams-param-text"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span></span>)</span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-      </dl>
-    </section>
 
 
     <section class="summary offset-anchor" id="exceptions">

@@ -72,7 +72,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; allPairs(BigInt index) async {
   final function = abi.getFunction(&quot;allPairs&quot;)!;
-  final result = await readSafe(
+  final result = await read(
     function: function.addValues(values: [index]),
   );
   return result.outputs.first.value as String;

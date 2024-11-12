@@ -79,7 +79,7 @@
 }) async {
   final function = abi.getFunction(&quot;quote&quot;)!;
 
-  final result = await readSafe(
+  final result = await read(
     function: function.addValues(values: [
       amountA,
       reserveA,

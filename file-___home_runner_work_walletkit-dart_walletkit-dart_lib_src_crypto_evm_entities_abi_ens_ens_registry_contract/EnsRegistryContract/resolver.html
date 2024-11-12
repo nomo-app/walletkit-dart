@@ -76,7 +76,7 @@
   final node = namehash(name);
 
   try {
-    final result = await readSafe(
+    final result = await read(
       function: function.addValues(values: [node]),
     );
 

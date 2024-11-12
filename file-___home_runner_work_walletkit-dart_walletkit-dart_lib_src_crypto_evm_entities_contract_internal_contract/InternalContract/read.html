@@ -60,8 +60,6 @@
 <span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a></span>
 <span class="name ">read</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="read-param-function"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">function</span>, </span></li>
 <li><span class="parameter" id="read-param-atBlock"><span class="type-annotation">dynamic</span> <span class="parameter-name">atBlock</span>, </span></li>
-<li><span class="parameter" id="read-param-outputs"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span> <span class="parameter-name">outputs</span>, </span></li>
-<li><span class="parameter" id="read-param-stateMutability"><span class="type-annotation">dynamic</span> <span class="parameter-name">stateMutability</span>, </span></li>
 </ol>})
 
       
@@ -73,24 +71,15 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Future&lt;ExternalContractFunctionWithValuesAndOutputs&gt; read({
-  required ExternalContractFunctionWithValues function,
+  <pre class="language-dart"><code class="language-dart">Future&lt;ContractFunctionWithValuesAndOutputs&gt; read({
+  required ContractFunctionWithValues function,
   BlockNum? atBlock,
-  required List&lt;FunctionParam&gt;? outputs,
-  StateMutability? stateMutability,
 }) async {
-  final _stateMutability = stateMutability ?? function.stateMutability;
-
-  if (_stateMutability != StateMutability.pure &amp;&amp;
-      _stateMutability != StateMutability.view) {
-    throw ArgumentError(&#39;Function is not view or pure&#39;);
-  }
-
-  final _outputs = outputs ?? function.outputTypes;
-
-  if (_outputs == null || _outputs.isEmpty) {
-    throw ArgumentError(&#39;Outputs must be provided&#39;);
-  }
+  assert(
+    function.stateMutability == StateMutability.pure ||
+        function.stateMutability == StateMutability.view,
+    &quot;Function is not view or pure&quot;,
+  );
 
   final data = function.buildDataField();
 
@@ -99,11 +88,9 @@
 
   final resultBuffer = result.hexToBytesWithPrefix;
 
-  return ExternalContractFunctionWithValuesAndOutputs.decode(
+  return ContractFunctionWithValuesAndOutputs.decode(
     data: resultBuffer,
     function: function,
-    outputs: _outputs,
-    stateMutability: stateMutability,
   );
 }</code></pre>
 </section>

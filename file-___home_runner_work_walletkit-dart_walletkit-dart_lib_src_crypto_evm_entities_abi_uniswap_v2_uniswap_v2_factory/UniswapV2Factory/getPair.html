@@ -77,7 +77,7 @@
 }) async {
   final function = abi.getFunction(&#39;getPair&#39;)!;
 
-  final result = await readSafe(
+  final result = await read(
     function: function.addValues(values: [tokenA, tokenB]),
   );
 

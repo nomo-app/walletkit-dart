@@ -72,7 +72,7 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; token1() async {
   final function = abi.getFunction(&#39;token1&#39;)!;
 
-  final response = await readSafe(
+  final response = await read(
     function: function.addValues(values: []),
   );
 
