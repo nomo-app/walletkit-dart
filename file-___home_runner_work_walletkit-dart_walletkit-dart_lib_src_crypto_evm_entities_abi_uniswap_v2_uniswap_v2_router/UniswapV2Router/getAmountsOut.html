@@ -77,7 +77,7 @@
 }) async {
   final function = abi.getFunction(&quot;getAmountsOut&quot;)!;
 
-  final result = await read(
+  final result = await readSafe(
     function: function.addValues(values: [amountIn, path]),
   );
 

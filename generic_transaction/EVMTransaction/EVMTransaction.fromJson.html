@@ -103,7 +103,7 @@
       input: input.hexToBytesOrNull ?? Uint8List(0),
       token: CoinEntity.fromJson(token),
       decodedInput: decodedInput != null
-          ? ExternalContractFunctionWithValues.fromJson(decodedInput)
+          ? ContractFunctionWithValues.fromJson(decodedInput)
           : null,
     );
   }

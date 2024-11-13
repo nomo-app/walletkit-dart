@@ -76,7 +76,7 @@
   required String spender,
 }) async {
   final function = abi.getFunction(&#39;allowance&#39;)!;
-  final response = await read(
+  final response = await readSafe(
     function: function.addValues(values: [owner, spender]),
   );
   return response.outputs.first.castValue&lt;BigInt&gt;();

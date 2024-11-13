@@ -73,6 +73,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;EvmNetworkFees&gt; fetchGasPrice() async {
+  final gasOracleEndpoint = &quot;${base}&amp;module=gastracker&amp;action=gasoracle&quot;;
+
   final result = await fetchEtherscanWithRatelimitRetries(gasOracleEndpoint);
   if (result is! Json) {
     throw Exception(&quot;Failed to fetch gas price&quot;);

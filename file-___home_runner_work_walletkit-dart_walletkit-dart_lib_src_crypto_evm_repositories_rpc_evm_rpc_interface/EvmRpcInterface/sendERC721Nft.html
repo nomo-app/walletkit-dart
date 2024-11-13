@@ -84,7 +84,7 @@
   required String contractAddress,
   required Uint8List seed,
 }) async {
-  final function = ContractFunctionWithValues(
+  final function = LocalContractFunctionWithValues(
     name: &quot;transferFrom&quot;,
     parameters: [
       FunctionParamWithValue(
@@ -104,7 +104,7 @@
       ),
     ],
     stateMutability: StateMutability.nonpayable,
-    outputs: [],
+    outputTypes: [],
   );
 
   return await interactWithContract(
