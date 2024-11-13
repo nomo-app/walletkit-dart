@@ -180,7 +180,7 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
   }) {
     if (data.length < 4) return UnknownContractFunction(data: data);
 
-    final hex_signature = data.sublist(0, 4).toHex;
+    final hex_signature = "0x${data.sublist(0, 4).toHex}";
 
     final text_signarure = functionMap[hex_signature];
 

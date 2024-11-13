@@ -34,7 +34,7 @@ base class EVMTransaction extends GenericTransaction {
     }
   }
 
-  EVMTransaction copyWith({ExternalContractFunctionWithValues? decodedInput}) {
+  EVMTransaction copyWith({ContractFunctionWithValues? decodedInput}) {
     return EVMTransaction(
       hash: hash,
       block: block,
