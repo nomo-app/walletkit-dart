@@ -1,19 +1,31 @@
 import 'dart:convert';
 
 import 'package:walletkit_dart/src/common/http_client.dart';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const _openchainEndpoint = "https://api.openchain.xyz/signature-database/v1";
 const _4byteEndpoint = "https://www.4byte.directory/api/v1";
 
-Map<String, ExternalContractFunction> _functionCache = {};
-
 class FunctionSelectorRepository {
-  static Future<ExternalContractFunction?> fetchSelector(
+  final Map<String, ExternalContractFunction> functionCache = {};
+
+  static final FunctionSelectorRepository _instance =
+      FunctionSelectorRepository._();
+
+  FunctionSelectorRepository._();
+
+  factory FunctionSelectorRepository() {
+    return _instance;
+  }
+
+  Future<ExternalContractFunction?> fetchSelector(
     String selector, {
     bool openChain = true,
     bool fourByte = true,
   }) async {
+    print(functionCache.length);
+
     assert(openChain || fourByte, "At least one source must be enabled");
 
     if (openChain) {
@@ -29,13 +41,14 @@ class FunctionSelectorRepository {
     return null;
   }
 
-  static Future<ExternalContractFunction?> fetchSelectorOpenChain(
+  Future<ExternalContractFunction?> fetchSelectorOpenChain(
     String selector,
   ) async {
     selector = selector.startsWith("0x") ? selector : "0x$selector";
 
-    if (_functionCache.containsKey(selector)) {
-      return _functionCache[selector];
+    if (functionCache.containsKey(selector)) {
+      print("Cache hit");
+      return functionCache[selector];
     }
 
     final response = await HTTPService.client.get(
@@ -67,7 +80,7 @@ class FunctionSelectorRepository {
 
         if (function == null) return null;
 
-        _functionCache[selector] = function;
+        functionCache[selector] = function;
 
         return function;
       }
@@ -78,13 +91,14 @@ class FunctionSelectorRepository {
     return null;
   }
 
-  static Future<ExternalContractFunction?> fetchSelector4Byte(
+  Future<ExternalContractFunction?> fetchSelector4Byte(
     String selector,
   ) async {
     selector = selector.startsWith("0x") ? selector : "0x$selector";
 
-    if (_functionCache.containsKey(selector)) {
-      return _functionCache[selector];
+    if (functionCache.containsKey(selector)) {
+      print("Cache hit");
+      return functionCache[selector];
     }
 
     final response = await HTTPService.client.get(
@@ -105,7 +119,7 @@ class FunctionSelectorRepository {
       final function = getLowestIdFunction(responseData["results"]);
 
       if (function != null) {
-        _functionCache[selector] = function;
+        functionCache[selector] = function;
       }
 
       return function;

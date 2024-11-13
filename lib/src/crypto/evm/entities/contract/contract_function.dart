@@ -157,6 +157,7 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
     required Uint8List data,
     Map<String, String>? functionMap,
   }) async {
+    print("a");
     if (data.length < 4) return UnknownContractFunction(data: data);
 
     if (functionMap != null) {
@@ -169,15 +170,19 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
     }
 
     final function_selector = data.sublist(0, 4).toHex;
-    final externalFunction = await FunctionSelectorRepository.fetchSelector(
-      function_selector,
-    );
 
-    if (externalFunction == null) {
+    try {
+      final externalFunction = await FunctionSelectorRepository().fetchSelector(
+        function_selector,
+      );
+      if (externalFunction == null) {
+        return UnknownContractFunction(data: data);
+      }
+
+      return decode(data: data, function: externalFunction);
+    } catch (e) {
       return UnknownContractFunction(data: data);
     }
-
-    return decode(data: data, function: externalFunction);
   }
 
   ///
