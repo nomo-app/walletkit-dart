@@ -82,6 +82,7 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
   required Uint8List data,
   Map&lt;String, String&gt;? functionMap,
 }) async {
+  print(&quot;a&quot;);
   if (data.length &lt; 4) return UnknownContractFunction(data: data);
 
   if (functionMap != null) {
@@ -94,15 +95,19 @@ If an external function is found, return a <a href="../../file-___home_runner_wo
   }
 
   final function_selector = data.sublist(0, 4).toHex;
-  final externalFunction = await FunctionSelectorRepository.fetchSelector(
-    function_selector,
-  );
 
-  if (externalFunction == null) {
+  try {
+    final externalFunction = await FunctionSelectorRepository().fetchSelector(
+      function_selector,
+    );
+    if (externalFunction == null) {
+      return UnknownContractFunction(data: data);
+    }
+
+    return decode(data: data, function: externalFunction);
+  } catch (e) {
     return UnknownContractFunction(data: data);
   }
-
-  return decode(data: data, function: externalFunction);
 }</code></pre>
 </section>
 
