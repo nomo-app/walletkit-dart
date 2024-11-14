@@ -75,15 +75,24 @@ abstract class InternalContract {
     );
   }
 
-  Future<ContractFunctionWithValuesAndOutputs> read({
-    required ContractFunctionWithValues function,
+  Future<ExternalContractFunctionWithValuesAndOutputs> read({
+    required ExternalContractFunctionWithValues function,
     BlockNum? atBlock,
+    required List<FunctionParam>? outputs,
+    StateMutability? stateMutability,
   }) async {
-    assert(
-      function.stateMutability == StateMutability.pure ||
-          function.stateMutability == StateMutability.view,
-      "Function is not view or pure",
-    );
+    final _stateMutability = stateMutability ?? function.stateMutability;
+
+    if (_stateMutability != StateMutability.pure &&
+        _stateMutability != StateMutability.view) {
+      throw ArgumentError('Function is not view or pure');
+    }
+
+    final _outputs = outputs ?? function.outputTypes;
+
+    if (_outputs == null || _outputs.isEmpty) {
+      throw ArgumentError('Outputs must be provided');
+    }
 
     final data = function.buildDataField();
 
@@ -92,7 +101,31 @@ abstract class InternalContract {
 
     final resultBuffer = result.hexToBytesWithPrefix;
 
-    return ContractFunctionWithValuesAndOutputs.decode(
+    return ExternalContractFunctionWithValuesAndOutputs.decode(
+      data: resultBuffer,
+      function: function,
+      outputs: _outputs,
+      stateMutability: stateMutability,
+    );
+  }
+
+  Future<LocalContractFunctionWithValuesAndOutputs> readSafe({
+    required LocalContractFunctionWithValues function,
+    BlockNum? atBlock,
+  }) async {
+    if (function.stateMutability != StateMutability.pure &&
+        function.stateMutability != StateMutability.view) {
+      throw ArgumentError('Function is not view or pure');
+    }
+
+    final data = function.buildDataField();
+
+    final String result =
+        await rpc.call(contractAddress: contractAddress, data: data);
+
+    final resultBuffer = result.hexToBytesWithPrefix;
+
+    return LocalContractFunctionWithValuesAndOutputs.decode(
       data: resultBuffer,
       function: function,
     );

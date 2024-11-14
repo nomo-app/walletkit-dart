@@ -1,9 +1,6 @@
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/common/types.dart';
-import 'package:walletkit_dart/src/domain/entities/coin_entity.dart';
-import 'package:walletkit_dart/src/domain/entities/amount.dart';
-import 'package:walletkit_dart/src/domain/entities/generic_transaction.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
+import 'package:walletkit_dart/src/common/logger.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 base class EtherscanTransaction extends EVMTransaction {
   const EtherscanTransaction({
@@ -30,6 +27,7 @@ base class EtherscanTransaction extends EVMTransaction {
     required CoinEntity token,
     required String address,
   }) {
+    /// Etherscan V2
     if (json
         case {
           'blockNumber': String block_s,
@@ -43,7 +41,8 @@ base class EtherscanTransaction extends EVMTransaction {
           'gasPrice': String gasPrice_s,
           'txreceipt_status': String txreceipt_status_s,
           'isError': String _,
-          'input': String input,
+          'input': String input_s,
+          'functionName': String functionName, // V2 only
         }) {
       final block = block_s.toIntOrNull ?? -1;
       final confirmations = block_s.toIntOrNull ?? -1;
@@ -67,6 +66,25 @@ base class EtherscanTransaction extends EVMTransaction {
       final transferMethod =
           TransactionTransferMethod.fromAddress(address, to, from);
 
+      final input = input_s.hexToBytesWithPrefixOrNull ?? Uint8List(0);
+
+      final contractFunction = switch (functionName) {
+        "" => null,
+        _ => ContractFunction.fromTextSignature(textSignature: functionName)
+      };
+
+      ContractFunctionWithValues? decodedInput;
+      if (contractFunction != null) {
+        try {
+          decodedInput = ContractFunction.decode(
+            data: input,
+            function: contractFunction,
+          );
+        } catch (e, s) {
+          Logger.logError(e, s: s, hint: "Failed to decode contract function");
+        }
+      }
+
       return EtherscanTransaction(
         hash: hash,
         block: block,
@@ -84,7 +102,69 @@ base class EtherscanTransaction extends EVMTransaction {
         status: ConfirmationStatus.fromReceiptStatus(
           txreceipt_status_s.toIntOrNull ?? -1,
         ),
-        input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
+        input: input,
+        decodedInput: decodedInput,
+      );
+    }
+
+    /// Etherscan V1
+    if (json
+        case {
+          'blockNumber': String block_s,
+          'timeStamp': String timeStamp_s,
+          'hash': String hash,
+          'from': String from,
+          'to': String to,
+          'value': String value_s,
+          'gas': String gas_s,
+          'gasUsed': String gasUsed_s,
+          'gasPrice': String gasPrice_s,
+          'txreceipt_status': String txreceipt_status_s,
+          'isError': String _,
+          'input': String input_s,
+        }) {
+      final block = block_s.toIntOrNull ?? -1;
+      final confirmations = block_s.toIntOrNull ?? -1;
+
+      final timeMilli = timeStamp_s.toIntOrNull ?? -1;
+      final amount = Amount(
+        value: BigInt.tryParse(value_s) ?? BigInt.from(-1),
+        decimals: token.decimals,
+      );
+
+      final fee = Amount(
+        value: gasPrice_s.toBigInt * gasUsed_s.toBigInt,
+        decimals: token.decimals,
+      );
+
+      final gasPrice = Amount(
+        value: gasPrice_s.toBigInt,
+        decimals: token.decimals,
+      );
+
+      final transferMethod =
+          TransactionTransferMethod.fromAddress(address, to, from);
+
+      final input = input_s.hexToBytesWithPrefixOrNull ?? Uint8List(0);
+
+      return EtherscanTransaction(
+        hash: hash,
+        block: block,
+        confirmations: confirmations,
+        timeMilli: timeMilli * 1000,
+        amount: amount,
+        fee: fee,
+        gasPrice: gasPrice,
+        gasUsed: gasUsed_s.toInt,
+        sender: from,
+        gas: gas_s.toInt,
+        recipient: to,
+        transferMethod: transferMethod,
+        token: token,
+        status: ConfirmationStatus.fromReceiptStatus(
+          txreceipt_status_s.toIntOrNull ?? -1,
+        ),
+        input: input,
       );
     }
 

@@ -367,7 +367,7 @@ final class EvmRpcInterface {
 
   Future<String> readContract({
     required String contractAddress,
-    required ContractFunctionWithValues function,
+    required LocalContractFunctionWithValues function,
   }) async {
     assert(
       function.stateMutability == StateMutability.view ||
@@ -388,7 +388,7 @@ final class EvmRpcInterface {
   ///
   Future<String> interactWithContract({
     required String contractAddress,
-    required ContractFunctionWithValues function,
+    required LocalContractFunctionWithValues function,
     required String sender,
     required Uint8List seed,
     required EvmFeeInformation? feeInfo,
@@ -449,7 +449,7 @@ final class EvmRpcInterface {
     required String contractAddress,
     required Uint8List seed,
   }) async {
-    final function = ContractFunctionWithValues(
+    final function = LocalContractFunctionWithValues(
       name: "transferFrom",
       parameters: [
         FunctionParamWithValue(
@@ -469,7 +469,7 @@ final class EvmRpcInterface {
         ),
       ],
       stateMutability: StateMutability.nonpayable,
-      outputs: [],
+      outputTypes: [],
     );
 
     return await interactWithContract(

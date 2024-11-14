@@ -4,6 +4,12 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
+  const functionMap = {
+    "0x40c10f19": "mint(address,uint256)",
+    "0x6ba4c138": "claim(uint256[])",
+    "0xd63a47d6":
+        "mint(address _to,uint256 _amount,bytes[] _amounts,bool _collect,address[] _addresses,int256 _intParam)",
+  };
   test('extract functionSignature mint from the transaction', () {
     const String unsignedTxFromNomo = // from nomo.signEvmTransaction
         "0xf86982074b8504a817c80083029810946d3be2fca848393ee83b2a1d65b312889cacf5e680b84440c10f1900000000000000000000000005870f1507d820212e921e1f39f14660336231d10000000000000000000000000000000000000000000000000000000000f34344";
@@ -18,10 +24,11 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
+    final functionSignature =
+        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
-    expect(functionSignature!.name, "mint");
+    expect(functionSignature.name, "mint");
     expect(functionSignature.parameters[0].type, FunctionParamAddress());
     expect(functionSignature.parameters[0].value,
         "0x05870f1507d820212e921e1f39f14660336231d1");
@@ -35,12 +42,13 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
+    final functionSignature =
+        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
 
     expect(
-        functionSignature!.parameters.first.value,
+        functionSignature.parameters.first.value,
         [
           8644,
           8717,
@@ -94,11 +102,12 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
 
-    final functionSignature = ContractFunctionWithValues.decodeRaw(data: data);
+    final functionSignature =
+        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
 
-    expect(functionSignature!.name, "mint");
+    expect(functionSignature.name, "mint");
 
     expect(functionSignature.parameters[0].name, "_to");
     expect(functionSignature.parameters[0].type, FunctionParamAddress());

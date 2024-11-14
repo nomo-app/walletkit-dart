@@ -14,12 +14,20 @@ class FunctionParam {
     this.indexed,
   });
 
-  factory FunctionParam.fromMap(Map<String, dynamic> map) {
+  factory FunctionParam.fromJson(Map<String, dynamic> map) {
     return FunctionParam(
       name: map['name'],
       type: FunctionParamType.fromString(map['type']),
       indexed: map['indexed'] as bool? ?? false,
     );
+  }
+
+  Json toJson() {
+    return {
+      'name': name,
+      'indexed': indexed,
+      'type': type.name,
+    };
   }
 }
 

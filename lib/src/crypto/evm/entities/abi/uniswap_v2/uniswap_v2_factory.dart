@@ -208,7 +208,7 @@ class UniswapV2Factory extends InternalContract {
   }) async {
     final function = abi.getFunction('getPair')!;
 
-    final result = await read(
+    final result = await readSafe(
       function: function.addValues(values: [tokenA, tokenB]),
     );
 
@@ -217,7 +217,7 @@ class UniswapV2Factory extends InternalContract {
 
   Future<BigInt> allPairsLength() async {
     final function = abi.getFunction("allPairsLength")!;
-    final result = await read(
+    final result = await readSafe(
       function: function.addValues(values: []),
     );
     return result.outputs.first.value as BigInt;
@@ -225,7 +225,7 @@ class UniswapV2Factory extends InternalContract {
 
   Future<String> allPairs(BigInt index) async {
     final function = abi.getFunction("allPairs")!;
-    final result = await read(
+    final result = await readSafe(
       function: function.addValues(values: [index]),
     );
     return result.outputs.first.value as String;

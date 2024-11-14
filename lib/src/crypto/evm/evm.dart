@@ -38,3 +38,5 @@ export 'entities/abi/ens/ens_resolver_contract.dart';
 export 'entities/abi/uniswap_v2/uniswap_v2_factory.dart';
 export 'entities/abi/uniswap_v2/uniswap_v2_pair.dart';
 export 'entities/abi/uniswap_v2/uniswap_v2_router.dart';
+
+export 'repositories/function_selector_repository.dart';

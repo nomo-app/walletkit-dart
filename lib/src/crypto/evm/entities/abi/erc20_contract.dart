@@ -291,7 +291,7 @@ class ERC20Contract extends InternalContract {
     final function = abi.functions[5];
     assert(function.functionSelectorHex == "70a08231");
 
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: [address]),
       atBlock: atBlock,
     );
@@ -302,7 +302,7 @@ class ERC20Contract extends InternalContract {
     final function = abi.functions[0];
     assert(function.functionSelectorHex == "06fdde03");
 
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
 
@@ -312,7 +312,7 @@ class ERC20Contract extends InternalContract {
   Future<String> getSymbol() async {
     final function = abi.functions[6];
     assert(function.functionSelectorHex == "95d89b41");
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
 
@@ -322,7 +322,7 @@ class ERC20Contract extends InternalContract {
   Future<BigInt> getSupply() async {
     final function = abi.functions[2];
     assert(function.functionSelectorHex == "18160ddd");
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
     return response.outputs.first.castValue<BigInt>();
@@ -331,7 +331,7 @@ class ERC20Contract extends InternalContract {
   Future<int> getDecimals() async {
     final function = abi.functions[4];
     assert(function.functionSelectorHex == "313ce567");
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
     return response.outputs.first.castValue<BigInt>().toInt();
@@ -340,7 +340,7 @@ class ERC20Contract extends InternalContract {
   Future<BigInt> balanceOf({required String address}) async {
     final function = abi.functions[5];
     assert(function.functionSelectorHex == "70a08231");
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: []),
     );
     return response.outputs.first.castValue<BigInt>();
@@ -352,7 +352,7 @@ class ERC20Contract extends InternalContract {
   }) async {
     final function = abi.functions[8];
     assert(function.functionSelectorHex == "dd62ed3e");
-    final response = await read(
+    final response = await readSafe(
       function: function.addValues(values: [owner, spender]),
     );
     return response.outputs.first.castValue<BigInt>();

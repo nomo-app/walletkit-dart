@@ -198,43 +198,14 @@ const spoilEVM = "0x1464935f48CA992D1a0bEAA2358471D7Cb6374E5";
 ///
 /// EVM
 ///
-const bnbScanBaseEndpoint = "https://api.bscscan.com/api";
-const etherscanBaseEndpoint = "https://api.etherscan.io/api";
-const polygonScanBaseEndpoint = "https://api.polygonscan.com/api";
+const etherscanBaseEndpoint = "https://api.etherscan.io/v2/api";
 const zeniqScanEnpoint = "https://zeniqscan.com/api";
 const zeniqSmartRPCEndpoint = "https://api.zeniq.network";
 
 ///
 /// Arbitrum
 ///
-const arbitrumScanBaseEndpoint = "https://api.arbiscan.io/api";
 const arbitrumTestWallet = "0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616";
-
-///
-/// Moonbeam
-///
-const moonbeamScanBaseEndpoint = "https://api-moonbeam.moonscan.io/api";
-
-///
-/// Base
-///
-const baseScanEndpoint = "https://api.basescan.org/api";
-
-///
-/// Avalanche
-///
-const avalancheAPIEndpoint =
-    "https://api.routescan.io/v2/network/mainnet/evm/43114/etherscan/api";
-
-///
-/// Optimism
-///
-const optimismScanEndpoint = "https://api-optimistic.etherscan.io/api";
-
-///
-///ZKSync
-///
-const zksyncAPIEndpoint = "https://api-era.zksync.network/api";
 
 ///
 /// Staking
