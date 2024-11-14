@@ -338,7 +338,7 @@ void main() {
   test('Fetch Function Selectors', () async {
     String selector = "0xbb51f1eb";
 
-    var result = await FunctionSelectorRepository.fetchSelector(selector);
+    var result = await FunctionSelectorRepository().fetchSelector(selector);
 
     expect(result, isNotNull);
 
@@ -350,7 +350,7 @@ void main() {
 
     selector = "0x13d79a0b";
 
-    result = await FunctionSelectorRepository.fetchSelector(selector);
+    result = await FunctionSelectorRepository().fetchSelector(selector);
 
     expect(result, isNotNull);
     expect(result!.functionSelectorHex, "13d79a0b");

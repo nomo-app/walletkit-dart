@@ -156,8 +156,9 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
   static Future<ContractFunctionWithValues> decodeRawWithFetch({
     required Uint8List data,
     Map<String, String>? functionMap,
+    bool openChain = true,
+    bool fourByte = true,
   }) async {
-    print("a");
     if (data.length < 4) return UnknownContractFunction(data: data);
 
     if (functionMap != null) {
@@ -174,6 +175,8 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
     try {
       final externalFunction = await FunctionSelectorRepository().fetchSelector(
         function_selector,
+        openChain: openChain,
+        fourByte: fourByte,
       );
       if (externalFunction == null) {
         return UnknownContractFunction(data: data);
