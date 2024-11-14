@@ -71,7 +71,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; allPairsLength() async {
   final function = abi.getFunction(&quot;allPairsLength&quot;)!;
-  final result = await readSafe(
+  final result = await read(
     function: function.addValues(values: []),
   );
   return result.outputs.first.value as BigInt;

@@ -104,7 +104,8 @@
 
 </dt>
 <dd>
-  
+  An Object that represents a contract function generated from an ABI
+Used for Encoding a datafield and after executing decoding the output
 </dd>
 
           <dt id="ContractFunctionWithValues">
@@ -120,7 +121,9 @@
 
 </dt>
 <dd>
-  
+  An Object that represents a contract function generated from an ABI
+Has the List<functionparamwithvalue> parameters with wich the function was called
+Has the List<functionparam> outputs with the outputs of said executed function</functionparam></functionparamwithvalue>
 </dd>
 
           <dt id="DecodedRLP">
@@ -157,14 +160,6 @@
 
           <dt id="ERC20Contract">
   <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_abi_erc20_contract/ERC20Contract-class.html">ERC20Contract</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
-          <dt id="ErrorContractFunctionMixin">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ErrorContractFunctionMixin-class.html">ErrorContractFunctionMixin</a></span> 
 
 </dt>
 <dd>
@@ -213,15 +208,6 @@ And hence only have the function name, selector and the parameters
 Only used for decoding existing datafields
 </dd>
 
-          <dt id="ExternalContractFunctionMixin">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionMixin-class.html">ExternalContractFunctionMixin</a></span> 
-
-</dt>
-<dd>
-  A mixin for External Contract Functions
-Does not have any additional properties just a marker
-</dd>
-
           <dt id="ExternalContractFunctionWithValues">
   <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a></span> 
 
@@ -230,14 +216,6 @@ Does not have any additional properties just a marker
   An Object that represents a contract function where we only have the function signature
 And hence only have the function name, selector and the parameters
 Created after decoding the datafield with <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a>
-</dd>
-
-          <dt id="ExternalContractFunctionWithValuesAndOutputs">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValuesAndOutputs-class.html">ExternalContractFunctionWithValuesAndOutputs</a></span> 
-
-</dt>
-<dd>
-  
 </dd>
 
           <dt id="FunctionParam">
@@ -1652,14 +1630,6 @@ Valid uint are: 8 through 256 with increments of 8
   
 </dd>
 
-          <dt id="FunctionSelectorRepository">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_function_selector_repository/FunctionSelectorRepository-class.html">FunctionSelectorRepository</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
           <dt id="InternalContract">
   <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_internal_contract/InternalContract-class.html">InternalContract</a></span> 
 
@@ -1668,43 +1638,8 @@ Valid uint are: 8 through 256 with increments of 8
   
 </dd>
 
-          <dt id="LocalContractFunction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunction-class.html">LocalContractFunction</a></span> 
-
-</dt>
-<dd>
-  An Object that represents a contract function generated from an ABI
-Used for Encoding a datafield and after executing decoding the output
-</dd>
-
-          <dt id="LocalContractFunctionMixin">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionMixin-class.html">LocalContractFunctionMixin</a></span> 
-
-</dt>
-<dd>
-  A mixin for Locale Contract Functions
-Used to get the stateMutability and outputs of the function
-These are only available in the local contract functions
-</dd>
-
-          <dt id="LocalContractFunctionWithValues">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionWithValues-class.html">LocalContractFunctionWithValues</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
-          <dt id="LocalContractFunctionWithValuesAndOutputs">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionWithValuesAndOutputs-class.html">LocalContractFunctionWithValuesAndOutputs</a></span> 
-
-</dt>
-<dd>
-  
-</dd>
-
-          <dt id="NotDecodableContractFunction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/NotDecodableContractFunction-class.html">NotDecodableContractFunction</a></span> 
+          <dt id="NotDecodableExternalContractFunction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/NotDecodableExternalContractFunction-class.html">NotDecodableExternalContractFunction</a></span> 
 
 </dt>
 <dd>
@@ -1783,8 +1718,8 @@ These are only available in the local contract functions
   
 </dd>
 
-          <dt id="UnknownContractFunction">
-  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/UnknownContractFunction-class.html">UnknownContractFunction</a></span> 
+          <dt id="UnknownExternalContractFunction">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/UnknownExternalContractFunction-class.html">UnknownExternalContractFunction</a></span> 
 
 </dt>
 <dd>
@@ -1832,6 +1767,21 @@ These are only available in the local contract functions
       </dl>
     </section>
 
+    <section class="summary offset-anchor" id="mixins">
+      <h2>Mixins</h2>
+      <dl>
+          <dt id="LocalContractFunctionMixin">
+  <span class="name "><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionMixin-mixin.html">LocalContractFunctionMixin</a></span> 
+
+</dt>
+<dd>
+  A mixin for <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction-class.html">ContractFunction</a> and <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a>
+Used to get the stateMutability and outputs of the function
+These are only available in the local contract functions
+</dd>
+
+      </dl>
+    </section>
 
 
     <section class="summary offset-anchor" id="extensions">
@@ -1907,6 +1857,18 @@ These are only available in the local contract functions
     <section class="summary offset-anchor" id="properties">
       <h2>Properties</h2>
       <dl class="properties">
+          <dt id="abiList" class="property">
+  <span class="name"><a href="../walletkit_dart/abiList.html">abiList</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_abi/ContractABI-class.html">ContractABI</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
           <dt id="contractAbiErc20" class="property">
   <span class="name"><a href="../walletkit_dart/contractAbiErc20.html">contractAbiErc20</a></span>
   <span class="signature">&#8594; dynamic</span>
@@ -2092,19 +2054,6 @@ including the leading 02 or 03
           <dt id="extractChainId" class="callable">
   <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_utils_utils/extractChainId.html">extractChainId</a></span><span class="signature">(<wbr><span class="parameter" id="extractChainId-param-v"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">v</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-          <dt id="extractParams" class="callable">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/extractParams.html">extractParams</a></span><span class="signature">(<wbr><span class="parameter" id="extractParams-param-text"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">text</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, </span><span class="field"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span></span>)</span>&gt;</span></span>
   </span>
   
 
@@ -2351,7 +2300,6 @@ including the leading 02 or 03
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_transactions_etherscan_transaction/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_transactions_etherscan_transaction-library.html">src/crypto/evm/entities/transactions/etherscan_transaction</a></li>
       <li><a href="../evm/evm-library.html">src/crypto/evm/evm</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_etherscan_etherscan_explorer/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_etherscan_etherscan_explorer-library.html">src/crypto/evm/repositories/etherscan/etherscan_explorer</a></li>
-      <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_function_selector_repository/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_function_selector_repository-library.html">src/crypto/evm/repositories/function_selector_repository</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_rpc_evm_client/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_rpc_evm_client-library.html">src/crypto/evm/repositories/rpc/evm_client</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_rpc_evm_rpc_interface/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_repositories_rpc_evm_rpc_interface-library.html">src/crypto/evm/repositories/rpc/evm_rpc_interface</a></li>
       <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_utils_rlp/file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_utils_rlp-library.html">src/crypto/evm/utils/rlp</a></li>

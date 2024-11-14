@@ -77,7 +77,7 @@
 }) async {
   final function = abi.functions[8];
   assert(function.functionSelectorHex == &quot;dd62ed3e&quot;);
-  final response = await readSafe(
+  final response = await read(
     function: function.addValues(values: [owner, spender]),
   );
   return response.outputs.first.castValue&lt;BigInt&gt;();

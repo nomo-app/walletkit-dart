@@ -73,7 +73,7 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; balanceOf({required String address}) async {
   final function = abi.functions[5];
   assert(function.functionSelectorHex == &quot;70a08231&quot;);
-  final response = await readSafe(
+  final response = await read(
     function: function.addValues(values: []),
   );
   return response.outputs.first.castValue&lt;BigInt&gt;();

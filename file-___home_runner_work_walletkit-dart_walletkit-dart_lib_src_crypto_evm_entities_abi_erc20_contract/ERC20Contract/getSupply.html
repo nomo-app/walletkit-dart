@@ -72,7 +72,7 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; getSupply() async {
   final function = abi.functions[2];
   assert(function.functionSelectorHex == &quot;18160ddd&quot;);
-  final response = await readSafe(
+  final response = await read(
     function: function.addValues(values: []),
   );
   return response.outputs.first.castValue&lt;BigInt&gt;();

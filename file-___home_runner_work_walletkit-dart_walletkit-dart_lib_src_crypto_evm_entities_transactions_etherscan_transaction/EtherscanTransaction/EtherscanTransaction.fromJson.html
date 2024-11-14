@@ -73,7 +73,6 @@
   required CoinEntity token,
   required String address,
 }) {
-  &#47;&#47;&#47; Etherscan V2
   if (json
       case {
         &#39;blockNumber&#39;: String block_s,
@@ -87,8 +86,7 @@
         &#39;gasPrice&#39;: String gasPrice_s,
         &#39;txreceipt_status&#39;: String txreceipt_status_s,
         &#39;isError&#39;: String _,
-        &#39;input&#39;: String input_s,
-        &#39;functionName&#39;: String functionName, &#47;&#47; V2 only
+        &#39;input&#39;: String input,
       }) {
     final block = block_s.toIntOrNull ?? -1;
     final confirmations = block_s.toIntOrNull ?? -1;
@@ -112,25 +110,6 @@
     final transferMethod =
         TransactionTransferMethod.fromAddress(address, to, from);
 
-    final input = input_s.hexToBytesWithPrefixOrNull ?? Uint8List(0);
-
-    final contractFunction = switch (functionName) {
-      &quot;&quot; =&gt; null,
-      _ =&gt; ContractFunction.fromTextSignature(textSignature: functionName)
-    };
-
-    ContractFunctionWithValues? decodedInput;
-    if (contractFunction != null) {
-      try {
-        decodedInput = ContractFunction.decode(
-          data: input,
-          function: contractFunction,
-        );
-      } catch (e, s) {
-        Logger.logError(e, s: s, hint: &quot;Failed to decode contract function&quot;);
-      }
-    }
-
     return EtherscanTransaction(
       hash: hash,
       block: block,
@@ -148,69 +127,7 @@
       status: ConfirmationStatus.fromReceiptStatus(
         txreceipt_status_s.toIntOrNull ?? -1,
       ),
-      input: input,
-      decodedInput: decodedInput,
-    );
-  }
-
-  &#47;&#47;&#47; Etherscan V1
-  if (json
-      case {
-        &#39;blockNumber&#39;: String block_s,
-        &#39;timeStamp&#39;: String timeStamp_s,
-        &#39;hash&#39;: String hash,
-        &#39;from&#39;: String from,
-        &#39;to&#39;: String to,
-        &#39;value&#39;: String value_s,
-        &#39;gas&#39;: String gas_s,
-        &#39;gasUsed&#39;: String gasUsed_s,
-        &#39;gasPrice&#39;: String gasPrice_s,
-        &#39;txreceipt_status&#39;: String txreceipt_status_s,
-        &#39;isError&#39;: String _,
-        &#39;input&#39;: String input_s,
-      }) {
-    final block = block_s.toIntOrNull ?? -1;
-    final confirmations = block_s.toIntOrNull ?? -1;
-
-    final timeMilli = timeStamp_s.toIntOrNull ?? -1;
-    final amount = Amount(
-      value: BigInt.tryParse(value_s) ?? BigInt.from(-1),
-      decimals: token.decimals,
-    );
-
-    final fee = Amount(
-      value: gasPrice_s.toBigInt * gasUsed_s.toBigInt,
-      decimals: token.decimals,
-    );
-
-    final gasPrice = Amount(
-      value: gasPrice_s.toBigInt,
-      decimals: token.decimals,
-    );
-
-    final transferMethod =
-        TransactionTransferMethod.fromAddress(address, to, from);
-
-    final input = input_s.hexToBytesWithPrefixOrNull ?? Uint8List(0);
-
-    return EtherscanTransaction(
-      hash: hash,
-      block: block,
-      confirmations: confirmations,
-      timeMilli: timeMilli * 1000,
-      amount: amount,
-      fee: fee,
-      gasPrice: gasPrice,
-      gasUsed: gasUsed_s.toInt,
-      sender: from,
-      gas: gas_s.toInt,
-      recipient: to,
-      transferMethod: transferMethod,
-      token: token,
-      status: ConfirmationStatus.fromReceiptStatus(
-        txreceipt_status_s.toIntOrNull ?? -1,
-      ),
-      input: input,
+      input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
     );
   }
 
