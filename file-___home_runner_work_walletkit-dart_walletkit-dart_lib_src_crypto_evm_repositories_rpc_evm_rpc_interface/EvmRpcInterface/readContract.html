@@ -73,7 +73,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; readContract({
   required String contractAddress,
-  required ContractFunctionWithValues function,
+  required LocalContractFunctionWithValues function,
 }) async {
   assert(
     function.stateMutability == StateMutability.view ||

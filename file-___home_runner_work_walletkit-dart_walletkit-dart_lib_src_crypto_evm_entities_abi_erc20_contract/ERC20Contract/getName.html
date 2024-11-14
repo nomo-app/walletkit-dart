@@ -73,7 +73,7 @@
   final function = abi.functions[0];
   assert(function.functionSelectorHex == &quot;06fdde03&quot;);
 
-  final response = await read(
+  final response = await readSafe(
     function: function.addValues(values: []),
   );
 

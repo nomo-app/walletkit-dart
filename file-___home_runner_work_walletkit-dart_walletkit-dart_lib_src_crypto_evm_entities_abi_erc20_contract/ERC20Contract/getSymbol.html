@@ -72,7 +72,7 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; getSymbol() async {
   final function = abi.functions[6];
   assert(function.functionSelectorHex == &quot;95d89b41&quot;);
-  final response = await read(
+  final response = await readSafe(
     function: function.addValues(values: []),
   );
 

@@ -72,7 +72,7 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;BigInt&gt; totalSupply() async {
   final function = abi.getFunction(&#39;totalSupply&#39;)!;
 
-  final response = await read(
+  final response = await readSafe(
     function: function.addValues(values: []),
   );
 

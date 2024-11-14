@@ -52,37 +52,32 @@
     data-below-sidebar="file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function&#47;ContractFunction-class-sidebar.html">
     <div>
 <h1><span class="kind-class">ContractFunction</span> class 
+    <a href="https://dart.dev/language/class-modifiers#sealed" class="feature feature-sealed" title="The direct subtypes of this class will be checked for exhaustiveness in switches.">sealed</a>
  
 </h1></div>
 
     
-<section class="desc markdown">
-  <p>An Object that represents a contract function generated from an ABI
-Used for Encoding a datafield and after executing decoding the output</p>
-</section>
 
 
     <section>
       <dl class="dl-horizontal">
         
-  <dt>Inheritance</dt>
-  <dd>
-    <ul class="gt-separated dark clazz-relationships">
-      <li><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></li>
-        <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a></li>
-      <li>ContractFunction</li>
-    </ul>
-  </dd>
 
         
-        
-  <dt>Mixed-in types</dt>
+  <dt>Implemented types</dt>
   <dd>
     <ul class="comma-separated clazz-relationships">
-        <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionMixin-mixin.html">LocalContractFunctionMixin</a></li>
+        <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionMixin-class.html">ExternalContractFunctionMixin</a></li>
     </ul>
   </dd>
+        
 
+          <dt>Implementers</dt>
+          <dd><ul class="comma-separated clazz-relationships">
+              <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a></li>
+              <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a></li>
+              <li><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunction-class.html">LocalContractFunction</a></li>
+          </ul></dd>
 
         
         
@@ -95,12 +90,12 @@ Used for Encoding a datafield and after executing decoding the output</p>
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="ContractFunction" class="callable">
-          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/ContractFunction.html">ContractFunction</a></span><span class="signature">({<span class="parameter" id="-param-name"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="-param-parameters"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">parameters</span>, </span><span class="parameter" id="-param-stateMutability"><span>required</span> <span class="type-annotation">dynamic</span> <span class="parameter-name">stateMutability</span>, </span><span class="parameter" id="-param-outputs"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span> <span class="parameter-name">outputs</span></span>})</span>
+        <dt id="ContractFunction.fromJson" class="callable">
+          <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/ContractFunction.fromJson.html">ContractFunction.fromJson</a></span><span class="signature">(<span class="parameter" id="fromJson-param-json"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a></span> <span class="parameter-name">json</span></span>)</span>
         </dt>
         <dd>
           
-            <div class="constructor-modifier features">const</div>
+            <div class="constructor-modifier features">factory</div>
         </dd>
     </dl>
   </section>
@@ -110,39 +105,39 @@ Used for Encoding a datafield and after executing decoding the output</p>
       id="instance-properties">
     <h2>Properties</h2>
     <dl class="properties">
-        <dt id="function" class="property inherited">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction/function.html">function</a></span>
+        <dt id="function" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/function.html">function</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   
 
 </dt>
-<dd class="inherited">
+<dd>
   
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
 
-        <dt id="functionSelector" class="property inherited">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction/functionSelector.html">functionSelector</a></span>
+        <dt id="functionSelector" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/functionSelector.html">functionSelector</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
   
 
 </dt>
-<dd class="inherited">
+<dd>
   
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
 
-        <dt id="functionSelectorHex" class="property inherited">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction/functionSelectorHex.html">functionSelectorHex</a></span>
+        <dt id="functionSelectorHex" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/functionSelectorHex.html">functionSelectorHex</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   
 
 </dt>
-<dd class="inherited">
+<dd>
   
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
 
@@ -158,21 +153,33 @@ Used for Encoding a datafield and after executing decoding the output</p>
 
 </dd>
 
-        <dt id="name" class="property inherited">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction/name.html">name</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+        <dt id="isExternal" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/isExternal.html">isExternal</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
   
 
 </dt>
-<dd class="inherited">
+<dd>
   
-  <div class="features"><span class="feature">final</span><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
 
-        <dt id="outputs" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/outputs.html">outputs</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>
+        <dt id="isLocal" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/isLocal.html">isLocal</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="name" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/name.html">name</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   
 
 </dt>
@@ -182,15 +189,27 @@ Used for Encoding a datafield and after executing decoding the output</p>
 
 </dd>
 
-        <dt id="parameters" class="property inherited">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction/parameters.html">parameters</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>
+        <dt id="outputTypes" class="property inherited">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionMixin/outputTypes.html">outputTypes</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a>?</span>
   
 
 </dt>
 <dd class="inherited">
   
   <div class="features"><span class="feature">final</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="parameters" class="property">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/parameters.html">parameters</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
 
@@ -206,15 +225,15 @@ Used for Encoding a datafield and after executing decoding the output</p>
 
 </dd>
 
-        <dt id="stateMutability" class="property">
-  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/stateMutability.html">stateMutability</a></span>
+        <dt id="stateMutability" class="property inherited">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionMixin/stateMutability.html">stateMutability</a></span>
   <span class="signature">&#8594; dynamic</span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   
-  <div class="features"><span class="feature">final</span></div>
+  <div class="features"><span class="feature">final</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -249,6 +268,19 @@ Used for Encoding a datafield and after executing decoding the output</p>
 <dd class="inherited">
   Invoked when a nonexistent method or property is accessed.
   <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="toJson" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/toJson.html">toJson</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
 
 </dd>
 
@@ -290,6 +322,69 @@ Used for Encoding a datafield and after executing decoding the output</p>
   </section>
     
     
+  <section class="summary offset-anchor" id="static-methods">
+    <h2>Static Methods</h2>
+    <dl class="callables">
+        <dt id="decode" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/decode.html">decode</a></span><span class="signature">(<wbr>{<span class="parameter" id="decode-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span><span class="parameter" id="decode-param-function"><span>required</span> <span class="type-annotation"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction-class.html">ContractFunction</a></span> <span class="parameter-name">function</span></span>})
+    <span class="returntype parameter">&#8594; <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Try to decode the raw data using the <code>function</code> and return the decoded function
+If the decoding of the data with information from the <code>function</code> fails a <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/NotDecodableContractFunction-class.html">NotDecodableContractFunction</a> is returned
+  
+
+</dd>
+
+        <dt id="decodeRaw" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/decodeRaw.html">decodeRaw</a></span><span class="signature">(<wbr>{<span class="parameter" id="decodeRaw-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span><span class="parameter" id="decodeRaw-param-functionMap"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">functionMap</span></span>})
+    <span class="returntype parameter">&#8594; <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Try to decode the raw data using the <code>abiList</code> and return the decoded function
+If the function is not found, return null
+  
+
+</dd>
+
+        <dt id="decodeRawWithFetch" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/decodeRawWithFetch.html">decodeRawWithFetch</a></span><span class="signature">(<wbr>{<span class="parameter" id="decodeRawWithFetch-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span><span class="parameter" id="decodeRawWithFetch-param-functionMap"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span>?</span> <span class="parameter-name">functionMap</span>, </span><span class="parameter" id="decodeRawWithFetch-param-openChain"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">openChain</span> = <span class="default-value">true</span>, </span><span class="parameter" id="decodeRawWithFetch-param-fourByte"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">fourByte</span> = <span class="default-value">true</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunctionWithValues-class.html">ContractFunctionWithValues</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Try to decode the raw data using the <code>abiList</code>
+If the function is not found locally it will try to fetch the function from an external source (4byte.directory)
+If the function is not found, return null
+If a local function is found, return a <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/LocalContractFunctionWithValues-class.html">LocalContractFunctionWithValues</a>
+If an external function is found, return a <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunctionWithValues-class.html">ExternalContractFunctionWithValues</a>
+  
+
+</dd>
+
+        <dt id="fromTextSignature" class="callable">
+  <span class="name"><a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ContractFunction/fromTextSignature.html">fromTextSignature</a></span><span class="signature">(<wbr>{<span class="parameter" id="fromTextSignature-param-textSignature"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">textSignature</span></span>})
+    <span class="returntype parameter">&#8594; <a href="../file-___home_runner_work_walletkit-dart_walletkit-dart_lib_src_crypto_evm_entities_contract_contract_function/ExternalContractFunction-class.html">ExternalContractFunction</a>?</span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+    </dl>
+  </section>
     
 
   </div> <!-- /.main-content -->

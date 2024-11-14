@@ -75,7 +75,7 @@
   final function = abi.functions[5];
   assert(function.functionSelectorHex == &quot;70a08231&quot;);
 
-  final response = await read(
+  final response = await readSafe(
     function: function.addValues(values: [address]),
     atBlock: atBlock,
   );
