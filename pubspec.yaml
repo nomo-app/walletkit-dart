@@ -20,6 +20,7 @@ dependencies:
   pointycastle: ^3.7.3
   sec: ^1.1.0
   collection: ^1.19.1
+  convert: ^3.1.2
   bip39:
     path: packages/bip39 # Own fork
 

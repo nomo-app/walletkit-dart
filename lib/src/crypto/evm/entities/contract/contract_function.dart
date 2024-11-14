@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/contract/contract_function_decoding.dart';
-import 'package:walletkit_dart/src/crypto/evm/repositories/function_selector_repository.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
