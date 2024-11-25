@@ -213,9 +213,11 @@ final class EvmRpcInterface {
     required EvmFeeInformation feeInfo,
     required Uint8List? data,
     required BigInt? value,
+    BigInt? nonce,
     List<AccessListItem>? accessList,
   }) async {
     final (gasPrice, gasLimit) = switch ((feeInfo.gasPrice, feeInfo.gasLimit)) {
+      (Amount gasPrice, int gaslimit) => (gasPrice, gaslimit),
       (null, int gasLimit) => (
           Amount(value: await getGasPrice(), decimals: 18),
           gasLimit
@@ -233,13 +235,14 @@ final class EvmRpcInterface {
           recipient: recipient, sender: sender, data: data, value: value),
     };
 
-    final nonce = await performTask(
-      (client) => client.getTransactionCount(sender),
-    );
+    final _nonce = nonce ??
+        await performTask<BigInt>(
+          (client) => client.getTransactionCount(sender),
+        );
 
     if (type is ZENIQ_SMART_NETWORK) {
       return RawEVMTransactionType0.unsigned(
-        nonce: nonce,
+        nonce: _nonce,
         gasPrice: gasPrice.value,
         gasLimit: gasLimit.toBI,
         to: recipient,
@@ -255,7 +258,7 @@ final class EvmRpcInterface {
 
     return switch (feeInfo) {
       EvmType2FeeInformation() => RawEVMTransactionType2.unsigned(
-          nonce: nonce,
+          nonce: _nonce,
           maxFeePerGas: gasPrice.value,
           maxPriorityFeePerGas:
               feeInfo.maxPriorityFeePerGas?.value ?? Amount.zero.value,
@@ -268,7 +271,7 @@ final class EvmRpcInterface {
         ),
       EvmFeeInformation() => accessList != null
           ? RawEVMTransactionType1.unsigned(
-              nonce: nonce,
+              nonce: _nonce,
               gasPrice: gasPrice.value,
               gasLimit: gasLimit.toBI,
               to: recipient,
@@ -278,7 +281,7 @@ final class EvmRpcInterface {
               chainId: type.chainId,
             )
           : RawEVMTransactionType0.unsigned(
-              nonce: nonce,
+              nonce: _nonce,
               gasPrice: gasPrice.value,
               gasLimit: gasLimit.toBI,
               to: recipient,
@@ -302,6 +305,7 @@ final class EvmRpcInterface {
     required Uint8List? data,
     required BigInt? value,
     List<AccessListItem>? accessList,
+    BigInt? nonce,
   }) async {
     final unsignedTx = await buildUnsignedTransaction(
       sender: sender,
@@ -310,6 +314,7 @@ final class EvmRpcInterface {
       data: data,
       value: value,
       accessList: accessList,
+      nonce: nonce,
     );
 
     final signature = Signature.createSignature(
