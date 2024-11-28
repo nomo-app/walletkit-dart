@@ -8,7 +8,7 @@ typedef JSON = Map<String, dynamic>;
 typedef JSONList = List<Map<String, dynamic>>;
 
 const retryInterval = Duration(seconds: 3);
-const timeoutDuration = Duration(seconds: 35);
+const timeoutDuration = Duration(seconds: 10);
 
 abstract class HTTPRepository {
   final List<String> apiKeys;
@@ -41,7 +41,7 @@ abstract class HTTPRepository {
     String? apiKey = _getApiKey(apiKeys.length);
     for (int i = 0; true; i++) {
       try {
-        return await _getCall<T>(uri, apiKey: apiKey);
+        return await _getCall<T>(uri, apiKey: apiKey).timeout(timeoutDuration);
       } on RateLimitException {
         apiKey = _getApiKey(i);
         await Future.delayed(retryInterval);
