@@ -216,10 +216,7 @@ final class EvmRpcInterface {
     List<AccessListItem>? accessList,
   }) async {
     final (gasPrice, gasLimit) = switch ((feeInfo.gasPrice, feeInfo.gasLimit)) {
-      (null, int gasLimit) => (
-          Amount(value: await getGasPrice(), decimals: 18),
-          gasLimit
-        ),
+      (Amount gasPrice, int gasLimit) => (gasPrice, gasLimit),
       (Amount gasPrice, null) => (
           gasPrice,
           await estimateGasLimit(
@@ -229,7 +226,11 @@ final class EvmRpcInterface {
             value: value,
           )
         ),
-      _ => await estimateNetworkFees(
+      (null, int gasLimit) => (
+          Amount(value: await getGasPrice(), decimals: 18),
+          gasLimit
+        ),
+      (null, null) => await estimateNetworkFees(
           recipient: recipient, sender: sender, data: data, value: value),
     };
 

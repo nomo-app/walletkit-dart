@@ -45,9 +45,19 @@ sealed class FeeInformation {
         'gasLimit': int gasLimit,
         'gasPrice': Map gasPrice,
       } =>
-        EvmFeeInformation(
+        EvmLegacyFeeInformation(
           gasLimit: gasLimit,
           gasPrice: Amount.fromJson(gasPrice),
+        ),
+      {
+        'gasLimit': int gasLimit,
+        'maxFeePerGas': Map maxFeePerGas,
+        'maxPriorityFeePerGas': Map maxPriorityFeePerGas,
+      } =>
+        EvmType2FeeInformation(
+          gasLimit: gasLimit,
+          maxFeePerGas: Amount.fromJson(maxFeePerGas),
+          maxPriorityFeePerGas: Amount.fromJson(maxPriorityFeePerGas),
         ),
       {
         'feePerByte': Map feePerByte,
@@ -68,14 +78,18 @@ sealed class FeeInformation {
   }
 }
 
-final class EvmFeeInformation extends FeeInformation {
+sealed class EvmFeeInformation extends FeeInformation {
   final int? gasLimit;
-  final Amount? gasPrice;
+
+  Amount get fee;
 
   const EvmFeeInformation({
     required this.gasLimit,
-    required this.gasPrice,
   });
+}
+
+final class EvmLegacyFeeInformation extends EvmFeeInformation {
+  final Amount? gasPrice;
 
   Amount get fee {
     return gasPrice ??
@@ -89,54 +103,53 @@ final class EvmFeeInformation extends FeeInformation {
     };
   }
 
-  EvmFeeInformation copyWith({
+  EvmLegacyFeeInformation copyWith({
     int? gasLimit,
     Amount? gasPrice,
   }) {
-    return EvmFeeInformation(
+    return EvmLegacyFeeInformation(
       gasLimit: gasLimit ?? this.gasLimit,
       gasPrice: gasPrice ?? this.gasPrice,
     );
   }
 
-  static EvmFeeInformation get zero {
-    return EvmFeeInformation(gasLimit: null, gasPrice: null);
-  }
+  const EvmLegacyFeeInformation({
+    required super.gasLimit,
+    required this.gasPrice,
+  });
 }
 
 final class EvmType2FeeInformation extends EvmFeeInformation {
+  final Amount? maxFeePerGas;
   final Amount? maxPriorityFeePerGas;
+
+  Amount get fee {
+    return maxFeePerGas ??
+        Amount.zero * Amount.convert(value: gasLimit ?? 0, decimals: 0);
+  }
 
   const EvmType2FeeInformation({
     required super.gasLimit,
-    required super.gasPrice,
+    required this.maxFeePerGas,
     required this.maxPriorityFeePerGas,
   });
-
-  static EvmType2FeeInformation get zero {
-    return EvmType2FeeInformation(
-      gasLimit: null,
-      gasPrice: null,
-      maxPriorityFeePerGas: null,
-    );
-  }
 
   Json toJson() {
     return {
       'gasLimit': gasLimit,
       'maxPriorityFeePerGas': maxPriorityFeePerGas.toString(),
-      'gasPrice': gasPrice?.toJson() ?? Amount.zero.toJson(),
+      'maxFeePerGas': maxFeePerGas.toString(),
     };
   }
 
   EvmType2FeeInformation copyWith({
     int? gasLimit,
-    Amount? gasPrice,
+    Amount? maxFeePerGas,
     Amount? maxPriorityFeePerGas,
   }) {
     return EvmType2FeeInformation(
       gasLimit: gasLimit ?? this.gasLimit,
-      gasPrice: gasPrice ?? this.gasPrice,
+      maxFeePerGas: maxFeePerGas ?? this.maxFeePerGas,
       maxPriorityFeePerGas: maxPriorityFeePerGas ?? this.maxPriorityFeePerGas,
     );
   }
