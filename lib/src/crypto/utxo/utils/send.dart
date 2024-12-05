@@ -37,11 +37,13 @@ RawTransaction buildUnsignedTransaction({
   }
 
   var targetValue = intent.amount.value;
+
   if (targetValue < BigInt.zero) {
     throw SendFailure("targetValue < 0");
   }
 
-  if (targetValue < networkType.dustTreshhold.legacy.toBI) {
+  if (targetValue < networkType.dustTreshhold.legacy.toBI &&
+      walletPath.purpose != HDWalletPurpose.BIP84) {
     throw SendFailure(
       "targetValue < DUST_THRESHOLD: ${networkType.dustTreshhold.legacy}",
     );

@@ -164,6 +164,11 @@ const BTC_DUSTTRESHOLD = (
   segwit: 294,
 );
 
+const NO_DUSTTRESHOLD = (
+  legacy: 0,
+  segwit: 0,
+);
+
 const BitcoinNetwork = BITCOIN_NETWORK();
 
 class BITCOIN_NETWORK extends UTXONetworkType {
@@ -322,7 +327,7 @@ class ZENIQ_NETWORK extends UTXONetworkType {
           addressPrefixes: const {
             AddressType.legacy: "m",
           },
-          dustTreshhold: BTC_DUSTTRESHOLD,
+          dustTreshhold: NO_DUSTTRESHOLD,
           blockTime: 600, // 10 minutes
         );
 }
@@ -348,7 +353,7 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
           addressPrefixes: const {
             AddressType.legacy: "c",
           },
-          dustTreshhold: BTC_DUSTTRESHOLD,
+          dustTreshhold: NO_DUSTTRESHOLD,
           blockTime: 600, // 10 minutes
         );
 }
