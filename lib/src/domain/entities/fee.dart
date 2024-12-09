@@ -81,7 +81,7 @@ sealed class FeeInformation {
 sealed class EvmFeeInformation extends FeeInformation {
   final int? gasLimit;
 
-  Amount get fee;
+  Amount? get maxFee;
 
   const EvmFeeInformation({
     required this.gasLimit,
@@ -91,9 +91,15 @@ sealed class EvmFeeInformation extends FeeInformation {
 final class EvmLegacyFeeInformation extends EvmFeeInformation {
   final Amount? gasPrice;
 
-  Amount get fee {
-    return gasPrice ??
-        Amount.zero * Amount.convert(value: gasLimit ?? 0, decimals: 0);
+  Amount? get maxFee {
+    if (gasPrice == null) {
+      return null;
+    }
+    if (gasLimit == null) {
+      return null;
+    }
+
+    return gasPrice! * Amount.convert(value: gasLimit!, decimals: 0);
   }
 
   Json toJson() {
@@ -123,9 +129,16 @@ final class EvmType2FeeInformation extends EvmFeeInformation {
   final Amount? maxFeePerGas;
   final Amount? maxPriorityFeePerGas;
 
-  Amount get fee {
-    return maxFeePerGas ??
-        Amount.zero * Amount.convert(value: gasLimit ?? 0, decimals: 0);
+  Amount? get maxFee {
+    if (gasLimit == null) {
+      return null;
+    }
+
+    if (maxFeePerGas == null) {
+      return null;
+    }
+
+    return maxFeePerGas! * Amount.convert(value: gasLimit!, decimals: 0);
   }
 
   const EvmType2FeeInformation({
