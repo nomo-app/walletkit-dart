@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/repositories/rpc/queued_rpc_interface.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+
+const type2Multiplier = 1.5;
 
 final class EvmRpcInterface {
   final EVMNetworkType type;
@@ -127,6 +130,13 @@ final class EvmRpcInterface {
   }
 
   ///
+  /// Get Gas Price
+  ///
+  Future<Amount> getGasPriceAmount() => getGasPrice().then(
+        (value) => Amount(value: value, decimals: 18),
+      );
+
+  ///
   /// Get Transaction Count (Nonce)
   ///
   Future<BigInt> getTransactionCount(String address) async {
@@ -201,6 +211,61 @@ final class EvmRpcInterface {
     );
   }
 
+  Future<Amount> getPriorityFee() async {
+    final priorityFee = await performTask(
+      (client) => client.getPriorityFee(),
+    );
+
+    return Amount(value: priorityFee, decimals: 9);
+  }
+
+  Future<EvmType2GasPrice> getType2GasPrice() async {
+    final maxFeePerGas = await getGasPriceAmount();
+    final maxPriorityFeePerGas = await getPriorityFee();
+
+    return EvmType2GasPrice(
+      maxFeePerGas:
+          maxFeePerGas.multiplyAndCeil(type2Multiplier) + maxPriorityFeePerGas,
+      maxPriorityFeePerGas: maxPriorityFeePerGas,
+    );
+  }
+
+  Future<(int gasLimit, EvmGasPrice gasPrice)> fetchNetworkFees({
+    EvmFeeInformation? existing,
+    required String recipient,
+    required String sender,
+    required Uint8List? data,
+    required BigInt? value,
+  }) async {
+    var gasLimit = existing?.gasLimit;
+    try {
+      gasLimit ??= await estimateGasLimit(
+        recipient: recipient,
+        sender: sender,
+        data: data,
+        value: value,
+      );
+    } catch (e) {
+      Logger.logError(e, hint: "Gas estimation failed");
+
+      // Only Debug
+      assert(true, "Gas estimation failed");
+
+      gasLimit = 1E6.toInt();
+    }
+
+    final EvmGasPrice gasPrice = switch (existing?.gasPrice) {
+      EvmLegacyGasPrice feeInfo => feeInfo,
+      EvmType2GasPrice feeInfo => feeInfo,
+      null when type.useEIP1559 => await getType2GasPrice(),
+      null => EvmLegacyGasPrice(
+          gasPrice: await getGasPriceAmount(),
+        ),
+    };
+
+    return (gasLimit, gasPrice);
+  }
+
   ///
   /// Used to create a raw Transactions
   /// Fetches the gasPrice and gasLimit from the network
@@ -210,56 +275,28 @@ final class EvmRpcInterface {
   Future<RawEvmTransaction> buildUnsignedTransaction({
     required String sender,
     required String recipient,
-    required EvmFeeInformation feeInfo,
+    required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
     List<AccessListItem>? accessList,
   }) async {
-    final (gasPrice, gasLimit) = switch ((feeInfo.gasPrice, feeInfo.gasLimit)) {
-      (Amount gasPrice, int gasLimit) => (gasPrice, gasLimit),
-      (Amount gasPrice, null) => (
-          gasPrice,
-          await estimateGasLimit(
-            recipient: recipient,
-            sender: sender,
-            data: data,
-            value: value,
-          )
-        ),
-      (null, int gasLimit) => (
-          Amount(value: await getGasPrice(), decimals: 18),
-          gasLimit
-        ),
-      (null, null) => await estimateNetworkFees(
-          recipient: recipient, sender: sender, data: data, value: value),
-    };
+    final (gasLimit, gasPrice) = await fetchNetworkFees(
+      recipient: recipient,
+      sender: sender,
+      data: data,
+      value: value,
+      existing: feeInfo,
+    );
 
     final nonce = await performTask(
       (client) => client.getTransactionCount(sender),
     );
 
-    if (type is ZENIQ_SMART_NETWORK) {
-      return RawEVMTransactionType0.unsigned(
-        nonce: nonce,
-        gasPrice: gasPrice.value,
-        gasLimit: gasLimit.toBI,
-        to: recipient,
-        value: value ?? BigInt.zero,
-        data: data ?? Uint8List(0),
-      );
-    }
-
-    if (feeInfo is EvmType2FeeInformation &&
-        gasPrice.value < feeInfo.maxPriorityFeePerGas!.value) {
-      throw Failure("Gas price is less than max priority fee");
-    }
-
-    return switch (feeInfo) {
-      EvmType2FeeInformation() => RawEVMTransactionType2.unsigned(
+    return switch (gasPrice) {
+      EvmType2GasPrice fee => RawEVMTransactionType2.unsigned(
           nonce: nonce,
-          maxFeePerGas: gasPrice.value,
-          maxPriorityFeePerGas:
-              feeInfo.maxPriorityFeePerGas?.value ?? Amount.zero.value,
+          maxFeePerGas: fee.maxFeePerGas.value,
+          maxPriorityFeePerGas: fee.maxPriorityFeePerGas.value,
           gasLimit: gasLimit.toBI,
           to: recipient,
           value: value ?? BigInt.zero,
@@ -267,10 +304,10 @@ final class EvmRpcInterface {
           accessList: accessList ?? [],
           chainId: type.chainId,
         ),
-      EvmFeeInformation() => accessList != null
+      EvmLegacyGasPrice fee => accessList != null
           ? RawEVMTransactionType1.unsigned(
               nonce: nonce,
-              gasPrice: gasPrice.value,
+              gasPrice: fee.gasPrice.value,
               gasLimit: gasLimit.toBI,
               to: recipient,
               value: value ?? BigInt.zero,
@@ -280,7 +317,7 @@ final class EvmRpcInterface {
             )
           : RawEVMTransactionType0.unsigned(
               nonce: nonce,
-              gasPrice: gasPrice.value,
+              gasPrice: fee.gasPrice.value,
               gasLimit: gasLimit.toBI,
               to: recipient,
               value: value ?? BigInt.zero,
@@ -299,7 +336,7 @@ final class EvmRpcInterface {
     required String sender,
     required String recipient,
     required Uint8List seed,
-    required EvmFeeInformation feeInfo,
+    required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
     List<AccessListItem>? accessList,
@@ -346,7 +383,7 @@ final class EvmRpcInterface {
     required String sender,
     required String recipient,
     required Uint8List seed,
-    required EvmFeeInformation feeInfo,
+    required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
     List<AccessListItem>? accessList,
@@ -410,7 +447,7 @@ final class EvmRpcInterface {
       sender: sender,
       recipient: contractAddress,
       seed: seed,
-      feeInfo: feeInfo ?? EvmFeeInformation.zero,
+      feeInfo: feeInfo,
       data: data,
       value: value ?? BigInt.zero,
     );
@@ -478,7 +515,7 @@ final class EvmRpcInterface {
       function: function,
       sender: from,
       seed: seed,
-      feeInfo: EvmFeeInformation.zero,
+      feeInfo: null,
     );
   }
 

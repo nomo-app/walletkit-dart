@@ -2,28 +2,29 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-class TransferIntent<T extends FeeInformation?> {
+class TransferIntent<T extends FeeInformation> {
   final CoinEntity token;
   final String recipient;
   final Amount amount;
 
   /// If null, the fee will be calculated by the network
-  final T feeInfo;
+  final T? feeInfo;
 
+  /// For EVM represents UTF8 Data in the input field
+  /// For Tron and UTXO not implemented
   final String? memo;
+
+  /// Is only respected for EVM Transactions
   final List<AccessListItem>? accessList;
 
   const TransferIntent({
     required this.recipient,
     required this.amount,
-    required this.feeInfo,
     required this.token,
     required this.memo,
     this.accessList,
+    this.feeInfo,
   });
-
-  bool get isType2 => feeInfo is EvmType2FeeInformation;
-  bool get isType1 => accessList != null;
 
   Amount? get fee {
     if (feeInfo is EvmFeeInformation) {
@@ -68,8 +69,9 @@ class TransferIntent<T extends FeeInformation?> {
     Amount? balance,
   }) {
     final newTargetValue = switch ((balance, feeInfo)) {
-      (Amount balance, EvmFeeInformation info) when token.isERC20 == false =>
-        _calcTargetAmount(balance, info.maxFee),
+      (Amount balance, EvmFeeInformation info)
+          when token.isERC20 == false && info.maxFee != null =>
+        _calcTargetAmount(balance, info.maxFee!),
       (Amount balance, TronFeeInformation info) when token.isERC20 == false =>
         _calcTargetAmount(balance, info.feeLimit),
       _ => amount,
@@ -81,6 +83,7 @@ class TransferIntent<T extends FeeInformation?> {
       feeInfo: feeInfo,
       token: token,
       memo: memo,
+      accessList: accessList,
     );
   }
 

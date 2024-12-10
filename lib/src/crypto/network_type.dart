@@ -19,12 +19,14 @@ sealed class NetworkType {
 
 sealed class EVMNetworkType extends NetworkType {
   final int chainId;
+  final bool useEIP1559;
 
   const EVMNetworkType({
     required super.messagePrefix,
     required super.coin,
     required super.blockTime,
     required this.chainId,
+    this.useEIP1559 = true,
   });
 }
 
@@ -382,6 +384,7 @@ class ZENIQ_SMART_NETWORK extends EVMNetworkType {
           coin: zeniqSmart,
           messagePrefix: "\x19Zeniq Signed Message:\n",
           blockTime: 3,
+          useEIP1559: false,
         );
 }
 

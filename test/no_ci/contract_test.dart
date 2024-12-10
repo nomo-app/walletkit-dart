@@ -246,7 +246,6 @@ void main() {
     final intent = TransferIntent<EvmFeeInformation>(
       recipient: arbitrumTestWallet,
       amount: Amount.convert(value: 10, decimals: 18),
-      feeInfo: EvmFeeInformation.zero,
       token: arbitrum,
       memo: null,
     );

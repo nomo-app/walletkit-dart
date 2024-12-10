@@ -21,7 +21,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 ///
 
 RawTransaction buildUnsignedTransaction({
-  required TransferIntent intent,
+  required TransferIntent<UtxoFeeInformation> intent,
   required UTXONetworkType networkType,
   required HDWalletPath walletPath,
   required Iterable<UTXOTransaction> txList,

@@ -1291,19 +1291,17 @@ class UniswapV2Router extends InternalContract {
     final function = abi.getFunction("addLiquidity")!;
     final result = await buildTransactionForFunction(
       sender: sender,
-      function: function.addValues(values: [
-        tokenA,
-        tokenB,
-        amountADesired,
-        amountBDesired,
-        amountAMin,
-        amountBMin,
-        to,
-        deadline,
-      ]),
-      feeInfo: EvmFeeInformation(
-        gasLimit: 3E5.toInt(),
-        gasPrice: Amount(value: 1E10.toInt().toBigInt, decimals: 18),
+      function: function.addValues(
+        values: [
+          tokenA,
+          tokenB,
+          amountADesired,
+          amountBDesired,
+          amountAMin,
+          amountBMin,
+          to,
+          deadline,
+        ],
       ),
     );
     return result;

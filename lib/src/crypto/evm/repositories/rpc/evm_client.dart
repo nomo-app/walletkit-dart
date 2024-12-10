@@ -284,6 +284,17 @@ base class EvmRpcClient {
     return gasPrice;
   }
 
+  Future<BigInt> getPriorityFee() async {
+    // Direct RPC call to get suggested priority fee
+    final response = await _call<String>(
+      'eth_maxPriorityFeePerGas',
+    );
+
+    final priorityFee = response.toBigIntOrNull;
+    if (priorityFee == null) throw Exception('Could not parse priority fee');
+    return priorityFee;
+  }
+
   ///
   /// Estimate Gas Fee
   ///
