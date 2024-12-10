@@ -397,6 +397,7 @@ class BNB_NETWORK extends EVMNetworkType {
           coin: binanceSmart,
           messagePrefix: "\x19Binance Chain Signed Message:\n",
           blockTime: 3,
+          useEIP1559: true,
         );
 }
 
