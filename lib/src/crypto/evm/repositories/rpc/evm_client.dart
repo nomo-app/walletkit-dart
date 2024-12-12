@@ -305,22 +305,30 @@ base class EvmRpcClient {
     BigInt? gasPrice,
     String? data,
   }) async {
-    final response = await _call<String>(
-      'eth_estimateGas',
-      args: [
-        {
-          if (from != null) 'from': from,
-          'to': to,
-          if (gasPrice != null) 'gasPrice': gasPrice.toHexWithPrefix,
-          if (data != null) 'data': data,
-          if (amount != null) 'value': amount.toHexWithPrefix,
-        }
-      ],
-    );
+    try {
+      final response = await _call<String>(
+        'eth_estimateGas',
+        args: [
+          {
+            if (from != null) 'from': from,
+            'to': to,
+            if (gasPrice != null) 'gasPrice': gasPrice.toHexWithPrefix,
+            if (data != null) 'data': data,
+            if (amount != null) 'value': amount.toHexWithPrefix,
+          }
+        ],
+      );
 
-    final gasFee = response.toBigIntOrNull;
-    if (gasFee == null) throw Exception('Could not parse gas fee');
-    return gasFee;
+      final gasFee = response.toBigIntOrNull;
+      if (gasFee == null) throw Exception('Could not parse gas fee');
+      return gasFee;
+    } catch (e) {
+      Logger.logError(
+        e,
+        hint: 'estimateGasLimit failed - falling back to hardcoded gasLimit',
+      );
+      return BigInt.from(95000);
+    }
   }
 }
 
