@@ -80,9 +80,9 @@ sealed class FeeInformation {
   }
 }
 
-final class EvmFeeInformation extends FeeInformation {
+final class EvmFeeInformation<T extends EvmGasPrice> extends FeeInformation {
   final int? gasLimit;
-  final EvmGasPrice? gasPrice;
+  final T? gasPrice;
 
   const EvmFeeInformation({
     this.gasLimit,
@@ -108,9 +108,9 @@ final class EvmFeeInformation extends FeeInformation {
     };
   }
 
-  EvmFeeInformation copyWith({
+  EvmFeeInformation<T> copyWith({
     int? gasLimit,
-    EvmGasPrice? gasPrice,
+    T? gasPrice,
   }) {
     return EvmFeeInformation(
       gasLimit: gasLimit ?? this.gasLimit,
