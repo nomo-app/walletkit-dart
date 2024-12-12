@@ -18,7 +18,6 @@ void main() {
       intent: TransferIntent(
         recipient: arbitrumTestWallet,
         amount: Amount.convert(value: 0.1, decimals: zeniqSmart.decimals),
-        feeInfo: EvmFeeInformation.zero,
         token: zeniqSmart,
         memo: null,
       ),
@@ -34,7 +33,6 @@ void main() {
       intent: TransferIntent(
         recipient: arbitrumTestWallet,
         amount: Amount.convert(value: 0.001, decimals: avinocZSC.decimals),
-        feeInfo: EvmFeeInformation.zero,
         token: avinocZSC,
         memo: null,
       ),
@@ -58,16 +56,13 @@ void main() {
       txs: txList,
     );
 
-    final intent = TransferIntent(
-      recipient: reveiveAddress,
-      amount: Amount(value: BigInt.from(100000000), decimals: 8),
-      feeInfo: null,
-      token: zeniqCoin,
-      memo: null,
-    );
-
     final unsignedTx = buildUnsignedTransaction(
-      intent: intent,
+      intent: TransferIntent(
+        recipient: reveiveAddress,
+        amount: Amount(value: BigInt.from(100000000), decimals: 8),
+        token: zeniqCoin,
+        memo: null,
+      ),
       networkType: ZeniqNetwork,
       walletPath: bitcoinNSHDPath,
       txList: txList,
@@ -122,16 +117,14 @@ void main() {
 
     print("Receive Address: $receive");
 
-    final intent = TransferIntent(
-      recipient: receive,
-      amount: Amount.convert(value: 1.2, decimals: 5),
-      feeInfo: null,
-      token: ec8Coin,
-      memo: null,
-    );
-
     final unsignedTx = buildUnsignedTransaction(
-      intent: intent,
+      intent: TransferIntent(
+        recipient: receive,
+        amount: Amount.convert(value: 1.2, decimals: 5),
+        feeInfo: null,
+        token: ec8Coin,
+        memo: null,
+      ),
       networkType: EurocoinNetwork,
       walletPath: bitcoinNSHDPath,
       txList: txList,

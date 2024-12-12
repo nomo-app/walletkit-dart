@@ -39,7 +39,7 @@ abstract class InternalContract {
       sender: sender,
       recipient: contractAddress,
       seed: seed,
-      feeInfo: feeInfo ?? EvmFeeInformation.zero,
+      feeInfo: feeInfo,
       data: functionData,
       value: value ?? BigInt.zero,
       accessList: accessList,
@@ -69,7 +69,7 @@ abstract class InternalContract {
     return await rpc.buildUnsignedTransaction(
       sender: sender,
       recipient: contractAddress,
-      feeInfo: feeInfo ?? EvmFeeInformation.zero,
+      feeInfo: feeInfo,
       data: functionData,
       value: value ?? BigInt.zero,
     );

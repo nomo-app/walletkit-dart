@@ -37,11 +37,18 @@ final class EvmNetworkFees extends NetworkFees {
   final BigInt average;
   final BigInt fast;
 
+  final BigInt safePriority;
+  final BigInt averagePriority;
+  final BigInt fastPriority;
+
   const EvmNetworkFees({
     required this.lastBlock,
     required this.safe,
     required this.average,
     required this.fast,
+    required this.safePriority,
+    required this.averagePriority,
+    required this.fastPriority,
   });
 
   BigInt getFeeGWEI(FeePriority feePriority) => switch (feePriority) {
@@ -51,24 +58,40 @@ final class EvmNetworkFees extends NetworkFees {
         _ => safe,
       };
 
+  BigInt getPriorityGWEI(FeePriority feePriority) => switch (feePriority) {
+        FeePriority.high => fastPriority,
+        FeePriority.medium => averagePriority,
+        FeePriority.low => safePriority,
+        _ => safePriority,
+      };
+
   Amount getFeeAmount(FeePriority feePriority) => Amount(
         value: getFeeGWEI(feePriority),
         decimals: 18, // GWEI
       );
 
+  Amount getPriorityAmount(FeePriority feePriority) => Amount(
+        value: getPriorityGWEI(feePriority),
+        decimals: 18, // GWEI
+      );
+
   const EvmNetworkFees.fromBigInt({
     required BigInt lastBlock,
+    required BigInt maxPriorityFeePerGas,
   }) : this(
           lastBlock: lastBlock,
           safe: lastBlock,
           average: lastBlock,
           fast: lastBlock,
+          safePriority: maxPriorityFeePerGas,
+          averagePriority: maxPriorityFeePerGas,
+          fastPriority: maxPriorityFeePerGas,
         );
 
   factory EvmNetworkFees.fromJson(Map<String, dynamic> json) {
     if (json
         case {
-          //  'suggestBaseFee': String last,
+          'suggestBaseFee': String last,
           'SafeGasPrice': String safe,
           'ProposeGasPrice': String propose,
           'FastGasPrice': String fast,
@@ -76,12 +99,42 @@ final class EvmNetworkFees extends NetworkFees {
       final safe_num = toGwei(safe);
       final propose_num = toGwei(propose);
       final fast_num = toGwei(fast);
+      final last_num = toGwei(last);
+
+      final safePriority = safe_num - last_num;
+      final averagePriority = propose_num - last_num;
+      final fastPriority = fast_num - last_num;
 
       return EvmNetworkFees(
-        lastBlock: safe_num,
+        lastBlock: last_num,
         safe: safe_num,
         average: propose_num,
         fast: fast_num,
+        safePriority: safePriority,
+        averagePriority: averagePriority,
+        fastPriority: fastPriority,
+      );
+    }
+
+    if (json
+        case {
+          'SafeGasPrice': String safe,
+          'ProposeGasPrice': String average,
+          'FastGasPrice': String fast,
+        }) {
+      final safe_num = toGwei(safe);
+      final last_num = safe_num;
+      final average_num = toGwei(average);
+      final fast_num = toGwei(fast);
+
+      return EvmNetworkFees(
+        lastBlock: last_num,
+        safe: safe_num,
+        average: average_num,
+        fast: fast_num,
+        safePriority: BigInt.zero,
+        averagePriority: BigInt.zero,
+        fastPriority: BigInt.zero,
       );
     }
 
