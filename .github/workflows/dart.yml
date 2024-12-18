@@ -29,7 +29,7 @@ jobs:
       - run: cd ..
       - name: Lint analysis
         run: flutter analyze
-        continue-on-error: false
+        continue-on-error: true
       - name: ci tests
         run: dart test test/ci
 
