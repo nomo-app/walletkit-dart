@@ -21,7 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v1
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: 'stable'
+        
+      - name: Print versions
+        run: |
+          flutter --version
+          dart --version
       - run: git submodule update --init --recursive
       - run: flutter pub get
       - run: cd packages/bip39 && flutter pub get
