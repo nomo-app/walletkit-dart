@@ -54,7 +54,11 @@ final optimismRPC = EvmRpcInterface(
 
 final zksyncRPC = EvmRpcInterface(
   type: ZKSyncNetwork,
-  clients: [EvmRpcClient('https://zksync-era.blockpi.network/v1/rpc/public')],
+  clients: [
+    EvmRpcClient('https://zksync-era.blockpi.network/v1/rpc/public'),
+    EvmRpcClient('https://mainnet.era.zksync.io'),
+    EvmRpcClient('https://1rpc.io/zksync2-era'),
+  ],
 );
 
 final tronSolidityRPC = EvmRpcInterface(

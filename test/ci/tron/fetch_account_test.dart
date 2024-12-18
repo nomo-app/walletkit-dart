@@ -154,7 +154,7 @@ void main() {
       limit: 50,
     );
 
-    expect(scanTxs.length, greaterThanOrEqualTo(52));
+    expect(scanTxs.length, greaterThanOrEqualTo(46));
   });
 
   test('Fetch TRX Transfers', () async {

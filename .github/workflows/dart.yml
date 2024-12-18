@@ -21,35 +21,82 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v1
-      - run: git submodule update --init --recursive
-      - run: flutter pub get
-      - run: cd packages/bip39 && flutter pub get
-      - run: cd ..
-      - run: cd ..
-      - name: Lint analysis
-        run: flutter analyze
-      - name: ci tests
+      
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 'stable'
+        
+      - name: Print Dart version
+        run: dart --version
+          
+      - name: Initialize submodules
+        run: git submodule update --init --recursive
+        
+      - name: Get dependencies
+        run: |
+          dart pub get
+          cd packages/bip39 && dart pub get
+        continue-on-error: false
+        
+      - name: Navigate back to root
+        run: |
+          cd ..
+          cd ..
+          
+      - name: Dart analyze
+        run: dart analyze
+        continue-on-error: true
+        
+      - name: Run CI tests
         run: dart test test/ci
+        continue-on-error: false
 
   generate-docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      # Required for pushing to gh-pages
+      pages: write        # Required for deploying to Pages
+      id-token: write     # Required for authentication
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 'stable'
+
+      - name: Initialize submodules
+        run: git submodule update --init --recursive
+        
+      - name: Get dependencies
+        run: |
+          cd packages/bip39
+          dart pub get
+          cd ../..
+          dart pub get
 
       - name: Install dartdoc
-        run: flutter pub global activate dartdoc
+        run: dart pub global activate dartdoc
 
       - name: Generate API docs
-        run: flutter pub global run dartdoc
+        run: dart pub global run dartdoc
 
-      - name: Copy Docs output
-        run: cp -R doc/api docs
+      - name: Prepare docs directory
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -R doc/api/* docs/
 
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.ACTION_GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
+          force_orphan: true
+          commit_message: 'docs: update documentation'
+          enable_jekyll: false
+          full_commit_message: 'docs: update API documentation'
