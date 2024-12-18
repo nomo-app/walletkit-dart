@@ -54,6 +54,10 @@ jobs:
 
   generate-docs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      # Required for pushing to gh-pages
+      pages: write        # Required for deploying to Pages
+      id-token: write     # Required for authentication
 
     steps:
       - uses: actions/checkout@v3
