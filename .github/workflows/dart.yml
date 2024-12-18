@@ -58,15 +58,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: 'recursive'  # This will initialize all submodules
-      
+          submodules: 'recursive'
+
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
         with:
           sdk: 'stable'
 
-      - name: Install dependencies
-        run: dart pub get
+      - name: Initialize submodules
+        run: git submodule update --init --recursive
+        
+      - name: Get dependencies
+        run: |
+          cd packages/bip39
+          dart pub get
+          cd ../..
+          dart pub get
 
       - name: Install dartdoc
         run: dart pub global activate dartdoc
@@ -74,13 +81,18 @@ jobs:
       - name: Generate API docs
         run: dart pub global run dartdoc
 
-      - name: Create docs directory
+      - name: Prepare docs directory
         run: |
+          rm -rf docs
           mkdir -p docs
-          cp -R doc/api docs
+          cp -R doc/api/* docs/
 
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
+          force_orphan: true
+          commit_message: 'docs: update documentation'
+          enable_jekyll: false
+          full_commit_message: 'docs: update API documentation'
