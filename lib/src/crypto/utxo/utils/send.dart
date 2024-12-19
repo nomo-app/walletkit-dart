@@ -158,8 +158,6 @@ RawTransaction buildUnsignedTransaction({
     "Total Input Value does not match Total Output Value",
   );
 
-  Logger.log("Estimated Fee: $estimatedFee");
-
   final outputs = buildOutputs(
     recipient: targetAddress,
     value: targetValue,
@@ -186,6 +184,10 @@ RawTransaction buildUnsignedTransaction({
       "Total Output Value does not match Total Input Value",
     );
   }
+  Logger.log("Input Fee per Byte: ${feePerByte.displayDouble}");
+  Logger.log("Estimated Fee: $estimatedFee");
+  Logger.log("Actual Fee: ${tx.fee}");
+  Logger.log("Fee per Byte: ${tx.feePerByte}");
 
   return tx;
 }
@@ -683,6 +685,7 @@ BigInt calculateFee({
 }) {
   return switch (tx) {
     EC8RawTransaction _ => calculateFeeEC8(tx: tx),
+    BTCRawTransaction tx when tx.isSegwit => tx.weight * feePerByte.value,
     _ => tx.size.toBI * feePerByte.value,
   };
 }
