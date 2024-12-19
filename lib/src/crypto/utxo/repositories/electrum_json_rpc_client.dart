@@ -215,6 +215,18 @@ class ElectrumXClient {
     return fee;
   }
 
+  Future<double> estimateSmartFee({required int blocks}) async {
+    final response = await _client.sendRequest(
+      {
+        "method": "blockchain.estimatesmartfee",
+        "params": [blocks]
+      },
+    );
+    final fee = response as double?;
+    if (fee == null || fee == 0) throw Exception("Fee estimation failed");
+    return fee;
+  }
+
   Future<bool> disconnect() async {
     await _client.disconnect();
     return true;
