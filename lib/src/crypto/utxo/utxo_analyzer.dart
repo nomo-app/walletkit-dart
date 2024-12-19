@@ -257,6 +257,12 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
     min: minEndpoints,
   );
 
+  print(
+    "Selected ${endpoints.map(
+      (e) => "$e",
+    )}",
+  );
+
   final isolateManager = IsolateManager();
 
   ///
