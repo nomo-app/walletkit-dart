@@ -21,15 +21,12 @@ sealed class RawTransaction {
   /// Non Null if returned from [buildUnsignedTransaction]
   final Map<ElectrumOutput, Input>? inputMap;
 
-  BigInt get weight {
-    return inputs.fold(
-          0.toBI,
-          (prev, input) => prev + input.weight,
-        ) +
-        outputs.fold(
-          0.toBI,
-          (prev, output) => prev + output.weight,
-        );
+  /// Weight of the transaction
+  BigInt get weight;
+
+  /// Virtual Size
+  BigInt get vSize {
+    return weight ~/ 4.toBI;
   }
 
   Uint8List get bytes;
@@ -39,6 +36,8 @@ sealed class RawTransaction {
   int get size => bytes.length;
 
   BigInt get fee => totalInputValue - totalOutputValue;
+
+  double get feePerByte => fee.toInt() / size;
 
   // Value of the first output
   BigInt get targetAmount => outputs.first.value;
@@ -191,6 +190,29 @@ class BTCRawTransaction extends RawTransaction {
           inputs: inputs,
           outputs: outputs,
         );
+
+  @override
+  BigInt get weight {
+    // Base size * 4
+    BigInt weight = 8.toBI * 4.toBI; // version + locktime
+
+    if (isSegwit) {
+      weight += 2.toBI * 4.toBI; // Segwit Marker + Segwit Flag
+    }
+
+    return inputs.fold(
+          0.toBI,
+          (prev, input) => prev + input.weight,
+        ) +
+        outputs.fold(
+          0.toBI,
+          (prev, output) => prev + output.weight,
+        );
+  }
+
+  bool get isSegwit {
+    return inputs.any((input) => input.isSegwit);
+  }
 
   bool get hasWitness {
     return inputs.any((input) => input.hasWitness);
@@ -483,6 +505,18 @@ class EC8RawTransaction extends RawTransaction {
           inputs: inputs,
           outputs: outputs,
         );
+
+  /// EC8 Transaction weight is calculated differently
+  BigInt get weight {
+    return inputs.fold(
+          0.toBI,
+          (prev, input) => prev + input.weight,
+        ) +
+        outputs.fold(
+          0.toBI,
+          (prev, output) => prev + output.weight,
+        );
+  }
 
   String get txid {
     final buffer = bytesForTxId;

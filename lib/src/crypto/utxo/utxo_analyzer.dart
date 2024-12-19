@@ -490,9 +490,12 @@ Future<Amount> estimateFeeForPriority({
   required int blocks,
   required UTXONetworkType network,
   required ElectrumXClient? initalClient,
+  bool useSmartFee = false,
 }) async {
   final (fee, _, _) = await fetchFromRandomElectrumXNode(
-    (client) => client.estimateFee(blocks: blocks),
+    (client) => useSmartFee
+        ? client.estimateSmartFee(blocks: blocks)
+        : client.estimateFee(blocks: blocks),
     client: initalClient,
     endpoints: network.endpoints,
     token: network.coin,
@@ -502,7 +505,7 @@ Future<Amount> estimateFeeForPriority({
 
   final feePerKb = Amount.convert(value: fee, decimals: 8);
 
-  final feePerB = feePerKb / Amount.from(value: 1000, decimals: 0);
+  final feePerB = feePerKb.multiplyAndCeil(0.001);
 
   return feePerB;
 }
@@ -510,6 +513,7 @@ Future<Amount> estimateFeeForPriority({
 Future<UtxoNetworkFees> getNetworkFees({
   required UTXONetworkType network,
   double multiplier = 1.0,
+  bool useSmartFee = false,
 }) async {
   final blockInOneHour = 3600 ~/ network.blockTime;
   final blocksTillTomorrow = 24 * 3600 ~/ network.blockTime;

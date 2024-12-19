@@ -121,3 +121,16 @@ int encodingLength(int number) {
               ? 5
               : 9);
 }
+
+int getVarIntSize(int value) {
+  if (value < 0xfd) {
+    return 1;
+  }
+  if (value <= 0xffff) {
+    return 3;
+  }
+  if (value <= 0xffffffff) {
+    return 5;
+  }
+  return 9;
+}

@@ -29,10 +29,21 @@ sealed class Input {
         _prevScriptPubKey = prevScriptPubKey,
         _wittnessScript = wittnessScript;
 
-  BigInt get weight {
-    if (_scriptSig == null || _prevScriptPubKey == null) return -1.toBI;
-    return calculateWeight(_prevScriptPubKey!, _scriptSig!);
+  BigInt get witnessSize {
+    if (_wittnessScript == null || _wittnessScript!.isEmpty) return 0.toBI;
+
+    BigInt size = getVarIntSize(_wittnessScript!.length)
+        .toBI; // Count of witness elements
+
+    for (final element in witness!) {
+      size += getVarIntSize(element.length).toBI; // Size of this element
+      size += element.length.toBI; // The element itself
+    }
+
+    return size;
   }
+
+  BigInt get weight;
 
   int get intValue => value != null ? value!.toInt() : 0;
 
@@ -225,7 +236,7 @@ class BTCInput extends Input {
       txid.length +
           output_index_length +
           scriptSig.length +
-          1 +
+          getVarIntSize(scriptSig.length) +
           sequence_length,
     );
 
@@ -244,6 +255,24 @@ class BTCInput extends Input {
 
     return buffer;
   }
+
+  @override
+  BigInt get weight {
+    BigInt weight = (txid.length + output_index_length + sequence_length).toBI *
+        4.toBI; // (32 + 4 + 4) * 4
+
+    weight +=
+        (scriptSig.length + getVarIntSize(scriptSig.length)).toBI * 4.toBI;
+
+    if (_wittnessScript != null) {
+      weight +=
+          (_wittnessScript!.length + getVarIntSize(_wittnessScript!.length))
+                  .toBI *
+              4.toBI;
+    }
+
+    return weight;
+  }
 }
 
 const value_length = 8;
@@ -258,6 +287,12 @@ class EC8Input extends Input {
     super.scriptSig,
     super.wittnessScript,
   });
+
+  @override
+  BigInt get weight {
+    if (_scriptSig == null || _prevScriptPubKey == null) return -1.toBI;
+    return calculateWeight(_prevScriptPubKey!, _scriptSig!);
+  }
 
   EC8Input addScript({
     Uint8List? scriptSig,
