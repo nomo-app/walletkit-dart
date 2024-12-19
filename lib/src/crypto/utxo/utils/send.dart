@@ -593,6 +593,10 @@ Future<bool> rebroadcastTransaction({
       ],
     );
 
+    if (clientsForRebroadcast.isEmpty) {
+      break;
+    }
+
     if (rebroadcastCount > type.endpoints.length / 2) {
       break;
     }
