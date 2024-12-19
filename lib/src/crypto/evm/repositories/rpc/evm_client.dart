@@ -12,6 +12,11 @@ base class EvmRpcClient {
   final Duration rateLimitTimeout;
   final void Function(Object e, StackTrace s, String url)? onRpcError;
 
+  EvmRpcClient.withRPC(JsonRPC rpc)
+      : _rpc = rpc,
+        rateLimitTimeout = const Duration(seconds: 30),
+        this.onRpcError = null;
+
   EvmRpcClient(
     String rpcUrl, {
     this.rateLimitTimeout = const Duration(seconds: 30),
