@@ -54,6 +54,7 @@ jobs:
 
   generate-docs:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' 
     permissions:
       contents: write      # Required for pushing to gh-pages
       pages: write        # Required for deploying to Pages
