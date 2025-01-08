@@ -467,6 +467,7 @@ Input buildInput({
     BITCOIN_NETWORK() ||
     BITCOINCASH_NETWORK() ||
     ZENIQ_NETWORK() ||
+    DOGECOIN_NETWORK() ||
     LITECOIN_NETWORK() =>
       BTCInput(
         txid: txid,
@@ -490,6 +491,7 @@ Output buildOutput(String address, BigInt value, UTXONetworkType networkType) {
     BITCOIN_NETWORK() ||
     BITCOINCASH_NETWORK() ||
     ZENIQ_NETWORK() ||
+    DOGECOIN_NETWORK() ||
     LITECOIN_NETWORK() =>
       BTCOutput(
         value: value,
