@@ -207,7 +207,7 @@ Future<UTXOTxInfo> fetchUTXOTransactionsFromEpubKey({
   final masterNode = await isolateManager.executeTask(
     IsolateTask(
       task: (arg) {
-        return deriveMasterNodeFromEpubKey(arg).$1;
+        return deriveMasterNodeFromExtendedKey(arg).$1;
       },
       argument: ePubKey,
     ),
