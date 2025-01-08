@@ -13,6 +13,7 @@ void main() {
         networkType: BitcoincashNetwork,
         ePubKey: rejectXpub,
         addressTypes: [AddressType.legacy, AddressType.cashaddr],
+        purpose: HDWalletPurpose.NO_STRUCTURE,
       );
       expect(txList.length, greaterThanOrEqualTo(14));
       final expectedTxHashes = expectedTxHashesBCHReject();
@@ -25,6 +26,7 @@ void main() {
         ePubKey: rejectXpub,
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
       );
       expect(txList.length, greaterThanOrEqualTo(301));
       final expectedTxHashes = expectedTxHashesZENIQReject();
@@ -41,6 +43,7 @@ void main() {
             "xpub69TptoZubWfAZAi5TecLSRUjo8cvu5mq6qnbnD29deEzvdvcmy3sDiEYafmg5GD1Yvmr4uKtJadDEdY5ez6wBFSTawd5chLKHxdjw3uYZXw",
         addressTypes: [AddressType.legacy, AddressType.segwit],
         networkType: BitcoinNetwork,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
       );
       expect(txList.length, greaterThanOrEqualTo(3));
       final expectedTxHashes = expectedTxHashesBTCxpub69T();
@@ -57,6 +60,7 @@ void main() {
             "xpub68G61RDvXPYULAPVaoK1djUycUqBi6UEYL2CkVZwYNM4FHnCcve7AkgCvmzpCMn48bgxsLgubUfrqznrTadyfkLxeQhtaH7NZ8rhuHfXyS5",
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
       );
       expect(txList.length, greaterThanOrEqualTo(20));
       final expectedTxHashes = expectedTxHashesZENIQxpub68G61R();
@@ -73,6 +77,7 @@ void main() {
             "xpub68dxwSLMkhjyHmnpBBXNTDhyUFAaeLVinaDjYXndV9cEn6Dvz5jVMcPRYq6T6XyakjdSnWYmZixUPc6TkYwH64PWPtnj4x3S73F1igAimjr",
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
       );
       expect(txList.length, greaterThanOrEqualTo(4));
       final expectedTxHashes = expectedTxHashesZENIQxpub68dxwS();
@@ -88,6 +93,7 @@ void main() {
             "xpub69Y1Sk2jpT46Z18PWgpMb2qic9HSqDh6uacrbVu3Vxh7mKhswH15aECHM8hzewP53Vo5L7C6tCXbVXVbhi5qUFxZbmx6hwbiT4aPjoGB7dS",
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
       );
       expect(txList.length, greaterThanOrEqualTo(10));
       final expectedTxHashes = expectedTxHashesXPub69Y1Sk2jp();
@@ -99,6 +105,7 @@ void main() {
       final (legacyTxList, _) = await fetchUTXOTransactionsFromEpubKey(
         networkType: BitcoinNetwork,
         ePubKey: rejectXpub,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
         addressTypes: [AddressType.legacy, AddressType.segwit],
         minEndpoints: 5,
       );
@@ -113,6 +120,7 @@ void main() {
           await fetchUTXOTransactionsFromEpubKey(
         networkType: BitcoinNetwork,
         ePubKey: rejectXpub,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
         addressTypes: [AddressType.segwit],
       );
 

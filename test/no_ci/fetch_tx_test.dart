@@ -13,6 +13,7 @@ void main() {
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
       addressTypes: addressTypes,
+      purpose: HDWalletPurpose.NO_STRUCTURE,
     );
 
     final tx = await fetchFromRandomElectrumXNode(

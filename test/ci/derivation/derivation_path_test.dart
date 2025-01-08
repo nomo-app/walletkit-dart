@@ -42,9 +42,9 @@ void main() {
       walletPath: bitcoinNSHDPath,
       seed: helloSeed,
     );
-    final node_xpub_ns = deriveMasterNodeFromEpubKeyWithCheck(
+    final node_xpub_ns = deriveMasterNodeFromExtendedKeyWithCheck(
       networkType: networkType,
-      walletPath: bitcoinNSHDPath,
+      purpose: bitcoinNSHDPath.purpose,
       ePubKey: helloXpub,
     );
 

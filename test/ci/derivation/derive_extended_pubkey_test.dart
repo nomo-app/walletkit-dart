@@ -27,14 +27,14 @@ void main() {
     const btcPubKey =
         "xpub68bx1dGR2BDKF2Ssy42k6inoJy1ZDNuTXVL3UudD63zU76vhmhX4jyN2doUh3ktHYmPN7x1TCxArK2rCqZ4QzwH562M4h4nUcWcwtSnN3S8";
 
-    var (_, version) = deriveMasterNodeFromEpubKey(btcPubKey);
+    var (_, version) = deriveMasterNodeFromExtendedKey(btcPubKey);
 
     expect(version, BitcoinNetwork.networkBIP.bip32XpubPrefix);
 
     const ltcPubKey =
         "xpub68bx1dGR2BDKFzcmRD9zbYPCrGSbRmnk3pwE4tNc3XAdd2BDfWcskotdUsZTHyVpDzQrUZYBk3FeYzxkJ887XLuujSYp43AKRMcaYzU77hz";
 
-    (_, version) = deriveMasterNodeFromEpubKey(ltcPubKey);
+    (_, version) = deriveMasterNodeFromExtendedKey(ltcPubKey);
 
     expect(version, LitecoinNetwork.networkBIP.bip32XpubPrefix);
   });
