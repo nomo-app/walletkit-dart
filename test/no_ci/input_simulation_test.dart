@@ -203,7 +203,7 @@ Future<(UTXOTransaction, String?)> fetchUTXOTXByHash(
   Iterable<NodeWithAddress> nodes,
   Iterable<AddressType> addressTypes,
 ) async {
-  final (result, _, _) = await fetchFromRandomElectrumXNode(
+  final (result, _, e) = await fetchFromRandomElectrumXNode(
     (client) async {
       return (
         await client.getTransactionForSimulation(
@@ -220,6 +220,8 @@ Future<(UTXOTransaction, String?)> fetchUTXOTXByHash(
     token: networkType.coin,
     timeout: Duration(seconds: 10),
   );
+
+  expect(e, isNull);
 
   expect(result, isNotNull, reason: "Result is null for $hash");
 

@@ -291,7 +291,7 @@ List<Input> signInputs({
           walletPath: walletPath,
         );
       } else
-        throw SendFailure("Can't sign input without node");
+        throw SendFailure("Can't sign input without node: $output $input");
     }
 
     if (tx is BTCRawTransaction && output.scriptPubKey.isSegwit) {

@@ -140,8 +140,7 @@ base class TronTransaction extends EVMTransaction {
       );
 
       final rawData = raw_data_hex.hexToBytes;
-      final tron.Transaction_raw rawTx =
-          tron.Transaction_raw.fromBuffer(rawData);
+      final Transaction_raw rawTx = Transaction_raw.fromBuffer(rawData);
 
       final contract = rawTx.contract.first;
       final contractType = contract.type;

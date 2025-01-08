@@ -153,14 +153,14 @@ class ElectrumXClient {
             return ElectrumOutput.fromJson(_outputs[index]);
           }
         })
-    ];
+    ].nonNulls;
 
     return UTXOTransaction.create(
       json: mainTxJson,
       addressTypes: addressTypes,
       type: type,
       nodes: nodes,
-      spentOutputs: outputs.whereType<ElectrumOutput>(),
+      spentOutputs: outputs,
     );
   }
 
