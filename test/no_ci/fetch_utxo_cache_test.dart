@@ -14,6 +14,7 @@ void main() {
       ePubKey: ePubKey,
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
+      purpose: HDWalletPurpose.NO_STRUCTURE,
     );
     final timeFirstFetch = stopWatch.elapsedMilliseconds;
     stopWatch.reset();
@@ -23,6 +24,7 @@ void main() {
       addressTypes: [AddressType.legacy],
       cachedTransactions: cacheSimulation,
       networkType: ZeniqNetwork,
+      purpose: HDWalletPurpose.NO_STRUCTURE,
     );
     final timeSecondFetch = stopWatch.elapsedMilliseconds;
 
@@ -52,6 +54,7 @@ void main() {
         ePubKey: ePubKey,
         addressTypes: [AddressType.legacy],
         networkType: ZeniqNetwork,
+        purpose: HDWalletPurpose.NO_STRUCTURE,
       );
       final timeFetch = stopWatch.elapsedMilliseconds;
 

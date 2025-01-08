@@ -183,7 +183,7 @@ Future<UTXOTxInfo> fetchUTXOTransactionsFromEpubKey({
   required Iterable<AddressType> addressTypes,
   required UTXONetworkType networkType,
   required String ePubKey,
-  HDWalletPurpose? purpose,
+  required HDWalletPurpose purpose,
   Set<UTXOTransaction> cachedTransactions = const {},
   List<NodeWithAddress> cachedNodes = const [],
   int minEndpoints = 2,
@@ -207,11 +207,11 @@ Future<UTXOTxInfo> fetchUTXOTransactionsFromEpubKey({
   final masterNode = await isolateManager.executeTask(
     IsolateTask(
       task: (arg) {
-        return deriveMasterNodeFromExtendedKey(
-          arg.$1,
+        return deriveMasterNodeFromExtendedKeyWithCheck(
+          ePubKey: arg.$1,
           networkType: arg.$2,
           purpose: arg.$3,
-        ).$1;
+        );
       },
       argument: (ePubKey, networkType, purpose),
     ),

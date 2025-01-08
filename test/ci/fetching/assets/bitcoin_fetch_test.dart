@@ -13,6 +13,7 @@ void main() {
     final (legacyTxList, _) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
+      purpose: HDWalletPurpose.NO_STRUCTURE,
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
     expect(legacyTxList.length, greaterThanOrEqualTo(74));
@@ -25,6 +26,7 @@ void main() {
     final (segwitTxList, segwitNodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectZpub,
+      purpose: HDWalletPurpose.BIP84,
       addressTypes: [AddressType.segwit],
     );
 
@@ -68,6 +70,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpub,
+      purpose: HDWalletPurpose.BIP44,
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 
@@ -108,6 +111,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: BitcoinNetwork,
       ePubKey: rejectXpubBip44,
+      purpose: HDWalletPurpose.BIP44,
       addressTypes: [AddressType.legacy, AddressType.segwit],
     );
 
