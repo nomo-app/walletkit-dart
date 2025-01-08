@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-import '../../../mocks.mocks.dart';
+import '../../../ci-mocked/mocks.mocks.dart';
 import '../../../utils.dart';
 
 void main() {
