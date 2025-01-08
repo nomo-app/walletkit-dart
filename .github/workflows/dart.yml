@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
       - uses: actions/cache@v3
         with:
           path: |
@@ -37,9 +39,6 @@ jobs:
 
       - name: Print Dart version
         run: dart --version
-
-      - name: Initialize submodules
-        run: git submodule update --init --recursive
 
       - name: Get dependencies
         run: |
@@ -68,6 +67,8 @@ jobs:
           ]
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
       - uses: actions/cache@v3
         with:
           path: |
@@ -81,9 +82,6 @@ jobs:
         uses: dart-lang/setup-dart@v1
         with:
           sdk: "stable"
-
-      - name: Initialize submodules
-        run: git submodule update --init --recursive
 
       - name: Get dependencies
         run: |
@@ -122,9 +120,6 @@ jobs:
         uses: dart-lang/setup-dart@v1
         with:
           sdk: "stable"
-
-      - name: Initialize submodules
-        run: git submodule update --init --recursive
 
       - name: Get dependencies
         run: |
