@@ -70,7 +70,7 @@ BipNode deriveMasterNodeFromExtendedKeyWithCheck({
     purpose: purpose,
   );
 
-  if (version != node.network.bip32.private ||
+  if (version != node.network.bip32.private &&
       version != node.network.bip32.public) {
     throw ArgumentError(
       "Version mismatch. Extracted Version: $version. Expected: ${node.network.bip32.private} or ${node.network.bip32.public}",
