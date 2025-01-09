@@ -88,34 +88,73 @@ jobs:
           dart pub get
           (cd packages/bip39 && dart pub get)
 
-      - name: Run CI tests
+      - name: Run CI tests with coverage
         run: |
           echo "::group::Running tests for ${{ matrix.test-path }}"
-          dart test ${{ matrix.test-path }}
+          dart pub global activate coverage
+          dart test --coverage=coverage ${{ matrix.test-path }}
+          dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --package=. --report-on=lib
           echo "::endgroup::"
 
-  generate-docs:
+      - name: Set artifact name
+        run: echo "ARTIFACT_NAME=coverage-$(echo '${{ matrix.test-path }}' | tr '/' '-')" >> $GITHUB_ENV
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: coverage/lcov.info
+
+  coverage-report:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download coverage reports
+        uses: actions/download-artifact@v3
+        with:
+          path: coverage-artifacts
+
+      - name: Install lcov
+        run: sudo apt-get install -y lcov
+
+      - name: Merge coverage reports
+        run: |
+          mkdir -p coverage
+          find coverage-artifacts -name lcov.info -exec echo -a {} \; | xargs lcov -o coverage/lcov.info
+
+      - name: Generate HTML report
+        run: genhtml coverage/lcov.info --output-directory coverage/html
+
+      - name: Calculate coverage percentage
+        run: |
+          COVERAGE=$(lcov --summary coverage/lcov.info | grep "lines......" | cut -d ' ' -f 4 | cut -d '%' -f 1)
+          echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
+          mkdir -p coverage/badges
+          # Create shields.io compatible JSON endpoint
+          echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"${COVERAGE}%\", \"color\": \"$(if [ $(echo "$COVERAGE >= 80" | bc -l) -eq 1 ]; then echo 'brightgreen'; elif [ $(echo "$COVERAGE >= 60" | bc -l) -eq 1 ]; then echo 'yellow'; else echo 'red'; fi)\"}" > coverage/badges/coverage.json
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/html
+
+  deploy-docs-and-coverage:
     if: github.ref == 'refs/heads/main'
-    needs: [lint, test]
+    needs: [coverage-report, lint, test]
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Required for pushing to gh-pages
-      pages: write # Required for deploying to Pages
-      id-token: write # Required for authentication
+      contents: write
+      pages: write
+      id-token: write
 
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: "recursive"
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache
-            .dart_tool
-            packages/bip39/.dart_tool
-          key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: ${{ runner.os }}-dart-
-
+      
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
         with:
@@ -134,11 +173,20 @@ jobs:
       - name: Generate API docs
         run: dart pub global run dartdoc
 
+      - name: Download coverage report
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage-report
+
       - name: Prepare docs directory
         run: |
           rm -rf docs
           mkdir -p docs
           cp -R doc/api/* docs/
+          mkdir -p docs/coverage docs/badges
+          cp -R coverage-report/* docs/coverage/
+          cp -R coverage/badges/* docs/badges/
 
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -146,6 +194,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           force_orphan: true
-          commit_message: "docs: update documentation"
+          commit_message: "docs: update documentation and coverage"
           enable_jekyll: false
-          full_commit_message: "docs: update API documentation"
+          full_commit_message: "docs: update API documentation and coverage report"
