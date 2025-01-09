@@ -106,6 +106,7 @@ jobs:
           path: coverage/lcov.info
 
   coverage-report:
+    if: github.ref == 'refs/heads/main'
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -144,6 +145,7 @@ jobs:
             coverage/badges
 
   deploy-docs-and-coverage:
+    if: github.ref == 'refs/heads/main'
     needs: [coverage-report, lint, test]
     runs-on: ubuntu-latest
     permissions:
