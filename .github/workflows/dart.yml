@@ -96,10 +96,13 @@ jobs:
           dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --package=. --report-on=lib
           echo "::endgroup::"
 
+      - name: Set artifact name
+        run: echo "ARTIFACT_NAME=coverage-$(echo '${{ matrix.test-path }}' | tr '/' '-')" >> $GITHUB_ENV
+
       - name: Upload coverage artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: coverage-${{ matrix.test-path }}
+          name: ${{ env.ARTIFACT_NAME }}
           path: coverage/lcov.info
 
   coverage-report:
