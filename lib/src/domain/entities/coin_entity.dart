@@ -147,6 +147,35 @@ class EvmCoinEntity extends CoinEntity {
   });
 }
 
+class ERC1155Entity extends EvmCoinEntity {
+  final String contractAddress;
+  final BigInt tokenId;
+
+  const ERC1155Entity({
+    required super.name,
+    required super.symbol,
+    required super.chainID,
+    required this.contractAddress,
+    required this.tokenId,
+  }) : super(decimals: 0);
+
+  String get lowerCaseAddress => contractAddress.toLowerCase();
+
+  @override
+  int get hashCode =>
+      lowerCaseAddress.hashCode ^ chainID.hashCode ^ tokenId.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ERC1155Entity &&
+        other.lowerCaseAddress == lowerCaseAddress &&
+        other.chainID == chainID &&
+        other.tokenId == tokenId;
+  }
+}
+
 class ERC20Entity extends EvmCoinEntity {
   final String contractAddress;
   final bool? allowDeletion;
