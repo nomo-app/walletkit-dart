@@ -21,58 +21,106 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+        with:
+          submodules: "recursive"
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            packages/bip39/.dart_tool
+          key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-dart-
+
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: 'stable'
-        
+          sdk: "stable"
+
       - name: Print Dart version
         run: dart --version
-          
-      - name: Initialize submodules
-        run: git submodule update --init --recursive
-        
+
       - name: Get dependencies
         run: |
           dart pub get
-          cd packages/bip39 && dart pub get
-        continue-on-error: false
-        
-      - name: Navigate back to root
-        run: |
-          cd ..
-          cd ..
-          
+          (cd packages/bip39 && dart pub get)
+
       - name: Dart analyze
         run: dart analyze
-        continue-on-error: true
-        
+
+  test:
+    needs: lint
+    name: ${{ matrix.test-path }} tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test-path:
+          [
+            "test/ci/amount",
+            "test/ci/derivation",
+            "test/ci/evm",
+            "test/ci/external_transactions",
+            "test/ci/fetching",
+            "test/ci/proof_of_payment",
+            "test/ci/sending",
+            "test/ci/tron",
+          ]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            packages/bip39/.dart_tool
+          key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-dart-
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "stable"
+
+      - name: Get dependencies
+        run: |
+          dart pub get
+          (cd packages/bip39 && dart pub get)
+
       - name: Run CI tests
-        run: dart test test/ci
-        continue-on-error: false
+        run: |
+          echo "::group::Running tests for ${{ matrix.test-path }}"
+          dart test ${{ matrix.test-path }}
+          echo "::endgroup::"
 
   generate-docs:
+    if: github.ref == 'refs/heads/main'
+    needs: [lint, test]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' 
     permissions:
-      contents: write      # Required for pushing to gh-pages
-      pages: write        # Required for deploying to Pages
-      id-token: write     # Required for authentication
+      contents: write # Required for pushing to gh-pages
+      pages: write # Required for deploying to Pages
+      id-token: write # Required for authentication
 
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: 'recursive'
+          submodules: "recursive"
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            packages/bip39/.dart_tool
+          key: ${{ runner.os }}-dart-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-dart-
 
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: 'stable'
+          sdk: "stable"
 
-      - name: Initialize submodules
-        run: git submodule update --init --recursive
-        
       - name: Get dependencies
         run: |
           cd packages/bip39
@@ -98,6 +146,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           force_orphan: true
-          commit_message: 'docs: update documentation'
+          commit_message: "docs: update documentation"
           enable_jekyll: false
-          full_commit_message: 'docs: update API documentation'
+          full_commit_message: "docs: update API documentation"

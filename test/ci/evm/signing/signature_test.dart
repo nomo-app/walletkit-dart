@@ -23,8 +23,6 @@ void main() {
       final signature_v2 = Signature.fromHex(signature.hex);
 
       expect(signature.bytes, signature_v2.bytes);
-      print(signature.hex);
-      print(signature_v2.hex);
       expect(signature.r, signature_v2.r);
       expect(signature.s, signature_v2.s);
       expect(signature.v, signature_v2.v);
