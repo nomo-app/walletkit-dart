@@ -171,6 +171,11 @@ const NO_DUSTTRESHOLD = (
   segwit: 0,
 );
 
+const DOGE_DUSTTRESHOLD = (
+  legacy: 100000000,
+  segwit: 100000000,
+);
+
 const BitcoinNetwork = BITCOIN_NETWORK();
 
 class BITCOIN_NETWORK extends UTXONetworkType {
@@ -357,6 +362,36 @@ class EUROCOIN_NETWORK extends UTXONetworkType {
           },
           dustTreshhold: NO_DUSTTRESHOLD,
           blockTime: 600, // 10 minutes
+        );
+}
+
+const DogecoinNetwork = DOGECOIN_NETWORK();
+
+class DOGECOIN_NETWORK extends UTXONetworkType {
+  const DOGECOIN_NETWORK()
+      : super(
+          messagePrefix: '\x19Dogecoin Signed Message:\n',
+          bech32: 'dc',
+          networkBIP: DOGECOIN_NETWORK_BIP,
+          pubKeyHashPrefix: 0x1e, // 30 in hex
+          scriptHashPrefix: 0x16,
+          coinType: 3,
+          txVersion: 1,
+          sighash: BITCOIN_SIGHASH_INFO,
+          endpoints: const {
+            ("doge.aftrek.org", 50001),
+            // ("electrum1.cipig.net", 10060),
+            // ("electrum2.cipig.net", 10060),
+            // ("electrum3.cipig.net", 10060),
+          },
+          coin: dogeCoin,
+          addressPrefixes: const {
+            AddressType.legacy: "D",
+            AddressType.compatibility: "9",
+            AddressType.segwit: "dc1",
+          },
+          dustTreshhold: DOGE_DUSTTRESHOLD,
+          blockTime: 60, // 1 minute
         );
 }
 

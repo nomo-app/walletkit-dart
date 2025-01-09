@@ -20,6 +20,20 @@ void main() {
     logEndpoints(endpoints, stopwatch);
   });
 
+  test("Get Best Health ElectrumX Endpoints Doge", () async {
+    final stopwatch = Stopwatch()..start();
+    final endpoints = await getBestHealthEndpointsWithRetry(
+      endpointPool: DogecoinNetwork.endpoints,
+      token: dogeCoin,
+      min: 1,
+      maxLatency: Duration(milliseconds: 50),
+      maxRetries: 10,
+    );
+
+    expect(endpoints, isNotEmpty);
+    logEndpoints(endpoints, stopwatch);
+  });
+
   test("Get Best Health ElectrumX Endpoints Bitcoin", () async {
     final stopwatch = Stopwatch()..start();
     final endpoints = await getBestHealthEndpointsWithRetry(
