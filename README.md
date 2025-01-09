@@ -1,5 +1,5 @@
-[![TestSuite](https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml/badge.svg?branch=main)](https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml)
-[![Coverage](https://img.shields.io/endpoint?url=https://dev.nomo.app/walletkit-dart/badges/coverage.json)](https://dev.nomo.app/walletkit-dart/coverage/)
+[![TestSuite](https://img.shields.io/github/actions/workflow/status/nomo-app/walletkit-dart/dart.yml?branch=main&style=for-the-badge&logo=github-actions)](https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml)
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdev.nomo.app%2Fwalletkit-dart%2Fbadges%2Fcoverage.json&query=message&style=for-the-badge&logo=codecov&logoSize=24&label=Coverage&link=https%3A%2F%2Fdev.nomo.app%2Fwalletkit-dart%2Fcoverage%2F)
 
 # WalletKit-Dart
 
