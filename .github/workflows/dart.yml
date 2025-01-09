@@ -142,7 +142,6 @@ jobs:
           path: coverage/html
 
   deploy-docs-and-coverage:
-    if: github.ref == 'refs/heads/main'
     needs: [coverage-report, lint, test]
     runs-on: ubuntu-latest
     permissions:
@@ -173,20 +172,32 @@ jobs:
       - name: Generate API docs
         run: dart pub global run dartdoc
 
-      - name: Download coverage report
+      - name: Download coverage report and badge
         uses: actions/download-artifact@v3
         with:
           name: coverage-report
           path: coverage-report
 
+      - name: Download badge data
+        uses: actions/download-artifact@v3
+        with:
+          name: badge-data
+          path: badge-data
+
       - name: Prepare docs directory
         run: |
+          # Create directory structure
           rm -rf docs
-          mkdir -p docs
-          cp -R doc/api/* docs/
           mkdir -p docs/coverage docs/badges
+          
+          # Copy API docs
+          cp -R doc/api/* docs/
+          
+          # Copy coverage report
           cp -R coverage-report/* docs/coverage/
-          cp -R coverage/badges/* docs/badges/
+          
+          # Copy badge
+          cp badge-data/coverage.json docs/badges/
 
       - name: Deploy to Github Pages
         uses: peaceiris/actions-gh-pages@v3
