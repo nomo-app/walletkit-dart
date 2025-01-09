@@ -38,4 +38,23 @@ void main() {
 
     print("Hash: $hash");
   });
+
+  test('test to transfer erc1155 asset', () async {
+    final intent = TransferIntent<EvmFeeInformation>(
+      recipient: arbitrumTestWallet,
+      amount: Amount.convert(value: 100, decimals: 0),
+      token: nullToken,
+      memo: null,
+    );
+
+    final hash = await zeniqSmartChainRPC.sendERC1155Token(
+      contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
+      from: arbitrumTestWallet,
+      tokenID: BigInt.from(0),
+      intent: intent,
+      seed: testSeed,
+    );
+
+    print("Hash: $hash");
+  });
 }
