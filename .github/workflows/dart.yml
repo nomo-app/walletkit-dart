@@ -93,7 +93,7 @@ jobs:
           echo "::group::Running tests for ${{ matrix.test-path }}"
           dart pub global activate coverage
           dart test --coverage=coverage ${{ matrix.test-path }}
-          dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
+          dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --package=. --report-on=lib
           echo "::endgroup::"
 
       - name: Upload coverage artifacts
