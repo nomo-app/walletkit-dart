@@ -78,6 +78,16 @@ sealed class UTXONetworkType extends NetworkType {
 
 typedef BIP32Prefixes = ({int private, int public});
 
+class NetworkNodeInfo {
+  final int wif;
+  final BIP32Prefixes keyPrefixes;
+
+  const NetworkNodeInfo({
+    required this.wif,
+    required this.keyPrefixes,
+  });
+}
+
 class NetworkBIP {
   final int wif;
 
@@ -98,17 +108,41 @@ class NetworkBIP {
     DOGE_NETWORK_BIP,
   ];
 
-  static (BIP32Prefixes, NetworkBIP)? findPrefixesFromVersion(int version) {
+  static NetworkNodeInfo? findPrefixesFromVersion(int version) {
     return defaults
         .map((e) {
           final prefixes = e.fromVersion(version);
           if (prefixes != null) {
-            return (prefixes, e);
+            return NetworkNodeInfo(
+              wif: e.wif,
+              keyPrefixes: prefixes,
+            );
           }
           return null;
         })
         .nonNulls
         .firstOrNull;
+  }
+
+  NetworkNodeInfo getForPurpose(HDWalletPurpose purpose) {
+    switch (purpose) {
+      case HDWalletPurpose.NO_STRUCTURE:
+      case HDWalletPurpose.BIP44:
+        return NetworkNodeInfo(
+          wif: wif,
+          keyPrefixes: bip32,
+        );
+      case HDWalletPurpose.BIP84:
+        return NetworkNodeInfo(
+          wif: wif,
+          keyPrefixes: bip84,
+        );
+      case HDWalletPurpose.BIP49:
+        return NetworkNodeInfo(
+          wif: wif,
+          keyPrefixes: bip49,
+        );
+    }
   }
 
   const NetworkBIP({

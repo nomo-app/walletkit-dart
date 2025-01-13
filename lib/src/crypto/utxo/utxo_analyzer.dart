@@ -204,15 +204,17 @@ Future<UTXOTxInfo> fetchUTXOTransactionsFromEpubKey({
   /// Search for Receive and Change Addresses
   ///
 
+  final nodeNetworkInfo = networkType.networkBIP.getForPurpose(purpose);
+
   final masterNode = await isolateManager.executeTask(
     IsolateTask(
       task: (arg) {
         return deriveMasterNodeFromExtendedKey(
           arg.$1,
-          networkType: arg.$2,
+          nodeNetworkInfo: arg.$2,
         );
       },
-      argument: (ePubKey, networkType),
+      argument: (ePubKey, nodeNetworkInfo),
     ),
   );
 

@@ -15,7 +15,7 @@ const UINT32_MAX = 4294967295; // 2^32 - 1
 /// Inspired by https://github.com/dart-bitcoin/
 ///
 class HDNode {
-  final NetworkBIP? network;
+  final NetworkNodeInfo? network;
   final Uint8List _q;
   final Uint8List? _p;
   final Uint8List chainCode;
@@ -72,7 +72,7 @@ class HDNode {
   String? extendedPrivateKey({
     int? version,
   }) {
-    version ??= network?.bip32.private;
+    version ??= network?.keyPrefixes.private;
     if (version == null) {
       throw ArgumentError("Missing version");
     }
@@ -100,7 +100,7 @@ class HDNode {
   }
 
   String extendedPublicKey({int? version}) {
-    version ??= network?.bip32.public;
+    version ??= network?.keyPrefixes.public;
     if (version == null) {
       throw ArgumentError("Missing version");
     }
@@ -214,7 +214,7 @@ class HDNode {
     required int depth,
     required int index,
     required int parentFingerprint,
-    NetworkBIP? network,
+    NetworkNodeInfo? network,
   }) {
     if (IL.length != 32) {
       throw ArgumentError("IL should be 32 bytes");
@@ -254,7 +254,7 @@ class HDNode {
     required int depth,
     required int index,
     required int parentFingerprint,
-    NetworkBIP? network,
+    NetworkNodeInfo? network,
   }) {
     if (ecurve.isPoint(publicKey) == false) {
       throw ArgumentError("Point is not on the curve");
@@ -284,7 +284,7 @@ class HDNode {
 
   factory HDNode.fromSeed(
     Uint8List seed, {
-    NetworkBIP? network,
+    NetworkNodeInfo? network,
   }) {
     if (seed.length < 16) {
       throw new ArgumentError("Seed should be at least 128 bits");
@@ -311,7 +311,7 @@ class HDNode {
   ///
   factory HDNode.fromExtendedKey(
     String key, {
-    NetworkBIP? network,
+    NetworkNodeInfo? network,
   }) {
     final buffer = base58CheckDecodeWithVersion(key);
     if (buffer.length != 78) {
@@ -322,23 +322,20 @@ class HDNode {
 
     final version = bytes.getUint32(0);
 
-    final BIP32Prefixes? networkPrefixes;
-
     /// Check if the version is valid if network is provided
-    if (network != null) {
-      networkPrefixes = network.fromVersion(version);
-      if (networkPrefixes == null) {
-        throw ArgumentError("Invalid version for given network");
-      }
-    } else {
+    if (network == null) {
       final result = NetworkBIP.findPrefixesFromVersion(version);
 
       if (result == null) {
         throw ArgumentError("No NetworkBIP found for $version");
       }
 
-      network = result.$2;
-      networkPrefixes = result.$1;
+      network = result;
+    } else {
+      if (version != network.keyPrefixes.private &&
+          version != network.keyPrefixes.public) {
+        throw ArgumentError("Invalid version for given network");
+      }
     }
 
     final depth = bytes.getUint8(4);
@@ -356,7 +353,7 @@ class HDNode {
 
     final chainCode = buffer.sublist(13, 45);
 
-    final isPrivate = networkPrefixes.private == version;
+    final isPrivate = network.keyPrefixes.private == version;
 
     if (isPrivate) {
       if (bytes.getUint8(45) != 0) {

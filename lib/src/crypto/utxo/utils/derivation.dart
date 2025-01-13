@@ -42,24 +42,28 @@ HDNode deriveMasterNodeFromSeed({
   required HDWalletPath walletPath,
   required UTXONetworkType networkType,
 }) {
-  final parentNode = HDNode.fromSeed(seed, network: networkType.networkBIP);
+  final masterNode = HDNode.fromSeed(
+    seed,
+    network: networkType.networkBIP.getForPurpose(walletPath.purpose),
+  );
+
   final derivationPath = switch (walletPath.basePath) {
     "m/44'/2'" => walletPath.account0Path,
     _ => walletPath.purpose.string,
   };
   final node =
-      parentNode.derivePath(derivationPath); // TODO: Use base Path with Account
+      masterNode.derivePath(derivationPath); // TODO: Use base Path with Account
 
   return node;
 }
 
 HDNode deriveMasterNodeFromExtendedKey(
   String ePubKey, {
-  UTXONetworkType? networkType,
+  NetworkNodeInfo? nodeNetworkInfo,
 }) {
   return HDNode.fromExtendedKey(
     ePubKey,
-    network: networkType?.networkBIP,
+    network: nodeNetworkInfo,
   );
 }
 
@@ -121,8 +125,9 @@ HDNode deriveChildNodeFromPath({
 
 extension on HDNode {
   String toBase58wkCompatibility(int parentFingerprint, int depth) {
-    final version =
-        (!isNeutered) ? network!.bip32.private : network!.bip32.public;
+    final version = !isNeutered
+        ? network!.keyPrefixes.private
+        : network!.keyPrefixes.public;
     Uint8List buffer = new Uint8List(78);
     ByteData bytes = buffer.buffer.asByteData();
     bytes.setUint32(0, version);

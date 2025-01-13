@@ -20,7 +20,6 @@ void main() {
 
     final masterNode = deriveMasterNodeFromExtendedKey(
       ePubKey,
-      networkType: t,
     );
     expect(
       deriveChildNode(
@@ -56,7 +55,6 @@ void main() {
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
     final masterNode = deriveMasterNodeFromExtendedKey(
       ePubKey,
-      networkType: t,
     );
     expect(
       deriveChildNode(
@@ -101,7 +99,6 @@ void main() {
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
     final masterNode = deriveMasterNodeFromExtendedKey(
       ePubKey,
-      networkType: t,
     );
     expect(
       deriveChildNode(
@@ -471,7 +468,6 @@ void main() {
 
     final masterNode = deriveMasterNodeFromExtendedKey(
       wkDebugXPUB,
-      networkType: t,
     );
     for (var i = 0; i < 10; i++) {
       final addresses = deriveChildNode(

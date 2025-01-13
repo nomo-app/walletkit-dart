@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
+import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 import 'package:walletkit_dart/src/utils/der.dart';
 import 'package:walletkit_dart/src/wallet/hd_node.dart';
 
@@ -59,7 +60,7 @@ void main() {
       IR: chainCode,
       depth: 0,
       index: 0,
-      network: BITCOIN_NETWORK_BIP,
+      network: BITCOIN_NETWORK_BIP.getForPurpose(HDWalletPurpose.NO_STRUCTURE),
       parentFingerprint: 0,
     );
 

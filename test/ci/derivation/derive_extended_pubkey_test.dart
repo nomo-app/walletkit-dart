@@ -30,7 +30,7 @@ void main() {
     var hdNode = deriveMasterNodeFromExtendedKey(btcPubKey);
 
     expect(
-      hdNode.network?.bip32.public,
+      hdNode.network?.keyPrefixes.public,
       BitcoinNetwork.networkBIP.bip32.public,
     );
 
@@ -40,7 +40,7 @@ void main() {
     hdNode = deriveMasterNodeFromExtendedKey(ltcPubKey);
 
     expect(
-      hdNode.network?.bip32.public,
+      hdNode.network?.keyPrefixes.public,
       LitecoinNetwork.networkBIP.bip32.public,
     );
   });

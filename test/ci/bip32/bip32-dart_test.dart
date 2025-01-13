@@ -5,6 +5,7 @@ import 'package:hex/hex.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
+import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 import 'dart:io';
 import 'dart:convert';
 
@@ -31,19 +32,20 @@ void main() {
         if (ff['network'] == 'litecoin') {
           network = LTC_NETWORK_BIP;
         }
-        var hdPrv = HDNode.fromExtendedKey(ff['base58Priv'], network: network);
+        var hdPrv = HDNode.fromExtendedKey(ff['base58Priv']);
         test('works for private key -> HD wallet', () {
           verify(hdPrv, true, ff, network);
         });
 
-        var hdPub = HDNode.fromExtendedKey(ff['base58'], network: network);
+        var hdPub = HDNode.fromExtendedKey(ff['base58']);
         test('works for public key -> HD wallet', () {
           verify(hdPub, false, ff, network);
         });
 
         if (ff['seed'] != null) {
           var seed = HEX.decode(ff['seed']);
-          var hdSeed = HDNode.fromSeed(seed as Uint8List, network: network);
+          var hdSeed = HDNode.fromSeed(seed as Uint8List,
+              network: network.getForPurpose(HDWalletPurpose.BIP44));
           test('works for seed -> HD wallet', () {
             verify(hdSeed, true, ff, network);
           });
@@ -59,7 +61,8 @@ void main() {
         network = LTC_NETWORK_BIP;
       HDNode? hd;
       try {
-        hd = HDNode.fromExtendedKey(f['string'], network: network);
+        hd = HDNode.fromExtendedKey(f['string'],
+            network: network.getForPurpose(HDWalletPurpose.BIP44));
       } catch (err) {
         if (err is FormatException) {
           expect(err.message, f['exception']);
@@ -154,7 +157,6 @@ void main() {
         depth: 0,
         index: 0,
         parentFingerprint: 0,
-        network: BITCOIN_NETWORK_BIP,
       );
     } catch (err) {
       expect((err as ArgumentError).message, "IL should be 32 bytes");
@@ -168,7 +170,6 @@ void main() {
         depth: 0,
         index: 0,
         parentFingerprint: 0,
-        network: BITCOIN_NETWORK_BIP,
       );
     } catch (err) {
       expect((err as ArgumentError).message, "IL should be a private key");
@@ -203,8 +204,9 @@ void main() {
     (fixtures['invalid']['fromSeed'] as List<dynamic>).forEach((f) {
       var hd;
       try {
-        hd = HDNode.fromSeed(HEX.decode(f['seed']) as Uint8List,
-            network: BITCOIN_NETWORK_BIP);
+        hd = HDNode.fromSeed(
+          HEX.decode(f['seed']) as Uint8List,
+        );
       } catch (err) {
         expect((err as ArgumentError).message, f['exception']);
       } finally {
@@ -219,7 +221,7 @@ void main() {
     String sigStr =
         "9636ee2fac31b795a308856b821ebe297dda7b28220fb46ea1fbbd7285977cc04c82b734956246a0f15a9698f03f546d8d96fe006c8e7bd2256ca7c8229e6f5c";
     Uint8List signature = HEX.decode(sigStr) as Uint8List;
-    HDNode node = HDNode.fromSeed(seed, network: BITCOIN_NETWORK_BIP);
+    HDNode node = HDNode.fromSeed(seed);
     expect(HEX.encode(node.sign(hash)), sigStr);
     expect(node.verify(hash, signature), true);
     expect(node.verify(seed, signature), false);
