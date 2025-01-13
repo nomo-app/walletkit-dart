@@ -1,18 +1,18 @@
-import 'package:bip32/bip32.dart';
+import 'package:walletkit_dart/src/wallet/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 /// TODO: Make sure this only has the privateKey when used for signing. Else EpubKey should be used.
 
 sealed class NodeWithAddress {
   final int type;
-  final BIP32? bip32Node;
+  final HDNode? bip32Node;
   final String address;
   final String derivationPath;
   final Map<AddressType, String> addresses;
   final HDWalletPurpose? walletPurpose;
   final String publicKey;
 
-  bool get isNeutered => bip32Node?.isNeutered() ?? true;
+  bool get isNeutered => bip32Node?.isNeutered ?? true;
 
   List<String> get addressesList => addresses.values.toList();
 
@@ -45,7 +45,7 @@ sealed class NodeWithAddress {
       };
 
   factory NodeWithAddress.fromChainIndex({
-    required BIP32 node,
+    required HDNode node,
     required String address,
     required int chainIndex,
     required String derivationPath,

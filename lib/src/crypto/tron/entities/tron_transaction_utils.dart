@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart';
 
-import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
     as tron;

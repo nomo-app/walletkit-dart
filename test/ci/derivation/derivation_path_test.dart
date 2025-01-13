@@ -2,6 +2,7 @@
 // import 'package:walletkit_dart/src/crypto/derivation.dart';
 // import 'package:walletkit_dart/src/domain/entities/default_assets.dart';
 
+import 'package:bip39/bip39.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/wallet_utils.dart';
@@ -42,14 +43,24 @@ void main() {
       walletPath: bitcoinNSHDPath,
       seed: helloSeed,
     );
-    final node_xpub_ns = deriveMasterNodeFromExtendedKeyWithCheck(
-      networkType: networkType,
-      purpose: bitcoinNSHDPath.purpose,
-      ePubKey: helloXpub,
-    );
+    final node_xpub_ns = deriveMasterNodeFromExtendedKey(helloXpub);
 
-    expect(node_seed_ns.neutered().toBase58(), helloXpub);
+    expect(node_seed_ns.neutered().extendedPublicKey(), helloXpub);
 
     expect(node_seed_ns.publicKey, node_xpub_ns.publicKey);
   });
+
+  test(
+    "HD Wallet Derivation",
+    () {
+      const mnemonic =
+          "walletkit dart walletkit dart walletkit dart walletkit dart walletkit dart walletkit dart";
+
+      final seed = mnemonicToSeed(mnemonic);
+
+      // final masterNode = deriveMasterNodeFromSeed(seed: seed, walletPath: );
+
+      print(seed);
+    },
+  );
 }
