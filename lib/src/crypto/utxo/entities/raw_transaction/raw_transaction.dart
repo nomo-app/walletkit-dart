@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/payments/pk_script_converter.dart';
-import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
 import 'package:walletkit_dart/src/utils/crypto.dart';

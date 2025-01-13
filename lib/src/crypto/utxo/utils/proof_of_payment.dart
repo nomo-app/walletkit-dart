@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
-import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
@@ -144,7 +143,7 @@ Future<POPResult> proofOfPayment({
   ];
 
   final signatures = [
-    for (final node in bip32Nodes) (node.sign(uPoPHash) as Uint8List),
+    for (final node in bip32Nodes) node.sign(uPoPHash),
   ];
 
   return POPResult(uPoPHash, uPopTx, signatures, txid);
