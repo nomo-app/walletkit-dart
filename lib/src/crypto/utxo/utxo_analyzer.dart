@@ -281,10 +281,10 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
               return deriveMasterNodeFromSeed(
                 seed: arg.$1,
                 walletPath: arg.$2,
-                networkType: networkType,
+                networkType: arg.$3,
               );
             },
-            argument: (seed, walletType),
+            argument: (seed, walletType, networkType),
           ),
         );
         return searchTransactionsForWalletType(
