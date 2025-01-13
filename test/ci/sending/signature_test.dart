@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:bip32/bip32.dart';
 import 'package:convert/convert.dart';
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/utils/der.dart';
+import 'package:walletkit_dart/src/wallet/hd_node.dart';
 
 final chainCode = Uint8List.fromList(
   [
@@ -53,7 +54,14 @@ void main() {
         "77306bb02155b0d8ed8d854ecb2d38a185ca737c3d3d68c25643c47e9a24b4ec",
       ),
     );
-    final bip32 = BIP32.fromPrivateKey(privateKey, chainCode);
+    final bip32 = HDNode.fromI(
+      IL: privateKey,
+      IR: chainCode,
+      depth: 0,
+      index: 0,
+      network: BITCOIN_NETWORK_BIP,
+      parentFingerprint: 0,
+    );
 
     final sigHashRev = Uint8List.fromList(sigHash.reversed.toList());
     final sig = bip32.sign(sigHashRev);

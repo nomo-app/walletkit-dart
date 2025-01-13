@@ -43,13 +43,12 @@ void main() {
       walletPath: bitcoinNSHDPath,
       seed: helloSeed,
     );
-    final node_xpub_ns = deriveMasterNodeFromExtendedKeyWithCheck(
+    final node_xpub_ns = deriveMasterNodeFromExtendedKey(
+      helloXpub,
       networkType: networkType,
-      purpose: bitcoinNSHDPath.purpose,
-      ePubKey: helloXpub,
     );
 
-    expect(node_seed_ns.neutered().toBase58(), helloXpub);
+    expect(node_seed_ns.neutered().extendedPublicKey(), helloXpub);
 
     expect(node_seed_ns.publicKey, node_xpub_ns.publicKey);
   });

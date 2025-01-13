@@ -18,10 +18,9 @@ void main() {
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
 
-    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
-      ePubKey: ePubKey,
+    final masterNode = deriveMasterNodeFromExtendedKey(
+      ePubKey,
       networkType: t,
-      purpose: purpose,
     );
     expect(
       deriveChildNode(
@@ -55,10 +54,9 @@ void main() {
     const t = ZeniqNetwork;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
-    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
-      ePubKey: ePubKey,
+    final masterNode = deriveMasterNodeFromExtendedKey(
+      ePubKey,
       networkType: t,
-      purpose: purpose,
     );
     expect(
       deriveChildNode(
@@ -101,10 +99,9 @@ void main() {
     const purpose = HDWalletPurpose.NO_STRUCTURE;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
-    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
-      ePubKey: ePubKey,
+    final masterNode = deriveMasterNodeFromExtendedKey(
+      ePubKey,
       networkType: t,
-      purpose: purpose,
     );
     expect(
       deriveChildNode(
@@ -472,10 +469,9 @@ void main() {
     const t = LitecoinNetwork;
     const purpose = HDWalletPurpose.BIP44;
 
-    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
-      ePubKey: wkDebugXPUB,
+    final masterNode = deriveMasterNodeFromExtendedKey(
+      wkDebugXPUB,
       networkType: t,
-      purpose: purpose,
     );
     for (var i = 0; i < 10; i++) {
       final addresses = deriveChildNode(

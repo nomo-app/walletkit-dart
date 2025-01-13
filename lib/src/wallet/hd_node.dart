@@ -5,16 +5,20 @@ import 'package:walletkit_dart/src/crypto/utxo/utils/ecurve.dart' as ecurve;
 import 'package:walletkit_dart/src/utils/base58.dart';
 import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 const HIGHEST_BIT = 0x80000000;
 const UINT31_MAX = 2147483647; // 2^31 - 1
 const UINT32_MAX = 4294967295; // 2^32 - 1
 
+///
+/// Inspired by https://github.com/dart-bitcoin/
+///
 class HDNode {
+  final NetworkBIP? network;
   final Uint8List _q;
   final Uint8List? _p;
   final Uint8List chainCode;
-
   final int depth;
   final int index;
   final int parentFingerprint;
@@ -28,6 +32,13 @@ class HDNode {
   Uint8List get identifier => ripmed160Sha256Hash(publicKey);
 
   Uint8List get fingerprint => identifier.sublist(0, 4);
+
+  Uint8List get publicKeyUncompressed {
+    if (privateKey == null) {
+      throw UnsupportedError("privateKey is null");
+    }
+    return ecurve.pointFromScalar(privateKey!, false)!;
+  }
 
   HDNode derivePath(String path) {
     final regex = new RegExp(r"^(m\/)?(\d+'?\/)*\d+'?$");
@@ -58,7 +69,14 @@ class HDNode {
     );
   }
 
-  String? extendedPrivateKey(int version) {
+  String? extendedPrivateKey({
+    int? version,
+  }) {
+    version ??= network?.bip32.private;
+    if (version == null) {
+      throw ArgumentError("Missing version");
+    }
+
     if (version.isUint(32) == false) {
       throw ArgumentError("Expected UInt32 for version");
     }
@@ -78,10 +96,14 @@ class HDNode {
     bytes.setUint8(45, 0);
     buffer.setRange(46, 78, privateKey!);
 
-    return base58Encode(buffer);
+    return base58CheckEncode2(buffer);
   }
 
-  String extendedPublicKey(int version) {
+  String extendedPublicKey({int? version}) {
+    version ??= network?.bip32.public;
+    if (version == null) {
+      throw ArgumentError("Missing version");
+    }
     if (version.isUint(32) == false) {
       throw ArgumentError("Expected UInt32 for version");
     }
@@ -96,11 +118,21 @@ class HDNode {
     buffer.setRange(13, 45, chainCode);
     buffer.setRange(45, 78, publicKey);
 
-    return base58Encode(buffer);
+    return base58CheckEncode2(buffer);
   }
 
-  String toWIF() {
-    throw UnimplementedError();
+  String toWIF({
+    int? version,
+  }) {
+    if (privateKey == null) {
+      throw new ArgumentError("Missing private key");
+    }
+    version ??= network?.wif;
+    if (version == null) {
+      throw ArgumentError("Missing version");
+    }
+    return WIF(version: version, privateKey: privateKey!, compressed: true)
+        .toBase58;
   }
 
   HDNode deriveHardened(int index) {
@@ -140,24 +172,26 @@ class HDNode {
       if (ki == null) {
         return derive(index + 1);
       }
-      return HDNode._fromPublicKey(
+      return HDNode.fromPublicKey(
         publicKey: ki,
         chainCode: IR,
         depth: depth + 1,
         index: index,
         parentFingerprint: fingerprint.buffer.asByteData().getUint32(0),
+        network: network,
       );
     } else {
       final ki = ecurve.privateAdd(privateKey!, IL);
       if (ki == null) {
         return derive(index + 1);
       }
-      return HDNode._fromI(
+      return HDNode.fromI(
         IL: ki,
         IR: IR,
         depth: depth + 1,
         index: index,
         parentFingerprint: fingerprint.buffer.asByteData().getUint32(0),
+        network: network,
       );
     }
   }
@@ -170,15 +204,17 @@ class HDNode {
       depth: depth,
       index: index,
       parentFingerprint: parentFingerprint,
+      network: network,
     );
   }
 
-  factory HDNode._fromI({
+  factory HDNode.fromI({
     required Uint8List IL,
     required Uint8List IR,
     required int depth,
     required int index,
     required int parentFingerprint,
+    NetworkBIP? network,
   }) {
     if (IL.length != 32) {
       throw ArgumentError("IL should be 32 bytes");
@@ -196,6 +232,7 @@ class HDNode {
       depth: depth,
       index: index,
       parentFingerprint: parentFingerprint,
+      network: network,
     );
   }
 
@@ -211,12 +248,13 @@ class HDNode {
     return ecurve.sign(hash, _p!);
   }
 
-  factory HDNode._fromPublicKey({
+  factory HDNode.fromPublicKey({
     required Uint8List publicKey,
     required Uint8List chainCode,
     required int depth,
     required int index,
     required int parentFingerprint,
+    NetworkBIP? network,
   }) {
     if (ecurve.isPoint(publicKey) == false) {
       throw ArgumentError("Point is not on the curve");
@@ -228,6 +266,7 @@ class HDNode {
       chainCode: chainCode,
       depth: depth,
       index: index,
+      network: network,
       parentFingerprint: parentFingerprint,
     );
   }
@@ -236,13 +275,17 @@ class HDNode {
     required Uint8List q,
     required Uint8List? p,
     required this.chainCode,
+    required this.network,
     required this.depth,
     required this.index,
     required this.parentFingerprint,
   })  : _q = q,
         _p = p;
 
-  factory HDNode.fromSeed(Uint8List seed) {
+  factory HDNode.fromSeed(
+    Uint8List seed, {
+    NetworkBIP? network,
+  }) {
     if (seed.length < 16) {
       throw new ArgumentError("Seed should be at least 128 bits");
     }
@@ -255,12 +298,151 @@ class HDNode {
     final IL = I.sublist(0, 32);
     final IR = I.sublist(32);
 
-    return HDNode._fromI(
+    return HDNode.fromI(
       IL: IL,
       IR: IR,
       depth: 0,
       index: 0,
       parentFingerprint: 0,
+      network: network,
     );
+  }
+
+  ///
+  factory HDNode.fromExtendedKey(
+    String key, {
+    NetworkBIP? network,
+  }) {
+    final buffer = base58CheckDecodeWithVersion(key);
+    if (buffer.length != 78) {
+      throw ArgumentError("Invalid buffer length");
+    }
+
+    final bytes = buffer.buffer.asByteData();
+
+    final version = bytes.getUint32(0);
+
+    final BIP32Prefixes? networkPrefixes;
+
+    /// Check if the version is valid if network is provided
+    if (network != null) {
+      networkPrefixes = network.fromVersion(version);
+      if (networkPrefixes == null) {
+        throw ArgumentError("Invalid version for given network");
+      }
+    } else {
+      final result = NetworkBIP.findPrefixesFromVersion(version);
+
+      if (result == null) {
+        throw ArgumentError("No NetworkBIP found for $version");
+      }
+
+      network = result.$2;
+      networkPrefixes = result.$1;
+    }
+
+    final depth = bytes.getUint8(4);
+
+    final parentFingerprint = bytes.getUint32(5);
+
+    if (depth == 0 && parentFingerprint != 0) {
+      throw ArgumentError("Invalid parent fingerprint");
+    }
+
+    final index = bytes.getUint32(9);
+    if (depth == 0 && index != 0) {
+      throw ArgumentError("Invalid index");
+    }
+
+    final chainCode = buffer.sublist(13, 45);
+
+    final isPrivate = networkPrefixes.private == version;
+
+    if (isPrivate) {
+      if (bytes.getUint8(45) != 0) {
+        throw ArgumentError("Invalid private key");
+      }
+      final IL = buffer.sublist(46, 78);
+      return HDNode.fromI(
+        IL: IL,
+        IR: chainCode,
+        depth: depth,
+        index: index,
+        parentFingerprint: parentFingerprint,
+        network: network,
+      );
+    } else {
+      final publicKey = buffer.sublist(45, 78);
+      return HDNode.fromPublicKey(
+        publicKey: publicKey,
+        chainCode: chainCode,
+        depth: depth,
+        index: index,
+        parentFingerprint: parentFingerprint,
+        network: network,
+      );
+    }
+  }
+}
+
+class WIF {
+  final int version;
+  final Uint8List privateKey;
+  final bool compressed;
+
+  const WIF({
+    required this.version,
+    required this.privateKey,
+    required this.compressed,
+  });
+
+  factory WIF.fromBuffer(
+    Uint8List buffer, {
+    int? version,
+  }) {
+    if (version != null && buffer[0] != version) {
+      throw ArgumentError("Invalid Network version");
+    }
+    if (buffer.length == 33) {
+      return WIF(
+        version: buffer[0],
+        privateKey: buffer.sublist(1, 33),
+        compressed: false,
+      );
+    }
+    if (buffer.length != 34) {
+      throw ArgumentError("Invalid buffer length");
+    }
+    if (buffer[33] != 0x01) {
+      throw ArgumentError("Invalid compression flag");
+    }
+    return WIF(
+      version: buffer[0],
+      privateKey: buffer.sublist(1, 33),
+      compressed: true,
+    );
+  }
+
+  Uint8List get buffer {
+    if (privateKey.length != 32) {
+      throw ArgumentError("Private key should be 32 bytes");
+    }
+    final buffer = Uint8List(compressed ? 34 : 33);
+    final byteData = buffer.buffer.asByteData();
+    byteData.setUint8(0, version);
+    buffer.setRange(1, 33, privateKey);
+    if (compressed) {
+      buffer[33] = 0x01;
+    }
+    return buffer;
+  }
+
+  String get toBase58 {
+    return base58CheckEncode2(buffer);
+  }
+
+  factory WIF.fromBase58(String base58) {
+    final buffer = base58CheckDecodeWithVersion(base58);
+    return WIF.fromBuffer(buffer);
   }
 }

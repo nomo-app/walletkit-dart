@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:bip32/bip32.dart' as bip32;
 import 'package:hex/hex.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/ecurve.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/crypto.dart';
+import 'package:walletkit_dart/src/wallet/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;
-import 'package:bip32/src/utils/ecurve.dart' as ecc;
 import 'package:convert/convert.dart' as convert;
 
 List<int> nomoIdDerivationPath(int hostId) {
@@ -103,11 +103,11 @@ Future<NodeWithAddress> deriveBIP32Ec8({
 }) async {
   final String derivationPathString = _derivationPathToString(derivationPath);
 
-  bip32.BIP32 seedNode = bip32.BIP32.fromSeed(seed);
-  final bip32.BIP32 childNode = seedNode.derivePath(derivationPathString);
+  final masterNode = HDNode.fromSeed(seed);
+  final childNode = masterNode.derivePath(derivationPathString);
 
   const compressed = false; // needed for address backwards compat
-  final publicKey = ecc.pointFromScalar(childNode.privateKey!, compressed)!;
+  final publicKey = pointFromScalar(childNode.privateKey!, compressed)!;
   final address = pubKeyToAddress(
     publicKey,
     AddressType.legacy,
@@ -117,7 +117,7 @@ Future<NodeWithAddress> deriveBIP32Ec8({
   return ChangeNode(
     bip32Node: childNode,
     address: address,
-    derivationPath: "", //
+    derivationPath: derivationPathString,
     addresses: {AddressType.legacy: address},
     walletPurpose: HDWalletPurpose.BIP44,
     publicKey: childNode.publicKey.toHex,
