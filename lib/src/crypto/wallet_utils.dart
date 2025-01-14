@@ -47,6 +47,25 @@ Future<TokenInfo?> getTokenInfo({
   }
 }
 
+Future<bool> isErc1155({
+  required String contractAddress,
+  required EvmRpcInterface rpc,
+  required String address,
+}) async {
+  bool isErc1155 = false;
+  try {
+    await rpc.fetchERC1155BalanceOfToken(
+      address: address,
+      tokenID: BigInt.from(0),
+      contractAddress: contractAddress,
+    );
+    isErc1155 = true;
+  } catch (e) {
+    isErc1155 = false;
+  }
+  return isErc1155;
+}
+
 Uint8List publicKeyToAddress(Uint8List publicKey) {
   // 1. Ensure the public key is in the correct format
   if (publicKey.length == 64) {
