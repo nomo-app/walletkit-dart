@@ -328,12 +328,12 @@ class ERC1155Contract extends InternalContract {
         );
 
   Future<BigInt> balanceOf({
-    required String account,
+    required String address,
     required BigInt tokenID,
   }) async {
     final function = abi.functions[0];
     final response = await readSafe(
-      function: function.addValues(values: [account, tokenID]),
+      function: function.addValues(values: [address, tokenID]),
     );
     return response.outputs.first.castValue<BigInt>();
   }

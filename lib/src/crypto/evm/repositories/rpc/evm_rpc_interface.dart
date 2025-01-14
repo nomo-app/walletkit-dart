@@ -107,7 +107,7 @@ final class EvmRpcInterface {
   /// Fetch Balance of ERC1155 Token
   ///
   Future<BigInt> fetchERC1155BalanceOfToken({
-    required String account,
+    required String address,
     required BigInt tokenID,
     required String contractAddress,
   }) async {
@@ -116,7 +116,7 @@ final class EvmRpcInterface {
       rpc: this,
     );
     final balance = await erc1155Contract.balanceOf(
-      account: account,
+      address: address,
       tokenID: tokenID,
     );
 

@@ -60,7 +60,7 @@ void main() {
 
   test('test erc1155 balance of token', () async {
     final balance = await zeniqSmartChainRPC.fetchERC1155BalanceOfToken(
-      account: arbitrumTestWallet,
+      address: arbitrumTestWallet,
       tokenID: BigInt.from(2),
       contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
     );
@@ -101,5 +101,20 @@ void main() {
 
     print('URI: $uri');
     expect(uri, isNotNull);
+  });
+
+  test("is erc1155", () async {
+    bool isERC1155 = false;
+    try {
+      await ethereumRPC.fetchERC1155BalanceOfToken(
+          address: arbitrumTestWallet,
+          tokenID: BigInt.from(0),
+          contractAddress: "0x1ca3262009b21F944e6b92a2a88D039D06F1acFa");
+      isERC1155 = true;
+    } catch (e) {
+      isERC1155 = false;
+    }
+
+    print('isERC1155: $isERC1155');
   });
 }
