@@ -106,7 +106,7 @@ final class EvmRpcInterface {
   ///
   /// Fetch Balance of ERC1155 Token
   ///
-  Future<BigInt> fetchERC1155BalanceOfToken({
+  Future<Amount> fetchERC1155BalanceOfToken({
     required String address,
     required BigInt tokenID,
     required String contractAddress,
@@ -120,7 +120,7 @@ final class EvmRpcInterface {
       tokenID: tokenID,
     );
 
-    return balance;
+    return Amount(value: balance, decimals: 0);
   }
 
   ///

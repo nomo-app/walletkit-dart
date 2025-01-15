@@ -171,6 +171,141 @@ base class EtherscanTransaction extends EVMTransaction {
     throw UnsupportedError("Invalid JSON for EtherscanTransaction");
   }
 
+  factory EtherscanTransaction.fromJsonErc1155(
+    Json json, {
+    required EvmCoinEntity currency,
+    required String address,
+  }) {
+    EtherscanTransaction _createTransaction({
+      required String block_s,
+      required String timeStamp_s,
+      required String hash,
+      required String from,
+      required String to,
+      required String gas_s,
+      required String gasUsed_s,
+      required String gasPrice_s,
+      required String contractAddress,
+      required String? symbol,
+      required String? name,
+      required String tokenID_s,
+      required String input,
+      String? tokenValue,
+    }) {
+      final block = block_s.toIntOrNull ?? -1;
+      final confirmations = block_s.toIntOrNull ?? -1;
+      final timeMilli = timeStamp_s.toIntOrNull ?? -1;
+      final token = ERC1155Entity(
+        name: name ?? "N.Av",
+        symbol: symbol ?? "N.Av",
+        contractAddress: contractAddress,
+        chainID: currency.chainID,
+        tokenId: BigInt.tryParse(tokenID_s) ?? BigInt.from(-1),
+      );
+      final amount = Amount(
+        value: tokenValue != null
+            ? (BigInt.tryParse(tokenValue) ?? BigInt.from(-1))
+            : BigInt.from(-1),
+        decimals: 0,
+      );
+      final fee = Amount(
+        value: gasPrice_s.toBigInt * gasUsed_s.toBigInt,
+        decimals: currency.decimals,
+      );
+      final gasPrice = Amount(
+        value: gasPrice_s.toBigInt,
+        decimals: currency.decimals,
+      );
+      final transferMethod =
+          TransactionTransferMethod.fromAddress(address, to, from);
+      return EtherscanTransaction(
+        hash: hash,
+        block: block,
+        confirmations: confirmations,
+        timeMilli: timeMilli * 1000,
+        amount: amount,
+        fee: fee,
+        gasUsed: gasUsed_s.toInt,
+        sender: from,
+        recipient: to,
+        gas: gas_s.toInt,
+        gasPrice: gasPrice,
+        transferMethod: transferMethod,
+        token: token,
+        status: ConfirmationStatus.fromConfirmations(confirmations),
+        input: input.hexToBytesWithPrefixOrNull ?? Uint8List(0),
+      );
+    }
+
+    if (json
+        case {
+          'blockNumber': String block_s,
+          'timeStamp': String timeStamp_s,
+          'hash': String hash,
+          'from': String from,
+          'to': String to,
+          'tokenValue': String value_s,
+          'gas': String gas_s,
+          'gasUsed': String gasUsed_s,
+          'gasPrice': String gasPrice_s,
+          'contractAddress': String contractAddress,
+          'tokenSymbol': String? symbol,
+          'tokenName': String? name,
+          'tokenID': String tokenID_s,
+          'input': String? input,
+        }) {
+      return _createTransaction(
+        block_s: block_s,
+        timeStamp_s: timeStamp_s,
+        hash: hash,
+        from: from,
+        to: to,
+        gas_s: gas_s,
+        gasUsed_s: gasUsed_s,
+        gasPrice_s: gasPrice_s,
+        contractAddress: contractAddress,
+        symbol: symbol,
+        name: name,
+        tokenID_s: tokenID_s,
+        input: input ?? "",
+        tokenValue: value_s,
+      );
+    }
+    if (json
+        case {
+          'blockNumber': String block_s,
+          'timeStamp': String timeStamp_s,
+          'hash': String hash,
+          'from': String from,
+          'to': String to,
+          'gas': String gas_s,
+          'gasUsed': String gasUsed_s,
+          'gasPrice': String gasPrice_s,
+          'contractAddress': String contractAddress,
+          'tokenSymbol': String? symbol,
+          'tokenName': String? name,
+          'tokenID': String tokenID_s,
+          'input': String input,
+        }) {
+      return _createTransaction(
+        block_s: block_s,
+        timeStamp_s: timeStamp_s,
+        hash: hash,
+        from: from,
+        to: to,
+        gas_s: gas_s,
+        gasUsed_s: gasUsed_s,
+        gasPrice_s: gasPrice_s,
+        contractAddress: contractAddress,
+        symbol: symbol,
+        name: name,
+        tokenID_s: tokenID_s,
+        input: input,
+      );
+    }
+    throw UnsupportedError("Invalid JSON for EtherscanTransaction");
+  }
+
   factory EtherscanTransaction.fromJsonErc20(
     Json json, {
     required EvmCoinEntity currency,

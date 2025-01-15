@@ -65,9 +65,9 @@ void main() {
       contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
     );
 
-    print('Balance: $balance');
+    print('Balance: ${balance.value}');
     expect(balance, isNotNull);
-    expect(balance, greaterThanOrEqualTo(BigInt.zero));
+    expect(balance.value, greaterThanOrEqualTo(BigInt.zero));
   });
 
   test('test erc1155 batch balance of tokens', () async {
@@ -77,7 +77,7 @@ void main() {
         arbitrumTestWallet,
         arbitrumTestWallet,
         arbitrumTestWallet,
-        arbitrumTestWallet
+        arbitrumTestWallet,
       ],
       tokenIDs: [
         BigInt.from(0),
