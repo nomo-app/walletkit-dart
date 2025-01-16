@@ -204,8 +204,8 @@ base class EtherscanTransaction extends EVMTransaction {
       );
       final amount = Amount(
         value: tokenValue != null
-            ? (BigInt.tryParse(tokenValue) ?? BigInt.from(-1))
-            : BigInt.from(-1),
+            ? (BigInt.tryParse(tokenValue) ?? BigInt.from(0))
+            : BigInt.from(0),
         decimals: 0,
       );
       final fee = Amount(
@@ -218,6 +218,7 @@ base class EtherscanTransaction extends EVMTransaction {
       );
       final transferMethod =
           TransactionTransferMethod.fromAddress(address, to, from);
+
       return EtherscanTransaction(
         hash: hash,
         block: block,
