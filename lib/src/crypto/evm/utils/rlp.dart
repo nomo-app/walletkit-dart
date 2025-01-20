@@ -61,6 +61,31 @@ bool _isBytesLike(dynamic object) {
 }
 
 /**
+ * Normalizes a hex string by removing leading zeros and '0x' prefix
+ * @param {String} hexStr The hex string to normalize
+ * @returns {String} The normalized hex string
+ */
+String normalizeHexString(String hexStr) {
+  // Remove 0x prefix if present
+  hexStr = hexStr.toLowerCase().replaceAll('0x', '');
+
+  // Remove leading zeros
+  hexStr = hexStr.replaceAll(RegExp(r'^0+'), '');
+
+  // Handle special case of zero
+  if (hexStr.isEmpty) {
+    return '00';
+  }
+
+  // Ensure even length
+  if (hexStr.length % 2 != 0) {
+    hexStr = '0' + hexStr;
+  }
+
+  return hexStr;
+}
+
+/**
  * 
  * @param {dynamic} object
  * 
@@ -88,7 +113,7 @@ Uint8List _encode(dynamic object) {
   if (object is int) {
     object = arrayifyInteger(object);
   } else if (object is String) {
-    object = Uint8List.fromList(hex.decode(object));
+    object = Uint8List.fromList(hex.decode(normalizeHexString(object)));
   }
 
   if (!_isBytesLike(object)) {
