@@ -43,6 +43,8 @@ extension BufferUtil on Uint8List {
 
   String get toHex => hex.encode(this);
 
+  String get bytesToUTF8 => utf8.decode(this, allowMalformed: true);
+
   Uint8List get rev => Uint8List.fromList(reversed.toList());
 
   Uint8List padToSize(int size) {

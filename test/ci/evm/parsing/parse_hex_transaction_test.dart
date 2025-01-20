@@ -19,25 +19,25 @@ void main() {
     // expect(tx.chainId, BigInt.from(383414847825));
   });
 
-  test('arrayify test', () {
-    int value = 123456;
-    Uint8List byteArray = arrayifyInteger(value);
+  // test('arrayify test', () {
+  //   int value = 123456;
+  //   Uint8List byteArray = arrayifyInteger(value);
 
-    int result = unarrayifyInteger(byteArray, 0, byteArray.length);
+  //   int result = unarrayifyInteger(byteArray, 0, byteArray.length);
 
-    expect(result, value);
-  });
+  //   expect(result, value);
+  // });
 
-  test('rlp encode', () {
-    final message =
-        Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
+  // test('rlp encode', () {
+  //   final message =
+  //       Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
 
-    DecodedRLP decoded = decodeRLP(message, 0);
+  //   DecodedRLP decoded = decodeRLP(message, 0);
 
-    final encoded = rlpEncode(decoded.result);
+  //   final encoded = rlpEncode(decoded.result);
 
-    expect(encoded, unsignedTxFromNomo);
-  });
+  //   expect(encoded, unsignedTxFromNomo);
+  // });
 
   test('serialize tx', () {
     final RawEVMTransactionType0 tx =

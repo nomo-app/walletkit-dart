@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:test/test.dart';
@@ -20,9 +21,9 @@ void main() {
       ),
     );
 
-    final DecodedRLP en = decodeRLP(message, 0);
+    final en = decodeRLP(message);
 
-    final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
+    final Uint8List data = (en as RLPList).value[5].value;
 
     final functionSignature =
         ContractFunction.decodeRaw(data: data, functionMap: functionMap);
@@ -98,9 +99,9 @@ void main() {
       ),
     );
 
-    final DecodedRLP en = decodeRLP(message, 0);
+    final en = decodeRLP(message) as RLPList;
 
-    final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
+    final Uint8List data = (en[5] as RLPBytes).value;
 
     final functionSignature =
         ContractFunction.decodeRaw(data: data, functionMap: functionMap);
