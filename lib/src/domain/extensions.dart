@@ -33,12 +33,20 @@ extension IntListUtil on List<int> {
 }
 
 extension BufferUtil on Uint8List {
-  BigInt toBigInt({bool littleEndian = true}) {
+  BigInt toBigInt({bool littleEndian = false}) {
     var buf = littleEndian ? reversed : this;
 
     var asHex = hex.encode(buf.toList());
 
     return BigInt.parse(asHex, radix: 16);
+  }
+
+  int toInt({bool littleEndian = false}) {
+    var buf = littleEndian ? reversed : this;
+
+    var asHex = hex.encode(buf.toList());
+
+    return int.parse(asHex, radix: 16);
   }
 
   String get toHex => hex.encode(this);
