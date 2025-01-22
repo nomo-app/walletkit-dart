@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/domain/extensions.dart';
-import 'package:walletkit_dart/src/utils/var_uint.dart';
 
 final class RLPException implements Exception {
   final String message;
