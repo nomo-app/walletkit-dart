@@ -48,7 +48,7 @@ final class TronIntParameter extends TronParameter<BigInt> {
   Uint8List get bytes => value.toBytesUnsigned;
 
   static TronIntParameter decode(Uint8List data) {
-    return TronIntParameter(data.toBigInt);
+    return TronIntParameter(data.toUBigInt);
   }
 }
 

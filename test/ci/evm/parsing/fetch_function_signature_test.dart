@@ -14,7 +14,7 @@ void main() {
       ),
     );
 
-    final en = decodeRLP(message) as RLPList;
+    final en = decodeRLP(message).$1 as RLPList;
 
     final Uint8List data = (en[5] as RLPBytes).value;
 

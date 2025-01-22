@@ -219,11 +219,11 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
       throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final nonce = rlpDecoded[0].buffer.toBigInt;
-    final gasPrice = rlpDecoded[1].buffer.toBigInt;
-    final gasLimit = rlpDecoded[2].buffer.toBigInt;
+    final nonce = rlpDecoded[0].buffer.toUBigInt;
+    final gasPrice = rlpDecoded[1].buffer.toUBigInt;
+    final gasLimit = rlpDecoded[2].buffer.toUBigInt;
     final to = "0x" + rlpDecoded[3].hex;
-    final value = rlpDecoded[4].buffer.toBigInt;
+    final value = rlpDecoded[4].buffer.toUBigInt;
     final data = rlpDecoded[5].buffer;
     final chainId = rlpDecoded.length > 6 ? rlpDecoded[6].buffer.toUInt : null;
 
@@ -250,16 +250,16 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
       throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final nonce = rlpDecoded[0].buffer.toBigInt;
-    final gasPrice = rlpDecoded[1].buffer.toBigInt;
-    final gasLimit = rlpDecoded[2].buffer.toBigInt;
+    final nonce = rlpDecoded[0].buffer.toUBigInt;
+    final gasPrice = rlpDecoded[1].buffer.toUBigInt;
+    final gasLimit = rlpDecoded[2].buffer.toUBigInt;
     final to = "0x" + rlpDecoded[3].hex;
-    final value = rlpDecoded[4].buffer.toBigInt;
+    final value = rlpDecoded[4].buffer.toUBigInt;
     final data = rlpDecoded[5].buffer;
 
     final v = rlpDecoded[6].buffer.toUInt;
-    final r = rlpDecoded[7].buffer.toBigInt;
-    final s = rlpDecoded[8].buffer.toBigInt;
+    final r = rlpDecoded[7].buffer.toUBigInt;
+    final s = rlpDecoded[8].buffer.toUBigInt;
 
     return RawEVMTransactionType0(
       nonce: nonce,
@@ -497,11 +497,11 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
 
     return RawEVMTransactionType1.unsigned(
       chainId: rlpDecoded[0].buffer.toUInt,
-      nonce: rlpDecoded[1].buffer.toBigInt,
-      gasPrice: rlpDecoded[2].buffer.toBigInt,
-      gasLimit: rlpDecoded[3].buffer.toBigInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      gasPrice: rlpDecoded[2].buffer.toUBigInt,
+      gasLimit: rlpDecoded[3].buffer.toUBigInt,
       to: "0x" + rlpDecoded[4].buffer.toHex,
-      value: rlpDecoded[5].buffer.toBigInt,
+      value: rlpDecoded[5].buffer.toUBigInt,
       data: rlpDecoded[6].buffer,
       accessList: switch (rlpDecoded[7]) {
         RLPList list => list.value
@@ -542,11 +542,11 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
 
     return RawEVMTransactionType1(
       chainId: rlpDecoded[0].buffer.toUInt,
-      nonce: rlpDecoded[1].buffer.toBigInt,
-      gasPrice: rlpDecoded[2].buffer.toBigInt,
-      gasLimit: rlpDecoded[3].buffer.toBigInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      gasPrice: rlpDecoded[2].buffer.toUBigInt,
+      gasLimit: rlpDecoded[3].buffer.toUBigInt,
       to: "0x" + rlpDecoded[4].buffer.toHex,
-      value: rlpDecoded[5].buffer.toBigInt,
+      value: rlpDecoded[5].buffer.toUBigInt,
       data: rlpDecoded[6].buffer,
       accessList: switch (rlpDecoded[7]) {
         RLPList list => list.value
@@ -656,12 +656,12 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
 
     return RawEVMTransactionType2.unsigned(
       chainId: rlpDecoded[0].buffer.toUInt,
-      nonce: rlpDecoded[1].buffer.toBigInt,
-      maxPriorityFeePerGas: rlpDecoded[2].buffer.toBigInt,
-      maxFeePerGas: rlpDecoded[3].buffer.toBigInt,
-      gasLimit: rlpDecoded[4].buffer.toBigInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      maxPriorityFeePerGas: rlpDecoded[2].buffer.toUBigInt,
+      maxFeePerGas: rlpDecoded[3].buffer.toUBigInt,
+      gasLimit: rlpDecoded[4].buffer.toUBigInt,
       to: "0x" + rlpDecoded[5].buffer.toHex,
-      value: rlpDecoded[6].buffer.toBigInt,
+      value: rlpDecoded[6].buffer.toUBigInt,
       data: rlpDecoded[7].buffer,
       accessList: switch (rlpDecoded[8]) {
         RLPList list => list.value
@@ -700,12 +700,12 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
 
     return RawEVMTransactionType2(
       chainId: rlpDecoded[0].buffer.toUInt,
-      nonce: rlpDecoded[1].buffer.toBigInt,
-      maxPriorityFeePerGas: rlpDecoded[2].buffer.toBigInt,
-      maxFeePerGas: rlpDecoded[3].buffer.toBigInt,
-      gasLimit: rlpDecoded[4].buffer.toBigInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      maxPriorityFeePerGas: rlpDecoded[2].buffer.toUBigInt,
+      maxFeePerGas: rlpDecoded[3].buffer.toUBigInt,
+      gasLimit: rlpDecoded[4].buffer.toUBigInt,
       to: "0x" + rlpDecoded[5].buffer.toHex,
-      value: rlpDecoded[6].buffer.toBigInt,
+      value: rlpDecoded[6].buffer.toUBigInt,
       data: rlpDecoded[7].buffer,
       accessList: switch (rlpDecoded[8]) {
         RLPList list => list.value

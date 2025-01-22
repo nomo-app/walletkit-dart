@@ -29,7 +29,7 @@ extension BigIntUtil on BigInt {
 }
 
 extension IntListUtil on List<int> {
-  BigInt get toBigInt => BigInt.parse(hex.encode(this), radix: 16);
+  // BigInt get toBigInt => BigInt.parse(hex.encode(this), radix: 16);
 
   Uint8List get toUint8List => Uint8List.fromList(this);
 
@@ -59,9 +59,17 @@ extension BufferUtil on Uint8List {
     return negative ? -(~result + 1) : result;
   }
 
-  /// Decode a big-endian integer from the buffer.
+  /// Decode a signed big-endian integer from the buffer.
   /// Can be positive or negative.
-  BigInt get toBigInt => p_utils.decodeBigInt(this);
+  // BigInt get toBigInt => p_utils.decodeBigInt(this);
+
+  BigInt get toUBigInt {
+    BigInt result = BigInt.zero;
+    for (var i = 0; i < length; i++) {
+      result = result * BigInt.from(256) + BigInt.from(this[i]);
+    }
+    return result;
+  }
 
   String get toHex => hex.encode(this);
 

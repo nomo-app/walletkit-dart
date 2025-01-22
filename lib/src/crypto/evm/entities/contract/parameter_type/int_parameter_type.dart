@@ -28,7 +28,7 @@ final class FunctionParamInt extends BaseFunctionParamType<BigInt> {
   }
 
   @override
-  BigInt decode(Uint8List data) => data.toBigInt;
+  BigInt decode(Uint8List data) => data.toUBigInt;
 }
 
 final class FunctionParamUint extends FunctionParamInt {
