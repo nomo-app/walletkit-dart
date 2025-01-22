@@ -185,11 +185,8 @@ Uint8List encodeRLP(RLPItem input) {
         throw RLPException("insufficient data for length bytes");
       }
 
-      final length = bytes.readVarIntFromLength(
-        offset + 1,
-        lengthLength,
-        Endian.big,
-      );
+      final length =
+          input.sublist(offset + 1, offset + 1 + lengthLength).toUInt;
 
       if (length < 56) {
         throw RLPException("encoded list too short");
@@ -244,11 +241,12 @@ Uint8List encodeRLP(RLPItem input) {
       if (offset + 1 + lengthLength > input.length) {
         throw RLPException("insufficient data for length bytes");
       }
-      final length = bytes.readVarIntFromLength(
-        offset + 1,
-        lengthLength,
-        Endian.big,
-      );
+      final length = input
+          .sublist(
+            offset + 1,
+            offset + 1 + lengthLength,
+          )
+          .toUInt;
       if (length < 56) {
         throw RLPException("Invalid RLP: length is too short");
       }
