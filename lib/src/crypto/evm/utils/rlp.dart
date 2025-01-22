@@ -176,6 +176,14 @@ Uint8List encodeRLP(RLPItem input) {
   );
 }
 
+RLPItem decodeRLPCheck(Uint8List input) {
+  final (item, consumed) = decodeRLP(input);
+  if (consumed != input.length) {
+    throw RLPException("Invalid RLP: input is longer than specified length");
+  }
+  return item;
+}
+
 (RLPItem, int) decodeRLP(
   Uint8List input, {
   int offset = 0,
@@ -193,8 +201,7 @@ Uint8List encodeRLP(RLPItem input) {
         throw RLPException("insufficient data for length bytes");
       }
 
-      final length =
-          input.sublist(offset + 1, offset + 1 + lengthLength).toUInt;
+      final length = decodeLength(input, lengthLength, offset + 1);
 
       if (length < 56) {
         throw RLPException("encoded list too short");
@@ -249,12 +256,8 @@ Uint8List encodeRLP(RLPItem input) {
       if (offset + 1 + lengthLength > input.length) {
         throw RLPException("insufficient data for length bytes");
       }
-      final length = input
-          .sublist(
-            offset + 1,
-            offset + 1 + lengthLength,
-          )
-          .toUInt;
+      final length = decodeLength(input, lengthLength, offset + 1);
+
       if (length < 56) {
         throw RLPException("Invalid RLP: length is too short");
       }
@@ -287,14 +290,6 @@ Uint8List encodeRLP(RLPItem input) {
   }
 }
 
-/**
- * 
- * @param {int} value
- * 
- * This function takes an integer value and converts it to a Uint8List.
- * 
- * @returns {Uint8List}
- */
 Uint8List arrayifyInteger(int value) {
   if (value == 0) {
     return Uint8List.fromList([0x80]);
@@ -306,4 +301,16 @@ Uint8List arrayifyInteger(int value) {
   }
 
   return Uint8List.fromList(result);
+}
+
+int decodeLength(
+  Uint8List input,
+  int lengthLength,
+  int offset,
+) {
+  final buffer = input.sublist(offset, offset + lengthLength);
+  if (buffer.length > 1 && buffer[0] == 0) {
+    throw RLPException('Leading zeros are not allowed');
+  }
+  return buffer.toUInt;
 }
