@@ -71,6 +71,22 @@ class EtherscanExplorer extends EtherscanRepository {
           .addOptionalParameter('offset', offset)
           .addOptionalParameter('sort', sorting?.name);
 
+  String buildERC1155TransactionEndpoint({
+    required String address,
+    required String contractAddress,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) =>
+      "$base&module=account&action=token1155tx&contractaddress=$contractAddress&address=$address"
+          .addOptionalParameter('page', page)
+          .addOptionalParameter('offset', offset)
+          .addOptionalParameter('startblock', startblock)
+          .addOptionalParameter('endblock', endblock)
+          .addOptionalParameter('sort', sorting?.name);
+
   ///
   /// Fetch all Transactions for the given [token] on the given [address]
   ///
@@ -98,7 +114,37 @@ class EtherscanExplorer extends EtherscanRepository {
           tx,
           token: currency,
           address: address,
-        )
+        ),
+    ];
+  }
+
+  Future<List<EtherscanTransaction>> fetchERC1155Transactions({
+    required String contractAddress,
+    required String address,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) async {
+    final endpoint = buildERC1155TransactionEndpoint(
+      address: address,
+      contractAddress: contractAddress,
+      startblock: startblock,
+      endblock: endblock,
+      page: page,
+      offset: offset,
+      sorting: sorting,
+    );
+    final txResults = await fetchEtherscanWithRatelimitRetries(endpoint);
+
+    return [
+      for (final tx in txResults)
+        EtherscanTransaction.fromJsonErc1155(
+          tx,
+          address: address,
+          currency: currency,
+        ),
     ];
   }
 
@@ -293,6 +339,24 @@ class ZeniqScanExplorer extends EtherscanExplorer {
 
   @override
   String buildERC20TransactionEndpoint({
+    required String address,
+    required String contractAddress,
+    int? startblock,
+    int? endblock,
+    int? page,
+    int? offset,
+    Sorting? sorting,
+  }) {
+    return "$base&module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
+        .addOptionalParameter('start_block', startblock)
+        .addOptionalParameter('end_block', endblock)
+        .addOptionalParameter('page', page)
+        .addOptionalParameter('offset', offset)
+        .addOptionalParameter('sort', sorting?.name);
+  }
+
+  @override
+  String buildERC1155TransactionEndpoint({
     required String address,
     required String contractAddress,
     int? startblock,

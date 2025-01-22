@@ -28,9 +28,11 @@ export 'entities/contract/parameter_type/function_parameter_type.dart';
 export 'entities/contract/contract_function.dart';
 
 // ERC20
-export 'entities/abi/erc20_contract.dart';
+export 'entities/abi/erc/erc20_contract.dart';
 // ERC721
-export 'entities/abi/erc721_contract.dart';
+export 'entities/abi/erc/erc721_contract.dart';
+// ERC1155
+export 'entities/abi/erc/erc1155.dart';
 // ENS
 export 'entities/abi/ens/ens_registry_contract.dart';
 export 'entities/abi/ens/ens_resolver_contract.dart';
