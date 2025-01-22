@@ -54,10 +54,19 @@ final class RLPInt extends RLPItem<int> {
 }
 
 final class RLPString extends RLPItem<String> {
-  RLPString(super.value);
+  final bool? isHex;
+
+  RLPString(super.value, {this.isHex});
 
   @override
   Uint8List get buffer {
+    if (isHex == true) {
+      if (value.startsWith("0x")) {
+        return value.substring(2).hexToBytes;
+      }
+      return value.hexToBytes;
+    }
+
     if (value.startsWith("0x")) {
       return value.substring(2).hexToBytes;
     }

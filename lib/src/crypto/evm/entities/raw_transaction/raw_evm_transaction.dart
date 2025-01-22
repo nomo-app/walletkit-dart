@@ -418,7 +418,9 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys.map((key) => RLPString(key)).toList(),
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
                       ),
                     ],
                   );
@@ -429,7 +431,7 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
               RLPBytes(signatureS),
             ],
           ),
-        ),
+        )
       ],
     );
   }
@@ -460,7 +462,9 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys.map((key) => RLPString(key)).toList(),
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
                       ),
                     ],
                   );
@@ -782,7 +786,9 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys.map((key) => RLPString(key)).toList(),
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
                       ),
                     ],
                   );
@@ -825,7 +831,9 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys.map((key) => RLPString(key)).toList(),
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
                       ),
                     ],
                   );
