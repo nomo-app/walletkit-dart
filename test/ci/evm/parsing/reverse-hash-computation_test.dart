@@ -20,9 +20,9 @@ void main() {
       ),
     );
 
-    final DecodedRLP en = decodeRLP(message, 0);
+    final en = decodeRLP(message).$1;
 
-    final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
+    final Uint8List data = (en as RLPList).value[5].value;
 
     final functionSignature =
         ContractFunction.decodeRaw(data: data, functionMap: functionMap);
@@ -98,9 +98,9 @@ void main() {
       ),
     );
 
-    final DecodedRLP en = decodeRLP(message, 0);
+    final en = decodeRLP(message).$1 as RLPList;
 
-    final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
+    final Uint8List data = (en[5] as RLPBytes).value;
 
     final functionSignature =
         ContractFunction.decodeRaw(data: data, functionMap: functionMap);

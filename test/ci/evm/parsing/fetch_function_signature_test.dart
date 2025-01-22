@@ -14,9 +14,9 @@ void main() {
       ),
     );
 
-    final DecodedRLP en = decodeRLP(message, 0);
+    final en = decodeRLP(message).$1 as RLPList;
 
-    final Uint8List data = Uint8List.fromList(hex.decode(en.result[5]));
+    final Uint8List data = (en[5] as RLPBytes).value;
 
     final contractFunction =
         await ContractFunction.decodeRawWithFetch(data: data);

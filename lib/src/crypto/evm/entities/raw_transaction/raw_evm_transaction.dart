@@ -1,6 +1,4 @@
 import 'dart:typed_data';
-import 'package:walletkit_dart/src/utils/bigint_utils.dart';
-import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
@@ -70,7 +68,7 @@ sealed class RawEvmTransaction {
 
     /// Check if the transaction is a Type 1 transaction
     if (rawTxHex.startsWith("01")) {
-      return RawEVMTransactionType1.fromUnsignedHexing(hex);
+      return RawEVMTransactionType1.fromUnsignedHex(hex);
     }
 
     return RawEVMTransactionType0.fromUnsignedHex(hex);
@@ -118,15 +116,14 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
     return (v - 36) ~/ 2;
   }
 
-  Uint8List get signingTxHash =>
-      keccak256(serializedUnsigned(chainId?.toInt()));
+  Uint8List get signingTxHash => keccak256(serializedUnsigned(chainId));
 
   String get sender {
     if (hasSignature == false) {
       throw Exception("Transaction is not signed, cannot recover sender");
     }
 
-    final signature = Signature.fromRSV(r, s, v.toInt());
+    final signature = Signature.fromRSV(r, s, v);
 
     final publicKey = recoverPublicKey(signingTxHash, signature);
 
@@ -141,29 +138,21 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
       throw Exception("Transaction is not signed, cannot serialize");
     }
 
-    final _nonce = nonce.bigIntToBytes.toHex;
-    final _gasPrice = gasPrice.bigIntToBytes.toHex;
-    final _gasLimit = gasLimit.bigIntToBytes.toHex;
-    final _to = to.replaceAll("0x", "");
-    final _value = value.bigIntToBytes.toHex;
-    final _data = data.toHex;
-    final _v = v.toBI.bigIntToBytes.toHex;
-    final _r = r.bigIntToBytes.toHex;
-    final _s = s.bigIntToBytes.toHex;
-
-    List<String> buffer = [
-      _nonce,
-      _gasPrice,
-      _gasLimit,
-      _to,
-      _value,
-      _data,
-      _v,
-      _r,
-      _s,
-    ];
-
-    return rlpEncode(buffer).hexToBytes;
+    return encodeRLP(
+      RLPList(
+        [
+          RLPBigInt(nonce),
+          RLPBigInt(gasPrice),
+          RLPBigInt(gasLimit),
+          RLPString(to),
+          RLPBigInt(value),
+          RLPBytes(data),
+          RLPInt(v),
+          RLPBigInt(r),
+          RLPBigInt(s),
+        ],
+      ),
+    );
   }
 
   const RawEVMTransactionType0({
@@ -200,7 +189,7 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
       gasPrice: gasPrice,
       r: signature.r,
       s: signature.s,
-      v: signature.v.toInt(),
+      v: signature.v,
     );
   }
 
@@ -220,27 +209,23 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
 
   factory RawEVMTransactionType0.fromUnsignedHex(String messageHex) {
     final rawTxHex = messageHex.replaceFirst("0x", "");
-    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
+    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes).$1;
 
-    if (rlpDecoded is! List) {
+    if (rlpDecoded is! RLPList) {
       throw Exception("Error RLP decoding transaction: $rlpDecoded");
     }
 
-    final decodedList = rlpDecoded.whereType<String>().toList();
-
-    if (decodedList.length < 6) {
-      throw Exception("Invalid transaction, missing fields: $decodedList");
+    if (rlpDecoded.length < 6) {
+      throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final nonce = parseAsHexBigInt(decodedList[0]);
-    final gasPrice = parseAsHexBigInt(decodedList[1]);
-    final gasLimit = parseAsHexBigInt(decodedList[2]);
-    final to = "0x" + decodedList[3];
-    final value = parseAsHexBigInt(decodedList[4]);
-    final data = decodedList[5].hexToBytes;
-
-    final chainId =
-        decodedList.length > 6 ? parseAsHexInt(decodedList[6]) : null;
+    final nonce = rlpDecoded[0].buffer.toUBigInt;
+    final gasPrice = rlpDecoded[1].buffer.toUBigInt;
+    final gasLimit = rlpDecoded[2].buffer.toUBigInt;
+    final to = "0x" + rlpDecoded[3].hex;
+    final value = rlpDecoded[4].buffer.toUBigInt;
+    final data = rlpDecoded[5].buffer;
+    final chainId = rlpDecoded.length > 6 ? rlpDecoded[6].buffer.toUInt : null;
 
     return RawEVMTransactionType0.unsigned(
       nonce: nonce,
@@ -255,27 +240,26 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
 
   factory RawEVMTransactionType0.fromHex(String messageHex) {
     final rawTxHex = messageHex.replaceFirst("0x", "");
-    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
+    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes).$1;
 
-    if (rlpDecoded is! List) {
+    if (rlpDecoded is! RLPList) {
       throw Exception("Error RLP decoding transaction: $rlpDecoded");
     }
 
-    final decodedList = rlpDecoded.whereType<String>().toList();
-
-    if (decodedList.length < 9) {
-      throw Exception("Invalid transaction, missing fields: $decodedList");
+    if (rlpDecoded.length < 9) {
+      throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final nonce = parseAsHexBigInt(decodedList[0]);
-    final gasPrice = parseAsHexBigInt(decodedList[1]);
-    final gasLimit = parseAsHexBigInt(decodedList[2]);
-    final to = "0x" + decodedList[3];
-    final value = parseAsHexBigInt(decodedList[4]);
-    final data = decodedList[5].hexToBytes;
-    final v = parseAsHexInt(decodedList[6]);
-    final r = parseAsHexBigInt(decodedList[7]);
-    final s = parseAsHexBigInt(decodedList[8]);
+    final nonce = rlpDecoded[0].buffer.toUBigInt;
+    final gasPrice = rlpDecoded[1].buffer.toUBigInt;
+    final gasLimit = rlpDecoded[2].buffer.toUBigInt;
+    final to = "0x" + rlpDecoded[3].hex;
+    final value = rlpDecoded[4].buffer.toUBigInt;
+    final data = rlpDecoded[5].buffer;
+
+    final v = rlpDecoded[6].buffer.toUInt;
+    final r = rlpDecoded[7].buffer.toUBigInt;
+    final s = rlpDecoded[8].buffer.toUBigInt;
 
     return RawEVMTransactionType0(
       nonce: nonce,
@@ -291,32 +275,23 @@ class RawEVMTransactionType0 extends RawEvmTransaction {
   }
 
   Uint8List serializedUnsigned([int? chainId]) {
-    final _nonce = nonce.bigIntToBytes.toHex;
-    final _gasPrice = gasPrice.bigIntToBytes.toHex;
-    final _gasLimit = gasLimit.bigIntToBytes.toHex;
-    final _to = to.replaceFirst("0x", "");
-    final _value = value.bigIntToBytes.toHex;
-    final _data = data.toHex;
-
-    List<String> buffer = [
-      _nonce,
-      _gasPrice,
-      _gasLimit,
-      _to,
-      _value,
-      _data,
-    ];
-
-    /// EIP-155: If the chainId is present, add it to the buffer before encoding
-    if (chainId != null) {
-      buffer.addAll([
-        chainId.toBI.bigIntToBytes.toHex,
-        "",
-        "",
-      ]);
-    }
-
-    return rlpEncode(buffer).hexToBytes;
+    return encodeRLP(
+      RLPList(
+        [
+          RLPBigInt(nonce),
+          RLPBigInt(gasPrice),
+          RLPBigInt(gasLimit),
+          RLPString(to),
+          RLPBigInt(value),
+          RLPBytes(data),
+          if (chainId != null) ...[
+            RLPInt(chainId),
+            RLPNull(),
+            RLPNull(),
+          ]
+        ],
+      ),
+    );
   }
 
   BigInt get gasFee {
@@ -402,7 +377,7 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
       Uint8List.fromList([
         ...signatureR,
         ...signatureS,
-        signatureYParity.toInt(),
+        signatureYParity,
       ]),
     );
 
@@ -424,38 +399,40 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
       throw Exception("Transaction is not signed, cannot serialize");
     }
 
-    final _nonce = nonce.bigIntToBytes.toHex;
-    final _gasPrice = gasPrice.bigIntToBytes.toHex;
-    final _gasLimit = gasLimit.bigIntToBytes.toHex;
-    final _to = to.replaceFirst("0x", "");
-    final _value = value.bigIntToBytes.toHex;
-    final _data = data.toHex;
-    final _accessList = accessList.map((item) {
-      return [
-        item.address.replaceFirst("0x", ""),
-        item.storageKeys,
-      ];
-    }).toList();
-    final _signatureYParity = signatureYParity.toBI.bigIntToBytes.toHex;
-    final _signatureR = signatureR.toHex;
-    final _signatureS = signatureS.toHex;
-
-    List<dynamic> buffer = [
-      chainId.toBI.bigIntToBytes.toHex,
-      _nonce,
-      _gasPrice,
-      _gasLimit,
-      _to,
-      _value,
-      _data,
-      _accessList,
-      _signatureYParity,
-      _signatureR,
-      _signatureS,
-    ];
-
     return Uint8List.fromList(
-      [0x01, ...rlpEncode(buffer).hexToBytes],
+      [
+        0x01,
+        ...encodeRLP(
+          RLPList(
+            [
+              RLPInt(chainId),
+              RLPBigInt(nonce),
+              RLPBigInt(gasPrice),
+              RLPBigInt(gasLimit),
+              RLPString(to),
+              RLPBigInt(value),
+              RLPBytes(data),
+              RLPList(
+                accessList.map((item) {
+                  return RLPList(
+                    [
+                      RLPString(item.address),
+                      RLPList(
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+              RLPInt(signatureYParity),
+              RLPBytes(signatureR),
+              RLPBytes(signatureS),
+            ],
+          ),
+        )
+      ],
     );
   }
 
@@ -466,46 +443,55 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
       (signatureYParity == 0 || signatureYParity == 1);
 
   Uint8List get serializedUnsigned {
-    final _nonce = nonce.bigIntToBytes.toHex;
-    final _gasPrice = gasPrice.bigIntToBytes.toHex;
-    final _gasLimit = gasLimit.bigIntToBytes.toHex;
-    final _to = to.replaceFirst("0x", "");
-    final _value = value.bigIntToBytes.toHex;
-    final _data = data.toHex;
-    final _accessList = accessList.map((item) {
-      return [
-        item.address.replaceFirst("0x", ""),
-        item.storageKeys,
-      ];
-    }).toList();
-
-    List<dynamic> buffer = [
-      chainId.toBI.bigIntToBytes.toHex,
-      _nonce,
-      _gasPrice,
-      _gasLimit,
-      _to,
-      _value,
-      _data,
-      _accessList,
-    ];
-
     return Uint8List.fromList(
-      [0x01, ...rlpEncode(buffer).hexToBytes],
+      [
+        0x01,
+        ...encodeRLP(
+          RLPList(
+            [
+              RLPInt(chainId),
+              RLPBigInt(nonce),
+              RLPBigInt(gasPrice),
+              RLPBigInt(gasLimit),
+              RLPString(to),
+              RLPBigInt(value),
+              RLPBytes(data),
+              RLPList(
+                accessList.map((item) {
+                  return RLPList(
+                    [
+                      RLPString(item.address),
+                      RLPList(
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
   @override
   Uint8List get signingTxHash => keccak256(serializedUnsigned);
 
-  factory RawEVMTransactionType1.fromUnsignedHexing(String rawTxHex) {
+  factory RawEVMTransactionType1.fromUnsignedHex(String rawTxHex) {
     rawTxHex = rawTxHex.replaceFirst("0x", ""); // Remove the 0x prefix
-    assert(rawTxHex.startsWith("01"), "Invalid Type 1 Transaction");
+
+    if (rawTxHex.startsWith("01") == false) {
+      throw Exception("Invalid Type 1 Transaction");
+    }
+
     rawTxHex = rawTxHex.substring(2); // Remove the type prefix
 
-    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
+    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes).$1;
 
-    if (rlpDecoded is! List) {
+    if (rlpDecoded is! RLPList) {
       throw Exception("Error RLP decoding transaction: $rlpDecoded");
     }
 
@@ -513,41 +499,44 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
       throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final chainId = parseAsHexInt(rlpDecoded[0]);
-    final nonce = parseAsHexBigInt(rlpDecoded[1]);
-    final gasPrice = parseAsHexBigInt(rlpDecoded[2]);
-    final gasLimit = parseAsHexBigInt(rlpDecoded[3]);
-    final to = "0x" + rlpDecoded[4];
-    final value = parseAsHexBigInt(rlpDecoded[5]);
-    final data = (rlpDecoded[6] as String).hexToBytes;
-    final accessList = [
-      for (final item in rlpDecoded[7])
-        (
-          address: "0x" + item[0],
-          storageKeys: (item[1] as List<dynamic>).whereType<String>().toList(),
-        )
-    ];
-
     return RawEVMTransactionType1.unsigned(
-      nonce: nonce,
-      gasLimit: gasLimit,
-      to: to,
-      value: value,
-      data: data,
-      chainId: chainId,
-      gasPrice: gasPrice,
-      accessList: accessList,
+      chainId: rlpDecoded[0].buffer.toUInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      gasPrice: rlpDecoded[2].buffer.toUBigInt,
+      gasLimit: rlpDecoded[3].buffer.toUBigInt,
+      to: "0x" + rlpDecoded[4].buffer.toHex,
+      value: rlpDecoded[5].buffer.toUBigInt,
+      data: rlpDecoded[6].buffer,
+      accessList: switch (rlpDecoded[7]) {
+        RLPList list => list.value
+            .whereType<RLPList>()
+            .map((item) {
+              final subList = item[1];
+              if (subList is RLPList)
+                return (
+                  address: "0x" + item[0].buffer.toHex,
+                  storageKeys:
+                      subList.value.map((key) => key.buffer.toHex).toList(),
+                );
+              return null;
+            })
+            .nonNulls
+            .toList(),
+        _ => [],
+      },
     );
   }
 
   factory RawEVMTransactionType1.fromHex(String rawTxHex) {
     rawTxHex = rawTxHex.replaceFirst("0x", ""); // Remove the 0x prefix
-    assert(rawTxHex.startsWith("01"), "Invalid Type 1 Transaction");
+    if (rawTxHex.startsWith("01") == false) {
+      throw Exception("Invalid Type 1 Transaction");
+    }
     rawTxHex = rawTxHex.substring(2); // Remove the type prefix
 
-    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
+    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes).$1;
 
-    if (rlpDecoded is! List) {
+    if (rlpDecoded is! RLPList) {
       throw Exception("Error RLP decoding transaction: $rlpDecoded");
     }
 
@@ -555,36 +544,34 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
       throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final chainId = parseAsHexInt(rlpDecoded[0]);
-    final nonce = parseAsHexBigInt(rlpDecoded[1]);
-    final gasPrice = parseAsHexBigInt(rlpDecoded[2]);
-    final gasLimit = parseAsHexBigInt(rlpDecoded[3]);
-    final to = "0x" + rlpDecoded[4];
-    final value = parseAsHexBigInt(rlpDecoded[5]);
-    final data = (rlpDecoded[6] as String).hexToBytes;
-    final accessList = [
-      for (final item in rlpDecoded[7])
-        (
-          address: "0x" + item[0],
-          storageKeys: (item[1] as List<dynamic>).whereType<String>().toList(),
-        )
-    ];
-    final signatureYParity = parseAsHexInt(rlpDecoded[8]);
-    final signatureR = (rlpDecoded[9] as String).hexToBytes;
-    final signatureS = (rlpDecoded[10] as String).hexToBytes;
-
     return RawEVMTransactionType1(
-      nonce: nonce,
-      gasLimit: gasLimit,
-      to: to,
-      value: value,
-      data: data,
-      chainId: chainId,
-      gasPrice: gasPrice,
-      accessList: accessList,
-      signatureYParity: signatureYParity,
-      signatureR: signatureR,
-      signatureS: signatureS,
+      chainId: rlpDecoded[0].buffer.toUInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      gasPrice: rlpDecoded[2].buffer.toUBigInt,
+      gasLimit: rlpDecoded[3].buffer.toUBigInt,
+      to: "0x" + rlpDecoded[4].buffer.toHex,
+      value: rlpDecoded[5].buffer.toUBigInt,
+      data: rlpDecoded[6].buffer,
+      accessList: switch (rlpDecoded[7]) {
+        RLPList list => list.value
+            .whereType<RLPList>()
+            .map((item) {
+              final subList = item[1];
+              if (subList is RLPList)
+                return (
+                  address: "0x" + item[0].buffer.toHex,
+                  storageKeys:
+                      subList.value.map((key) => key.buffer.toHex).toList(),
+                );
+              return null;
+            })
+            .nonNulls
+            .toList(),
+        _ => [],
+      },
+      signatureYParity: rlpDecoded[8].buffer.toUInt,
+      signatureR: rlpDecoded[9].buffer,
+      signatureS: rlpDecoded[10].buffer,
     );
   }
 }
@@ -661,9 +648,9 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
     assert(rawTxHex.startsWith("02"), "Invalid Type 1 Transaction");
     rawTxHex = rawTxHex.substring(2); // Remove the type prefix
 
-    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
+    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes).$1;
 
-    if (rlpDecoded is! List) {
+    if (rlpDecoded is! RLPList) {
       throw Exception("Error RLP decoding transaction: $rlpDecoded");
     }
 
@@ -671,32 +658,32 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
       throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final chainId = parseAsHexInt(rlpDecoded[0]);
-    final nonce = parseAsHexBigInt(rlpDecoded[1]);
-    final maxPriorityFeePerGas = parseAsHexBigInt(rlpDecoded[2]);
-    final maxFeePerGas = parseAsHexBigInt(rlpDecoded[3]);
-    final gasLimit = parseAsHexBigInt(rlpDecoded[4]);
-    final to = "0x" + rlpDecoded[5];
-    final value = parseAsHexBigInt(rlpDecoded[6]);
-    final data = (rlpDecoded[7] as String).hexToBytes;
-    final accessList = [
-      for (final item in rlpDecoded[8])
-        (
-          address: "0x" + item[0],
-          storageKeys: (item[1] as List<dynamic>).whereType<String>().toList(),
-        )
-    ];
-
     return RawEVMTransactionType2.unsigned(
-      nonce: nonce,
-      gasLimit: gasLimit,
-      to: to,
-      value: value,
-      data: data,
-      chainId: chainId,
-      maxFeePerGas: maxFeePerGas,
-      maxPriorityFeePerGas: maxPriorityFeePerGas,
-      accessList: accessList,
+      chainId: rlpDecoded[0].buffer.toUInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      maxPriorityFeePerGas: rlpDecoded[2].buffer.toUBigInt,
+      maxFeePerGas: rlpDecoded[3].buffer.toUBigInt,
+      gasLimit: rlpDecoded[4].buffer.toUBigInt,
+      to: "0x" + rlpDecoded[5].buffer.toHex,
+      value: rlpDecoded[6].buffer.toUBigInt,
+      data: rlpDecoded[7].buffer,
+      accessList: switch (rlpDecoded[8]) {
+        RLPList list => list.value
+            .whereType<RLPList>()
+            .map((item) {
+              final subList = item[1];
+              if (subList is RLPList)
+                return (
+                  address: "0x" + item[0].buffer.toHex,
+                  storageKeys:
+                      subList.value.map((key) => key.buffer.toHex).toList(),
+                );
+              return null;
+            })
+            .nonNulls
+            .toList(),
+        _ => [],
+      },
     );
   }
 
@@ -705,9 +692,9 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
     assert(rawTxHex.startsWith("02"), "Invalid Type 1 Transaction");
     rawTxHex = rawTxHex.substring(2); // Remove the type prefix
 
-    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes, 0).result;
+    final rlpDecoded = decodeRLP(rawTxHex.hexToBytes).$1;
 
-    if (rlpDecoded is! List) {
+    if (rlpDecoded is! RLPList) {
       throw Exception("Error RLP decoding transaction: $rlpDecoded");
     }
 
@@ -715,38 +702,35 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
       throw Exception("Invalid transaction, missing fields: $rlpDecoded");
     }
 
-    final chainId = parseAsHexInt(rlpDecoded[0]);
-    final nonce = parseAsHexBigInt(rlpDecoded[1]);
-    final maxPriorityFeePerGas = parseAsHexBigInt(rlpDecoded[2]);
-    final maxFeePerGas = parseAsHexBigInt(rlpDecoded[3]);
-    final gasLimit = parseAsHexBigInt(rlpDecoded[4]);
-    final to = "0x" + rlpDecoded[5];
-    final value = parseAsHexBigInt(rlpDecoded[6]);
-    final data = (rlpDecoded[7] as String).hexToBytes;
-    final accessList = [
-      for (final item in rlpDecoded[8])
-        (
-          address: "0x" + item[0],
-          storageKeys: (item[1] as List<dynamic>).whereType<String>().toList(),
-        )
-    ];
-    final signatureYParity = parseAsHexInt(rlpDecoded[9]);
-    final signatureR = (rlpDecoded[10] as String).hexToBytes;
-    final signatureS = (rlpDecoded[11] as String).hexToBytes;
-
     return RawEVMTransactionType2(
-      nonce: nonce,
-      gasLimit: gasLimit,
-      to: to,
-      value: value,
-      data: data,
-      chainId: chainId,
-      maxFeePerGas: maxFeePerGas,
-      maxPriorityFeePerGas: maxPriorityFeePerGas,
-      accessList: accessList,
-      signatureR: signatureR,
-      signatureS: signatureS,
-      signatureYParity: signatureYParity,
+      chainId: rlpDecoded[0].buffer.toUInt,
+      nonce: rlpDecoded[1].buffer.toUBigInt,
+      maxPriorityFeePerGas: rlpDecoded[2].buffer.toUBigInt,
+      maxFeePerGas: rlpDecoded[3].buffer.toUBigInt,
+      gasLimit: rlpDecoded[4].buffer.toUBigInt,
+      to: "0x" + rlpDecoded[5].buffer.toHex,
+      value: rlpDecoded[6].buffer.toUBigInt,
+      data: rlpDecoded[7].buffer,
+      accessList: switch (rlpDecoded[8]) {
+        RLPList list => list.value
+            .whereType<RLPList>()
+            .map((item) {
+              final subList = item[1];
+              if (subList is RLPList)
+                return (
+                  address: "0x" + item[0].buffer.toHex,
+                  storageKeys:
+                      subList.value.map((key) => key.buffer.toHex).toList(),
+                );
+              return null;
+            })
+            .nonNulls
+            .toList(),
+        _ => [],
+      },
+      signatureYParity: rlpDecoded[9].buffer.toUInt,
+      signatureR: rlpDecoded[10].buffer,
+      signatureS: rlpDecoded[11].buffer,
     );
   }
 
@@ -760,7 +744,7 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
       Uint8List.fromList([
         ...signatureR,
         ...signatureS,
-        signatureYParity.toInt(),
+        signatureYParity,
       ]),
     );
 
@@ -782,40 +766,41 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
       throw Exception("Transaction is not signed, cannot serialize");
     }
 
-    final _nonce = nonce.bigIntToBytes.toHex;
-    final _maxFeePerGas = maxFeePerGas.bigIntToBytes.toHex;
-    final _maxPriorityFeePerGas = maxPriorityFeePerGas.bigIntToBytes.toHex;
-    final _gasLimit = gasLimit.bigIntToBytes.toHex;
-    final _to = to.replaceFirst("0x", "");
-    final _value = value.bigIntToBytes.toHex;
-    final _data = data.toHex;
-    final _accessList = accessList.map((item) {
-      return [
-        item.address.replaceFirst("0x", ""),
-        item.storageKeys,
-      ];
-    }).toList();
-    final _signatureYParity = signatureYParity.toBI.bigIntToBytes.toHex;
-    final _signatureR = signatureR.toHex;
-    final _signatureS = signatureS.toHex;
-
-    List<dynamic> buffer = [
-      chainId.toBI.bigIntToBytes.toHex,
-      _nonce,
-      _maxPriorityFeePerGas,
-      _maxFeePerGas,
-      _gasLimit,
-      _to,
-      _value,
-      _data,
-      _accessList,
-      _signatureYParity,
-      _signatureR,
-      _signatureS,
-    ];
-
     return Uint8List.fromList(
-      [0x02, ...rlpEncode(buffer).hexToBytes],
+      [
+        0x02,
+        ...encodeRLP(
+          RLPList(
+            [
+              RLPInt(chainId),
+              RLPBigInt(nonce),
+              RLPBigInt(maxPriorityFeePerGas),
+              RLPBigInt(maxFeePerGas),
+              RLPBigInt(gasLimit),
+              RLPString(to),
+              RLPBigInt(value),
+              RLPBytes(data),
+              RLPList(
+                accessList.map((item) {
+                  return RLPList(
+                    [
+                      RLPString(item.address),
+                      RLPList(
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+              RLPInt(signatureYParity),
+              RLPBytes(signatureR),
+              RLPBytes(signatureS),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -826,34 +811,38 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
       (signatureYParity == 0 || signatureYParity == 1);
 
   Uint8List get serializedUnsigned {
-    final _nonce = nonce.bigIntToBytes.toHex;
-    final _maxFeePerGas = maxFeePerGas.bigIntToBytes.toHex;
-    final _maxPriorityFeePerGas = maxPriorityFeePerGas.bigIntToBytes.toHex;
-    final _gasLimit = gasLimit.bigIntToBytes.toHex;
-    final _to = to.replaceFirst("0x", "");
-    final _value = value.bigIntToBytes.toHex;
-    final _data = data.toHex;
-    final _accessList = accessList.map((item) {
-      return [
-        item.address.replaceFirst("0x", ""),
-        item.storageKeys,
-      ];
-    }).toList();
-
-    List<dynamic> buffer = [
-      chainId.toBI.bigIntToBytes.toHex,
-      _nonce,
-      _maxPriorityFeePerGas,
-      _maxFeePerGas,
-      _gasLimit,
-      _to,
-      _value,
-      _data,
-      _accessList,
-    ];
-
     return Uint8List.fromList(
-      [0x02, ...rlpEncode(buffer).hexToBytes],
+      [
+        0x02,
+        ...encodeRLP(
+          RLPList(
+            [
+              RLPInt(chainId),
+              RLPBigInt(nonce),
+              RLPBigInt(maxPriorityFeePerGas),
+              RLPBigInt(maxFeePerGas),
+              RLPBigInt(gasLimit),
+              RLPString(to),
+              RLPBigInt(value),
+              RLPBytes(data),
+              RLPList(
+                accessList.map((item) {
+                  return RLPList(
+                    [
+                      RLPString(item.address),
+                      RLPList(
+                        item.storageKeys
+                            .map((key) => RLPString(key, isHex: true))
+                            .toList(),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

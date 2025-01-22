@@ -45,10 +45,10 @@ final class TronIntParameter extends TronParameter<BigInt> {
   const TronIntParameter(BigInt value) : super(value, TronParameterType.INT256);
 
   @override
-  Uint8List get bytes => value.bigIntToBytes;
+  Uint8List get bytes => value.toBytesUnsigned;
 
   static TronIntParameter decode(Uint8List data) {
-    return TronIntParameter(data.toBigInt(littleEndian: false));
+    return TronIntParameter(data.toUBigInt);
   }
 }
 

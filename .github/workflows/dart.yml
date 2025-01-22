@@ -64,6 +64,7 @@ jobs:
             "test/ci/proof_of_payment",
             "test/ci/sending",
             "test/ci/tron",
+            "test/ci/rlp"
           ]
     steps:
       - uses: actions/checkout@v3
