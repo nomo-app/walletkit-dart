@@ -52,11 +52,6 @@ final class RLPInt extends RLPItem<int> {
 
   @override
   Uint8List get buffer => arrayifyInteger(value);
-
-  factory RLPInt.fromBuffer(Uint8List buffer) {
-    final value = buffer.first;
-    return RLPInt(value);
-  }
 }
 
 final class RLPString extends RLPItem<String> {
@@ -70,11 +65,6 @@ final class RLPString extends RLPItem<String> {
 
     return utf8.encode(value);
   }
-
-  factory RLPString.fromBuffer(Uint8List buffer) {
-    final value = utf8.decode(buffer);
-    return RLPString(value);
-  }
 }
 
 final class RLPBigInt extends RLPItem<BigInt> {
@@ -85,12 +75,7 @@ final class RLPBigInt extends RLPItem<BigInt> {
     if (value == BigInt.zero) {
       return Uint8List.fromList([0x80]);
     }
-    return this.value.bigIntToBytes;
-  }
-
-  factory RLPBigInt.fromBuffer(Uint8List buffer) {
-    final value = BigInt.parse(buffer.toHex, radix: 16);
-    return RLPBigInt(value);
+    return this.value.toBytesUnsigned;
   }
 }
 

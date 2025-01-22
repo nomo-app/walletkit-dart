@@ -14,9 +14,13 @@ extension ExtFixedPrecision on double {
 }
 
 extension BigIntUtil on BigInt {
-  Uint8List get bigIntToBytes {
+  Uint8List get toBytesUnsigned {
     assert(this >= BigInt.zero, "BigInt must be positive");
     return p_utils.encodeBigIntAsUnsigned(this);
+  }
+
+  Uint8List get toBytes {
+    return p_utils.encodeBigInt(this);
   }
 
   String get toHex => toRadixString(16);
@@ -33,21 +37,31 @@ extension IntListUtil on List<int> {
 }
 
 extension BufferUtil on Uint8List {
-  BigInt toBigInt({bool littleEndian = false}) {
-    var buf = littleEndian ? reversed : this;
-
-    var asHex = hex.encode(buf.toList());
-
-    return BigInt.parse(asHex, radix: 16);
+  /// Decode a unsigned big-endian integer from the buffer.
+  int get toUInt {
+    int result = 0;
+    for (var i = 0; i < length; i++) {
+      result = result * 256 + this[i];
+    }
+    return result;
   }
 
-  int toInt({bool littleEndian = false}) {
-    var buf = littleEndian ? reversed : this;
+  /// Decode a big-endian integer from the buffer.
+  /// Can be positive or negative.
+  int get toInt {
+    bool negative = length > 0 && (this[0] & 0x80) == 0x80;
+    int result = 0;
 
-    var asHex = hex.encode(buf.toList());
+    for (var i = 0; i < length; i++) {
+      result = result * 256 + this[i];
+    }
 
-    return int.parse(asHex, radix: 16);
+    return negative ? -(~result + 1) : result;
   }
+
+  /// Decode a big-endian integer from the buffer.
+  /// Can be positive or negative.
+  BigInt get toBigInt => p_utils.decodeBigInt(this);
 
   String get toHex => hex.encode(this);
 

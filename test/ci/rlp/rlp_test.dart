@@ -103,6 +103,9 @@ void main() {
             expect(encoded[0], 0x82);
             expect(encoded[1], 0x04);
             expect(encoded[2], 0x00);
+
+            final decoded = decodeRLP(encoded).$1;
+            expect(decoded.buffer.toBigInt, BigInt.from(1024));
           },
         );
 
@@ -112,6 +115,9 @@ void main() {
             final encoded = encodeRLP(RLPBigInt(BigInt.from(0)));
             expect(encoded.length, 1);
             expect(encoded[0], 0x80);
+
+            final decoded = decodeRLP(encoded).$1;
+            expect(decoded.buffer.toBigInt, BigInt.zero);
           },
         );
       },

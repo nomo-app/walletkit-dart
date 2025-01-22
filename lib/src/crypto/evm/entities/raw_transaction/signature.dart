@@ -24,8 +24,8 @@ class Signature {
   factory Signature.fromHex(String hex) => Signature.fromBytes(hex.hexToBytes);
 
   factory Signature.fromBytes(Uint8List bytes) {
-    final r = bytes.sublist(0, 32).toBigInt(littleEndian: false);
-    final s = bytes.sublist(32, 64).toBigInt(littleEndian: false);
+    final r = bytes.sublist(0, 32).toBigInt;
+    final s = bytes.sublist(32, 64).toBigInt;
     final v = bytes[64];
 
     return Signature(r, s, v);
