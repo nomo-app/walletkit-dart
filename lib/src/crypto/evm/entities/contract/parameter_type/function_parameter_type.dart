@@ -162,6 +162,14 @@ sealed class FunctionParamType<T> {
 
   Uint8List encode(T value);
 
+  dynamic toJsonValue<T>(T value) {
+    return value;
+  }
+
+  T fromJsonValue(dynamic value) {
+    return value as T;
+  }
+
   @override
   int get hashCode => name.hashCode;
 
