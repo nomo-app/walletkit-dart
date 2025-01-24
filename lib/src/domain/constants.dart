@@ -34,6 +34,9 @@ const String P2SH_PREFIX = '3'; // Compatibility Address
 const String P2SH_PREFIX_LTC = 'M'; // Compatibility Address Litecoin
 const String P2WPKH_PREFIX_BTC = 'bc1'; // Native SegWit Bitcoin
 const String P2WPKH_PREFIX_LTC = 'ltc1'; // Native SegWit Litecoin
+const String P2PKH_PREFIX_DOGE = 'D'; // Legacy Dogecoin
+const String P2SH_PREFIX_DOGE = 'A'; // Compatibility Address Dogecoin
+const String P2WPKH_PREFIX_DOGE = 'dc1'; // Native SegWit Dogecoin
 const List<String> P2WPKH_PREFIXES_BCH = [
   "1q",
   "qq"
@@ -48,6 +51,17 @@ const BITCOIN_NETWORK_BIP = NetworkBIP(
   bip84XpubPrefix: 0x04b24746,
   bip84XprivPrefix: 0x04b2430c,
   wif: 0x80,
+);
+
+const DOGECOIN_NETWORK_BIP = NetworkBIP(
+  bip32XpubPrefix: 0x02facafd,
+  bip32XprivPrefix: 0x02fac398,
+  bip49XpubPrefix:
+      0x02facafd, // Dogecoin typically uses the same prefix for BIP49
+  bip49XprivPrefix: 0x02fac398,
+  bip84XpubPrefix: 0x02facafd, // And for BIP84
+  bip84XprivPrefix: 0x02fac398,
+  wif: 0x9e, // WIF prefix for Dogecoin
 );
 
 const BITCOIN_SIGHASH_INFO = SighashInfo(

@@ -19,17 +19,20 @@ class P2Hash {
     if (address.startsWith(P2PKH_PREFIX) ||
         address.startsWith(P2PKH_PREFIX_LTC) ||
         address.startsWith(P2PKH_PREFIX_ZENIQ) ||
-        address.startsWith(P2PKH_PREFIX_EC8)) {
+        address.startsWith(P2PKH_PREFIX_EC8) ||
+        address.startsWith(P2PKH_PREFIX_DOGE)) {
       return p2pkhScript;
     }
 
     if (address.startsWith(P2SH_PREFIX) ||
-        address.startsWith(P2SH_PREFIX_LTC)) {
+        address.startsWith(P2SH_PREFIX_LTC) ||
+        address.startsWith(P2SH_PREFIX_DOGE)) {
       return p2shScript;
     }
 
     if (address.startsWith(P2WPKH_PREFIX_BTC) ||
-        address.startsWith(P2WPKH_PREFIX_LTC)) {
+        address.startsWith(P2WPKH_PREFIX_LTC) ||
+        address.startsWith(P2WPKH_PREFIX_DOGE)) {
       return p2wpkhScript;
     }
 
