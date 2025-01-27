@@ -55,6 +55,19 @@ final class EvmRpcInterface {
   }) =>
       _manager.performTask(task, timeout: timeout, maxTries: maxTries);
 
+  Future<Map<EvmRpcClient, T>> performTaskForMultipleClients<T>(
+    Future<T> Function(EvmRpcClient client) task, {
+    Duration timeout = const Duration(seconds: 30),
+    int? maxTries,
+    int? maxClients,
+  }) =>
+      _manager.performTaskForMultipleClients(
+        task,
+        timeout: timeout,
+        maxTries: maxTries,
+        maxClients: maxClients,
+      );
+
   ///
   /// eth_call
   ///

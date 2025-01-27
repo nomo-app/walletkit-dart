@@ -3,6 +3,21 @@ import 'dart:async';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
+class Either<V, E> {
+  final V? value;
+  final E? error;
+
+  Either._(this.value, this.error);
+
+  Either.value(V value) : this._(value, null);
+
+  Either.error(E error) : this._(null, error);
+
+  bool get isError => error != null;
+
+  bool get isValue => value != null;
+}
+
 enum RefreshType { onInit, onTask }
 
 abstract class RpcManager {
@@ -44,7 +59,7 @@ abstract class RpcManager {
     }
   }
 
-  void refreshClients() async {
+  Future refreshClients() async {
     if (_isRefreshingClients) return;
     _isRefreshingClients = true;
     final futures = allClients.map((client) async {
@@ -73,6 +88,13 @@ abstract class RpcManager {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
   });
+
+  Future<Map<EvmRpcClient, T>> performTaskForMultipleClients<T>(
+    Future<T> Function(EvmRpcClient client) task, {
+    Duration timeout = const Duration(seconds: 30),
+    int? maxTries,
+    int? maxClients,
+  });
 }
 
 final class SimpleRpcManager extends RpcManager {
@@ -83,6 +105,38 @@ final class SimpleRpcManager extends RpcManager {
     required super.eagerError,
     required super.refreshType,
   });
+
+  Future<Map<EvmRpcClient, T>> performTaskForMultipleClients<T>(
+    Future<T> Function(EvmRpcClient client) task, {
+    Duration timeout = const Duration(seconds: 30),
+    int? maxTries,
+    int? maxClients,
+  }) async {
+    if (clients.isEmpty) {
+      throw Exception("No working clients available");
+    }
+    final clientCount = maxClients ?? (clients.length / 2).floor();
+    final clientsToUse = clients.take(clientCount);
+
+    Future<(T?, String?)> _singleTask(EvmRpcClient client) async {
+      String errors = "";
+      for (var i = 0; i < (maxTries ?? 1); i++) {
+        try {
+          return (await task(client).timeout(timeout), null);
+        } catch (e, s) {
+          Logger.logError(e, s: s, hint: 'RPC Task Error');
+          errors += "$e\n";
+        }
+      }
+      return (null, "Max tries reached: $errors");
+    }
+
+    final tasks = [
+      for (final client in clientsToUse) _singleTask(client),
+    ];
+
+    final results = await Future.wait(tasks);
+  }
 
   Future<T> performTask<T>(
     Future<T> Function(EvmRpcClient client) task, {
