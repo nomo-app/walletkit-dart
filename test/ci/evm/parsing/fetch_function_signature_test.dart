@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:test/test.dart';
 import 'package:convert/convert.dart';
 import 'dart:typed_data';
@@ -49,6 +51,26 @@ void main() {
         "0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000018c5c71dd6f8c06a772000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000004e9fcd48af4738e3bf1382009dc1e93ebfce698f");
     expect(contractFunction.parameters.last.type, FunctionParamUint256());
     expect(contractFunction.parameters.last.value, BigInt.from(1701042887));
+
+    final json = contractFunction.toJson();
+
+    final jsonString = jsonEncode(json);
+
+    expect(jsonString,
+        '{"name":"execute","parameters":[{"name":null,"indexed":null,"type":"bytes","value":"0b08"},{"name":null,"indexed":null,"type":"bytes[]","value":["0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000016345785d8a0000","0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000018c5c71dd6f8c06a772000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000004e9fcd48af4738e3bf1382009dc1e93ebfce698f"]},{"name":null,"indexed":null,"type":"uint256","value":"1701042887"}]}');
+
+    final decoded = ContractFunctionWithValues.fromJson(json);
+
+    expect(decoded.name, "execute");
+    expect(decoded.parameters.first.type, FunctionParamBytes());
+    expect((decoded.parameters.first.value as Uint8List).toHex, "0b08");
+    expect(decoded.parameters[1].type, FunctionParamBytesArray());
+    expect((decoded.parameters[1].value[0] as Uint8List).toHex,
+        "0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000016345785d8a0000");
+    expect((decoded.parameters[1].value[1] as Uint8List).toHex,
+        "0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000016345785d8a00000000000000000000000000000000000000000000000018c5c71dd6f8c06a772000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000004e9fcd48af4738e3bf1382009dc1e93ebfce698f");
+    expect(decoded.parameters.last.type, FunctionParamUint256());
+    expect(decoded.parameters.last.value, BigInt.from(1701042887));
   });
 
   test("fetch sigature and decode bytes and bytes[] of long bytes[]", () async {
@@ -313,6 +335,116 @@ void main() {
     );
     expect(
       contractFunction.parameters[3].value,
+      [
+        [],
+        [
+          [
+            "0xDef1C0ded9bec7F1a1670819833240f027b25EfF".toLowerCase(),
+            BigInt.from(0),
+            "0xaa77476c000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48000000000000000000000000000000000000000000000001d27dcfc85ca3c1e2000000000000000000000000000000000000000000000000000000187280a225000000000000000000000000a69babef1ca67a37ffaf7a485dfff3382056e78c0000000000000000000000009008d19f58aabd9ed0d60971565aa8510560ab41000000000000000000000000e3067c7c27c1038de4e8ad95a83b927d23dfbd990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006686d0ba01ffffffffffffffffffffffffffffffffffffff348caea26686d0560000003f0000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000001ce0fd5d9a853ecfab33b09da09b896cb62349d70e0575da64b52cc408216910aa48a3cc1667816cbc21ba7abda098ab0aff4b2a02223e2e3dad3544c7e0766b960000000000000000000000000000000000000000000000000000001747e1ef5c"
+                .hexToBytesWithPrefix,
+          ],
+          [
+            "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2".toLowerCase(),
+            BigInt.from(0),
+            "0x2e1a7d4d000000000000000000000000000000000000000000000001bc3bafb479cf0000"
+                .hexToBytesWithPrefix,
+          ]
+        ],
+        [],
+      ],
+    );
+
+    final json = contractFunction.toJson();
+
+    final decoded = ContractFunctionWithValues.fromJson(json);
+
+    expect(decoded.name, "settle");
+    expect(decoded.parameters[0].type, FunctionParamAddressArray());
+    expect(decoded.parameters[0].value, [
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48".toLowerCase(),
+      "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE".toLowerCase(),
+      "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48".toLowerCase(),
+      "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE".toLowerCase(),
+    ]);
+
+    expect(
+      decoded.parameters[1].type,
+      ArrayFunctionParamType("uint256[]", FunctionParamUint256()),
+    );
+    expect(
+      decoded.parameters[1].value,
+      [
+        BigInt.parse("01bc3bafb479cf0000", radix: 16),
+        BigInt.parse("1747e1ef5c", radix: 16),
+        BigInt.parse("01bc3bafb479cf0000", radix: 16),
+        BigInt.parse("174876e800", radix: 16),
+      ],
+    );
+
+    expect(
+      decoded.parameters[2].type,
+      ArrayFunctionParamType(
+        "(uint256,uint256,address,uint256,uint256,uint32,bytes32,uint256,uint256,uint256,bytes)[]",
+        TupleFunctionParamType(
+          "(uint256,uint256,address,uint256,uint256,uint32,bytes32,uint256,uint256,uint256,bytes)",
+          [
+            FunctionParamUint256(),
+            FunctionParamUint256(),
+            FunctionParamAddress(),
+            FunctionParamUint256(),
+            FunctionParamUint256(),
+            FunctionParamUint32(),
+            FunctionParamBytes32(),
+            FunctionParamUint256(),
+            FunctionParamUint256(),
+            FunctionParamUint256(),
+            FunctionParamBytes(),
+          ],
+        ),
+      ),
+    );
+
+    expect(
+      decoded.parameters[2].value,
+      [
+        [
+          BigInt.from(2),
+          BigInt.from(3),
+          "0x5c02f2dfcb6537b83929596fe8a3278e237e3e7c",
+          BigInt.parse("174876e800", radix: 16),
+          BigInt.parse("01bae1d29347fe96f2", radix: 16),
+          1720112929.toBigInt,
+          "0xf4c17d12a7afdbf56c5ae1fad213ac36cf3499276e48f2ab768e9c6faa93a023"
+              .hexToBytesWithPrefix,
+          BigInt.zero,
+          BigInt.zero,
+          BigInt.parse("174876e800", radix: 16),
+          "0x5402e579943a2d85182166f1ec505f3672f7719e27021f589018c0ca546905fd2672834c47293b6db931e4b406ca11d6087477e2353bf265577bdc4067d860811c"
+              .hexToBytesWithPrefix,
+        ],
+      ],
+    );
+
+    expect(
+      decoded.parameters[3].type,
+      ArrayFunctionParamType(
+        "(address,uint256,bytes)[][3]",
+        ArrayFunctionParamType(
+          "(address,uint256,bytes)[]",
+          TupleFunctionParamType(
+            "(address,uint256,bytes)",
+            [
+              FunctionParamAddress(),
+              FunctionParamUint256(),
+              FunctionParamBytes(),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(
+      decoded.parameters[3].value,
       [
         [],
         [

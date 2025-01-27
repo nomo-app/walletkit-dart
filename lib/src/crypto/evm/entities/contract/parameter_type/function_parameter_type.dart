@@ -3,6 +3,7 @@ library function_parameter_type;
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/contract/contract_function_decoding.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/contract/contract_function_encoding.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
@@ -162,13 +163,9 @@ sealed class FunctionParamType<T> {
 
   Uint8List encode(T value);
 
-  dynamic toJsonValue<T>(T value) {
-    return value;
-  }
+  T valueFromJson(dynamic json);
 
-  T fromJsonValue(dynamic value) {
-    return value as T;
-  }
+  dynamic valueToJson(T value);
 
   @override
   int get hashCode => name.hashCode;
@@ -238,6 +235,23 @@ final class TupleFunctionParamType extends FunctionParamType<List<dynamic>> {
 
     return (values, max_offset);
   }
+
+  @override
+  valueToJson(List<dynamic> value) => value.mapIndexed((index, element) {
+        final type = types[index];
+        return type.valueToJson(element);
+      }).toList();
+
+  @override
+  List<dynamic> valueFromJson(dynamic json) {
+    return switch (json) {
+      List list => list.mapIndexed((index, element) {
+          final type = types[index];
+          return type.valueFromJson(element);
+        }).toList(),
+      _ => throw Exception('Invalid value'),
+    };
+  }
 }
 
 ///
@@ -302,6 +316,18 @@ final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
       [...length_header, for (var value in encoded_values) ...value],
     );
   }
+
+  @override
+  valueToJson(List<T> value) =>
+      value.map((val) => itemType.valueToJson(val)).toList();
+
+  @override
+  List<T> valueFromJson(dynamic json) {
+    return switch (json) {
+      List list => list.map((e) => itemType.valueFromJson(e)).toList(),
+      _ => throw Exception('Invalid value'),
+    };
+  }
 }
 
 final class FunctionParamAddressArray extends ArrayFunctionParamType<String> {
@@ -344,6 +370,17 @@ final class FunctionParamAddress extends BaseFunctionParamType<String> {
     final addressBuffer = data.sublist(12, size_unit);
     return "0x" + addressBuffer.toHex;
   }
+
+  @override
+  valueToJson(String value) => value;
+
+  @override
+  String valueFromJson(json) {
+    return switch (json) {
+      String str => str,
+      _ => throw Exception('Invalid value'),
+    };
+  }
 }
 
 final class FunctionParamBool extends BaseFunctionParamType<bool> {
@@ -357,6 +394,18 @@ final class FunctionParamBool extends BaseFunctionParamType<bool> {
   @override
   bool decode(Uint8List data) {
     return FunctionParamInt8().decode(data) == BigInt.one;
+  }
+
+  @override
+  valueToJson(bool value) => value;
+
+  @override
+  bool valueFromJson(json) {
+    return switch (json) {
+      String strinbool => bool.parse(strinbool),
+      bool b => b,
+      _ => throw Exception('Invalid value'),
+    };
   }
 }
 
@@ -374,6 +423,17 @@ final class FunctionParamString extends DynamicFunctionParamType<String> {
     final string = utf8.decode(bytes);
     return (string, off);
   }
+
+  @override
+  valueToJson(String value) => value;
+
+  @override
+  String valueFromJson(json) {
+    return switch (json) {
+      String str => str,
+      _ => throw Exception('Invalid value'),
+    };
+  }
 }
 
 typedef ABIFunction = ({Uint8List selector, String address});
@@ -388,6 +448,16 @@ final class FunctionParamFunction extends BaseFunctionParamType<ABIFunction> {
 
   @override
   ABIFunction decode(Uint8List data) {
+    throw UnimplementedError();
+  }
+
+  @override
+  valueToJson(ABIFunction value) {
+    throw UnimplementedError();
+  }
+
+  @override
+  ABIFunction valueFromJson(json) {
     throw UnimplementedError();
   }
 }
