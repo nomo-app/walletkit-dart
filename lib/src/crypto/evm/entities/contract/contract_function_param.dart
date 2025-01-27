@@ -77,16 +77,17 @@ class FunctionParamWithValue<T> extends FunctionParam {
       'name': name,
       'indexed': indexed,
       'type': type.name,
-      'value': value.toString(),
+      'value': type.valueToJson(value),
     };
   }
 
   factory FunctionParamWithValue.fromJson(Map map) {
+    final type = FunctionParamType.fromString(map['type']);
     return FunctionParamWithValue(
-      value: map['value'],
+      value: type.valueFromJson(map['value']),
       name: map['name'],
       indexed: map['indexed'] as bool? ?? false,
-      type: FunctionParamType.fromString(map['type']),
+      type: type,
     );
   }
 }
