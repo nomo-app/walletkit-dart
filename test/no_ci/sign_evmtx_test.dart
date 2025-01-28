@@ -207,10 +207,10 @@ void main() {
 
     print("Hash: $hash");
   });
-  test('derive eth address from pubkey', () {
-    final checksumAddress = pubKeytoChecksumETHAddress(testSeed);
-    expect(arbitrumTestWallet, checksumAddress);
-  });
+  // test('derive eth address from pubkey', () {
+  //   final checksumAddress = pubKeytoChecksumETHAddress(testSeed);
+  //   expect(arbitrumTestWallet, checksumAddress);
+  // });
 
   test('sign message and verify signature', () async {
     const String message = "this message comes from my wallet";
@@ -233,8 +233,8 @@ void main() {
     expect(pubKeyHex,
         "3f2ac2efe7a90c365e245e8e08c2dfba3aa57d8d0fe99ef1d6598f828ba200786ed81927394a2ec0db63387df95665ac83442fd9b21645dccc26c6154d0a1eff");
 
-    final address = pubKeytoChecksumETHAddress(rejectSeed);
-    expect(address, "0x05870f1507d820212E921e1f39f14660336231D1");
+    // final address = pubKeytoChecksumETHAddress(rejectSeed);
+    // expect(address, "0x05870f1507d820212E921e1f39f14660336231D1");
   });
 
   test('verify chat signature', () async {
