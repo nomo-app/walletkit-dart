@@ -103,7 +103,7 @@ jobs:
         run: echo "ARTIFACT_NAME=coverage-$(echo '${{ matrix.test-path }}' | tr '/' '-')" >> $GITHUB_ENV
 
       - name: Upload coverage artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: coverage/lcov.info
@@ -140,7 +140,7 @@ jobs:
           echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"${COVERAGE}%\", \"color\": \"$(if [ $(echo "$COVERAGE >= 80" | bc -l) -eq 1 ]; then echo 'brightgreen'; elif [ $(echo "$COVERAGE >= 60" | bc -l) -eq 1 ]; then echo 'yellow'; else echo 'red'; fi)\"}" > coverage/badges/coverage.json
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: |
