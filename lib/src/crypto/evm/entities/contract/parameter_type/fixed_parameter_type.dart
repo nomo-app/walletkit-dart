@@ -15,6 +15,12 @@ abstract class FunctionParamFixedBase extends BaseFunctionParamType<Amount> {
   Amount decode(Uint8List data) {
     throw UnimplementedError();
   }
+
+  @override
+  valueToJson(Amount value) => value.toJson();
+
+  @override
+  Amount valueFromJson(dynamic json) => Amount.fromJson(json);
 }
 
 /// Synonym for [FunctionParamFixed128]
@@ -30,6 +36,12 @@ final class FunctionParamFixed extends BaseFunctionParamType<Amount> {
   Amount decode(Uint8List data) {
     return FunctionParamFixed128(18).decode(data);
   }
+
+  @override
+  valueToJson(Amount value) => value.toJson();
+
+  @override
+  Amount valueFromJson(dynamic json) => Amount.fromJson(json);
 }
 
 /// Synonym for [FunctionParamUFixed128]
@@ -45,6 +57,12 @@ final class FunctionParamUFixed extends BaseFunctionParamType<Amount> {
   Amount decode(Uint8List data) {
     return FunctionParamUFixed128(18).decode(data);
   }
+
+  @override
+  valueToJson(Amount value) => value.toJson();
+
+  @override
+  Amount valueFromJson(dynamic json) => Amount.fromJson(json);
 }
 
 final class FunctionParamFixed8 extends FunctionParamFixedBase {

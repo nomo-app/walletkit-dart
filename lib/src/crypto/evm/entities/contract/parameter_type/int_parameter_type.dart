@@ -29,6 +29,15 @@ final class FunctionParamInt extends BaseFunctionParamType<BigInt> {
 
   @override
   BigInt decode(Uint8List data) => data.toUBigInt;
+
+  @override
+  valueToJson(BigInt value) => value.toString();
+
+  @override
+  BigInt valueFromJson(dynamic json) => switch (json) {
+        String str => BigInt.parse(str),
+        _ => throw Exception('Invalid JSON type'),
+      };
 }
 
 final class FunctionParamUint extends FunctionParamInt {
