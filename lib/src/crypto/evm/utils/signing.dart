@@ -10,9 +10,8 @@ const stakingPartnerAddress =
 
 (RawEvmTransaction, Signature) signEvmTransaction({
   required String messageHex,
-  required Uint8List seed,
+  required Uint8List privateKey,
 }) {
-  final privateKey = derivePrivateKeyETH(seed);
   final rawTx = RawEvmTransaction.fromUnsignedHex(messageHex);
 
   final signature = switch (rawTx) {
@@ -118,10 +117,9 @@ Signature _parseEthSignature(String signature) {
 
 String signEvmMessage({
   required String message,
-  required Uint8List seed,
+  required Uint8List privateKey,
 }) {
   final payload = Uint8List.fromList(utf8.encode(message));
-  final privateKey = derivePrivateKeyETH(seed);
   final sig = Signature.signPersonalMessageToUint8List(payload, privateKey);
   return "0x" + HEX.encode(sig);
 }

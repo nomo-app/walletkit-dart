@@ -123,11 +123,11 @@ String getETHAddressFromMnemonic({
   return address;
 }
 
-Uint8List derivePrivateKeyETH(Uint8List seed) {
+Uint8List derivePrivateKeyETH(Uint8List seed, String path) {
   final node = bip32.BIP32.fromSeed(seed);
 
   final bip32.BIP32 childNode = node.derivePath(
-    ethereumBip44HDPath.defaultPath,
+    path,
   );
   return childNode.privateKey!;
 }

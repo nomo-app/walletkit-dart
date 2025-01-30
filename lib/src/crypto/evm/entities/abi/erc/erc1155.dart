@@ -367,7 +367,7 @@ class ERC1155Contract extends InternalContract {
     required String to,
     required BigInt tokenID,
     required BigInt amount,
-    required Uint8List seed,
+    required Uint8List privateKey,
     Uint8List? data,
     EvmFeeInformation? feeInfo,
     List<AccessListItem>? accessList,
@@ -377,7 +377,7 @@ class ERC1155Contract extends InternalContract {
       function: function.addValues(
           values: [sender, to, tokenID, amount, data ?? Uint8List(0)]),
       sender: sender,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: feeInfo,
       accessList: accessList,
     );

@@ -238,7 +238,7 @@ class ERC20Contract extends InternalContract {
     required String sender,
     required String to,
     required BigInt value,
-    required Uint8List seed,
+    required Uint8List privateKey,
     EvmFeeInformation? feeInfo,
     List<AccessListItem>? accessList,
   }) async {
@@ -246,7 +246,7 @@ class ERC20Contract extends InternalContract {
     assert(function.functionSelectorHex == "a9059cbb");
     return await interact(
       function: function.addValues(values: [to, value]),
-      seed: seed,
+      privateKey: privateKey,
       sender: sender,
       feeInfo: feeInfo,
       accessList: accessList,
@@ -257,7 +257,7 @@ class ERC20Contract extends InternalContract {
     required String sender,
     required String spender,
     required BigInt value,
-    required Uint8List seed,
+    required Uint8List privateKey,
     EvmFeeInformation? feeInfo,
   }) async {
     final function = abi.functions[1];
@@ -265,7 +265,7 @@ class ERC20Contract extends InternalContract {
 
     return await interact(
       function: function.addValues(values: [spender, value]),
-      seed: seed,
+      privateKey: privateKey,
       sender: sender,
       feeInfo: feeInfo,
     );

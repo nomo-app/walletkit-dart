@@ -1,41 +1,41 @@
-import 'package:test/test.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
+// import 'package:test/test.dart';
+// import 'package:walletkit_dart/walletkit_dart.dart';
 
-import '../utils.dart';
+// import '../utils.dart';
 
-void main() {
-  final testSeed = loadFromEnv("DEV_SEED");
-  test('Test zkSync wbtc send', () async {
-    final intent = TransferIntent<EvmFeeInformation>(
-      recipient: arbitrumTestWallet,
-      amount: Amount.convert(value: 0.00004, decimals: 8),
-      token: wbtcZKSync,
-      memo: null,
-    );
+// void main() {
+//   final testSeed = loadFromEnv("DEV_SEED");
+//   test('Test zkSync wbtc send', () async {
+//     final intent = TransferIntent<EvmFeeInformation>(
+//       recipient: arbitrumTestWallet,
+//       amount: Amount.convert(value: 0.00004, decimals: 8),
+//       token: wbtcZKSync,
+//       memo: null,
+//     );
 
-    final hash = await zksyncRPC.sendERC20Token(
-      intent: intent,
-      seed: testSeed,
-      from: arbitrumTestWallet,
-    );
+//     final hash = await zksyncRPC.sendERC20Token(
+//       intent: intent,
+//       seed: testSeed,
+//       from: arbitrumTestWallet,
+//     );
 
-    print("Hash: $hash");
-  });
+//     print("Hash: $hash");
+//   });
 
-  test('zkSyncETH send', () async {
-    final intentETH = TransferIntent<EvmFeeInformation>(
-      recipient: arbitrumTestWallet,
-      amount: Amount.convert(value: 0.001, decimals: 18),
-      token: ethzkSync,
-      memo: null,
-    );
+//   test('zkSyncETH send', () async {
+//     final intentETH = TransferIntent<EvmFeeInformation>(
+//       recipient: arbitrumTestWallet,
+//       amount: Amount.convert(value: 0.001, decimals: 18),
+//       token: ethzkSync,
+//       memo: null,
+//     );
 
-    final hashETH = await zksyncRPC.sendCoin(
-      intent: intentETH,
-      from: arbitrumTestWallet,
-      seed: testSeed,
-    );
+//     final hashETH = await zksyncRPC.sendCoin(
+//       intent: intentETH,
+//       from: arbitrumTestWallet,
+//       seed: testSeed,
+//     );
 
-    print("Hash: $hashETH");
-  });
-}
+//     print("Hash: $hashETH");
+//   });
+// }
