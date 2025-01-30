@@ -245,7 +245,7 @@ class HDNode {
       throw ArgumentError("HDNode is not private");
     }
 
-    return ecurve.sign(hash, _p!);
+    return ecurve.sign(hash, _p);
   }
 
   factory HDNode.fromPublicKey({
