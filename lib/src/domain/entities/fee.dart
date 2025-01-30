@@ -157,8 +157,8 @@ final class EvmType2GasPrice extends EvmGasPrice {
 
   Json toJson() {
     return {
-      'maxPriorityFeePerGas': maxPriorityFeePerGas.toString(),
-      'maxFeePerGas': maxFeePerGas.toString(),
+      'maxPriorityFeePerGas': maxPriorityFeePerGas.toJson(),
+      'maxFeePerGas': maxFeePerGas.toJson(),
     };
   }
 

@@ -20,6 +20,15 @@ final class FunctionParamBytes extends DynamicFunctionParamType<Uint8List> {
     offset += size_unit * ((length + size_unit - 1) ~/ size_unit);
     return (value, offset);
   }
+
+  @override
+  valueToJson(Uint8List value) => value.toHex;
+
+  @override
+  Uint8List valueFromJson(dynamic json) => switch (json) {
+        String str => str.hexToBytes,
+        _ => throw Exception('Invalid JSON type'),
+      };
 }
 
 abstract class FunctionParamBytesBase extends BaseFunctionParamType<Uint8List> {
@@ -39,6 +48,15 @@ abstract class FunctionParamBytesBase extends BaseFunctionParamType<Uint8List> {
   Uint8List decode(Uint8List data) {
     return data.sublist(size_unit - size);
   }
+
+  @override
+  valueToJson(Uint8List value) => value.toHex;
+
+  @override
+  Uint8List valueFromJson(dynamic json) => switch (json) {
+        String str => str.hexToBytes,
+        _ => throw Exception('Invalid JSON type'),
+      };
 }
 
 final class FunctionParamBytes1 extends FunctionParamBytesBase {

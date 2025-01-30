@@ -161,3 +161,8 @@ List<String> loadListFromEnv(String key) {
   final seedString = env[key]!.split(",");
   return seedString;
 }
+
+String loadMnemonicFromEnv(String key) {
+  var env = DotEnv(includePlatformEnvironment: true)..load();
+  return env[key]!;
+}

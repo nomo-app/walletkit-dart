@@ -96,7 +96,7 @@ Transaction_raw buildRawTransaction(
 }) {
   final blockId = block.blockId.hexToBytes;
   final refBlockHash = blockId.sublist(8, 16);
-  final blockNumberBytes = block.blockNumber.toBigInt.bigIntToBytes;
+  final blockNumberBytes = block.blockNumber.toBigInt.toBytesUnsigned;
   final refBlockBytes = blockNumberBytes.sublist(
     blockNumberBytes.length < 2 ? 0 : blockNumberBytes.length - 2,
     blockNumberBytes.length,
@@ -200,9 +200,9 @@ Uint8List createTxSignature({
   final sig =
       Signature.createSignature(txID, credentials.$1, hashPayload: false);
 
-  final r = padUint8ListTo32(sig.r.bigIntToBytes);
-  final s = padUint8ListTo32(sig.s.bigIntToBytes);
-  final v = (BigInt.from(sig.v)).bigIntToBytes;
+  final r = padUint8ListTo32(sig.r.toBytesUnsigned);
+  final s = padUint8ListTo32(sig.s.toBytesUnsigned);
+  final v = (BigInt.from(sig.v)).toBytesUnsigned;
 
   final sigBuffer = uint8ListFromList(r + s + v);
 

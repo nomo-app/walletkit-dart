@@ -3,10 +3,9 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
+import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
 import 'package:walletkit_dart/src/wallet/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-// import 'package:bip39/bip39.dart' as bip39;
-import 'package:bip39/bip39.dart' as bip39;
 
 export 'utxo/utils/derivation.dart';
 
@@ -45,6 +44,25 @@ Future<TokenInfo?> getTokenInfo({
   } catch (e) {
     return null;
   }
+}
+
+Future<bool> isErc1155({
+  required String contractAddress,
+  required EvmRpcInterface rpc,
+  required String address,
+}) async {
+  bool isErc1155 = false;
+  try {
+    await rpc.fetchERC1155BalanceOfToken(
+      address: address,
+      tokenID: BigInt.from(0),
+      contractAddress: contractAddress,
+    );
+    isErc1155 = true;
+  } catch (e) {
+    isErc1155 = false;
+  }
+  return isErc1155;
 }
 
 Uint8List publicKeyToAddress(Uint8List publicKey) {
@@ -93,7 +111,7 @@ String pubKeytoChecksumETHAddress(Uint8List seed) {
 String getETHAddressFromMnemonic({
   required String mnemonic,
 }) {
-  final seed = bip39.mnemonicToSeed(mnemonic);
+  final seed = mnemonicToSeed(mnemonic);
 
   final publicKey = derivePublicKeyETH(seed);
 

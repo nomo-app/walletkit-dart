@@ -102,6 +102,66 @@ final class EvmRpcInterface {
     return Amount(value: balance, decimals: token.decimals);
   }
 
+  ///
+  /// Fetch Balance of ERC1155 Token
+  ///
+  Future<Amount> fetchERC1155BalanceOfToken({
+    required String address,
+    required BigInt tokenID,
+    required String contractAddress,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+    final balance = await erc1155Contract.balanceOf(
+      address: address,
+      tokenID: tokenID,
+    );
+
+    return Amount(value: balance, decimals: 0);
+  }
+
+  ///
+  /// Fetch Batch Balance of ERC1155 Tokens
+  ///
+  Future<List<BigInt>> fetchERC1155BatchBalanceOfTokens({
+    required List<String> accounts,
+    required List<BigInt> tokenIDs,
+    required String contractAddress,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+
+    final balances = await erc1155Contract.balanceOfBatch(
+      accounts: accounts,
+      tokenIDs: tokenIDs,
+    );
+
+    return balances;
+  }
+
+  ///
+  /// Fetch Uri of ERC115 Token
+  ///
+  Future<String> fetchERC1155UriOfToken({
+    required BigInt tokenID,
+    required String contractAddress,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+
+    final uri = await erc1155Contract.getUri(
+      tokenID: tokenID,
+    );
+
+    return uri;
+  }
+
   Future<(Amount, int)> estimateNetworkFees({
     required String recipient,
     required String sender,
@@ -206,6 +266,32 @@ final class EvmRpcInterface {
       sender: from,
       to: intent.recipient,
       value: intent.amount.value,
+      feeInfo: intent.feeInfo,
+      accessList: intent.accessList,
+    );
+  }
+
+  ///
+  /// Send ERC1155 Token
+  ///
+  Future<String> sendERC1155Token({
+    required TransferIntent<EvmFeeInformation> intent,
+    required String contractAddress,
+    required BigInt tokenID,
+    required String from,
+    required Uint8List seed,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+
+    return erc1155Contract.safeTransferFrom(
+      sender: from,
+      to: intent.recipient,
+      tokenID: tokenID,
+      amount: intent.amount.value,
+      seed: seed,
       feeInfo: intent.feeInfo,
       accessList: intent.accessList,
     );
