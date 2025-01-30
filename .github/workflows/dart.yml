@@ -66,6 +66,7 @@ jobs:
             "test/ci/tron",
             "test/ci/rlp",
             "test/ci/bip39",
+            "test/ci/bip32",
           ]
     steps:
       - uses: actions/checkout@v3

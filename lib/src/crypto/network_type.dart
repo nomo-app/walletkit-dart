@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names, camel_case_types
 
-import 'package:bip32/bip32.dart' as bip32;
+import 'package:collection/collection.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 sealed class NetworkType {
@@ -76,60 +76,129 @@ sealed class UTXONetworkType extends NetworkType {
   }
 }
 
+typedef BIP32Prefixes = ({int private, int public});
+
+class NetworkNodeInfo {
+  final int wif;
+  final BIP32Prefixes keyPrefixes;
+
+  const NetworkNodeInfo({
+    required this.wif,
+    required this.keyPrefixes,
+  });
+}
+
 class NetworkBIP {
   final int wif;
-  final int bip32XpubPrefix;
-  final int bip32XprivPrefix;
-  // final int bip44XpubPrefix;
-  // final int bip44XprivPrefix;
-  final int bip49XpubPrefix;
-  final int bip49XprivPrefix;
-  final int bip84XpubPrefix;
-  final int bip84XprivPrefix;
+
+  final BIP32Prefixes bip32;
+  final BIP32Prefixes bip49;
+  final BIP32Prefixes bip84;
+  final BIP32Prefixes bip49MultiSig;
+  final BIP32Prefixes bip84MultiSig;
 
   static const String NS_PURPOSE = "m/0'";
   static const String BIP44_PURPOSE = "m/44'";
   static const String BIP49_PURPOSE = "m/49'";
   static const String BIP84_PURPOSE = "m/84'";
 
+  static List<NetworkBIP> defaults = [
+    BITCOIN_NETWORK_BIP,
+    LTC_NETWORK_BIP,
+    DOGE_NETWORK_BIP,
+  ];
+
+  static NetworkNodeInfo? findPrefixesFromVersion(int version) {
+    return defaults
+        .map((e) {
+          final prefixes = e.fromVersion(version);
+          if (prefixes != null) {
+            return NetworkNodeInfo(
+              wif: e.wif,
+              keyPrefixes: prefixes,
+            );
+          }
+          return null;
+        })
+        .nonNulls
+        .firstOrNull;
+  }
+
+  NetworkNodeInfo getForPurpose(HDWalletPurpose purpose) {
+    switch (purpose) {
+      case HDWalletPurpose.NO_STRUCTURE:
+      case HDWalletPurpose.BIP44:
+        return NetworkNodeInfo(
+          wif: wif,
+          keyPrefixes: bip32,
+        );
+      case HDWalletPurpose.BIP84:
+        return NetworkNodeInfo(
+          wif: wif,
+          keyPrefixes: bip84,
+        );
+      case HDWalletPurpose.BIP49:
+        return NetworkNodeInfo(
+          wif: wif,
+          keyPrefixes: bip49,
+        );
+    }
+  }
+
   const NetworkBIP({
-    required this.bip32XpubPrefix,
-    required this.bip32XprivPrefix,
-    // required this.bip44XpubPrefix,
-    // required this.bip44XprivPrefix,
-    required this.bip49XpubPrefix,
-    required this.bip49XprivPrefix,
-    required this.bip84XpubPrefix,
-    required this.bip84XprivPrefix,
+    required this.bip32,
+    required this.bip49,
+    required this.bip84,
+    required this.bip49MultiSig,
+    required this.bip84MultiSig,
     required this.wif,
   });
 
-  bip32.NetworkType getForWalletType(HDWalletPurpose purpose) =>
-      switch (purpose) {
-        HDWalletPurpose.NO_STRUCTURE ||
-        HDWalletPurpose.BIP44 =>
-          bip32.NetworkType(
-            wif: wif,
-            bip32: bip32.Bip32Type(
-              private: bip32XprivPrefix,
-              public: bip32XpubPrefix,
-            ),
-          ),
-        HDWalletPurpose.BIP84 => bip32.NetworkType(
-            wif: wif,
-            bip32: bip32.Bip32Type(
-              private: bip84XprivPrefix,
-              public: bip84XpubPrefix,
-            ),
-          ),
-        HDWalletPurpose.BIP49 => bip32.NetworkType(
-            wif: wif,
-            bip32: bip32.Bip32Type(
-              private: bip49XprivPrefix,
-              public: bip49XpubPrefix,
-            ),
-          ),
-      };
+  BIP32Prefixes? fromVersion(int version) {
+    if (version == bip32.private || version == bip32.public) {
+      return bip32;
+    }
+    if (version == bip49.private || version == bip49.public) {
+      return bip49;
+    }
+    if (version == bip84.private || version == bip84.public) {
+      return bip84;
+    }
+    if (version == bip49MultiSig.private || version == bip49MultiSig.public) {
+      return bip49MultiSig;
+    }
+    if (version == bip84MultiSig.private || version == bip84MultiSig.public) {
+      return bip84MultiSig;
+    }
+    return null;
+  }
+
+  // bip32.NetworkType getForWalletType(HDWalletPurpose purpose) =>
+  //     switch (purpose) {
+  //       HDWalletPurpose.NO_STRUCTURE ||
+  //       HDWalletPurpose.BIP44 =>
+  //         bip32.NetworkType(
+  //           wif: wif,
+  //           bip32: bip32.Bip32Type(
+  //             private: bip32PrivPrefix,
+  //             public: bip32PubPrefix,
+  //           ),
+  //         ),
+  //       HDWalletPurpose.BIP84 => bip32.NetworkType(
+  //           wif: wif,
+  //           bip32: bip32.Bip32Type(
+  //             private: bip84PrivPrefix,
+  //             public: bip84PubPrefix,
+  //           ),
+  //         ),
+  //       HDWalletPurpose.BIP49 => bip32.NetworkType(
+  //           wif: wif,
+  //           bip32: bip32.Bip32Type(
+  //             private: bip49PrivPrefix,
+  //             public: bip49PubPrefix,
+  //           ),
+  //         ),
+  //     };
 }
 
 class SighashInfo {
