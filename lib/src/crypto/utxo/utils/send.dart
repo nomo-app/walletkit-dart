@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:bip32/bip32.dart';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/payments/input_selection.dart';
@@ -13,6 +11,7 @@ import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_cl
 import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
 import 'package:walletkit_dart/src/utils/der.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
+import 'package:walletkit_dart/src/wallet/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 ///
@@ -282,7 +281,7 @@ List<Input> signInputs({
     final output = entry.key;
     var bip32Node = output.node.bip32Node;
 
-    if (bip32Node == null || bip32Node.isNeutered()) {
+    if (bip32Node == null || bip32Node.isNeutered) {
       if (output.belongsToUs) {
         bip32Node = deriveChildNodeFromPath(
           seed: seed,
@@ -328,7 +327,7 @@ Uint8List createScriptSignature({
   required ElectrumOutput output,
   required HDWalletPurpose walletPurpose,
   required UTXONetworkType networkType,
-  required BIP32 node,
+  required HDNode node,
 }) {
   final hashType = networkType.sighash.all;
   final prevScriptPubKey = output.scriptPubKey.lockingScript;
@@ -372,7 +371,7 @@ Uint8List createScriptWitness({
   required int i,
   required ElectrumOutput output,
   required UTXONetworkType networkType,
-  required BIP32 node,
+  required HDNode node,
 }) {
   final hashType = networkType.sighash.all;
   final prevScriptPubKey = output.scriptPubKey.lockingScript;
@@ -630,7 +629,7 @@ Future<bool> rebroadcastTransaction({
 }
 
 Uint8List signInput({
-  required BIP32 bip32,
+  required HDNode bip32,
   required Uint8List sigHash,
 }) {
   try {

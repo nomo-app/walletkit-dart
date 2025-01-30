@@ -6,6 +6,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 class P2Hash {
