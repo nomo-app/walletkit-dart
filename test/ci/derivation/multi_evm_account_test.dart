@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../utils.dart';
