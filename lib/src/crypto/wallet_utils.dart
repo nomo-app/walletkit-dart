@@ -83,8 +83,8 @@ Uint8List publicKeyToAddress(Uint8List publicKey) {
   return hash.sublist(12, 32);
 }
 
-String pubKeytoChecksumETHAddress(Uint8List seed) {
-  final publicKey = derivePublicKeyETH(seed);
+String pubKeytoChecksumETHAddress(Uint8List seed, String path) {
+  final publicKey = derivePublicKeyETH(seed, path);
   final pubKeyWithoutPrefix = keccak256(publicKey.sublist(1));
 
   final address = '0x${pubKeyWithoutPrefix.sublist(12).toHex}';
@@ -113,7 +113,7 @@ String getETHAddressFromMnemonic({
 }) {
   final seed = mnemonicToSeed(mnemonic);
 
-  final publicKey = derivePublicKeyETH(seed);
+  final publicKey = derivePublicKeyETH(seed, ethereumBip44HDPath.defaultPath);
 
   final publicKeyWithoutPrefix = keccak256(publicKey.sublist(1));
 
@@ -122,20 +122,18 @@ String getETHAddressFromMnemonic({
   return address;
 }
 
-Uint8List derivePrivateKeyETH(Uint8List seed) {
+Uint8List derivePrivateKeyETH(Uint8List seed, String path) {
   final node = HDNode.fromSeed(seed);
 
   final childNode = node.derivePath(
-    ethereumBip44HDPath.defaultPath,
+    path,
   );
   return childNode.privateKey!;
 }
 
-Uint8List derivePublicKeyETH(Uint8List seed) {
+Uint8List derivePublicKeyETH(Uint8List seed, String path) {
   final node = HDNode.fromSeed(seed);
 
-  final childNode = node.derivePath(
-    ethereumBip44HDPath.defaultPath,
-  );
+  final childNode = node.derivePath(path);
   return childNode.publicKeyUncompressed;
 }
