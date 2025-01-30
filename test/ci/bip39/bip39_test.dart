@@ -6,8 +6,6 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
 
-import '../../utils.dart';
-
 void main() {
   Map<String, dynamic> vectors = json.decode(
     File('./test/ci/bip39/vectors.json').readAsStringSync(encoding: utf8),
