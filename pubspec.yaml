@@ -6,11 +6,11 @@ repository: https://github.com/nomo-app/walletkit-dart
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ^3.0.0
+  sdk: ^3.3.0
 
 dependencies:
   crypto: ^3.0.3 # dart.dev
-  http: ^1.2.2 # dart.dev
+  http: ^1.3.0 # dart.dev
   grpc: 3.2.4 # dart.dev
   fixnum: ^1.1.0 # dart.dev
   protobuf: ^3.1.0 # google.dev
