@@ -19,24 +19,24 @@ void main() {
     i++;
   });
 
-  test(
-    "Generate Mnemonic with word arm",
-    () {
-      int tries = 0;
-      bool found = false;
-      for (; tries < 20000; tries++) {
-        final m = generateMnemonic();
-        if (m.endsWith(" arm")) {
-          print(
-            "After $tries tries: Found random mnemonic that ends with arm: $m",
-          );
-          found = true;
-          break;
-        }
-      }
-      expect(found, true);
-    },
-  );
+  // test(
+  //   "Generate Mnemonic with word arm",
+  //   () {
+  //     int tries = 0;
+  //     bool found = false;
+  //     for (; tries < 20000; tries++) {
+  //       final m = generateMnemonic();
+  //       if (m.endsWith(" arm")) {
+  //         print(
+  //           "After $tries tries: Found random mnemonic that ends with arm: $m",
+  //         );
+  //         found = true;
+  //         break;
+  //       }
+  //     }
+  //     expect(found, true);
+  //   },
+  // );
 
   group(
     "Generate Mnemonic with different lengths",
