@@ -21,8 +21,6 @@ dependencies:
   sec: ^1.1.0
   collection: ^1.18.0
   convert: ^3.1.2
-  bip39:
-    path: packages/bip39 # Own fork
 
 dev_dependencies:
   lints: ^2.0.0

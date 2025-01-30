@@ -3,10 +3,10 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
+import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 // import 'package:bip39/bip39.dart' as bip39;
 import 'package:bip32/bip32.dart' as bip32;
-import 'package:bip39/bip39.dart' as bip39;
 
 export 'utxo/utils/derivation.dart';
 
@@ -112,7 +112,7 @@ String pubKeytoChecksumETHAddress(Uint8List seed) {
 String getETHAddressFromMnemonic({
   required String mnemonic,
 }) {
-  final seed = bip39.mnemonicToSeed(mnemonic);
+  final seed = mnemonicToSeed(mnemonic);
 
   final publicKey = derivePublicKeyETH(seed);
 
