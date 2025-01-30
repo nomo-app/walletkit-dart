@@ -227,7 +227,7 @@ void testVector(List<dynamic> v, int i) {
   final ventropy = v[0];
   final vmnemonic = v[1];
   final vseedHex = v[2];
-  final xpriv = v[3];
+  //final xpriv = v[3];
 
   group('for English(${i}), ${ventropy}', () {
     setUp(() {});
