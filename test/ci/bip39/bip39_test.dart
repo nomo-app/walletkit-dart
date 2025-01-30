@@ -3,10 +3,11 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:hex/hex.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
 import 'package:walletkit_dart/src/wallet/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
+
+// TODO: Maybe impl more testcases in Future for multiple languages: https://github.com/trezor/python-mnemonic/blob/master/vectors.json
 
 void main() {
   Map<String, dynamic> vectors = json.decode(
