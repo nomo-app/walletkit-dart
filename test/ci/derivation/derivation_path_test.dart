@@ -2,12 +2,12 @@
 // import 'package:walletkit_dart/src/crypto/derivation.dart';
 // import 'package:walletkit_dart/src/domain/entities/default_assets.dart';
 
-import 'package:bip39/bip39.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/wallet_utils.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
 import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
+import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
 
 void main() {
   // test("", () {
