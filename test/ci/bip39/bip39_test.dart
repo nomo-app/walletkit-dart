@@ -5,6 +5,8 @@ import 'package:hex/hex.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/domain/extensions.dart';
 import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
+import 'package:walletkit_dart/src/wallet/hd_node.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
   Map<String, dynamic> vectors = json.decode(
@@ -221,7 +223,7 @@ void testVector(List<dynamic> v, int i) {
   final ventropy = v[0];
   final vmnemonic = v[1];
   final vseedHex = v[2];
-  //final xpriv = v[3];
+  final vxpriv = v[3];
 
   group('for English(${i}), ${ventropy}', () {
     setUp(() {});
@@ -229,11 +231,19 @@ void testVector(List<dynamic> v, int i) {
       final String entropy = mnemonicToEntropy(vmnemonic);
       expect(entropy, equals(ventropy));
     });
-    test('mnemonic to seed hex', () {
-      final seedHex = mnemonicToSeed(vmnemonic, passphrase: "TREZOR").toHex;
-      expect(seedHex, equals(vseedHex));
+    test('mnemonic to seed hex and xpriv', () {
+      final seed = mnemonicToSeed(vmnemonic, passphrase: "TREZOR");
 
-      // TODO: ADD CHeck for xpriv
+      expect(seed.toHex, equals(vseedHex));
+
+      final xpriv = HDNode.fromSeed(
+        seed,
+        network: BitcoinNetwork.networkBIP.getForPurpose(
+          HDWalletPurpose.BIP44,
+        ),
+      ).extendedPrivateKey();
+
+      expect(xpriv, vxpriv);
     });
     test('entropy to mnemonic', () {
       final code = entropyToMnemonic(ventropy);
