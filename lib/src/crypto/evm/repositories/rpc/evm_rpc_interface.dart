@@ -220,12 +220,12 @@ final class EvmRpcInterface {
   Future<String> sendCoin({
     required TransferIntent<EvmFeeInformation> intent,
     required String from,
-    required Uint8List seed,
+    required Uint8List privateKey,
   }) async {
     final tx = await buildTransaction(
       sender: from,
       recipient: intent.recipient,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: intent.feeInfo,
       data: intent.encodedMemo,
       value: intent.amount.value,
@@ -248,7 +248,7 @@ final class EvmRpcInterface {
   Future<String> sendERC20Token({
     required TransferIntent<EvmFeeInformation> intent,
     required String from,
-    required Uint8List seed,
+    required Uint8List privateKey,
   }) async {
     assert(intent.token is ERC20Entity);
     assert(intent.memo == null);
@@ -262,7 +262,7 @@ final class EvmRpcInterface {
     );
 
     return erc20Contract.transfer(
-      seed: seed,
+      privateKey: privateKey,
       sender: from,
       to: intent.recipient,
       value: intent.amount.value,
@@ -279,7 +279,7 @@ final class EvmRpcInterface {
     required String contractAddress,
     required BigInt tokenID,
     required String from,
-    required Uint8List seed,
+    required Uint8List privateKey,
   }) async {
     final erc1155Contract = ERC1155Contract(
       contractAddress: contractAddress,
@@ -291,7 +291,7 @@ final class EvmRpcInterface {
       to: intent.recipient,
       tokenID: tokenID,
       amount: intent.amount.value,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: intent.feeInfo,
       accessList: intent.accessList,
     );
@@ -421,7 +421,7 @@ final class EvmRpcInterface {
   Future<RawEvmTransaction> buildTransaction({
     required String sender,
     required String recipient,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
@@ -447,7 +447,7 @@ final class EvmRpcInterface {
         RawEVMTransactionType1() => TransactionType.Type1,
         RawEVMTransactionType2() => TransactionType.Type2,
       },
-      derivePrivateKeyETH(seed),
+      privateKey,
       chainId: type.chainId,
     );
 
@@ -468,7 +468,7 @@ final class EvmRpcInterface {
   Future<String> buildAndBroadcastTransaction({
     required String sender,
     required String recipient,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
@@ -477,7 +477,7 @@ final class EvmRpcInterface {
     final signedTx = await buildTransaction(
       sender: sender,
       recipient: recipient,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: feeInfo,
       data: data,
       value: value,
@@ -514,7 +514,7 @@ final class EvmRpcInterface {
     required String contractAddress,
     required LocalContractFunctionWithValues function,
     required String sender,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required EvmFeeInformation? feeInfo,
     BigInt? value,
   }) async {
@@ -532,7 +532,7 @@ final class EvmRpcInterface {
     return await buildAndBroadcastTransaction(
       sender: sender,
       recipient: contractAddress,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: feeInfo,
       data: data,
       value: value ?? BigInt.zero,
@@ -571,7 +571,7 @@ final class EvmRpcInterface {
     required String from,
     required int tokenId,
     required String contractAddress,
-    required Uint8List seed,
+    required Uint8List privateKey,
   }) async {
     final function = LocalContractFunctionWithValues(
       name: "transferFrom",
@@ -600,7 +600,7 @@ final class EvmRpcInterface {
       contractAddress: contractAddress,
       function: function,
       sender: from,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: null,
     );
   }

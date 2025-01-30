@@ -1021,14 +1021,14 @@ class UniswapV2Router extends InternalContract {
     required List<String> path,
     required String to,
     required BigInt deadline,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required String sender,
     EvmFeeInformation? feeInformation,
   }) async {
     final function = abi.getFunction("swapExactETHForTokens")!;
 
     final result = await interact(
-      seed: seed,
+      privateKey: privateKey,
       value: amountIn,
       function: function.addValues(values: [amountOutMin, path, to, deadline]),
       sender: sender,
@@ -1065,13 +1065,13 @@ class UniswapV2Router extends InternalContract {
     required List<String> path,
     required String to,
     required BigInt deadline,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required String sender,
   }) async {
     final function = abi.getFunction("swapExactTokensForETH")!;
 
     final result = await interact(
-      seed: seed,
+      privateKey: privateKey,
       sender: sender,
       function: function
           .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
@@ -1105,13 +1105,13 @@ class UniswapV2Router extends InternalContract {
     required List<String> path,
     required String to,
     required BigInt deadline,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required String sender,
   }) async {
     final function = abi.getFunction("swapExactTokensForTokens")!;
 
     final result = await interact(
-      seed: seed,
+      privateKey: privateKey,
       sender: sender,
       function: function
           .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
@@ -1145,13 +1145,13 @@ class UniswapV2Router extends InternalContract {
     required List<String> path,
     required String to,
     required BigInt deadline,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required String sender,
   }) async {
     final function = abi.getFunction("swapETHForExactTokens")!;
 
     final result = await interact(
-      seed: seed,
+      privateKey: privateKey,
       sender: sender,
       function: function.addValues(values: [amountOut, path, to, deadline]),
       value: amountInMax,
@@ -1185,13 +1185,13 @@ class UniswapV2Router extends InternalContract {
     required List<String> path,
     required String to,
     required BigInt deadline,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required String sender,
   }) async {
     final function = abi.getFunction("swapTokensForExactETH")!;
 
     final result = await interact(
-      seed: seed,
+      privateKey: privateKey,
       sender: sender,
       function: function
           .addValues(values: [amountOut, amountInMax, path, to, deadline]),
@@ -1225,13 +1225,13 @@ class UniswapV2Router extends InternalContract {
     required List<String> path,
     required String to,
     required BigInt deadline,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required String sender,
   }) async {
     final function = abi.getFunction("swapTokensForExactTokens")!;
 
     final result = await interact(
-      seed: seed,
+      privateKey: privateKey,
       sender: sender,
       function: function
           .addValues(values: [amountOut, amountInMax, path, to, deadline]),
