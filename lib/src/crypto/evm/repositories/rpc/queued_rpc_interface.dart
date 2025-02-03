@@ -3,19 +3,72 @@ import 'dart:async';
 import 'package:walletkit_dart/src/common/logger.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-class Either<V, E> {
-  final V? value;
-  final E? error;
+sealed class ValueOrError<T, E> {
+  final E? extra;
 
-  Either._(this.value, this.error);
+  const ValueOrError({this.extra});
 
-  Either.value(V value) : this._(value, null);
+  factory ValueOrError.value(
+    T value, {
+    E? extra,
+  }) =>
+      Value(value, extra: extra);
 
-  Either.error(E error) : this._(null, error);
+  factory ValueOrError.error(
+    Object error, {
+    StackTrace? stackTrace,
+    E? extra,
+  }) =>
+      Error<T, E>(
+        error,
+        stackTrace: stackTrace,
+        extra: extra,
+      );
 
-  bool get isError => error != null;
+  R when<R>({
+    required R Function(Value<T, E> value) value,
+    required R Function(Error<T, E> error) error,
+  }) {
+    return switch (this) {
+      Value<T, E> v => value(v),
+      Error<T, E> e => error(e),
+    };
+  }
+}
 
-  bool get isValue => value != null;
+final class Value<T, E> extends ValueOrError<T, E> {
+  final T value;
+
+  const Value(this.value, {super.extra});
+}
+
+final class Error<T, E> extends ValueOrError<T, E> {
+  final Object error;
+  final StackTrace? stackTrace;
+  final List<Error<T, E>>? children;
+
+  const Error(
+    this.error, {
+    this.stackTrace,
+    this.children,
+    super.extra,
+  });
+}
+
+extension ValueOrErrorExtension<T> on Future<T> {
+  Future<ValueOrError<T, E>> toValueOrError<E>({
+    E? extra,
+  }) {
+    return then(
+      (value) => ValueOrError<T, E>.value(value),
+    ).catchError(
+      (e, s) => Error<T, E>(
+        e,
+        stackTrace: s,
+        extra: extra,
+      ),
+    );
+  }
 }
 
 enum RefreshType { onInit, onTask }
@@ -83,18 +136,63 @@ abstract class RpcManager {
     Logger.log('Selected clients: ${clients.map((e) => e.rpcUrl).toList()}');
   }
 
-  Future<T> performTask<T>(
+  ///
+  /// Perform a single task using one of the available clients
+  /// Retries the task on the next client if the current client fails
+  ///
+  Future<ValueOrError<T, EvmRpcClient>> performTask<T>(
     Future<T> Function(EvmRpcClient client) task, {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
   });
 
-  Future<Map<EvmRpcClient, T>> performTaskForMultipleClients<T>(
+  ///
+  /// Perform a single task on all available clients
+  ///
+  Future<R> performTaskForClients<T, R>(
     Future<T> Function(EvmRpcClient client) task, {
+    required R Function(
+      List<ValueOrError<T, EvmRpcClient>> results,
+    ) consilidate,
     Duration timeout = const Duration(seconds: 30),
-    int? maxTries,
+    int maxTriesPerClient = 2,
+    int minClients = 2,
     int? maxClients,
   });
+
+  Future<ValueOrError<T, EvmRpcClient>> performTaskForClient<T>(
+    Future<T> Function(EvmRpcClient client) task, {
+    required EvmRpcClient client,
+    Duration timeout = const Duration(seconds: 30),
+    int maxTries = 2,
+  }) async {
+    if (maxTries == 1) {
+      return task(client).timeout(timeout).toValueOrError(extra: client);
+    }
+    final errors = <Error<T, EvmRpcClient>>[];
+
+    for (int i = 0; i < maxTries; i++) {
+      final result =
+          await task(client).timeout(timeout).toValueOrError(extra: client);
+
+      switch (result) {
+        case Value<T, EvmRpcClient> value:
+          return value;
+        case Error<T, EvmRpcClient> error:
+          errors.add(error);
+          Logger.logError(
+            error.error,
+            s: error.stackTrace,
+            hint: 'RPC Task Error',
+          );
+      }
+    }
+    return Error(
+      "Failed to perform the task after $maxTries tries",
+      stackTrace: null,
+      children: errors,
+    );
+  }
 }
 
 final class SimpleRpcManager extends RpcManager {
@@ -106,39 +204,42 @@ final class SimpleRpcManager extends RpcManager {
     required super.refreshType,
   });
 
-  Future<Map<EvmRpcClient, T>> performTaskForMultipleClients<T>(
+  Future<R> performTaskForClients<T, R>(
     Future<T> Function(EvmRpcClient client) task, {
+    required R Function(
+      List<ValueOrError<T, EvmRpcClient>> results,
+    ) consilidate,
     Duration timeout = const Duration(seconds: 30),
-    int? maxTries,
+    int maxTriesPerClient = 2,
+    int minClients = 2,
     int? maxClients,
   }) async {
-    if (clients.isEmpty) {
-      throw Exception("No working clients available");
-    }
-    final clientCount = maxClients ?? (clients.length / 2).floor();
-    final clientsToUse = clients.take(clientCount);
+    assert(
+      maxClients == null || maxClients >= minClients,
+      "maxClients must be greater than or equal to minClients",
+    );
+    final clientsToUse = [...clients].take(maxClients ?? clients.length);
 
-    Future<(T?, String?)> _singleTask(EvmRpcClient client) async {
-      String errors = "";
-      for (var i = 0; i < (maxTries ?? 1); i++) {
-        try {
-          return (await task(client).timeout(timeout), null);
-        } catch (e, s) {
-          Logger.logError(e, s: s, hint: 'RPC Task Error');
-          errors += "$e\n";
-        }
-      }
-      return (null, "Max tries reached: $errors");
+    if (clientsToUse.length < minClients) {
+      throw Exception("Not enough clients available");
     }
 
-    final tasks = [
-      for (final client in clientsToUse) _singleTask(client),
-    ];
+    final results = await Future.wait(
+      [
+        for (final client in clientsToUse)
+          performTaskForClient(
+            task,
+            client: client,
+            timeout: timeout,
+            maxTries: maxTriesPerClient,
+          ),
+      ],
+    );
 
-    final results = await Future.wait(tasks);
+    return consilidate(results);
   }
 
-  Future<T> performTask<T>(
+  Future<ValueOrError<T, EvmRpcClient>> performTask<T>(
     Future<T> Function(EvmRpcClient client) task, {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
@@ -156,24 +257,33 @@ final class SimpleRpcManager extends RpcManager {
       throw Exception("No working clients available");
     }
 
-    final errors = <String, (Object, StackTrace)>{};
+    final errors = <Error<T, EvmRpcClient>>[];
 
     for (final client in currentClients) {
-      try {
-        final result = await task(client).timeout(timeout);
-        return result;
-      } catch (e, s) {
-        errors[client.rpcUrl] = (e, s);
+      final result =
+          await task(client).timeout(timeout).toValueOrError(extra: client);
 
-        if (eagerError) {
-          throw Exception("Error performing task: $errors");
-        }
-
-        Logger.logError(e, s: s, hint: 'RPC Task Error');
+      switch (result) {
+        case Value<T, EvmRpcClient> value:
+          return value;
+        case Error<T, EvmRpcClient> error:
+          errors.add(error);
+          Logger.logError(
+            error.error,
+            s: error.stackTrace,
+            hint: 'RPC Task Error',
+          );
+          if (eagerError) {
+            return error;
+          }
+          break;
       }
     }
 
-    throw Exception("All clients failed to perform the task: $errors");
+    return Error(
+      "All clients failed to perform the task: $errors",
+      children: errors,
+    );
   }
 }
 
@@ -204,57 +314,93 @@ final class QueuedRpcManager extends RpcManager {
 
     final currentClients = [...clients];
 
-    final errors = <String, (Object, StackTrace)>{};
+    final errors = <Error<dynamic, EvmRpcClient>>[];
 
     while (taskQueue.isNotEmpty) {
       final task = taskQueue.dequeue();
       if (task == null) continue;
 
       if (currentClients.isEmpty) {
-        task.completer.completeError(Exception("No working clients available"));
+        task.completer.complete(
+          Error(
+            "No working clients available",
+            children: errors,
+          ),
+        );
         continue;
       }
 
-      final currentClient = currentClients[currentClientIndex];
+      final currentClient = task.client ?? currentClients[currentClientIndex];
 
-      try {
-        task.startTime ??= DateTime.now();
-        if (task.isTimedOut()) throw TimeoutException("Task timed out");
-        task.tries++;
-        if (task.isMaxTriesReached) throw Exception("Max tries reached");
-
-        final result = await task.task(currentClient).timeout(task.timeout);
-        task.completer.complete(result);
-        errors.clear(); // Clear errors if the task was successful
-      } catch (e, s) {
-        errors[currentClient.rpcUrl] = (e, s);
-        if (eagerError) {
-          final error = Exception("Error performing task: $errors");
-          task.completer.completeError(error);
-          errors.clear();
-          continue;
-        }
-
-        if (task.tries == currentClients.length) {
-          final error =
-              Exception("All clients failed to perform the task: $errors");
-          errors.clear();
-          Logger.logError(error, hint: 'RPC Task Error');
-          task.completer.completeError(error);
-          continue;
-        }
-
-        // Switch to the next client
-        currentClientIndex = (currentClientIndex + 1) % currentClients.length;
-        taskQueue.enqueue(task);
+      task.startTime ??= DateTime.now();
+      if (task.isTimedOut()) {
+        task.completer.complete(
+          Error(
+            "Task timed out after ${task.timeout}",
+            children: errors,
+          ),
+        );
         continue;
+      }
+      task.tries++;
+
+      final result = await performTaskForClient(
+        task.task,
+        client: currentClient,
+        timeout: task.timeout,
+        maxTries: 1,
+      );
+
+      switch (result) {
+        case Value<dynamic, EvmRpcClient> value:
+          task.completer.complete(value);
+          errors.clear();
+          continue;
+        case Error<dynamic, EvmRpcClient> error:
+          errors.add(error);
+
+          if (eagerError) {
+            task.completer.complete(error);
+            errors.clear();
+            continue;
+          }
+
+          if (task.tries >= task.maxTries) {
+            task.completer.complete(
+              Error(
+                "Failed to perform the task: $errors after ${task.tries} tries",
+                children: errors,
+              ),
+            );
+            errors.clear();
+            continue;
+          }
+
+          if (task.tries == currentClients.length) {
+            task.completer.complete(
+              Error(
+                "All clients failed to perform the task: $errors",
+                children: errors,
+              ),
+            );
+            errors.clear();
+            continue;
+          }
+
+          // Switch to the next client
+          if (task.client == null) {
+            currentClientIndex =
+                (currentClientIndex + 1) % currentClients.length;
+          }
+          taskQueue.enqueueFront(task);
+          continue;
       }
     }
 
     isWorking = false;
   }
 
-  Future<T> performTask<T>(
+  Future<ValueOrError<T, EvmRpcClient>> performTask<T>(
     Future<T> Function(EvmRpcClient client) task, {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
@@ -266,11 +412,56 @@ final class QueuedRpcManager extends RpcManager {
 
     return _task.future;
   }
+
+  @override
+  Future<R> performTaskForClients<T, R>(
+    Future<T> Function(EvmRpcClient client) task, {
+    required R Function(
+      List<ValueOrError<T, EvmRpcClient>> results,
+    ) consilidate,
+    Duration timeout = const Duration(seconds: 30),
+    int maxTriesPerClient = 2,
+    int minClients = 2,
+    int? maxClients,
+  }) async {
+    assert(
+      maxClients == null || maxClients >= minClients,
+      "maxClients must be greater than or equal to minClients",
+    );
+
+    final clientsToUse = clients.take(maxClients ?? clients.length);
+
+    if (clientsToUse.length < minClients) {
+      throw Exception("Not enough clients available");
+    }
+
+    final tasks = [
+      for (final client in clientsToUse)
+        Task(
+          task,
+          timeout,
+          maxTriesPerClient,
+          client: client,
+        ),
+    ];
+
+    taskQueue.enqueueAll(tasks);
+
+    workOnQueue();
+
+    final results = await Future.wait(
+      [
+        for (final task in tasks) task.future,
+      ],
+    ).timeout(timeout);
+
+    return consilidate(results);
+  }
 }
 
 class Task<T, C> {
   final Future<T> Function(C client) task;
-  final Completer<T> completer = Completer();
+  final Completer<ValueOrError<T, EvmRpcClient>> completer = Completer();
 
   final Duration timeout;
   DateTime? startTime;
@@ -278,16 +469,16 @@ class Task<T, C> {
   final int maxTries;
   int tries = 0;
 
-  bool get isMaxTriesReached => tries > maxTries;
+  final C? client;
 
   bool isTimedOut() {
     if (startTime == null) return false;
     return DateTime.now().difference(startTime!) > timeout;
   }
 
-  Future<T> get future => completer.future;
+  Future<ValueOrError<T, EvmRpcClient>> get future => completer.future;
 
-  Task(this.task, this.timeout, this.maxTries);
+  Task(this.task, this.timeout, this.maxTries, {this.client});
 }
 
 class TaskQueue<T, C> {
@@ -295,6 +486,14 @@ class TaskQueue<T, C> {
 
   void enqueue(Task<T, C> task) {
     _list.add(task);
+  }
+
+  void enqueueAll(Iterable<Task<T, C>> tasks) {
+    _list.addAll(tasks);
+  }
+
+  void enqueueFront(Task<T, C> task) {
+    _list.insert(0, task);
   }
 
   Task<T, C>? dequeue() {

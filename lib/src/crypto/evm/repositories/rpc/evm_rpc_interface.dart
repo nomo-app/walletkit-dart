@@ -53,19 +53,32 @@ final class EvmRpcInterface {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
   }) =>
-      _manager.performTask(task, timeout: timeout, maxTries: maxTries);
+      _manager.performTask(task, timeout: timeout, maxTries: maxTries).then(
+        (valueOrError) {
+          return valueOrError.when(
+            value: (value) => value.value,
+            error: (error) => throw Exception(error),
+          );
+        },
+      );
 
-  Future<Map<EvmRpcClient, T>> performTaskForMultipleClients<T>(
-    Future<T> Function(EvmRpcClient client) task, {
+  Future<R> performTaskForClients<T, R>(
+    Future<T> Function(EvmRpcClient) task, {
+    required R Function(
+      List<ValueOrError<T, EvmRpcClient>> results,
+    ) consilidate,
     Duration timeout = const Duration(seconds: 30),
-    int? maxTries,
+    int maxTriesPerClient = 2,
+    int minClients = 2,
     int? maxClients,
   }) =>
-      _manager.performTaskForMultipleClients(
+      _manager.performTaskForClients(
         task,
+        consilidate: consilidate,
         timeout: timeout,
-        maxTries: maxTries,
+        maxTriesPerClient: maxTriesPerClient,
         maxClients: maxClients,
+        minClients: minClients,
       );
 
   ///
@@ -473,8 +486,19 @@ final class EvmRpcInterface {
     serializedTransactionHex = serializedTransactionHex.startsWith("0x")
         ? serializedTransactionHex
         : "0x$serializedTransactionHex";
-    return performTask(
+    return performTaskForClients(
       (client) => client.sendRawTransaction(serializedTransactionHex),
+      minClients: 1,
+      consilidate: (resultMap) {
+        return resultMap.first.when(
+          value: (value) {
+            return value.value;
+          },
+          error: (error) {
+            throw Exception(error);
+          },
+        );
+      },
     );
   }
 
