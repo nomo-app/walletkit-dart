@@ -45,7 +45,7 @@ final class Value<T, E> extends ValueOrError<T, E> {
 final class Error<T, E> extends ValueOrError<T, E> {
   final Object error;
   final StackTrace? stackTrace;
-  final List<Error<T, E>>? children;
+  final List<Error<dynamic, E>>? children;
 
   const Error(
     this.error, {
@@ -53,6 +53,11 @@ final class Error<T, E> extends ValueOrError<T, E> {
     this.children,
     super.extra,
   });
+
+  @override
+  String toString() {
+    return 'Error{error: $error, extra: $extra,stackTrace: $stackTrace, children: $children}';
+  }
 }
 
 extension ValueOrErrorExtension<T> on Future<T> {
@@ -321,7 +326,7 @@ final class QueuedRpcManager extends RpcManager {
       if (task == null) continue;
 
       if (currentClients.isEmpty) {
-        task.completer.complete(
+        task.complete(
           Error(
             "No working clients available",
             children: errors,
@@ -334,7 +339,7 @@ final class QueuedRpcManager extends RpcManager {
 
       task.startTime ??= DateTime.now();
       if (task.isTimedOut()) {
-        task.completer.complete(
+        task.complete(
           Error(
             "Task timed out after ${task.timeout}",
             children: errors,
@@ -351,49 +356,41 @@ final class QueuedRpcManager extends RpcManager {
         maxTries: 1,
       );
 
-      switch (result) {
-        case Value<dynamic, EvmRpcClient> value:
-          task.completer.complete(value);
+      if (result is Value<dynamic, EvmRpcClient>) {
+        task.complete(result);
+        errors.clear();
+        continue;
+      }
+
+      if (result is Error<dynamic, EvmRpcClient>) {
+        errors.add(result);
+        if (task.tries >= task.maxTries) {
+          task.complete(
+            Error(
+              "Failed to perform the task: $errors after ${task.tries} tries",
+              children: errors,
+            ),
+          );
           errors.clear();
           continue;
-        case Error<dynamic, EvmRpcClient> error:
-          errors.add(error);
+        }
 
-          if (eagerError) {
-            task.completer.complete(error);
-            errors.clear();
-            continue;
-          }
-
-          if (task.tries >= task.maxTries) {
-            task.completer.complete(
-              Error(
-                "Failed to perform the task: $errors after ${task.tries} tries",
-                children: errors,
-              ),
-            );
-            errors.clear();
-            continue;
-          }
-
-          if (task.tries == currentClients.length) {
-            task.completer.complete(
-              Error(
-                "All clients failed to perform the task: $errors",
-                children: errors,
-              ),
-            );
-            errors.clear();
-            continue;
-          }
-
-          // Switch to the next client
-          if (task.client == null) {
-            currentClientIndex =
-                (currentClientIndex + 1) % currentClients.length;
-          }
-          taskQueue.enqueueFront(task);
+        if (task.tries == currentClients.length) {
+          task.complete(
+            Error(
+              "All clients failed to perform the task: $errors",
+              children: errors,
+            ),
+          );
+          errors.clear();
           continue;
+        }
+
+        // Switch to the next client
+        if (task.client == null) {
+          currentClientIndex = (currentClientIndex + 1) % currentClients.length;
+        }
+        taskQueue.enqueueFront(task);
       }
     }
 
@@ -461,7 +458,7 @@ final class QueuedRpcManager extends RpcManager {
 
 class Task<T, C> {
   final Future<T> Function(C client) task;
-  final Completer<ValueOrError<T, EvmRpcClient>> completer = Completer();
+  final Completer<ValueOrError<T, C>> _completer = Completer();
 
   final Duration timeout;
   DateTime? startTime;
@@ -476,7 +473,21 @@ class Task<T, C> {
     return DateTime.now().difference(startTime!) > timeout;
   }
 
-  Future<ValueOrError<T, EvmRpcClient>> get future => completer.future;
+  Future<ValueOrError<T, C>> get future => _completer.future;
+
+  void complete(ValueOrError<dynamic, C> result) {
+    _completer.complete(
+      result.when(
+        value: (value) => Value<T, C>(value.value as T, extra: value.extra),
+        error: (error) => Error<T, C>(
+          error.error,
+          stackTrace: error.stackTrace,
+          extra: error.extra,
+          children: error.children,
+        ),
+      ),
+    );
+  }
 
   Task(this.task, this.timeout, this.maxTries, {this.client});
 }

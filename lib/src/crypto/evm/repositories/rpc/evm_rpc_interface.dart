@@ -489,15 +489,18 @@ final class EvmRpcInterface {
     return performTaskForClients(
       (client) => client.sendRawTransaction(serializedTransactionHex),
       minClients: 1,
-      consilidate: (resultMap) {
-        return resultMap.first.when(
-          value: (value) {
-            return value.value;
-          },
-          error: (error) {
-            throw Exception(error);
-          },
-        );
+      maxTriesPerClient: 1,
+      consilidate: (resultsWithErrors) {
+        final results =
+            resultsWithErrors.whereType<Value<String, EvmRpcClient>>();
+
+        if (results.isEmpty) {
+          throw Exception(
+            "No client was able to send the transaction: ${results}",
+          );
+        }
+
+        return results.first.value;
       },
     );
   }
