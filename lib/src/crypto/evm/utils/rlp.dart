@@ -278,11 +278,11 @@ RLPItem decodeRLPCheck(Uint8List input) {
         offset + 1,
         offset + 1 + length,
       );
-      // if (length == 1 && result[0] < 0x80) {
-      //   throw RLPException(
-      //     "invalid RLP encoding: invalid prefix, single byte < 0x80 are not prefixed",
-      //   );
-      // }
+      if (offset == 0 && length == 1 && result[0] < 0x80) {
+        throw RLPException(
+          "invalid RLP encoding: invalid prefix, single byte < 0x80 are not prefixed",
+        );
+      }
       return (RLPBytes(result), 1 + length);
     default:
       final result = input.sublist(offset, offset + 1);
