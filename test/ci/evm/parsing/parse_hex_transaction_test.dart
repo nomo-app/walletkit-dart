@@ -41,8 +41,18 @@ void main() {
   });
 
   test('Parse hex string to RawEvmTransaction', () {
+    STRICT_RLP_DECODE = true;
     const msgHex =
         "f86b8151843b9aca00830124f894e9e7CEA3DedcA5984780Bafc599bD69ADd087D5680b844a9059cbb000000000000000000000000a7fa4bb0bba164f999e8c7b83c9da96a3be44616000000000000000000000000000000000000000000000000000000000000271081388080";
+
+    expect(
+      () => RawEvmTransaction.fromUnsignedHex(msgHex),
+      throwsA(
+        isA<RLPException>(),
+      ),
+    );
+
+    STRICT_RLP_DECODE = false;
 
     final tx = RawEvmTransaction.fromUnsignedHex(msgHex);
 
