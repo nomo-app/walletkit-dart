@@ -163,6 +163,7 @@ abstract class RpcManager {
     int maxTriesPerClient = 2,
     int minClients = 2,
     int? maxClients,
+    bool enforceParallel = false,
   });
 
   Future<ValueOrError<T, EvmRpcClient>> performTaskForClient<T>(
@@ -218,6 +219,7 @@ final class SimpleRpcManager extends RpcManager {
     int maxTriesPerClient = 2,
     int minClients = 2,
     int? maxClients,
+    bool enforceParallel = false,
   }) async {
     assert(
       maxClients == null || maxClients >= minClients,
@@ -292,7 +294,7 @@ final class SimpleRpcManager extends RpcManager {
   }
 }
 
-final class QueuedRpcManager extends RpcManager {
+final class QueuedRpcManager extends SimpleRpcManager {
   QueuedRpcManager({
     required super.allClients,
     required super.awaitRefresh,
@@ -420,7 +422,19 @@ final class QueuedRpcManager extends RpcManager {
     int maxTriesPerClient = 2,
     int minClients = 2,
     int? maxClients,
+    bool enforceParallel = false,
   }) async {
+    /// If [enforceParallel] is true, perform the task on all clients at once => SimpleRpcManager Implementation
+    if (enforceParallel) {
+      return super.performTaskForClients(
+        task,
+        consilidate: consilidate,
+        timeout: timeout,
+        maxTriesPerClient: maxTriesPerClient,
+        minClients: minClients,
+        maxClients: maxClients,
+      );
+    }
     assert(
       maxClients == null || maxClients >= minClients,
       "maxClients must be greater than or equal to minClients",

@@ -71,6 +71,7 @@ final class EvmRpcInterface {
     int maxTriesPerClient = 2,
     int minClients = 2,
     int? maxClients,
+    bool enforceParallel = false,
   }) =>
       _manager.performTaskForClients(
         task,
@@ -79,6 +80,7 @@ final class EvmRpcInterface {
         maxTriesPerClient: maxTriesPerClient,
         maxClients: maxClients,
         minClients: minClients,
+        enforceParallel: enforceParallel,
       );
 
   ///
@@ -490,9 +492,12 @@ final class EvmRpcInterface {
       (client) => client.sendRawTransaction(serializedTransactionHex),
       minClients: 1,
       maxTriesPerClient: 1,
+      maxClients: 5,
+      enforceParallel: true,
       consilidate: (resultsWithErrors) {
-        final results =
-            resultsWithErrors.whereType<Value<String, EvmRpcClient>>();
+        final results = resultsWithErrors
+            .whereType<Value<String, EvmRpcClient>>()
+            .map((v) => v.value);
 
         if (results.isEmpty) {
           throw Exception(
@@ -500,7 +505,19 @@ final class EvmRpcInterface {
           );
         }
 
-        return results.first.value;
+        final hashMap = results.fold<Map<String, int>>(
+          {},
+          (acc, hash) {
+            acc[hash] = (acc[hash] ?? 0) + 1;
+            return acc;
+          },
+        );
+
+        final hash = hashMap.entries.reduce(
+          (a, b) => a.value > b.value ? a : b,
+        );
+
+        return hash.key;
       },
     );
   }
