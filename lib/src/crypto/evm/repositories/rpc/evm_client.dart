@@ -12,6 +12,9 @@ base class EvmRpcClient {
   final Duration rateLimitTimeout;
   final void Function(Object e, StackTrace s, String url)? onRpcError;
 
+  @override
+  String toString() => 'EvmRpcClient{rpcUrl: $rpcUrl}';
+
   EvmRpcClient.withRPC(JsonRPC rpc)
       : _rpc = rpc,
         rateLimitTimeout = const Duration(seconds: 30),
@@ -134,20 +137,12 @@ base class EvmRpcClient {
   }
 
   Future<String> sendRawTransaction(String rawTx) async {
-    try {
-      final response = await _call<String>(
-        'eth_sendRawTransaction',
-        args: [rawTx],
-      );
+    final response = await _call<String>(
+      'eth_sendRawTransaction',
+      args: [rawTx],
+    );
 
-      return response;
-    } catch (e) {
-      final response = await _call<String>(
-        'eth_sendRawTransaction',
-        args: [rawTx],
-      );
-      return response;
-    }
+    return response;
   }
 
   // Future<BigInt> estimateZkSyncFee({
