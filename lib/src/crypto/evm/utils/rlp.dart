@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/domain/extensions.dart';
 
+/// Whether to strictly enforce RLP decoding rules.
+/// We recommned leaving this enabled unless you have a specific reason to disable it.
 bool STRICT_RLP_DECODE = true;
 
 final class RLPException implements Exception {
