@@ -93,10 +93,10 @@ Uint8List _createEthStyleMessageHash(String message) {
 
 Signature _parseEthSignature(String signature) {
   if (!signature.startsWith("0x")) {
-    throw Failure("expected to begin with 0x");
+    throw WKFailure("expected to begin with 0x");
   }
   if (signature.length != 132) {
-    throw Failure("Unexpected signature length");
+    throw WKFailure("Unexpected signature length");
   }
   // Skip the prefix byte and extract the remaining 129 hex characters as the signature string
   String signatureStr = signature.substring(2);

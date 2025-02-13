@@ -264,7 +264,7 @@ final class EvmRpcInterface {
     );
 
     if (balance < tx.gasFee + tx.value) {
-      throw Failure("Insufficient funds to pay native gas fee");
+      throw WKFailure("Insufficient funds to pay native gas fee");
     }
 
     return await sendRawTransaction(tx.serialized.toHex);
