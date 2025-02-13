@@ -506,7 +506,7 @@ Future<String> broadcastTransaction({
   required String rawTxHex,
   required UTXONetworkType type,
 }) async {
-  final (result, _, error) = await fetchFromRandomElectrumXNode(
+  final (result, client, error) = await fetchFromRandomElectrumXNode(
     (client) async {
       final broadcastResult =
           await client.broadcastTransaction(rawTxHex: rawTxHex);
@@ -517,8 +517,10 @@ Future<String> broadcastTransaction({
     endpoints: type.endpoints,
   );
 
+  final host = "${client?.host}:${client?.port}";
+
   if (result == null) {
-    throw SendFailure("Broadcasting failed: ${error?.message}");
+    throw SendFailure("Broadcasting failed for $host: ${error?.message}");
   }
 
   final json = jsonDecode(result);
@@ -528,13 +530,16 @@ Future<String> broadcastTransaction({
         case {
           "error": {"error": {"code": int code, "message": String message}}
         }) {
-      throw SendFailure("$code $message");
+      throw SendFailure("$host $code $message");
     }
-    throw SendFailure("Unknown error: $result");
+    if (json case {"error": {"code": int code, "message": String message}}) {
+      throw SendFailure("$host $code $message");
+    }
+    throw SendFailure("Unknown error for $host: $result");
   }
 
   if (result.contains('result') == false) {
-    throw SendFailure("Unknown error: $result");
+    throw SendFailure("Unknown error for $host: $result");
   }
 
   final hash = json['result'];
