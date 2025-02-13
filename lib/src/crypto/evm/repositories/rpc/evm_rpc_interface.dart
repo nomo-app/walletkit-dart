@@ -53,7 +53,35 @@ final class EvmRpcInterface {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
   }) =>
-      _manager.performTask(task, timeout: timeout, maxTries: maxTries);
+      _manager.performTask(task, timeout: timeout, maxTries: maxTries).then(
+        (valueOrError) {
+          return valueOrError.when(
+            value: (value) => value.value,
+            error: (error) => throw Exception(error),
+          );
+        },
+      );
+
+  Future<R> performTaskForClients<T, R>(
+    Future<T> Function(EvmRpcClient) task, {
+    required R Function(
+      List<ValueOrError<T, EvmRpcClient>> results,
+    ) consilidate,
+    Duration timeout = const Duration(seconds: 30),
+    int maxTriesPerClient = 2,
+    int minClients = 2,
+    int? maxClients,
+    bool enforceParallel = false,
+  }) =>
+      _manager.performTaskForClients(
+        task,
+        consilidate: consilidate,
+        timeout: timeout,
+        maxTriesPerClient: maxTriesPerClient,
+        maxClients: maxClients,
+        minClients: minClients,
+        enforceParallel: enforceParallel,
+      );
 
   ///
   /// eth_call
@@ -100,6 +128,66 @@ final class EvmRpcInterface {
     );
     final balance = await erc20Contract.getBalance(address);
     return Amount(value: balance, decimals: token.decimals);
+  }
+
+  ///
+  /// Fetch Balance of ERC1155 Token
+  ///
+  Future<Amount> fetchERC1155BalanceOfToken({
+    required String address,
+    required BigInt tokenID,
+    required String contractAddress,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+    final balance = await erc1155Contract.balanceOf(
+      address: address,
+      tokenID: tokenID,
+    );
+
+    return Amount(value: balance, decimals: 0);
+  }
+
+  ///
+  /// Fetch Batch Balance of ERC1155 Tokens
+  ///
+  Future<List<BigInt>> fetchERC1155BatchBalanceOfTokens({
+    required List<String> accounts,
+    required List<BigInt> tokenIDs,
+    required String contractAddress,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+
+    final balances = await erc1155Contract.balanceOfBatch(
+      accounts: accounts,
+      tokenIDs: tokenIDs,
+    );
+
+    return balances;
+  }
+
+  ///
+  /// Fetch Uri of ERC115 Token
+  ///
+  Future<String> fetchERC1155UriOfToken({
+    required BigInt tokenID,
+    required String contractAddress,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+
+    final uri = await erc1155Contract.getUri(
+      tokenID: tokenID,
+    );
+
+    return uri;
   }
 
   Future<(Amount, int)> estimateNetworkFees({
@@ -160,12 +248,12 @@ final class EvmRpcInterface {
   Future<String> sendCoin({
     required TransferIntent<EvmFeeInformation> intent,
     required String from,
-    required Uint8List seed,
+    required Uint8List privateKey,
   }) async {
     final tx = await buildTransaction(
       sender: from,
       recipient: intent.recipient,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: intent.feeInfo,
       data: intent.encodedMemo,
       value: intent.amount.value,
@@ -176,7 +264,7 @@ final class EvmRpcInterface {
     );
 
     if (balance < tx.gasFee + tx.value) {
-      throw Failure("Insufficient funds to pay native gas fee");
+      throw WKFailure("Insufficient funds to pay native gas fee");
     }
 
     return await sendRawTransaction(tx.serialized.toHex);
@@ -188,7 +276,7 @@ final class EvmRpcInterface {
   Future<String> sendERC20Token({
     required TransferIntent<EvmFeeInformation> intent,
     required String from,
-    required Uint8List seed,
+    required Uint8List privateKey,
   }) async {
     assert(intent.token is ERC20Entity);
     assert(intent.memo == null);
@@ -202,10 +290,36 @@ final class EvmRpcInterface {
     );
 
     return erc20Contract.transfer(
-      seed: seed,
+      privateKey: privateKey,
       sender: from,
       to: intent.recipient,
       value: intent.amount.value,
+      feeInfo: intent.feeInfo,
+      accessList: intent.accessList,
+    );
+  }
+
+  ///
+  /// Send ERC1155 Token
+  ///
+  Future<String> sendERC1155Token({
+    required TransferIntent<EvmFeeInformation> intent,
+    required String contractAddress,
+    required BigInt tokenID,
+    required String from,
+    required Uint8List privateKey,
+  }) async {
+    final erc1155Contract = ERC1155Contract(
+      contractAddress: contractAddress,
+      rpc: this,
+    );
+
+    return erc1155Contract.safeTransferFrom(
+      sender: from,
+      to: intent.recipient,
+      tokenID: tokenID,
+      amount: intent.amount.value,
+      privateKey: privateKey,
       feeInfo: intent.feeInfo,
       accessList: intent.accessList,
     );
@@ -335,7 +449,7 @@ final class EvmRpcInterface {
   Future<RawEvmTransaction> buildTransaction({
     required String sender,
     required String recipient,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
@@ -361,7 +475,7 @@ final class EvmRpcInterface {
         RawEVMTransactionType1() => TransactionType.Type1,
         RawEVMTransactionType2() => TransactionType.Type2,
       },
-      derivePrivateKeyETH(seed),
+      privateKey,
       chainId: type.chainId,
     );
 
@@ -374,15 +488,44 @@ final class EvmRpcInterface {
     serializedTransactionHex = serializedTransactionHex.startsWith("0x")
         ? serializedTransactionHex
         : "0x$serializedTransactionHex";
-    return performTask(
+    return performTaskForClients(
       (client) => client.sendRawTransaction(serializedTransactionHex),
+      minClients: 1,
+      maxTriesPerClient: 1,
+      maxClients: 5,
+      enforceParallel: true,
+      consilidate: (resultsWithErrors) {
+        final results = resultsWithErrors
+            .whereType<Value<String, EvmRpcClient>>()
+            .map((v) => v.value);
+
+        if (results.isEmpty) {
+          throw Exception(
+            "No client was able to send the transaction: ${results}",
+          );
+        }
+
+        final hashMap = results.fold<Map<String, int>>(
+          {},
+          (acc, hash) {
+            acc[hash] = (acc[hash] ?? 0) + 1;
+            return acc;
+          },
+        );
+
+        final hash = hashMap.entries.reduce(
+          (a, b) => a.value > b.value ? a : b,
+        );
+
+        return hash.key;
+      },
     );
   }
 
   Future<String> buildAndBroadcastTransaction({
     required String sender,
     required String recipient,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required EvmFeeInformation? feeInfo,
     required Uint8List? data,
     required BigInt? value,
@@ -391,7 +534,7 @@ final class EvmRpcInterface {
     final signedTx = await buildTransaction(
       sender: sender,
       recipient: recipient,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: feeInfo,
       data: data,
       value: value,
@@ -428,7 +571,7 @@ final class EvmRpcInterface {
     required String contractAddress,
     required LocalContractFunctionWithValues function,
     required String sender,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required EvmFeeInformation? feeInfo,
     BigInt? value,
   }) async {
@@ -446,7 +589,7 @@ final class EvmRpcInterface {
     return await buildAndBroadcastTransaction(
       sender: sender,
       recipient: contractAddress,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: feeInfo,
       data: data,
       value: value ?? BigInt.zero,
@@ -485,7 +628,7 @@ final class EvmRpcInterface {
     required String from,
     required int tokenId,
     required String contractAddress,
-    required Uint8List seed,
+    required Uint8List privateKey,
   }) async {
     final function = LocalContractFunctionWithValues(
       name: "transferFrom",
@@ -514,7 +657,7 @@ final class EvmRpcInterface {
       contractAddress: contractAddress,
       function: function,
       sender: from,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: null,
     );
   }

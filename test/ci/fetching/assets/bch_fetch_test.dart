@@ -108,6 +108,7 @@ void main() {
     final (legacyTxList, _) = await fetchUTXOTransactionsFromEpubKey(
       networkType: network,
       ePubKey: rejectXpub,
+      purpose: HDWalletPurpose.NO_STRUCTURE,
       addressTypes: [AddressType.cashaddr, AddressType.legacy],
     );
     expect(legacyTxList.length, greaterThanOrEqualTo(17));
@@ -121,6 +122,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: network,
       ePubKey: rejectXpub,
+      purpose: HDWalletPurpose.BIP44,
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
     );
 
@@ -142,6 +144,7 @@ void main() {
     final (bip44TxList, bip44Nodes) = await fetchUTXOTransactionsFromEpubKey(
       networkType: network,
       ePubKey: rejectXpubBip44,
+      purpose: HDWalletPurpose.BIP44,
       addressTypes: [AddressType.legacy, AddressType.cashaddr],
     );
 

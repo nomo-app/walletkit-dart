@@ -13,15 +13,15 @@ final seed = helloSeed;
 void main() {
   test('measure bip32 derivation performance', () {
     const c = EXTERNAL_CHAIN_INDEX;
-    const type = bitcoinNSHDPath;
+    const purpose = HDWalletPurpose.NO_STRUCTURE;
     const t = ZeniqNetwork;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
 
-    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
+    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
       ePubKey: ePubKey,
       networkType: t,
-      walletPath: type,
+      purpose: purpose,
     );
     expect(
       deriveChildNode(
@@ -29,7 +29,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mGDcPPDSnyJDKM7MzUTmFDwhaEHxFTEw1Q",
@@ -41,7 +41,7 @@ void main() {
           chainIndex: c,
           index: i,
           networkType: ZeniqNetwork,
-          walletPurpose: type.purpose,
+          walletPurpose: purpose,
           addressTypes: [AddressType.legacy],
         ).address,
         startsWith("m"),
@@ -51,14 +51,14 @@ void main() {
 
   test('derive external ZENIQ addresses from ePubKey', () {
     const c = EXTERNAL_CHAIN_INDEX;
-    const type = bitcoinNSHDPath;
+    const purpose = HDWalletPurpose.NO_STRUCTURE;
     const t = ZeniqNetwork;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
-    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
+    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
       ePubKey: ePubKey,
       networkType: t,
-      walletPath: type,
+      purpose: purpose,
     );
     expect(
       deriveChildNode(
@@ -66,7 +66,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mGDcPPDSnyJDKM7MzUTmFDwhaEHxFTEw1Q",
@@ -77,7 +77,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mW96EYARiQNDe1fua5Bc1x9nhNg47JrbM2",
@@ -88,7 +88,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "mR4FAAi9v8MtJCiAVMtCu4MaTvhLFZofxf",
@@ -98,13 +98,13 @@ void main() {
   test('derive external Bitcoin addresses from ePubKey', () {
     const c = EXTERNAL_CHAIN_INDEX;
     const t = BitcoinNetwork;
-    const type = bitcoinNSHDPath;
+    const purpose = HDWalletPurpose.NO_STRUCTURE;
     const ePubKey =
         "xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8";
-    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
+    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
       ePubKey: ePubKey,
       networkType: t,
-      walletPath: type,
+      purpose: purpose,
     );
     expect(
       deriveChildNode(
@@ -112,7 +112,7 @@ void main() {
         chainIndex: c,
         index: 0,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "113G5SRkh8KqMfmqJKphuS1ALjxC3ead3Z",
@@ -123,7 +123,7 @@ void main() {
         chainIndex: c,
         index: 1,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "1ExjvbNjcZPqgLLNsvYYgADFTtLHrwYivT",
@@ -134,7 +134,7 @@ void main() {
         chainIndex: c,
         index: 2,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.legacy],
       ).address,
       "19strDvTpHPWLXNdoDF9ZGR3ESMa7NpXPw",
@@ -470,12 +470,12 @@ void main() {
 
   test("Derive Litecoin Addresses", () async {
     const t = LitecoinNetwork;
-    const type = litecoinBip44HDPath;
+    const purpose = HDWalletPurpose.BIP44;
 
-    final masterNode = deriveMasterNodeFromEpubKeyWithCheck(
+    final masterNode = deriveMasterNodeFromExtendedKeyWithCheck(
       ePubKey: wkDebugXPUB,
       networkType: t,
-      walletPath: type,
+      purpose: purpose,
     );
     for (var i = 0; i < 10; i++) {
       final addresses = deriveChildNode(
@@ -483,7 +483,7 @@ void main() {
         chainIndex: EXTERNAL_CHAIN_INDEX,
         index: i,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.segwit, AddressType.legacy],
       ).addresses;
 
@@ -496,7 +496,7 @@ void main() {
         chainIndex: INTERNAL_CHAIN_INDEX,
         index: i,
         networkType: t,
-        walletPurpose: type.purpose,
+        walletPurpose: purpose,
         addressTypes: [AddressType.segwit, AddressType.legacy],
       ).addresses;
 

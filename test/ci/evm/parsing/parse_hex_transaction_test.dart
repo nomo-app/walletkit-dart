@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 import 'package:convert/convert.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -19,24 +20,15 @@ void main() {
     // expect(tx.chainId, BigInt.from(383414847825));
   });
 
-  test('arrayify test', () {
-    int value = 123456;
-    Uint8List byteArray = arrayifyInteger(value);
-
-    int result = unarrayifyInteger(byteArray, 0, byteArray.length);
-
-    expect(result, value);
-  });
-
   test('rlp encode', () {
     final message =
         Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
 
-    DecodedRLP decoded = decodeRLP(message, 0);
+    final decoded = decodeRLP(message).$1;
 
-    final encoded = rlpEncode(decoded.result);
+    final encoded = encodeRLP(decoded);
 
-    expect(encoded, unsignedTxFromNomo);
+    expect(encoded.toHex, unsignedTxFromNomo);
   });
 
   test('serialize tx', () {
@@ -46,5 +38,25 @@ void main() {
     final messageHex = tx.serializedUnsigned(ZeniqSmartNetwork.chainId).toHex;
 
     expect(messageHex, unsignedTxFromNomo);
+  });
+
+  test('Parse hex string to RawEvmTransaction', () {
+    STRICT_RLP_DECODE = true;
+    const msgHex =
+        "f86b8151843b9aca00830124f894e9e7CEA3DedcA5984780Bafc599bD69ADd087D5680b844a9059cbb000000000000000000000000a7fa4bb0bba164f999e8c7b83c9da96a3be44616000000000000000000000000000000000000000000000000000000000000271081388080";
+
+    expect(
+      () => RawEvmTransaction.fromUnsignedHex(msgHex),
+      throwsA(
+        isA<RLPException>(),
+      ),
+    );
+
+    STRICT_RLP_DECODE = false;
+
+    final tx = RawEvmTransaction.fromUnsignedHex(msgHex);
+
+    expect(tx.nonce, BigInt.from(81));
+    expect(tx.value, BigInt.zero);
   });
 }

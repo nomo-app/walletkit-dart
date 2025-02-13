@@ -10,9 +10,8 @@ const stakingPartnerAddress =
 
 (RawEvmTransaction, Signature) signEvmTransaction({
   required String messageHex,
-  required Uint8List seed,
+  required Uint8List privateKey,
 }) {
-  final privateKey = derivePrivateKeyETH(seed);
   final rawTx = RawEvmTransaction.fromUnsignedHex(messageHex);
 
   final signature = switch (rawTx) {
@@ -94,10 +93,10 @@ Uint8List _createEthStyleMessageHash(String message) {
 
 Signature _parseEthSignature(String signature) {
   if (!signature.startsWith("0x")) {
-    throw Failure("expected to begin with 0x");
+    throw WKFailure("expected to begin with 0x");
   }
   if (signature.length != 132) {
-    throw Failure("Unexpected signature length");
+    throw WKFailure("Unexpected signature length");
   }
   // Skip the prefix byte and extract the remaining 129 hex characters as the signature string
   String signatureStr = signature.substring(2);
@@ -118,10 +117,9 @@ Signature _parseEthSignature(String signature) {
 
 String signEvmMessage({
   required String message,
-  required Uint8List seed,
+  required Uint8List privateKey,
 }) {
   final payload = Uint8List.fromList(utf8.encode(message));
-  final privateKey = derivePrivateKeyETH(seed);
   final sig = Signature.signPersonalMessageToUint8List(payload, privateKey);
   return "0x" + HEX.encode(sig);
 }

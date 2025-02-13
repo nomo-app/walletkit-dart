@@ -14,9 +14,13 @@ extension ExtFixedPrecision on double {
 }
 
 extension BigIntUtil on BigInt {
-  Uint8List get bigIntToBytes {
+  Uint8List get toBytesUnsigned {
     assert(this >= BigInt.zero, "BigInt must be positive");
     return p_utils.encodeBigIntAsUnsigned(this);
+  }
+
+  Uint8List get toBytes {
+    return p_utils.encodeBigInt(this);
   }
 
   String get toHex => toRadixString(16);
@@ -25,7 +29,7 @@ extension BigIntUtil on BigInt {
 }
 
 extension IntListUtil on List<int> {
-  BigInt get toBigInt => BigInt.parse(hex.encode(this), radix: 16);
+  // BigInt get toBigInt => BigInt.parse(hex.encode(this), radix: 16);
 
   Uint8List get toUint8List => Uint8List.fromList(this);
 
@@ -33,15 +37,43 @@ extension IntListUtil on List<int> {
 }
 
 extension BufferUtil on Uint8List {
-  BigInt toBigInt({bool littleEndian = true}) {
-    var buf = littleEndian ? reversed : this;
+  /// Decode a unsigned big-endian integer from the buffer.
+  int get toUInt {
+    int result = 0;
+    for (var i = 0; i < length; i++) {
+      result = result * 256 + this[i];
+    }
+    return result;
+  }
 
-    var asHex = hex.encode(buf.toList());
+  /// Decode a big-endian integer from the buffer.
+  /// Can be positive or negative.
+  int get toInt {
+    bool negative = length > 0 && (this[0] & 0x80) == 0x80;
+    int result = 0;
 
-    return BigInt.parse(asHex, radix: 16);
+    for (var i = 0; i < length; i++) {
+      result = result * 256 + this[i];
+    }
+
+    return negative ? -(~result + 1) : result;
+  }
+
+  /// Decode a signed big-endian integer from the buffer.
+  /// Can be positive or negative.
+  // BigInt get toBigInt => p_utils.decodeBigInt(this);
+
+  BigInt get toUBigInt {
+    BigInt result = BigInt.zero;
+    for (var i = 0; i < length; i++) {
+      result = result * BigInt.from(256) + BigInt.from(this[i]);
+    }
+    return result;
   }
 
   String get toHex => hex.encode(this);
+
+  String get bytesToUTF8 => utf8.decode(this, allowMalformed: true);
 
   Uint8List get rev => Uint8List.fromList(reversed.toList());
 

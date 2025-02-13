@@ -15,7 +15,7 @@ abstract class InternalContract {
 
   Future<String> interact({
     required ContractFunctionWithValues function,
-    required Uint8List seed,
+    required Uint8List privateKey,
     required String sender,
     EvmFeeInformation? feeInfo,
     BigInt? value,
@@ -38,7 +38,7 @@ abstract class InternalContract {
     return await rpc.buildAndBroadcastTransaction(
       sender: sender,
       recipient: contractAddress,
-      seed: seed,
+      privateKey: privateKey,
       feeInfo: feeInfo,
       data: functionData,
       value: value ?? BigInt.zero,

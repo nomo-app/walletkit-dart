@@ -26,8 +26,12 @@ class CoinEntity {
   ERC20Entity? get asEthBased =>
       this is ERC20Entity ? this as ERC20Entity : null;
 
+  ERC1155Entity? get asERC1155 =>
+      this is ERC1155Entity ? this as ERC1155Entity : null;
+
   bool get isEvm => this is EvmCoinEntity;
   bool get isERC20 => this is ERC20Entity;
+  bool get isERC1155 => this is ERC1155Entity;
   bool get isUTXO => switch (this) {
         btcCoin || ltcCoin || zeniqCoin || bchCoin || ec8Coin => true,
         _ => false,
@@ -62,6 +66,14 @@ class CoinEntity {
           'contractAddress': ethBasedToken.contractAddress,
           'allowDeletion': ethBasedToken.allowDeletion,
         },
+      ERC1155Entity erc1155Token => {
+          'name': erc1155Token.name,
+          'symbol': erc1155Token.symbol,
+          'contractAddress': erc1155Token.contractAddress,
+          'tokenId': erc1155Token.tokenId.toString(),
+          'allowDeletion': erc1155Token.allowDeletion,
+          'chainID': erc1155Token.chainID,
+        },
       EvmCoinEntity evmEntity => {
           'name': evmEntity.name,
           'symbol': evmEntity.symbol,
@@ -94,6 +106,21 @@ class CoinEntity {
           allowDeletion: json['allowDeletion'] ?? true,
         ),
       {
+        "name": String name,
+        "symbol": String symbol,
+        "contractAddress": String contractAddress,
+        "tokenId": String tokenId,
+        "chainID": int chainID,
+      } =>
+        ERC1155Entity(
+          name: name,
+          symbol: symbol,
+          contractAddress: contractAddress,
+          tokenId: BigInt.parse(tokenId),
+          chainID: chainID,
+          allowDeletion: json['allowDeletion'] ?? true,
+        ),
+      {
         'name': String name,
         'symbol': String symbol,
         'decimals': int decimals,
@@ -122,6 +149,7 @@ class CoinEntity {
 
 class EvmCoinEntity extends CoinEntity {
   final int chainID;
+  final bool? allowDeletion;
 
   @override
   String get identifier => "$name:$symbol:$decimals:$chainID";
@@ -136,6 +164,7 @@ class EvmCoinEntity extends CoinEntity {
     return other is EvmCoinEntity &&
         other is! ERC20Entity &&
         other is! ERC721Entity &&
+        other is! ERC1155Entity &&
         other.chainID == chainID;
   }
 
@@ -144,12 +173,92 @@ class EvmCoinEntity extends CoinEntity {
     required super.symbol,
     required super.decimals,
     required this.chainID,
+    this.allowDeletion = false,
   });
+
+  EvmCoinEntity copyWith({
+    String? name,
+    String? symbol,
+    int? decimals,
+    int? chainID,
+    bool? allowDeletion,
+  }) {
+    return EvmCoinEntity(
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      decimals: decimals ?? this.decimals,
+      chainID: chainID ?? this.chainID,
+      allowDeletion: allowDeletion ?? this.allowDeletion,
+    );
+  }
+}
+
+class ERC1155Entity extends EvmCoinEntity {
+  final String contractAddress;
+  final BigInt tokenId;
+
+  const ERC1155Entity({
+    required super.name,
+    required super.symbol,
+    required super.chainID,
+    required this.contractAddress,
+    required this.tokenId,
+    super.allowDeletion,
+  }) : super(decimals: 0);
+
+  String get lowerCaseAddress => contractAddress.toLowerCase();
+
+  @override
+  int get hashCode =>
+      lowerCaseAddress.hashCode ^ chainID.hashCode ^ tokenId.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ERC1155Entity &&
+        other.lowerCaseAddress == lowerCaseAddress &&
+        other.chainID == chainID &&
+        other.tokenId == tokenId;
+  }
+
+  ERC1155Entity copyWith({
+    String? name,
+    String? symbol,
+    int? decimals,
+    String? contractAddress,
+    BigInt? tokenId,
+    bool? allowDeletion,
+    int? chainID,
+  }) {
+    return ERC1155Entity(
+      name: name ?? this.name,
+      symbol: symbol ?? this.symbol,
+      contractAddress: contractAddress ?? this.contractAddress,
+      tokenId: tokenId ?? this.tokenId,
+      allowDeletion: allowDeletion ?? this.allowDeletion,
+      chainID: chainID ?? this.chainID,
+    );
+  }
+
+  factory ERC1155Entity.fromJson(
+    Map<String, dynamic> json, {
+    required bool allowDeletion,
+    required int chainID,
+  }) {
+    return ERC1155Entity(
+      name: json['name'],
+      symbol: json['symbol'],
+      contractAddress: json['contractAddress'],
+      tokenId: BigInt.parse(json['tokenId']),
+      allowDeletion: allowDeletion,
+      chainID: chainID,
+    );
+  }
 }
 
 class ERC20Entity extends EvmCoinEntity {
   final String contractAddress;
-  final bool? allowDeletion;
 
   const ERC20Entity({
     required super.name,
@@ -157,7 +266,7 @@ class ERC20Entity extends EvmCoinEntity {
     required super.decimals,
     required super.chainID,
     required this.contractAddress,
-    this.allowDeletion = false,
+    super.allowDeletion,
   });
 
   String get lowerCaseAddress => contractAddress.toLowerCase();

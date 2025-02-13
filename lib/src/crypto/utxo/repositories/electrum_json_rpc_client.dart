@@ -233,6 +233,7 @@ class ElectrumXClient {
   }
 
   String get host => _client.host;
+  int get port => _client.port;
 }
 
 Future<String> fetchRawTxByHash(

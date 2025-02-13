@@ -59,24 +59,32 @@ BipNode deriveMasterNodeFromSeed({
   return node;
 }
 
-BipNode deriveMasterNodeFromEpubKeyWithCheck({
+BipNode deriveMasterNodeFromExtendedKeyWithCheck({
   required String ePubKey,
   required UTXONetworkType networkType,
-  required HDWalletPath walletPath,
+  required HDWalletPurpose purpose,
 }) {
-  final bip32NetworkType =
-      networkType.networkBIP.getForWalletType(walletPath.purpose);
+  final (node, version) = deriveMasterNodeFromExtendedKey(
+    ePubKey,
+    networkType: networkType,
+    purpose: purpose,
+  );
 
-  final (node, version) = deriveMasterNodeFromEpubKey(ePubKey);
-
-  if (version != bip32NetworkType.bip32.public) {
-    throw UnsupportedError("invalid ePubKey");
+  if (version != node.network.bip32.private &&
+      version != node.network.bip32.public) {
+    throw ArgumentError(
+      "Version mismatch. Extracted Version: $version. Expected: ${node.network.bip32.private} or ${node.network.bip32.public}",
+    );
   }
 
   return node;
 }
 
-(BipNode node, int version) deriveMasterNodeFromEpubKey(String ePubKey) {
+(BipNode node, int version) deriveMasterNodeFromExtendedKey(
+  String ePubKey, {
+  UTXONetworkType? networkType,
+  HDWalletPurpose? purpose,
+}) {
   final buffer = bs58check.decode(ePubKey);
 
   if (buffer.length != 78) {
@@ -87,13 +95,17 @@ BipNode deriveMasterNodeFromEpubKeyWithCheck({
 
   final node = BipNode.fromBase58(
     ePubKey,
-    bip32.NetworkType(
-      wif: 0x80, // Not used for deriving Node
-      bip32: bip32.Bip32Type(
-        public: version,
-        private: 0, // Can be ingored since we are only accepting public keys
-      ),
-    ),
+    switch ((networkType, purpose)) {
+      (UTXONetworkType network, HDWalletPurpose purpose) =>
+        network.networkBIP.getForWalletType(purpose),
+      _ => bip32.NetworkType(
+          wif: 0x80,
+          bip32: bip32.Bip32Type(
+            private: 0x0488ADE4,
+            public: 0x0488B21E,
+          ),
+        ),
+    },
   );
 
   return (node, version);

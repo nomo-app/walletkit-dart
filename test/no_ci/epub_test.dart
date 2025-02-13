@@ -15,6 +15,7 @@ void main() {
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
       ePubKey: epubKey,
+      purpose: HDWalletPurpose.NO_STRUCTURE,
     );
 
     reportCoinsAndAddresses(txList: txs, type: ZeniqNetwork);

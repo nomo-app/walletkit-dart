@@ -1,167 +1,120 @@
 @Timeout(Duration(seconds: 600))
-
 import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-
+import '../../rpc_test_config.dart';
+import '../../shared_rpc_tests.dart';
 import '../../utils.dart';
 
 void main() {
-  test(
-    "Eth RPC",
-    () async {
-      final ethereumRPC = EvmRpcInterface(
-        type: EthereumNetwork,
-        useQueuedManager: true,
-        awaitRefresh: true,
-        clients: [
-          EvmRpcClient('https://rpc.notadegen.com/eth'), // Could be not working
-          EvmRpcClient(
-              'https://rpc.notadegen.com/asdasdasda'), // Definitely not working
-          EvmRpcClient('https://eth.llamarpc.com'),
-          EvmRpcClient('https://rpc.ankr.com/eth'),
-        ],
-      );
+  final arbitrumParams = RPCTestParameters(token: arbitrum);
+  final ethereumParams = RPCTestParameters(token: usdtToken);
+  final zeniqSmartParams = RPCTestParameters(token: avinocZSC);
+  final moonbeamParams = RPCTestParameters(token: frax);
+  final avalancheParams = RPCTestParameters(token: wrappedETH);
+  final optimismParams = RPCTestParameters(token: optimism);
+  final zkSyncParams = RPCTestParameters(token: wbtcZKSync);
+  final polygonParams = RPCTestParameters(token: cLFi);
+  final baseParams = RPCTestParameters(token: mathToken);
+  final bnbParams = RPCTestParameters(token: zeniqBSCToken);
 
-      try {
-        final block = await ethereumRPC.getBlockNumber();
-        expect(block, greaterThan(20764294));
-        print(block);
-      } catch (e) {
-        print(e);
-      }
-    },
-  );
+  runSharedRPCTests(
+      description: "Ethereum Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: EthereumNetwork),
+      params: ethereumParams);
+  runSharedRPCTests(
+      description: "Zeniq_Smart_Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: ZeniqSmartNetwork),
+      params: zeniqSmartParams);
+  runSharedRPCTests(
+      description: "Arbitrum Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: ArbitrumNetwork),
+      params: arbitrumParams);
+  runSharedRPCTests(
+      description: "Moonbeam Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: MoonbeamNetwork),
+      params: moonbeamParams);
+  runSharedRPCTests(
+      description: "Avalanche Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: AvalancheNetwork),
+      params: avalancheParams);
+  runSharedRPCTests(
+      description: "Optimism Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: OptimismNetwork),
+      params: optimismParams);
+  runSharedRPCTests(
+      description: "ZKSync Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: ZKSyncNetwork),
+      params: zkSyncParams);
+  runSharedRPCTests(
+      description: "Base Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: EthereumNetwork),
+      params: baseParams);
+  runSharedRPCTests(
+      description: "Polygon Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: PolygonNetwork),
+      params: polygonParams);
+  runSharedRPCTests(
+      description: "Binance Network RPC Tests",
+      config: RPCLiveTestConfig(networkType: BNBNetwork),
+      params: bnbParams);
 
-  test('ZeniqSmartChain Fetching rejectWallet', () async {
-    final zscBalance = await zeniqSmartChainRPC.fetchBalance(
-      address: rejectEVM,
-    );
-
-    print('ZSC Balance: $zscBalance');
-
-    final avinocZSCBalance = await zeniqSmartChainRPC.fetchTokenBalance(
-      rejectEVM,
-      avinocZSC,
-    );
-
-    print('AVINOC ZSC Balance: $avinocZSCBalance');
-  });
-
-  test('estimate Gas Limit', () async {
-    var data = erc20TransferSig +
-        spoilEVM.substring(2).padLeft(64, '0') +
-        BigInt.from(0).toHex.padLeft(64, '0');
-
-    var gasLimit = await zeniqSmartChainRPC.estimateGasLimit(
-      sender: rejectEVM,
-      recipient: avinocZSC.contractAddress,
-      gasPrice: null,
-      value: BigInt.zero,
-      data: data.hexToBytes,
-    );
-
-    expect(gasLimit, greaterThanOrEqualTo(GasLimits.ethSend.value));
-
-    data = "Test memo";
-
-    gasLimit = await zeniqSmartChainRPC.estimateGasLimit(
-      sender: rejectEVM,
-      recipient: spoilEVM,
-      gasPrice: null,
-      value: BigInt.one,
-      data: data.asUTF8,
-    );
-
-    final memoGasLimit = GasLimits.ethSend.value + 16 * data.length;
-
-    expect(gasLimit, greaterThanOrEqualTo(memoGasLimit));
-  });
-
-  test('Arbitrum Test', () async {
-    final balance = await arbitrumRPC.fetchBalance(
+  test('test erc1155 balance of token', () async {
+    final balance = await zeniqSmartChainRPC.fetchERC1155BalanceOfToken(
       address: arbitrumTestWallet,
+      tokenID: BigInt.from(2),
+      contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
     );
-    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+
+    print('Balance: ${balance.value}');
+    expect(balance, isNotNull);
+    expect(balance.value, greaterThanOrEqualTo(BigInt.zero));
   });
 
-  // test('Base Test', () async {
-  //   final rpcInterface = EvmRpcInterface(BaseNetwork);
-
-  //   final balance = await rpcInterface.fetchBalance(
-  //     address: arbitrumTestWallet,
-  //   );
-  //   expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
-
-  //   final tokenBalance =
-  //       await rpcInterface.fetchTokenBalance(arbitrumTestWallet, mathToken);
-
-  //   expect(tokenBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
-  // });
-
-  test('MoonBeam Test', () async {
-    final balance = await moonbeamRPC.fetchBalance(
-      address: arbitrumTestWallet,
+  test('test erc1155 batch balance of tokens', () async {
+    final balances = await zeniqSmartChainRPC.fetchERC1155BatchBalanceOfTokens(
+      accounts: [
+        arbitrumTestWallet,
+        arbitrumTestWallet,
+        arbitrumTestWallet,
+        arbitrumTestWallet,
+        arbitrumTestWallet,
+      ],
+      tokenIDs: [
+        BigInt.from(0),
+        BigInt.from(1),
+        BigInt.from(2),
+        BigInt.from(3),
+        BigInt.from(4)
+      ],
+      contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
     );
 
-    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
-
-    final fraxBalance = await moonbeamRPC.fetchTokenBalance(
-      arbitrumTestWallet,
-      frax,
-    );
-
-    expect(fraxBalance.value, greaterThan(BigInt.zero));
+    print('Balances: $balances');
+    expect(balances, isNotNull);
   });
 
-  test('Avalanche Test', () async {
-    final balance = await avalancheRPC.fetchBalance(
-      address: arbitrumTestWallet,
+  test('test uri of erc1155 tokens', () async {
+    final uri = await ethereumRPC.fetchERC1155UriOfToken(
+      tokenID: BigInt.from(1),
+      contractAddress: "0x1ca3262009b21F944e6b92a2a88D039D06F1acFa",
     );
 
-    print(balance);
-    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
+    print('URI: $uri');
+    expect(uri, isNotNull);
   });
 
-  // TODO: Add API Key & Change RPC
-  // test('Optimism Test', () async {
-  //   final balance = await optimismRPC.fetchBalance(
-  //     address: arbitrumTestWallet,
-  //   );
+  test("is erc1155", () async {
+    bool isERC1155 = false;
+    try {
+      await ethereumRPC.fetchERC1155BalanceOfToken(
+          address: arbitrumTestWallet,
+          tokenID: BigInt.from(0),
+          contractAddress: "0x1ca3262009b21F944e6b92a2a88D039D06F1acFa");
+      isERC1155 = true;
+    } catch (e) {
+      isERC1155 = false;
+    }
 
-  //   expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
-
-  //   final opBalance = await optimismRPC.fetchTokenBalance(
-  //     arbitrumTestWallet,
-  //     optimism,
-  //   );
-
-  //   expect(opBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
-  // });
-  test('zkSync Test', () async {
-    final balance = await zksyncRPC.fetchBalance(
-      address: arbitrumTestWallet,
-    );
-
-    expect(balance.value, greaterThanOrEqualTo(BigInt.from(0)));
-
-    final wbtcBalance = await zksyncRPC.fetchTokenBalance(
-      arbitrumTestWallet,
-      wbtcZKSync,
-    );
-
-    expect(wbtcBalance.value, greaterThanOrEqualTo(BigInt.from(0)));
-  });
-
-  test('Fetch Network Fees', () async {
-    final fees = await zeniqSmartChainRPC.estimateNetworkFees(
-      recipient: rejectEVM,
-      data: null,
-      sender: rejectEVM,
-      value: BigInt.one,
-    );
-
-    expect(fees, isNotNull);
-    expect(fees.$1.value, equals(BigInt.from(10000000000))); // 10 Gwei
-    expect(fees.$2, greaterThanOrEqualTo(21000));
+    print('isERC1155: $isERC1155');
   });
 }

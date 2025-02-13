@@ -78,6 +78,23 @@ extension ByteUtil on ByteData {
     }
     return (getUint64(offset + 1, Endian.little), 9);
   }
+
+  int readVarIntFromLength(
+    int offset,
+    int length,
+    Endian endian,
+  ) {
+    if (length < 0xfd) {
+      return getUint8(offset);
+    }
+    if (length == 0xfd) {
+      return getUint16(offset, endian);
+    }
+    if (length == 0xfe) {
+      return getUint32(offset, endian);
+    }
+    return getUint64(offset, endian);
+  }
 }
 
 extension BufferUtil on Uint8List {

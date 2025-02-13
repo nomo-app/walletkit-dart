@@ -32,6 +32,7 @@ void main() {
       ePubKey: ePubKeyNS,
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
+      purpose: HDWalletPurpose.NO_STRUCTURE,
     );
 
     expect(txs.length, greaterThanOrEqualTo(79));
@@ -47,6 +48,7 @@ void main() {
       addressTypes: [AddressType.legacy, AddressType.segwit],
       networkType: LitecoinNetwork,
       minEndpoints: 1,
+      purpose: HDWalletPurpose.BIP44,
     );
 
     expect(txs.whereType<NotAvaialableUTXOTransaction>().length, equals(0));
