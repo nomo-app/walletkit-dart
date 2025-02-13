@@ -200,14 +200,18 @@ class BTCRawTransaction extends RawTransaction {
       weight += 2.toBI * 4.toBI; // Segwit Marker + Segwit Flag
     }
 
-    return inputs.fold(
-          0.toBI,
-          (prev, input) => prev + input.weight,
-        ) +
-        outputs.fold(
-          0.toBI,
-          (prev, output) => prev + output.weight,
-        );
+    final inputWeight = inputs.fold(
+      0.toBI,
+      (prev, input) => prev + input.weight,
+    );
+    final outputWeight = outputs.fold(
+      0.toBI,
+      (prev, output) => prev + output.weight,
+    );
+
+    weight += inputWeight + outputWeight;
+
+    return weight;
   }
 
   bool get isSegwit {

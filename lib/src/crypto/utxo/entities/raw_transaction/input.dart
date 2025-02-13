@@ -35,12 +35,21 @@ sealed class Input {
     BigInt size = getVarIntSize(_wittnessScript!.length)
         .toBI; // Count of witness elements
 
-    for (final element in witness!) {
-      size += getVarIntSize(element.length).toBI; // Size of this element
-      size += element.length.toBI; // The element itself
+    final wittnessChunks =
+        decodeScriptWittness(wittnessScript: _wittnessScript!);
+
+    for (final chunk in wittnessChunks) {
+      size += getVarIntSize(chunk.length).toBI; // Size of this element
+      size += chunk.length.toBI; // The element itself
     }
 
     return size;
+  }
+
+  BigInt get scriptSize {
+    if (_scriptSig == null || _scriptSig!.isEmpty) return 0.toBI;
+
+    return getVarIntSize(_scriptSig!.length).toBI + _scriptSig!.length.toBI;
   }
 
   BigInt get weight;
@@ -261,14 +270,11 @@ class BTCInput extends Input {
     BigInt weight = (txid.length + output_index_length + sequence_length).toBI *
         4.toBI; // (32 + 4 + 4) * 4
 
-    weight +=
-        (scriptSig.length + getVarIntSize(scriptSig.length)).toBI * 4.toBI;
-
+    if (_scriptSig != null) {
+      weight += scriptSize * 4.toBI;
+    }
     if (_wittnessScript != null) {
-      weight +=
-          (_wittnessScript!.length + getVarIntSize(_wittnessScript!.length))
-                  .toBI *
-              4.toBI;
+      weight += witnessSize;
     }
 
     return weight;
