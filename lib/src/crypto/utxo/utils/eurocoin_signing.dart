@@ -27,10 +27,10 @@ String ec8Recover({required String message, required String sig}) {
 
 Signature _parseEc8Signature(String signature) {
   if (signature.startsWith("0x")) {
-    throw Failure("expected to not begin with 0x");
+    throw WKFailure("expected to not begin with 0x");
   }
   if (signature.length != 130) {
-    throw Failure("Unexpected signature length");
+    throw WKFailure("Unexpected signature length");
   }
 
   // Extract the r and s values
