@@ -127,6 +127,11 @@ Uint8List ripmed160Sha256Hash(Uint8List buffer) {
   return ripmed160.process(sha256.process(buffer));
 }
 
+Uint8List ripmed160Hash(Uint8List buffer) {
+  final ripmed160 = RIPEMD160Digest();
+  return ripmed160.process(buffer);
+}
+
 ///
 /// Sha256 Hash of Sha256 Hash
 ///

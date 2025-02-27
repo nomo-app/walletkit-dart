@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/payments/pk_script_converter.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
@@ -64,22 +64,22 @@ sealed class RawTransaction {
 
   Uint8List legacySigHash({
     required int index,
-    required Uint8List prevScriptPubKey,
+    required BTCLockingScript prevScript,
     required int hashType,
+    required UTXONetworkType networkType,
   }) {
+    assert(
+        hashType == networkType.sighash.all, "Only SIGHASH_ALL is supported");
+
     final copy = createCopy();
 
     // clear all scriptSigs
     for (int i = 0; i < copy.inputs.length; i++) {
-      copy.inputs[i] = copy.inputs[i].addScript(
-        scriptSig: Uint8List.fromList([]),
-      );
+      copy.inputs[i] = copy.inputs[i].addScript(EmptyUnlockingScript());
     }
 
     // set scriptSig for inputIndex to prevScriptPubKeyHex
-    copy.inputs[index] = copy.inputs[index].addScript(
-      scriptSig: prevScriptPubKey,
-    );
+    copy.inputs[index] = copy.inputs[index].addScript(prevScript);
 
     final bytes = copy is EC8RawTransaction ? copy.bytesForSigning : copy.bytes;
 
@@ -296,7 +296,7 @@ class BTCRawTransaction extends RawTransaction {
 
     /// Witness
     if (isSegwit) {
-      List<(Uint8List, BTCInput)> wittnessScripts = [];
+      List<(BTCUnlockingScript, BTCInput)> wittnessScripts = [];
 
       for (final input in inputs) {
         final (emptyScript, emptyScriptLength) = buffer.bytes.readUint8(offset);
@@ -305,15 +305,17 @@ class BTCRawTransaction extends RawTransaction {
           continue;
         }
 
-        final (wittnessScript, length) =
-            readScriptWittness(buffer: buffer, offset: offset);
-        wittnessScripts.add((wittnessScript, input));
-        offset += length;
+        final witness = ScriptWitness.fromScript(
+          buffer.sublist(offset),
+        );
+
+        wittnessScripts.add((witness, input));
+        offset += witness.size;
       }
 
       for (final (wittnessScript, input) in wittnessScripts) {
         final index = inputs.indexOf(input);
-        inputs[index] = input.addScript(wittnessScript: wittnessScript);
+        inputs[index] = input.addScript(wittnessScript);
       }
     }
 
@@ -358,7 +360,7 @@ class BTCRawTransaction extends RawTransaction {
         0,
         (prev, input) {
           assert(input.isSegwit);
-          return prev + input.wittnessScript.length;
+          return prev + input.script!.size;
         },
       );
       txByteLength += nonSegwitInputs.length; // Empty Script
@@ -395,7 +397,7 @@ class BTCRawTransaction extends RawTransaction {
     if (hasWitness)
       for (final input in inputs) {
         if (input.isSegwit) {
-          offset += buffer.writeSlice(offset, input.wittnessScript);
+          offset += buffer.writeSlice(offset, input.script!.bytes); // TODO: Fix
           continue;
         }
 
@@ -410,18 +412,22 @@ class BTCRawTransaction extends RawTransaction {
 
   ///
   /// BIP143 SigHash: https://github.com/bitcoin/bips/blob/master/bip-0143.mediawiki
+  /// Currently only support SIG_HASH_ALL
   ///
   Uint8List bip143sigHash({
     required int index,
-    required Uint8List prevScriptPubKey,
+    required BTCLockingScript prevScript,
     required ElectrumOutput output,
     required int hashType,
+    required UTXONetworkType networkType,
   }) {
+    assert(
+        hashType == networkType.sighash.all, "Only SIGHASH_ALL is supported");
+
     ///
     /// Always use P2PKH in bip143 sigHash
     ///
-    final converter = PublicKeyScriptConverter(prevScriptPubKey);
-    final p2pkhScript = converter.p2pkhScript;
+    final p2pkhScript = PayToPublicKeyHashScript(prevScript.data);
 
     final outputBuffers = outputs.map((output) => output.bytes);
     final txOutSize = outputBuffers.fold(
@@ -455,13 +461,13 @@ class BTCRawTransaction extends RawTransaction {
 
     for (final output in outputs) {
       tOffset += tBuffer.bytes.writeUint64(tOffset, output.value.toInt());
-      tOffset += tBuffer.writeVarSlice(tOffset, output.scriptPubKey);
+      tOffset += tBuffer.writeVarSlice(tOffset, output.script.bytes);
     }
     final hashOutputs = sha256Sha256Hash(tBuffer);
 
     /// Final Buffer
     final inputToSign = inputs[index];
-    final prevScriptPubKeyLength = varSliceSize(p2pkhScript);
+    final prevScriptPubKeyLength = varSliceSize(p2pkhScript.bytes);
     tBuffer = Uint8List(156 + prevScriptPubKeyLength);
     tOffset = 0;
 
@@ -472,7 +478,7 @@ class BTCRawTransaction extends RawTransaction {
     tOffset += tBuffer.writeSlice(tOffset, inputToSign.txid);
     tOffset += tBuffer.bytes.writeUint32(tOffset, inputToSign.vout);
 
-    tOffset += tBuffer.writeVarSlice(tOffset, p2pkhScript);
+    tOffset += tBuffer.writeVarSlice(tOffset, p2pkhScript.bytes);
 
     tOffset += tBuffer.bytes.writeUint64(tOffset, output.value.toInt());
     tOffset += tBuffer.bytes.writeUint32(tOffset, inputToSign.sequence);
@@ -682,7 +688,7 @@ class EC8RawTransaction extends RawTransaction {
 
     /// Input to be signed has a scriptSig all other inputs have empty scriptSigs
     final input = inputs.singleWhereOrNull(
-      (input) => input.scriptSig.length != 0,
+      (input) => input.script!.size != 0,
     );
     if (input == null) {
       throw Exception('No input to be signed');

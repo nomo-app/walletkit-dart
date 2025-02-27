@@ -124,22 +124,6 @@ class P2Hash {
       OPCODE.OP_EQUAL.hex,
     ].toUint8List;
   }
-
-  ///
-  /// Utility functions
-  ///
-  static Uint8List toP2PKHScript(Uint8List segWitScript) {
-    final pubkeyhash = segWitScript.sublist(2);
-
-    return [
-      OPCODE.OP_DUP.hex,
-      OPCODE.OP_HASH160.hex,
-      pubkeyhash.length,
-      ...pubkeyhash,
-      OPCODE.OP_EQUALVERIFY.hex,
-      OPCODE.OP_CHECKSIG.hex,
-    ].toUint8List;
-  }
 }
 
 ///
