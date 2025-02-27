@@ -2,6 +2,8 @@
 
 // TODO: Refactor this class to be more readable
 
+import 'package:collection/collection.dart';
+
 enum OPCODE {
   /// Constants
   OP_0(0x00),
@@ -146,6 +148,10 @@ enum OPCODE {
     if (this == OPCODE.OP_0) return '00';
 
     return hex.toRadixString(16);
+  }
+
+  static OPCODE? fromHex(int hex) {
+    return OPCODE.values.singleWhereOrNull((element) => element.hex == hex);
   }
 }
 

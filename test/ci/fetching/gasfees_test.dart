@@ -8,6 +8,15 @@ void main() {
     expect(gasEntity, isNotNull);
 
     print(gasEntity);
+
+    final smartGasEntity = await getNetworkFees(
+      network: BitcoinNetwork,
+      useSmartFee: true,
+    );
+
+    expect(smartGasEntity, isNotNull);
+
+    print(smartGasEntity);
   });
 
   test('Estimate Fees LTC', () async {
@@ -16,6 +25,15 @@ void main() {
     expect(gasEntity, isNotNull);
 
     print(gasEntity);
+
+    final smartGasEntity = await getNetworkFees(
+      network: LitecoinNetwork,
+      useSmartFee: true,
+    );
+
+    expect(smartGasEntity, isNotNull);
+
+    print(smartGasEntity);
   });
 
   test('Estimate Fees BCH', () async {
@@ -24,6 +42,15 @@ void main() {
     expect(gasEntity, isNotNull);
 
     print(gasEntity);
+
+    final smartGasEntity = await getNetworkFees(
+      network: BitcoincashNetwork,
+      useSmartFee: true,
+    );
+
+    expect(smartGasEntity, isNotNull);
+
+    print(smartGasEntity);
   });
 
   test('Estimate Fees Zeniq', () async {
@@ -32,5 +59,14 @@ void main() {
     expect(gasEntity, isNotNull);
 
     print(gasEntity);
+
+    final smartGasEntity = await getNetworkFees(
+      network: ZeniqNetwork,
+      useSmartFee: true,
+    );
+
+    expect(smartGasEntity, isNotNull);
+
+    print(smartGasEntity);
   });
 }

@@ -8,6 +8,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/payments/input_selection
 import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
@@ -158,8 +159,6 @@ RawTransaction buildUnsignedTransaction({
     "Total Input Value does not match Total Output Value",
   );
 
-  Logger.log("Estimated Fee: $estimatedFee");
-
   final outputs = buildOutputs(
     recipient: targetAddress,
     value: targetValue,
@@ -186,6 +185,10 @@ RawTransaction buildUnsignedTransaction({
       "Total Output Value does not match Total Input Value",
     );
   }
+  Logger.log("Input Fee per Byte: ${feePerByte.displayDouble}");
+  Logger.log("Estimated Fee: $estimatedFee");
+  Logger.log("Actual Fee: ${tx.fee}");
+  Logger.log("Fee per Byte: ${tx.feePerByte}");
 
   return tx;
 }
@@ -303,7 +306,7 @@ List<Input> signInputs({
         node: bip32Node,
       );
 
-      signedInputs.add(input.addScript(wittnessScript: witnessSript));
+      signedInputs.add(input.addScript(witnessSript));
       continue;
     }
 
@@ -316,13 +319,13 @@ List<Input> signInputs({
       node: bip32Node,
     );
 
-    signedInputs.add(input.addScript(scriptSig: scriptSig));
+    signedInputs.add(input.addScript(scriptSig));
   }
 
   return signedInputs;
 }
 
-Uint8List createScriptSignature({
+BTCUnlockingScript createScriptSignature({
   required RawTransaction tx,
   required int i,
   required ElectrumOutput output,
@@ -338,7 +341,8 @@ Uint8List createScriptSignature({
     ZENIQ_NETWORK() when tx is BTCRawTransaction =>
       tx.bip143sigHash(
         index: i,
-        prevScriptPubKey: prevScriptPubKey,
+        prevScript: prevScriptPubKey,
+        networkType: networkType,
         output: output,
         hashType: hashType,
       ),
@@ -347,7 +351,8 @@ Uint8List createScriptSignature({
     EUROCOIN_NETWORK() =>
       tx.legacySigHash(
         index: i,
-        prevScriptPubKey: prevScriptPubKey,
+        prevScript: prevScriptPubKey,
+        networkType: networkType,
         hashType: hashType,
       ),
     _ =>
@@ -356,18 +361,15 @@ Uint8List createScriptSignature({
 
   final sig = signInput(bip32: node, sigHash: sigHash);
 
-  final scriptSig = encodeSignature(sig, hashType);
+  final encodedSig = encodeSignature(sig, hashType);
 
-  final unlockingScript = constructScriptSig(
-    walletPurpose: walletPurpose,
-    signature: scriptSig,
-    publicKey: node.publicKey,
-  );
-
-  return unlockingScript;
+  return switch (walletPurpose) {
+    HDWalletPurpose.BIP49 => throw UnimplementedError(),
+    _ => ScriptSignature(encodedSig, node.publicKey),
+  };
 }
 
-Uint8List createScriptWitness({
+ScriptWitness createScriptWitness({
   required BTCRawTransaction tx,
   required int i,
   required ElectrumOutput output,
@@ -381,9 +383,10 @@ Uint8List createScriptWitness({
 
   final sigHash = tx.bip143sigHash(
     index: i,
-    prevScriptPubKey: prevScriptPubKey,
+    prevScript: prevScriptPubKey,
     output: output,
     hashType: hashType,
+    networkType: networkType,
   );
 
   final sig = signInput(bip32: node, sigHash: sigHash);
@@ -392,13 +395,7 @@ Uint8List createScriptWitness({
 
   final pubkey = node.publicKey;
 
-  return [
-    0x02,
-    scriptSig.length,
-    ...scriptSig,
-    pubkey.length,
-    ...pubkey,
-  ].toUint8List;
+  return ScriptWitness(scriptSig, pubkey);
 }
 
 (BigInt, Map<ElectrumOutput, Input>) buildInputs(
@@ -471,20 +468,20 @@ Input buildInput({
       BTCInput(
         txid: txid,
         vout: vout,
-        value: utxo.value,
-        prevScriptPubKey: utxo.scriptPubKey.lockingScript,
+        script: null,
+        prevOutput: utxo.toOutput,
       ),
     EUROCOIN_NETWORK() => EC8Input(
         txid: txid,
         vout: vout,
-        value: utxo.value,
-        prevScriptPubKey: utxo.scriptPubKey.lockingScript,
+        script: null,
+        prevOutput: utxo.toOutput,
       ),
   };
 }
 
 Output buildOutput(String address, BigInt value, UTXONetworkType networkType) {
-  final lockingScript = P2Hash(address).publicKeyScript;
+  final lockingScript = BTCLockingScript.fromAddress(address);
 
   return switch (networkType) {
     BITCOIN_NETWORK() ||
@@ -493,11 +490,11 @@ Output buildOutput(String address, BigInt value, UTXONetworkType networkType) {
     LITECOIN_NETWORK() =>
       BTCOutput(
         value: value,
-        scriptPubKey: lockingScript,
+        script: lockingScript,
       ),
     EUROCOIN_NETWORK() => EC8Output(
         value: value,
-        scriptPubKey: lockingScript,
+        script: lockingScript,
       ),
   };
 }
@@ -598,6 +595,10 @@ Future<bool> rebroadcastTransaction({
       ],
     );
 
+    if (clientsForRebroadcast.isEmpty) {
+      break;
+    }
+
     if (rebroadcastCount > type.endpoints.length / 2) {
       break;
     }
@@ -645,45 +646,13 @@ Uint8List signInput({
   }
 }
 
-Uint8List constructScriptSig({
-  required HDWalletPurpose walletPurpose,
-  required Uint8List signature,
-  required Uint8List publicKey,
-  Uint8List? redeemScript, // Required for BIP49 (P2SH-P2WPKH)
-}) =>
-    switch (walletPurpose) {
-      HDWalletPurpose.NO_STRUCTURE ||
-      HDWalletPurpose.BIP44 =>
-        Uint8List.fromList([
-          signature.length,
-          ...signature,
-          publicKey.length,
-          ...publicKey,
-        ]),
-      HDWalletPurpose.BIP49 => Uint8List.fromList([
-          0x00,
-          signature.length,
-          ...signature,
-          redeemScript!.length,
-          ...redeemScript,
-        ]),
-
-      /// Should never be called as it is handled in constructWitnessScript
-      HDWalletPurpose.BIP84 => Uint8List.fromList([
-          0x00,
-          signature.length,
-          ...signature,
-          publicKey.length,
-          ...publicKey,
-        ]),
-    };
-
 BigInt calculateFee({
   required RawTransaction tx,
   required Amount feePerByte,
 }) {
   return switch (tx) {
     EC8RawTransaction _ => calculateFeeEC8(tx: tx),
+    BTCRawTransaction tx when tx.isSegwit => tx.weight * feePerByte.value,
     _ => tx.size.toBI * feePerByte.value,
   };
 }
