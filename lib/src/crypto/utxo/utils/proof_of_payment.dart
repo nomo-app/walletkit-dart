@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:collection/collection.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
@@ -90,16 +91,16 @@ Future<POPResult> proofOfPayment({
   ///
   /// Create Pop Output
   ///
-  final pop_output_script = Uint8List(1 + 2 + 32 + nonceBytes.length + 1);
+  final pop_output_script_data = Uint8List(2 + 32 + nonceBytes.length + 1);
   var offset = 0;
-  offset += pop_output_script.bytes.writeUint8(offset, OP_RETURN);
-  offset += pop_output_script.bytes.writeUint16(offset, 0x01); // POP Version
-  offset += pop_output_script.writeSlice(offset, txid.hexToBytes);
-  offset += pop_output_script.writeVarSlice(offset, nonceBytes);
+  offset +=
+      pop_output_script_data.bytes.writeUint16(offset, 0x01); // POP Version
+  offset += pop_output_script_data.writeSlice(offset, txid.hexToBytes);
+  offset += pop_output_script_data.writeVarSlice(offset, nonceBytes);
 
   final pop_output = BTCOutput(
     value: 0.toBI,
-    scriptPubKey: pop_output_script,
+    script: OPReturnScript(pop_output_script_data),
   );
 
   ///

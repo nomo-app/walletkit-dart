@@ -506,8 +506,8 @@ class ElectrumScriptPubKey {
     );
   }
 
-  Uint8List get lockingScript {
-    return Uint8List.fromList(hex.decode(hexString));
+  BTCLockingScript get lockingScript {
+    return BTCLockingScript.fromBuffer(hex.decode(hexString).toUint8List);
   }
 
   Json toJson() {
@@ -537,4 +537,13 @@ final class NotAvaialableUTXOTransaction extends UTXOTransaction {
           token: token,
           transferMethod: TransactionTransferMethod.unknown,
         );
+}
+
+extension OutputConverter on ElectrumOutput {
+  Output get toOutput {
+    return BTCOutput(
+      value: value,
+      script: scriptPubKey.lockingScript,
+    );
+  }
 }
