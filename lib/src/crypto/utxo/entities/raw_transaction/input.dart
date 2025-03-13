@@ -3,11 +3,8 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/script.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
 
 const output_index_length = 4;
 const sequence_length = 4;
@@ -147,7 +144,12 @@ class BTCInput extends Input {
   Uint8List get bytes {
     assert(script != null, "Script is required");
 
-    final _script = script!;
+    /// Only the ScriptSig is included in the input
+    /// If the script is a witness, the witness is included in the transaction itself not in the input => use EmptyLockingScript
+    final _script = switch (script) {
+      ScriptSignature sig => sig,
+      _ => EmptyLockingScript(),
+    };
 
     final buffer = Uint8List(
       txid.length +
@@ -159,7 +161,7 @@ class BTCInput extends Input {
 
     var offset = 0;
     // Write TXID
-    offset += buffer.writeSlice(offset, txid); // Or TXID ?
+    offset += buffer.writeSlice(offset, txid);
 
     // Write Vout
     offset += buffer.bytes.writeUint32(offset, vout);
