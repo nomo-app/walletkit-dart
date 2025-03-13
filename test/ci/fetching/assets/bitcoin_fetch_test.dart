@@ -15,8 +15,9 @@ void main() {
       ePubKey: rejectXpub,
       purpose: HDWalletPurpose.NO_STRUCTURE,
       addressTypes: [AddressType.legacy, AddressType.segwit],
+      minEndpoints: 1,
     );
-    expect(legacyTxList.length, greaterThanOrEqualTo(74));
+    expect(legacyTxList.length, greaterThanOrEqualTo(87));
     final expectedTxHashes = expectedTxHashesBTCReject();
     expectTxHashes(txList: legacyTxList, expectedTxHashes: expectedTxHashes);
     reportCoinsAndAddresses(txList: legacyTxList, type: BitcoinNetwork);
