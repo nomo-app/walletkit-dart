@@ -87,6 +87,9 @@ class EtherscanExplorer extends EtherscanRepository {
           .addOptionalParameter('endblock', endblock)
           .addOptionalParameter('sort', sorting?.name);
 
+  String buildTransactionReceiptEndpoint(String hash) =>
+      "$base&module=transaction&action=gettxreceiptstatus&txhash=$hash";
+
   ///
   /// Fetch all Transactions for the given [token] on the given [address]
   ///
@@ -169,6 +172,8 @@ class EtherscanExplorer extends EtherscanRepository {
       offset: offset,
       sorting: sorting,
     );
+
+    print(endpoint);
 
     final txResults = await fetchEtherscanWithRatelimitRetries(endpoint);
     return [
@@ -287,6 +292,14 @@ class EtherscanExplorer extends EtherscanRepository {
       throw Exception("Failed to fetch gas price");
     }
     return int.tryParse(result);
+  }
+
+  Future<bool> fetchTransactionsReceipt(String hash) async {
+    final endpoint = buildTransactionReceiptEndpoint(hash);
+
+    final result = await fetchEtherscanWithRatelimitRetries(endpoint);
+
+    return result["status"] == "1";
   }
 }
 
