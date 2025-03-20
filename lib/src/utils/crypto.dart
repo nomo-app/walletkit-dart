@@ -11,6 +11,15 @@ Uint8List ripmed160Sha256Hash(Uint8List buffer) {
 }
 
 ///
+/// Ripmed160 Hash
+///
+Uint8List ripmed160Hash(Uint8List buffer) {
+  final ripmed160 = RIPEMD160Digest();
+
+  return ripmed160.process(buffer);
+}
+
+///
 /// Sha256 Hash of Sha256 Hash
 ///
 Uint8List sha256Sha256Hash(Uint8List buffer) {

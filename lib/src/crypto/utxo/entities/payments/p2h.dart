@@ -4,7 +4,6 @@ import 'package:convert/convert.dart';
 import 'package:dart_bech32/dart_bech32.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
-import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
 import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -91,8 +90,9 @@ class P2Hash {
 
     final payload = Base32().decode(_address);
 
-    final payloadData =
-        bech32.fromWords(payload.sublist(0, payload.length - 8));
+    final payloadData = bech32.fromWords(
+      payload.sublist(0, payload.length - 8),
+    );
 
     final version = payloadData[0];
     final pubKeyHash = payloadData.sublist(1);
@@ -125,22 +125,6 @@ class P2Hash {
       OPCODE.OP_EQUAL.hex,
     ].toUint8List;
   }
-
-  ///
-  /// Utility functions
-  ///
-  static Uint8List toP2PKHScript(Uint8List segWitScript) {
-    final pubkeyhash = segWitScript.sublist(2);
-
-    return [
-      OPCODE.OP_DUP.hex,
-      OPCODE.OP_HASH160.hex,
-      pubkeyhash.length,
-      ...pubkeyhash,
-      OPCODE.OP_EQUALVERIFY.hex,
-      OPCODE.OP_CHECKSIG.hex,
-    ].toUint8List;
-  }
 }
 
 ///
@@ -163,13 +147,20 @@ String getAddressFromLockingScript(
         data: pubKeyHash,
         witnessVersion: type.pubKeyHashPrefix,
       ),
-    HDWalletPurpose.BIP44 =>
-      pubKeyHashToLegacyAddress(pubKeyHash, type.pubKeyHashPrefix),
-    HDWalletPurpose.BIP49 =>
-      pubKeyHashToP2SHAddress(pubKeyHash, type.scriptHashPrefix),
-    HDWalletPurpose.BIP84 =>
-      pubKeyHashToSegwitAddress(pubKeyHash, type.bech32, type.pubKeyHashPrefix),
-    _ => throw UnsupportedError("Address type not supported: $pubKeyHash")
+    HDWalletPurpose.BIP44 => pubKeyHashToLegacyAddress(
+      pubKeyHash,
+      type.pubKeyHashPrefix,
+    ),
+    HDWalletPurpose.BIP49 => pubKeyHashToP2SHAddress(
+      pubKeyHash,
+      type.scriptHashPrefix,
+    ),
+    HDWalletPurpose.BIP84 => pubKeyHashToSegwitAddress(
+      pubKeyHash,
+      type.bech32,
+      type.pubKeyHashPrefix,
+    ),
+    _ => throw UnsupportedError("Address type not supported: $pubKeyHash"),
   };
 }
 
@@ -207,10 +198,7 @@ String getAddressFromLockingScript(
   /// P2WPKH
   ///
   if (hexKey.startsWith(p2wpkhPrefix)) {
-    final pubKeyHashHex = hexKey.substring(
-      p2wpkhPrefix.length,
-      hexKey.length,
-    );
+    final pubKeyHashHex = hexKey.substring(p2wpkhPrefix.length, hexKey.length);
     final pubKeyHash = Uint8List.fromList(hex.decode(pubKeyHashHex));
     return (pubKeyHash, HDWalletPurpose.BIP84);
   }
@@ -234,7 +222,7 @@ String getAddressFromInput(
   final _addressType = switch (addressType) {
     AddressType.cashaddr when pubKeyAddressType == AddressType.legacy =>
       AddressType.cashaddr,
-    _ => pubKeyAddressType
+    _ => pubKeyAddressType,
   };
 
   return pubKeyToAddress(publicKey, _addressType, type);
@@ -243,9 +231,7 @@ String getAddressFromInput(
 ///
 /// Returns the PublicKey from the unlocking script of a transaction input. This only works for P2PKH and P2WPKH inputs.
 ///
-(Uint8List, AddressType) getPubKeyFromInput(
-  ElectrumInput input,
-) {
+(Uint8List, AddressType) getPubKeyFromInput(ElectrumInput input) {
   final hexSig = input.scriptSig;
 
   ///
@@ -283,4 +269,8 @@ String getAddressFromInput(
   }
 
   throw UnsupportedError("Address type not supported: $hexSig");
+}
+
+Uint8List getSegwitScript(Uint8List pubKeyHash) {
+  return [OPCODE.OP_0.hex, pubKeyHash.length, ...pubKeyHash].toUint8List;
 }

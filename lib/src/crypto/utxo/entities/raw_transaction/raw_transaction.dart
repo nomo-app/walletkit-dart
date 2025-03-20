@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/payments/pk_script_converter.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
 import 'package:walletkit_dart/src/utils/crypto.dart';
@@ -21,15 +21,12 @@ sealed class RawTransaction {
   /// Non Null if returned from [buildUnsignedTransaction]
   final Map<ElectrumOutput, Input>? inputMap;
 
-  BigInt get weight {
-    return inputs.fold(
-          0.toBI,
-          (prev, input) => prev + input.weight,
-        ) +
-        outputs.fold(
-          0.toBI,
-          (prev, output) => prev + output.weight,
-        );
+  /// Weight of the transaction
+  BigInt get weight;
+
+  /// Virtual Size
+  BigInt get vSize {
+    return weight ~/ 4.toBI;
   }
 
   Uint8List get bytes;
@@ -39,6 +36,8 @@ sealed class RawTransaction {
   int get size => bytes.length;
 
   BigInt get fee => totalInputValue - totalOutputValue;
+
+  double get feePerByte => fee.toInt() / size;
 
   // Value of the first output
   BigInt get targetAmount => outputs.first.value;
@@ -51,10 +50,7 @@ sealed class RawTransaction {
   }
 
   BigInt get totalOutputValue {
-    return outputs.fold(
-      BigInt.zero,
-      (prev, element) => prev + element.value,
-    );
+    return outputs.fold(BigInt.zero, (prev, element) => prev + element.value);
   }
 
   String get txid {
@@ -65,22 +61,24 @@ sealed class RawTransaction {
 
   Uint8List legacySigHash({
     required int index,
-    required Uint8List prevScriptPubKey,
+    required BTCLockingScript prevScript,
     required int hashType,
+    required UTXONetworkType networkType,
   }) {
+    assert(
+      hashType == networkType.sighash.all,
+      "Only SIGHASH_ALL is supported",
+    );
+
     final copy = createCopy();
 
     // clear all scriptSigs
     for (int i = 0; i < copy.inputs.length; i++) {
-      copy.inputs[i] = copy.inputs[i].addScript(
-        scriptSig: Uint8List.fromList([]),
-      );
+      copy.inputs[i] = copy.inputs[i].addScript(EmptyUnlockingScript());
     }
 
     // set scriptSig for inputIndex to prevScriptPubKeyHex
-    copy.inputs[index] = copy.inputs[index].addScript(
-      scriptSig: prevScriptPubKey,
-    );
+    copy.inputs[index] = copy.inputs[index].addScript(prevScript);
 
     final bytes = copy is EC8RawTransaction ? copy.bytesForSigning : copy.bytes;
 
@@ -152,10 +150,7 @@ sealed class RawTransaction {
     required HDWalletPath walletPath,
     required UTXONetworkType networkType,
   }) {
-    assert(
-      inputMap != null,
-      'Cant sign transaction without inputs',
-    );
+    assert(inputMap != null, 'Cant sign transaction without inputs');
 
     final signedInputs = signInputs(
       inputs: inputMap!,
@@ -187,10 +182,34 @@ class BTCRawTransaction extends RawTransaction {
     required this.inputs,
     required this.outputs,
     super.inputMap,
-  }) : super(
-          inputs: inputs,
-          outputs: outputs,
-        );
+  }) : super(inputs: inputs, outputs: outputs);
+
+  @override
+  BigInt get weight {
+    // Base size * 4
+    BigInt weight = 8.toBI * 4.toBI; // version + locktime
+
+    if (isSegwit) {
+      weight += 2.toBI * 4.toBI; // Segwit Marker + Segwit Flag
+    }
+
+    final inputWeight = inputs.fold(
+      0.toBI,
+      (prev, input) => prev + input.weight,
+    );
+    final outputWeight = outputs.fold(
+      0.toBI,
+      (prev, output) => prev + output.weight,
+    );
+
+    weight += inputWeight + outputWeight;
+
+    return weight;
+  }
+
+  bool get isSegwit {
+    return inputs.any((input) => input.isSegwit);
+  }
 
   bool get hasWitness {
     return inputs.any((input) => input.hasWitness);
@@ -213,9 +232,7 @@ class BTCRawTransaction extends RawTransaction {
     );
   }
 
-  BTCRawTransaction _addInputs(
-    List<Input>? inputs,
-  ) {
+  BTCRawTransaction _addInputs(List<Input>? inputs) {
     final signedInputs = inputs?.whereType<BTCInput>().toList() ?? this.inputs;
 
     return BTCRawTransaction(
@@ -244,8 +261,9 @@ class BTCRawTransaction extends RawTransaction {
     }
 
     /// Inputs
-    final (inputLength, inputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (inputLength, inputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += inputLengthByteLength;
 
     final inputs = <BTCInput>[];
@@ -256,8 +274,9 @@ class BTCRawTransaction extends RawTransaction {
     }
 
     /// Outputs
-    final (outputLength, outputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (outputLength, outputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += outputLengthByteLength;
 
     final outputs = <BTCOutput>[];
@@ -270,7 +289,7 @@ class BTCRawTransaction extends RawTransaction {
 
     /// Witness
     if (isSegwit) {
-      List<(Uint8List, BTCInput)> wittnessScripts = [];
+      List<(BTCUnlockingScript, BTCInput)> wittnessScripts = [];
 
       for (final input in inputs) {
         final (emptyScript, emptyScriptLength) = buffer.bytes.readUint8(offset);
@@ -279,15 +298,15 @@ class BTCRawTransaction extends RawTransaction {
           continue;
         }
 
-        final (wittnessScript, length) =
-            readScriptWittness(buffer: buffer, offset: offset);
-        wittnessScripts.add((wittnessScript, input));
-        offset += length;
+        final witness = ScriptWitness.fromScript(buffer.sublist(offset));
+
+        wittnessScripts.add((witness, input));
+        offset += witness.size;
       }
 
       for (final (wittnessScript, input) in wittnessScripts) {
         final index = inputs.indexOf(input);
-        inputs[index] = input.addScript(wittnessScript: wittnessScript);
+        inputs[index] = input.addScript(wittnessScript);
       }
     }
 
@@ -317,7 +336,8 @@ class BTCRawTransaction extends RawTransaction {
       (prev, buffer) => prev + buffer.length,
     );
 
-    var txByteLength = 4 +
+    var txByteLength =
+        4 +
         inputLengthByte +
         inputsByteLength +
         outputLengthByte +
@@ -328,13 +348,10 @@ class BTCRawTransaction extends RawTransaction {
       txByteLength += 1; // Segwit Flag
       txByteLength += 1; // Segwit Marker
 
-      txByteLength += segwitInputs.fold(
-        0,
-        (prev, input) {
-          assert(input.isSegwit);
-          return prev + input.wittnessScript.length;
-        },
-      );
+      txByteLength += segwitInputs.fold(0, (prev, input) {
+        assert(input.isSegwit);
+        return prev + input.script!.size;
+      });
       txByteLength += nonSegwitInputs.length; // Empty Script
     }
 
@@ -369,7 +386,7 @@ class BTCRawTransaction extends RawTransaction {
     if (hasWitness)
       for (final input in inputs) {
         if (input.isSegwit) {
-          offset += buffer.writeSlice(offset, input.wittnessScript);
+          offset += buffer.writeSlice(offset, input.script!.bytes); // TODO: Fix
           continue;
         }
 
@@ -384,18 +401,24 @@ class BTCRawTransaction extends RawTransaction {
 
   ///
   /// BIP143 SigHash: https://github.com/bitcoin/bips/blob/master/bip-0143.mediawiki
+  /// Currently only support SIG_HASH_ALL
   ///
   Uint8List bip143sigHash({
     required int index,
-    required Uint8List prevScriptPubKey,
+    required BTCLockingScript prevScript,
     required ElectrumOutput output,
     required int hashType,
+    required UTXONetworkType networkType,
   }) {
+    assert(
+      hashType == networkType.sighash.all,
+      "Only SIGHASH_ALL is supported",
+    );
+
     ///
     /// Always use P2PKH in bip143 sigHash
     ///
-    final converter = PublicKeyScriptConverter(prevScriptPubKey);
-    final p2pkhScript = converter.p2pkhScript;
+    final p2pkhScript = PayToPublicKeyHashScript(prevScript.data);
 
     final outputBuffers = outputs.map((output) => output.bytes);
     final txOutSize = outputBuffers.fold(
@@ -429,13 +452,13 @@ class BTCRawTransaction extends RawTransaction {
 
     for (final output in outputs) {
       tOffset += tBuffer.bytes.writeUint64(tOffset, output.value.toInt());
-      tOffset += tBuffer.writeVarSlice(tOffset, output.scriptPubKey);
+      tOffset += tBuffer.writeVarSlice(tOffset, output.script.bytes);
     }
     final hashOutputs = sha256Sha256Hash(tBuffer);
 
     /// Final Buffer
     final inputToSign = inputs[index];
-    final prevScriptPubKeyLength = varSliceSize(p2pkhScript);
+    final prevScriptPubKeyLength = varSliceSize(p2pkhScript.bytes);
     tBuffer = Uint8List(156 + prevScriptPubKeyLength);
     tOffset = 0;
 
@@ -446,7 +469,7 @@ class BTCRawTransaction extends RawTransaction {
     tOffset += tBuffer.writeSlice(tOffset, inputToSign.txid);
     tOffset += tBuffer.bytes.writeUint32(tOffset, inputToSign.vout);
 
-    tOffset += tBuffer.writeVarSlice(tOffset, p2pkhScript);
+    tOffset += tBuffer.writeVarSlice(tOffset, p2pkhScript.bytes);
 
     tOffset += tBuffer.bytes.writeUint64(tOffset, output.value.toInt());
     tOffset += tBuffer.bytes.writeUint32(tOffset, inputToSign.sequence);
@@ -479,10 +502,13 @@ class EC8RawTransaction extends RawTransaction {
     required this.validFrom,
     required this.validUntil,
     super.inputMap,
-  }) : super(
-          inputs: inputs,
-          outputs: outputs,
-        );
+  }) : super(inputs: inputs, outputs: outputs);
+
+  /// EC8 Transaction weight is calculated differently
+  BigInt get weight {
+    return inputs.fold(0.toBI, (prev, input) => prev + input.weight) +
+        outputs.fold(0.toBI, (prev, output) => prev + output.weight);
+  }
 
   String get txid {
     final buffer = bytesForTxId;
@@ -506,7 +532,8 @@ class EC8RawTransaction extends RawTransaction {
       (prev, buffer) => prev + buffer.length,
     );
 
-    var txByteLength = 4 +
+    var txByteLength =
+        4 +
         inputLengthByte +
         inputsByteLength +
         outputLengthByte +
@@ -567,7 +594,8 @@ class EC8RawTransaction extends RawTransaction {
       (prev, buffer) => prev + buffer.length,
     );
 
-    var txByteLength = 4 +
+    var txByteLength =
+        4 +
         inputLengthByte +
         inputsByteLength +
         outputLengthByte +
@@ -619,10 +647,7 @@ class EC8RawTransaction extends RawTransaction {
   Uint8List get bytesForSigning {
     /// Double SHA256 Hash of all inputs
     final inputBuffers = inputs.map(
-      (input) => input.bytesForSigning(
-        withWeight: true,
-        withScript: false,
-      ),
+      (input) => input.bytesForSigning(withWeight: true, withScript: false),
     );
     final combinedInputBuffers = inputBuffers.fold(
       Uint8List(0),
@@ -643,9 +668,7 @@ class EC8RawTransaction extends RawTransaction {
     ///
 
     /// Input to be signed has a scriptSig all other inputs have empty scriptSigs
-    final input = inputs.singleWhereOrNull(
-      (input) => input.scriptSig.length != 0,
-    );
+    final input = inputs.singleWhereOrNull((input) => input.script!.size != 0);
     if (input == null) {
       throw Exception('No input to be signed');
     }
@@ -658,7 +681,8 @@ class EC8RawTransaction extends RawTransaction {
     ///
     /// Construct Buffer
     ///
-    final txByteLength = 4 +
+    final txByteLength =
+        4 +
         hashInputs.length +
         hashOutputs.length +
         inputBytes.length +
@@ -675,10 +699,7 @@ class EC8RawTransaction extends RawTransaction {
     offset += buffer.writeSlice(offset, hashInputs);
 
     /// Input to be signed
-    offset += buffer.writeSlice(
-      offset,
-      inputBytes,
-    );
+    offset += buffer.writeSlice(offset, inputBytes);
 
     /// HashOutputs
     offset += buffer.writeSlice(offset, hashOutputs);
@@ -705,9 +726,7 @@ class EC8RawTransaction extends RawTransaction {
     );
   }
 
-  EC8RawTransaction _addInputs(
-    List<Input>? inputs,
-  ) {
+  EC8RawTransaction _addInputs(List<Input>? inputs) {
     final signedInputs = inputs?.whereType<EC8Input>().toList() ?? this.inputs;
 
     return EC8RawTransaction(
@@ -729,8 +748,9 @@ class EC8RawTransaction extends RawTransaction {
     offset += length;
 
     /// Inputs
-    final (inputLength, inputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (inputLength, inputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += inputLengthByteLength;
 
     final inputs = <EC8Input>[];
@@ -741,8 +761,9 @@ class EC8RawTransaction extends RawTransaction {
     }
 
     /// Outputs
-    final (outputLength, outputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (outputLength, outputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += outputLengthByteLength;
 
     final outputs = <EC8Output>[];

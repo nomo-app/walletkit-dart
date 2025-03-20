@@ -51,8 +51,9 @@ HDNode deriveMasterNodeFromSeed({
     "m/44'/2'" => walletPath.account0Path,
     _ => walletPath.purpose.string,
   };
-  final node =
-      masterNode.derivePath(derivationPath); // TODO: Use base Path with Account
+  final node = masterNode.derivePath(
+    derivationPath,
+  ); // TODO: Use base Path with Account
 
   return node;
 }
@@ -61,9 +62,34 @@ HDNode deriveMasterNodeFromExtendedKey(
   String ePubKey, {
   NetworkNodeInfo? nodeNetworkInfo,
 }) {
-  return HDNode.fromExtendedKey(
-    ePubKey,
-    network: nodeNetworkInfo,
+  return HDNode.fromExtendedKey(ePubKey, network: nodeNetworkInfo);
+}
+
+NodeWithAddress deriveNodeFromSeed({
+  required Uint8List seed,
+  required String path,
+  required HDWalletPurpose purpose,
+  required UTXONetworkType networkType,
+  required Iterable<AddressType> addressTypes,
+}) {
+  final masterNode = HDNode.fromSeed(
+    seed,
+    network: networkType.networkBIP.getForPurpose(purpose),
+  );
+
+  final node = masterNode.derivePath(path);
+
+  final addresses = {
+    for (final addressType in addressTypes)
+      addressType: pubKeyToAddress(node.publicKey, addressType, networkType),
+  };
+
+  return NodeWithAddress.fromChainIndex(
+    node: node,
+    address: addresses.values.first,
+    chainIndex: 0,
+    derivationPath: path,
+    addresses: addresses,
   );
 }
 
@@ -125,9 +151,10 @@ HDNode deriveChildNodeFromPath({
 
 extension on HDNode {
   String toBase58wkCompatibility(int parentFingerprint, int depth) {
-    final version = !isNeutered
-        ? network!.keyPrefixes.private
-        : network!.keyPrefixes.public;
+    final version =
+        !isNeutered
+            ? network!.keyPrefixes.private
+            : network!.keyPrefixes.public;
     Uint8List buffer = new Uint8List(78);
     ByteData bytes = buffer.buffer.asByteData();
     bytes.setUint32(0, version);
