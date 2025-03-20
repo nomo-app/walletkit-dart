@@ -180,7 +180,7 @@ jobs:
         run: dart pub global run dartdoc
 
       - name: Download coverage report and badge
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: coverage-report
           path: coverage-report

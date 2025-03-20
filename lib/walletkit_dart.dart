@@ -34,3 +34,6 @@ export 'src/domain/extensions.dart';
 
 /// Predefined Assets
 export 'src/domain/predefined_assets.dart';
+
+/// Exceptions
+export 'src/domain/exceptions.dart';

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:uuid/uuid.dart';
+
 ///
 /// A helper class which starts an Isolate and lets you execute Functions.
 ///
@@ -98,7 +100,7 @@ class IsolateTask<T, A> {
   IsolateTask({
     required this.task,
     required this.argument,
-  }) : id = DateTime.now().microsecondsSinceEpoch.toString();
+  }) : id = Uuid().v4();
 
   FutureOr<T> call() => task(argument);
 }

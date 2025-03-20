@@ -51,7 +51,7 @@ class P2Hash {
     final pubKeyHash = decodedHex.substring(2);
 
     if (pubKeyHash.length != 40) {
-      throw Failure("wrong pubKeyHash length");
+      throw WKFailure("wrong pubKeyHash length");
     }
     // see https://en.bitcoinwiki.org/wiki/Pay-to-Pubkey_Hash for P2PKH
     final scriptP2PKH =

@@ -2,7 +2,7 @@ class JsonRpcConnectionNotInitialized implements Exception {
   const JsonRpcConnectionNotInitialized();
 }
 
-class SendFailure extends Failure {
+class SendFailure extends WKFailure {
   const SendFailure(super.message);
 
   @override
@@ -11,10 +11,10 @@ class SendFailure extends Failure {
   }
 }
 
-class Failure implements Exception {
+class WKFailure implements Exception {
   final String message;
 
-  const Failure(this.message);
+  const WKFailure(this.message);
 
   @override
   String toString() {

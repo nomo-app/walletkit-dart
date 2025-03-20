@@ -3,6 +3,10 @@ import 'dart:typed_data';
 
 import 'package:walletkit_dart/src/domain/extensions.dart';
 
+/// Whether to strictly enforce RLP decoding rules.
+/// We recommned leaving this enabled unless you have a specific reason to disable it.
+bool STRICT_RLP_DECODE = true;
+
 final class RLPException implements Exception {
   final String message;
   const RLPException(this.message);
@@ -278,7 +282,7 @@ RLPItem decodeRLPCheck(Uint8List input) {
         offset + 1,
         offset + 1 + length,
       );
-      if (length == 1 && result[0] < 0x80) {
+      if (STRICT_RLP_DECODE && length == 1 && result[0] < 0x80) {
         throw RLPException(
           "invalid RLP encoding: invalid prefix, single byte < 0x80 are not prefixed",
         );
