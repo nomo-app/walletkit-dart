@@ -302,6 +302,7 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
               BITCOIN_NETWORK() ||
               BITCOINCASH_NETWORK() ||
               LITECOIN_NETWORK() ||
+              DOGECOIN_NETWORK() ||
               ZENIQ_NETWORK() =>
                 BTCOutput(
                   value: out.value,
