@@ -39,7 +39,7 @@ const String P2SH_PREFIX_DOGE = 'A'; // Compatibility Address Dogecoin
 const String P2WPKH_PREFIX_DOGE = 'dc1'; // Native SegWit Dogecoin
 const List<String> P2WPKH_PREFIXES_BCH = [
   "1q",
-  "qq"
+  "qq",
 ]; // Native SegWit Bitcoin Cash
 const String P2PKH_PREFIX_EC8 = 'c';
 
@@ -63,24 +63,13 @@ const LTC_NETWORK_BIP = NetworkBIP(
   wif: 0xB0, // 176
 );
 
-// Dogecoin (DOGE)
-const DOGE_NETWORK_BIP = NetworkBIP(
-  bip32: (private: 0x02FAC398, public: 0x02FACAFD), // Dprv, Dpub
-  bip49: (private: 0x02FAC398, public: 0x02FACAFD), // Dprv, Dpub
-  bip84: (private: 0x02FAC398, public: 0x02FACAFD), // Dprv, Dpub
-  bip49MultiSig: (private: 0x02FAC398, public: 0x02FACAFD), // Dprv, Dpub
-  bip84MultiSig: (private: 0x02FAC398, public: 0x02FACAFD), // Dprv, Dpub
-  wif: 0x9E, // 158
-);
-
 const DOGECOIN_NETWORK_BIP = NetworkBIP(
-  bip32XpubPrefix: 0x02facafd,
-  bip32XprivPrefix: 0x02fac398,
-  bip49XpubPrefix:
-      0x02facafd, // Dogecoin typically uses the same prefix for BIP49
-  bip49XprivPrefix: 0x02fac398,
-  bip84XpubPrefix: 0x02facafd, // And for BIP84
-  bip84XprivPrefix: 0x02fac398,
+  bip32: (private: 0x02fac398, public: 0x02facafd),
+  bip49: (private: 0x02fac398, public: 0x02facafd),
+  bip84: (private: 0x02fac398, public: 0x02facafd),
+  bip49MultiSig: (private: 0x02fac398, public: 0x02facafd),
+  bip84MultiSig: (private: 0x02fac398, public: 0x02facafd),
+
   wif: 0x9e, // WIF prefix for Dogecoin
 );
 
@@ -186,7 +175,7 @@ Uint8List get helloSeed {
     228,
     193,
     46,
-    58
+    58,
   ]);
 }
 

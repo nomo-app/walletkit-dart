@@ -54,24 +54,19 @@ class HDNode {
       splitPath = splitPath.sublist(1);
     }
 
-    return splitPath.fold(
-      this,
-      (HDNode prevHd, String indexStr) {
-        int index;
-        if (indexStr.substring(indexStr.length - 1) == "'") {
-          index = int.parse(indexStr.substring(0, indexStr.length - 1));
-          return prevHd.deriveHardened(index);
-        } else {
-          index = int.parse(indexStr);
-          return prevHd.derive(index);
-        }
-      },
-    );
+    return splitPath.fold(this, (HDNode prevHd, String indexStr) {
+      int index;
+      if (indexStr.substring(indexStr.length - 1) == "'") {
+        index = int.parse(indexStr.substring(0, indexStr.length - 1));
+        return prevHd.deriveHardened(index);
+      } else {
+        index = int.parse(indexStr);
+        return prevHd.derive(index);
+      }
+    });
   }
 
-  String? extendedPrivateKey({
-    int? version,
-  }) {
+  String? extendedPrivateKey({int? version}) {
     version ??= network?.keyPrefixes.private;
     if (version == null) {
       throw ArgumentError("Missing version");
@@ -121,9 +116,7 @@ class HDNode {
     return base58CheckEncode2(buffer);
   }
 
-  String toWIF({
-    int? version,
-  }) {
+  String toWIF({int? version}) {
     if (privateKey == null) {
       throw new ArgumentError("Missing private key");
     }
@@ -131,8 +124,11 @@ class HDNode {
     if (version == null) {
       throw ArgumentError("Missing version");
     }
-    return WIF(version: version, privateKey: privateKey!, compressed: true)
-        .toBase58;
+    return WIF(
+      version: version,
+      privateKey: privateKey!,
+      compressed: true,
+    ).toBase58;
   }
 
   HDNode deriveHardened(int index) {
@@ -279,13 +275,10 @@ class HDNode {
     required this.depth,
     required this.index,
     required this.parentFingerprint,
-  })  : _q = q,
-        _p = p;
+  }) : _q = q,
+       _p = p;
 
-  factory HDNode.fromSeed(
-    Uint8List seed, {
-    NetworkNodeInfo? network,
-  }) {
+  factory HDNode.fromSeed(Uint8List seed, {NetworkNodeInfo? network}) {
     if (seed.length < 16) {
       throw new ArgumentError("Seed should be at least 128 bits");
     }
@@ -309,10 +302,7 @@ class HDNode {
   }
 
   ///
-  factory HDNode.fromExtendedKey(
-    String key, {
-    NetworkNodeInfo? network,
-  }) {
+  factory HDNode.fromExtendedKey(String key, {NetworkNodeInfo? network}) {
     final buffer = base58CheckDecodeWithVersion(key);
     if (buffer.length != 78) {
       throw ArgumentError("Invalid buffer length");
@@ -393,10 +383,7 @@ class WIF {
     required this.compressed,
   });
 
-  factory WIF.fromBuffer(
-    Uint8List buffer, {
-    int? version,
-  }) {
+  factory WIF.fromBuffer(Uint8List buffer, {int? version}) {
     if (version != null && buffer[0] != version) {
       throw ArgumentError("Invalid Network version");
     }

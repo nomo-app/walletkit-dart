@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:dart_bech32/dart_bech32.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
 import 'package:convert/convert.dart' show hex;
 import 'package:bs58check/bs58check.dart' as bs58check;
@@ -31,7 +31,7 @@ String pubKeyToAddress(
       networkType.pubKeyHashPrefix,
     ),
     AddressType.compatibility => pubKeyHashToP2SHAddress(
-      ripmed160Sha256Hash(getSegwitScript(pubKeyHash)),
+      ripmed160Sha256Hash(PayToWitnessPublicKeyHashScript(pubKeyHash).bytes),
       networkType.scriptHashPrefix,
     ),
     AddressType.legacy => pubKeyHashToLegacyAddress(

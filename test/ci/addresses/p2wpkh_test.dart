@@ -44,5 +44,25 @@ void main() {
     );
     print(childNode.derivationPath);
     print(childNode.address);
+
+    childNode = deriveNodeFromSeed(
+      seed: seed,
+      addressTypes: [AddressType.legacy],
+      networkType: BitcoinNetwork,
+      purpose: HDWalletPurpose.BIP44,
+      path: "m/44'/0'/0'/0/0",
+    );
+    print(childNode.derivationPath);
+    print(childNode.address);
+
+    childNode = deriveNodeFromSeed(
+      seed: seed,
+      addressTypes: [AddressType.legacy],
+      networkType: DogecoinNetwork,
+      purpose: HDWalletPurpose.BIP44,
+      path: "m/44'/3'/0'/0/0",
+    );
+    print(childNode.derivationPath);
+    print(childNode.address);
   });
 }
