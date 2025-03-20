@@ -1,12 +1,11 @@
 import 'dart:typed_data';
 import 'package:dart_bech32/dart_bech32.dart';
-import 'package:pointycastle/digests/ripemd160.dart';
-import 'package:pointycastle/digests/sha256.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
 import 'package:convert/convert.dart' show hex;
 import 'package:bs58check/bs58check.dart' as bs58check;
 import 'package:walletkit_dart/src/utils/base58.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 String pubKeyHexToAddress(
@@ -109,36 +108,6 @@ String pubKeyHashToSegwitAddress(
 ///
 String pubKeyHashToP2SHAddress(Uint8List pubKeyHash, int scriptHashPrefix) {
   return base58CheckEncode(scriptHashPrefix, pubKeyHash);
-}
-
-///
-/// Ripmed160 Hash of Sha256 Hash
-///
-Uint8List ripmed160Sha256Hash(Uint8List buffer) {
-  final ripmed160 = RIPEMD160Digest();
-  final sha256 = SHA256Digest();
-  return ripmed160.process(sha256.process(buffer));
-}
-
-Uint8List ripmed160Hash(Uint8List buffer) {
-  final ripmed160 = RIPEMD160Digest();
-  return ripmed160.process(buffer);
-}
-
-///
-/// Sha256 Hash of Sha256 Hash
-///
-Uint8List sha256Sha256Hash(Uint8List buffer) {
-  final sha256 = SHA256Digest();
-  return sha256.process(sha256.process(buffer));
-}
-
-///
-/// Sha256 Hash
-///
-Uint8List sha256Hash(Uint8List buffer) {
-  final sha256 = SHA256Digest();
-  return sha256.process(buffer);
 }
 
 ///

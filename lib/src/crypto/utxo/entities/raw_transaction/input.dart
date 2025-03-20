@@ -177,7 +177,8 @@ class BTCInput extends Input {
 
   @override
   BigInt get weight {
-    final weight = (txid.length + output_index_length + sequence_length).toBI *
+    final weight =
+        (txid.length + output_index_length + sequence_length).toBI *
         4.toBI; // (32 + 4 + 4) * 4
 
     return switch (script!) {
@@ -208,10 +209,7 @@ class EC8Input extends Input {
     // return calculateWeight(_prevScriptPubKey!, _scriptSig!);
   }
 
-  BigInt calculateWeight(
-    Uint8List prevScriptPubKey,
-    Uint8List? scriptSig,
-  ) {
+  BigInt calculateWeight(Uint8List prevScriptPubKey, Uint8List? scriptSig) {
     throw UnimplementedError();
     // if (scriptSig == null || prevScriptPubKey.isEmpty) {
     //   return 0.toBI;
@@ -332,8 +330,10 @@ class EC8Input extends Input {
 
     // Write Weight
     if (withWeight) {
-      offset +=
-          buffer.bytes.writeUint32(offset, weight.toInt()); // Should be 146
+      offset += buffer.bytes.writeUint32(
+        offset,
+        weight.toInt(),
+      ); // Should be 146
     }
 
     if (withScript) {
@@ -375,9 +375,7 @@ class EC8Input extends Input {
   }
 }
 
-List<Uint8List> decodeScriptWittness({
-  required Uint8List wittnessScript,
-}) {
+List<Uint8List> decodeScriptWittness({required Uint8List wittnessScript}) {
   final scripts = <Uint8List>[];
 
   var offset = 0;

@@ -5,6 +5,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_struc
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -50,10 +51,7 @@ sealed class RawTransaction {
   }
 
   BigInt get totalOutputValue {
-    return outputs.fold(
-      BigInt.zero,
-      (prev, element) => prev + element.value,
-    );
+    return outputs.fold(BigInt.zero, (prev, element) => prev + element.value);
   }
 
   String get txid {
@@ -69,7 +67,9 @@ sealed class RawTransaction {
     required UTXONetworkType networkType,
   }) {
     assert(
-        hashType == networkType.sighash.all, "Only SIGHASH_ALL is supported");
+      hashType == networkType.sighash.all,
+      "Only SIGHASH_ALL is supported",
+    );
 
     final copy = createCopy();
 
@@ -151,10 +151,7 @@ sealed class RawTransaction {
     required HDWalletPath walletPath,
     required UTXONetworkType networkType,
   }) {
-    assert(
-      inputMap != null,
-      'Cant sign transaction without inputs',
-    );
+    assert(inputMap != null, 'Cant sign transaction without inputs');
 
     final signedInputs = signInputs(
       inputs: inputMap!,
@@ -186,10 +183,7 @@ class BTCRawTransaction extends RawTransaction {
     required this.inputs,
     required this.outputs,
     super.inputMap,
-  }) : super(
-          inputs: inputs,
-          outputs: outputs,
-        );
+  }) : super(inputs: inputs, outputs: outputs);
 
   @override
   BigInt get weight {
@@ -239,9 +233,7 @@ class BTCRawTransaction extends RawTransaction {
     );
   }
 
-  BTCRawTransaction _addInputs(
-    List<Input>? inputs,
-  ) {
+  BTCRawTransaction _addInputs(List<Input>? inputs) {
     final signedInputs = inputs?.whereType<BTCInput>().toList() ?? this.inputs;
 
     return BTCRawTransaction(
@@ -270,8 +262,9 @@ class BTCRawTransaction extends RawTransaction {
     }
 
     /// Inputs
-    final (inputLength, inputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (inputLength, inputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += inputLengthByteLength;
 
     final inputs = <BTCInput>[];
@@ -282,8 +275,9 @@ class BTCRawTransaction extends RawTransaction {
     }
 
     /// Outputs
-    final (outputLength, outputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (outputLength, outputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += outputLengthByteLength;
 
     final outputs = <BTCOutput>[];
@@ -305,9 +299,7 @@ class BTCRawTransaction extends RawTransaction {
           continue;
         }
 
-        final witness = ScriptWitness.fromScript(
-          buffer.sublist(offset),
-        );
+        final witness = ScriptWitness.fromScript(buffer.sublist(offset));
 
         wittnessScripts.add((witness, input));
         offset += witness.size;
@@ -345,7 +337,8 @@ class BTCRawTransaction extends RawTransaction {
       (prev, buffer) => prev + buffer.length,
     );
 
-    var txByteLength = 4 +
+    var txByteLength =
+        4 +
         inputLengthByte +
         inputsByteLength +
         outputLengthByte +
@@ -356,13 +349,10 @@ class BTCRawTransaction extends RawTransaction {
       txByteLength += 1; // Segwit Flag
       txByteLength += 1; // Segwit Marker
 
-      txByteLength += segwitInputs.fold(
-        0,
-        (prev, input) {
-          assert(input.isSegwit);
-          return prev + input.script!.size;
-        },
-      );
+      txByteLength += segwitInputs.fold(0, (prev, input) {
+        assert(input.isSegwit);
+        return prev + input.script!.size;
+      });
       txByteLength += nonSegwitInputs.length; // Empty Script
     }
 
@@ -422,7 +412,9 @@ class BTCRawTransaction extends RawTransaction {
     required UTXONetworkType networkType,
   }) {
     assert(
-        hashType == networkType.sighash.all, "Only SIGHASH_ALL is supported");
+      hashType == networkType.sighash.all,
+      "Only SIGHASH_ALL is supported",
+    );
 
     ///
     /// Always use P2PKH in bip143 sigHash
@@ -511,21 +503,12 @@ class EC8RawTransaction extends RawTransaction {
     required this.validFrom,
     required this.validUntil,
     super.inputMap,
-  }) : super(
-          inputs: inputs,
-          outputs: outputs,
-        );
+  }) : super(inputs: inputs, outputs: outputs);
 
   /// EC8 Transaction weight is calculated differently
   BigInt get weight {
-    return inputs.fold(
-          0.toBI,
-          (prev, input) => prev + input.weight,
-        ) +
-        outputs.fold(
-          0.toBI,
-          (prev, output) => prev + output.weight,
-        );
+    return inputs.fold(0.toBI, (prev, input) => prev + input.weight) +
+        outputs.fold(0.toBI, (prev, output) => prev + output.weight);
   }
 
   String get txid {
@@ -550,7 +533,8 @@ class EC8RawTransaction extends RawTransaction {
       (prev, buffer) => prev + buffer.length,
     );
 
-    var txByteLength = 4 +
+    var txByteLength =
+        4 +
         inputLengthByte +
         inputsByteLength +
         outputLengthByte +
@@ -611,7 +595,8 @@ class EC8RawTransaction extends RawTransaction {
       (prev, buffer) => prev + buffer.length,
     );
 
-    var txByteLength = 4 +
+    var txByteLength =
+        4 +
         inputLengthByte +
         inputsByteLength +
         outputLengthByte +
@@ -663,10 +648,7 @@ class EC8RawTransaction extends RawTransaction {
   Uint8List get bytesForSigning {
     /// Double SHA256 Hash of all inputs
     final inputBuffers = inputs.map(
-      (input) => input.bytesForSigning(
-        withWeight: true,
-        withScript: false,
-      ),
+      (input) => input.bytesForSigning(withWeight: true, withScript: false),
     );
     final combinedInputBuffers = inputBuffers.fold(
       Uint8List(0),
@@ -687,9 +669,7 @@ class EC8RawTransaction extends RawTransaction {
     ///
 
     /// Input to be signed has a scriptSig all other inputs have empty scriptSigs
-    final input = inputs.singleWhereOrNull(
-      (input) => input.script!.size != 0,
-    );
+    final input = inputs.singleWhereOrNull((input) => input.script!.size != 0);
     if (input == null) {
       throw Exception('No input to be signed');
     }
@@ -702,7 +682,8 @@ class EC8RawTransaction extends RawTransaction {
     ///
     /// Construct Buffer
     ///
-    final txByteLength = 4 +
+    final txByteLength =
+        4 +
         hashInputs.length +
         hashOutputs.length +
         inputBytes.length +
@@ -719,10 +700,7 @@ class EC8RawTransaction extends RawTransaction {
     offset += buffer.writeSlice(offset, hashInputs);
 
     /// Input to be signed
-    offset += buffer.writeSlice(
-      offset,
-      inputBytes,
-    );
+    offset += buffer.writeSlice(offset, inputBytes);
 
     /// HashOutputs
     offset += buffer.writeSlice(offset, hashOutputs);
@@ -749,9 +727,7 @@ class EC8RawTransaction extends RawTransaction {
     );
   }
 
-  EC8RawTransaction _addInputs(
-    List<Input>? inputs,
-  ) {
+  EC8RawTransaction _addInputs(List<Input>? inputs) {
     final signedInputs = inputs?.whereType<EC8Input>().toList() ?? this.inputs;
 
     return EC8RawTransaction(
@@ -773,8 +749,9 @@ class EC8RawTransaction extends RawTransaction {
     offset += length;
 
     /// Inputs
-    final (inputLength, inputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (inputLength, inputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += inputLengthByteLength;
 
     final inputs = <EC8Input>[];
@@ -785,8 +762,9 @@ class EC8RawTransaction extends RawTransaction {
     }
 
     /// Outputs
-    final (outputLength, outputLengthByteLength) =
-        buffer.bytes.readVarInt(offset);
+    final (outputLength, outputLengthByteLength) = buffer.bytes.readVarInt(
+      offset,
+    );
     offset += outputLengthByteLength;
 
     final outputs = <EC8Output>[];

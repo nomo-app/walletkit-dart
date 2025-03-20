@@ -6,6 +6,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
@@ -19,12 +20,7 @@ class POPResult {
   /// Signatures of uPoPHash for each input used in the to be proven transaction
   final List<Uint8List> pops;
 
-  const POPResult(
-    this.uPoPHash,
-    this.upopTx,
-    this.pops,
-    this.originalTxId,
-  );
+  const POPResult(this.uPoPHash, this.upopTx, this.pops, this.originalTxId);
 
   bool verifiyPop(int index, Uint8List publicKey) {
     assert(index < pops.length);
@@ -36,9 +32,7 @@ class POPResult {
       "txId": originalTxId,
       "uPoP": upopTx.asHex,
       "uPoPHash": uPoPHash.toHex,
-      "pops": [
-        for (final pop in pops) pop.toHex,
-      ],
+      "pops": [for (final pop in pops) pop.toHex],
     };
   }
 }
@@ -60,28 +54,30 @@ Future<POPResult> proofOfPayment({
   /// Fetch to be proven Tx
   ///
   final tbProvenTxSerialized = await fetchRawTxByHash(txid, networkType);
-  final tbProvenTx = isEc8
-      ? EC8RawTransaction.fromHex(tbProvenTxSerialized)
-      : BTCRawTransaction.fromHex(tbProvenTxSerialized);
+  final tbProvenTx =
+      isEc8
+          ? EC8RawTransaction.fromHex(tbProvenTxSerialized)
+          : BTCRawTransaction.fromHex(tbProvenTxSerialized);
 
   ///
   /// Get Nodes for Inputs
   ///
   ///
   final listEquality = const ListEquality().equals;
-  final usedNodes = [
-    for (final input in tbProvenTx.inputs)
-      () {
-        final node = nodes.firstWhereOrNull(
-          (node) => listEquality(
-            node.publicKey.hexToBytes,
-            input.publicKeyFromSig,
-          ),
-        );
-        if (node == null) return null;
-        return node;
-      }.call()
-  ].whereType<NodeWithAddress>().toList();
+  final usedNodes =
+      [
+        for (final input in tbProvenTx.inputs)
+          () {
+            final node = nodes.firstWhereOrNull(
+              (node) => listEquality(
+                node.publicKey.hexToBytes,
+                input.publicKeyFromSig,
+              ),
+            );
+            if (node == null) return null;
+            return node;
+          }.call(),
+      ].whereType<NodeWithAddress>().toList();
 
   assert(
     tbProvenTx.inputs.length == usedNodes.length,
@@ -93,8 +89,10 @@ Future<POPResult> proofOfPayment({
   ///
   final pop_output_script_data = Uint8List(2 + 32 + nonceBytes.length + 1);
   var offset = 0;
-  offset +=
-      pop_output_script_data.bytes.writeUint16(offset, 0x01); // POP Version
+  offset += pop_output_script_data.bytes.writeUint16(
+    offset,
+    0x01,
+  ); // POP Version
   offset += pop_output_script_data.writeSlice(offset, txid.hexToBytes);
   offset += pop_output_script_data.writeVarSlice(offset, nonceBytes);
 
@@ -106,9 +104,10 @@ Future<POPResult> proofOfPayment({
   ///
   /// Adjust Inputs (Set Sequence to 0x00000000)
   ///
-  final pop_inputs = tbProvenTx.inputs.map((input) {
-    return input.changeSequence(0x00000000);
-  }).toList();
+  final pop_inputs =
+      tbProvenTx.inputs.map((input) {
+        return input.changeSequence(0x00000000);
+      }).toList();
 
   ///
   /// Create UPoP
@@ -143,9 +142,7 @@ Future<POPResult> proofOfPayment({
       ),
   ];
 
-  final signatures = [
-    for (final node in bip32Nodes) (node.sign(uPoPHash) as Uint8List),
-  ];
+  final signatures = [for (final node in bip32Nodes) node.sign(uPoPHash)];
 
   return POPResult(uPoPHash, uPopTx, signatures, txid);
 }

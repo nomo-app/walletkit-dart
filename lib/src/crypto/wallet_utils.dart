@@ -3,10 +3,9 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:convert/convert.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
+import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
+import 'package:walletkit_dart/src/wallet/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-// import 'package:bip39/bip39.dart' as bip39;
-import 'package:bip32/bip32.dart' as bip32;
-import 'package:bip39/bip39.dart' as bip39;
 
 export 'utxo/utils/derivation.dart';
 
@@ -112,7 +111,7 @@ String pubKeytoChecksumETHAddress(Uint8List seed, String path) {
 String getETHAddressFromMnemonic({
   required String mnemonic,
 }) {
-  final seed = bip39.mnemonicToSeed(mnemonic);
+  final seed = mnemonicToSeed(mnemonic);
 
   final publicKey = derivePublicKeyETH(seed, ethereumBip44HDPath.defaultPath);
 
@@ -124,17 +123,17 @@ String getETHAddressFromMnemonic({
 }
 
 Uint8List derivePrivateKeyETH(Uint8List seed, String path) {
-  final node = bip32.BIP32.fromSeed(seed);
+  final node = HDNode.fromSeed(seed);
 
-  final bip32.BIP32 childNode = node.derivePath(
+  final childNode = node.derivePath(
     path,
   );
   return childNode.privateKey!;
 }
 
 Uint8List derivePublicKeyETH(Uint8List seed, String path) {
-  final node = bip32.BIP32.fromSeed(seed);
+  final node = HDNode.fromSeed(seed);
 
-  final bip32.BIP32 childNode = node.derivePath(path);
+  final childNode = node.derivePath(path);
   return childNode.publicKeyUncompressed;
 }

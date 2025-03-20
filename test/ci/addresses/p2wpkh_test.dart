@@ -1,6 +1,6 @@
-import 'package:bip39/bip39.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
+import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {

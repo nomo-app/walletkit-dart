@@ -8,17 +8,11 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.d
 import 'package:walletkit_dart/src/crypto/utxo/entities/script.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
-enum InputType {
-  P2PK,
-  P2PKH,
-  P2SH,
-  P2WPKH,
-  P2WSH,
-  P2TR,
-}
+enum InputType { P2PK, P2PKH, P2SH, P2WPKH, P2WSH, P2TR }
 
 sealed class BTCScript {
   final Uint8List bytes;
@@ -95,8 +89,9 @@ sealed class BTCLockingScript extends BTCScript {
 
       final payload = Base32().decode(_address);
 
-      final payloadData =
-          bech32.fromWords(payload.sublist(0, payload.length - 8));
+      final payloadData = bech32.fromWords(
+        payload.sublist(0, payload.length - 8),
+      );
 
       final version = payloadData[0];
       final pubKeyHash = payloadData.sublist(1);
@@ -190,15 +185,15 @@ final class RedeemScript extends BTCUnlockingScript {
   }
 
   RedeemScript(this.signature, this.redeemScript)
-      : super(
-          [
-            0x00,
-            signature.length,
-            ...signature,
-            redeemScript.length,
-            ...redeemScript,
-          ].toUint8List,
-        );
+    : super(
+        [
+          0x00,
+          signature.length,
+          ...signature,
+          redeemScript.length,
+          ...redeemScript,
+        ].toUint8List,
+      );
 }
 
 final class ScriptSignature extends BTCUnlockingScript {
@@ -212,14 +207,14 @@ final class ScriptSignature extends BTCUnlockingScript {
   }
 
   ScriptSignature(this.signature, this.publicKey)
-      : super(
-          [
-            signature.length,
-            ...signature,
-            publicKey.length,
-            ...publicKey,
-          ].toUint8List,
-        );
+    : super(
+        [
+          signature.length,
+          ...signature,
+          publicKey.length,
+          ...publicKey,
+        ].toUint8List,
+      );
 }
 
 final class ScriptWitness extends BTCUnlockingScript {
@@ -233,15 +228,15 @@ final class ScriptWitness extends BTCUnlockingScript {
   }
 
   ScriptWitness(this.scriptSig, this.publicKey)
-      : super(
-          [
-            0x02,
-            scriptSig.length,
-            ...scriptSig,
-            publicKey.length,
-            ...publicKey,
-          ].toUint8List,
-        );
+    : super(
+        [
+          0x02,
+          scriptSig.length,
+          ...scriptSig,
+          publicKey.length,
+          ...publicKey,
+        ].toUint8List,
+      );
 }
 
 final class TimeLockedScript extends BTCLockingScript {
@@ -250,162 +245,154 @@ final class TimeLockedScript extends BTCLockingScript {
   final bool isRelative;
 
   TimeLockedScript.fromScript(super.bytes)
-      : input = BTCLockingScript.fromBuffer(bytes.sublist(3, bytes.length - 1)),
-        lockTime = bytes[0],
-        isRelative = bytes[1] == OPCODE.OP_CHECKSEQUENCEVERIFY.hex;
+    : input = BTCLockingScript.fromBuffer(bytes.sublist(3, bytes.length - 1)),
+      lockTime = bytes[0],
+      isRelative = bytes[1] == OPCODE.OP_CHECKSEQUENCEVERIFY.hex;
 
   TimeLockedScript(this.input, this.lockTime, this.isRelative)
-      : super(isRelative
+    : super(
+        isRelative
             ? [
-                lockTime,
-                OPCODE.OP_CHECKSEQUENCEVERIFY.hex,
-                OPCODE.OP_DROP.hex,
-                ...input.bytes,
-              ].toUint8List
+              lockTime,
+              OPCODE.OP_CHECKSEQUENCEVERIFY.hex,
+              OPCODE.OP_DROP.hex,
+              ...input.bytes,
+            ].toUint8List
             : [
-                lockTime,
-                OPCODE.OP_CHECKLOCKTIMEVERIFY.hex,
-                OPCODE.OP_DROP.hex,
-                ...input.bytes,
-              ].toUint8List);
+              lockTime,
+              OPCODE.OP_CHECKLOCKTIMEVERIFY.hex,
+              OPCODE.OP_DROP.hex,
+              ...input.bytes,
+            ].toUint8List,
+      );
 }
 
 final class PayToPublicKeyScript extends BTCLockingScript {
   final Uint8List publicKey;
 
   PayToPublicKeyScript.fromScript(super.bytes)
-      : publicKey = bytes.sublist(0, bytes.length - 1).toUint8List;
+    : publicKey = bytes.sublist(0, bytes.length - 1).toUint8List;
 
   PayToPublicKeyScript(this.publicKey)
-      : super(
-          [
-            publicKey.length,
-            ...publicKey,
-            OPCODE.OP_CHECKSIG.hex,
-          ].toUint8List,
-        );
+    : super(
+        [publicKey.length, ...publicKey, OPCODE.OP_CHECKSIG.hex].toUint8List,
+      );
 }
 
 final class PayToPublicKeyHashScript extends BTCLockingScript {
   final Uint8List publicKeyHash;
 
   PayToPublicKeyHashScript.fromScript(super.bytes)
-      : publicKeyHash = bytes.sublist(3, bytes.length - 2).toUint8List;
+    : publicKeyHash = bytes.sublist(3, bytes.length - 2).toUint8List;
 
   PayToPublicKeyHashScript(this.publicKeyHash)
-      : super(
-          [
-            OPCODE.OP_DUP.hex,
-            OPCODE.OP_HASH160.hex,
-            publicKeyHash.length,
-            ...publicKeyHash,
-            OPCODE.OP_EQUALVERIFY.hex,
-            OPCODE.OP_CHECKSIG.hex,
-          ].toUint8List,
-        );
+    : super(
+        [
+          OPCODE.OP_DUP.hex,
+          OPCODE.OP_HASH160.hex,
+          publicKeyHash.length,
+          ...publicKeyHash,
+          OPCODE.OP_EQUALVERIFY.hex,
+          OPCODE.OP_CHECKSIG.hex,
+        ].toUint8List,
+      );
 }
 
 final class PayToScriptHashScript extends BTCLockingScript {
   final Uint8List scriptHash;
 
   PayToScriptHashScript.fromScript(super.bytes)
-      : scriptHash = bytes.sublist(2, bytes.length - 1).toUint8List;
+    : scriptHash = bytes.sublist(2, bytes.length - 1).toUint8List;
 
   PayToScriptHashScript(this.scriptHash)
-      : super(
-          [
-            OPCODE.OP_HASH160.hex,
-            scriptHash.length,
-            ...scriptHash,
-            OPCODE.OP_EQUAL.hex,
-          ].toUint8List,
-        );
+    : super(
+        [
+          OPCODE.OP_HASH160.hex,
+          scriptHash.length,
+          ...scriptHash,
+          OPCODE.OP_EQUAL.hex,
+        ].toUint8List,
+      );
 }
 
 final class PayToWitnessPublicKeyHashScript extends BTCLockingScript {
   final Uint8List publicKeyHash;
 
   PayToWitnessPublicKeyHashScript.fromScript(super.bytes)
-      : publicKeyHash = bytes.sublist(2, bytes.length).toUint8List;
+    : publicKeyHash = bytes.sublist(2, bytes.length).toUint8List;
 
   PayToWitnessPublicKeyHashScript(this.publicKeyHash)
-      : super(
-          [
-            OPCODE.OP_0.hex,
-            publicKeyHash.length,
-            ...publicKeyHash,
-          ].toUint8List,
-        );
+    : super(
+        [OPCODE.OP_0.hex, publicKeyHash.length, ...publicKeyHash].toUint8List,
+      );
 }
 
 final class PayToWitnessScriptHashScript extends BTCLockingScript {
   final Uint8List witnessScriptHash;
 
   PayToWitnessScriptHashScript.fromScript(super.bytes)
-      : witnessScriptHash = bytes.sublist(2, bytes.length).toUint8List;
+    : witnessScriptHash = bytes.sublist(2, bytes.length).toUint8List;
 
   PayToWitnessScriptHashScript(this.witnessScriptHash)
-      : super(
-          [
-            OPCODE.OP_0.hex,
-            witnessScriptHash.length,
-            ...witnessScriptHash,
-          ].toUint8List,
-        );
+    : super(
+        [
+          OPCODE.OP_0.hex,
+          witnessScriptHash.length,
+          ...witnessScriptHash,
+        ].toUint8List,
+      );
 }
 
 final class NestedSegwitScript extends BTCLockingScript {
   final Uint8List nestedScriptHash;
 
   NestedSegwitScript(super.bytes)
-      : nestedScriptHash = bytes.sublist(2, bytes.length - 1).toUint8List;
+    : nestedScriptHash = bytes.sublist(2, bytes.length - 1).toUint8List;
 }
 
 final class PayToWitnessPublicKeyHashNestedScript extends NestedSegwitScript {
   final Uint8List? pubKeyHash;
 
   PayToWitnessPublicKeyHashNestedScript.fromScript(super.script)
-      : pubKeyHash = null;
+    : pubKeyHash = null;
 
   PayToWitnessPublicKeyHashNestedScript(Uint8List pubKeyHash)
-      : pubKeyHash = pubKeyHash,
-        super([
+    : pubKeyHash = pubKeyHash,
+      super(
+        [
           OPCODE.OP_HASH160.hex,
           20,
           ...ripmed160Hash([00, 14, ...pubKeyHash].toUint8List),
           OPCODE.OP_EQUAL.hex,
-        ].toUint8List);
+        ].toUint8List,
+      );
 }
 
 final class PayToWitnessScriptHashNestedScript extends NestedSegwitScript {
   final Uint8List? witnessSript;
 
   PayToWitnessScriptHashNestedScript.fromScript(super.script)
-      : witnessSript = null;
+    : witnessSript = null;
 
   PayToWitnessScriptHashNestedScript(Uint8List witnessSript)
-      : witnessSript = witnessSript,
-        super(
-          [
-            OPCODE.OP_HASH160.hex,
-            ...ripmed160Hash([00, 20, ...sha256Hash(witnessSript)].toUint8List),
-            OPCODE.OP_EQUAL.hex,
-          ].toUint8List,
-        );
+    : witnessSript = witnessSript,
+      super(
+        [
+          OPCODE.OP_HASH160.hex,
+          ...ripmed160Hash([00, 20, ...sha256Hash(witnessSript)].toUint8List),
+          OPCODE.OP_EQUAL.hex,
+        ].toUint8List,
+      );
 }
 
 final class PayToTaprootScript extends BTCLockingScript {
   final Uint8List pubkey;
 
   PayToTaprootScript.fromScript(super.bytes)
-      : pubkey = bytes.sublist(2, bytes.length).toUint8List;
+    : pubkey = bytes.sublist(2, bytes.length).toUint8List;
 
   PayToTaprootScript(this.pubkey)
-      : super([
-          OPCODE.OP_1.hex,
-          pubkey.length,
-          ...pubkey,
-        ].toUint8List);
+    : super([OPCODE.OP_1.hex, pubkey.length, ...pubkey].toUint8List);
 }
 
 // final class BareMultiSigScript extends UTXOScript {
@@ -435,14 +422,11 @@ final class OPReturnScript extends BTCLockingScript {
   final Uint8List data;
 
   OPReturnScript.fromScript(super.bytes)
-      : data = bytes.sublist(2, bytes.length).toUint8List;
+    : data = bytes.sublist(2, bytes.length).toUint8List;
 
   OPReturnScript(this.data)
-      : assert(data.length <= 80, "Data length must be less than 80 bytes"),
-        super([
-          OPCODE.OP_RETURN.hex,
-          ...data,
-        ].toUint8List);
+    : assert(data.length <= 80, "Data length must be less than 80 bytes"),
+      super([OPCODE.OP_RETURN.hex, ...data].toUint8List);
 }
 
 final class AnyoneCanSpendScript extends BTCLockingScript {
@@ -486,10 +470,10 @@ sealed class BTCTransactionStructure {
 final class LegacyFormat extends BTCTransactionStructure {
   @override
   Set<InputType> get acceptedInputTypes => {
-        InputType.P2PKH,
-        InputType.P2SH,
-        InputType.P2PK,
-      };
+    InputType.P2PKH,
+    InputType.P2SH,
+    InputType.P2PK,
+  };
 
   Uint8List buildBuffer({
     required int version,
@@ -508,19 +492,20 @@ final class SegwitFormat extends BTCTransactionStructure {
 
   @override
   Set<InputType> get acceptedInputTypes => {
-        InputType.P2PKH,
-        InputType.P2SH,
-        InputType.P2PK,
-        InputType.P2WPKH,
-        InputType.P2WSH,
-      };
+    InputType.P2PKH,
+    InputType.P2SH,
+    InputType.P2PK,
+    InputType.P2WPKH,
+    InputType.P2WSH,
+  };
 
   @override
-  Uint8List buildBuffer(
-      {required int version,
-      required int lockTime,
-      required List<Input> inputs,
-      required List<Output> outputs}) {
+  Uint8List buildBuffer({
+    required int version,
+    required int lockTime,
+    required List<Input> inputs,
+    required List<Output> outputs,
+  }) {
     throw UnimplementedError();
   }
 }
@@ -535,7 +520,7 @@ final class TaprootFormat extends SegwitFormat {
 
   @override
   Set<InputType> get acceptedInputTypes => {
-        ...super.acceptedInputTypes,
-        InputType.P2TR,
-      };
+    ...super.acceptedInputTypes,
+    InputType.P2TR,
+  };
 }
