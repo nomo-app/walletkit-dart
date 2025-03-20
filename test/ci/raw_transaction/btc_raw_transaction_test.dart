@@ -1,6 +1,5 @@
 @Timeout(Duration(minutes: 5))
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/input.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../no_ci/input_simulation_test.dart';

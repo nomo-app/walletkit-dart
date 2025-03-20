@@ -74,7 +74,7 @@ sealed class Input {
     return switch (script) {
       ScriptSignature scripSig => scripSig.publicKey,
       ScriptWitness scriptWitness => scriptWitness.publicKey,
-      RedeemScript redeemScript => throw Exception("Redeem Script"),
+      RedeemScript _ => throw Exception("Redeem Script"),
       _ => throw Exception("Unknown Script"),
     };
   }
