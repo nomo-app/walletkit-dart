@@ -6,7 +6,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/transactions/electrum_transaction.dart';
-import 'package:bip32/bip32.dart' as bip32;
+import 'package:walletkit_dart/src/wallet/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const kAddressesUpperLimit = 10000;
@@ -204,16 +204,17 @@ Future<UTXOTxInfo> fetchUTXOTransactionsFromEpubKey({
   /// Search for Receive and Change Addresses
   ///
 
+  final nodeNetworkInfo = networkType.networkBIP.getForPurpose(purpose);
+
   final masterNode = await isolateManager.executeTask(
     IsolateTask(
       task: (arg) {
-        return deriveMasterNodeFromExtendedKeyWithCheck(
-          ePubKey: arg.$1,
-          networkType: arg.$2,
-          purpose: arg.$3,
+        return deriveMasterNodeFromExtendedKey(
+          arg.$1,
+          nodeNetworkInfo: arg.$2,
         );
       },
-      argument: (ePubKey, networkType, purpose),
+      argument: (ePubKey, nodeNetworkInfo),
     ),
   );
 
@@ -279,9 +280,13 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
         final masterNode = await isolateManager.executeTask(
           IsolateTask(
             task: (arg) {
-              return deriveMasterNodeFromSeed(seed: arg.$1, walletPath: arg.$2);
+              return deriveMasterNodeFromSeed(
+                seed: arg.$1,
+                walletPath: arg.$2,
+                networkType: arg.$3,
+              );
             },
-            argument: (seed, walletType),
+            argument: (seed, walletType, networkType),
           ),
         );
         return searchTransactionsForWalletType(
@@ -316,7 +321,7 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
 
 Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     searchTransactionsForWalletType({
-  required BipNode masterNode,
+  required HDNode masterNode,
   required HDWalletPurpose? purpose,
   required Iterable<AddressType> addressTypes,
   required UTXONetworkType networkType,
@@ -355,7 +360,7 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
 
 Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
     searchForTransactions({
-  required bip32.BIP32 masterNode,
+  required HDNode masterNode,
   required int chainIndex,
   required Iterable<AddressType> addressTypes,
   required HDWalletPurpose? walletPurpose,
@@ -494,9 +499,12 @@ Future<Amount> estimateFeeForPriority({
   required int blocks,
   required UTXONetworkType network,
   required ElectrumXClient? initalClient,
+  bool useSmartFee = false,
 }) async {
   final (fee, _, _) = await fetchFromRandomElectrumXNode(
-    (client) => client.estimateFee(blocks: blocks),
+    (client) => useSmartFee
+        ? client.estimateSmartFee(blocks: blocks)
+        : client.estimateFee(blocks: blocks),
     client: initalClient,
     endpoints: network.endpoints,
     token: network.coin,
@@ -506,7 +514,7 @@ Future<Amount> estimateFeeForPriority({
 
   final feePerKb = Amount.convert(value: fee, decimals: 8);
 
-  final feePerB = feePerKb / Amount.from(value: 1000, decimals: 0);
+  final feePerB = feePerKb.multiplyAndCeil(0.001);
 
   return feePerB;
 }
@@ -514,6 +522,7 @@ Future<Amount> estimateFeeForPriority({
 Future<UtxoNetworkFees> getNetworkFees({
   required UTXONetworkType network,
   double multiplier = 1.0,
+  bool useSmartFee = false,
 }) async {
   final blockInOneHour = 3600 ~/ network.blockTime;
   final blocksTillTomorrow = 24 * 3600 ~/ network.blockTime;

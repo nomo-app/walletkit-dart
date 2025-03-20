@@ -302,14 +302,15 @@ Future<(UTXOTransaction, bool, String?)> simulateTx({
               BITCOIN_NETWORK() ||
               BITCOINCASH_NETWORK() ||
               LITECOIN_NETWORK() ||
+              DOGECOIN_NETWORK() ||
               ZENIQ_NETWORK() =>
                 BTCOutput(
                   value: out.value,
-                  scriptPubKey: out.scriptPubKey.lockingScript,
+                  script: out.scriptPubKey.lockingScript,
                 ),
               EUROCOIN_NETWORK() => EC8Output(
                   value: out.value,
-                  scriptPubKey: out.scriptPubKey.lockingScript,
+                  script: out.scriptPubKey.lockingScript,
                 ),
             })
         .toList();

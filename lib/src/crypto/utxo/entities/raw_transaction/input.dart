@@ -1,11 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/script.dart';
-import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/utils/int.dart';
 import 'package:walletkit_dart/src/utils/var_uint.dart';
-import 'package:walletkit_dart/walletkit_dart.dart';
 
 const output_index_length = 4;
 const sequence_length = 4;
@@ -13,36 +12,48 @@ const sequence_length = 4;
 sealed class Input {
   final Uint8List txid;
   final int vout;
-  final Uint8List? _scriptSig;
-  final Uint8List? _wittnessScript;
-  final BigInt? value;
-  final Uint8List? _prevScriptPubKey;
+
+  final Output? prevOutput;
+
+  final BTCScript? script;
+
+  BigInt? get value => prevOutput?.value;
 
   const Input({
     required this.txid,
     required this.vout,
-    this.value,
-    Uint8List? prevScriptPubKey,
-    Uint8List? scriptSig,
-    Uint8List? wittnessScript,
-  })  : _scriptSig = scriptSig,
-        _prevScriptPubKey = prevScriptPubKey,
-        _wittnessScript = wittnessScript;
+    required this.prevOutput,
+    required this.script,
+  });
 
-  BigInt get weight {
-    if (_scriptSig == null || _prevScriptPubKey == null) return -1.toBI;
-    return calculateWeight(_prevScriptPubKey!, _scriptSig!);
-  }
+  // BigInt get witnessSize {
+  //   if (_wittnessScript == null || _wittnessScript!.isEmpty) return 0.toBI;
+
+  //   BigInt size = getVarIntSize(_wittnessScript!.length)
+  //       .toBI; // Count of witness elements
+
+  //   final wittnessChunks =
+  //       decodeScriptWittness(wittnessScript: _wittnessScript!);
+
+  //   for (final chunk in wittnessChunks) {
+  //     size += getVarIntSize(chunk.length).toBI; // Size of this element
+  //     size += chunk.length.toBI; // The element itself
+  //   }
+
+  //   return size;
+  // }
+
+  // BigInt get scriptSize {
+  //   if (_scriptSig == null || _scriptSig!.isEmpty) return 0.toBI;
+
+  //   return getVarIntSize(_scriptSig!.length).toBI + _scriptSig!.length.toBI;
+  // }
+
+  BigInt get weight;
 
   int get intValue => value != null ? value!.toInt() : 0;
 
-  String? get scriptSigHex => _scriptSig != null ? _scriptSig!.toHex : null;
-
   String get txIdString => hex.encode(txid);
-
-  Uint8List get scriptSig => _scriptSig ?? Uint8List(0);
-
-  Uint8List get wittnessScript => _wittnessScript ?? Uint8List(0);
 
   Uint8List get bytes;
 
@@ -50,112 +61,32 @@ sealed class Input {
 
   String get toHex => hex.encode(bytes);
 
-  Uint8List get previousScriptPubKey => _prevScriptPubKey ?? Uint8List(0);
+  BTCLockingScript? get previousScript => prevOutput?.script;
 
-  bool get isP2SH =>
-      previousScriptPubKey.length == 23 &&
-      previousScriptPubKey[0] == OP_HASH160 &&
-      previousScriptPubKey[1] == 0x14 &&
-      previousScriptPubKey[22] == OP_EQUAL;
+  bool get isSegwit =>
+      hasWitness ||
+      previousScript is PayToWitnessScriptHashScript ||
+      previousScript is PayToWitnessPublicKeyHashScript;
 
-  bool get isP2PKH =>
-      previousScriptPubKey.length == 25 &&
-      previousScriptPubKey[0] == OP_DUP &&
-      previousScriptPubKey[1] == OP_HASH160 &&
-      previousScriptPubKey[2] == 0x14 &&
-      previousScriptPubKey[23] == OP_EQUALVERIFY &&
-      previousScriptPubKey[24] == OP_CHECKSIG;
-
-  bool get isP2WPKH =>
-      previousScriptPubKey.length == 22 &&
-      previousScriptPubKey[0] == 0x00 &&
-      previousScriptPubKey[1] == 0x14;
-
-  bool get isP2WSH =>
-      previousScriptPubKey.length == 34 &&
-      previousScriptPubKey[0] == 0x00 &&
-      previousScriptPubKey[1] == 0x20;
-
-  bool get isP2PK =>
-      previousScriptPubKey.length == 35 && previousScriptPubKey[0] == 0x21;
-
-  bool get isSegwit => isP2WPKH || isP2WSH || hasWitness;
-
-  bool get hasWitness => _wittnessScript != null;
+  bool get hasWitness => script is ScriptWitness;
 
   Uint8List get publicKeyFromSig {
-    /// From ScriptSig (P2PKH, P2PK)
-    if (_scriptSig != null && _scriptSig!.isNotEmpty) {
-      final script = Script(_scriptSig!);
-
-      final publicKey = script.chunks[1].data;
-      if (publicKey == null) {
-        throw Exception("Invalid Public Key");
-      }
-      if (publicKey.length != 33) {
-        throw Exception("Invalid Public Key");
-      }
-      return publicKey;
-    }
-
-    /// From Witness
-    if (_wittnessScript != null && _wittnessScript!.isNotEmpty) {
-      final chunks = decodeScriptWittness(wittnessScript: _wittnessScript!);
-      if (chunks.length != 2) {
-        throw Exception("Invalid Witness");
-      }
-      final publicKey = chunks[1];
-      if (publicKey.length != 33) {
-        throw Exception("Invalid Public Key");
-      }
-      return publicKey;
-    }
-
-    throw Exception("No ScriptSig or Witness found");
+    return switch (script) {
+      ScriptSignature scripSig => scripSig.publicKey,
+      ScriptWitness scriptWitness => scriptWitness.publicKey,
+      RedeemScript _ => throw Exception("Redeem Script"),
+      _ => throw Exception("Unknown Script"),
+    };
   }
 
-  Input addScript({Uint8List? scriptSig, Uint8List? wittnessScript});
-
-  BigInt calculateWeight(
-    Uint8List prevScriptPubKey,
-    Uint8List? scriptSig,
-  ) {
-    if (scriptSig == null || prevScriptPubKey.isEmpty) {
-      return 0.toBI;
-    }
-
-    BigInt w = 1.toBI + getScriptWeight(prevScriptPubKey);
-
-    if (!isP2SH) return w;
-
-    final script = Script(scriptSig);
-
-    Uint8List? buffer = Uint8List(0);
-
-    for (final chunk in script.chunks) {
-      if (buffer != null) {
-        buffer = chunk.data;
-      }
-      if (chunk.opcode > OP_16) {
-        return weight;
-      }
-    }
-
-    if (buffer != null && buffer.isNotEmpty) {
-      w += getScriptWeight(buffer);
-    }
-
-    return w;
-  }
+  Input addScript(BTCScript script);
 
   BTCInput changeSequence(int sequence) {
     return BTCInput(
       txid: txid,
       vout: vout,
-      value: value,
-      scriptSig: _scriptSig,
-      prevScriptPubKey: _prevScriptPubKey,
-      wittnessScript: _wittnessScript,
+      script: script,
+      prevOutput: prevOutput,
       sequence: sequence,
     );
   }
@@ -167,10 +98,8 @@ class BTCInput extends Input {
   const BTCInput({
     required super.txid,
     required super.vout,
-    required super.value,
-    super.scriptSig,
-    super.prevScriptPubKey,
-    super.wittnessScript,
+    required super.prevOutput,
+    required super.script,
     this.sequence = 0xffffffff,
   });
 
@@ -197,52 +126,68 @@ class BTCInput extends Input {
       txid: txid,
       vout: vout,
       sequence: sequence,
-      scriptSig: script,
-      value: null,
+      script: BTCUnlockingScript.fromBuffer(script),
+      prevOutput: null,
     );
   }
 
-  BTCInput addScript({
-    Uint8List? scriptSig,
-    Uint8List? wittnessScript,
-  }) {
-    final _scriptSig = scriptSig ?? this._scriptSig;
-    final _witnessScript = wittnessScript ?? _wittnessScript;
-
+  BTCInput addScript(BTCScript script) {
     return BTCInput(
       txid: txid,
       vout: vout,
-      scriptSig: _scriptSig,
-      prevScriptPubKey: previousScriptPubKey,
-      wittnessScript: _witnessScript,
-      value: value,
+      script: script,
+      prevOutput: prevOutput,
       sequence: sequence,
     );
   }
 
   Uint8List get bytes {
+    assert(script != null, "Script is required");
+
+    /// Only the ScriptSig is included in the input
+    /// If the script is a witness, the witness is included in the transaction itself not in the input => use EmptyLockingScript
+    final _script = switch (script) {
+      ScriptSignature sig => sig,
+      _ => EmptyLockingScript(),
+    };
+
     final buffer = Uint8List(
       txid.length +
           output_index_length +
-          scriptSig.length +
-          1 +
+          _script.size +
+          getVarIntSize(_script.size) +
           sequence_length,
     );
 
     var offset = 0;
     // Write TXID
-    offset += buffer.writeSlice(offset, txid); // Or TXID ?
+    offset += buffer.writeSlice(offset, txid);
 
     // Write Vout
     offset += buffer.bytes.writeUint32(offset, vout);
 
-    // Write ScriptSig
-    offset += buffer.writeVarSlice(offset, scriptSig);
+    // Write Unlocking Script
+    offset += buffer.writeVarSlice(offset, _script.bytes);
 
     // Write Sequence
     offset += buffer.bytes.writeUint32(offset, sequence);
 
     return buffer;
+  }
+
+  @override
+  BigInt get weight {
+    final weight =
+        (txid.length + output_index_length + sequence_length).toBI *
+        4.toBI; // (32 + 4 + 4) * 4
+
+    return switch (script!) {
+      ScriptSignature sig => weight + (sig.weight * 4.toBI),
+      ScriptWitness witness => weight + witness.weight,
+      RedeemScript redeem =>
+        weight + redeem.weight, // TODO: I think this doesnt make sense
+      _ => throw Exception("Unknown Script"),
+    };
   }
 }
 
@@ -253,37 +198,67 @@ class EC8Input extends Input {
   const EC8Input({
     required super.txid,
     required super.vout,
-    required super.value,
-    super.prevScriptPubKey,
-    super.scriptSig,
-    super.wittnessScript,
+    required super.script,
+    required super.prevOutput,
   });
 
-  EC8Input addScript({
-    Uint8List? scriptSig,
-    Uint8List? wittnessScript,
-  }) {
-    final _scriptSig = scriptSig ?? this._scriptSig;
-    final _witnessScript = wittnessScript ?? _wittnessScript;
+  @override
+  BigInt get weight {
+    throw UnimplementedError();
+    // if (_scriptSig == null || _prevScriptPubKey == null) return -1.toBI;
+    // return calculateWeight(_prevScriptPubKey!, _scriptSig!);
+  }
 
+  BigInt calculateWeight(Uint8List prevScriptPubKey, Uint8List? scriptSig) {
+    throw UnimplementedError();
+    // if (scriptSig == null || prevScriptPubKey.isEmpty) {
+    //   return 0.toBI;
+    // }
+
+    // BigInt w = 1.toBI + getScriptWeight(prevScriptPubKey);
+
+    // if (!isP2SH) return w;
+
+    // final script = Script(scriptSig);
+
+    // Uint8List? buffer = Uint8List(0);
+
+    // for (final chunk in script.chunks) {
+    //   if (buffer != null) {
+    //     buffer = chunk.data;
+    //   }
+    //   if (chunk.opcode > OP_16) {
+    //     return weight;
+    //   }
+    // }
+
+    // if (buffer != null && buffer.isNotEmpty) {
+    //   w += getScriptWeight(buffer);
+    // }
+
+    // return w;
+  }
+
+  EC8Input addScript(BTCScript script) {
     return EC8Input(
       txid: txid,
       vout: vout,
-      scriptSig: _scriptSig,
-      value: value,
-      prevScriptPubKey: previousScriptPubKey,
-      wittnessScript: _witnessScript,
+      script: script,
+      prevOutput: prevOutput,
     );
   }
 
   Uint8List get bytes {
+    assert(script != null, "Script is required");
+    final _script = script!;
+
     final buffer = Uint8List(
       txid.length +
           output_index_length +
           value_length +
           weight_length +
-          scriptSig.length +
-          1,
+          _script.size +
+          getVarIntSize(_script.size),
     );
 
     var offset = 0;
@@ -300,7 +275,7 @@ class EC8Input extends Input {
     offset += buffer.bytes.writeUint32(offset, weight.toInt());
 
     // Write ScriptSig
-    offset += buffer.writeVarSlice(offset, scriptSig);
+    offset += buffer.writeVarSlice(offset, _script.bytes);
 
     return buffer;
   }
@@ -333,12 +308,16 @@ class EC8Input extends Input {
     required bool withWeight,
     required bool withScript,
   }) {
+    assert(withWeight || withScript, "At least one of the two is required");
+    assert(script != null, "Script is required");
+    final _script = script!;
+
     final buffer = Uint8List(
       txid.length +
           output_index_length +
           value_length +
           (withWeight ? weight_length : 0) +
-          (withScript ? scriptSig.length + 1 : 0),
+          (withScript ? _script.size + getVarIntSize(_script.size) : 0),
     );
 
     var offset = 0;
@@ -351,13 +330,15 @@ class EC8Input extends Input {
 
     // Write Weight
     if (withWeight) {
-      offset +=
-          buffer.bytes.writeUint32(offset, weight.toInt()); // Should be 146
+      offset += buffer.bytes.writeUint32(
+        offset,
+        weight.toInt(),
+      ); // Should be 146
     }
 
     if (withScript) {
       // Write ScriptSig
-      offset += buffer.writeVarSlice(offset, scriptSig);
+      offset += buffer.writeVarSlice(offset, _script.bytes);
     }
     return buffer;
   }
@@ -382,47 +363,19 @@ class EC8Input extends Input {
     offset += off4;
 
     /// ScriptSig
-    final (scriptSig, off5) = buffer.readVarSlice(offset);
+    final (script, off5) = buffer.readVarSlice(offset);
     offset += off5;
 
     return EC8Input(
       txid: txid,
       vout: vout,
-      scriptSig: scriptSig,
-      value: BigInt.from(value),
+      script: BTCUnlockingScript.fromBuffer(script),
+      prevOutput: null,
     );
   }
 }
 
-(Uint8List, int) readScriptWittness({
-  required Uint8List buffer,
-  required int offset,
-}) {
-  final (count, off1) = buffer.bytes.readVarInt(offset);
-  offset += off1;
-
-  final scripts = <Uint8List>[];
-
-  for (var i = 0; i < count; i++) {
-    final (script, off2) = buffer.readVarSlice(offset);
-    offset += off2;
-    scripts.add(script);
-  }
-
-  final wittnessScript = [
-    count,
-    for (final script in scripts) ...[
-      script.length,
-      ...script,
-    ],
-  ].toUint8List;
-
-  return (wittnessScript, wittnessScript.length);
-}
-
-List<Uint8List> decodeScriptWittness({
-  required Uint8List wittnessScript,
-}) {
+List<Uint8List> decodeScriptWittness({required Uint8List wittnessScript}) {
   final scripts = <Uint8List>[];
 
   var offset = 0;

@@ -73,13 +73,15 @@ final class UTXOTransaction extends GenericTransaction {
     final id = json['txid'] as String;
     //final hash = json['hash'] as String;
 
-    final inputs = (json['vin'] as List<dynamic>)
-        .map((e) => ElectrumInput.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final inputs =
+        (json['vin'] as List<dynamic>)
+            .map((e) => ElectrumInput.fromJson(e as Map<String, dynamic>))
+            .toList();
 
-    final rawOutputs = (json['vout'] as List<dynamic>)
-        .map((e) => ElectrumOutput.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final rawOutputs =
+        (json['vout'] as List<dynamic>)
+            .map((e) => ElectrumOutput.fromJson(e as Map<String, dynamic>))
+            .toList();
 
     final outputs = findOurOwnCoins(rawOutputs, nodes, addressTypes, type);
 
@@ -112,7 +114,8 @@ final class UTXOTransaction extends GenericTransaction {
     var fee = fee_int != null ? BigInt.from(fee_int) : null;
     fee ??= spentOutputs.isEmpty ? null : totalInputValue - totalOutputValue;
 
-    final recipient = determineTransactionTarget(
+    final recipient =
+        determineTransactionTarget(
           outputs,
           transferMethod,
           type,
@@ -147,24 +150,23 @@ final class UTXOTransaction extends GenericTransaction {
   }
 
   factory UTXOTransaction.fromJson(Map<dynamic, dynamic> json) {
-    if (json
-        case {
-          'hash': String hash,
-          'block': int block,
-          'confirmations': int confirmations,
-          'timeMilli': int timeMilli,
-          'amount': Map amount,
-          'fee': Map? fee,
-          'sender': String sender,
-          'recipient': String recipient,
-          'transferMethod': int transferMethod,
-          'status': int status,
-          'token': Map token,
-          'id': String id,
-          'version': int version,
-          'inputs': JsonList inputs,
-          'outputs': JsonList outputs,
-        }) {
+    if (json case {
+      'hash': String hash,
+      'block': int block,
+      'confirmations': int confirmations,
+      'timeMilli': int timeMilli,
+      'amount': Map amount,
+      'fee': Map? fee,
+      'sender': String sender,
+      'recipient': String recipient,
+      'transferMethod': int transferMethod,
+      'status': int status,
+      'token': Map token,
+      'id': String id,
+      'version': int version,
+      'inputs': JsonList inputs,
+      'outputs': JsonList outputs,
+    }) {
       return UTXOTransaction(
         hash: hash,
         block: block,
@@ -255,7 +257,7 @@ class ElectrumInput {
     }
     return [
       for (final addressType in addressTypes)
-        pubKeyToAddress(pubKey, addressType, networkType)
+        pubKeyToAddress(pubKey, addressType, networkType),
     ];
   }
 
@@ -263,10 +265,7 @@ class ElectrumInput {
     return switch (json) {
       {
         "txinwitness": [String sig, String pubKey],
-        "scriptSig": {
-          "asm": _,
-          "hex": String hex,
-        },
+        "scriptSig": {"asm": _, "hex": String hex},
         "sequence": int sequence,
         "txid": String txid,
         "vout": int vout,
@@ -279,10 +278,7 @@ class ElectrumInput {
           vout: vout,
         ),
       {
-        "scriptSig": {
-          "asm": _,
-          "hex": String hex,
-        },
+        "scriptSig": {"asm": _, "hex": String hex},
         "sequence": int sequence,
         "txid": String txid,
         "vout": int vout,
@@ -293,30 +289,18 @@ class ElectrumInput {
           txid: txid,
           vout: vout,
         ),
+      {"coinbase": String coinbase, "sequence": int sequence} => ElectrumInput(
+        coinbase: coinbase,
+        sequence: sequence,
+      ),
       {
-        "coinbase": String coinbase,
-        "sequence": int sequence,
-      } =>
-        ElectrumInput(
-          coinbase: coinbase,
-          sequence: sequence,
-        ),
-      {
-        "scriptSig": {
-          "asm": _,
-          "hex": String hex,
-        },
+        "scriptSig": {"asm": _, "hex": String hex},
         "txid": String txid,
         "vout": int vout,
         "value_int": int _,
         "weight": int weight,
       } =>
-        ElectrumInput(
-          scriptSig: hex,
-          txid: txid,
-          vout: vout,
-          sequence: weight,
-        ),
+        ElectrumInput(scriptSig: hex, txid: txid, vout: vout, sequence: weight),
       {
         'scriptSig': String? scriptSig,
         'sequence': int? sequence,
@@ -374,15 +358,14 @@ class ElectrumOutput {
   /// Bitcoin: { value: float, ... }
 
   factory ElectrumOutput.fromJson(Map json) {
-    if (json
-        case {
-          'value': int value,
-          'n': int n,
-          'spent': bool spent,
-          'belongsToUs': bool belongsToUs,
-          'scriptPubKey': Map scriptPubKey,
-          'node': Map node,
-        }) {
+    if (json case {
+      'value': int value,
+      'n': int n,
+      'spent': bool spent,
+      'belongsToUs': bool belongsToUs,
+      'scriptPubKey': Map scriptPubKey,
+      'node': Map node,
+    }) {
       return ElectrumOutput(
         value: value.toBigInt,
         n: n,
@@ -407,17 +390,18 @@ class ElectrumOutput {
     return ElectrumOutput(
       value: value,
       n: n,
-      scriptPubKey: ElectrumScriptPubKey.fromJson(
-        json['scriptPubKey'],
-      ),
+      scriptPubKey: ElectrumScriptPubKey.fromJson(json['scriptPubKey']),
       node: EmptyNode(),
     );
   }
 
   String getAddress(UTXONetworkType type, {AddressType? addressType}) {
     try {
-      return getAddressFromLockingScript(scriptPubKey, type,
-          addressType: addressType);
+      return getAddressFromLockingScript(
+        scriptPubKey,
+        type,
+        addressType: addressType,
+      );
     } catch (e) {
       return ADDRESS_NOT_SUPPORTED;
     }
@@ -428,12 +412,14 @@ class ElectrumOutput {
     required Iterable<AddressType> addressTypes,
   }) {
     try {
-      final (pubKey, _) =
-          getPublicKeyFromLockingScript(scriptPubKey, networkType);
+      final (pubKey, _) = getPublicKeyFromLockingScript(
+        scriptPubKey,
+        networkType,
+      );
 
       return [
         for (final addressType in addressTypes)
-          pubKeyHashToAddress(pubKey, addressType, networkType)
+          pubKeyHashToAddress(pubKey, addressType, networkType),
       ];
     } catch (e) {
       return [];
@@ -489,10 +475,7 @@ class ElectrumScriptPubKey {
   final String hexString;
   final String type;
 
-  const ElectrumScriptPubKey({
-    required this.hexString,
-    required this.type,
-  });
+  const ElectrumScriptPubKey({required this.hexString, required this.type});
 
   bool get isP2SH => type == 'scripthash';
   bool get isP2PKH => type == 'pubkeyhash';
@@ -506,35 +489,38 @@ class ElectrumScriptPubKey {
     );
   }
 
-  Uint8List get lockingScript {
-    return Uint8List.fromList(hex.decode(hexString));
+  BTCLockingScript get lockingScript {
+    return BTCLockingScript.fromBuffer(hex.decode(hexString).toUint8List);
   }
 
   Json toJson() {
-    return {
-      'hex': hexString,
-      'type': type,
-    };
+    return {'hex': hexString, 'type': type};
   }
 }
 
 final class NotAvaialableUTXOTransaction extends UTXOTransaction {
   NotAvaialableUTXOTransaction(String hash, int block, CoinEntity token)
-      : super(
-          block: block,
-          hash: hash,
-          id: hash,
-          version: -1,
-          confirmations: -1,
-          amount: Amount.zero,
-          fee: Amount.zero,
-          inputs: const [],
-          outputs: const [],
-          recipient: "",
-          sender: "",
-          status: ConfirmationStatus.notSubmitted,
-          timeMilli: -1,
-          token: token,
-          transferMethod: TransactionTransferMethod.unknown,
-        );
+    : super(
+        block: block,
+        hash: hash,
+        id: hash,
+        version: -1,
+        confirmations: -1,
+        amount: Amount.zero,
+        fee: Amount.zero,
+        inputs: const [],
+        outputs: const [],
+        recipient: "",
+        sender: "",
+        status: ConfirmationStatus.notSubmitted,
+        timeMilli: -1,
+        token: token,
+        transferMethod: TransactionTransferMethod.unknown,
+      );
+}
+
+extension OutputConverter on ElectrumOutput {
+  Output get toOutput {
+    return BTCOutput(value: value, script: scriptPubKey.lockingScript);
+  }
 }

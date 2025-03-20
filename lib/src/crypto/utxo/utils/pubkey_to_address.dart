@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 import 'package:dart_bech32/dart_bech32.dart';
-import 'package:pointycastle/digests/ripemd160.dart';
-import 'package:pointycastle/digests/sha256.dart';
+import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/tx_structure.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
 import 'package:convert/convert.dart' show hex;
 import 'package:bs58check/bs58check.dart' as bs58check;
 import 'package:walletkit_dart/src/utils/base58.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 String pubKeyHexToAddress(
@@ -26,24 +26,24 @@ String pubKeyToAddress(
 
   return switch (addressType) {
     AddressType.segwit => pubKeyHashToSegwitAddress(
-        pubKeyHash,
-        networkType.bech32,
-        networkType.pubKeyHashPrefix,
-      ),
+      pubKeyHash,
+      networkType.bech32,
+      networkType.pubKeyHashPrefix,
+    ),
     AddressType.compatibility => pubKeyHashToP2SHAddress(
-        pubKey,
-        networkType.scriptHashPrefix,
-      ),
+      ripmed160Sha256Hash(PayToWitnessPublicKeyHashScript(pubKeyHash).bytes),
+      networkType.scriptHashPrefix,
+    ),
     AddressType.legacy => pubKeyHashToLegacyAddress(
-        pubKeyHash,
-        networkType.pubKeyHashPrefix,
-      ),
+      pubKeyHash,
+      networkType.pubKeyHashPrefix,
+    ),
     AddressType.cashaddr => bchAddrEncode(
-        hrp: networkType.bech32,
-        data: pubKeyHash,
-        witnessVersion: networkType.pubKeyHashPrefix,
-      ),
-    _ => throw UnsupportedError("Address type not supported: $addressType")
+      hrp: networkType.bech32,
+      data: pubKeyHash,
+      witnessVersion: networkType.pubKeyHashPrefix,
+    ),
+    _ => throw UnsupportedError("Address type not supported: $addressType"),
   };
 }
 
@@ -54,20 +54,20 @@ String pubKeyHashToAddress(
 ) {
   return switch (addressType) {
     AddressType.segwit => pubKeyHashToSegwitAddress(
-        pubKeyHash,
-        networkType.bech32,
-        networkType.pubKeyHashPrefix,
-      ),
+      pubKeyHash,
+      networkType.bech32,
+      networkType.pubKeyHashPrefix,
+    ),
     AddressType.legacy => pubKeyHashToLegacyAddress(
-        pubKeyHash,
-        networkType.pubKeyHashPrefix,
-      ),
+      pubKeyHash,
+      networkType.pubKeyHashPrefix,
+    ),
     AddressType.cashaddr => bchAddrEncode(
-        hrp: networkType.bech32,
-        data: pubKeyHash,
-        witnessVersion: networkType.pubKeyHashPrefix,
-      ),
-    _ => throw UnsupportedError("Address type not supported: $addressType")
+      hrp: networkType.bech32,
+      data: pubKeyHash,
+      witnessVersion: networkType.pubKeyHashPrefix,
+    ),
+    _ => throw UnsupportedError("Address type not supported: $addressType"),
   };
 }
 
@@ -107,40 +107,7 @@ String pubKeyHashToSegwitAddress(
 /// P2SH Address (Base58)
 ///
 String pubKeyHashToP2SHAddress(Uint8List pubKeyHash, int scriptHashPrefix) {
-  final prefixedHash = Uint8List.fromList([scriptHashPrefix, ...pubKeyHash]);
-
-  final checkSum = sha256Sha256Hash(prefixedHash).sublist(0, 4);
-
-  final prefixedHashWithChecksum = Uint8List.fromList(
-    [...prefixedHash, ...checkSum],
-  );
-
-  return base58Encode(prefixedHashWithChecksum);
-}
-
-///
-/// Ripmed160 Hash of Sha256 Hash
-///
-Uint8List ripmed160Sha256Hash(Uint8List buffer) {
-  final ripmed160 = RIPEMD160Digest();
-  final sha256 = SHA256Digest();
-  return ripmed160.process(sha256.process(buffer));
-}
-
-///
-/// Sha256 Hash of Sha256 Hash
-///
-Uint8List sha256Sha256Hash(Uint8List buffer) {
-  final sha256 = SHA256Digest();
-  return sha256.process(sha256.process(buffer));
-}
-
-///
-/// Sha256 Hash
-///
-Uint8List sha256Hash(Uint8List buffer) {
-  final sha256 = SHA256Digest();
-  return sha256.process(buffer);
+  return base58CheckEncode(scriptHashPrefix, pubKeyHash);
 }
 
 ///
@@ -183,14 +150,16 @@ String bchAddrEncode({
 
   final payloadData = bech32.toWords([witnessVersion, ...data].toUint8List);
 
-  final checksumData = [
-    ...prefixData,
-    ...payloadData,
-    ...[0, 0, 0, 0, 0, 0, 0, 0]
-  ].toUint8List;
+  final checksumData =
+      [
+        ...prefixData,
+        ...payloadData,
+        ...[0, 0, 0, 0, 0, 0, 0, 0],
+      ].toUint8List;
 
-  final checksumUint5List =
-      _checksumToUint5List(_polymod(checksumData).toInt());
+  final checksumUint5List = _checksumToUint5List(
+    _polymod(checksumData).toInt(),
+  );
 
   final payload = [...payloadData, ...checksumUint5List].toUint8List;
 

@@ -13,38 +13,34 @@ void main() {
   });
 
   test('Test Bitcoin EPubKey Derivation', () {
-    HDWalletPath walletType = bitcoinBip44HDPath;
     final pubKey = deriveExtendedPubKey(
       seed: helloSeed,
       type: BitcoinNetwork,
-      walletPurpose: walletType,
+      walletPurpose: bitcoinBip44HDPath,
     );
     expect(pubKey,
         "xpub69BsBUCquKCiiip64fmSF5RPt4XXudBeqAGGdBrMCCUanxaAc9myKLEMHUV5pUNDCXyYpjyhT7RocMXXocxzZMYgLWD3LFLYiWWoUA37i3h");
 
-    walletType = bitcoinBip49HDPath;
     final pubKey2 = deriveExtendedPubKey(
       seed: helloSeed,
       type: BitcoinNetwork,
-      walletPurpose: walletType,
+      walletPurpose: bitcoinBip49HDPath,
     );
     expect(pubKey2,
         "ypub6U28V8sm3zkCp7RGmrK2z3pJyaDZw9bRpqn7xFY5Gvy6nyuKVC3qVCAfQwqkQwE7baVsUEpKrxicoNMwL6d3fgbFYLirYeHFjj1pPSHZ7TC");
 
-    walletType = bitcoinBip84HDPath;
     final pubKey3 = deriveExtendedPubKey(
       seed: helloSeed,
       type: BitcoinNetwork,
-      walletPurpose: walletType,
+      walletPurpose: bitcoinBip84HDPath,
     );
     expect(pubKey3,
         "zpub6nrPnoYgCgHiBWgrfaQubVQedPitFfrd1z8SmtpGVS9Xzv6HWAKGNsMDbCKzoztrGcu2JxHqGgHvLkX9nqRvTfgdUuHZKWSR4GbtMJKTXpj");
 
-    walletType = bitcoinNSHDPath;
     final pubKey4 = deriveExtendedPubKey(
       seed: helloSeed,
       type: BitcoinNetwork,
-      walletPurpose: walletType,
+      walletPurpose: bitcoinNSHDPath,
     );
     expect(pubKey4,
         "xpub69BsBUCquKCgn1u6cum7syZewx5J2fyJE479qzDRJtB6hSHkhLsPZZW2SBfPfJaidDtE9g6wyH7ZFv8bWTkwuLeRJx3H2Kray9AsvY8EJAP");

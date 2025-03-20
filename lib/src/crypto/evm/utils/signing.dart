@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:hex/hex.dart';
-import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 

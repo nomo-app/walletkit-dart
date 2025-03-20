@@ -49,7 +49,7 @@ void main() {
 
       expect(output.value, BigInt.zero);
 
-      final outputScript = output.scriptPubKey;
+      final outputScript = output.script.bytes;
       var offset = 0;
       final (op, off1) = outputScript.bytes.readUint8(offset);
       offset += off1;
@@ -71,7 +71,7 @@ void main() {
         final compareInput = selectedTx.inputs[i];
 
         expect(input.txid.rev.toHex, compareInput.txid);
-        expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
+        expect(input.script?.bytes, compareInput.scriptSig?.hexToBytes);
         expect(input.vout, compareInput.vout);
       }
 
@@ -130,7 +130,7 @@ void main() {
 
       expect(output.value, BigInt.zero);
 
-      final outputScript = output.scriptPubKey;
+      final outputScript = output.script.bytes;
       var offset = 0;
       final (op, off1) = outputScript.bytes.readUint8(offset);
       offset += off1;
@@ -152,7 +152,7 @@ void main() {
         final compareInput = selectedTx.inputs[i];
 
         expect(input.txid.rev.toHex, compareInput.txid);
-        expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
+        expect(input.script?.bytes, compareInput.scriptSig?.hexToBytes);
         expect(input.vout, compareInput.vout);
       }
 
@@ -194,7 +194,7 @@ void main() {
 
       expect(output.value, BigInt.zero);
 
-      final outputScript = output.scriptPubKey;
+      final outputScript = output.script.bytes;
       var offset = 0;
       final (op, off1) = outputScript.bytes.readUint8(offset);
       offset += off1;
@@ -216,7 +216,7 @@ void main() {
         final compareInput = selectedTx.inputs[i];
 
         expect(input.txid.rev.toHex, compareInput.txid);
-        expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
+        expect(input.script?.bytes, compareInput.scriptSig?.hexToBytes);
         expect(input.vout, compareInput.vout);
       }
 
@@ -262,7 +262,7 @@ void main() {
 
     expect(output.value, BigInt.zero);
 
-    final outputScript = output.scriptPubKey;
+    final outputScript = output.script.bytes;
     var offset = 0;
     final (op, off1) = outputScript.bytes.readUint8(offset);
     offset += off1;
@@ -284,7 +284,7 @@ void main() {
       final compareInput = selectedTx.inputs[i];
 
       expect(input.txid.rev.toHex, compareInput.txid);
-      expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
+      expect(input.script?.bytes, compareInput.scriptSig?.hexToBytes);
       expect(input.vout, compareInput.vout);
     }
 
@@ -345,7 +345,7 @@ void main() {
 
     expect(output.value, BigInt.zero);
 
-    final outputScript = output.scriptPubKey;
+    final outputScript = output.script.bytes;
     var offset = 0;
     final (op, off1) = outputScript.bytes.readUint8(offset);
     offset += off1;
@@ -367,7 +367,7 @@ void main() {
       final compareInput = selectedTx.inputs[i];
 
       expect(input.txid.rev.toHex, compareInput.txid);
-      expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
+      expect(input.script?.bytes, compareInput.scriptSig?.hexToBytes);
       expect(input.vout, compareInput.vout);
     }
 
@@ -423,7 +423,7 @@ void main() {
 
     expect(output.value, BigInt.zero);
 
-    final outputScript = output.scriptPubKey;
+    final outputScript = output.script.bytes;
     var offset = 0;
     final (op, off1) = outputScript.bytes.readUint8(offset);
     offset += off1;
@@ -445,7 +445,7 @@ void main() {
       final compareInput = selectedTx.inputs[i];
 
       expect(input.txid.rev.toHex, compareInput.txid);
-      expect(input.scriptSig, compareInput.scriptSig?.hexToBytes);
+      expect(input.script?.bytes, compareInput.scriptSig?.hexToBytes);
       expect(input.vout, compareInput.vout);
     }
 
