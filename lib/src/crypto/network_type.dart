@@ -93,6 +93,8 @@ class NetworkBIP {
   final BIP32Prefixes bip84;
   final BIP32Prefixes bip49MultiSig;
   final BIP32Prefixes bip84MultiSig;
+  final BIP32Prefixes bip86;
+  final BIP32Prefixes bip86MultiSig;
 
   static const String NS_PURPOSE = "m/0'";
   static const String BIP44_PURPOSE = "m/44'";
@@ -118,17 +120,13 @@ class NetworkBIP {
         .firstOrNull;
   }
 
-  NetworkNodeInfo getForPurpose(HDWalletPurpose purpose) {
-    switch (purpose) {
-      case HDWalletPurpose.NO_STRUCTURE:
-      case HDWalletPurpose.BIP44:
-        return NetworkNodeInfo(wif: wif, keyPrefixes: bip32);
-      case HDWalletPurpose.BIP84:
-        return NetworkNodeInfo(wif: wif, keyPrefixes: bip84);
-      case HDWalletPurpose.BIP49:
-        return NetworkNodeInfo(wif: wif, keyPrefixes: bip49);
-    }
-  }
+  NetworkNodeInfo getForPurpose(HDWalletPurpose purpose) => switch (purpose) {
+    HDWalletPurpose.NO_STRUCTURE ||
+    HDWalletPurpose.BIP44 => NetworkNodeInfo(wif: wif, keyPrefixes: bip32),
+    HDWalletPurpose.BIP49 => NetworkNodeInfo(wif: wif, keyPrefixes: bip49),
+    HDWalletPurpose.BIP84 => NetworkNodeInfo(wif: wif, keyPrefixes: bip84),
+    HDWalletPurpose.BIP86 => NetworkNodeInfo(wif: wif, keyPrefixes: bip86),
+  };
 
   const NetworkBIP({
     required this.bip32,
@@ -136,6 +134,8 @@ class NetworkBIP {
     required this.bip84,
     required this.bip49MultiSig,
     required this.bip84MultiSig,
+    required this.bip86,
+    required this.bip86MultiSig,
     required this.wif,
   });
 

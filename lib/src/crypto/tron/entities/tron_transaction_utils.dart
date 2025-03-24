@@ -30,15 +30,9 @@ final dummySeed = helloSeed;
 /// Builds a Dummy Transaction and calculates the size of the transaction
 /// https://github.com/tronprotocol/wallet-cli/issues/292
 int calculateTransactionSize(TronContractData contractData) {
-  final rawTx = buildRawTransaction(
-    contractData,
-    block: tronDummyBlock,
-  );
+  final rawTx = buildRawTransaction(contractData, block: tronDummyBlock);
 
-  final tx = signTransaction(
-    rawTx: rawTx,
-    seed: dummySeed,
-  );
+  final tx = signTransaction(rawTx: rawTx, seed: dummySeed);
 
   final rawDataLength = tx.rawData.writeToBuffer().length;
 
@@ -73,14 +67,9 @@ Future<String> sendTRX({
   final txId = (rawTx['txID'] as String).hexToBytes;
 
   /// Signatures
-  final signature = createTxSignature(
-    txID: txId,
-    seed: seed,
-  );
+  final signature = createTxSignature(txID: txId, seed: seed);
 
-  rawTx['signature'] = [
-    signature.toHex,
-  ];
+  rawTx['signature'] = [signature.toHex];
 
   final result = await tronHTTP.broadcastTransaction(json: rawTx);
 
@@ -124,15 +113,9 @@ Transaction signTransaction({
 }) {
   final txId = sha256Hash(rawTx.writeToBuffer());
 
-  final signature = createTxSignature(
-    txID: txId,
-    seed: seed,
-  );
+  final signature = createTxSignature(txID: txId, seed: seed);
 
-  final tx = tron.Transaction(
-    rawData: rawTx,
-    signature: [signature],
-  );
+  final tx = tron.Transaction(rawData: rawTx, signature: [signature]);
 
   return tx;
 }
@@ -148,9 +131,7 @@ tron.Transaction_raw createRawTransaction({
   final contract = data.createContract();
 
   final tx = tron.Transaction_raw(
-    contract: [
-      contract,
-    ],
+    contract: [contract],
     refBlockBytes: refBlockBytes,
     refBlockHash: refBlockHash,
     expiration: Int64(expiration),
@@ -197,8 +178,11 @@ Uint8List createTxSignature({
 }) {
   final credentials = getTronCredentials(seed: seed);
 
-  final sig =
-      Signature.createSignature(txID, credentials.$1, hashPayload: false);
+  final sig = Signature.createSignature(
+    txID,
+    credentials.$1,
+    hashPayload: false,
+  );
 
   final r = padUint8ListTo32(sig.r.toBytesUnsigned);
   final s = padUint8ListTo32(sig.s.toBytesUnsigned);
@@ -210,6 +194,7 @@ Uint8List createTxSignature({
 }
 
 (Uint8List, Uint8List) getTronCredentials({required Uint8List seed}) {
-  final node = deriveNode(seed, tronBip44HDPath.defaultPath);
-  return (node.privateKey!, node.publicKeyUncompressed);
+  throw UnimplementedError();
+  // final node = deriveNode(seed, tronBip44HDPath.defaultPath);
+  // return (node.privateKey!, node.publicKeyUncompressed);
 }

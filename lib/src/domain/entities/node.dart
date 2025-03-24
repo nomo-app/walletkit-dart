@@ -1,4 +1,4 @@
-import 'package:walletkit_dart/src/wallet/hd_node.dart';
+import 'package:walletkit_dart/src/wallet/bip32/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 /// TODO: Make sure this only has the privateKey when used for signing. Else EpubKey should be used.
@@ -19,30 +19,30 @@ sealed class NodeWithAddress {
   int get index => derivationPath.split("/").last.toInt;
 
   int get chainIndex => switch (this) {
-        ReceiveNode() => EXTERNAL_CHAIN_INDEX,
-        ChangeNode() => INTERNAL_CHAIN_INDEX,
-        EmptyNode() => -1,
-      };
+    ReceiveNode() => EXTERNAL_CHAIN_INDEX,
+    ChangeNode() => INTERNAL_CHAIN_INDEX,
+    EmptyNode() => -1,
+  };
 
   NodeWithAddress get neutered => switch (this) {
-        ReceiveNode() => ReceiveNode(
-            bip32Node: bip32Node?.neutered(),
-            address: address,
-            derivationPath: derivationPath,
-            addresses: addresses,
-            walletPurpose: walletPurpose,
-            publicKey: publicKey,
-          ),
-        ChangeNode() => ChangeNode(
-            bip32Node: bip32Node?.neutered(),
-            address: address,
-            derivationPath: derivationPath,
-            addresses: addresses,
-            walletPurpose: walletPurpose,
-            publicKey: publicKey,
-          ),
-        EmptyNode() => EmptyNode(),
-      };
+    ReceiveNode() => ReceiveNode(
+      bip32Node: bip32Node?.neutered(),
+      address: address,
+      derivationPath: derivationPath,
+      addresses: addresses,
+      walletPurpose: walletPurpose,
+      publicKey: publicKey,
+    ),
+    ChangeNode() => ChangeNode(
+      bip32Node: bip32Node?.neutered(),
+      address: address,
+      derivationPath: derivationPath,
+      addresses: addresses,
+      walletPurpose: walletPurpose,
+      publicKey: publicKey,
+    ),
+    EmptyNode() => EmptyNode(),
+  };
 
   factory NodeWithAddress.fromChainIndex({
     required HDNode node,
@@ -76,16 +76,16 @@ sealed class NodeWithAddress {
   }
 
   Json toJson() => {
-        'type': type,
-        'address': address,
-        'derivationPath': derivationPath,
-        'addresses': {
-          for (final entry in addresses.entries)
-            entry.key.index.toString(): entry.value,
-        },
-        'walletPurpose': walletPurpose?.index,
-        'publicKey': publicKey,
-      };
+    'type': type,
+    'address': address,
+    'derivationPath': derivationPath,
+    'addresses': {
+      for (final entry in addresses.entries)
+        entry.key.index.toString(): entry.value,
+    },
+    'walletPurpose': walletPurpose?.index,
+    'publicKey': publicKey,
+  };
 
   factory NodeWithAddress.fromJson(Map json) {
     final type = json['type'] as int;
@@ -94,40 +94,41 @@ sealed class NodeWithAddress {
       return EmptyNode();
     }
 
-    if (json
-        case {
-          'type': int type,
-          'address': String address,
-          'derivationPath': String derivationPath,
-          'addresses': Map addresses,
-          'walletPurpose': int? walletPurpose,
-          'publicKey': String publicKey,
-        }) {
+    if (json case {
+      'type': int type,
+      'address': String address,
+      'derivationPath': String derivationPath,
+      'addresses': Map addresses,
+      'walletPurpose': int? walletPurpose,
+      'publicKey': String publicKey,
+    }) {
       return switch (type) {
         0 => ReceiveNode(
-            address: address,
-            derivationPath: derivationPath,
-            addresses: {
-              for (final MapEntry(:key, :value) in addresses.entries)
-                AddressType.fromIndex(int.parse(key as String)): value as String
-            },
-            walletPurpose: walletPurpose != null
-                ? HDWalletPurpose.values[walletPurpose]
-                : null,
-            publicKey: publicKey,
-          ),
+          address: address,
+          derivationPath: derivationPath,
+          addresses: {
+            for (final MapEntry(:key, :value) in addresses.entries)
+              AddressType.fromIndex(int.parse(key as String)): value as String,
+          },
+          walletPurpose:
+              walletPurpose != null
+                  ? HDWalletPurpose.values[walletPurpose]
+                  : null,
+          publicKey: publicKey,
+        ),
         1 => ChangeNode(
-            address: address,
-            derivationPath: derivationPath,
-            addresses: {
-              for (final MapEntry(:key, :value) in addresses.entries)
-                AddressType.fromIndex(int.parse(key as String)): value as String
-            },
-            walletPurpose: walletPurpose != null
-                ? HDWalletPurpose.values[walletPurpose]
-                : null,
-            publicKey: publicKey,
-          ),
+          address: address,
+          derivationPath: derivationPath,
+          addresses: {
+            for (final MapEntry(:key, :value) in addresses.entries)
+              AddressType.fromIndex(int.parse(key as String)): value as String,
+          },
+          walletPurpose:
+              walletPurpose != null
+                  ? HDWalletPurpose.values[walletPurpose]
+                  : null,
+          publicKey: publicKey,
+        ),
         _ => throw UnimplementedError(),
       };
     }
@@ -171,19 +172,17 @@ final class ChangeNode extends NodeWithAddress {
 final class EmptyNode extends NodeWithAddress {
   @override
   Json toJson() {
-    return {
-      "type": type,
-    };
+    return {"type": type};
   }
 
   const EmptyNode()
-      : super(
-          bip32Node: null,
-          address: "",
-          derivationPath: "",
-          addresses: const {},
-          walletPurpose: null,
-          publicKey: "",
-          type: 2,
-        );
+    : super(
+        bip32Node: null,
+        address: "",
+        derivationPath: "",
+        addresses: const {},
+        walletPurpose: null,
+        publicKey: "",
+        type: 2,
+      );
 }

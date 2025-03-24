@@ -50,6 +50,8 @@ const BITCOIN_NETWORK_BIP = NetworkBIP(
   bip84: (private: 0x04B2430C, public: 0x04B24746), // zprv, zpub
   bip49MultiSig: (private: 0x0295B005, public: 0x0295B43F), // Yprv, Ypub
   bip84MultiSig: (private: 0x02AA7A99, public: 0x02AA7ED3), // Zprv, Zpub
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
   wif: 0x80, // 128
 );
 
@@ -60,6 +62,8 @@ const LTC_NETWORK_BIP = NetworkBIP(
   bip84: (private: 0x04B2430C, public: 0x04B24746), // zprv, zpub
   bip49MultiSig: (private: 0x01B26792, public: 0x01B26EF6), // Mtpv, Mtub
   bip84MultiSig: (private: 0x02AA7A99, public: 0x02AA7ED3), // Zprv, Zpub
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
   wif: 0xB0, // 176
 );
 
@@ -69,7 +73,8 @@ const DOGECOIN_NETWORK_BIP = NetworkBIP(
   bip84: (private: 0x02fac398, public: 0x02facafd),
   bip49MultiSig: (private: 0x02fac398, public: 0x02facafd),
   bip84MultiSig: (private: 0x02fac398, public: 0x02facafd),
-
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
   wif: 0x9e, // WIF prefix for Dogecoin
 );
 
@@ -100,6 +105,8 @@ const LITECOIN_NETWORK_BIP_WK_COMPATIBILITY = NetworkBIP(
   bip84: (private: 0x0488ade4, public: 0x0488b21e),
   bip49MultiSig: (private: 0x0488ade4, public: 0x0488b21e),
   bip84MultiSig: (private: 0x0488ade4, public: 0x0488b21e),
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
   wif: 0xb0,
 );
 

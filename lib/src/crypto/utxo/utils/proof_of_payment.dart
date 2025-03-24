@@ -127,20 +127,23 @@ Future<POPResult> proofOfPayment({
     throw Exception("WalletPurpose is required for all nodes.");
   }
 
-  final bip32Nodes = [
-    for (final node in usedNodes)
-      deriveChildNodeFromPath(
-        seed: seed,
-        networkType: networkType,
-        childDerivationPath: node.derivationPath,
-        walletPath: HDWalletPath.fromPurpose(
-          node.walletPurpose!,
-          networkType,
-        ), // TODO: Store HDWalletPath better
-      ),
-  ];
+  // TODO: reimplement derivation
+  // final bip32Nodes = [
+  //   for (final node in usedNodes)
+  //     deriveChildNodeFromPath(
+  //       seed: seed,
+  //       networkType: networkType,
+  //       childDerivationPath: node.derivationPath,
+  //       walletPath: HDWalletPath.fromPurpose(
+  //         node.walletPurpose!,
+  //         networkType,
+  //       ), // TODO: Store HDWalletPath better
+  //     ),
+  // ];
 
-  final signatures = [for (final node in bip32Nodes) node.sign(uPoPHash)];
+  // final signatures = [for (final node in bip32Nodes) node.sign(uPoPHash)];
 
-  return POPResult(uPoPHash, uPopTx, signatures, txid);
+  // return POPResult(uPoPHash, uPopTx, signatures, txid);
+
+  throw UnimplementedError();
 }

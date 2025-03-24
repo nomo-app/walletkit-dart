@@ -147,17 +147,16 @@ sealed class RawTransaction {
 
   RawTransaction sign({
     required Uint8List seed,
-    required HDWalletPath walletPath,
+    required HDWalletPurpose purpose,
     required UTXONetworkType networkType,
   }) {
     assert(inputMap != null, 'Cant sign transaction without inputs');
 
     final signedInputs = signInputs(
       inputs: inputMap!,
-      walletPath: walletPath,
+      purpose: purpose,
       tx: this,
       networkType: networkType,
-      seed: seed,
     );
 
     return _addInputs(signedInputs);

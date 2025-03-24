@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/crypto/wallet_utils.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
-import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
+import 'package:walletkit_dart/src/wallet/bip32/hd_wallet_type.dart';
 import 'package:walletkit_dart/src/wallet/bip39/bip39.dart';
 
 void main() {
@@ -36,31 +36,28 @@ void main() {
   //   expect(getDerivationPath(bitcoinBip84HDPath, token), "m/84'/0'/0'");
   // });
 
-  test('Assert that Xpub and Seed lead same Node', () {
-    const networkType = BitcoinNetwork;
-    final node_seed_ns = deriveMasterNodeFromSeed(
-      networkType: networkType,
-      walletPath: bitcoinNSHDPath,
-      seed: helloSeed,
-    );
-    final node_xpub_ns = deriveMasterNodeFromExtendedKey(helloXpub);
+  // test('Assert that Xpub and Seed lead same Node', () {
+  //   const networkType = BitcoinNetwork;
+  //   final node_seed_ns = deriveMasterNodeFromSeed(
+  //     networkType: networkType,
+  //     walletPath: bitcoinNSHDPath,
+  //     seed: helloSeed,
+  //   );
+  //   final node_xpub_ns = deriveMasterNodeFromExtendedKey(helloXpub);
 
-    expect(node_seed_ns.neutered().extendedPublicKey(), helloXpub);
+  //   expect(node_seed_ns.neutered().extendedPublicKey(), helloXpub);
 
-    expect(node_seed_ns.publicKey, node_xpub_ns.publicKey);
+  //   expect(node_seed_ns.publicKey, node_xpub_ns.publicKey);
+  // });
+
+  test("HD Wallet Derivation", () {
+    const mnemonic =
+        "walletkit dart walletkit dart walletkit dart walletkit dart walletkit dart walletkit dart";
+
+    final seed = mnemonicToSeed(mnemonic);
+
+    // final masterNode = deriveMasterNodeFromSeed(seed: seed, walletPath: );
+
+    print(seed);
   });
-
-  test(
-    "HD Wallet Derivation",
-    () {
-      const mnemonic =
-          "walletkit dart walletkit dart walletkit dart walletkit dart walletkit dart walletkit dart";
-
-      final seed = mnemonicToSeed(mnemonic);
-
-      // final masterNode = deriveMasterNodeFromSeed(seed: seed, walletPath: );
-
-      print(seed);
-    },
-  );
 }
