@@ -1,0 +1,11 @@
+.dart_tool/
+build/
+coverage/
+.idea/
+
+.env*
+
+protos/
+coverage/
+
+lib/src/crypto/tron/repositories/rpc/api/
