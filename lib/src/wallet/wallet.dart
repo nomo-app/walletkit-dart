@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dotenv/dotenv.dart';
 import 'package:walletkit_dart/src/domain/entities/coin_entity.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 class MultiHDWallet {
   final Map<String, HDWallet> wallets;
@@ -37,8 +38,25 @@ class HDAccount {
 final walletDB = EnvironmentWalletDB();
 
 final wallet = HDWallet(
-  loadSeed: (id) {
-    return walletDB.loadSeedForId("DEV_SEED");
+  coinWallets: {
+    btcCoin: HDAccountWallet(
+      accounts: {
+        0: HDAccount(
+          coin: btcCoin,
+          accountIndex: 0,
+          publicKey: walletDB.loadSeedForId('btc')!.data,
+        ),
+      },
+    ),
+    dogeCoin: HDAccountWallet(
+      accounts: {
+        0: HDAccount(
+          coin: dogeCoin,
+          accountIndex: 0,
+          publicKey: walletDB.loadSeedForId('doge')!.data,
+        ),
+      },
+    ),
   },
 );
 

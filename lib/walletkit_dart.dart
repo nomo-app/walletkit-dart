@@ -16,7 +16,8 @@ export 'src/domain/entities/fee.dart';
 export 'src/domain/entities/token_info.dart';
 export 'src/domain/entities/amount.dart';
 export 'src/domain/entities/node.dart';
-export 'src/domain/entities/hd_wallet_type.dart';
+export 'src/wallet/bip32/hd_wallet_type.dart';
+export 'src/wallet/bip32/hd_node.dart';
 export 'src/domain/entities/address_type.dart';
 
 /// Common

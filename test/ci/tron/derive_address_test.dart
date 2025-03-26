@@ -1,4 +1,5 @@
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/wallet/bip32/hd_wallet_type.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../utils.dart';

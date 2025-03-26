@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
+import 'package:walletkit_dart/src/wallet/bip32/hd_wallet_type.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 ///

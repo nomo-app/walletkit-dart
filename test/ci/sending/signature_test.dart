@@ -2,47 +2,43 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/domain/constants.dart';
-import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 import 'package:walletkit_dart/src/utils/der.dart';
-import 'package:walletkit_dart/src/wallet/hd_node.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
-final chainCode = Uint8List.fromList(
-  [
-    110,
-    140,
-    176,
-    151,
-    208,
-    44,
-    205,
-    123,
-    201,
-    45,
-    202,
-    138,
-    165,
-    82,
-    94,
-    84,
-    81,
-    35,
-    224,
-    194,
-    214,
-    76,
-    30,
-    250,
-    81,
-    19,
-    165,
-    200,
-    31,
-    25,
-    140,
-    98
-  ],
-);
+final chainCode = Uint8List.fromList([
+  110,
+  140,
+  176,
+  151,
+  208,
+  44,
+  205,
+  123,
+  201,
+  45,
+  202,
+  138,
+  165,
+  82,
+  94,
+  84,
+  81,
+  35,
+  224,
+  194,
+  214,
+  76,
+  30,
+  250,
+  81,
+  19,
+  165,
+  200,
+  31,
+  25,
+  140,
+  98,
+]);
 
 void main() {
   test('Bitcoin Unlocking Script P2PKH', () {

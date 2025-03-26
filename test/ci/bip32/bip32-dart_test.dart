@@ -5,17 +5,17 @@ import 'package:hex/hex.dart';
 import 'package:test/test.dart';
 import 'package:walletkit_dart/src/crypto/network_type.dart';
 import 'package:walletkit_dart/src/domain/constants.dart';
-import 'package:walletkit_dart/src/domain/entities/hd_wallet_type.dart';
 import 'dart:io';
 import 'dart:convert';
 
-import 'package:walletkit_dart/src/wallet/hd_node.dart';
+import 'package:walletkit_dart/walletkit_dart.dart';
 
 List<dynamic> validAll = [];
 
 void main() {
   Map<String, dynamic> fixtures = json.decode(
-      File('./test/ci/bip32/fixtures.json').readAsStringSync(encoding: utf8));
+    File('./test/ci/bip32/fixtures.json').readAsStringSync(encoding: utf8),
+  );
   (fixtures['valid'] as List<dynamic>).forEach((f) {
     f['master']['network'] = f['network'];
     f['master']['children'] = f['children'];
@@ -44,8 +44,10 @@ void main() {
 
         if (ff['seed'] != null) {
           var seed = HEX.decode(ff['seed']);
-          var hdSeed = HDNode.fromSeed(seed as Uint8List,
-              network: network.getForPurpose(HDWalletPurpose.BIP44));
+          var hdSeed = HDNode.fromSeed(
+            seed as Uint8List,
+            network: network.getForPurpose(HDWalletPurpose.BIP44),
+          );
           test('works for seed -> HD wallet', () {
             verify(hdSeed, true, ff, network);
           });
@@ -61,8 +63,10 @@ void main() {
         network = LTC_NETWORK_BIP;
       HDNode? hd;
       try {
-        hd = HDNode.fromExtendedKey(f['string'],
-            network: network.getForPurpose(HDWalletPurpose.BIP44));
+        hd = HDNode.fromExtendedKey(
+          f['string'],
+          network: network.getForPurpose(HDWalletPurpose.BIP44),
+        );
       } catch (err) {
         if (err is FormatException) {
           expect(err.message, f['exception']);
@@ -107,8 +111,10 @@ void main() {
     try {
       hd = master.deriveHardened(c['m']);
     } catch (err) {
-      expect((err as ArgumentError).message,
-          "Cannot derive hardened key from neutered parent");
+      expect(
+        (err as ArgumentError).message,
+        "Cannot derive hardened key from neutered parent",
+      );
     } finally {
       expect(hd, null);
     }
@@ -182,11 +188,15 @@ void main() {
     const key =
         "xprv9s21ZrQH143K3ckY9DgU79uMTJkQRLdbCCVDh81SnxTgPzLLGax6uHeBULTtaEtcAvKjXfT7ZWtHzKjTpujMkUd9dDb8msDeAfnJxrgAYhr";
     HDNode hdkey = HDNode.fromExtendedKey(key);
-    expect(HEX.encode(hdkey.privateKey!),
-        "00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd");
+    expect(
+      HEX.encode(hdkey.privateKey!),
+      "00000055378cf5fafb56c711c674143f9b0ee82ab0ba2924f19b64f5ae7cdbfd",
+    );
     HDNode child = hdkey.derivePath("m/44'/0'/0'/0/0'");
-    expect(HEX.encode(child.privateKey!),
-        "3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb");
+    expect(
+      HEX.encode(child.privateKey!),
+      "3348069561d2a0fb925e74bf198762acc47dce7db27372257d2d959a9e6f8aeb",
+    );
   });
 
   test('derive', () {
@@ -204,9 +214,7 @@ void main() {
     (fixtures['invalid']['fromSeed'] as List<dynamic>).forEach((f) {
       var hd;
       try {
-        hd = HDNode.fromSeed(
-          HEX.decode(f['seed']) as Uint8List,
-        );
+        hd = HDNode.fromSeed(HEX.decode(f['seed']) as Uint8List);
       } catch (err) {
         expect((err as ArgumentError).message, f['exception']);
       } finally {
@@ -249,7 +257,8 @@ void verify(HDNode hd, prv, f, NetworkBIP network) {
   if (!prv &&
       (f['children'] as List<dynamic>)
           .map((fc) => fc['hardened'])
-          .contains(true)) return;
+          .contains(true))
+    return;
 
   (f['children'] as List<dynamic>).forEach((cf) {
     var chd = hd.derivePath(cf['path']);
