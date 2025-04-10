@@ -34,3 +34,5 @@ export 'src/domain/extensions.dart';
 
 /// Predefined Assets
 export 'src/domain/predefined_assets.dart';
+
+export 'src/generator/contract_annotations.dart';
