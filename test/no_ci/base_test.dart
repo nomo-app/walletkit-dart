@@ -40,7 +40,7 @@ void main() {
 
     // print("Hash: $hash");
 
-    final contract_function = contractAbiErc20.getFunction("transfer");
+    final contract_function = erc20contract_abi.getFunction("transfer");
 
     assert(contract_function != null);
     assert(contract_function!.functionSelector == "a9059cbb");

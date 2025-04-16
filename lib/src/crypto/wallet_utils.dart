@@ -22,21 +22,21 @@ Future<TokenInfo?> getTokenInfo({
   try {
     final result = await Future.wait(
       [
-        tokenContract.getDecimals(),
-        tokenContract.getName(),
-        tokenContract.getSymbol(),
-        tokenContract.getSupply(),
+        tokenContract.decimals(),
+        tokenContract.name(),
+        tokenContract.symbol(),
+        tokenContract.totalSupply(),
       ],
       eagerError: true,
     );
-    int decimals = result[0] as int;
+    BigInt decimals = result[0] as BigInt;
     String name = result[1] as String;
     String symbol = result[2] as String;
     BigInt maxSupply = result[3] as BigInt;
-    double maxSupplyDouble = maxSupply.toDouble() / pow(10, decimals);
+    double maxSupplyDouble = maxSupply.toDouble() / pow(10, decimals.toInt());
 
     return TokenInfo(
-      decimals: decimals,
+      decimals: decimals.toInt(),
       maxSupply: maxSupplyDouble,
       symbol: symbol,
       name: name,

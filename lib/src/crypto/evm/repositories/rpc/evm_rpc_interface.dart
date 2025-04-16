@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:walletkit_dart/src/common/logger.dart';
-import 'package:walletkit_dart/src/crypto/evm/entities/abi/erc/erc1155.dart';
 import 'package:walletkit_dart/src/crypto/evm/entities/block_number.dart';
 import 'package:walletkit_dart/src/crypto/evm/repositories/rpc/queued_rpc_interface.dart';
 import 'package:walletkit_dart/src/domain/exceptions.dart';
@@ -99,7 +98,7 @@ final class EvmRpcInterface {
       contractAddress: token.contractAddress,
       rpc: this,
     );
-    final balance = await erc20Contract.getBalance(address);
+    final balance = await erc20Contract.balanceOf(owner: address);
     return Amount(value: balance, decimals: token.decimals);
   }
 
@@ -115,10 +114,8 @@ final class EvmRpcInterface {
       contractAddress: contractAddress,
       rpc: this,
     );
-    final balance = await erc1155Contract.balanceOf(
-      address: address,
-      tokenID: tokenID,
-    );
+    final balance =
+        await erc1155Contract.balanceOf(account: address, id: tokenID);
 
     return balance;
   }
@@ -138,7 +135,7 @@ final class EvmRpcInterface {
 
     final balances = await erc1155Contract.balanceOfBatch(
       accounts: accounts,
-      tokenIDs: tokenIDs,
+      ids: tokenIDs,
     );
 
     return balances;
@@ -156,8 +153,8 @@ final class EvmRpcInterface {
       rpc: this,
     );
 
-    final uri = await erc1155Contract.getUri(
-      tokenID: tokenID,
+    final uri = await erc1155Contract.uri(
+      id: tokenID,
     );
 
     return uri;
@@ -268,7 +265,6 @@ final class EvmRpcInterface {
       to: intent.recipient,
       value: intent.amount.value,
       feeInfo: intent.feeInfo,
-      accessList: intent.accessList,
     );
   }
 
@@ -288,14 +284,14 @@ final class EvmRpcInterface {
     );
 
     return erc1155Contract.safeTransferFrom(
-      sender: from,
-      to: intent.recipient,
-      tokenID: tokenID,
-      amount: intent.amount.value,
-      seed: seed,
-      feeInfo: intent.feeInfo,
-      accessList: intent.accessList,
-    );
+        from: from,
+        to: intent.recipient,
+        id: tokenID,
+        amount: intent.amount.value,
+        seed: seed,
+        sender: from,
+        feeInfo: intent.feeInfo,
+        data: Uint8List(0));
   }
 
   Future<Amount> getPriorityFee() async {

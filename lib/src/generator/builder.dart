@@ -4,8 +4,8 @@ import 'contract_generator.dart';
 
 Builder contractBuilder(BuilderOptions options) {
   print('========== CONTRACT BUILDER FACTORY CALLED ==========');
-  return SharedPartBuilder(
-    [ContractGenerator()],
-    "g",
+  return LibraryBuilder(
+    ContractGenerator(),
+    generatedExtension: ".g.dart",
   );
 }

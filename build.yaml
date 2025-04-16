@@ -1,20 +1,15 @@
 targets:
   $default:
     builders:
-      # source_gen:combining_builder:
-      #   enabled: true
-      #   options:
-      #     build_extensions:
-      #       "^lib/{{}}.dart": "lib/{{}}.g.dart"
       walletkit_dart|contractBuilder:
         enabled: true
         generate_for:
           - lib/src/crypto/evm/entities/contracts/**.dart
+
 builders:
   contractBuilder:
     import: "package:walletkit_dart/src/generator/builder.dart"
     builder_factories: ["contractBuilder"]
-    build_extensions: { ".dart": [".g.part"] }
+    build_extensions: { ".dart": [".g.dart"] }
     auto_apply: dependents
     build_to: source
-    # applies_builders: ["source_gen:combining_builder"]

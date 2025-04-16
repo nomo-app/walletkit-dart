@@ -19,6 +19,10 @@ class ContractGenerator extends GeneratorForAnnotation<Contract> {
         element: element,
       );
     }
+    final path = element.source.uri.path;
+    if (path.contains('.g.dart')) {
+      return '';
+    }
 
     final abiPath = annotation.read('abiPath').stringValue;
     final abiAssetId = AssetId(
@@ -76,20 +80,30 @@ class ContractGenerator extends GeneratorForAnnotation<Contract> {
     final stateMutability = methodData['stateMutability'] as String;
 
     final isViewOrPure = stateMutability == 'view' || stateMutability == 'pure';
-    final returnType = _determineReturnType(outputs);
+    String returnType = _determineReturnType(outputs);
 
+    if (!isViewOrPure) {
+      returnType = "String";
+    }
     // Start method definition
     buffer.write('  Future<$returnType> $methodName(');
 
     // Generate method parameters
     if (inputs != null && inputs.isNotEmpty) {
+      buffer.write("{");
       final params = <String>[];
       for (final input in inputs) {
         final paramType = _convertSolidityTypeToDart(input['type'] as String);
-        final paramName = input['name'] as String;
-        params.add('$paramType $paramName');
+        final paramName = (input['name'] as String).replaceAll("_", "");
+        params.add('required $paramType $paramName');
       }
       buffer.write(params.join(', '));
+      if (!isViewOrPure) {
+        buffer.writeln(",required String sender,");
+        buffer.writeln("required Uint8List seed,");
+        buffer.writeln("EvmFeeInformation? feeInfo,");
+      }
+      buffer.write("}");
     }
 
     buffer.writeln(') async {');
@@ -105,14 +119,17 @@ class ContractGenerator extends GeneratorForAnnotation<Contract> {
     buffer.write('      function: function.addValues(values: [');
 
     if (inputs != null && inputs.isNotEmpty) {
-      buffer.write(inputs.map((input) => input['name'] as String).join(', '));
+      buffer.write(inputs
+          .map((input) => (input['name'] as String).replaceAll("_", ""))
+          .join(', '));
     }
 
     buffer.writeln(']),');
 
     if (!isViewOrPure) {
-      buffer.writeln('      seed: seed,');
+      buffer.writeln("      seed: seed,");
       buffer.writeln('      sender: sender,');
+      buffer.writeln('      feeInfo: feeInfo,');
       if (stateMutability == 'payable') {
         buffer.writeln('      value: value,');
       }
@@ -161,21 +178,45 @@ class ContractGenerator extends GeneratorForAnnotation<Contract> {
   }
 
   String _convertSolidityTypeToDart(String solidityType) {
-    if (solidityType.startsWith('uint') || solidityType.startsWith('int')) {
-      return 'BigInt';
-    } else if (solidityType == 'bool') {
-      return 'bool';
-    } else if (solidityType == 'address') {
-      return 'String';
-    } else if (solidityType == 'string') {
-      return 'String';
-    } else if (solidityType.startsWith('bytes')) {
-      return 'Uint8List';
-    } else if (solidityType.contains('[]')) {
+    // First check if it's an array type
+    if (solidityType.endsWith('[]')) {
       final baseType = solidityType.substring(0, solidityType.length - 2);
       return 'List<${_convertSolidityTypeToDart(baseType)}>';
-    } else {
+    }
+
+    // Handle fixed-size arrays like bytes32[4]
+    final fixedArrayMatch = RegExp(r'(.*)\[(\d+)\]$').firstMatch(solidityType);
+    if (fixedArrayMatch != null) {
+      final baseType = fixedArrayMatch.group(1)!;
+      return 'List<${_convertSolidityTypeToDart(baseType)}>';
+    }
+
+    // Handle tuples
+    if (solidityType.startsWith('tuple')) {
+      // For complex tuple types, we'll use dynamic
       return 'dynamic';
+    }
+
+    // Handle primitive types
+    switch (solidityType) {
+      case 'address':
+      case 'string':
+        return 'String';
+      case 'bool':
+        return 'bool';
+      case 'bytes':
+      case 'bytes32':
+        return 'Uint8List';
+      default:
+        // Handle uint/int types of various sizes
+        if (solidityType.startsWith('uint') || solidityType.startsWith('int')) {
+          return 'BigInt';
+        }
+        // Handle fixed size bytes like bytes16
+        if (RegExp(r'^bytes\d+$').hasMatch(solidityType)) {
+          return 'Uint8List';
+        }
+        return 'dynamic';
     }
   }
 }
