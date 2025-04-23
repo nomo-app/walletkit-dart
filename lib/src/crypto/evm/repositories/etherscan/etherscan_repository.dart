@@ -4,7 +4,7 @@ import 'package:walletkit_dart/src/common/http_client.dart';
 import 'package:walletkit_dart/src/common/logger.dart';
 
 class EtherscanRepository {
-  final String base;
+  final String baseUrl;
   final List<String> apiKeys;
   final Map<String, bool> endpointNeedsApiKey = {};
   final Map<String, DateTime> apiKeyExcludedUntil = {};
@@ -14,7 +14,7 @@ class EtherscanRepository {
   final Duration apiKeyRetryIntervall;
 
   EtherscanRepository(
-    this.base,
+    this.baseUrl,
     this.apiKeys, {
     this.noApiKeyRetryIntervall = const Duration(seconds: 5),
     this.apiKeyRetryIntervall = const Duration(seconds: 3),

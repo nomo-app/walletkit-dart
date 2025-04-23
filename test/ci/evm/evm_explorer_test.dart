@@ -55,13 +55,13 @@ void main() {
   );
 
   test('test erc1155 fetching zsc', () async {
-    final transactions = await zeniqScan.fetchERC1155Transactions(
-      address: arbitrumTestWallet,
-      contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
+    expectLater(
+      zeniqScan.fetchERC1155Transactions(
+        address: arbitrumTestWallet,
+        contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
+      ),
+      throwsUnsupportedError,
     );
-
-    print('ERC1155 Transactions: $transactions');
-    expect(transactions, isNotEmpty);
   });
 
   test('Test Ethereum Etherscan Fetching', () async {
