@@ -10,10 +10,9 @@ enum Sorting { asc, desc }
 class EtherscanExplorer extends EtherscanRepository {
   final EvmCoinEntity currency;
 
-  EtherscanExplorer(super.base, super.apiKeys, this.currency);
+  EtherscanExplorer(super.baseUrl, super.apiKeys, this.currency);
 
-  @override
-  String get base => "${super.base}?chainid=${currency.chainID}";
+  String get base => "${super.baseUrl}?chainid=${currency.chainID}";
 
   String buildBalanceEndpoint(String address) =>
       "$base&module=account&action=balance&address=$address"
@@ -321,41 +320,6 @@ class ZeniqScanExplorer extends EtherscanExplorer {
   ZeniqScanExplorer(super.base, super.apiKeys, super.currency);
 
   @override
-  String buildTransactionEndpoint({
-    required String address,
-    int? startblock,
-    int? endblock,
-    int? page,
-    int? offset,
-    Sorting? sorting,
-  }) {
-    return "$base&module=account&action=txlist&address=$address"
-        .addOptionalParameter('start_block', startblock)
-        .addOptionalParameter('end_block', endblock)
-        .addOptionalParameter('page', page)
-        .addOptionalParameter('offset', offset)
-        .addOptionalParameter('sort', sorting?.name);
-  }
-
-  @override
-  String buildERC20TransactionEndpoint({
-    required String address,
-    required String contractAddress,
-    int? startblock,
-    int? endblock,
-    int? page,
-    int? offset,
-    Sorting? sorting,
-  }) {
-    return "$base&module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
-        .addOptionalParameter('start_block', startblock)
-        .addOptionalParameter('end_block', endblock)
-        .addOptionalParameter('page', page)
-        .addOptionalParameter('offset', offset)
-        .addOptionalParameter('sort', sorting?.name);
-  }
-
-  @override
   String buildERC1155TransactionEndpoint({
     required String address,
     required String contractAddress,
@@ -365,11 +329,8 @@ class ZeniqScanExplorer extends EtherscanExplorer {
     int? offset,
     Sorting? sorting,
   }) {
-    return "$base&module=account&action=tokentx&address=$address&contractaddress=$contractAddress"
-        .addOptionalParameter('start_block', startblock)
-        .addOptionalParameter('end_block', endblock)
-        .addOptionalParameter('page', page)
-        .addOptionalParameter('offset', offset)
-        .addOptionalParameter('sort', sorting?.name);
+    throw UnsupportedError(
+      "Building ERC1155 Transaction Endpoint not supported",
+    );
   }
 }
