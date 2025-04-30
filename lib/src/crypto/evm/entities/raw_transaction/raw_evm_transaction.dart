@@ -42,6 +42,10 @@ sealed class RawEvmTransaction {
 
   String get serializedHex => "0x" + serialized.toHex;
 
+  factory RawEvmTransaction.fromJson(Json json) {
+    throw Exception("Invalid transaction");
+  }
+
   factory RawEvmTransaction.fromHex(String hex) {
     final rawTxHex = hex.replaceFirst("0x", "");
 
