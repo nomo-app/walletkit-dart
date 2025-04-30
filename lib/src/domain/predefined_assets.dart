@@ -28,6 +28,11 @@ const ec8Coin = CoinEntity(
   symbol: 'EURO',
   decimals: 5,
 );
+const dogeCoin = CoinEntity(
+  name: 'Dogecoin',
+  symbol: 'DOGE',
+  decimals: 8,
+);
 
 ///
 /// Ethereum Assets

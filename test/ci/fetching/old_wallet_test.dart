@@ -12,27 +12,24 @@ void main() {
   const coinbaseTx =
       "652a27f226ddfc74642fa4648de388985fc46bdcffd9f8d5f7ad5d4e5fd77944";
 
-  test(
-    'Fetch Zeniq Coinbase tx: $coinbaseTx',
-    () async {
-      final (tx, _) = await fetchUTXOTXByHash(
-        coinbaseTx,
-        ZeniqNetwork,
-        [],
-        [AddressType.legacy],
-      );
-      expect(tx.block, -1);
-      expect(tx.hash,
-          "652a27f226ddfc74642fa4648de388985fc46bdcffd9f8d5f7ad5d4e5fd77944");
-    },
-  );
+  test('Fetch Zeniq Coinbase tx: $coinbaseTx', () async {
+    final (tx, _) = await fetchUTXOTXByHash(coinbaseTx, ZeniqNetwork, [], [
+      AddressType.legacy,
+    ]);
+    expect(tx.block, -1);
+    expect(
+      tx.hash,
+      "652a27f226ddfc74642fa4648de388985fc46bdcffd9f8d5f7ad5d4e5fd77944",
+    );
+  });
 
   test('Fetch Zeniq Txs $ePubKeyNS', () async {
-    final (txs, _) = await fetchUTXOTransactionsFromEpubKey(
-      ePubKey: ePubKeyNS,
+    final node = deriveMasterNodeFromExtendedKey(ePubKeyNS);
+    final (txs, _) = await fetchUTXOTransactions(
+      accountLevelHdNodes: [node],
+
       addressTypes: [AddressType.legacy],
       networkType: ZeniqNetwork,
-      purpose: HDWalletPurpose.NO_STRUCTURE,
     );
 
     expect(txs.length, greaterThanOrEqualTo(79));
@@ -43,12 +40,12 @@ void main() {
   });
 
   test('Fetch Litecoin Txs $ePubKeyBip44LTC', () async {
-    final (txs, _) = await fetchUTXOTransactionsFromEpubKey(
-      ePubKey: ePubKeyBip44LTC,
+    final node = deriveMasterNodeFromExtendedKey(ePubKeyBip44LTC);
+    final (txs, _) = await fetchUTXOTransactions(
+      accountLevelHdNodes: [node],
       addressTypes: [AddressType.legacy, AddressType.segwit],
       networkType: LitecoinNetwork,
       minEndpoints: 1,
-      purpose: HDWalletPurpose.BIP44,
     );
 
     expect(txs.whereType<NotAvaialableUTXOTransaction>().length, equals(0));

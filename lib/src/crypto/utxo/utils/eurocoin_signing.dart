@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:bip32/bip32.dart' as bip32;
 import 'package:hex/hex.dart';
+import 'package:walletkit_dart/src/crypto/utxo/utils/ecurve.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
-import 'package:walletkit_dart/src/domain/exceptions.dart';
+import 'package:walletkit_dart/src/utils/crypto.dart';
+import 'package:walletkit_dart/src/wallet/bip32/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;
-import 'package:bip32/src/utils/ecurve.dart' as ecc;
 import 'package:convert/convert.dart' as convert;
 
 List<int> nomoIdDerivationPath(int hostId) {
@@ -20,7 +20,8 @@ String ec8Recover({required String message, required String sig}) {
 
   final uncompressedPrefix = [0x04];
   final pubKeyCompressed = compressPublicKey(
-      Uint8List.fromList(uncompressedPrefix + pubKeyUncompressed));
+    Uint8List.fromList(uncompressedPrefix + pubKeyUncompressed),
+  );
   final pubKeyHex = convert.hex.encode(pubKeyCompressed);
   return pubKeyHex;
 }
@@ -65,8 +66,11 @@ Uint8List ec8SignMessage(String message, NodeWithAddress node) {
   // message test vector: https://zeniq.id/safir.com/backend/qrl?n=2f24bc32c0752e835e21&r=/backend/qrll
   final messageHash = createEurocoinMessageHash(message);
   // messageHash test vector: u8	uint8_t[32]	"\xf9\x9b\xf9~\U00000015j\xf1\xd1K\U0000001a\U00000002[\U00000011\x83\U0000001ae\xeb\nH\xa0zⴞ\xa8k\xc4Tn~\x80\xe3"
-  final signature =
-      Signature.createSignature(messageHash, privateKey, hashPayload: false);
+  final signature = Signature.createSignature(
+    messageHash,
+    privateKey,
+    hashPayload: false,
+  );
 
   final r = padUint8ListTo32(unsignedIntToBytes(signature.r));
   final s = padUint8ListTo32(unsignedIntToBytes(signature.s));
@@ -102,11 +106,11 @@ Future<NodeWithAddress> deriveBIP32Ec8({
 }) async {
   final String derivationPathString = _derivationPathToString(derivationPath);
 
-  bip32.BIP32 seedNode = bip32.BIP32.fromSeed(seed);
-  final bip32.BIP32 childNode = seedNode.derivePath(derivationPathString);
+  final masterNode = HDNode.fromSeed(seed);
+  final childNode = masterNode.derivePath(derivationPathString);
 
   const compressed = false; // needed for address backwards compat
-  final publicKey = ecc.pointFromScalar(childNode.privateKey!, compressed)!;
+  final publicKey = pointFromScalar(childNode.privateKey!, compressed)!;
   final address = pubKeyToAddress(
     publicKey,
     AddressType.legacy,
@@ -116,7 +120,7 @@ Future<NodeWithAddress> deriveBIP32Ec8({
   return ChangeNode(
     bip32Node: childNode,
     address: address,
-    derivationPath: "", //
+    derivationPath: derivationPathString,
     addresses: {AddressType.legacy: address},
     walletPurpose: HDWalletPurpose.BIP44,
     publicKey: childNode.publicKey.toHex,
@@ -154,7 +158,7 @@ Uint8List encodeVarint(int value) {
       value & 0xFF,
       (value >> 8) & 0xFF,
       (value >> 16) & 0xFF,
-      (value >> 24) & 0xFF
+      (value >> 24) & 0xFF,
     ]);
   } else {
     result.addAll([

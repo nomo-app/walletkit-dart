@@ -1,154 +1,104 @@
-[![TestSuite](https://img.shields.io/github/actions/workflow/status/nomo-app/walletkit-dart/dart.yml?branch=main&style=for-the-badge&logo=testing-library&label=Test%20Suite)](https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml)
+[![TestSuite](https://img.shields.io/github/actions/workflow/status/nomo-app/walletkit-dart/dart.yml?branch=wallet_interface&style=for-the-badge&logo=testing-library&label=Test%20Suite)](https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml)
 [![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdev.nomo.app%2Fwalletkit-dart%2Fbadges%2Fcoverage.json&query=message&style=for-the-badge&logo=codecov&logoSize=24&label=Coverage&link=https%3A%2F%2Fdev.nomo.app%2Fwalletkit-dart%2Fcoverage%2F)](https://dev.nomo.app/walletkit-dart/coverage/)
 
 # WalletKit-Dart
 
-WalletKit-Dart provides features for interacting with
-Bitcoin/Ethereum/Tron/ZENIQ/ZENIQ Smartchain/Polygon/Binance
-Smartchain/Litecoin/Bitcoin Cash/Eurocoin as well as several layer 2 chains. If
-needed, it is easy to expand WalletKit-Dart with other chains.
-
-See the [Uniswap WebOn](https://github.com/nomo-app/uniswap-webon) or the
-Unit-tests for a practical example how to use WalletKit-Dart.
-
-See the [api-docs](https://dev.nomo.app/walletkit-dart) for a list of individual
-functions.
+A powerful Dart library for interacting with multiple blockchain networks, including Bitcoin, Ethereum, Tron, ZENIQ, Polygon, Binance Smart Chain, Litecoin, Bitcoin Cash, and Eurocoin, as well as various layer 2 chains.
 
 ## Features
 
-- Sending transactions, including legacy/SegWit/P2SH/EVM
-- Fetching transactions and balances, including xPub/zPub/ERC20
-- Advanced parsing for making smart contract calls readable for humans (EVM)
-- Deriving addresses from mnemonics (HD-Wallet)
-- Performance by default: Immutable data will be cached in-memory
-- A large suite of Unit-tests
+- **Multi-Chain Support**: Native support for both UTXO-based and EVM-based chains
+- **Transaction Management**:
+  - Send transactions (legacy/SegWit/P2SH/EVM)
+  - Fetch transactions and balances (including xPub/zPub/ERC20)
+  - Advanced smart contract call parsing for human readability
+- **Wallet Features**:
+  - HD-Wallet support with mnemonic phrase derivation
+  - Address validation and management
+  - Fee estimation
+- **Performance Optimized**:
+  - In-memory caching for immutable data
+  - Stateless API design
+- **Comprehensive Testing**:
+  - Extensive unit test suite
+  - CI/CD integration
 
-## Why WalletKit-Dart?
+## Getting Started
 
-WalletKit-Dart has been inspired by the
-[WalletKit-C](https://github.com/blockset-corp/walletkit) from blockset-corp and
-by [bitcoin_flutter](https://github.com/dart-bitcoin/bitcoin_flutter) from the
-dart-bitcoin-project.
+### Installation
 
-The WalletKit-C was one of the first WalletKits that combined UTXO-chains and
-EVM-chains under a unified class hierarchy. However, the WalletKit-C was plagued
-by race conditions and memory corruptions. Also, the WalletKit-C had an "object
-oriented architecture" that was poorly supported by the C-language.
+Add WalletKit-Dart to your project as a Git submodule:
 
-bitcoin_flutter worked well, but bitcoin_flutter did not support modern
-null-safe Dart and it was difficult to expand for multiple chains.
-
-WalletKit-Dart has been developed to solve all those problems. WalletKit-Dart
-works with modern Dart-versions and is easy to expand for multiple chains.
-
-## How to integrate
-
-First, add this package as a Git-submodule by using Git-commands:
-
-```
+```bash
 git submodule add https://github.com/nomo-app/walletkit-dart.git packages/walletkit-dart
 ```
 
-Next, expand your pubspec.yaml accordingly:
+Update your `pubspec.yaml`:
 
-```
+```yaml
 dependencies:
-    walletkit_dart:
-        path: packages/walletkit-dart
+  walletkit_dart:
+    path: packages/walletkit-dart
 ```
 
-Afterwards, clone submodules with:
+Initialize the submodules:
 
-```
+```bash
 git submodule update --init --recursive
 ```
 
-The `--recursive` is important because WalletKit-Dart depends on other
-grandchild-submodules.
+### Requirements
+
+- Dart SDK: ^3.7.2
+- See [pubspec.yaml](pubspec.yaml) for detailed dependencies
 
 ## Architecture
 
-WalletKit-Dart is built for both _UTXO-chains_ and _EVM-chains_. WalletKit-Dart
-provides a class hierarchy where both `UTXOTransaction` and `EVMTransaction`
-inherit from a `GenericTransaction` base class.
+WalletKit-Dart is designed to handle both UTXO-based and EVM-based chains efficiently:
 
-Here is a quick summary if you do not yet understand the difference between UTXO
-and EVM:
+### UTXO Chains
+- Bitcoin and similar cryptocurrencies
+- Tracks ownership through unspent transaction outputs
+- Efficient for simple value transfers
 
-```
-UTXO-based chains and EVM-based chains are two different architectures for blockchain systems.
-UTXO (Unspent Transaction Output) is a concept used in Bitcoin and some other cryptocurrencies.
-In this architecture, each transaction spends one or more previously unspent outputs and creates new outputs.
-The sum of the inputs must be equal to or greater than the sum of the outputs.
-EVM (Ethereum Virtual Machine) is used in Ethereum and some other blockchain platforms that support smart contracts.
-In this architecture, each transaction is executed in the EVM as a smart contract, which can modify the state of the blockchain and create new contracts.
-The state is stored in a database, rather than as a set of unspent outputs.
-In summary, UTXO-based chains focus on tracking ownership of tokens, while EVM-based chains focus on executing arbitrary code in the form of smart contracts.
-```
+### EVM Chains
+- Ethereum and compatible networks
+- Supports smart contracts and complex transactions
+- State-based architecture
 
-## API Philosophy
+## API Design Philosophy
 
-WalletKit-Dart provides a _stateless API_. Neither does it store seed phrases,
-nor does it store transactions. It is the users responsibility to store any
-needed data.
+- **Stateless**: No storage of seed phrases or transactions
+- **Memory-Efficient**: Uses in-memory caches for performance
+- **Chain-Specific APIs**: Specialized interfaces for different chain architectures
+- **No Broken Abstractions**: Maintains clear separation between chain types
 
-By design, WalletKit-Dart does not have any persistent databases. Instead,
-WalletKit-Dart only has a few in-memory-caches to improve performance of
-repeated calls. This design helps to simplify the API.
+## Backend Integration
 
-Moreover, WalletKit-Dart provides different APIs for UTXO-chains and EVM-chains.
-Although every transaction inherits from a generic base transaction, we want to
-provide APIs that are specifically targeted for the architecture of a chain. In
-that sense, we deviate from a traditional object oriented approach.
+- **UTXO Chains**: Uses the [ElectrumX Protocol](https://electrumx.readthedocs.io/en/latest/protocol-methods.html)
+- **EVM Chains**: Integrates with JSON-RPC providers and Etherscan-style APIs
 
-In other words, while we aim to reuse code between chains, we do not want to
-create broken abstraction layers by abstracting too much complexity away.
+## Examples
 
-## Backend APIs
+Check out these example implementations:
 
-Depending on the chain, WalletKit-Dart depends on multiple backend APIs. For
-UTXO-chains, WalletKit-Dart depends on the
-[ElectrumX Protocol](https://electrumx.readthedocs.io/en/latest/protocol-methods.html).
+- [Uniswap WebOn](https://github.com/nomo-app/uniswap-webon)
+- [API Documentation](https://dev.nomo.app/walletkit-dart)
 
-For EVM-chains, WalletKit-Dart depends on several JSON-RPC-providers as well as
-etherscan-styled APIs.
+### Test Examples
 
-## The following Unit-tests show how to use WalletKit-Dart
+The test suite provides practical examples for various use cases:
 
-[Get Token Info for a ERC20 Token](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/erc20_test.dart)
+- [ERC20 Token Info](test/ci/evm/erc20_test.dart)
+- [EVM Transaction Fetching](test/ci/evm/evm_explorer_test.dart)
+- [Bitcoin Transaction Management](test/ci/fetching/assets/bitcoin_fetch_test.dart)
+- [Address Validation](test/ci/sending/address_validation_test.dart)
+- [Gas Fee Estimation](test/ci/gasfees_test.dart)
 
-[Fetch EVM Transaction from Explorer](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/evm_explorer_test.dart)
+## Contributing
 
-[Walletkit Json RPC Interface](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/evm_rcp_test.dart)
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-[Fetch Bitcoin Transactions](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/assets/bitcoin_fetch_test.dart)
+## License
 
-[Get best health endpoints utxo](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/endpoint_test.dart)
-
-[EPubKey Derivation](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/epubkey_test.dart)
-
-[Fetch UTXO Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/fetch_utxo_transactions_test.dart)
-
-[Parse MessageHex into EVM Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/parsing/parse_hex_transaction_test.dart)
-
-[Decode datafield from EVM Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/parsing/reverse-hash-computation_test.dart)
-
-[Address Validation](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/sending/address_validation_test.dart)
-
-[Estimate Fee](https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/gasfees_test.dart)
-
-[Send EVM Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/send_evm_test.dart)
-
-[Fetch Peers from ElectrumX](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/peers_test.dart)
-
-[Broadcast UTXO Transaction](https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/wallet_test.dart)
-
-protoc -I.
---dart_out=grpc:/home/thomas/src/walletkit-dart/lib/src/crypto/tron/rpc
-core/Tron.proto core/Discover.proto core/TronInventoryItems.proto
-core/contract/common.proto core/contract/account_contract.proto
-core/contract/asset_issue_contract.proto core/contract/balance_contract.proto
-core/contract/exchange_contract.proto core/contract/market_contract.proto
-core/contract/proposal_contract.proto core/contract/shield_contract.proto
-core/contract/smart_contract.proto core/contract/storage_contract.proto
-core/contract/witness_contract.proto api/api.proto
+This project is licensed under the MIT License - see the LICENSE file for details.

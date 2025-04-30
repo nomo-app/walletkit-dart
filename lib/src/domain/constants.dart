@@ -34,20 +34,48 @@ const String P2SH_PREFIX = '3'; // Compatibility Address
 const String P2SH_PREFIX_LTC = 'M'; // Compatibility Address Litecoin
 const String P2WPKH_PREFIX_BTC = 'bc1'; // Native SegWit Bitcoin
 const String P2WPKH_PREFIX_LTC = 'ltc1'; // Native SegWit Litecoin
+const String P2PKH_PREFIX_DOGE = 'D'; // Legacy Dogecoin
+const String P2SH_PREFIX_DOGE = 'A'; // Compatibility Address Dogecoin
+const String P2WPKH_PREFIX_DOGE = 'dc1'; // Native SegWit Dogecoin
 const List<String> P2WPKH_PREFIXES_BCH = [
   "1q",
-  "qq"
+  "qq",
 ]; // Native SegWit Bitcoin Cash
 const String P2PKH_PREFIX_EC8 = 'c';
 
+// Bitcoin (BTC)
 const BITCOIN_NETWORK_BIP = NetworkBIP(
-  bip32XpubPrefix: 0x0488b21e,
-  bip32XprivPrefix: 0x0488ade4,
-  bip49XpubPrefix: 0x049d7cb2,
-  bip49XprivPrefix: 0x049d7878,
-  bip84XpubPrefix: 0x04b24746,
-  bip84XprivPrefix: 0x04b2430c,
-  wif: 0x80,
+  bip32: (private: 0x0488ADE4, public: 0x0488B21E), // xprv, xpub
+  bip49: (private: 0x049D7878, public: 0x049D7CB2), // yprv, ypub
+  bip84: (private: 0x04B2430C, public: 0x04B24746), // zprv, zpub
+  bip49MultiSig: (private: 0x0295B005, public: 0x0295B43F), // Yprv, Ypub
+  bip84MultiSig: (private: 0x02AA7A99, public: 0x02AA7ED3), // Zprv, Zpub
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
+  wif: 0x80, // 128
+);
+
+// Litecoin (LTC)
+const LTC_NETWORK_BIP = NetworkBIP(
+  bip32: (private: 0x019D9CFE, public: 0x019DA462), // Ltub, Ltpv
+  bip49: (private: 0x01B26792, public: 0x01B26EF6), // Mtpv, Mtub
+  bip84: (private: 0x04B2430C, public: 0x04B24746), // zprv, zpub
+  bip49MultiSig: (private: 0x01B26792, public: 0x01B26EF6), // Mtpv, Mtub
+  bip84MultiSig: (private: 0x02AA7A99, public: 0x02AA7ED3), // Zprv, Zpub
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
+  wif: 0xB0, // 176
+);
+
+const DOGECOIN_NETWORK_BIP = NetworkBIP(
+  bip32: (private: 0x02fac398, public: 0x02facafd),
+  bip49: (private: 0x02fac398, public: 0x02facafd),
+  bip84: (private: 0x02fac398, public: 0x02facafd),
+  bip49MultiSig: (private: 0x02fac398, public: 0x02facafd),
+  bip84MultiSig: (private: 0x02fac398, public: 0x02facafd),
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
+  wif: 0x9e, // WIF prefix for Dogecoin
 );
 
 const BITCOIN_SIGHASH_INFO = SighashInfo(
@@ -72,22 +100,13 @@ const BCH_SIGHASH_INFO = SighashInfo(
 /// Needed for compatibility with old wallets
 ///
 const LITECOIN_NETWORK_BIP_WK_COMPATIBILITY = NetworkBIP(
-  bip32XpubPrefix: 0x0488b21e,
-  bip32XprivPrefix: 0x0488ade4,
-  bip49XpubPrefix: 0x0488b21e,
-  bip49XprivPrefix: 0x0488ade4,
-  bip84XpubPrefix: 0x0488b21e,
-  bip84XprivPrefix: 0x0488ade4,
-  wif: 0xb0,
-);
-
-const LITECOIN_NETWORK_BIP = NetworkBIP(
-  bip32XpubPrefix: 0x019da462,
-  bip32XprivPrefix: 0x019d9cfe,
-  bip49XpubPrefix: 0x01b26ef6,
-  bip49XprivPrefix: 0x01b26792,
-  bip84XpubPrefix: 0x01b26ef6,
-  bip84XprivPrefix: 0x01b26792,
+  bip32: (private: 0x0488ade4, public: 0x0488b21e),
+  bip49: (private: 0x0488ade4, public: 0x0488b21e),
+  bip84: (private: 0x0488ade4, public: 0x0488b21e),
+  bip49MultiSig: (private: 0x0488ade4, public: 0x0488b21e),
+  bip84MultiSig: (private: 0x0488ade4, public: 0x0488b21e),
+  bip86: (private: 0x045f18bc, public: 0x045f1cf6), // trprv, trpub
+  bip86MultiSig: (private: 0x02575483, public: 0x02575048), // Trprv, Trpub
   wif: 0xb0,
 );
 
@@ -163,7 +182,7 @@ Uint8List get helloSeed {
     228,
     193,
     46,
-    58
+    58,
   ]);
 }
 

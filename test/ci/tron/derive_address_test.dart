@@ -1,4 +1,5 @@
 import 'package:test/test.dart';
+import 'package:walletkit_dart/src/wallet/bip32/hd_wallet_type.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 import '../../utils.dart';
@@ -23,16 +24,15 @@ void main() {
     print(address);
   });
   test('Test HD Wallet Path Test', () {
-    expect(tronBip44HDPath.basePath, "m/44'/195'");
-    expect(tronBip44HDPath.getPath(0, 0, 0), "m/44'/195'/0'/0/0");
-    expect(tronBip44HDPath.getPath(0, 0, 1), "m/44'/195'/0'/0/1");
-    expect(tronBip44HDPath.getPath(0, 1, 0), "m/44'/195'/0'/1/0");
-    expect(tronBip44HDPath.getPath(1, 0, 0), "m/44'/195'/1'/0/0");
+    expect(tronBip44HDPath.hardenedPath, "m/44'/195'");
   });
   test('Derive Addresses', () {
     final seed = loadFromEnv('TRON_SEED');
 
-    var node = deriveNode(seed, tronBip44HDPath.defaultPath);
+    var node = deriveNode(
+      seed,
+      tronBip44HDPathAccountZero.withChangeAndIndex(0, 0).derivationPath,
+    );
 
     var address = uncompressedPublicKeyToAddress(
       node.publicKeyUncompressed,
@@ -45,7 +45,10 @@ void main() {
     expect(address_hex.toHex, tronAddressHex);
     expect(evm_address, tronAddressEVM);
 
-    node = deriveNode(seed, tronBip44HDPath.getPath(0, 0, 1));
+    node = deriveNode(
+      seed,
+      tronBip44HDPathAccountZero.withChangeAndIndex(0, 1).derivationPath,
+    );
     address = uncompressedPublicKeyToAddress(
       node.publicKeyUncompressed,
       TRON_ADDRESS_PREFIX,

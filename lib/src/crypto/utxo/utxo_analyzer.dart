@@ -6,7 +6,7 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/transactions/electrum_transaction.dart';
-import 'package:bip32/bip32.dart' as bip32;
+import 'package:walletkit_dart/src/wallet/bip32/hd_node.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const kAddressesUpperLimit = 10000;
@@ -17,10 +17,8 @@ typedef UTXOTxInfo = (Set<UTXOTransaction>, Iterable<NodeWithAddress>);
 
 typedef ElectrumXResult = (Set<ElectrumTransactionInfo>?, ElectrumXClient);
 
-typedef SearchTransactionResult = (
-  Set<ElectrumTransactionInfo>,
-  Set<NodeWithAddress>
-);
+typedef SearchTransactionResult =
+    (Set<ElectrumTransactionInfo>, Set<NodeWithAddress>);
 
 Future<UTXOTxInfo> fetchMissingUTXOTransactions({
   required Set<UTXOTransaction> cachedTransactions,
@@ -34,24 +32,20 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
   required Stopwatch watch,
 }) async {
   /// Filter out all transactions that are already cached
-  final newTxs = allTxs.where(
-    (tx) {
-      final isCached = cachedTransactions.any((cTx) => cTx.id == tx.hash);
+  final newTxs = allTxs.where((tx) {
+    final isCached = cachedTransactions.any((cTx) => cTx.id == tx.hash);
 
-      return isCached == false;
-    },
-  );
+    return isCached == false;
+  });
 
-  final pendingTxs = allTxs.where(
-    (tx) {
-      final cTx = cachedTransactions.singleWhereOrNull(
-        (cTx) => cTx.id == tx.hash,
-      );
-      if (cTx == null) return false;
+  final pendingTxs = allTxs.where((tx) {
+    final cTx = cachedTransactions.singleWhereOrNull(
+      (cTx) => cTx.id == tx.hash,
+    );
+    if (cTx == null) return false;
 
-      return cTx.isPending || cTx is NotAvaialableUTXOTransaction;
-    },
-  );
+    return cTx.isPending || cTx is NotAvaialableUTXOTransaction;
+  });
   Logger.log("Found ${pendingTxs.length} pending TXs for ${coin.symbol}");
   Logger.log("Found ${newTxs.length} new TXs for ${coin.symbol}");
 
@@ -87,8 +81,9 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
     if (parentTxHash == null) continue;
 
     // Check if Parent TX is already in the list
-    var parentTx = newUtxoTxs
-        .singleWhereOrNull((element) => element.id == firstInput.txid);
+    var parentTx = newUtxoTxs.singleWhereOrNull(
+      (element) => element.id == firstInput.txid,
+    );
 
     final (_tx, _, _) = await fetchFromRandomElectrumXNode(
       (client) {
@@ -107,9 +102,7 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
     parentTx ??= _tx;
 
     if (parentTx == null) {
-      Logger.logWarning(
-        "Parent TX $parentTxHash not found for ${tx.hash}",
-      );
+      Logger.logWarning("Parent TX $parentTxHash not found for ${tx.hash}");
       continue;
     }
 
@@ -138,27 +131,26 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
     addressTypes: addressTypes,
   );
 
-  var utxoTXs = {
-    ...newUtxoTxs,
-    ...cachedTransactions,
-  };
+  var utxoTXs = {...newUtxoTxs, ...cachedTransactions};
 
   /// Replace the pending transactions with the updated ones
-  utxoTXs = utxoTXs.map((tx) {
-    final pendingTx = pendingUtxoTxs.singleWhereOrNull(
-      (element) => element.id == tx.id,
-    );
-    return pendingTx ?? tx;
-  }).toSet();
+  utxoTXs =
+      utxoTXs.map((tx) {
+        final pendingTx = pendingUtxoTxs.singleWhereOrNull(
+          (element) => element.id == tx.id,
+        );
+        return pendingTx ?? tx;
+      }).toSet();
 
   ///
   /// Mark Spent Outputs
   ///
   for (final tx in utxoTXs) {
     for (final input in tx.inputs) {
-      final outputs = utxoTXs
-          .singleWhereOrNull((element) => element.id == input.txid)
-          ?.outputs;
+      final outputs =
+          utxoTXs
+              .singleWhereOrNull((element) => element.id == input.txid)
+              ?.outputs;
 
       if (input.isCoinbase) continue;
       final index = input.vout!;
@@ -177,76 +169,10 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
   return (sortedTxs, nodes);
 }
 
-/// Fetches UTXO Transactions for a given ePubKey
-/// if [purpose] is not provied the returned [nodes] cant be used to derive the master node (used in Proof of Payment)
-Future<UTXOTxInfo> fetchUTXOTransactionsFromEpubKey({
-  required Iterable<AddressType> addressTypes,
-  required UTXONetworkType networkType,
-  required String ePubKey,
-  required HDWalletPurpose purpose,
-  Set<UTXOTransaction> cachedTransactions = const {},
-  List<NodeWithAddress> cachedNodes = const [],
-  int minEndpoints = 2,
-  Duration maxLatency = const Duration(milliseconds: 800),
-}) async {
-  final watch = Stopwatch()..start();
-
-  final endpoints = await getBestHealthEndpointsWithRetry(
-    endpointPool: networkType.endpoints,
-    token: networkType.coin,
-    maxLatency: maxLatency,
-    min: minEndpoints,
-  );
-
-  final isolateManager = IsolateManager();
-
-  ///
-  /// Search for Receive and Change Addresses
-  ///
-
-  final masterNode = await isolateManager.executeTask(
-    IsolateTask(
-      task: (arg) {
-        return deriveMasterNodeFromExtendedKeyWithCheck(
-          ePubKey: arg.$1,
-          networkType: arg.$2,
-          purpose: arg.$3,
-        );
-      },
-      argument: (ePubKey, networkType, purpose),
-    ),
-  );
-
-  final (allTxs, nodes) = await searchTransactionsForWalletType(
-    masterNode: masterNode,
-    purpose: purpose,
-    addressTypes: addressTypes,
-    networkType: networkType,
-    endpoints: endpoints,
-    cachedNodes: cachedNodes,
-    isolateManager: isolateManager,
-  );
-
-  isolateManager.dispose();
-
-  return fetchMissingUTXOTransactions(
-    allTxs: allTxs,
-    nodes: nodes,
-    cachedNodes: cachedNodes,
-    cachedTransactions: cachedTransactions,
-    addressTypes: addressTypes,
-    coin: networkType.coin,
-    endpoints: endpoints,
-    networkType: networkType,
-    watch: watch,
-  );
-}
-
 Future<UTXOTxInfo> fetchUTXOTransactions({
-  required Iterable<HDWalletPath> walletTypes,
+  required Iterable<HDNode> accountLevelHdNodes,
   required Iterable<AddressType> addressTypes,
   required UTXONetworkType networkType,
-  required Uint8List seed,
   Set<UTXOTransaction> cachedTransactions = const {},
   List<NodeWithAddress> cachedNodes = const [],
   int minEndpoints = 2,
@@ -261,12 +187,9 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
     min: minEndpoints,
   );
 
-  print(
-    "Selected ${endpoints.map(
-      (e) => "$e",
-    )}",
-  );
+  print("Selected ${endpoints.map((e) => "$e")}");
 
+  /// Derivation happens in a seperate Thread
   final isolateManager = IsolateManager();
 
   ///
@@ -274,30 +197,23 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
   ///
 
   final (allTxs, nodes) = await Future.wait([
-    for (final walletType in walletTypes)
+    for (final accountHdNode in accountLevelHdNodes)
       () async {
-        final masterNode = await isolateManager.executeTask(
-          IsolateTask(
-            task: (arg) {
-              return deriveMasterNodeFromSeed(seed: arg.$1, walletPath: arg.$2);
-            },
-            argument: (seed, walletType),
-          ),
-        );
         return searchTransactionsForWalletType(
-          masterNode: masterNode,
-          purpose: walletType.purpose,
+          masterNode: accountHdNode,
           addressTypes: addressTypes,
           networkType: networkType,
           endpoints: endpoints,
           cachedNodes: cachedNodes,
           isolateManager: isolateManager,
         );
-      }.call()
-  ]).then((value) => (
-        value.expand((element) => element.$1).toSet(),
-        value.expand((element) => element.$2).toSet()
-      ));
+      }.call(),
+  ]).then(
+    (value) => (
+      value.expand((element) => element.$1).toSet(),
+      value.expand((element) => element.$2).toSet(),
+    ),
+  );
 
   isolateManager.dispose();
 
@@ -315,9 +231,8 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
 }
 
 Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
-    searchTransactionsForWalletType({
-  required BipNode masterNode,
-  required HDWalletPurpose? purpose,
+searchTransactionsForWalletType({
+  required HDNode masterNode,
   required Iterable<AddressType> addressTypes,
   required UTXONetworkType networkType,
   required List<(String, int)> endpoints,
@@ -328,7 +243,6 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     masterNode: masterNode,
     chainIndex: EXTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletPurpose: purpose,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
@@ -339,7 +253,6 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
     masterNode: masterNode,
     chainIndex: INTERNAL_CHAIN_INDEX,
     addressTypes: addressTypes,
-    walletPurpose: purpose,
     networkType: networkType,
     endpoints: endpoints,
     cachedNodes: cachedNodes,
@@ -354,11 +267,10 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
 }
 
 Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
-    searchForTransactions({
-  required bip32.BIP32 masterNode,
+searchForTransactions({
+  required HDNode masterNode,
   required int chainIndex,
   required Iterable<AddressType> addressTypes,
-  required HDWalletPurpose? walletPurpose,
   required UTXONetworkType networkType,
   required List<(String, int)> endpoints,
   required List<NodeWithAddress> cachedNodes,
@@ -378,9 +290,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
   final batchSize = clients.length;
   final nodes = <NodeWithAddress>[];
 
-  Logger.logFetch(
-    "Fetching transactions from $batchSize ElectrumX Nodes",
-  );
+  Logger.logFetch("Fetching transactions from $batchSize ElectrumX Nodes");
 
   if (batchSize == 0) {
     Logger.logWarning("No ElectrumX Nodes available for $networkType");
@@ -390,9 +300,10 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
   for (var index = 0; index * batchSize < kAddressesUpperLimit; index++) {
     final indexes = List.generate(batchSize, (i) => index * batchSize + i);
     final newIndexes = indexes.where(
-      (i) => !cachedNodes.any(
-        (cNode) => cNode.index == i && cNode.chainIndex == chainIndex,
-      ),
+      (i) =>
+          !cachedNodes.any(
+            (cNode) => cNode.index == i && cNode.chainIndex == chainIndex,
+          ),
     );
 
     final List<NodeWithAddress> newNodes;
@@ -401,17 +312,17 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
     } else {
       newNodes = await isolateManager.executeTask(
         IsolateTask(
-          task: (arg) => [
-            for (var index in indexes)
-              deriveChildNode(
-                masterNode: masterNode,
-                chainIndex: chainIndex,
-                index: index,
-                networkType: networkType,
-                addressTypes: addressTypes,
-                walletPurpose: walletPurpose,
-              ),
-          ],
+          task:
+              (arg) => [
+                for (var index in indexes)
+                  deriveChildNode(
+                    masterNode: masterNode,
+                    chainIndex: chainIndex,
+                    index: index,
+                    networkType: networkType,
+                    addressTypes: addressTypes,
+                  ),
+              ],
           argument: null,
         ),
       );
@@ -434,7 +345,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
                 if (batchNodes[i].addresses.containsKey(type))
                   await client.getHistory(
                     P2Hash(batchNodes[i].addresses[type]!).publicKeyScriptHash,
-                  )
+                  ),
             ];
 
             return txsInfos
@@ -478,14 +389,10 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
   ///
   /// Disconnect Clients
   ///
-  await Future.wait([
-    for (final client in clients) client.disconnect(),
-  ]);
+  await Future.wait([for (final client in clients) client.disconnect()]);
 
   watch.stop();
-  Logger.logFetch(
-    "Fetched ${txs0.length} TXs in ${watch.elapsed} $chainIndex",
-  );
+  Logger.logFetch("Fetched ${txs0.length} TXs in ${watch.elapsed} $chainIndex");
 
   return (txs0, nodes);
 }
@@ -494,9 +401,13 @@ Future<Amount> estimateFeeForPriority({
   required int blocks,
   required UTXONetworkType network,
   required ElectrumXClient? initalClient,
+  bool useSmartFee = false,
 }) async {
   final (fee, _, _) = await fetchFromRandomElectrumXNode(
-    (client) => client.estimateFee(blocks: blocks),
+    (client) =>
+        useSmartFee
+            ? client.estimateSmartFee(blocks: blocks)
+            : client.estimateFee(blocks: blocks),
     client: initalClient,
     endpoints: network.endpoints,
     token: network.coin,
@@ -506,7 +417,7 @@ Future<Amount> estimateFeeForPriority({
 
   final feePerKb = Amount.convert(value: fee, decimals: 8);
 
-  final feePerB = feePerKb / Amount.from(value: 1000, decimals: 0);
+  final feePerB = feePerKb.multiplyAndCeil(0.001);
 
   return feePerB;
 }
@@ -514,19 +425,18 @@ Future<Amount> estimateFeeForPriority({
 Future<UtxoNetworkFees> getNetworkFees({
   required UTXONetworkType network,
   double multiplier = 1.0,
+  bool useSmartFee = false,
 }) async {
   final blockInOneHour = 3600 ~/ network.blockTime;
   final blocksTillTomorrow = 24 * 3600 ~/ network.blockTime;
 
   final client = await getBestHealthEndpointsWithRetry(
-    endpointPool: network.endpoints,
-    token: network.coin,
-    max: 1,
-    min: 1,
-  )
-      .then(
-        (endpoints) => endpoints.first,
+        endpointPool: network.endpoints,
+        token: network.coin,
+        max: 1,
+        min: 1,
       )
+      .then((endpoints) => endpoints.first)
       .then(
         (endpoint) => createElectrumXClient(
           endpoint: endpoint.$1,
@@ -619,7 +529,8 @@ Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({
 
       if (tx == null) {
         Logger.logWarning(
-            "Failed to fetch TX ${txInfo.hash} from ${client.host}");
+          "Failed to fetch TX ${txInfo.hash} from ${client.host}",
+        );
         txs.add(txInfo.getNotAvailableUTXOTransaction(type.coin));
         continue;
       }
@@ -632,25 +543,19 @@ Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({
     return txs;
   }
 
-  final futures = [
-    for (final client in clients) fetchFromPool(client),
-  ];
+  final futures = [for (final client in clients) fetchFromPool(client)];
 
   final results = await Future.wait(futures);
 
   final txs = results.expand((e) => e).toList();
 
   watch.stop();
-  Logger.logFetch(
-    "Fetched ${txs.length} transactions in ${watch.elapsed}",
-  );
+  Logger.logFetch("Fetched ${txs.length} transactions in ${watch.elapsed}");
 
   ///
   /// Disconnect Clients
   ///
-  await Future.wait([
-    for (final client in clients) client.disconnect(),
-  ]);
+  await Future.wait([for (final client in clients) client.disconnect()]);
 
   return txs;
 }
@@ -697,17 +602,15 @@ Map<ElectrumOutput, UTXOTransaction> extractAllUTXOs({
 ///
 /// Returns a map of UTXOs which belong to us and are unspent and their corresponding transactions
 ///
-List<ElectrumOutput> getSpendableOutputs(
-        {required List<UTXOTransaction> txList}) =>
-    [
-      for (final tx in txList)
-        for (final ElectrumOutput output in tx.outputs)
-          if (output.spent == false && output.belongsToUs == true) output
-    ];
+List<ElectrumOutput> getSpendableOutputs({
+  required List<UTXOTransaction> txList,
+}) => [
+  for (final tx in txList)
+    for (final ElectrumOutput output in tx.outputs)
+      if (output.spent == false && output.belongsToUs == true) output,
+];
 
-BigInt computeBalanceFromUTXOs({
-  required Iterable<UTXOTransaction> txList,
-}) {
+BigInt computeBalanceFromUTXOs({required Iterable<UTXOTransaction> txList}) {
   BigInt balance = BigInt.zero;
   for (final tx in txList) {
     for (final ElectrumOutput output in tx.outputs) {
@@ -809,12 +712,7 @@ List<ElectrumOutput> findOurOwnCoins(
       ),
     );
     final belongsToUs = node != null;
-    outputs0.add(
-      vout.copyWith(
-        belongsToUs: belongsToUs,
-        node: node,
-      ),
-    );
+    outputs0.add(vout.copyWith(belongsToUs: belongsToUs, node: node));
   }
   return outputs0;
 }
@@ -826,30 +724,26 @@ List<ElectrumOutput> findOurOwnCoins(
   UTXONetworkType type,
 ) {
   final ourValue = switch (transferMethod) {
-    TransactionTransferMethod.receive => outputs.fold(
-        BigInt.zero,
-        (prev, output) {
-          if (output.belongsToUs) {
-            return prev + output.value;
-          }
-          return prev;
-        },
-      ),
-    TransactionTransferMethod.own => outputs
-            .singleWhereOrNull(
-              (output) => output.node is ReceiveNode,
-            )
-            ?.value ??
-        BigInt.from(-1),
-    TransactionTransferMethod.send => outputs.fold(
-        BigInt.zero,
-        (prev, output) {
-          if (!output.belongsToUs) {
-            return prev + output.value;
-          }
-          return prev;
-        },
-      ),
+    TransactionTransferMethod.receive => outputs.fold(BigInt.zero, (
+      prev,
+      output,
+    ) {
+      if (output.belongsToUs) {
+        return prev + output.value;
+      }
+      return prev;
+    }),
+    TransactionTransferMethod.own =>
+      outputs
+              .singleWhereOrNull((output) => output.node is ReceiveNode)
+              ?.value ??
+          BigInt.from(-1),
+    TransactionTransferMethod.send => outputs.fold(BigInt.zero, (prev, output) {
+      if (!output.belongsToUs) {
+        return prev + output.value;
+      }
+      return prev;
+    }),
     TransactionTransferMethod.unknown => BigInt.from(-1),
   };
   final totalValue = outputs.fold(
@@ -878,7 +772,7 @@ ElectrumOutput? _findMainOutput(
 
   final isMainOutputOurOwn =
       transferMethod == TransactionTransferMethod.receive ||
-          transferMethod == TransactionTransferMethod.own;
+      transferMethod == TransactionTransferMethod.own;
   final voutList =
       voutListFull.where((v) => v.belongsToUs == isMainOutputOurOwn).toList();
   if (voutList.isEmpty) {
