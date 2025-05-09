@@ -118,8 +118,7 @@ extension BufferUtil on Uint8List {
 
   (Uint8List, int) readVarSlice(int offset) {
     final (length, lengthByteLength) = bytes.readVarInt(offset);
-    final (slice, sliceByteLength) =
-        readSlice(offset + lengthByteLength, length);
+    final (slice, sliceByteLength) = readSlice(offset + lengthByteLength, length);
     return (slice, lengthByteLength + sliceByteLength);
   }
 }

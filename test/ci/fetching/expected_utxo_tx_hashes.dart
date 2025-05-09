@@ -5,8 +5,7 @@ import 'package:test/test.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 void expectTxHashes(
-    {required Set<UTXOTransaction> txList,
-    required List<String> expectedTxHashes}) {
+    {required Set<UTXOTransaction> txList, required List<String> expectedTxHashes}) {
   // print(txList.toList().map((tx) => "'" + tx.hash + "'").toList().toString());
   for (final hash in expectedTxHashes) {
     expect(txList.firstWhereOrNull((tx) => tx.id == hash)?.id, hash);

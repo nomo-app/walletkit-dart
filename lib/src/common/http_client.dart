@@ -11,8 +11,7 @@ abstract class HTTPService {
   }
 
   //Add headers to the request
-  static Future<http.Response> getWithHeaders(String url,
-      {Map<String, String>? headers}) {
+  static Future<http.Response> getWithHeaders(String url, {Map<String, String>? headers}) {
     return client.get(Uri.parse(url), headers: headers);
   }
 }

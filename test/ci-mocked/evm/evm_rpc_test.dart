@@ -5,7 +5,5 @@ import '../../shared_rpc_tests.dart';
 
 void main() {
   runSharedRPCTests(
-      description: "Mocked RPC Tests",
-      config: RPCMockTestConfig(),
-      params: RPCTestParameters());
+      description: "Mocked RPC Tests", config: RPCMockTestConfig(), params: RPCTestParameters());
 }

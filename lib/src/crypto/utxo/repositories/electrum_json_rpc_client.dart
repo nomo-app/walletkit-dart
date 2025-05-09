@@ -142,8 +142,7 @@ class ElectrumXClient {
     final inputs = <(String, int)>[];
     if (mainTxJson case {"vin": JsonList _inputs}) {
       for (final input in _inputs) {
-        if (input case {"txid": String txid, "vout": int index})
-          inputs.add((txid, index));
+        if (input case {"txid": String txid, "vout": int index}) inputs.add((txid, index));
       }
     }
     final outputs = [

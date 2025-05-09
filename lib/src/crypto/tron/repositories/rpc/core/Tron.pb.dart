@@ -44,14 +44,11 @@ class AccountId extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'AccountId',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AccountId',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'name', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'name', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -119,16 +116,13 @@ class Vote extends $pb.GeneratedMessage {
   factory Vote.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory Vote.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Vote.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Vote',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Vote',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'voteAddress', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'voteAddress', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'voteCount')
     ..hasRequiredFields = false;
 
@@ -149,8 +143,7 @@ class Vote extends $pb.GeneratedMessage {
   Vote createEmptyInstance() => create();
   static $pb.PbList<Vote> createRepeated() => $pb.PbList<Vote>();
   @$core.pragma('dart2js:noInline')
-  static Vote getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Vote>(create);
+  static Vote getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Vote>(create);
   static Vote? _defaultInstance;
 
   /// the super rep address
@@ -223,13 +216,11 @@ class Proposal extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Proposal',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Proposal',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'proposalId')
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'proposerAddress', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'proposerAddress', $pb.PbFieldType.OY)
     ..m<$fixnum.Int64, $fixnum.Int64>(3, _omitFieldNames ? '' : 'parameters',
         entryClassName: 'Proposal.ParametersEntry',
         keyFieldType: $pb.PbFieldType.O6,
@@ -237,8 +228,7 @@ class Proposal extends $pb.GeneratedMessage {
         packageName: const $pb.PackageName('protocol'))
     ..aInt64(4, _omitFieldNames ? '' : 'expirationTime')
     ..aInt64(5, _omitFieldNames ? '' : 'createTime')
-    ..p<$core.List<$core.int>>(
-        6, _omitFieldNames ? '' : 'approvals', $pb.PbFieldType.PY)
+    ..p<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'approvals', $pb.PbFieldType.PY)
     ..e<Proposal_State>(7, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
         defaultOrMaker: Proposal_State.PENDING,
         valueOf: Proposal_State.valueOf,
@@ -376,19 +366,15 @@ class Exchange extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Exchange',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Exchange',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'exchangeId')
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'creatorAddress', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'creatorAddress', $pb.PbFieldType.OY)
     ..aInt64(3, _omitFieldNames ? '' : 'createTime')
-    ..a<$core.List<$core.int>>(
-        6, _omitFieldNames ? '' : 'firstTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'firstTokenId', $pb.PbFieldType.OY)
     ..aInt64(7, _omitFieldNames ? '' : 'firstTokenBalance')
-    ..a<$core.List<$core.int>>(
-        8, _omitFieldNames ? '' : 'secondTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(8, _omitFieldNames ? '' : 'secondTokenId', $pb.PbFieldType.OY)
     ..aInt64(9, _omitFieldNames ? '' : 'secondTokenBalance')
     ..hasRequiredFields = false;
 
@@ -561,32 +547,24 @@ class MarketOrder extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketOrder',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketOrder',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'orderId', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'ownerAddress', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'orderId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'ownerAddress', $pb.PbFieldType.OY)
     ..aInt64(3, _omitFieldNames ? '' : 'createTime')
-    ..a<$core.List<$core.int>>(
-        4, _omitFieldNames ? '' : 'sellTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'sellTokenId', $pb.PbFieldType.OY)
     ..aInt64(5, _omitFieldNames ? '' : 'sellTokenQuantity')
-    ..a<$core.List<$core.int>>(
-        6, _omitFieldNames ? '' : 'buyTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'buyTokenId', $pb.PbFieldType.OY)
     ..aInt64(7, _omitFieldNames ? '' : 'buyTokenQuantity')
     ..aInt64(9, _omitFieldNames ? '' : 'sellTokenQuantityRemain')
     ..aInt64(10, _omitFieldNames ? '' : 'sellTokenQuantityReturn')
-    ..e<MarketOrder_State>(
-        11, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
+    ..e<MarketOrder_State>(11, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE,
         defaultOrMaker: MarketOrder_State.ACTIVE,
         valueOf: MarketOrder_State.valueOf,
         enumValues: MarketOrder_State.values)
-    ..a<$core.List<$core.int>>(
-        12, _omitFieldNames ? '' : 'prev', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        13, _omitFieldNames ? '' : 'next', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(12, _omitFieldNames ? '' : 'prev', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(13, _omitFieldNames ? '' : 'next', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -597,8 +575,7 @@ class MarketOrder extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketOrder copyWith(void Function(MarketOrder) updates) =>
-      super.copyWith((message) => updates(message as MarketOrder))
-          as MarketOrder;
+      super.copyWith((message) => updates(message as MarketOrder)) as MarketOrder;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -607,8 +584,8 @@ class MarketOrder extends $pb.GeneratedMessage {
   MarketOrder createEmptyInstance() => create();
   static $pb.PbList<MarketOrder> createRepeated() => $pb.PbList<MarketOrder>();
   @$core.pragma('dart2js:noInline')
-  static MarketOrder getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketOrder>(create);
+  static MarketOrder getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketOrder>(create);
   static MarketOrder? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -776,8 +753,7 @@ class MarketOrderList extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketOrderList',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketOrderList',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..pc<MarketOrder>(1, _omitFieldNames ? '' : 'orders', $pb.PbFieldType.PM,
@@ -792,19 +768,17 @@ class MarketOrderList extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketOrderList copyWith(void Function(MarketOrderList) updates) =>
-      super.copyWith((message) => updates(message as MarketOrderList))
-          as MarketOrderList;
+      super.copyWith((message) => updates(message as MarketOrderList)) as MarketOrderList;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MarketOrderList create() => MarketOrderList._();
   MarketOrderList createEmptyInstance() => create();
-  static $pb.PbList<MarketOrderList> createRepeated() =>
-      $pb.PbList<MarketOrderList>();
+  static $pb.PbList<MarketOrderList> createRepeated() => $pb.PbList<MarketOrderList>();
   @$core.pragma('dart2js:noInline')
-  static MarketOrderList getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketOrderList>(create);
+  static MarketOrderList getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketOrderList>(create);
   static MarketOrderList? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -829,12 +803,10 @@ class MarketOrderPairList extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketOrderPairList',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketOrderPairList',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..pc<MarketOrderPair>(
-        1, _omitFieldNames ? '' : 'orderPair', $pb.PbFieldType.PM,
+    ..pc<MarketOrderPair>(1, _omitFieldNames ? '' : 'orderPair', $pb.PbFieldType.PM,
         protoName: 'orderPair', subBuilder: MarketOrderPair.create)
     ..hasRequiredFields = false;
 
@@ -846,19 +818,17 @@ class MarketOrderPairList extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketOrderPairList copyWith(void Function(MarketOrderPairList) updates) =>
-      super.copyWith((message) => updates(message as MarketOrderPairList))
-          as MarketOrderPairList;
+      super.copyWith((message) => updates(message as MarketOrderPairList)) as MarketOrderPairList;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MarketOrderPairList create() => MarketOrderPairList._();
   MarketOrderPairList createEmptyInstance() => create();
-  static $pb.PbList<MarketOrderPairList> createRepeated() =>
-      $pb.PbList<MarketOrderPairList>();
+  static $pb.PbList<MarketOrderPairList> createRepeated() => $pb.PbList<MarketOrderPairList>();
   @$core.pragma('dart2js:noInline')
-  static MarketOrderPairList getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketOrderPairList>(create);
+  static MarketOrderPairList getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketOrderPairList>(create);
   static MarketOrderPairList? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -887,14 +857,11 @@ class MarketOrderPair extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketOrderPair',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketOrderPair',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'sellTokenId', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'buyTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'sellTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'buyTokenId', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -905,19 +872,17 @@ class MarketOrderPair extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketOrderPair copyWith(void Function(MarketOrderPair) updates) =>
-      super.copyWith((message) => updates(message as MarketOrderPair))
-          as MarketOrderPair;
+      super.copyWith((message) => updates(message as MarketOrderPair)) as MarketOrderPair;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MarketOrderPair create() => MarketOrderPair._();
   MarketOrderPair createEmptyInstance() => create();
-  static $pb.PbList<MarketOrderPair> createRepeated() =>
-      $pb.PbList<MarketOrderPair>();
+  static $pb.PbList<MarketOrderPair> createRepeated() => $pb.PbList<MarketOrderPair>();
   @$core.pragma('dart2js:noInline')
-  static MarketOrderPair getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketOrderPair>(create);
+  static MarketOrderPair getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketOrderPair>(create);
   static MarketOrderPair? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -975,14 +940,11 @@ class MarketAccountOrder extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketAccountOrder',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketAccountOrder',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'ownerAddress', $pb.PbFieldType.OY)
-    ..p<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'orders', $pb.PbFieldType.PY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'ownerAddress', $pb.PbFieldType.OY)
+    ..p<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'orders', $pb.PbFieldType.PY)
     ..aInt64(3, _omitFieldNames ? '' : 'count')
     ..aInt64(4, _omitFieldNames ? '' : 'totalCount')
     ..hasRequiredFields = false;
@@ -995,19 +957,17 @@ class MarketAccountOrder extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketAccountOrder copyWith(void Function(MarketAccountOrder) updates) =>
-      super.copyWith((message) => updates(message as MarketAccountOrder))
-          as MarketAccountOrder;
+      super.copyWith((message) => updates(message as MarketAccountOrder)) as MarketAccountOrder;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MarketAccountOrder create() => MarketAccountOrder._();
   MarketAccountOrder createEmptyInstance() => create();
-  static $pb.PbList<MarketAccountOrder> createRepeated() =>
-      $pb.PbList<MarketAccountOrder>();
+  static $pb.PbList<MarketAccountOrder> createRepeated() => $pb.PbList<MarketAccountOrder>();
   @$core.pragma('dart2js:noInline')
-  static MarketAccountOrder getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketAccountOrder>(create);
+  static MarketAccountOrder getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketAccountOrder>(create);
   static MarketAccountOrder? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1072,8 +1032,7 @@ class MarketPrice extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketPrice',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketPrice',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'sellTokenQuantity')
@@ -1088,8 +1047,7 @@ class MarketPrice extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketPrice copyWith(void Function(MarketPrice) updates) =>
-      super.copyWith((message) => updates(message as MarketPrice))
-          as MarketPrice;
+      super.copyWith((message) => updates(message as MarketPrice)) as MarketPrice;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -1098,8 +1056,8 @@ class MarketPrice extends $pb.GeneratedMessage {
   MarketPrice createEmptyInstance() => create();
   static $pb.PbList<MarketPrice> createRepeated() => $pb.PbList<MarketPrice>();
   @$core.pragma('dart2js:noInline')
-  static MarketPrice getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketPrice>(create);
+  static MarketPrice getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketPrice>(create);
   static MarketPrice? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1153,14 +1111,11 @@ class MarketPriceList extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketPriceList',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketPriceList',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'sellTokenId', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'buyTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'sellTokenId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'buyTokenId', $pb.PbFieldType.OY)
     ..pc<MarketPrice>(3, _omitFieldNames ? '' : 'prices', $pb.PbFieldType.PM,
         subBuilder: MarketPrice.create)
     ..hasRequiredFields = false;
@@ -1173,19 +1128,17 @@ class MarketPriceList extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketPriceList copyWith(void Function(MarketPriceList) updates) =>
-      super.copyWith((message) => updates(message as MarketPriceList))
-          as MarketPriceList;
+      super.copyWith((message) => updates(message as MarketPriceList)) as MarketPriceList;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MarketPriceList create() => MarketPriceList._();
   MarketPriceList createEmptyInstance() => create();
-  static $pb.PbList<MarketPriceList> createRepeated() =>
-      $pb.PbList<MarketPriceList>();
+  static $pb.PbList<MarketPriceList> createRepeated() => $pb.PbList<MarketPriceList>();
   @$core.pragma('dart2js:noInline')
-  static MarketPriceList getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketPriceList>(create);
+  static MarketPriceList getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketPriceList>(create);
   static MarketPriceList? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1238,14 +1191,11 @@ class MarketOrderIdList extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketOrderIdList',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketOrderIdList',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'head', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'tail', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'head', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'tail', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1256,19 +1206,17 @@ class MarketOrderIdList extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketOrderIdList copyWith(void Function(MarketOrderIdList) updates) =>
-      super.copyWith((message) => updates(message as MarketOrderIdList))
-          as MarketOrderIdList;
+      super.copyWith((message) => updates(message as MarketOrderIdList)) as MarketOrderIdList;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MarketOrderIdList create() => MarketOrderIdList._();
   MarketOrderIdList createEmptyInstance() => create();
-  static $pb.PbList<MarketOrderIdList> createRepeated() =>
-      $pb.PbList<MarketOrderIdList>();
+  static $pb.PbList<MarketOrderIdList> createRepeated() => $pb.PbList<MarketOrderIdList>();
   @$core.pragma('dart2js:noInline')
-  static MarketOrderIdList getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketOrderIdList>(create);
+  static MarketOrderIdList getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketOrderIdList>(create);
   static MarketOrderIdList? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1334,17 +1282,14 @@ class ChainParameters_ChainParameter extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ChainParameters_ChainParameter copyWith(
-          void Function(ChainParameters_ChainParameter) updates) =>
-      super.copyWith(
-              (message) => updates(message as ChainParameters_ChainParameter))
+  ChainParameters_ChainParameter copyWith(void Function(ChainParameters_ChainParameter) updates) =>
+      super.copyWith((message) => updates(message as ChainParameters_ChainParameter))
           as ChainParameters_ChainParameter;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static ChainParameters_ChainParameter create() =>
-      ChainParameters_ChainParameter._();
+  static ChainParameters_ChainParameter create() => ChainParameters_ChainParameter._();
   ChainParameters_ChainParameter createEmptyInstance() => create();
   static $pb.PbList<ChainParameters_ChainParameter> createRepeated() =>
       $pb.PbList<ChainParameters_ChainParameter>();
@@ -1396,14 +1341,12 @@ class ChainParameters extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ChainParameters',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChainParameters',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..pc<ChainParameters_ChainParameter>(
         1, _omitFieldNames ? '' : 'chainParameter', $pb.PbFieldType.PM,
-        protoName: 'chainParameter',
-        subBuilder: ChainParameters_ChainParameter.create)
+        protoName: 'chainParameter', subBuilder: ChainParameters_ChainParameter.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -1414,19 +1357,17 @@ class ChainParameters extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ChainParameters copyWith(void Function(ChainParameters) updates) =>
-      super.copyWith((message) => updates(message as ChainParameters))
-          as ChainParameters;
+      super.copyWith((message) => updates(message as ChainParameters)) as ChainParameters;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ChainParameters create() => ChainParameters._();
   ChainParameters createEmptyInstance() => create();
-  static $pb.PbList<ChainParameters> createRepeated() =>
-      $pb.PbList<ChainParameters>();
+  static $pb.PbList<ChainParameters> createRepeated() => $pb.PbList<ChainParameters>();
   @$core.pragma('dart2js:noInline')
-  static ChainParameters getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ChainParameters>(create);
+  static ChainParameters getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChainParameters>(create);
   static ChainParameters? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1456,8 +1397,7 @@ class Account_Frozen extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Account.Frozen',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Account.Frozen',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'frozenBalance')
@@ -1472,19 +1412,17 @@ class Account_Frozen extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Account_Frozen copyWith(void Function(Account_Frozen) updates) =>
-      super.copyWith((message) => updates(message as Account_Frozen))
-          as Account_Frozen;
+      super.copyWith((message) => updates(message as Account_Frozen)) as Account_Frozen;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Account_Frozen create() => Account_Frozen._();
   Account_Frozen createEmptyInstance() => create();
-  static $pb.PbList<Account_Frozen> createRepeated() =>
-      $pb.PbList<Account_Frozen>();
+  static $pb.PbList<Account_Frozen> createRepeated() => $pb.PbList<Account_Frozen>();
   @$core.pragma('dart2js:noInline')
-  static Account_Frozen getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Account_Frozen>(create);
+  static Account_Frozen getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account_Frozen>(create);
   static Account_Frozen? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1538,8 +1476,7 @@ class Account_AccountResource extends $pb.GeneratedMessage {
       $result.latestConsumeTimeForEnergy = latestConsumeTimeForEnergy;
     }
     if (acquiredDelegatedFrozenBalanceForEnergy != null) {
-      $result.acquiredDelegatedFrozenBalanceForEnergy =
-          acquiredDelegatedFrozenBalanceForEnergy;
+      $result.acquiredDelegatedFrozenBalanceForEnergy = acquiredDelegatedFrozenBalanceForEnergy;
     }
     if (delegatedFrozenBalanceForEnergy != null) {
       $result.delegatedFrozenBalanceForEnergy = delegatedFrozenBalanceForEnergy;
@@ -1557,12 +1494,10 @@ class Account_AccountResource extends $pb.GeneratedMessage {
       $result.energyWindowSize = energyWindowSize;
     }
     if (delegatedFrozenV2BalanceForEnergy != null) {
-      $result.delegatedFrozenV2BalanceForEnergy =
-          delegatedFrozenV2BalanceForEnergy;
+      $result.delegatedFrozenV2BalanceForEnergy = delegatedFrozenV2BalanceForEnergy;
     }
     if (acquiredDelegatedFrozenV2BalanceForEnergy != null) {
-      $result.acquiredDelegatedFrozenV2BalanceForEnergy =
-          acquiredDelegatedFrozenV2BalanceForEnergy;
+      $result.acquiredDelegatedFrozenV2BalanceForEnergy = acquiredDelegatedFrozenV2BalanceForEnergy;
     }
     if (energyWindowOptimized != null) {
       $result.energyWindowOptimized = energyWindowOptimized;
@@ -1585,8 +1520,7 @@ class Account_AccountResource extends $pb.GeneratedMessage {
     ..aOM<Account_Frozen>(2, _omitFieldNames ? '' : 'frozenBalanceForEnergy',
         subBuilder: Account_Frozen.create)
     ..aInt64(3, _omitFieldNames ? '' : 'latestConsumeTimeForEnergy')
-    ..aInt64(
-        4, _omitFieldNames ? '' : 'acquiredDelegatedFrozenBalanceForEnergy')
+    ..aInt64(4, _omitFieldNames ? '' : 'acquiredDelegatedFrozenBalanceForEnergy')
     ..aInt64(5, _omitFieldNames ? '' : 'delegatedFrozenBalanceForEnergy')
     ..aInt64(6, _omitFieldNames ? '' : 'storageLimit')
     ..aInt64(7, _omitFieldNames ? '' : 'storageUsage')
@@ -1594,8 +1528,7 @@ class Account_AccountResource extends $pb.GeneratedMessage {
     ..aInt64(9, _omitFieldNames ? '' : 'energyWindowSize')
     ..aInt64(10, _omitFieldNames ? '' : 'delegatedFrozenV2BalanceForEnergy',
         protoName: 'delegated_frozenV2_balance_for_energy')
-    ..aInt64(
-        11, _omitFieldNames ? '' : 'acquiredDelegatedFrozenV2BalanceForEnergy',
+    ..aInt64(11, _omitFieldNames ? '' : 'acquiredDelegatedFrozenV2BalanceForEnergy',
         protoName: 'acquired_delegated_frozenV2_balance_for_energy')
     ..aOB(12, _omitFieldNames ? '' : 'energyWindowOptimized')
     ..hasRequiredFields = false;
@@ -1603,13 +1536,11 @@ class Account_AccountResource extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  Account_AccountResource clone() =>
-      Account_AccountResource()..mergeFromMessage(this);
+  Account_AccountResource clone() => Account_AccountResource()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  Account_AccountResource copyWith(
-          void Function(Account_AccountResource) updates) =>
+  Account_AccountResource copyWith(void Function(Account_AccountResource) updates) =>
       super.copyWith((message) => updates(message as Account_AccountResource))
           as Account_AccountResource;
 
@@ -1621,8 +1552,8 @@ class Account_AccountResource extends $pb.GeneratedMessage {
   static $pb.PbList<Account_AccountResource> createRepeated() =>
       $pb.PbList<Account_AccountResource>();
   @$core.pragma('dart2js:noInline')
-  static Account_AccountResource getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Account_AccountResource>(create);
+  static Account_AccountResource getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account_AccountResource>(create);
   static Account_AccountResource? _defaultInstance;
 
   /// energy resource, get from frozen
@@ -1799,8 +1730,7 @@ class Account_FreezeV2 extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Account.FreezeV2',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Account.FreezeV2',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..e<$14.ResourceCode>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
@@ -1818,19 +1748,17 @@ class Account_FreezeV2 extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Account_FreezeV2 copyWith(void Function(Account_FreezeV2) updates) =>
-      super.copyWith((message) => updates(message as Account_FreezeV2))
-          as Account_FreezeV2;
+      super.copyWith((message) => updates(message as Account_FreezeV2)) as Account_FreezeV2;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Account_FreezeV2 create() => Account_FreezeV2._();
   Account_FreezeV2 createEmptyInstance() => create();
-  static $pb.PbList<Account_FreezeV2> createRepeated() =>
-      $pb.PbList<Account_FreezeV2>();
+  static $pb.PbList<Account_FreezeV2> createRepeated() => $pb.PbList<Account_FreezeV2>();
   @$core.pragma('dart2js:noInline')
-  static Account_FreezeV2 getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Account_FreezeV2>(create);
+  static Account_FreezeV2 getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account_FreezeV2>(create);
   static Account_FreezeV2? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -1884,8 +1812,7 @@ class Account_UnFreezeV2 extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Account.UnFreezeV2',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Account.UnFreezeV2',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..e<$14.ResourceCode>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
@@ -1904,19 +1831,17 @@ class Account_UnFreezeV2 extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Account_UnFreezeV2 copyWith(void Function(Account_UnFreezeV2) updates) =>
-      super.copyWith((message) => updates(message as Account_UnFreezeV2))
-          as Account_UnFreezeV2;
+      super.copyWith((message) => updates(message as Account_UnFreezeV2)) as Account_UnFreezeV2;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Account_UnFreezeV2 create() => Account_UnFreezeV2._();
   Account_UnFreezeV2 createEmptyInstance() => create();
-  static $pb.PbList<Account_UnFreezeV2> createRepeated() =>
-      $pb.PbList<Account_UnFreezeV2>();
+  static $pb.PbList<Account_UnFreezeV2> createRepeated() => $pb.PbList<Account_UnFreezeV2>();
   @$core.pragma('dart2js:noInline')
-  static Account_UnFreezeV2 getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Account_UnFreezeV2>(create);
+  static Account_UnFreezeV2 getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Account_UnFreezeV2>(create);
   static Account_UnFreezeV2? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -2101,8 +2026,7 @@ class Account extends $pb.GeneratedMessage {
       $result.unfrozenV2.addAll(unfrozenV2);
     }
     if (delegatedFrozenV2BalanceForBandwidth != null) {
-      $result.delegatedFrozenV2BalanceForBandwidth =
-          delegatedFrozenV2BalanceForBandwidth;
+      $result.delegatedFrozenV2BalanceForBandwidth = delegatedFrozenV2BalanceForBandwidth;
     }
     if (acquiredDelegatedFrozenV2BalanceForBandwidth != null) {
       $result.acquiredDelegatedFrozenV2BalanceForBandwidth =
@@ -2113,8 +2037,7 @@ class Account extends $pb.GeneratedMessage {
           acquiredDelegatedFrozenBalanceForBandwidth;
     }
     if (delegatedFrozenBalanceForBandwidth != null) {
-      $result.delegatedFrozenBalanceForBandwidth =
-          delegatedFrozenBalanceForBandwidth;
+      $result.delegatedFrozenBalanceForBandwidth = delegatedFrozenBalanceForBandwidth;
     }
     if (oldTronPower != null) {
       $result.oldTronPower = oldTronPower;
@@ -2147,21 +2070,17 @@ class Account extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Account',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Account',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'accountName', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'accountName', $pb.PbFieldType.OY)
     ..e<AccountType>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: AccountType.Normal,
         valueOf: AccountType.valueOf,
         enumValues: AccountType.values)
-    ..a<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
     ..aInt64(4, _omitFieldNames ? '' : 'balance')
-    ..pc<Vote>(5, _omitFieldNames ? '' : 'votes', $pb.PbFieldType.PM,
-        subBuilder: Vote.create)
+    ..pc<Vote>(5, _omitFieldNames ? '' : 'votes', $pb.PbFieldType.PM, subBuilder: Vote.create)
     ..m<$core.String, $fixnum.Int64>(6, _omitFieldNames ? '' : 'asset',
         entryClassName: 'Account.AssetEntry',
         keyFieldType: $pb.PbFieldType.OS,
@@ -2174,81 +2093,63 @@ class Account extends $pb.GeneratedMessage {
     ..aInt64(10, _omitFieldNames ? '' : 'latestOprationTime')
     ..aInt64(11, _omitFieldNames ? '' : 'allowance')
     ..aInt64(12, _omitFieldNames ? '' : 'latestWithdrawTime')
-    ..a<$core.List<$core.int>>(
-        13, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(13, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OY)
     ..aOB(14, _omitFieldNames ? '' : 'isWitness')
     ..aOB(15, _omitFieldNames ? '' : 'isCommittee')
-    ..pc<Account_Frozen>(
-        16, _omitFieldNames ? '' : 'frozenSupply', $pb.PbFieldType.PM,
+    ..pc<Account_Frozen>(16, _omitFieldNames ? '' : 'frozenSupply', $pb.PbFieldType.PM,
         subBuilder: Account_Frozen.create)
-    ..a<$core.List<$core.int>>(
-        17, _omitFieldNames ? '' : 'assetIssuedName', $pb.PbFieldType.OY)
-    ..m<$core.String, $fixnum.Int64>(
-        18, _omitFieldNames ? '' : 'latestAssetOperationTime',
+    ..a<$core.List<$core.int>>(17, _omitFieldNames ? '' : 'assetIssuedName', $pb.PbFieldType.OY)
+    ..m<$core.String, $fixnum.Int64>(18, _omitFieldNames ? '' : 'latestAssetOperationTime',
         entryClassName: 'Account.LatestAssetOperationTimeEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.O6,
         packageName: const $pb.PackageName('protocol'))
     ..aInt64(19, _omitFieldNames ? '' : 'freeNetUsage')
-    ..m<$core.String, $fixnum.Int64>(
-        20, _omitFieldNames ? '' : 'freeAssetNetUsage',
+    ..m<$core.String, $fixnum.Int64>(20, _omitFieldNames ? '' : 'freeAssetNetUsage',
         entryClassName: 'Account.FreeAssetNetUsageEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.O6,
         packageName: const $pb.PackageName('protocol'))
     ..aInt64(21, _omitFieldNames ? '' : 'latestConsumeTime')
     ..aInt64(22, _omitFieldNames ? '' : 'latestConsumeFreeTime')
-    ..a<$core.List<$core.int>>(
-        23, _omitFieldNames ? '' : 'accountId', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(23, _omitFieldNames ? '' : 'accountId', $pb.PbFieldType.OY)
     ..aInt64(24, _omitFieldNames ? '' : 'netWindowSize')
     ..aOB(25, _omitFieldNames ? '' : 'netWindowOptimized')
     ..aOM<Account_AccountResource>(26, _omitFieldNames ? '' : 'accountResource',
         subBuilder: Account_AccountResource.create)
-    ..a<$core.List<$core.int>>(
-        30, _omitFieldNames ? '' : 'codeHash', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(30, _omitFieldNames ? '' : 'codeHash', $pb.PbFieldType.OY,
         protoName: 'codeHash')
-    ..aOM<Permission>(31, _omitFieldNames ? '' : 'ownerPermission',
+    ..aOM<Permission>(31, _omitFieldNames ? '' : 'ownerPermission', subBuilder: Permission.create)
+    ..aOM<Permission>(32, _omitFieldNames ? '' : 'witnessPermission', subBuilder: Permission.create)
+    ..pc<Permission>(33, _omitFieldNames ? '' : 'activePermission', $pb.PbFieldType.PM,
         subBuilder: Permission.create)
-    ..aOM<Permission>(32, _omitFieldNames ? '' : 'witnessPermission',
-        subBuilder: Permission.create)
-    ..pc<Permission>(
-        33, _omitFieldNames ? '' : 'activePermission', $pb.PbFieldType.PM,
-        subBuilder: Permission.create)
-    ..pc<Account_FreezeV2>(
-        34, _omitFieldNames ? '' : 'frozenV2', $pb.PbFieldType.PM,
+    ..pc<Account_FreezeV2>(34, _omitFieldNames ? '' : 'frozenV2', $pb.PbFieldType.PM,
         protoName: 'frozenV2', subBuilder: Account_FreezeV2.create)
-    ..pc<Account_UnFreezeV2>(
-        35, _omitFieldNames ? '' : 'unfrozenV2', $pb.PbFieldType.PM,
+    ..pc<Account_UnFreezeV2>(35, _omitFieldNames ? '' : 'unfrozenV2', $pb.PbFieldType.PM,
         protoName: 'unfrozenV2', subBuilder: Account_UnFreezeV2.create)
     ..aInt64(36, _omitFieldNames ? '' : 'delegatedFrozenV2BalanceForBandwidth',
         protoName: 'delegated_frozenV2_balance_for_bandwidth')
-    ..aInt64(37,
-        _omitFieldNames ? '' : 'acquiredDelegatedFrozenV2BalanceForBandwidth',
+    ..aInt64(37, _omitFieldNames ? '' : 'acquiredDelegatedFrozenV2BalanceForBandwidth',
         protoName: 'acquired_delegated_frozenV2_balance_for_bandwidth')
-    ..aInt64(
-        41, _omitFieldNames ? '' : 'acquiredDelegatedFrozenBalanceForBandwidth')
+    ..aInt64(41, _omitFieldNames ? '' : 'acquiredDelegatedFrozenBalanceForBandwidth')
     ..aInt64(42, _omitFieldNames ? '' : 'delegatedFrozenBalanceForBandwidth')
     ..aInt64(46, _omitFieldNames ? '' : 'oldTronPower')
-    ..aOM<Account_Frozen>(47, _omitFieldNames ? '' : 'tronPower',
-        subBuilder: Account_Frozen.create)
+    ..aOM<Account_Frozen>(47, _omitFieldNames ? '' : 'tronPower', subBuilder: Account_Frozen.create)
     ..m<$core.String, $fixnum.Int64>(56, _omitFieldNames ? '' : 'assetV2',
         protoName: 'assetV2',
         entryClassName: 'Account.AssetV2Entry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.O6,
         packageName: const $pb.PackageName('protocol'))
-    ..a<$core.List<$core.int>>(
-        57, _omitFieldNames ? '' : 'assetIssuedID', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(57, _omitFieldNames ? '' : 'assetIssuedID', $pb.PbFieldType.OY,
         protoName: 'asset_issued_ID')
-    ..m<$core.String, $fixnum.Int64>(
-        58, _omitFieldNames ? '' : 'latestAssetOperationTimeV2',
+    ..m<$core.String, $fixnum.Int64>(58, _omitFieldNames ? '' : 'latestAssetOperationTimeV2',
         protoName: 'latest_asset_operation_timeV2',
         entryClassName: 'Account.LatestAssetOperationTimeV2Entry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.O6,
         packageName: const $pb.PackageName('protocol'))
-    ..m<$core.String, $fixnum.Int64>(
-        59, _omitFieldNames ? '' : 'freeAssetNetUsageV2',
+    ..m<$core.String, $fixnum.Int64>(59, _omitFieldNames ? '' : 'freeAssetNetUsageV2',
         protoName: 'free_asset_net_usageV2',
         entryClassName: 'Account.FreeAssetNetUsageV2Entry',
         keyFieldType: $pb.PbFieldType.OS,
@@ -2461,8 +2362,7 @@ class Account extends $pb.GeneratedMessage {
   void clearAssetIssuedName() => clearField(17);
 
   @$pb.TagNumber(18)
-  $core.Map<$core.String, $fixnum.Int64> get latestAssetOperationTime =>
-      $_getMap(17);
+  $core.Map<$core.String, $fixnum.Int64> get latestAssetOperationTime => $_getMap(17);
 
   @$pb.TagNumber(19)
   $fixnum.Int64 get freeNetUsage => $_getI64(18);
@@ -2616,8 +2516,7 @@ class Account extends $pb.GeneratedMessage {
   void clearDelegatedFrozenV2BalanceForBandwidth() => clearField(36);
 
   @$pb.TagNumber(37)
-  $fixnum.Int64 get acquiredDelegatedFrozenV2BalanceForBandwidth =>
-      $_getI64(33);
+  $fixnum.Int64 get acquiredDelegatedFrozenV2BalanceForBandwidth => $_getI64(33);
   @$pb.TagNumber(37)
   set acquiredDelegatedFrozenV2BalanceForBandwidth($fixnum.Int64 v) {
     $_setInt64(33, v);
@@ -2697,12 +2596,10 @@ class Account extends $pb.GeneratedMessage {
   void clearAssetIssuedID() => clearField(57);
 
   @$pb.TagNumber(58)
-  $core.Map<$core.String, $fixnum.Int64> get latestAssetOperationTimeV2 =>
-      $_getMap(40);
+  $core.Map<$core.String, $fixnum.Int64> get latestAssetOperationTimeV2 => $_getMap(40);
 
   @$pb.TagNumber(59)
-  $core.Map<$core.String, $fixnum.Int64> get freeAssetNetUsageV2 =>
-      $_getMap(41);
+  $core.Map<$core.String, $fixnum.Int64> get freeAssetNetUsageV2 => $_getMap(41);
 
   @$pb.TagNumber(60)
   $core.bool get assetOptimized => $_getBF(42);
@@ -2735,16 +2632,13 @@ class Key extends $pb.GeneratedMessage {
   factory Key.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory Key.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Key.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Key',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Key',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'weight')
     ..hasRequiredFields = false;
 
@@ -2765,8 +2659,7 @@ class Key extends $pb.GeneratedMessage {
   Key createEmptyInstance() => create();
   static $pb.PbList<Key> createRepeated() => $pb.PbList<Key>();
   @$core.pragma('dart2js:noInline')
-  static Key getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Key>(create);
+  static Key getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Key>(create);
   static Key? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -2832,14 +2725,11 @@ class DelegatedResource extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DelegatedResource',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DelegatedResource',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'from', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'to', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'from', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'to', $pb.PbFieldType.OY)
     ..aInt64(3, _omitFieldNames ? '' : 'frozenBalanceForBandwidth')
     ..aInt64(4, _omitFieldNames ? '' : 'frozenBalanceForEnergy')
     ..aInt64(5, _omitFieldNames ? '' : 'expireTimeForBandwidth')
@@ -2854,19 +2744,17 @@ class DelegatedResource extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DelegatedResource copyWith(void Function(DelegatedResource) updates) =>
-      super.copyWith((message) => updates(message as DelegatedResource))
-          as DelegatedResource;
+      super.copyWith((message) => updates(message as DelegatedResource)) as DelegatedResource;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DelegatedResource create() => DelegatedResource._();
   DelegatedResource createEmptyInstance() => create();
-  static $pb.PbList<DelegatedResource> createRepeated() =>
-      $pb.PbList<DelegatedResource>();
+  static $pb.PbList<DelegatedResource> createRepeated() => $pb.PbList<DelegatedResource>();
   @$core.pragma('dart2js:noInline')
-  static DelegatedResource getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DelegatedResource>(create);
+  static DelegatedResource getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DelegatedResource>(create);
   static DelegatedResource? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -2964,14 +2852,11 @@ class authority extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'authority',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'authority',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aOM<AccountId>(1, _omitFieldNames ? '' : 'account',
-        subBuilder: AccountId.create)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'permissionName', $pb.PbFieldType.OY)
+    ..aOM<AccountId>(1, _omitFieldNames ? '' : 'account', subBuilder: AccountId.create)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'permissionName', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -3064,12 +2949,10 @@ class Permission extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Permission',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Permission',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..e<Permission_PermissionType>(
-        1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+    ..e<Permission_PermissionType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: Permission_PermissionType.Owner,
         valueOf: Permission_PermissionType.valueOf,
         enumValues: Permission_PermissionType.values)
@@ -3077,10 +2960,8 @@ class Permission extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'permissionName')
     ..aInt64(4, _omitFieldNames ? '' : 'threshold')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'parentId', $pb.PbFieldType.O3)
-    ..a<$core.List<$core.int>>(
-        6, _omitFieldNames ? '' : 'operations', $pb.PbFieldType.OY)
-    ..pc<Key>(7, _omitFieldNames ? '' : 'keys', $pb.PbFieldType.PM,
-        subBuilder: Key.create)
+    ..a<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'operations', $pb.PbFieldType.OY)
+    ..pc<Key>(7, _omitFieldNames ? '' : 'keys', $pb.PbFieldType.PM, subBuilder: Key.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -3100,8 +2981,8 @@ class Permission extends $pb.GeneratedMessage {
   Permission createEmptyInstance() => create();
   static $pb.PbList<Permission> createRepeated() => $pb.PbList<Permission>();
   @$core.pragma('dart2js:noInline')
-  static Permission getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Permission>(create);
+  static Permission getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Permission>(create);
   static Permission? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -3231,24 +3112,18 @@ class Witness extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Witness',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Witness',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'voteCount', protoName: 'voteCount')
-    ..a<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'pubKey', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'pubKey', $pb.PbFieldType.OY,
         protoName: 'pubKey')
     ..aOS(4, _omitFieldNames ? '' : 'url')
-    ..aInt64(5, _omitFieldNames ? '' : 'totalProduced',
-        protoName: 'totalProduced')
+    ..aInt64(5, _omitFieldNames ? '' : 'totalProduced', protoName: 'totalProduced')
     ..aInt64(6, _omitFieldNames ? '' : 'totalMissed', protoName: 'totalMissed')
-    ..aInt64(7, _omitFieldNames ? '' : 'latestBlockNum',
-        protoName: 'latestBlockNum')
-    ..aInt64(8, _omitFieldNames ? '' : 'latestSlotNum',
-        protoName: 'latestSlotNum')
+    ..aInt64(7, _omitFieldNames ? '' : 'latestBlockNum', protoName: 'latestBlockNum')
+    ..aInt64(8, _omitFieldNames ? '' : 'latestSlotNum', protoName: 'latestSlotNum')
     ..aOB(9, _omitFieldNames ? '' : 'isJobs', protoName: 'isJobs')
     ..hasRequiredFields = false;
 
@@ -3405,20 +3280,15 @@ class Votes extends $pb.GeneratedMessage {
   factory Votes.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory Votes.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Votes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Votes',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Votes',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
-    ..pc<Vote>(2, _omitFieldNames ? '' : 'oldVotes', $pb.PbFieldType.PM,
-        subBuilder: Vote.create)
-    ..pc<Vote>(3, _omitFieldNames ? '' : 'newVotes', $pb.PbFieldType.PM,
-        subBuilder: Vote.create)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
+    ..pc<Vote>(2, _omitFieldNames ? '' : 'oldVotes', $pb.PbFieldType.PM, subBuilder: Vote.create)
+    ..pc<Vote>(3, _omitFieldNames ? '' : 'newVotes', $pb.PbFieldType.PM, subBuilder: Vote.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -3483,13 +3353,11 @@ class TXOutput extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'TXOutput',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TXOutput',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'value')
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'pubKeyHash', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'pubKeyHash', $pb.PbFieldType.OY,
         protoName: 'pubKeyHash')
     ..hasRequiredFields = false;
 
@@ -3565,16 +3433,13 @@ class TXInput_raw extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'TXInput.raw',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TXInput.raw',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'txID', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'txID', $pb.PbFieldType.OY,
         protoName: 'txID')
     ..aInt64(2, _omitFieldNames ? '' : 'vout')
-    ..a<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'pubKey', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'pubKey', $pb.PbFieldType.OY,
         protoName: 'pubKey')
     ..hasRequiredFields = false;
 
@@ -3586,8 +3451,7 @@ class TXInput_raw extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   TXInput_raw copyWith(void Function(TXInput_raw) updates) =>
-      super.copyWith((message) => updates(message as TXInput_raw))
-          as TXInput_raw;
+      super.copyWith((message) => updates(message as TXInput_raw)) as TXInput_raw;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -3596,8 +3460,8 @@ class TXInput_raw extends $pb.GeneratedMessage {
   TXInput_raw createEmptyInstance() => create();
   static $pb.PbList<TXInput_raw> createRepeated() => $pb.PbList<TXInput_raw>();
   @$core.pragma('dart2js:noInline')
-  static TXInput_raw getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<TXInput_raw>(create);
+  static TXInput_raw getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TXInput_raw>(create);
   static TXInput_raw? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -3659,14 +3523,11 @@ class TXInput extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'TXInput',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TXInput',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aOM<TXInput_raw>(1, _omitFieldNames ? '' : 'rawData',
-        subBuilder: TXInput_raw.create)
-    ..a<$core.List<$core.int>>(
-        4, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
+    ..aOM<TXInput_raw>(1, _omitFieldNames ? '' : 'rawData', subBuilder: TXInput_raw.create)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -3735,8 +3596,7 @@ class TXOutputs extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'TXOutputs',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TXOutputs',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..pc<TXOutput>(1, _omitFieldNames ? '' : 'outputs', $pb.PbFieldType.PM,
@@ -3814,8 +3674,7 @@ class ResourceReceipt extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ResourceReceipt',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ResourceReceipt',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'energyUsage')
@@ -3824,8 +3683,7 @@ class ResourceReceipt extends $pb.GeneratedMessage {
     ..aInt64(4, _omitFieldNames ? '' : 'energyUsageTotal')
     ..aInt64(5, _omitFieldNames ? '' : 'netUsage')
     ..aInt64(6, _omitFieldNames ? '' : 'netFee')
-    ..e<Transaction_Result_contractResult>(
-        7, _omitFieldNames ? '' : 'result', $pb.PbFieldType.OE,
+    ..e<Transaction_Result_contractResult>(7, _omitFieldNames ? '' : 'result', $pb.PbFieldType.OE,
         defaultOrMaker: Transaction_Result_contractResult.DEFAULT,
         valueOf: Transaction_Result_contractResult.valueOf,
         enumValues: Transaction_Result_contractResult.values)
@@ -3840,19 +3698,17 @@ class ResourceReceipt extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ResourceReceipt copyWith(void Function(ResourceReceipt) updates) =>
-      super.copyWith((message) => updates(message as ResourceReceipt))
-          as ResourceReceipt;
+      super.copyWith((message) => updates(message as ResourceReceipt)) as ResourceReceipt;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ResourceReceipt create() => ResourceReceipt._();
   ResourceReceipt createEmptyInstance() => create();
-  static $pb.PbList<ResourceReceipt> createRepeated() =>
-      $pb.PbList<ResourceReceipt>();
+  static $pb.PbList<ResourceReceipt> createRepeated() => $pb.PbList<ResourceReceipt>();
   @$core.pragma('dart2js:noInline')
-  static ResourceReceipt getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ResourceReceipt>(create);
+  static ResourceReceipt getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ResourceReceipt>(create);
   static ResourceReceipt? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -3982,20 +3838,15 @@ class MarketOrderDetail extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MarketOrderDetail',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MarketOrderDetail',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'makerOrderId', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'makerOrderId', $pb.PbFieldType.OY,
         protoName: 'makerOrderId')
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'takerOrderId', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'takerOrderId', $pb.PbFieldType.OY,
         protoName: 'takerOrderId')
-    ..aInt64(3, _omitFieldNames ? '' : 'fillSellQuantity',
-        protoName: 'fillSellQuantity')
-    ..aInt64(4, _omitFieldNames ? '' : 'fillBuyQuantity',
-        protoName: 'fillBuyQuantity')
+    ..aInt64(3, _omitFieldNames ? '' : 'fillSellQuantity', protoName: 'fillSellQuantity')
+    ..aInt64(4, _omitFieldNames ? '' : 'fillBuyQuantity', protoName: 'fillBuyQuantity')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -4006,19 +3857,17 @@ class MarketOrderDetail extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MarketOrderDetail copyWith(void Function(MarketOrderDetail) updates) =>
-      super.copyWith((message) => updates(message as MarketOrderDetail))
-          as MarketOrderDetail;
+      super.copyWith((message) => updates(message as MarketOrderDetail)) as MarketOrderDetail;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MarketOrderDetail create() => MarketOrderDetail._();
   MarketOrderDetail createEmptyInstance() => create();
-  static $pb.PbList<MarketOrderDetail> createRepeated() =>
-      $pb.PbList<MarketOrderDetail>();
+  static $pb.PbList<MarketOrderDetail> createRepeated() => $pb.PbList<MarketOrderDetail>();
   @$core.pragma('dart2js:noInline')
-  static MarketOrderDetail getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MarketOrderDetail>(create);
+  static MarketOrderDetail getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MarketOrderDetail>(create);
   static MarketOrderDetail? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -4104,21 +3953,16 @@ class Transaction_Contract extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Transaction.Contract',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Transaction.Contract',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..e<Transaction_Contract_ContractType>(
-        1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+    ..e<Transaction_Contract_ContractType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: Transaction_Contract_ContractType.AccountCreateContract,
         valueOf: Transaction_Contract_ContractType.valueOf,
         enumValues: Transaction_Contract_ContractType.values)
-    ..aOM<$12.Any>(2, _omitFieldNames ? '' : 'parameter',
-        subBuilder: $12.Any.create)
-    ..a<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'provider', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        4, _omitFieldNames ? '' : 'ContractName', $pb.PbFieldType.OY,
+    ..aOM<$12.Any>(2, _omitFieldNames ? '' : 'parameter', subBuilder: $12.Any.create)
+    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'provider', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'ContractName', $pb.PbFieldType.OY,
         protoName: 'ContractName')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'PermissionId', $pb.PbFieldType.O3,
         protoName: 'Permission_id')
@@ -4127,25 +3971,22 @@ class Transaction_Contract extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  Transaction_Contract clone() =>
-      Transaction_Contract()..mergeFromMessage(this);
+  Transaction_Contract clone() => Transaction_Contract()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Transaction_Contract copyWith(void Function(Transaction_Contract) updates) =>
-      super.copyWith((message) => updates(message as Transaction_Contract))
-          as Transaction_Contract;
+      super.copyWith((message) => updates(message as Transaction_Contract)) as Transaction_Contract;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Transaction_Contract create() => Transaction_Contract._();
   Transaction_Contract createEmptyInstance() => create();
-  static $pb.PbList<Transaction_Contract> createRepeated() =>
-      $pb.PbList<Transaction_Contract>();
+  static $pb.PbList<Transaction_Contract> createRepeated() => $pb.PbList<Transaction_Contract>();
   @$core.pragma('dart2js:noInline')
-  static Transaction_Contract getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Transaction_Contract>(create);
+  static Transaction_Contract getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transaction_Contract>(create);
   static Transaction_Contract? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -4285,13 +4126,11 @@ class Transaction_Result extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Transaction.Result',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Transaction.Result',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'fee')
-    ..e<Transaction_Result_code>(
-        2, _omitFieldNames ? '' : 'ret', $pb.PbFieldType.OE,
+    ..e<Transaction_Result_code>(2, _omitFieldNames ? '' : 'ret', $pb.PbFieldType.OE,
         defaultOrMaker: Transaction_Result_code.SUCESS,
         valueOf: Transaction_Result_code.valueOf,
         enumValues: Transaction_Result_code.values)
@@ -4309,15 +4148,12 @@ class Transaction_Result extends $pb.GeneratedMessage {
     ..aInt64(20, _omitFieldNames ? '' : 'exchangeWithdrawAnotherAmount')
     ..aInt64(21, _omitFieldNames ? '' : 'exchangeId')
     ..aInt64(22, _omitFieldNames ? '' : 'shieldedTransactionFee')
-    ..a<$core.List<$core.int>>(
-        25, _omitFieldNames ? '' : 'orderId', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(25, _omitFieldNames ? '' : 'orderId', $pb.PbFieldType.OY,
         protoName: 'orderId')
-    ..pc<MarketOrderDetail>(
-        26, _omitFieldNames ? '' : 'orderDetails', $pb.PbFieldType.PM,
+    ..pc<MarketOrderDetail>(26, _omitFieldNames ? '' : 'orderDetails', $pb.PbFieldType.PM,
         protoName: 'orderDetails', subBuilder: MarketOrderDetail.create)
     ..aInt64(27, _omitFieldNames ? '' : 'withdrawExpireAmount')
-    ..m<$core.String, $fixnum.Int64>(
-        28, _omitFieldNames ? '' : 'cancelUnfreezeV2Amount',
+    ..m<$core.String, $fixnum.Int64>(28, _omitFieldNames ? '' : 'cancelUnfreezeV2Amount',
         protoName: 'cancel_unfreezeV2_amount',
         entryClassName: 'Transaction.Result.CancelUnfreezeV2AmountEntry',
         keyFieldType: $pb.PbFieldType.OS,
@@ -4333,19 +4169,17 @@ class Transaction_Result extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Transaction_Result copyWith(void Function(Transaction_Result) updates) =>
-      super.copyWith((message) => updates(message as Transaction_Result))
-          as Transaction_Result;
+      super.copyWith((message) => updates(message as Transaction_Result)) as Transaction_Result;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Transaction_Result create() => Transaction_Result._();
   Transaction_Result createEmptyInstance() => create();
-  static $pb.PbList<Transaction_Result> createRepeated() =>
-      $pb.PbList<Transaction_Result>();
+  static $pb.PbList<Transaction_Result> createRepeated() => $pb.PbList<Transaction_Result>();
   @$core.pragma('dart2js:noInline')
-  static Transaction_Result getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Transaction_Result>(create);
+  static Transaction_Result getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transaction_Result>(create);
   static Transaction_Result? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -4508,8 +4342,7 @@ class Transaction_Result extends $pb.GeneratedMessage {
   void clearWithdrawExpireAmount() => clearField(27);
 
   @$pb.TagNumber(28)
-  $core.Map<$core.String, $fixnum.Int64> get cancelUnfreezeV2Amount =>
-      $_getMap(14);
+  $core.Map<$core.String, $fixnum.Int64> get cancelUnfreezeV2Amount => $_getMap(14);
 }
 
 class Transaction_raw extends $pb.GeneratedMessage {
@@ -4566,25 +4399,19 @@ class Transaction_raw extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Transaction.raw',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Transaction.raw',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'refBlockBytes', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'refBlockBytes', $pb.PbFieldType.OY)
     ..aInt64(3, _omitFieldNames ? '' : 'refBlockNum')
-    ..a<$core.List<$core.int>>(
-        4, _omitFieldNames ? '' : 'refBlockHash', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'refBlockHash', $pb.PbFieldType.OY)
     ..aInt64(8, _omitFieldNames ? '' : 'expiration')
     ..pc<authority>(9, _omitFieldNames ? '' : 'auths', $pb.PbFieldType.PM,
         subBuilder: authority.create)
-    ..a<$core.List<$core.int>>(
-        10, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
-    ..pc<Transaction_Contract>(
-        11, _omitFieldNames ? '' : 'contract', $pb.PbFieldType.PM,
+    ..a<$core.List<$core.int>>(10, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..pc<Transaction_Contract>(11, _omitFieldNames ? '' : 'contract', $pb.PbFieldType.PM,
         subBuilder: Transaction_Contract.create)
-    ..a<$core.List<$core.int>>(
-        12, _omitFieldNames ? '' : 'scripts', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(12, _omitFieldNames ? '' : 'scripts', $pb.PbFieldType.OY)
     ..aInt64(14, _omitFieldNames ? '' : 'timestamp')
     ..aInt64(18, _omitFieldNames ? '' : 'feeLimit')
     ..hasRequiredFields = false;
@@ -4597,19 +4424,17 @@ class Transaction_raw extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Transaction_raw copyWith(void Function(Transaction_raw) updates) =>
-      super.copyWith((message) => updates(message as Transaction_raw))
-          as Transaction_raw;
+      super.copyWith((message) => updates(message as Transaction_raw)) as Transaction_raw;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Transaction_raw create() => Transaction_raw._();
   Transaction_raw createEmptyInstance() => create();
-  static $pb.PbList<Transaction_raw> createRepeated() =>
-      $pb.PbList<Transaction_raw>();
+  static $pb.PbList<Transaction_raw> createRepeated() => $pb.PbList<Transaction_raw>();
   @$core.pragma('dart2js:noInline')
-  static Transaction_raw getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Transaction_raw>(create);
+  static Transaction_raw getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transaction_raw>(create);
   static Transaction_raw? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -4744,16 +4569,12 @@ class Transaction extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Transaction',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Transaction',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aOM<Transaction_raw>(1, _omitFieldNames ? '' : 'rawData',
-        subBuilder: Transaction_raw.create)
-    ..p<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.PY)
-    ..pc<Transaction_Result>(
-        5, _omitFieldNames ? '' : 'ret', $pb.PbFieldType.PM,
+    ..aOM<Transaction_raw>(1, _omitFieldNames ? '' : 'rawData', subBuilder: Transaction_raw.create)
+    ..p<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.PY)
+    ..pc<Transaction_Result>(5, _omitFieldNames ? '' : 'ret', $pb.PbFieldType.PM,
         subBuilder: Transaction_Result.create)
     ..hasRequiredFields = false;
 
@@ -4765,8 +4586,7 @@ class Transaction extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Transaction copyWith(void Function(Transaction) updates) =>
-      super.copyWith((message) => updates(message as Transaction))
-          as Transaction;
+      super.copyWith((message) => updates(message as Transaction)) as Transaction;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -4775,8 +4595,8 @@ class Transaction extends $pb.GeneratedMessage {
   Transaction createEmptyInstance() => create();
   static $pb.PbList<Transaction> createRepeated() => $pb.PbList<Transaction>();
   @$core.pragma('dart2js:noInline')
-  static Transaction getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Transaction>(create);
+  static Transaction getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transaction>(create);
   static Transaction? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -4827,16 +4647,12 @@ class TransactionInfo_Log extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'TransactionInfo.Log',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TransactionInfo.Log',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
-    ..p<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'topics', $pb.PbFieldType.PY)
-    ..a<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
+    ..p<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'topics', $pb.PbFieldType.PY)
+    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -4847,19 +4663,17 @@ class TransactionInfo_Log extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   TransactionInfo_Log copyWith(void Function(TransactionInfo_Log) updates) =>
-      super.copyWith((message) => updates(message as TransactionInfo_Log))
-          as TransactionInfo_Log;
+      super.copyWith((message) => updates(message as TransactionInfo_Log)) as TransactionInfo_Log;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static TransactionInfo_Log create() => TransactionInfo_Log._();
   TransactionInfo_Log createEmptyInstance() => create();
-  static $pb.PbList<TransactionInfo_Log> createRepeated() =>
-      $pb.PbList<TransactionInfo_Log>();
+  static $pb.PbList<TransactionInfo_Log> createRepeated() => $pb.PbList<TransactionInfo_Log>();
   @$core.pragma('dart2js:noInline')
-  static TransactionInfo_Log getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<TransactionInfo_Log>(create);
+  static TransactionInfo_Log getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransactionInfo_Log>(create);
   static TransactionInfo_Log? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5000,55 +4814,42 @@ class TransactionInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'TransactionInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TransactionInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'fee')
     ..aInt64(3, _omitFieldNames ? '' : 'blockNumber', protoName: 'blockNumber')
-    ..aInt64(4, _omitFieldNames ? '' : 'blockTimeStamp',
-        protoName: 'blockTimeStamp')
-    ..p<$core.List<$core.int>>(
-        5, _omitFieldNames ? '' : 'contractResult', $pb.PbFieldType.PY,
+    ..aInt64(4, _omitFieldNames ? '' : 'blockTimeStamp', protoName: 'blockTimeStamp')
+    ..p<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'contractResult', $pb.PbFieldType.PY,
         protoName: 'contractResult')
-    ..a<$core.List<$core.int>>(
-        6, _omitFieldNames ? '' : 'contractAddress', $pb.PbFieldType.OY)
-    ..aOM<ResourceReceipt>(7, _omitFieldNames ? '' : 'receipt',
-        subBuilder: ResourceReceipt.create)
-    ..pc<TransactionInfo_Log>(
-        8, _omitFieldNames ? '' : 'log', $pb.PbFieldType.PM,
+    ..a<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'contractAddress', $pb.PbFieldType.OY)
+    ..aOM<ResourceReceipt>(7, _omitFieldNames ? '' : 'receipt', subBuilder: ResourceReceipt.create)
+    ..pc<TransactionInfo_Log>(8, _omitFieldNames ? '' : 'log', $pb.PbFieldType.PM,
         subBuilder: TransactionInfo_Log.create)
-    ..e<TransactionInfo_code>(
-        9, _omitFieldNames ? '' : 'result', $pb.PbFieldType.OE,
+    ..e<TransactionInfo_code>(9, _omitFieldNames ? '' : 'result', $pb.PbFieldType.OE,
         defaultOrMaker: TransactionInfo_code.SUCESS,
         valueOf: TransactionInfo_code.valueOf,
         enumValues: TransactionInfo_code.values)
-    ..a<$core.List<$core.int>>(
-        10, _omitFieldNames ? '' : 'resMessage', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(10, _omitFieldNames ? '' : 'resMessage', $pb.PbFieldType.OY,
         protoName: 'resMessage')
     ..aOS(14, _omitFieldNames ? '' : 'assetIssueID', protoName: 'assetIssueID')
     ..aInt64(15, _omitFieldNames ? '' : 'withdrawAmount')
     ..aInt64(16, _omitFieldNames ? '' : 'unfreezeAmount')
-    ..pc<InternalTransaction>(
-        17, _omitFieldNames ? '' : 'internalTransactions', $pb.PbFieldType.PM,
+    ..pc<InternalTransaction>(17, _omitFieldNames ? '' : 'internalTransactions', $pb.PbFieldType.PM,
         subBuilder: InternalTransaction.create)
     ..aInt64(18, _omitFieldNames ? '' : 'exchangeReceivedAmount')
     ..aInt64(19, _omitFieldNames ? '' : 'exchangeInjectAnotherAmount')
     ..aInt64(20, _omitFieldNames ? '' : 'exchangeWithdrawAnotherAmount')
     ..aInt64(21, _omitFieldNames ? '' : 'exchangeId')
     ..aInt64(22, _omitFieldNames ? '' : 'shieldedTransactionFee')
-    ..a<$core.List<$core.int>>(
-        25, _omitFieldNames ? '' : 'orderId', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(25, _omitFieldNames ? '' : 'orderId', $pb.PbFieldType.OY,
         protoName: 'orderId')
-    ..pc<MarketOrderDetail>(
-        26, _omitFieldNames ? '' : 'orderDetails', $pb.PbFieldType.PM,
+    ..pc<MarketOrderDetail>(26, _omitFieldNames ? '' : 'orderDetails', $pb.PbFieldType.PM,
         protoName: 'orderDetails', subBuilder: MarketOrderDetail.create)
     ..aInt64(27, _omitFieldNames ? '' : 'packingFee', protoName: 'packingFee')
     ..aInt64(28, _omitFieldNames ? '' : 'withdrawExpireAmount')
-    ..m<$core.String, $fixnum.Int64>(
-        29, _omitFieldNames ? '' : 'cancelUnfreezeV2Amount',
+    ..m<$core.String, $fixnum.Int64>(29, _omitFieldNames ? '' : 'cancelUnfreezeV2Amount',
         protoName: 'cancel_unfreezeV2_amount',
         entryClassName: 'TransactionInfo.CancelUnfreezeV2AmountEntry',
         keyFieldType: $pb.PbFieldType.OS,
@@ -5064,19 +4865,17 @@ class TransactionInfo extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   TransactionInfo copyWith(void Function(TransactionInfo) updates) =>
-      super.copyWith((message) => updates(message as TransactionInfo))
-          as TransactionInfo;
+      super.copyWith((message) => updates(message as TransactionInfo)) as TransactionInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static TransactionInfo create() => TransactionInfo._();
   TransactionInfo createEmptyInstance() => create();
-  static $pb.PbList<TransactionInfo> createRepeated() =>
-      $pb.PbList<TransactionInfo>();
+  static $pb.PbList<TransactionInfo> createRepeated() => $pb.PbList<TransactionInfo>();
   @$core.pragma('dart2js:noInline')
-  static TransactionInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<TransactionInfo>(create);
+  static TransactionInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransactionInfo>(create);
   static TransactionInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5322,8 +5121,7 @@ class TransactionInfo extends $pb.GeneratedMessage {
   void clearWithdrawExpireAmount() => clearField(28);
 
   @$pb.TagNumber(29)
-  $core.Map<$core.String, $fixnum.Int64> get cancelUnfreezeV2Amount =>
-      $_getMap(23);
+  $core.Map<$core.String, $fixnum.Int64> get cancelUnfreezeV2Amount => $_getMap(23);
 }
 
 class TransactionRet extends $pb.GeneratedMessage {
@@ -5352,15 +5150,12 @@ class TransactionRet extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'TransactionRet',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TransactionRet',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'blockNumber', protoName: 'blockNumber')
-    ..aInt64(2, _omitFieldNames ? '' : 'blockTimeStamp',
-        protoName: 'blockTimeStamp')
-    ..pc<TransactionInfo>(
-        3, _omitFieldNames ? '' : 'transactioninfo', $pb.PbFieldType.PM,
+    ..aInt64(2, _omitFieldNames ? '' : 'blockTimeStamp', protoName: 'blockTimeStamp')
+    ..pc<TransactionInfo>(3, _omitFieldNames ? '' : 'transactioninfo', $pb.PbFieldType.PM,
         subBuilder: TransactionInfo.create)
     ..hasRequiredFields = false;
 
@@ -5372,19 +5167,17 @@ class TransactionRet extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   TransactionRet copyWith(void Function(TransactionRet) updates) =>
-      super.copyWith((message) => updates(message as TransactionRet))
-          as TransactionRet;
+      super.copyWith((message) => updates(message as TransactionRet)) as TransactionRet;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static TransactionRet create() => TransactionRet._();
   TransactionRet createEmptyInstance() => create();
-  static $pb.PbList<TransactionRet> createRepeated() =>
-      $pb.PbList<TransactionRet>();
+  static $pb.PbList<TransactionRet> createRepeated() => $pb.PbList<TransactionRet>();
   @$core.pragma('dart2js:noInline')
-  static TransactionRet getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<TransactionRet>(create);
+  static TransactionRet getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransactionRet>(create);
   static TransactionRet? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5433,12 +5226,10 @@ class Transactions extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Transactions',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Transactions',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..pc<Transaction>(
-        1, _omitFieldNames ? '' : 'transactions', $pb.PbFieldType.PM,
+    ..pc<Transaction>(1, _omitFieldNames ? '' : 'transactions', $pb.PbFieldType.PM,
         subBuilder: Transaction.create)
     ..hasRequiredFields = false;
 
@@ -5450,19 +5241,17 @@ class Transactions extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   Transactions copyWith(void Function(Transactions) updates) =>
-      super.copyWith((message) => updates(message as Transactions))
-          as Transactions;
+      super.copyWith((message) => updates(message as Transactions)) as Transactions;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Transactions create() => Transactions._();
   Transactions createEmptyInstance() => create();
-  static $pb.PbList<Transactions> createRepeated() =>
-      $pb.PbList<Transactions>();
+  static $pb.PbList<Transactions> createRepeated() => $pb.PbList<Transactions>();
   @$core.pragma('dart2js:noInline')
-  static Transactions getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Transactions>(create);
+  static Transactions getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transactions>(create);
   static Transactions? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5515,24 +5304,19 @@ class BlockHeader_raw extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'BlockHeader.raw',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'BlockHeader.raw',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'timestamp')
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'txTrieRoot', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'txTrieRoot', $pb.PbFieldType.OY,
         protoName: 'txTrieRoot')
-    ..a<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'parentHash', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'parentHash', $pb.PbFieldType.OY,
         protoName: 'parentHash')
     ..aInt64(7, _omitFieldNames ? '' : 'number')
     ..aInt64(8, _omitFieldNames ? '' : 'witnessId')
-    ..a<$core.List<$core.int>>(
-        9, _omitFieldNames ? '' : 'witnessAddress', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(9, _omitFieldNames ? '' : 'witnessAddress', $pb.PbFieldType.OY)
     ..a<$core.int>(10, _omitFieldNames ? '' : 'version', $pb.PbFieldType.O3)
-    ..a<$core.List<$core.int>>(
-        11, _omitFieldNames ? '' : 'accountStateRoot', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(11, _omitFieldNames ? '' : 'accountStateRoot', $pb.PbFieldType.OY,
         protoName: 'accountStateRoot')
     ..hasRequiredFields = false;
 
@@ -5544,19 +5328,17 @@ class BlockHeader_raw extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BlockHeader_raw copyWith(void Function(BlockHeader_raw) updates) =>
-      super.copyWith((message) => updates(message as BlockHeader_raw))
-          as BlockHeader_raw;
+      super.copyWith((message) => updates(message as BlockHeader_raw)) as BlockHeader_raw;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static BlockHeader_raw create() => BlockHeader_raw._();
   BlockHeader_raw createEmptyInstance() => create();
-  static $pb.PbList<BlockHeader_raw> createRepeated() =>
-      $pb.PbList<BlockHeader_raw>();
+  static $pb.PbList<BlockHeader_raw> createRepeated() => $pb.PbList<BlockHeader_raw>();
   @$core.pragma('dart2js:noInline')
-  static BlockHeader_raw getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<BlockHeader_raw>(create);
+  static BlockHeader_raw getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BlockHeader_raw>(create);
   static BlockHeader_raw? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5680,14 +5462,11 @@ class BlockHeader extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'BlockHeader',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'BlockHeader',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aOM<BlockHeader_raw>(1, _omitFieldNames ? '' : 'rawData',
-        subBuilder: BlockHeader_raw.create)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'witnessSignature', $pb.PbFieldType.OY)
+    ..aOM<BlockHeader_raw>(1, _omitFieldNames ? '' : 'rawData', subBuilder: BlockHeader_raw.create)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'witnessSignature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -5698,8 +5477,7 @@ class BlockHeader extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BlockHeader copyWith(void Function(BlockHeader) updates) =>
-      super.copyWith((message) => updates(message as BlockHeader))
-          as BlockHeader;
+      super.copyWith((message) => updates(message as BlockHeader)) as BlockHeader;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -5708,8 +5486,8 @@ class BlockHeader extends $pb.GeneratedMessage {
   BlockHeader createEmptyInstance() => create();
   static $pb.PbList<BlockHeader> createRepeated() => $pb.PbList<BlockHeader>();
   @$core.pragma('dart2js:noInline')
-  static BlockHeader getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<BlockHeader>(create);
+  static BlockHeader getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BlockHeader>(create);
   static BlockHeader? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5758,19 +5536,15 @@ class Block extends $pb.GeneratedMessage {
   factory Block.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory Block.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Block.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Block',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Block',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..pc<Transaction>(
-        1, _omitFieldNames ? '' : 'transactions', $pb.PbFieldType.PM,
+    ..pc<Transaction>(1, _omitFieldNames ? '' : 'transactions', $pb.PbFieldType.PM,
         subBuilder: Transaction.create)
-    ..aOM<BlockHeader>(2, _omitFieldNames ? '' : 'blockHeader',
-        subBuilder: BlockHeader.create)
+    ..aOM<BlockHeader>(2, _omitFieldNames ? '' : 'blockHeader', subBuilder: BlockHeader.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -5838,21 +5612,18 @@ class ChainInventory_BlockId extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'ChainInventory.BlockId',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'number')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  ChainInventory_BlockId clone() =>
-      ChainInventory_BlockId()..mergeFromMessage(this);
+  ChainInventory_BlockId clone() => ChainInventory_BlockId()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  ChainInventory_BlockId copyWith(
-          void Function(ChainInventory_BlockId) updates) =>
+  ChainInventory_BlockId copyWith(void Function(ChainInventory_BlockId) updates) =>
       super.copyWith((message) => updates(message as ChainInventory_BlockId))
           as ChainInventory_BlockId;
 
@@ -5864,8 +5635,8 @@ class ChainInventory_BlockId extends $pb.GeneratedMessage {
   static $pb.PbList<ChainInventory_BlockId> createRepeated() =>
       $pb.PbList<ChainInventory_BlockId>();
   @$core.pragma('dart2js:noInline')
-  static ChainInventory_BlockId getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ChainInventory_BlockId>(create);
+  static ChainInventory_BlockId getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChainInventory_BlockId>(create);
   static ChainInventory_BlockId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5915,12 +5686,10 @@ class ChainInventory extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ChainInventory',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChainInventory',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..pc<ChainInventory_BlockId>(
-        1, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.PM,
+    ..pc<ChainInventory_BlockId>(1, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.PM,
         subBuilder: ChainInventory_BlockId.create)
     ..aInt64(2, _omitFieldNames ? '' : 'remainNum')
     ..hasRequiredFields = false;
@@ -5933,19 +5702,17 @@ class ChainInventory extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   ChainInventory copyWith(void Function(ChainInventory) updates) =>
-      super.copyWith((message) => updates(message as ChainInventory))
-          as ChainInventory;
+      super.copyWith((message) => updates(message as ChainInventory)) as ChainInventory;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ChainInventory create() => ChainInventory._();
   ChainInventory createEmptyInstance() => create();
-  static $pb.PbList<ChainInventory> createRepeated() =>
-      $pb.PbList<ChainInventory>();
+  static $pb.PbList<ChainInventory> createRepeated() => $pb.PbList<ChainInventory>();
   @$core.pragma('dart2js:noInline')
-  static ChainInventory getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<ChainInventory>(create);
+  static ChainInventory getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChainInventory>(create);
   static ChainInventory? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -5990,21 +5757,18 @@ class BlockInventory_BlockId extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'BlockInventory.BlockId',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'number')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  BlockInventory_BlockId clone() =>
-      BlockInventory_BlockId()..mergeFromMessage(this);
+  BlockInventory_BlockId clone() => BlockInventory_BlockId()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  BlockInventory_BlockId copyWith(
-          void Function(BlockInventory_BlockId) updates) =>
+  BlockInventory_BlockId copyWith(void Function(BlockInventory_BlockId) updates) =>
       super.copyWith((message) => updates(message as BlockInventory_BlockId))
           as BlockInventory_BlockId;
 
@@ -6016,8 +5780,8 @@ class BlockInventory_BlockId extends $pb.GeneratedMessage {
   static $pb.PbList<BlockInventory_BlockId> createRepeated() =>
       $pb.PbList<BlockInventory_BlockId>();
   @$core.pragma('dart2js:noInline')
-  static BlockInventory_BlockId getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<BlockInventory_BlockId>(create);
+  static BlockInventory_BlockId getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BlockInventory_BlockId>(create);
   static BlockInventory_BlockId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -6068,15 +5832,12 @@ class BlockInventory extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'BlockInventory',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'BlockInventory',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..pc<BlockInventory_BlockId>(
-        1, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.PM,
+    ..pc<BlockInventory_BlockId>(1, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.PM,
         subBuilder: BlockInventory_BlockId.create)
-    ..e<BlockInventory_Type>(
-        2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+    ..e<BlockInventory_Type>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: BlockInventory_Type.SYNC,
         valueOf: BlockInventory_Type.valueOf,
         enumValues: BlockInventory_Type.values)
@@ -6090,19 +5851,17 @@ class BlockInventory extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   BlockInventory copyWith(void Function(BlockInventory) updates) =>
-      super.copyWith((message) => updates(message as BlockInventory))
-          as BlockInventory;
+      super.copyWith((message) => updates(message as BlockInventory)) as BlockInventory;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static BlockInventory create() => BlockInventory._();
   BlockInventory createEmptyInstance() => create();
-  static $pb.PbList<BlockInventory> createRepeated() =>
-      $pb.PbList<BlockInventory>();
+  static $pb.PbList<BlockInventory> createRepeated() => $pb.PbList<BlockInventory>();
   @$core.pragma('dart2js:noInline')
-  static BlockInventory getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<BlockInventory>(create);
+  static BlockInventory getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BlockInventory>(create);
   static BlockInventory? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -6143,17 +5902,14 @@ class Inventory extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Inventory',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Inventory',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..e<Inventory_InventoryType>(
-        1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
+    ..e<Inventory_InventoryType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: Inventory_InventoryType.TRX,
         valueOf: Inventory_InventoryType.valueOf,
         enumValues: Inventory_InventoryType.values)
-    ..p<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.PY)
+    ..p<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.PY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -6219,25 +5975,20 @@ class Items extends $pb.GeneratedMessage {
   factory Items.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory Items.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Items.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Items',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Items',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..e<Items_ItemType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE,
         defaultOrMaker: Items_ItemType.ERR,
         valueOf: Items_ItemType.valueOf,
         enumValues: Items_ItemType.values)
-    ..pc<Block>(2, _omitFieldNames ? '' : 'blocks', $pb.PbFieldType.PM,
-        subBuilder: Block.create)
-    ..pc<BlockHeader>(
-        3, _omitFieldNames ? '' : 'blockHeaders', $pb.PbFieldType.PM,
+    ..pc<Block>(2, _omitFieldNames ? '' : 'blocks', $pb.PbFieldType.PM, subBuilder: Block.create)
+    ..pc<BlockHeader>(3, _omitFieldNames ? '' : 'blockHeaders', $pb.PbFieldType.PM,
         subBuilder: BlockHeader.create)
-    ..pc<Transaction>(
-        4, _omitFieldNames ? '' : 'transactions', $pb.PbFieldType.PM,
+    ..pc<Transaction>(4, _omitFieldNames ? '' : 'transactions', $pb.PbFieldType.PM,
         subBuilder: Transaction.create)
     ..hasRequiredFields = false;
 
@@ -6303,8 +6054,7 @@ class DynamicProperties extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DynamicProperties',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DynamicProperties',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'lastSolidityBlockNum')
@@ -6318,19 +6068,17 @@ class DynamicProperties extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DynamicProperties copyWith(void Function(DynamicProperties) updates) =>
-      super.copyWith((message) => updates(message as DynamicProperties))
-          as DynamicProperties;
+      super.copyWith((message) => updates(message as DynamicProperties)) as DynamicProperties;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DynamicProperties create() => DynamicProperties._();
   DynamicProperties createEmptyInstance() => create();
-  static $pb.PbList<DynamicProperties> createRepeated() =>
-      $pb.PbList<DynamicProperties>();
+  static $pb.PbList<DynamicProperties> createRepeated() => $pb.PbList<DynamicProperties>();
   @$core.pragma('dart2js:noInline')
-  static DynamicProperties getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DynamicProperties>(create);
+  static DynamicProperties getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DynamicProperties>(create);
   static DynamicProperties? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -6364,8 +6112,7 @@ class DisconnectMessage extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'DisconnectMessage',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DisconnectMessage',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..e<ReasonCode>(1, _omitFieldNames ? '' : 'reason', $pb.PbFieldType.OE,
@@ -6382,19 +6129,17 @@ class DisconnectMessage extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   DisconnectMessage copyWith(void Function(DisconnectMessage) updates) =>
-      super.copyWith((message) => updates(message as DisconnectMessage))
-          as DisconnectMessage;
+      super.copyWith((message) => updates(message as DisconnectMessage)) as DisconnectMessage;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DisconnectMessage create() => DisconnectMessage._();
   DisconnectMessage createEmptyInstance() => create();
-  static $pb.PbList<DisconnectMessage> createRepeated() =>
-      $pb.PbList<DisconnectMessage>();
+  static $pb.PbList<DisconnectMessage> createRepeated() => $pb.PbList<DisconnectMessage>();
   @$core.pragma('dart2js:noInline')
-  static DisconnectMessage getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DisconnectMessage>(create);
+  static DisconnectMessage getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DisconnectMessage>(create);
   static DisconnectMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -6432,37 +6177,32 @@ class HelloMessage_BlockId extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'HelloMessage.BlockId',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HelloMessage.BlockId',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'number')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  HelloMessage_BlockId clone() =>
-      HelloMessage_BlockId()..mergeFromMessage(this);
+  HelloMessage_BlockId clone() => HelloMessage_BlockId()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   HelloMessage_BlockId copyWith(void Function(HelloMessage_BlockId) updates) =>
-      super.copyWith((message) => updates(message as HelloMessage_BlockId))
-          as HelloMessage_BlockId;
+      super.copyWith((message) => updates(message as HelloMessage_BlockId)) as HelloMessage_BlockId;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static HelloMessage_BlockId create() => HelloMessage_BlockId._();
   HelloMessage_BlockId createEmptyInstance() => create();
-  static $pb.PbList<HelloMessage_BlockId> createRepeated() =>
-      $pb.PbList<HelloMessage_BlockId>();
+  static $pb.PbList<HelloMessage_BlockId> createRepeated() => $pb.PbList<HelloMessage_BlockId>();
   @$core.pragma('dart2js:noInline')
-  static HelloMessage_BlockId getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<HelloMessage_BlockId>(create);
+  static HelloMessage_BlockId getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HelloMessage_BlockId>(create);
   static HelloMessage_BlockId? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -6548,12 +6288,10 @@ class HelloMessage extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'HelloMessage',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HelloMessage',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aOM<$13.Endpoint>(1, _omitFieldNames ? '' : 'from',
-        subBuilder: $13.Endpoint.create)
+    ..aOM<$13.Endpoint>(1, _omitFieldNames ? '' : 'from', subBuilder: $13.Endpoint.create)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'version', $pb.PbFieldType.O3)
     ..aInt64(3, _omitFieldNames ? '' : 'timestamp')
     ..aOM<HelloMessage_BlockId>(4, _omitFieldNames ? '' : 'genesisBlockId',
@@ -6562,16 +6300,11 @@ class HelloMessage extends $pb.GeneratedMessage {
         protoName: 'solidBlockId', subBuilder: HelloMessage_BlockId.create)
     ..aOM<HelloMessage_BlockId>(6, _omitFieldNames ? '' : 'headBlockId',
         protoName: 'headBlockId', subBuilder: HelloMessage_BlockId.create)
-    ..a<$core.List<$core.int>>(
-        7, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        8, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
-    ..a<$core.int>(9, _omitFieldNames ? '' : 'nodeType', $pb.PbFieldType.O3,
-        protoName: 'nodeType')
-    ..aInt64(10, _omitFieldNames ? '' : 'lowestBlockNum',
-        protoName: 'lowestBlockNum')
-    ..a<$core.List<$core.int>>(
-        11, _omitFieldNames ? '' : 'codeVersion', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(7, _omitFieldNames ? '' : 'address', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(8, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
+    ..a<$core.int>(9, _omitFieldNames ? '' : 'nodeType', $pb.PbFieldType.O3, protoName: 'nodeType')
+    ..aInt64(10, _omitFieldNames ? '' : 'lowestBlockNum', protoName: 'lowestBlockNum')
+    ..a<$core.List<$core.int>>(11, _omitFieldNames ? '' : 'codeVersion', $pb.PbFieldType.OY,
         protoName: 'codeVersion')
     ..hasRequiredFields = false;
 
@@ -6583,19 +6316,17 @@ class HelloMessage extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   HelloMessage copyWith(void Function(HelloMessage) updates) =>
-      super.copyWith((message) => updates(message as HelloMessage))
-          as HelloMessage;
+      super.copyWith((message) => updates(message as HelloMessage)) as HelloMessage;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static HelloMessage create() => HelloMessage._();
   HelloMessage createEmptyInstance() => create();
-  static $pb.PbList<HelloMessage> createRepeated() =>
-      $pb.PbList<HelloMessage>();
+  static $pb.PbList<HelloMessage> createRepeated() => $pb.PbList<HelloMessage>();
   @$core.pragma('dart2js:noInline')
-  static HelloMessage getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<HelloMessage>(create);
+  static HelloMessage getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HelloMessage>(create);
   static HelloMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -6779,22 +6510,19 @@ class InternalTransaction_CallValueInfo extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   InternalTransaction_CallValueInfo copyWith(
           void Function(InternalTransaction_CallValueInfo) updates) =>
-      super.copyWith((message) =>
-              updates(message as InternalTransaction_CallValueInfo))
+      super.copyWith((message) => updates(message as InternalTransaction_CallValueInfo))
           as InternalTransaction_CallValueInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static InternalTransaction_CallValueInfo create() =>
-      InternalTransaction_CallValueInfo._();
+  static InternalTransaction_CallValueInfo create() => InternalTransaction_CallValueInfo._();
   InternalTransaction_CallValueInfo createEmptyInstance() => create();
   static $pb.PbList<InternalTransaction_CallValueInfo> createRepeated() =>
       $pb.PbList<InternalTransaction_CallValueInfo>();
   @$core.pragma('dart2js:noInline')
   static InternalTransaction_CallValueInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<InternalTransaction_CallValueInfo>(
-          create);
+      $pb.GeneratedMessage.$_defaultFor<InternalTransaction_CallValueInfo>(create);
   static InternalTransaction_CallValueInfo? _defaultInstance;
 
   /// trx (TBD: or token) value
@@ -6866,23 +6594,17 @@ class InternalTransaction extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'InternalTransaction',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'InternalTransaction',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'callerAddress', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'transferToAddress', $pb.PbFieldType.OY,
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'callerAddress', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'transferToAddress', $pb.PbFieldType.OY,
         protoName: 'transferTo_address')
     ..pc<InternalTransaction_CallValueInfo>(
         4, _omitFieldNames ? '' : 'callValueInfo', $pb.PbFieldType.PM,
-        protoName: 'callValueInfo',
-        subBuilder: InternalTransaction_CallValueInfo.create)
-    ..a<$core.List<$core.int>>(
-        5, _omitFieldNames ? '' : 'note', $pb.PbFieldType.OY)
+        protoName: 'callValueInfo', subBuilder: InternalTransaction_CallValueInfo.create)
+    ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'note', $pb.PbFieldType.OY)
     ..aOB(6, _omitFieldNames ? '' : 'rejected')
     ..aOS(7, _omitFieldNames ? '' : 'extra')
     ..hasRequiredFields = false;
@@ -6895,19 +6617,17 @@ class InternalTransaction extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   InternalTransaction copyWith(void Function(InternalTransaction) updates) =>
-      super.copyWith((message) => updates(message as InternalTransaction))
-          as InternalTransaction;
+      super.copyWith((message) => updates(message as InternalTransaction)) as InternalTransaction;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static InternalTransaction create() => InternalTransaction._();
   InternalTransaction createEmptyInstance() => create();
-  static $pb.PbList<InternalTransaction> createRepeated() =>
-      $pb.PbList<InternalTransaction>();
+  static $pb.PbList<InternalTransaction> createRepeated() => $pb.PbList<InternalTransaction>();
   @$core.pragma('dart2js:noInline')
-  static InternalTransaction getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<InternalTransaction>(create);
+  static InternalTransaction getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InternalTransaction>(create);
   static InternalTransaction? _defaultInstance;
 
   /// internalTransaction identity, the root InternalTransaction hash
@@ -6951,8 +6671,7 @@ class InternalTransaction extends $pb.GeneratedMessage {
   void clearTransferToAddress() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.List<InternalTransaction_CallValueInfo> get callValueInfo =>
-      $_getList(3);
+  $core.List<InternalTransaction_CallValueInfo> get callValueInfo => $_getList(3);
 
   @$pb.TagNumber(5)
   $core.List<$core.int> get note => $_getN(4);
@@ -7025,13 +6744,10 @@ class DelegatedResourceAccountIndex extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'DelegatedResourceAccountIndex',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'account', $pb.PbFieldType.OY)
-    ..p<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'fromAccounts', $pb.PbFieldType.PY,
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'account', $pb.PbFieldType.OY)
+    ..p<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'fromAccounts', $pb.PbFieldType.PY,
         protoName: 'fromAccounts')
-    ..p<$core.List<$core.int>>(
-        3, _omitFieldNames ? '' : 'toAccounts', $pb.PbFieldType.PY,
+    ..p<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'toAccounts', $pb.PbFieldType.PY,
         protoName: 'toAccounts')
     ..aInt64(4, _omitFieldNames ? '' : 'timestamp')
     ..hasRequiredFields = false;
@@ -7039,28 +6755,24 @@ class DelegatedResourceAccountIndex extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  DelegatedResourceAccountIndex clone() =>
-      DelegatedResourceAccountIndex()..mergeFromMessage(this);
+  DelegatedResourceAccountIndex clone() => DelegatedResourceAccountIndex()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  DelegatedResourceAccountIndex copyWith(
-          void Function(DelegatedResourceAccountIndex) updates) =>
-      super.copyWith(
-              (message) => updates(message as DelegatedResourceAccountIndex))
+  DelegatedResourceAccountIndex copyWith(void Function(DelegatedResourceAccountIndex) updates) =>
+      super.copyWith((message) => updates(message as DelegatedResourceAccountIndex))
           as DelegatedResourceAccountIndex;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static DelegatedResourceAccountIndex create() =>
-      DelegatedResourceAccountIndex._();
+  static DelegatedResourceAccountIndex create() => DelegatedResourceAccountIndex._();
   DelegatedResourceAccountIndex createEmptyInstance() => create();
   static $pb.PbList<DelegatedResourceAccountIndex> createRepeated() =>
       $pb.PbList<DelegatedResourceAccountIndex>();
   @$core.pragma('dart2js:noInline')
-  static DelegatedResourceAccountIndex getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<DelegatedResourceAccountIndex>(create);
+  static DelegatedResourceAccountIndex getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DelegatedResourceAccountIndex>(create);
   static DelegatedResourceAccountIndex? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -7208,55 +6920,42 @@ class NodeInfo_PeerInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'NodeInfo.PeerInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeInfo.PeerInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'lastSyncBlock', protoName: 'lastSyncBlock')
     ..aInt64(2, _omitFieldNames ? '' : 'remainNum', protoName: 'remainNum')
-    ..aInt64(3, _omitFieldNames ? '' : 'lastBlockUpdateTime',
-        protoName: 'lastBlockUpdateTime')
+    ..aInt64(3, _omitFieldNames ? '' : 'lastBlockUpdateTime', protoName: 'lastBlockUpdateTime')
     ..aOB(4, _omitFieldNames ? '' : 'syncFlag', protoName: 'syncFlag')
     ..aInt64(5, _omitFieldNames ? '' : 'headBlockTimeWeBothHave',
         protoName: 'headBlockTimeWeBothHave')
-    ..aOB(6, _omitFieldNames ? '' : 'needSyncFromPeer',
-        protoName: 'needSyncFromPeer')
-    ..aOB(7, _omitFieldNames ? '' : 'needSyncFromUs',
-        protoName: 'needSyncFromUs')
+    ..aOB(6, _omitFieldNames ? '' : 'needSyncFromPeer', protoName: 'needSyncFromPeer')
+    ..aOB(7, _omitFieldNames ? '' : 'needSyncFromUs', protoName: 'needSyncFromUs')
     ..aOS(8, _omitFieldNames ? '' : 'host')
     ..a<$core.int>(9, _omitFieldNames ? '' : 'port', $pb.PbFieldType.O3)
     ..aOS(10, _omitFieldNames ? '' : 'nodeId', protoName: 'nodeId')
     ..aInt64(11, _omitFieldNames ? '' : 'connectTime', protoName: 'connectTime')
-    ..a<$core.double>(
-        12, _omitFieldNames ? '' : 'avgLatency', $pb.PbFieldType.OD,
+    ..a<$core.double>(12, _omitFieldNames ? '' : 'avgLatency', $pb.PbFieldType.OD,
         protoName: 'avgLatency')
-    ..a<$core.int>(
-        13, _omitFieldNames ? '' : 'syncToFetchSize', $pb.PbFieldType.O3,
+    ..a<$core.int>(13, _omitFieldNames ? '' : 'syncToFetchSize', $pb.PbFieldType.O3,
         protoName: 'syncToFetchSize')
     ..aInt64(14, _omitFieldNames ? '' : 'syncToFetchSizePeekNum',
         protoName: 'syncToFetchSizePeekNum')
-    ..a<$core.int>(
-        15, _omitFieldNames ? '' : 'syncBlockRequestedSize', $pb.PbFieldType.O3,
+    ..a<$core.int>(15, _omitFieldNames ? '' : 'syncBlockRequestedSize', $pb.PbFieldType.O3,
         protoName: 'syncBlockRequestedSize')
-    ..aInt64(16, _omitFieldNames ? '' : 'unFetchSynNum',
-        protoName: 'unFetchSynNum')
-    ..a<$core.int>(
-        17, _omitFieldNames ? '' : 'blockInPorcSize', $pb.PbFieldType.O3,
+    ..aInt64(16, _omitFieldNames ? '' : 'unFetchSynNum', protoName: 'unFetchSynNum')
+    ..a<$core.int>(17, _omitFieldNames ? '' : 'blockInPorcSize', $pb.PbFieldType.O3,
         protoName: 'blockInPorcSize')
-    ..aOS(18, _omitFieldNames ? '' : 'headBlockWeBothHave',
-        protoName: 'headBlockWeBothHave')
+    ..aOS(18, _omitFieldNames ? '' : 'headBlockWeBothHave', protoName: 'headBlockWeBothHave')
     ..aOB(19, _omitFieldNames ? '' : 'isActive', protoName: 'isActive')
     ..a<$core.int>(20, _omitFieldNames ? '' : 'score', $pb.PbFieldType.O3)
     ..a<$core.int>(21, _omitFieldNames ? '' : 'nodeCount', $pb.PbFieldType.O3,
         protoName: 'nodeCount')
     ..aInt64(22, _omitFieldNames ? '' : 'inFlow', protoName: 'inFlow')
-    ..a<$core.int>(
-        23, _omitFieldNames ? '' : 'disconnectTimes', $pb.PbFieldType.O3,
+    ..a<$core.int>(23, _omitFieldNames ? '' : 'disconnectTimes', $pb.PbFieldType.O3,
         protoName: 'disconnectTimes')
-    ..aOS(24, _omitFieldNames ? '' : 'localDisconnectReason',
-        protoName: 'localDisconnectReason')
-    ..aOS(25, _omitFieldNames ? '' : 'remoteDisconnectReason',
-        protoName: 'remoteDisconnectReason')
+    ..aOS(24, _omitFieldNames ? '' : 'localDisconnectReason', protoName: 'localDisconnectReason')
+    ..aOS(25, _omitFieldNames ? '' : 'remoteDisconnectReason', protoName: 'remoteDisconnectReason')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -7267,19 +6966,17 @@ class NodeInfo_PeerInfo extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   NodeInfo_PeerInfo copyWith(void Function(NodeInfo_PeerInfo) updates) =>
-      super.copyWith((message) => updates(message as NodeInfo_PeerInfo))
-          as NodeInfo_PeerInfo;
+      super.copyWith((message) => updates(message as NodeInfo_PeerInfo)) as NodeInfo_PeerInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static NodeInfo_PeerInfo create() => NodeInfo_PeerInfo._();
   NodeInfo_PeerInfo createEmptyInstance() => create();
-  static $pb.PbList<NodeInfo_PeerInfo> createRepeated() =>
-      $pb.PbList<NodeInfo_PeerInfo>();
+  static $pb.PbList<NodeInfo_PeerInfo> createRepeated() => $pb.PbList<NodeInfo_PeerInfo>();
   @$core.pragma('dart2js:noInline')
-  static NodeInfo_PeerInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<NodeInfo_PeerInfo>(create);
+  static NodeInfo_PeerInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeInfo_PeerInfo>(create);
   static NodeInfo_PeerInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -7681,60 +7378,45 @@ class NodeInfo_ConfigNodeInfo extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'p2pVersion', protoName: 'p2pVersion')
     ..a<$core.int>(3, _omitFieldNames ? '' : 'listenPort', $pb.PbFieldType.O3,
         protoName: 'listenPort')
-    ..aOB(4, _omitFieldNames ? '' : 'discoverEnable',
-        protoName: 'discoverEnable')
-    ..a<$core.int>(
-        5, _omitFieldNames ? '' : 'activeNodeSize', $pb.PbFieldType.O3,
+    ..aOB(4, _omitFieldNames ? '' : 'discoverEnable', protoName: 'discoverEnable')
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'activeNodeSize', $pb.PbFieldType.O3,
         protoName: 'activeNodeSize')
-    ..a<$core.int>(
-        6, _omitFieldNames ? '' : 'passiveNodeSize', $pb.PbFieldType.O3,
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'passiveNodeSize', $pb.PbFieldType.O3,
         protoName: 'passiveNodeSize')
     ..a<$core.int>(7, _omitFieldNames ? '' : 'sendNodeSize', $pb.PbFieldType.O3,
         protoName: 'sendNodeSize')
-    ..a<$core.int>(
-        8, _omitFieldNames ? '' : 'maxConnectCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'maxConnectCount', $pb.PbFieldType.O3,
         protoName: 'maxConnectCount')
-    ..a<$core.int>(
-        9, _omitFieldNames ? '' : 'sameIpMaxConnectCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(9, _omitFieldNames ? '' : 'sameIpMaxConnectCount', $pb.PbFieldType.O3,
         protoName: 'sameIpMaxConnectCount')
-    ..a<$core.int>(
-        10, _omitFieldNames ? '' : 'backupListenPort', $pb.PbFieldType.O3,
+    ..a<$core.int>(10, _omitFieldNames ? '' : 'backupListenPort', $pb.PbFieldType.O3,
         protoName: 'backupListenPort')
-    ..a<$core.int>(
-        11, _omitFieldNames ? '' : 'backupMemberSize', $pb.PbFieldType.O3,
+    ..a<$core.int>(11, _omitFieldNames ? '' : 'backupMemberSize', $pb.PbFieldType.O3,
         protoName: 'backupMemberSize')
-    ..a<$core.int>(
-        12, _omitFieldNames ? '' : 'backupPriority', $pb.PbFieldType.O3,
+    ..a<$core.int>(12, _omitFieldNames ? '' : 'backupPriority', $pb.PbFieldType.O3,
         protoName: 'backupPriority')
     ..a<$core.int>(13, _omitFieldNames ? '' : 'dbVersion', $pb.PbFieldType.O3,
         protoName: 'dbVersion')
-    ..a<$core.int>(
-        14, _omitFieldNames ? '' : 'minParticipationRate', $pb.PbFieldType.O3,
+    ..a<$core.int>(14, _omitFieldNames ? '' : 'minParticipationRate', $pb.PbFieldType.O3,
         protoName: 'minParticipationRate')
-    ..aOB(15, _omitFieldNames ? '' : 'supportConstant',
-        protoName: 'supportConstant')
-    ..a<$core.double>(
-        16, _omitFieldNames ? '' : 'minTimeRatio', $pb.PbFieldType.OD,
+    ..aOB(15, _omitFieldNames ? '' : 'supportConstant', protoName: 'supportConstant')
+    ..a<$core.double>(16, _omitFieldNames ? '' : 'minTimeRatio', $pb.PbFieldType.OD,
         protoName: 'minTimeRatio')
-    ..a<$core.double>(
-        17, _omitFieldNames ? '' : 'maxTimeRatio', $pb.PbFieldType.OD,
+    ..a<$core.double>(17, _omitFieldNames ? '' : 'maxTimeRatio', $pb.PbFieldType.OD,
         protoName: 'maxTimeRatio')
     ..aInt64(18, _omitFieldNames ? '' : 'allowCreationOfContracts',
         protoName: 'allowCreationOfContracts')
-    ..aInt64(19, _omitFieldNames ? '' : 'allowAdaptiveEnergy',
-        protoName: 'allowAdaptiveEnergy')
+    ..aInt64(19, _omitFieldNames ? '' : 'allowAdaptiveEnergy', protoName: 'allowAdaptiveEnergy')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  NodeInfo_ConfigNodeInfo clone() =>
-      NodeInfo_ConfigNodeInfo()..mergeFromMessage(this);
+  NodeInfo_ConfigNodeInfo clone() => NodeInfo_ConfigNodeInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  NodeInfo_ConfigNodeInfo copyWith(
-          void Function(NodeInfo_ConfigNodeInfo) updates) =>
+  NodeInfo_ConfigNodeInfo copyWith(void Function(NodeInfo_ConfigNodeInfo) updates) =>
       super.copyWith((message) => updates(message as NodeInfo_ConfigNodeInfo))
           as NodeInfo_ConfigNodeInfo;
 
@@ -7746,8 +7428,8 @@ class NodeInfo_ConfigNodeInfo extends $pb.GeneratedMessage {
   static $pb.PbList<NodeInfo_ConfigNodeInfo> createRepeated() =>
       $pb.PbList<NodeInfo_ConfigNodeInfo>();
   @$core.pragma('dart2js:noInline')
-  static NodeInfo_ConfigNodeInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<NodeInfo_ConfigNodeInfo>(create);
+  static NodeInfo_ConfigNodeInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeInfo_ConfigNodeInfo>(create);
   static NodeInfo_ConfigNodeInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -8006,8 +7688,7 @@ class NodeInfo_MachineInfo_MemoryDescInfo extends $pb.GeneratedMessage {
     return $result;
   }
   NodeInfo_MachineInfo_MemoryDescInfo._() : super();
-  factory NodeInfo_MachineInfo_MemoryDescInfo.fromBuffer(
-          $core.List<$core.int> i,
+  factory NodeInfo_MachineInfo_MemoryDescInfo.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
   factory NodeInfo_MachineInfo_MemoryDescInfo.fromJson($core.String i,
@@ -8022,8 +7703,7 @@ class NodeInfo_MachineInfo_MemoryDescInfo extends $pb.GeneratedMessage {
     ..aInt64(2, _omitFieldNames ? '' : 'initSize', protoName: 'initSize')
     ..aInt64(3, _omitFieldNames ? '' : 'useSize', protoName: 'useSize')
     ..aInt64(4, _omitFieldNames ? '' : 'maxSize', protoName: 'maxSize')
-    ..a<$core.double>(5, _omitFieldNames ? '' : 'useRate', $pb.PbFieldType.OD,
-        protoName: 'useRate')
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'useRate', $pb.PbFieldType.OD, protoName: 'useRate')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -8036,22 +7716,19 @@ class NodeInfo_MachineInfo_MemoryDescInfo extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   NodeInfo_MachineInfo_MemoryDescInfo copyWith(
           void Function(NodeInfo_MachineInfo_MemoryDescInfo) updates) =>
-      super.copyWith((message) =>
-              updates(message as NodeInfo_MachineInfo_MemoryDescInfo))
+      super.copyWith((message) => updates(message as NodeInfo_MachineInfo_MemoryDescInfo))
           as NodeInfo_MachineInfo_MemoryDescInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static NodeInfo_MachineInfo_MemoryDescInfo create() =>
-      NodeInfo_MachineInfo_MemoryDescInfo._();
+  static NodeInfo_MachineInfo_MemoryDescInfo create() => NodeInfo_MachineInfo_MemoryDescInfo._();
   NodeInfo_MachineInfo_MemoryDescInfo createEmptyInstance() => create();
   static $pb.PbList<NodeInfo_MachineInfo_MemoryDescInfo> createRepeated() =>
       $pb.PbList<NodeInfo_MachineInfo_MemoryDescInfo>();
   @$core.pragma('dart2js:noInline')
-  static NodeInfo_MachineInfo_MemoryDescInfo getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-          NodeInfo_MachineInfo_MemoryDescInfo>(create);
+  static NodeInfo_MachineInfo_MemoryDescInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<NodeInfo_MachineInfo_MemoryDescInfo>(create);
   static NodeInfo_MachineInfo_MemoryDescInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -8150,8 +7827,7 @@ class NodeInfo_MachineInfo_DeadLockThreadInfo extends $pb.GeneratedMessage {
     return $result;
   }
   NodeInfo_MachineInfo_DeadLockThreadInfo._() : super();
-  factory NodeInfo_MachineInfo_DeadLockThreadInfo.fromBuffer(
-          $core.List<$core.int> i,
+  factory NodeInfo_MachineInfo_DeadLockThreadInfo.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
   factory NodeInfo_MachineInfo_DeadLockThreadInfo.fromJson($core.String i,
@@ -8181,8 +7857,7 @@ class NodeInfo_MachineInfo_DeadLockThreadInfo extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   NodeInfo_MachineInfo_DeadLockThreadInfo copyWith(
           void Function(NodeInfo_MachineInfo_DeadLockThreadInfo) updates) =>
-      super.copyWith((message) =>
-              updates(message as NodeInfo_MachineInfo_DeadLockThreadInfo))
+      super.copyWith((message) => updates(message as NodeInfo_MachineInfo_DeadLockThreadInfo))
           as NodeInfo_MachineInfo_DeadLockThreadInfo;
 
   $pb.BuilderInfo get info_ => _i;
@@ -8194,9 +7869,8 @@ class NodeInfo_MachineInfo_DeadLockThreadInfo extends $pb.GeneratedMessage {
   static $pb.PbList<NodeInfo_MachineInfo_DeadLockThreadInfo> createRepeated() =>
       $pb.PbList<NodeInfo_MachineInfo_DeadLockThreadInfo>();
   @$core.pragma('dart2js:noInline')
-  static NodeInfo_MachineInfo_DeadLockThreadInfo getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-          NodeInfo_MachineInfo_DeadLockThreadInfo>(create);
+  static NodeInfo_MachineInfo_DeadLockThreadInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<NodeInfo_MachineInfo_DeadLockThreadInfo>(create);
   static NodeInfo_MachineInfo_DeadLockThreadInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -8298,8 +7972,7 @@ class NodeInfo_MachineInfo extends $pb.GeneratedMessage {
     $fixnum.Int64? jvmFreeMemory,
     $core.double? processCpuRate,
     $core.Iterable<NodeInfo_MachineInfo_MemoryDescInfo>? memoryDescInfoList,
-    $core.Iterable<NodeInfo_MachineInfo_DeadLockThreadInfo>?
-        deadLockThreadInfoList,
+    $core.Iterable<NodeInfo_MachineInfo_DeadLockThreadInfo>? deadLockThreadInfoList,
   }) {
     final $result = create();
     if (threadCount != null) {
@@ -8351,34 +8024,26 @@ class NodeInfo_MachineInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'NodeInfo.MachineInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeInfo.MachineInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'threadCount', $pb.PbFieldType.O3,
         protoName: 'threadCount')
-    ..a<$core.int>(
-        2, _omitFieldNames ? '' : 'deadLockThreadCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'deadLockThreadCount', $pb.PbFieldType.O3,
         protoName: 'deadLockThreadCount')
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'cpuCount', $pb.PbFieldType.O3,
-        protoName: 'cpuCount')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'cpuCount', $pb.PbFieldType.O3, protoName: 'cpuCount')
     ..aInt64(4, _omitFieldNames ? '' : 'totalMemory', protoName: 'totalMemory')
     ..aInt64(5, _omitFieldNames ? '' : 'freeMemory', protoName: 'freeMemory')
-    ..a<$core.double>(6, _omitFieldNames ? '' : 'cpuRate', $pb.PbFieldType.OD,
-        protoName: 'cpuRate')
+    ..a<$core.double>(6, _omitFieldNames ? '' : 'cpuRate', $pb.PbFieldType.OD, protoName: 'cpuRate')
     ..aOS(7, _omitFieldNames ? '' : 'javaVersion', protoName: 'javaVersion')
     ..aOS(8, _omitFieldNames ? '' : 'osName', protoName: 'osName')
-    ..aInt64(9, _omitFieldNames ? '' : 'jvmTotalMemory',
-        protoName: 'jvmTotalMemory')
-    ..aInt64(10, _omitFieldNames ? '' : 'jvmFreeMemory',
-        protoName: 'jvmFreeMemory')
-    ..a<$core.double>(
-        11, _omitFieldNames ? '' : 'processCpuRate', $pb.PbFieldType.OD,
+    ..aInt64(9, _omitFieldNames ? '' : 'jvmTotalMemory', protoName: 'jvmTotalMemory')
+    ..aInt64(10, _omitFieldNames ? '' : 'jvmFreeMemory', protoName: 'jvmFreeMemory')
+    ..a<$core.double>(11, _omitFieldNames ? '' : 'processCpuRate', $pb.PbFieldType.OD,
         protoName: 'processCpuRate')
     ..pc<NodeInfo_MachineInfo_MemoryDescInfo>(
         12, _omitFieldNames ? '' : 'memoryDescInfoList', $pb.PbFieldType.PM,
-        protoName: 'memoryDescInfoList',
-        subBuilder: NodeInfo_MachineInfo_MemoryDescInfo.create)
+        protoName: 'memoryDescInfoList', subBuilder: NodeInfo_MachineInfo_MemoryDescInfo.create)
     ..pc<NodeInfo_MachineInfo_DeadLockThreadInfo>(
         13, _omitFieldNames ? '' : 'deadLockThreadInfoList', $pb.PbFieldType.PM,
         protoName: 'deadLockThreadInfoList',
@@ -8388,25 +8053,22 @@ class NodeInfo_MachineInfo extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  NodeInfo_MachineInfo clone() =>
-      NodeInfo_MachineInfo()..mergeFromMessage(this);
+  NodeInfo_MachineInfo clone() => NodeInfo_MachineInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   NodeInfo_MachineInfo copyWith(void Function(NodeInfo_MachineInfo) updates) =>
-      super.copyWith((message) => updates(message as NodeInfo_MachineInfo))
-          as NodeInfo_MachineInfo;
+      super.copyWith((message) => updates(message as NodeInfo_MachineInfo)) as NodeInfo_MachineInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static NodeInfo_MachineInfo create() => NodeInfo_MachineInfo._();
   NodeInfo_MachineInfo createEmptyInstance() => create();
-  static $pb.PbList<NodeInfo_MachineInfo> createRepeated() =>
-      $pb.PbList<NodeInfo_MachineInfo>();
+  static $pb.PbList<NodeInfo_MachineInfo> createRepeated() => $pb.PbList<NodeInfo_MachineInfo>();
   @$core.pragma('dart2js:noInline')
-  static NodeInfo_MachineInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<NodeInfo_MachineInfo>(create);
+  static NodeInfo_MachineInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeInfo_MachineInfo>(create);
   static NodeInfo_MachineInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -8542,12 +8204,10 @@ class NodeInfo_MachineInfo extends $pb.GeneratedMessage {
   void clearProcessCpuRate() => clearField(11);
 
   @$pb.TagNumber(12)
-  $core.List<NodeInfo_MachineInfo_MemoryDescInfo> get memoryDescInfoList =>
-      $_getList(11);
+  $core.List<NodeInfo_MachineInfo_MemoryDescInfo> get memoryDescInfoList => $_getList(11);
 
   @$pb.TagNumber(13)
-  $core.List<NodeInfo_MachineInfo_DeadLockThreadInfo>
-      get deadLockThreadInfoList => $_getList(12);
+  $core.List<NodeInfo_MachineInfo_DeadLockThreadInfo> get deadLockThreadInfoList => $_getList(12);
 }
 
 class NodeInfo extends $pb.GeneratedMessage {
@@ -8608,33 +8268,26 @@ class NodeInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'NodeInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NodeInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'beginSyncNum',
-        protoName: 'beginSyncNum')
+    ..aInt64(1, _omitFieldNames ? '' : 'beginSyncNum', protoName: 'beginSyncNum')
     ..aOS(2, _omitFieldNames ? '' : 'block')
     ..aOS(3, _omitFieldNames ? '' : 'solidityBlock', protoName: 'solidityBlock')
-    ..a<$core.int>(
-        4, _omitFieldNames ? '' : 'currentConnectCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'currentConnectCount', $pb.PbFieldType.O3,
         protoName: 'currentConnectCount')
-    ..a<$core.int>(
-        5, _omitFieldNames ? '' : 'activeConnectCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'activeConnectCount', $pb.PbFieldType.O3,
         protoName: 'activeConnectCount')
-    ..a<$core.int>(
-        6, _omitFieldNames ? '' : 'passiveConnectCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'passiveConnectCount', $pb.PbFieldType.O3,
         protoName: 'passiveConnectCount')
     ..aInt64(7, _omitFieldNames ? '' : 'totalFlow', protoName: 'totalFlow')
-    ..pc<NodeInfo_PeerInfo>(
-        8, _omitFieldNames ? '' : 'peerInfoList', $pb.PbFieldType.PM,
+    ..pc<NodeInfo_PeerInfo>(8, _omitFieldNames ? '' : 'peerInfoList', $pb.PbFieldType.PM,
         protoName: 'peerInfoList', subBuilder: NodeInfo_PeerInfo.create)
     ..aOM<NodeInfo_ConfigNodeInfo>(9, _omitFieldNames ? '' : 'configNodeInfo',
         protoName: 'configNodeInfo', subBuilder: NodeInfo_ConfigNodeInfo.create)
     ..aOM<NodeInfo_MachineInfo>(10, _omitFieldNames ? '' : 'machineInfo',
         protoName: 'machineInfo', subBuilder: NodeInfo_MachineInfo.create)
-    ..m<$core.String, $core.String>(
-        11, _omitFieldNames ? '' : 'cheatWitnessInfoMap',
+    ..m<$core.String, $core.String>(11, _omitFieldNames ? '' : 'cheatWitnessInfoMap',
         protoName: 'cheatWitnessInfoMap',
         entryClassName: 'NodeInfo.CheatWitnessInfoMapEntry',
         keyFieldType: $pb.PbFieldType.OS,
@@ -8813,13 +8466,11 @@ class MetricsInfo_NodeInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MetricsInfo.NodeInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MetricsInfo.NodeInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'ip')
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'nodeType', $pb.PbFieldType.O3,
-        protoName: 'nodeType')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'nodeType', $pb.PbFieldType.O3, protoName: 'nodeType')
     ..aOS(3, _omitFieldNames ? '' : 'version')
     ..a<$core.int>(4, _omitFieldNames ? '' : 'backupStatus', $pb.PbFieldType.O3,
         protoName: 'backupStatus')
@@ -8828,25 +8479,22 @@ class MetricsInfo_NodeInfo extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  MetricsInfo_NodeInfo clone() =>
-      MetricsInfo_NodeInfo()..mergeFromMessage(this);
+  MetricsInfo_NodeInfo clone() => MetricsInfo_NodeInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MetricsInfo_NodeInfo copyWith(void Function(MetricsInfo_NodeInfo) updates) =>
-      super.copyWith((message) => updates(message as MetricsInfo_NodeInfo))
-          as MetricsInfo_NodeInfo;
+      super.copyWith((message) => updates(message as MetricsInfo_NodeInfo)) as MetricsInfo_NodeInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MetricsInfo_NodeInfo create() => MetricsInfo_NodeInfo._();
   MetricsInfo_NodeInfo createEmptyInstance() => create();
-  static $pb.PbList<MetricsInfo_NodeInfo> createRepeated() =>
-      $pb.PbList<MetricsInfo_NodeInfo>();
+  static $pb.PbList<MetricsInfo_NodeInfo> createRepeated() => $pb.PbList<MetricsInfo_NodeInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NodeInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NodeInfo>(create);
+  static MetricsInfo_NodeInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NodeInfo>(create);
   static MetricsInfo_NodeInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -8938,22 +8586,19 @@ class MetricsInfo_BlockChainInfo_Witness extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   MetricsInfo_BlockChainInfo_Witness copyWith(
           void Function(MetricsInfo_BlockChainInfo_Witness) updates) =>
-      super.copyWith((message) =>
-              updates(message as MetricsInfo_BlockChainInfo_Witness))
+      super.copyWith((message) => updates(message as MetricsInfo_BlockChainInfo_Witness))
           as MetricsInfo_BlockChainInfo_Witness;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_BlockChainInfo_Witness create() =>
-      MetricsInfo_BlockChainInfo_Witness._();
+  static MetricsInfo_BlockChainInfo_Witness create() => MetricsInfo_BlockChainInfo_Witness._();
   MetricsInfo_BlockChainInfo_Witness createEmptyInstance() => create();
   static $pb.PbList<MetricsInfo_BlockChainInfo_Witness> createRepeated() =>
       $pb.PbList<MetricsInfo_BlockChainInfo_Witness>();
   @$core.pragma('dart2js:noInline')
   static MetricsInfo_BlockChainInfo_Witness getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_BlockChainInfo_Witness>(
-          create);
+      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_BlockChainInfo_Witness>(create);
   static MetricsInfo_BlockChainInfo_Witness? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -9000,8 +8645,7 @@ class MetricsInfo_BlockChainInfo_DupWitness extends $pb.GeneratedMessage {
     return $result;
   }
   MetricsInfo_BlockChainInfo_DupWitness._() : super();
-  factory MetricsInfo_BlockChainInfo_DupWitness.fromBuffer(
-          $core.List<$core.int> i,
+  factory MetricsInfo_BlockChainInfo_DupWitness.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
   factory MetricsInfo_BlockChainInfo_DupWitness.fromJson($core.String i,
@@ -9027,8 +8671,7 @@ class MetricsInfo_BlockChainInfo_DupWitness extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   MetricsInfo_BlockChainInfo_DupWitness copyWith(
           void Function(MetricsInfo_BlockChainInfo_DupWitness) updates) =>
-      super.copyWith((message) =>
-              updates(message as MetricsInfo_BlockChainInfo_DupWitness))
+      super.copyWith((message) => updates(message as MetricsInfo_BlockChainInfo_DupWitness))
           as MetricsInfo_BlockChainInfo_DupWitness;
 
   $pb.BuilderInfo get info_ => _i;
@@ -9040,9 +8683,8 @@ class MetricsInfo_BlockChainInfo_DupWitness extends $pb.GeneratedMessage {
   static $pb.PbList<MetricsInfo_BlockChainInfo_DupWitness> createRepeated() =>
       $pb.PbList<MetricsInfo_BlockChainInfo_DupWitness>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_BlockChainInfo_DupWitness getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-          MetricsInfo_BlockChainInfo_DupWitness>(create);
+  static MetricsInfo_BlockChainInfo_DupWitness getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_BlockChainInfo_DupWitness>(create);
   static MetricsInfo_BlockChainInfo_DupWitness? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -9152,50 +8794,40 @@ class MetricsInfo_BlockChainInfo extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'MetricsInfo.BlockChainInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'headBlockNum',
-        protoName: 'headBlockNum')
-    ..aInt64(2, _omitFieldNames ? '' : 'headBlockTimestamp',
-        protoName: 'headBlockTimestamp')
+    ..aInt64(1, _omitFieldNames ? '' : 'headBlockNum', protoName: 'headBlockNum')
+    ..aInt64(2, _omitFieldNames ? '' : 'headBlockTimestamp', protoName: 'headBlockTimestamp')
     ..aOS(3, _omitFieldNames ? '' : 'headBlockHash', protoName: 'headBlockHash')
     ..a<$core.int>(4, _omitFieldNames ? '' : 'forkCount', $pb.PbFieldType.O3,
         protoName: 'forkCount')
-    ..a<$core.int>(
-        5, _omitFieldNames ? '' : 'failForkCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'failForkCount', $pb.PbFieldType.O3,
         protoName: 'failForkCount')
     ..aOM<MetricsInfo_RateInfo>(6, _omitFieldNames ? '' : 'blockProcessTime',
         protoName: 'blockProcessTime', subBuilder: MetricsInfo_RateInfo.create)
     ..aOM<MetricsInfo_RateInfo>(7, _omitFieldNames ? '' : 'tps',
         subBuilder: MetricsInfo_RateInfo.create)
-    ..a<$core.int>(
-        8, _omitFieldNames ? '' : 'transactionCacheSize', $pb.PbFieldType.O3,
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'transactionCacheSize', $pb.PbFieldType.O3,
         protoName: 'transactionCacheSize')
     ..aOM<MetricsInfo_RateInfo>(9, _omitFieldNames ? '' : 'missedTransaction',
         protoName: 'missedTransaction', subBuilder: MetricsInfo_RateInfo.create)
     ..pc<MetricsInfo_BlockChainInfo_Witness>(
         10, _omitFieldNames ? '' : 'witnesses', $pb.PbFieldType.PM,
         subBuilder: MetricsInfo_BlockChainInfo_Witness.create)
-    ..aInt64(11, _omitFieldNames ? '' : 'failProcessBlockNum',
-        protoName: 'failProcessBlockNum')
-    ..aOS(12, _omitFieldNames ? '' : 'failProcessBlockReason',
-        protoName: 'failProcessBlockReason')
+    ..aInt64(11, _omitFieldNames ? '' : 'failProcessBlockNum', protoName: 'failProcessBlockNum')
+    ..aOS(12, _omitFieldNames ? '' : 'failProcessBlockReason', protoName: 'failProcessBlockReason')
     ..pc<MetricsInfo_BlockChainInfo_DupWitness>(
         13, _omitFieldNames ? '' : 'dupWitness', $pb.PbFieldType.PM,
-        protoName: 'dupWitness',
-        subBuilder: MetricsInfo_BlockChainInfo_DupWitness.create)
+        protoName: 'dupWitness', subBuilder: MetricsInfo_BlockChainInfo_DupWitness.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  MetricsInfo_BlockChainInfo clone() =>
-      MetricsInfo_BlockChainInfo()..mergeFromMessage(this);
+  MetricsInfo_BlockChainInfo clone() => MetricsInfo_BlockChainInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  MetricsInfo_BlockChainInfo copyWith(
-          void Function(MetricsInfo_BlockChainInfo) updates) =>
-      super.copyWith(
-              (message) => updates(message as MetricsInfo_BlockChainInfo))
+  MetricsInfo_BlockChainInfo copyWith(void Function(MetricsInfo_BlockChainInfo) updates) =>
+      super.copyWith((message) => updates(message as MetricsInfo_BlockChainInfo))
           as MetricsInfo_BlockChainInfo;
 
   $pb.BuilderInfo get info_ => _i;
@@ -9206,8 +8838,8 @@ class MetricsInfo_BlockChainInfo extends $pb.GeneratedMessage {
   static $pb.PbList<MetricsInfo_BlockChainInfo> createRepeated() =>
       $pb.PbList<MetricsInfo_BlockChainInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_BlockChainInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_BlockChainInfo>(create);
+  static MetricsInfo_BlockChainInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MetricsInfo_BlockChainInfo>(create);
   static MetricsInfo_BlockChainInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -9352,8 +8984,7 @@ class MetricsInfo_BlockChainInfo extends $pb.GeneratedMessage {
   void clearFailProcessBlockReason() => clearField(12);
 
   @$pb.TagNumber(13)
-  $core.List<MetricsInfo_BlockChainInfo_DupWitness> get dupWitness =>
-      $_getList(12);
+  $core.List<MetricsInfo_BlockChainInfo_DupWitness> get dupWitness => $_getList(12);
 }
 
 class MetricsInfo_RateInfo extends $pb.GeneratedMessage {
@@ -9390,46 +9021,39 @@ class MetricsInfo_RateInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MetricsInfo.RateInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MetricsInfo.RateInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'count')
     ..a<$core.double>(2, _omitFieldNames ? '' : 'meanRate', $pb.PbFieldType.OD,
         protoName: 'meanRate')
-    ..a<$core.double>(
-        3, _omitFieldNames ? '' : 'oneMinuteRate', $pb.PbFieldType.OD,
+    ..a<$core.double>(3, _omitFieldNames ? '' : 'oneMinuteRate', $pb.PbFieldType.OD,
         protoName: 'oneMinuteRate')
-    ..a<$core.double>(
-        4, _omitFieldNames ? '' : 'fiveMinuteRate', $pb.PbFieldType.OD,
+    ..a<$core.double>(4, _omitFieldNames ? '' : 'fiveMinuteRate', $pb.PbFieldType.OD,
         protoName: 'fiveMinuteRate')
-    ..a<$core.double>(
-        5, _omitFieldNames ? '' : 'fifteenMinuteRate', $pb.PbFieldType.OD,
+    ..a<$core.double>(5, _omitFieldNames ? '' : 'fifteenMinuteRate', $pb.PbFieldType.OD,
         protoName: 'fifteenMinuteRate')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  MetricsInfo_RateInfo clone() =>
-      MetricsInfo_RateInfo()..mergeFromMessage(this);
+  MetricsInfo_RateInfo clone() => MetricsInfo_RateInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MetricsInfo_RateInfo copyWith(void Function(MetricsInfo_RateInfo) updates) =>
-      super.copyWith((message) => updates(message as MetricsInfo_RateInfo))
-          as MetricsInfo_RateInfo;
+      super.copyWith((message) => updates(message as MetricsInfo_RateInfo)) as MetricsInfo_RateInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MetricsInfo_RateInfo create() => MetricsInfo_RateInfo._();
   MetricsInfo_RateInfo createEmptyInstance() => create();
-  static $pb.PbList<MetricsInfo_RateInfo> createRepeated() =>
-      $pb.PbList<MetricsInfo_RateInfo>();
+  static $pb.PbList<MetricsInfo_RateInfo> createRepeated() => $pb.PbList<MetricsInfo_RateInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_RateInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_RateInfo>(create);
+  static MetricsInfo_RateInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MetricsInfo_RateInfo>(create);
   static MetricsInfo_RateInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -9516,8 +9140,7 @@ class MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo extends $pb.GeneratedMessage {
     return $result;
   }
   MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo._() : super();
-  factory MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo.fromBuffer(
-          $core.List<$core.int> i,
+  factory MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
   factory MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo.fromJson($core.String i,
@@ -9547,8 +9170,7 @@ class MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo copyWith(
           void Function(MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo) updates) =>
-      super.copyWith((message) =>
-              updates(message as MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo))
+      super.copyWith((message) => updates(message as MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo))
           as MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo;
 
   $pb.BuilderInfo get info_ => _i;
@@ -9557,13 +9179,11 @@ class MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo extends $pb.GeneratedMessage {
   static MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo create() =>
       MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo._();
   MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo createEmptyInstance() => create();
-  static $pb.PbList<MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo>
-      createRepeated() =>
-          $pb.PbList<MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo>();
+  static $pb.PbList<MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo> createRepeated() =>
+      $pb.PbList<MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-          MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo>(create);
+  static MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo>(create);
   static MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -9669,28 +9289,24 @@ class MetricsInfo_NetInfo_ApiInfo extends $pb.GeneratedMessage {
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
-  MetricsInfo_NetInfo_ApiInfo clone() =>
-      MetricsInfo_NetInfo_ApiInfo()..mergeFromMessage(this);
+  MetricsInfo_NetInfo_ApiInfo clone() => MetricsInfo_NetInfo_ApiInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
-  MetricsInfo_NetInfo_ApiInfo copyWith(
-          void Function(MetricsInfo_NetInfo_ApiInfo) updates) =>
-      super.copyWith(
-              (message) => updates(message as MetricsInfo_NetInfo_ApiInfo))
+  MetricsInfo_NetInfo_ApiInfo copyWith(void Function(MetricsInfo_NetInfo_ApiInfo) updates) =>
+      super.copyWith((message) => updates(message as MetricsInfo_NetInfo_ApiInfo))
           as MetricsInfo_NetInfo_ApiInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NetInfo_ApiInfo create() =>
-      MetricsInfo_NetInfo_ApiInfo._();
+  static MetricsInfo_NetInfo_ApiInfo create() => MetricsInfo_NetInfo_ApiInfo._();
   MetricsInfo_NetInfo_ApiInfo createEmptyInstance() => create();
   static $pb.PbList<MetricsInfo_NetInfo_ApiInfo> createRepeated() =>
       $pb.PbList<MetricsInfo_NetInfo_ApiInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NetInfo_ApiInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo_ApiInfo>(create);
+  static MetricsInfo_NetInfo_ApiInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo_ApiInfo>(create);
   static MetricsInfo_NetInfo_ApiInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -9736,8 +9352,7 @@ class MetricsInfo_NetInfo_ApiInfo extends $pb.GeneratedMessage {
   MetricsInfo_RateInfo ensureOutTraffic() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  $core.List<MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo> get detail =>
-      $_getList(3);
+  $core.List<MetricsInfo_NetInfo_ApiInfo_ApiDetailInfo> get detail => $_getList(3);
 }
 
 class MetricsInfo_NetInfo_DisconnectionDetailInfo extends $pb.GeneratedMessage {
@@ -9755,8 +9370,7 @@ class MetricsInfo_NetInfo_DisconnectionDetailInfo extends $pb.GeneratedMessage {
     return $result;
   }
   MetricsInfo_NetInfo_DisconnectionDetailInfo._() : super();
-  factory MetricsInfo_NetInfo_DisconnectionDetailInfo.fromBuffer(
-          $core.List<$core.int> i,
+  factory MetricsInfo_NetInfo_DisconnectionDetailInfo.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
   factory MetricsInfo_NetInfo_DisconnectionDetailInfo.fromJson($core.String i,
@@ -9781,8 +9395,7 @@ class MetricsInfo_NetInfo_DisconnectionDetailInfo extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   MetricsInfo_NetInfo_DisconnectionDetailInfo copyWith(
           void Function(MetricsInfo_NetInfo_DisconnectionDetailInfo) updates) =>
-      super.copyWith((message) =>
-              updates(message as MetricsInfo_NetInfo_DisconnectionDetailInfo))
+      super.copyWith((message) => updates(message as MetricsInfo_NetInfo_DisconnectionDetailInfo))
           as MetricsInfo_NetInfo_DisconnectionDetailInfo;
 
   $pb.BuilderInfo get info_ => _i;
@@ -9791,13 +9404,11 @@ class MetricsInfo_NetInfo_DisconnectionDetailInfo extends $pb.GeneratedMessage {
   static MetricsInfo_NetInfo_DisconnectionDetailInfo create() =>
       MetricsInfo_NetInfo_DisconnectionDetailInfo._();
   MetricsInfo_NetInfo_DisconnectionDetailInfo createEmptyInstance() => create();
-  static $pb.PbList<MetricsInfo_NetInfo_DisconnectionDetailInfo>
-      createRepeated() =>
-          $pb.PbList<MetricsInfo_NetInfo_DisconnectionDetailInfo>();
+  static $pb.PbList<MetricsInfo_NetInfo_DisconnectionDetailInfo> createRepeated() =>
+      $pb.PbList<MetricsInfo_NetInfo_DisconnectionDetailInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NetInfo_DisconnectionDetailInfo getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-          MetricsInfo_NetInfo_DisconnectionDetailInfo>(create);
+  static MetricsInfo_NetInfo_DisconnectionDetailInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo_DisconnectionDetailInfo>(create);
   static MetricsInfo_NetInfo_DisconnectionDetailInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -9825,8 +9436,7 @@ class MetricsInfo_NetInfo_DisconnectionDetailInfo extends $pb.GeneratedMessage {
   void clearCount() => clearField(2);
 }
 
-class MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo
-    extends $pb.GeneratedMessage {
+class MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo extends $pb.GeneratedMessage {
   factory MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo({
     $core.String? witness,
     $core.int? top99,
@@ -9865,19 +9475,15 @@ class MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo
     return $result;
   }
   MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo._() : super();
-  factory MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo.fromBuffer(
-          $core.List<$core.int> i,
+  factory MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo.fromJson(
-          $core.String i,
+  factory MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo.fromJson($core.String i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames
-          ? ''
-          : 'MetricsInfo.NetInfo.LatencyInfo.LatencyDetailInfo',
+      _omitMessageNames ? '' : 'MetricsInfo.NetInfo.LatencyInfo.LatencyDetailInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'witness')
@@ -9885,28 +9491,23 @@ class MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo
     ..a<$core.int>(3, _omitFieldNames ? '' : 'top95', $pb.PbFieldType.O3)
     ..a<$core.int>(4, _omitFieldNames ? '' : 'top75', $pb.PbFieldType.O3)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'count', $pb.PbFieldType.O3)
-    ..a<$core.int>(6, _omitFieldNames ? '' : 'delay1S', $pb.PbFieldType.O3,
-        protoName: 'delay1S')
-    ..a<$core.int>(7, _omitFieldNames ? '' : 'delay2S', $pb.PbFieldType.O3,
-        protoName: 'delay2S')
-    ..a<$core.int>(8, _omitFieldNames ? '' : 'delay3S', $pb.PbFieldType.O3,
-        protoName: 'delay3S')
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'delay1S', $pb.PbFieldType.O3, protoName: 'delay1S')
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'delay2S', $pb.PbFieldType.O3, protoName: 'delay2S')
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'delay3S', $pb.PbFieldType.O3, protoName: 'delay3S')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
       'Will be removed in next major version')
   MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo clone() =>
-      MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo()
-        ..mergeFromMessage(this);
+      MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo()..mergeFromMessage(this);
   @$core.Deprecated('Using this can add significant overhead to your binary. '
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo copyWith(
-          void Function(MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo)
-              updates) =>
-      super.copyWith((message) => updates(
-              message as MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo))
+          void Function(MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo) updates) =>
+      super.copyWith(
+              (message) => updates(message as MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo))
           as MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo;
 
   $pb.BuilderInfo get info_ => _i;
@@ -9914,15 +9515,12 @@ class MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo
   @$core.pragma('dart2js:noInline')
   static MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo create() =>
       MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo._();
-  MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo createEmptyInstance() =>
-      create();
-  static $pb.PbList<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo>
-      createRepeated() =>
-          $pb.PbList<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo>();
+  MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo createEmptyInstance() => create();
+  static $pb.PbList<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo> createRepeated() =>
+      $pb.PbList<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<
-          MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo>(create);
+  static MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo>(create);
   static MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10077,12 +9675,9 @@ class MetricsInfo_NetInfo_LatencyInfo extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'top75', $pb.PbFieldType.O3)
     ..a<$core.int>(4, _omitFieldNames ? '' : 'totalCount', $pb.PbFieldType.O3,
         protoName: 'totalCount')
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'delay1S', $pb.PbFieldType.O3,
-        protoName: 'delay1S')
-    ..a<$core.int>(6, _omitFieldNames ? '' : 'delay2S', $pb.PbFieldType.O3,
-        protoName: 'delay2S')
-    ..a<$core.int>(7, _omitFieldNames ? '' : 'delay3S', $pb.PbFieldType.O3,
-        protoName: 'delay3S')
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'delay1S', $pb.PbFieldType.O3, protoName: 'delay1S')
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'delay2S', $pb.PbFieldType.O3, protoName: 'delay2S')
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'delay3S', $pb.PbFieldType.O3, protoName: 'delay3S')
     ..pc<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo>(
         8, _omitFieldNames ? '' : 'detail', $pb.PbFieldType.PM,
         subBuilder: MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo.create)
@@ -10098,22 +9693,19 @@ class MetricsInfo_NetInfo_LatencyInfo extends $pb.GeneratedMessage {
       'Will be removed in next major version')
   MetricsInfo_NetInfo_LatencyInfo copyWith(
           void Function(MetricsInfo_NetInfo_LatencyInfo) updates) =>
-      super.copyWith(
-              (message) => updates(message as MetricsInfo_NetInfo_LatencyInfo))
+      super.copyWith((message) => updates(message as MetricsInfo_NetInfo_LatencyInfo))
           as MetricsInfo_NetInfo_LatencyInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NetInfo_LatencyInfo create() =>
-      MetricsInfo_NetInfo_LatencyInfo._();
+  static MetricsInfo_NetInfo_LatencyInfo create() => MetricsInfo_NetInfo_LatencyInfo._();
   MetricsInfo_NetInfo_LatencyInfo createEmptyInstance() => create();
   static $pb.PbList<MetricsInfo_NetInfo_LatencyInfo> createRepeated() =>
       $pb.PbList<MetricsInfo_NetInfo_LatencyInfo>();
   @$core.pragma('dart2js:noInline')
   static MetricsInfo_NetInfo_LatencyInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo_LatencyInfo>(
-          create);
+      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo_LatencyInfo>(create);
   static MetricsInfo_NetInfo_LatencyInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10201,8 +9793,7 @@ class MetricsInfo_NetInfo_LatencyInfo extends $pb.GeneratedMessage {
   void clearDelay3S() => clearField(7);
 
   @$pb.TagNumber(8)
-  $core.List<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo> get detail =>
-      $_getList(7);
+  $core.List<MetricsInfo_NetInfo_LatencyInfo_LatencyDetailInfo> get detail => $_getList(7);
 }
 
 class MetricsInfo_NetInfo extends $pb.GeneratedMessage {
@@ -10214,8 +9805,7 @@ class MetricsInfo_NetInfo extends $pb.GeneratedMessage {
     MetricsInfo_RateInfo? tcpInTraffic,
     MetricsInfo_RateInfo? tcpOutTraffic,
     $core.int? disconnectionCount,
-    $core.Iterable<MetricsInfo_NetInfo_DisconnectionDetailInfo>?
-        disconnectionDetail,
+    $core.Iterable<MetricsInfo_NetInfo_DisconnectionDetailInfo>? disconnectionDetail,
     MetricsInfo_RateInfo? udpInTraffic,
     MetricsInfo_RateInfo? udpOutTraffic,
     MetricsInfo_NetInfo_LatencyInfo? latency,
@@ -10264,27 +9854,22 @@ class MetricsInfo_NetInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MetricsInfo.NetInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MetricsInfo.NetInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.int>(
-        1, _omitFieldNames ? '' : 'errorProtoCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'errorProtoCount', $pb.PbFieldType.O3,
         protoName: 'errorProtoCount')
     ..aOM<MetricsInfo_NetInfo_ApiInfo>(2, _omitFieldNames ? '' : 'api',
         subBuilder: MetricsInfo_NetInfo_ApiInfo.create)
-    ..a<$core.int>(
-        3, _omitFieldNames ? '' : 'connectionCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'connectionCount', $pb.PbFieldType.O3,
         protoName: 'connectionCount')
-    ..a<$core.int>(
-        4, _omitFieldNames ? '' : 'validConnectionCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'validConnectionCount', $pb.PbFieldType.O3,
         protoName: 'validConnectionCount')
     ..aOM<MetricsInfo_RateInfo>(5, _omitFieldNames ? '' : 'tcpInTraffic',
         protoName: 'tcpInTraffic', subBuilder: MetricsInfo_RateInfo.create)
     ..aOM<MetricsInfo_RateInfo>(6, _omitFieldNames ? '' : 'tcpOutTraffic',
         protoName: 'tcpOutTraffic', subBuilder: MetricsInfo_RateInfo.create)
-    ..a<$core.int>(
-        7, _omitFieldNames ? '' : 'disconnectionCount', $pb.PbFieldType.O3,
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'disconnectionCount', $pb.PbFieldType.O3,
         protoName: 'disconnectionCount')
     ..pc<MetricsInfo_NetInfo_DisconnectionDetailInfo>(
         8, _omitFieldNames ? '' : 'disconnectionDetail', $pb.PbFieldType.PM,
@@ -10306,19 +9891,17 @@ class MetricsInfo_NetInfo extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MetricsInfo_NetInfo copyWith(void Function(MetricsInfo_NetInfo) updates) =>
-      super.copyWith((message) => updates(message as MetricsInfo_NetInfo))
-          as MetricsInfo_NetInfo;
+      super.copyWith((message) => updates(message as MetricsInfo_NetInfo)) as MetricsInfo_NetInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static MetricsInfo_NetInfo create() => MetricsInfo_NetInfo._();
   MetricsInfo_NetInfo createEmptyInstance() => create();
-  static $pb.PbList<MetricsInfo_NetInfo> createRepeated() =>
-      $pb.PbList<MetricsInfo_NetInfo>();
+  static $pb.PbList<MetricsInfo_NetInfo> createRepeated() => $pb.PbList<MetricsInfo_NetInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo_NetInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo>(create);
+  static MetricsInfo_NetInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MetricsInfo_NetInfo>(create);
   static MetricsInfo_NetInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10412,8 +9995,7 @@ class MetricsInfo_NetInfo extends $pb.GeneratedMessage {
   void clearDisconnectionCount() => clearField(7);
 
   @$pb.TagNumber(8)
-  $core.List<MetricsInfo_NetInfo_DisconnectionDetailInfo>
-      get disconnectionDetail => $_getList(7);
+  $core.List<MetricsInfo_NetInfo_DisconnectionDetailInfo> get disconnectionDetail => $_getList(7);
 
   @$pb.TagNumber(9)
   MetricsInfo_RateInfo get udpInTraffic => $_getN(8);
@@ -10488,8 +10070,7 @@ class MetricsInfo extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'MetricsInfo',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MetricsInfo',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'interval')
@@ -10509,8 +10090,7 @@ class MetricsInfo extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   MetricsInfo copyWith(void Function(MetricsInfo) updates) =>
-      super.copyWith((message) => updates(message as MetricsInfo))
-          as MetricsInfo;
+      super.copyWith((message) => updates(message as MetricsInfo)) as MetricsInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -10519,8 +10099,8 @@ class MetricsInfo extends $pb.GeneratedMessage {
   MetricsInfo createEmptyInstance() => create();
   static $pb.PbList<MetricsInfo> createRepeated() => $pb.PbList<MetricsInfo>();
   @$core.pragma('dart2js:noInline')
-  static MetricsInfo getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<MetricsInfo>(create);
+  static MetricsInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MetricsInfo>(create);
   static MetricsInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10612,24 +10192,20 @@ class PBFTMessage_Raw extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'PBFTMessage.Raw',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PBFTMessage.Raw',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..e<PBFTMessage_MsgType>(
-        1, _omitFieldNames ? '' : 'msgType', $pb.PbFieldType.OE,
+    ..e<PBFTMessage_MsgType>(1, _omitFieldNames ? '' : 'msgType', $pb.PbFieldType.OE,
         defaultOrMaker: PBFTMessage_MsgType.VIEW_CHANGE,
         valueOf: PBFTMessage_MsgType.valueOf,
         enumValues: PBFTMessage_MsgType.values)
-    ..e<PBFTMessage_DataType>(
-        2, _omitFieldNames ? '' : 'dataType', $pb.PbFieldType.OE,
+    ..e<PBFTMessage_DataType>(2, _omitFieldNames ? '' : 'dataType', $pb.PbFieldType.OE,
         defaultOrMaker: PBFTMessage_DataType.BLOCK,
         valueOf: PBFTMessage_DataType.valueOf,
         enumValues: PBFTMessage_DataType.values)
     ..aInt64(3, _omitFieldNames ? '' : 'viewN')
     ..aInt64(4, _omitFieldNames ? '' : 'epoch')
-    ..a<$core.List<$core.int>>(
-        5, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -10640,19 +10216,17 @@ class PBFTMessage_Raw extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   PBFTMessage_Raw copyWith(void Function(PBFTMessage_Raw) updates) =>
-      super.copyWith((message) => updates(message as PBFTMessage_Raw))
-          as PBFTMessage_Raw;
+      super.copyWith((message) => updates(message as PBFTMessage_Raw)) as PBFTMessage_Raw;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static PBFTMessage_Raw create() => PBFTMessage_Raw._();
   PBFTMessage_Raw createEmptyInstance() => create();
-  static $pb.PbList<PBFTMessage_Raw> createRepeated() =>
-      $pb.PbList<PBFTMessage_Raw>();
+  static $pb.PbList<PBFTMessage_Raw> createRepeated() => $pb.PbList<PBFTMessage_Raw>();
   @$core.pragma('dart2js:noInline')
-  static PBFTMessage_Raw getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PBFTMessage_Raw>(create);
+  static PBFTMessage_Raw getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PBFTMessage_Raw>(create);
   static PBFTMessage_Raw? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10738,14 +10312,11 @@ class PBFTMessage extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'PBFTMessage',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PBFTMessage',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..aOM<PBFTMessage_Raw>(1, _omitFieldNames ? '' : 'rawData',
-        subBuilder: PBFTMessage_Raw.create)
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
+    ..aOM<PBFTMessage_Raw>(1, _omitFieldNames ? '' : 'rawData', subBuilder: PBFTMessage_Raw.create)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -10756,8 +10327,7 @@ class PBFTMessage extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   PBFTMessage copyWith(void Function(PBFTMessage) updates) =>
-      super.copyWith((message) => updates(message as PBFTMessage))
-          as PBFTMessage;
+      super.copyWith((message) => updates(message as PBFTMessage)) as PBFTMessage;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -10766,8 +10336,8 @@ class PBFTMessage extends $pb.GeneratedMessage {
   PBFTMessage createEmptyInstance() => create();
   static $pb.PbList<PBFTMessage> createRepeated() => $pb.PbList<PBFTMessage>();
   @$core.pragma('dart2js:noInline')
-  static PBFTMessage getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PBFTMessage>(create);
+  static PBFTMessage getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PBFTMessage>(create);
   static PBFTMessage? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10819,14 +10389,11 @@ class PBFTCommitResult extends $pb.GeneratedMessage {
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'PBFTCommitResult',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PBFTCommitResult',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
-    ..p<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.PY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'data', $pb.PbFieldType.OY)
+    ..p<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.PY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -10837,19 +10404,17 @@ class PBFTCommitResult extends $pb.GeneratedMessage {
       'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
       'Will be removed in next major version')
   PBFTCommitResult copyWith(void Function(PBFTCommitResult) updates) =>
-      super.copyWith((message) => updates(message as PBFTCommitResult))
-          as PBFTCommitResult;
+      super.copyWith((message) => updates(message as PBFTCommitResult)) as PBFTCommitResult;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static PBFTCommitResult create() => PBFTCommitResult._();
   PBFTCommitResult createEmptyInstance() => create();
-  static $pb.PbList<PBFTCommitResult> createRepeated() =>
-      $pb.PbList<PBFTCommitResult>();
+  static $pb.PbList<PBFTCommitResult> createRepeated() => $pb.PbList<PBFTCommitResult>();
   @$core.pragma('dart2js:noInline')
-  static PBFTCommitResult getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<PBFTCommitResult>(create);
+  static PBFTCommitResult getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PBFTCommitResult>(create);
   static PBFTCommitResult? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10882,16 +10447,13 @@ class SRL extends $pb.GeneratedMessage {
   factory SRL.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory SRL.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory SRL.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'SRL',
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SRL',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
       createEmptyInstance: create)
-    ..p<$core.List<$core.int>>(
-        1, _omitFieldNames ? '' : 'srAddress', $pb.PbFieldType.PY,
+    ..p<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'srAddress', $pb.PbFieldType.PY,
         protoName: 'srAddress')
     ..hasRequiredFields = false;
 
@@ -10912,8 +10474,7 @@ class SRL extends $pb.GeneratedMessage {
   SRL createEmptyInstance() => create();
   static $pb.PbList<SRL> createRepeated() => $pb.PbList<SRL>();
   @$core.pragma('dart2js:noInline')
-  static SRL getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SRL>(create);
+  static SRL getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SRL>(create);
   static SRL? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -10921,5 +10482,4 @@ class SRL extends $pb.GeneratedMessage {
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
-    $core.bool.fromEnvironment('protobuf.omit_message_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

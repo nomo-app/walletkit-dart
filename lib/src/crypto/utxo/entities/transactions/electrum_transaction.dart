@@ -15,15 +15,12 @@ class ElectrumTransactionInfo {
 
   @override
   bool operator ==(Object other) =>
-      other is ElectrumTransactionInfo &&
-      other.runtimeType == runtimeType &&
-      other.hash == hash;
+      other is ElectrumTransactionInfo && other.runtimeType == runtimeType && other.hash == hash;
 
   @override
   int get hashCode => hash.hashCode;
 
-  NotAvaialableUTXOTransaction getNotAvailableUTXOTransaction(
-      CoinEntity token) {
+  NotAvaialableUTXOTransaction getNotAvailableUTXOTransaction(CoinEntity token) {
     return NotAvaialableUTXOTransaction(hash, height, token);
   }
 }

@@ -80,8 +80,7 @@ sealed class NodeWithAddress {
         'address': address,
         'derivationPath': derivationPath,
         'addresses': {
-          for (final entry in addresses.entries)
-            entry.key.index.toString(): entry.value,
+          for (final entry in addresses.entries) entry.key.index.toString(): entry.value,
         },
         'walletPurpose': walletPurpose?.index,
         'publicKey': publicKey,
@@ -111,9 +110,7 @@ sealed class NodeWithAddress {
               for (final MapEntry(:key, :value) in addresses.entries)
                 AddressType.fromIndex(int.parse(key as String)): value as String
             },
-            walletPurpose: walletPurpose != null
-                ? HDWalletPurpose.values[walletPurpose]
-                : null,
+            walletPurpose: walletPurpose != null ? HDWalletPurpose.values[walletPurpose] : null,
             publicKey: publicKey,
           ),
         1 => ChangeNode(
@@ -123,9 +120,7 @@ sealed class NodeWithAddress {
               for (final MapEntry(:key, :value) in addresses.entries)
                 AddressType.fromIndex(int.parse(key as String)): value as String
             },
-            walletPurpose: walletPurpose != null
-                ? HDWalletPurpose.values[walletPurpose]
-                : null,
+            walletPurpose: walletPurpose != null ? HDWalletPurpose.values[walletPurpose] : null,
             publicKey: publicKey,
           ),
         _ => throw UnimplementedError(),

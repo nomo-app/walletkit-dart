@@ -3,10 +3,8 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 
 void main() {
   test('empty addresses', () {
-    expect(
-        validateAddress(address: "", token: zeniqCoin), AddressError.INVALID);
-    expect(
-        validateAddress(address: "", token: ethNative), AddressError.INVALID);
+    expect(validateAddress(address: "", token: zeniqCoin), AddressError.INVALID);
+    expect(validateAddress(address: "", token: ethNative), AddressError.INVALID);
     expect(
       validateAddress(address: "  ", token: zeniqCoin),
       AddressError.WHITESPACE,
@@ -20,18 +18,15 @@ void main() {
   test('address validations ZENIQ UTXO', () {
     const coin = zeniqCoin;
     expect(
-      validateAddress(
-          address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
+      validateAddress(address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
       null,
     );
     expect(
-      validateAddress(
-          address: "mAy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
+      validateAddress(address: "mAy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
       AddressError.INVALID_CHECKSUM,
     );
     expect(
-      validateAddress(
-          address: "  mUy497jumJB1E5RqRJAhBni3TzJMdrboKa ", token: coin),
+      validateAddress(address: "  mUy497jumJB1E5RqRJAhBni3TzJMdrboKa ", token: coin),
       AddressError.WHITESPACE,
     );
     expect(
@@ -39,30 +34,25 @@ void main() {
       AddressError.INVALID,
     );
     expect(
-      validateAddress(
-          address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
+      validateAddress(address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
+      validateAddress(address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
+      validateAddress(address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
+      validateAddress(address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
       AddressError.WRONG_CHAIN,
     );
 
     expect(
       validateAddress(
-          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x",
-          token: coin),
+          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x", token: coin),
       AddressError.WRONG_CHAIN,
     );
   });
@@ -70,18 +60,15 @@ void main() {
   test('address validations BTC', () {
     const coin = btcCoin;
     expect(
-      validateAddress(
-          address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
+      validateAddress(address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
       null,
     );
     expect(
-      validateAddress(
-          address: "18M1XkiDXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
+      validateAddress(address: "18M1XkiDXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
       AddressError.INVALID_CHECKSUM,
     );
     expect(
-      validateAddress(
-          address: "  18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q ", token: coin),
+      validateAddress(address: "  18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q ", token: coin),
       AddressError.WHITESPACE,
     );
     expect(
@@ -89,47 +76,37 @@ void main() {
       AddressError.INVALID,
     );
     expect(
-      validateAddress(
-          address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
+      validateAddress(address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
+      validateAddress(address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
+      validateAddress(address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
+      null,
+    );
+    expect(
+      validateAddress(address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
       null,
     );
     expect(
       validateAddress(
-          address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
-      null,
-    );
-    expect(
-      validateAddress(
-          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x",
-          token: coin),
+          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x", token: coin),
       AddressError.WRONG_CHAIN,
     );
   });
 
   test('address validations LTC', () {
     const coin = ltcCoin;
+    expect(validateAddress(address: "LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g2", token: coin), null);
     expect(
-        validateAddress(
-            address: "LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g2", token: coin),
-        null);
-    expect(
-      validateAddress(
-          address: "LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g3", token: coin),
+      validateAddress(address: "LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g3", token: coin),
       AddressError.INVALID_CHECKSUM,
     );
     expect(
-      validateAddress(
-          address: "  LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g2 ", token: coin),
+      validateAddress(address: "  LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g2 ", token: coin),
       AddressError.WHITESPACE,
     );
     expect(
@@ -137,65 +114,52 @@ void main() {
       AddressError.INVALID,
     );
     expect(
-      validateAddress(
-          address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
+      validateAddress(address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
+      AddressError.WRONG_CHAIN,
+    );
+    expect(
+      validateAddress(address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
+      AddressError.WRONG_CHAIN,
+    );
+    expect(
+      validateAddress(address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
+      AddressError.WRONG_CHAIN,
+    );
+    expect(
+      validateAddress(address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
+      AddressError.WRONG_CHAIN,
+    );
+    expect(
+      validateAddress(address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
       validateAddress(
-          address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
-      AddressError.WRONG_CHAIN,
-    );
-    expect(
-      validateAddress(
-          address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
-      AddressError.WRONG_CHAIN,
-    );
-    expect(
-      validateAddress(
-          address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
-      AddressError.WRONG_CHAIN,
-    );
-    expect(
-      validateAddress(
-          address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
-      AddressError.WRONG_CHAIN,
-    );
-    expect(
-      validateAddress(
-          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x",
-          token: coin),
+          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x", token: coin),
       AddressError.WRONG_CHAIN,
     );
 
     expect(
-      validateAddress(
-          address: "MTcnkd11rPmucGsZb2bfqsdcWqtntoJoAc", token: coin),
+      validateAddress(address: "MTcnkd11rPmucGsZb2bfqsdcWqtntoJoAc", token: coin),
       null,
     );
 
     expect(
-        validateAddress(
-            address: "ltc1q9ltm9d5mz7kl4p3hl9c2m55x448u3cvawljcyz",
-            token: coin),
-        null);
+        validateAddress(address: "ltc1q9ltm9d5mz7kl4p3hl9c2m55x448u3cvawljcyz", token: coin), null);
   });
 
   test('address validations BCH', () {
     const coin = bchCoin;
     expect(
-      validateAddress(
-          address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
+      validateAddress(address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q", token: coin),
       null,
     );
     expect(
-      validateAddress(
-          address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6L", token: coin),
+      validateAddress(address: "18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6L", token: coin),
       AddressError.INVALID_CHECKSUM,
     );
     expect(
-      validateAddress(
-          address: "  18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q ", token: coin),
+      validateAddress(address: "  18M1XkiCXdfu7RWjg7avPXFtgAEeCtkn6Q ", token: coin),
       AddressError.WHITESPACE,
     );
     expect(
@@ -203,34 +167,28 @@ void main() {
       AddressError.INVALID,
     );
     expect(
-      validateAddress(
-          address: "LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g2", token: coin),
+      validateAddress(address: "LQWQYndDLpq2MKNeaCtnpAta8MDhUjr9g2", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
+      validateAddress(address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
+      validateAddress(address: "mUy497jumJB1E5RqRJAhBni3TzJMdrboKa", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
-      validateAddress(
-          address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
+      validateAddress(address: "35bSzXvRKLpHsHMrzb82f617cV4Srnt7hS", token: coin),
       null,
     );
     expect(
-      validateAddress(
-          address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
+      validateAddress(address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
       AddressError.WRONG_CHAIN,
     );
     expect(
       validateAddress(
-          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x",
-          token: coin),
+          address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x", token: coin),
       null,
     );
   });
@@ -253,32 +211,23 @@ void main() {
 }
 
 void _addressValidationsEVM(CoinEntity coin) {
+  expect(validateAddress(address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin), null);
   expect(
       validateAddress(
-          address: "0x05870f1507d820212E921e1f39f14660336231D1", token: coin),
-      null);
-  expect(
-      validateAddress(
-          address: "0x05870f1507d820212E921e1f39f14660336231D124".toLowerCase(),
-          token: coin),
+          address: "0x05870f1507d820212E921e1f39f14660336231D124".toLowerCase(), token: coin),
       AddressError.INVALID); // length must be 42
   expect(
       validateAddress(
-          address: "0x05870f1507d820212E921e1f39f140336231D1".toLowerCase(),
-          token: coin),
+          address: "0x05870f1507d820212E921e1f39f140336231D1".toLowerCase(), token: coin),
       AddressError.INVALID); // length must be 42
-  expect(
-      validateAddress(
-          address: "0x058D0A1507d820212E921e1f39f14660336231D1", token: coin),
+  expect(validateAddress(address: "0x058D0A1507d820212E921e1f39f14660336231D1", token: coin),
       AddressError.INVALID_CHECKSUM); // mixed case must contain a checksum
   expect(
       validateAddress(
-          address: "0x058D0A1507d820212E921e1f39f14660336231D1".toLowerCase(),
-          token: coin),
+          address: "0x058D0A1507d820212E921e1f39f14660336231D1".toLowerCase(), token: coin),
       null); // lowercase does not contain a checksum
   expect(
-    validateAddress(
-        address: "  0x05870f1507d820212E921e1f39f14660336231D1 ", token: coin),
+    validateAddress(address: "  0x05870f1507d820212E921e1f39f14660336231D1 ", token: coin),
     AddressError.WHITESPACE,
   );
   expect(
@@ -298,14 +247,11 @@ void _addressValidationsEVM(CoinEntity coin) {
     AddressError.WRONG_CHAIN,
   );
   expect(
-    validateAddress(
-        address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
+    validateAddress(address: "bc1qdf6dj0ux6p459mkd8e7x6q2ny0436xfg8xnvr9", token: coin),
     AddressError.WRONG_CHAIN,
   );
   expect(
-    validateAddress(
-        address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x",
-        token: coin),
+    validateAddress(address: "bitcoincash:qp0qu5dhyug828caegpnu5zg48k7elfywq494pje3x", token: coin),
     AddressError.WRONG_CHAIN,
   );
 }

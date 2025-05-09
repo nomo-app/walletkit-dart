@@ -58,8 +58,7 @@ class Signature {
       sig = ECSignature(sig.r, canonicalS);
     }
 
-    final publickey =
-        bytesToUnsignedInt(privateKeyToPublic(bytesToUnsignedInt(privateKey)));
+    final publickey = bytesToUnsignedInt(privateKeyToPublic(bytesToUnsignedInt(privateKey)));
 
     final rcID = EC.secp256k1.calculateRecoveryId(publickey, sig, payload);
 
@@ -68,8 +67,7 @@ class Signature {
     }
 
     final int v = switch (txType) {
-      TransactionType.Legacy =>
-        chainId != null ? (rcID + (chainId * 2 + 35)) : (rcID + 27),
+      TransactionType.Legacy => chainId != null ? (rcID + (chainId * 2 + 35)) : (rcID + 27),
       TransactionType.Type1 || TransactionType.Type2 => rcID,
     };
 
@@ -80,8 +78,7 @@ class Signature {
 
   static const _messagePrefix = '\u0019Ethereum Signed Message:\n';
 
-  static Uint8List signPersonalMessageToUint8List(
-      Uint8List payload, Uint8List privateKey) {
+  static Uint8List signPersonalMessageToUint8List(Uint8List payload, Uint8List privateKey) {
     final prefix = _messagePrefix + payload.length.toString();
     final prefixBytes = ascii.encode(prefix);
 

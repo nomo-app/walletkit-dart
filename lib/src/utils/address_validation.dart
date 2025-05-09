@@ -47,8 +47,7 @@ AddressError? validateAddress({
   required CoinEntity token,
 }) {
   return switch (token) {
-    _ when token.isUTXO =>
-      validateUTXOAddress(address: address, token: token).$1,
+    _ when token.isUTXO => validateUTXOAddress(address: address, token: token).$1,
     tron => validateTronAddress(address: address),
     _ => validateEVMAddress(address: address),
   };
@@ -128,8 +127,7 @@ AddressError? validateEVMAddress({required String address}) {
   }
 }
 
-final RegExp _basicAddress =
-    RegExp(r'^(0x)?[0-9a-f]{40}$', caseSensitive: false);
+final RegExp _basicAddress = RegExp(r'^(0x)?[0-9a-f]{40}$', caseSensitive: false);
 
 void _validate(String address) {
   // Basic address validation
@@ -141,11 +139,9 @@ void _validate(String address) {
     );
   }
 
-  final cleanAddress =
-      address.startsWith('0x') ? address.substring(2) : address;
+  final cleanAddress = address.startsWith('0x') ? address.substring(2) : address;
 
-  if (cleanAddress.toUpperCase() == cleanAddress ||
-      cleanAddress.toLowerCase() == cleanAddress) {
+  if (cleanAddress.toUpperCase() == cleanAddress || cleanAddress.toLowerCase() == cleanAddress) {
     return;
   }
 
@@ -155,8 +151,7 @@ void _validate(String address) {
 
 void _validateEIP55Checksum(String address) {
   // Strip the '0x' prefix if present
-  final cleanAddress =
-      address.startsWith('0x') ? address.substring(2) : address;
+  final cleanAddress = address.startsWith('0x') ? address.substring(2) : address;
 
   // Convert to lowercase and compute the hash
   final hash = keccakAscii(cleanAddress.toLowerCase()).toHex;

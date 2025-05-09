@@ -374,8 +374,7 @@ class ERC1155Contract extends InternalContract {
   }) async {
     final function = abi.functions[4];
     return await interact(
-      function: function.addValues(
-          values: [sender, to, tokenID, amount, data ?? Uint8List(0)]),
+      function: function.addValues(values: [sender, to, tokenID, amount, data ?? Uint8List(0)]),
       sender: sender,
       privateKey: privateKey,
       feeInfo: feeInfo,

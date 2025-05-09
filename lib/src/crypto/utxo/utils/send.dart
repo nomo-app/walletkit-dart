@@ -190,10 +190,7 @@ RawTransaction buildUnsignedTransaction({
   return tx;
 }
 
-typedef DummyTxInfo = ({
-  RawTransaction dummyRawTx,
-  List<ElectrumOutput> chosenUTXOs
-});
+typedef DummyTxInfo = ({RawTransaction dummyRawTx, List<ElectrumOutput> chosenUTXOs});
 
 ///
 /// Creates a dummy transaction to estimate the size of the transaction and hence the fee
@@ -334,24 +331,18 @@ Uint8List createScriptSignature({
   final prevScriptPubKey = output.scriptPubKey.lockingScript;
 
   final sigHash = switch (networkType) {
-    BITCOINCASH_NETWORK() ||
-    ZENIQ_NETWORK() when tx is BTCRawTransaction =>
-      tx.bip143sigHash(
+    BITCOINCASH_NETWORK() || ZENIQ_NETWORK() when tx is BTCRawTransaction => tx.bip143sigHash(
         index: i,
         prevScriptPubKey: prevScriptPubKey,
         output: output,
         hashType: hashType,
       ),
-    LITECOIN_NETWORK() ||
-    BITCOIN_NETWORK() ||
-    EUROCOIN_NETWORK() =>
-      tx.legacySigHash(
+    LITECOIN_NETWORK() || BITCOIN_NETWORK() || EUROCOIN_NETWORK() => tx.legacySigHash(
         index: i,
         prevScriptPubKey: prevScriptPubKey,
         hashType: hashType,
       ),
-    _ =>
-      throw SendFailure("Could not find sigHash for networkType $networkType"),
+    _ => throw SendFailure("Could not find sigHash for networkType $networkType"),
   };
 
   final sig = signInput(bip32: node, sigHash: sigHash);
@@ -464,11 +455,7 @@ Input buildInput({
   ///
 
   return switch (networkType) {
-    BITCOIN_NETWORK() ||
-    BITCOINCASH_NETWORK() ||
-    ZENIQ_NETWORK() ||
-    LITECOIN_NETWORK() =>
-      BTCInput(
+    BITCOIN_NETWORK() || BITCOINCASH_NETWORK() || ZENIQ_NETWORK() || LITECOIN_NETWORK() => BTCInput(
         txid: txid,
         vout: vout,
         value: utxo.value,
@@ -508,8 +495,7 @@ Future<String> broadcastTransaction({
 }) async {
   final (result, client, error) = await fetchFromRandomElectrumXNode(
     (client) async {
-      final broadcastResult =
-          await client.broadcastTransaction(rawTxHex: rawTxHex);
+      final broadcastResult = await client.broadcastTransaction(rawTxHex: rawTxHex);
       return broadcastResult;
     },
     client: null,
@@ -526,10 +512,7 @@ Future<String> broadcastTransaction({
   final json = jsonDecode(result);
 
   if (result.contains('error')) {
-    if (json
-        case {
-          "error": {"error": {"code": int code, "message": String message}}
-        }) {
+    if (json case {"error": {"error": {"code": int code, "message": String message}}}) {
       throw SendFailure("$host $code $message");
     }
     if (json case {"error": {"code": int code, "message": String message}}) {
@@ -652,9 +635,7 @@ Uint8List constructScriptSig({
   Uint8List? redeemScript, // Required for BIP49 (P2SH-P2WPKH)
 }) =>
     switch (walletPurpose) {
-      HDWalletPurpose.NO_STRUCTURE ||
-      HDWalletPurpose.BIP44 =>
-        Uint8List.fromList([
+      HDWalletPurpose.NO_STRUCTURE || HDWalletPurpose.BIP44 => Uint8List.fromList([
           signature.length,
           ...signature,
           publicKey.length,

@@ -161,8 +161,7 @@ BigInt _polymod(List<int> data) {
   for (int i = 0; i < data.length; ++i) {
     int value = data[i];
     BigInt topBits = checksum >> 35;
-    checksum =
-        ((checksum & BigInt.from(0x07ffffffff)) << 5) ^ BigInt.from(value);
+    checksum = ((checksum & BigInt.from(0x07ffffffff)) << 5) ^ BigInt.from(value);
 
     for (int j = 0; j < GENERATOR.length; ++j) {
       if ((topBits >> j) & BigInt.from(1) == BigInt.from(1)) {
@@ -189,8 +188,7 @@ String bchAddrEncode({
     ...[0, 0, 0, 0, 0, 0, 0, 0]
   ].toUint8List;
 
-  final checksumUint5List =
-      _checksumToUint5List(_polymod(checksumData).toInt());
+  final checksumUint5List = _checksumToUint5List(_polymod(checksumData).toInt());
 
   final payload = [...payloadData, ...checksumUint5List].toUint8List;
 

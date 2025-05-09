@@ -22,7 +22,14 @@ const AssetIssueContract$json = {
     {'1': 'name', '3': 2, '4': 1, '5': 12, '10': 'name'},
     {'1': 'abbr', '3': 3, '4': 1, '5': 12, '10': 'abbr'},
     {'1': 'total_supply', '3': 4, '4': 1, '5': 3, '10': 'totalSupply'},
-    {'1': 'frozen_supply', '3': 5, '4': 3, '5': 11, '6': '.protocol.AssetIssueContract.FrozenSupply', '10': 'frozenSupply'},
+    {
+      '1': 'frozen_supply',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.protocol.AssetIssueContract.FrozenSupply',
+      '10': 'frozenSupply'
+    },
     {'1': 'trx_num', '3': 6, '4': 1, '5': 5, '10': 'trxNum'},
     {'1': 'precision', '3': 7, '4': 1, '5': 5, '10': 'precision'},
     {'1': 'num', '3': 8, '4': 1, '5': 5, '10': 'num'},
@@ -50,22 +57,22 @@ const AssetIssueContract_FrozenSupply$json = {
 };
 
 /// Descriptor for `AssetIssueContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List assetIssueContractDescriptor = $convert.base64Decode(
-    'ChJBc3NldElzc3VlQ29udHJhY3QSDgoCaWQYKSABKAlSAmlkEiMKDW93bmVyX2FkZHJlc3MYAS'
-    'ABKAxSDG93bmVyQWRkcmVzcxISCgRuYW1lGAIgASgMUgRuYW1lEhIKBGFiYnIYAyABKAxSBGFi'
-    'YnISIQoMdG90YWxfc3VwcGx5GAQgASgDUgt0b3RhbFN1cHBseRJOCg1mcm96ZW5fc3VwcGx5GA'
-    'UgAygLMikucHJvdG9jb2wuQXNzZXRJc3N1ZUNvbnRyYWN0LkZyb3plblN1cHBseVIMZnJvemVu'
-    'U3VwcGx5EhcKB3RyeF9udW0YBiABKAVSBnRyeE51bRIcCglwcmVjaXNpb24YByABKAVSCXByZW'
-    'Npc2lvbhIQCgNudW0YCCABKAVSA251bRIdCgpzdGFydF90aW1lGAkgASgDUglzdGFydFRpbWUS'
-    'GQoIZW5kX3RpbWUYCiABKANSB2VuZFRpbWUSFAoFb3JkZXIYCyABKANSBW9yZGVyEh0KCnZvdG'
-    'Vfc2NvcmUYECABKAVSCXZvdGVTY29yZRIgCgtkZXNjcmlwdGlvbhgUIAEoDFILZGVzY3JpcHRp'
-    'b24SEAoDdXJsGBUgASgMUgN1cmwSLwoUZnJlZV9hc3NldF9uZXRfbGltaXQYFiABKANSEWZyZW'
-    'VBc3NldE5ldExpbWl0EjwKG3B1YmxpY19mcmVlX2Fzc2V0X25ldF9saW1pdBgXIAEoA1IXcHVi'
-    'bGljRnJlZUFzc2V0TmV0TGltaXQSPAobcHVibGljX2ZyZWVfYXNzZXRfbmV0X3VzYWdlGBggAS'
-    'gDUhdwdWJsaWNGcmVlQXNzZXROZXRVc2FnZRI8ChtwdWJsaWNfbGF0ZXN0X2ZyZWVfbmV0X3Rp'
-    'bWUYGSABKANSF3B1YmxpY0xhdGVzdEZyZWVOZXRUaW1lGlQKDEZyb3plblN1cHBseRIjCg1mcm'
-    '96ZW5fYW1vdW50GAEgASgDUgxmcm96ZW5BbW91bnQSHwoLZnJvemVuX2RheXMYAiABKANSCmZy'
-    'b3plbkRheXM=');
+final $typed_data.Uint8List assetIssueContractDescriptor = $convert
+    .base64Decode('ChJBc3NldElzc3VlQ29udHJhY3QSDgoCaWQYKSABKAlSAmlkEiMKDW93bmVyX2FkZHJlc3MYAS'
+        'ABKAxSDG93bmVyQWRkcmVzcxISCgRuYW1lGAIgASgMUgRuYW1lEhIKBGFiYnIYAyABKAxSBGFi'
+        'YnISIQoMdG90YWxfc3VwcGx5GAQgASgDUgt0b3RhbFN1cHBseRJOCg1mcm96ZW5fc3VwcGx5GA'
+        'UgAygLMikucHJvdG9jb2wuQXNzZXRJc3N1ZUNvbnRyYWN0LkZyb3plblN1cHBseVIMZnJvemVu'
+        'U3VwcGx5EhcKB3RyeF9udW0YBiABKAVSBnRyeE51bRIcCglwcmVjaXNpb24YByABKAVSCXByZW'
+        'Npc2lvbhIQCgNudW0YCCABKAVSA251bRIdCgpzdGFydF90aW1lGAkgASgDUglzdGFydFRpbWUS'
+        'GQoIZW5kX3RpbWUYCiABKANSB2VuZFRpbWUSFAoFb3JkZXIYCyABKANSBW9yZGVyEh0KCnZvdG'
+        'Vfc2NvcmUYECABKAVSCXZvdGVTY29yZRIgCgtkZXNjcmlwdGlvbhgUIAEoDFILZGVzY3JpcHRp'
+        'b24SEAoDdXJsGBUgASgMUgN1cmwSLwoUZnJlZV9hc3NldF9uZXRfbGltaXQYFiABKANSEWZyZW'
+        'VBc3NldE5ldExpbWl0EjwKG3B1YmxpY19mcmVlX2Fzc2V0X25ldF9saW1pdBgXIAEoA1IXcHVi'
+        'bGljRnJlZUFzc2V0TmV0TGltaXQSPAobcHVibGljX2ZyZWVfYXNzZXRfbmV0X3VzYWdlGBggAS'
+        'gDUhdwdWJsaWNGcmVlQXNzZXROZXRVc2FnZRI8ChtwdWJsaWNfbGF0ZXN0X2ZyZWVfbmV0X3Rp'
+        'bWUYGSABKANSF3B1YmxpY0xhdGVzdEZyZWVOZXRUaW1lGlQKDEZyb3plblN1cHBseRIjCg1mcm'
+        '96ZW5fYW1vdW50GAEgASgDUgxmcm96ZW5BbW91bnQSHwoLZnJvemVuX2RheXMYAiABKANSCmZy'
+        'b3plbkRheXM=');
 
 @$core.Deprecated('Use transferAssetContractDescriptor instead')
 const TransferAssetContract$json = {
@@ -79,10 +86,10 @@ const TransferAssetContract$json = {
 };
 
 /// Descriptor for `TransferAssetContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List transferAssetContractDescriptor = $convert.base64Decode(
-    'ChVUcmFuc2ZlckFzc2V0Q29udHJhY3QSHQoKYXNzZXRfbmFtZRgBIAEoDFIJYXNzZXROYW1lEi'
-    'MKDW93bmVyX2FkZHJlc3MYAiABKAxSDG93bmVyQWRkcmVzcxIdCgp0b19hZGRyZXNzGAMgASgM'
-    'Ugl0b0FkZHJlc3MSFgoGYW1vdW50GAQgASgDUgZhbW91bnQ=');
+final $typed_data.Uint8List transferAssetContractDescriptor = $convert
+    .base64Decode('ChVUcmFuc2ZlckFzc2V0Q29udHJhY3QSHQoKYXNzZXRfbmFtZRgBIAEoDFIJYXNzZXROYW1lEi'
+        'MKDW93bmVyX2FkZHJlc3MYAiABKAxSDG93bmVyQWRkcmVzcxIdCgp0b19hZGRyZXNzGAMgASgM'
+        'Ugl0b0FkZHJlc3MSFgoGYW1vdW50GAQgASgDUgZhbW91bnQ=');
 
 @$core.Deprecated('Use unfreezeAssetContractDescriptor instead')
 const UnfreezeAssetContract$json = {
@@ -93,9 +100,9 @@ const UnfreezeAssetContract$json = {
 };
 
 /// Descriptor for `UnfreezeAssetContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List unfreezeAssetContractDescriptor = $convert.base64Decode(
-    'ChVVbmZyZWV6ZUFzc2V0Q29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
-    'RyZXNz');
+final $typed_data.Uint8List unfreezeAssetContractDescriptor = $convert
+    .base64Decode('ChVVbmZyZWV6ZUFzc2V0Q29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
+        'RyZXNz');
 
 @$core.Deprecated('Use updateAssetContractDescriptor instead')
 const UpdateAssetContract$json = {
@@ -110,11 +117,11 @@ const UpdateAssetContract$json = {
 };
 
 /// Descriptor for `UpdateAssetContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateAssetContractDescriptor = $convert.base64Decode(
-    'ChNVcGRhdGVBc3NldENvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQWRkcm'
-    'VzcxIgCgtkZXNjcmlwdGlvbhgCIAEoDFILZGVzY3JpcHRpb24SEAoDdXJsGAMgASgMUgN1cmwS'
-    'GwoJbmV3X2xpbWl0GAQgASgDUghuZXdMaW1pdBIoChBuZXdfcHVibGljX2xpbWl0GAUgASgDUg'
-    '5uZXdQdWJsaWNMaW1pdA==');
+final $typed_data.Uint8List updateAssetContractDescriptor = $convert
+    .base64Decode('ChNVcGRhdGVBc3NldENvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQWRkcm'
+        'VzcxIgCgtkZXNjcmlwdGlvbhgCIAEoDFILZGVzY3JpcHRpb24SEAoDdXJsGAMgASgMUgN1cmwS'
+        'GwoJbmV3X2xpbWl0GAQgASgDUghuZXdMaW1pdBIoChBuZXdfcHVibGljX2xpbWl0GAUgASgDUg'
+        '5uZXdQdWJsaWNMaW1pdA==');
 
 @$core.Deprecated('Use participateAssetIssueContractDescriptor instead')
 const ParticipateAssetIssueContract$json = {
@@ -128,8 +135,7 @@ const ParticipateAssetIssueContract$json = {
 };
 
 /// Descriptor for `ParticipateAssetIssueContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List participateAssetIssueContractDescriptor = $convert.base64Decode(
-    'Ch1QYXJ0aWNpcGF0ZUFzc2V0SXNzdWVDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUg'
-    'xvd25lckFkZHJlc3MSHQoKdG9fYWRkcmVzcxgCIAEoDFIJdG9BZGRyZXNzEh0KCmFzc2V0X25h'
-    'bWUYAyABKAxSCWFzc2V0TmFtZRIWCgZhbW91bnQYBCABKANSBmFtb3VudA==');
-
+final $typed_data.Uint8List participateAssetIssueContractDescriptor = $convert
+    .base64Decode('Ch1QYXJ0aWNpcGF0ZUFzc2V0SXNzdWVDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUg'
+        'xvd25lckFkZHJlc3MSHQoKdG9fYWRkcmVzcxgCIAEoDFIJdG9BZGRyZXNzEh0KCmFzc2V0X25h'
+        'bWUYAyABKAxSCWFzc2V0TmFtZRIWCgZhbW91bnQYBCABKANSBmFtb3VudA==');

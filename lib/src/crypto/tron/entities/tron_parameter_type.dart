@@ -30,8 +30,7 @@ sealed class TronParameter<T> {
 }
 
 final class TronAddressParameter extends TronParameter<String> {
-  const TronAddressParameter(String value)
-      : super(value, TronParameterType.ADDRESS);
+  const TronAddressParameter(String value) : super(value, TronParameterType.ADDRESS);
 
   @override
   Uint8List get bytes => base58ToHex(value);
@@ -68,8 +67,7 @@ Uint8List createParameter(
 
     final bytes = param.bytes;
 
-    final paddedBytes = Uint8List(paddedLength)
-      ..writeSlice(paddedLength - paramSize, bytes);
+    final paddedBytes = Uint8List(paddedLength)..writeSlice(paddedLength - paramSize, bytes);
 
     buffer.addAll(paddedBytes);
   }

@@ -57,10 +57,8 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
     }
 
     return switch (this) {
-      ErrorContractFunctionMixin() =>
-        throw Exception("Cannot add values to $this"),
-      LocalContractFunctionMixin functionMixin =>
-        LocalContractFunctionWithValues(
+      ErrorContractFunctionMixin() => throw Exception("Cannot add values to $this"),
+      LocalContractFunctionMixin functionMixin => LocalContractFunctionWithValues(
           name: name,
           parameters: paramsWithValues,
           stateMutability: functionMixin.stateMutability,
@@ -134,10 +132,8 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
       final dataBytes = data.hexToBytes;
       final timestamp = json["timeStamp"] as int?;
       return switch (name) {
-        "Unknown" =>
-          UnknownContractFunction(data: dataBytes, timeStamp: timestamp),
-        "NotDecodable" =>
-          NotDecodableContractFunction(data: dataBytes, timeStamp: timestamp),
+        "Unknown" => UnknownContractFunction(data: dataBytes, timeStamp: timestamp),
+        "NotDecodable" => NotDecodableContractFunction(data: dataBytes, timeStamp: timestamp),
         _ => throw Exception("Invalid json"),
       };
     }
@@ -163,8 +159,7 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
     if (functionMap != null) {
       final localResult = decodeRaw(data: data, functionMap: functionMap);
 
-      if (localResult is! UnknownContractFunction &&
-          localResult is! NotDecodableContractFunction) {
+      if (localResult is! UnknownContractFunction && localResult is! NotDecodableContractFunction) {
         return localResult;
       }
     }
@@ -203,8 +198,7 @@ sealed class ContractFunction implements ExternalContractFunctionMixin {
 
     if (text_signarure == null) return UnknownContractFunction(data: data);
 
-    final function =
-        ContractFunction.fromTextSignature(textSignature: text_signarure);
+    final function = ContractFunction.fromTextSignature(textSignature: text_signarure);
 
     if (function == null) return UnknownContractFunction(data: data);
 
@@ -293,8 +287,7 @@ sealed class ContractFunctionWithValues extends ContractFunction {
       return ExternalContractFunctionWithValues(
         name: name,
         parameters: [
-          for (final param in parameters)
-            FunctionParamWithValue.fromJson(param),
+          for (final param in parameters) FunctionParamWithValue.fromJson(param),
         ],
       );
     }
@@ -311,8 +304,7 @@ sealed class ContractFunctionWithValues extends ContractFunction {
   }
 }
 
-sealed class ContractFunctionWithValuesAndOutputs
-    extends ContractFunctionWithValues {
+sealed class ContractFunctionWithValuesAndOutputs extends ContractFunctionWithValues {
   List<FunctionParamWithValue> get outputs;
 
   List<FunctionParamWithValue> get parameters;
@@ -322,8 +314,7 @@ sealed class ContractFunctionWithValuesAndOutputs
   });
 }
 
-final class LocalContractFunctionWithValuesAndOutputs
-    extends ContractFunctionWithValuesAndOutputs
+final class LocalContractFunctionWithValuesAndOutputs extends ContractFunctionWithValuesAndOutputs
     implements LocalContractFunctionMixin {
   @override
   final List<FunctionParamWithValue> outputs;
@@ -363,8 +354,7 @@ final class LocalContractFunctionWithValuesAndOutputs
 }
 
 final class ExternalContractFunctionWithValuesAndOutputs
-    extends ContractFunctionWithValuesAndOutputs
-    implements ExternalContractFunctionMixin {
+    extends ContractFunctionWithValuesAndOutputs implements ExternalContractFunctionMixin {
   @override
   final List<FunctionParamWithValue> outputs;
 
@@ -411,8 +401,7 @@ final class ExternalContractFunctionWithValuesAndOutputs
 /// And hence only have the function name, selector and the parameters
 /// Only used for decoding existing datafields
 ///
-class ExternalContractFunction extends ContractFunction
-    implements ExternalContractFunctionMixin {
+class ExternalContractFunction extends ContractFunction implements ExternalContractFunctionMixin {
   final List<FunctionParam> parameters;
 
   @override
@@ -497,8 +486,7 @@ class ErrorContractFunctionMixin extends ExternalContractFunctionMixin {
 /// An Object that represents a contract function generated from an ABI
 /// Used for Encoding a datafield and after executing decoding the output
 ///
-class LocalContractFunction extends ContractFunction
-    implements LocalContractFunctionMixin {
+class LocalContractFunction extends ContractFunction implements LocalContractFunctionMixin {
   @override
   final List<FunctionParam> parameters;
   final StateMutability stateMutability;

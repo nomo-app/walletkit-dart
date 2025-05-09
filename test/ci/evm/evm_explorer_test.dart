@@ -165,13 +165,11 @@ void main() {
   });
 
   test("Test Arbitrum Fetching", () async {
-    final balance =
-        await arbitrumscan.fetchBalance(address: arbitrumTestWallet);
+    final balance = await arbitrumscan.fetchBalance(address: arbitrumTestWallet);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-    final transactions =
-        await arbitrumscan.fetchTransactions(address: arbitrumTestWallet);
+    final transactions = await arbitrumscan.fetchTransactions(address: arbitrumTestWallet);
 
     expect(transactions, isNotEmpty);
 
@@ -230,14 +228,12 @@ void main() {
     expect(erc20Transactions, isNotEmpty);
 
     final erc20balance = await basescan.fetchTokenBalance(
-        address: arbitrumTestWallet,
-        contractAddress: mathToken.contractAddress);
+        address: arbitrumTestWallet, contractAddress: mathToken.contractAddress);
     expect(erc20balance, greaterThan(BigInt.zero));
   });
 
   test("Test MoonBeam Fetching", () async {
-    final balance =
-        await moonbeamscan.fetchBalance(address: arbitrumTestWallet);
+    final balance = await moonbeamscan.fetchBalance(address: arbitrumTestWallet);
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
@@ -292,8 +288,7 @@ void main() {
 
     expect(balance, greaterThanOrEqualTo(BigInt.zero));
 
-    final transactions =
-        await zksyncscan.fetchTransactions(address: arbitrumTestWallet);
+    final transactions = await zksyncscan.fetchTransactions(address: arbitrumTestWallet);
     expect(transactions, isNotEmpty);
 
     final erc20T = await zksyncscan.fetchERC20Transactions(

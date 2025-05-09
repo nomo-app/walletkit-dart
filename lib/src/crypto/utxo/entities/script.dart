@@ -24,20 +24,17 @@ class Script {
         dataToRead = opcode;
       } else if (opcode == OP_PUSHDATA1) {
         // Next byte is length of data
-        if (bytes.length - offset < 1)
-          throw Exception('Unexpected end of script');
+        if (bytes.length - offset < 1) throw Exception('Unexpected end of script');
         dataToRead = bytes.bytes.readUint8(offset).$1;
         offset += 1;
       } else if (opcode == OP_PUSHDATA2) {
         // Next two bytes are length of data
-        if (bytes.length - offset < 2)
-          throw Exception('Unexpected end of script');
+        if (bytes.length - offset < 2) throw Exception('Unexpected end of script');
         dataToRead = bytes.bytes.readUint16(offset).$1;
         offset += 2;
       } else if (opcode == OP_PUSHDATA4) {
         // Next four bytes are length of data
-        if (bytes.length - offset < 4)
-          throw Exception('Unexpected end of script');
+        if (bytes.length - offset < 4) throw Exception('Unexpected end of script');
         dataToRead = bytes.bytes.readUint32(offset).$1;
         offset += 4;
       }

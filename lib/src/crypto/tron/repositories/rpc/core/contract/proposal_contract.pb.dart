@@ -33,41 +33,52 @@ class ProposalApproveContract extends $pb.GeneratedMessage {
     return $result;
   }
   ProposalApproveContract._() : super();
-  factory ProposalApproveContract.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ProposalApproveContract.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ProposalApproveContract.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ProposalApproveContract.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ProposalApproveContract', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ProposalApproveContract',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'ownerAddress', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'proposalId')
     ..aOB(3, _omitFieldNames ? '' : 'isAddApproval')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   ProposalApproveContract clone() => ProposalApproveContract()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ProposalApproveContract copyWith(void Function(ProposalApproveContract) updates) => super.copyWith((message) => updates(message as ProposalApproveContract)) as ProposalApproveContract;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ProposalApproveContract copyWith(void Function(ProposalApproveContract) updates) =>
+      super.copyWith((message) => updates(message as ProposalApproveContract))
+          as ProposalApproveContract;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ProposalApproveContract create() => ProposalApproveContract._();
   ProposalApproveContract createEmptyInstance() => create();
-  static $pb.PbList<ProposalApproveContract> createRepeated() => $pb.PbList<ProposalApproveContract>();
+  static $pb.PbList<ProposalApproveContract> createRepeated() =>
+      $pb.PbList<ProposalApproveContract>();
   @$core.pragma('dart2js:noInline')
-  static ProposalApproveContract getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProposalApproveContract>(create);
+  static ProposalApproveContract getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProposalApproveContract>(create);
   static ProposalApproveContract? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get ownerAddress => $_getN(0);
   @$pb.TagNumber(1)
-  set ownerAddress($core.List<$core.int> v) { $_setBytes(0, v); }
+  set ownerAddress($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasOwnerAddress() => $_has(0);
   @$pb.TagNumber(1)
@@ -76,7 +87,10 @@ class ProposalApproveContract extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $fixnum.Int64 get proposalId => $_getI64(1);
   @$pb.TagNumber(2)
-  set proposalId($fixnum.Int64 v) { $_setInt64(1, v); }
+  set proposalId($fixnum.Int64 v) {
+    $_setInt64(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasProposalId() => $_has(1);
   @$pb.TagNumber(2)
@@ -85,7 +99,10 @@ class ProposalApproveContract extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool get isAddApproval => $_getBF(2);
   @$pb.TagNumber(3)
-  set isAddApproval($core.bool v) { $_setBool(2, v); }
+  set isAddApproval($core.bool v) {
+    $_setBool(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasIsAddApproval() => $_has(2);
   @$pb.TagNumber(3)
@@ -107,40 +124,55 @@ class ProposalCreateContract extends $pb.GeneratedMessage {
     return $result;
   }
   ProposalCreateContract._() : super();
-  factory ProposalCreateContract.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ProposalCreateContract.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ProposalCreateContract.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ProposalCreateContract.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ProposalCreateContract', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ProposalCreateContract',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'ownerAddress', $pb.PbFieldType.OY)
-    ..m<$fixnum.Int64, $fixnum.Int64>(2, _omitFieldNames ? '' : 'parameters', entryClassName: 'ProposalCreateContract.ParametersEntry', keyFieldType: $pb.PbFieldType.O6, valueFieldType: $pb.PbFieldType.O6, packageName: const $pb.PackageName('protocol'))
-    ..hasRequiredFields = false
-  ;
+    ..m<$fixnum.Int64, $fixnum.Int64>(2, _omitFieldNames ? '' : 'parameters',
+        entryClassName: 'ProposalCreateContract.ParametersEntry',
+        keyFieldType: $pb.PbFieldType.O6,
+        valueFieldType: $pb.PbFieldType.O6,
+        packageName: const $pb.PackageName('protocol'))
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   ProposalCreateContract clone() => ProposalCreateContract()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ProposalCreateContract copyWith(void Function(ProposalCreateContract) updates) => super.copyWith((message) => updates(message as ProposalCreateContract)) as ProposalCreateContract;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ProposalCreateContract copyWith(void Function(ProposalCreateContract) updates) =>
+      super.copyWith((message) => updates(message as ProposalCreateContract))
+          as ProposalCreateContract;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ProposalCreateContract create() => ProposalCreateContract._();
   ProposalCreateContract createEmptyInstance() => create();
-  static $pb.PbList<ProposalCreateContract> createRepeated() => $pb.PbList<ProposalCreateContract>();
+  static $pb.PbList<ProposalCreateContract> createRepeated() =>
+      $pb.PbList<ProposalCreateContract>();
   @$core.pragma('dart2js:noInline')
-  static ProposalCreateContract getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProposalCreateContract>(create);
+  static ProposalCreateContract getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProposalCreateContract>(create);
   static ProposalCreateContract? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get ownerAddress => $_getN(0);
   @$pb.TagNumber(1)
-  set ownerAddress($core.List<$core.int> v) { $_setBytes(0, v); }
+  set ownerAddress($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasOwnerAddress() => $_has(0);
   @$pb.TagNumber(1)
@@ -165,40 +197,51 @@ class ProposalDeleteContract extends $pb.GeneratedMessage {
     return $result;
   }
   ProposalDeleteContract._() : super();
-  factory ProposalDeleteContract.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ProposalDeleteContract.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ProposalDeleteContract.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ProposalDeleteContract.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ProposalDeleteContract', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ProposalDeleteContract',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'ownerAddress', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'proposalId')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   ProposalDeleteContract clone() => ProposalDeleteContract()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ProposalDeleteContract copyWith(void Function(ProposalDeleteContract) updates) => super.copyWith((message) => updates(message as ProposalDeleteContract)) as ProposalDeleteContract;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ProposalDeleteContract copyWith(void Function(ProposalDeleteContract) updates) =>
+      super.copyWith((message) => updates(message as ProposalDeleteContract))
+          as ProposalDeleteContract;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ProposalDeleteContract create() => ProposalDeleteContract._();
   ProposalDeleteContract createEmptyInstance() => create();
-  static $pb.PbList<ProposalDeleteContract> createRepeated() => $pb.PbList<ProposalDeleteContract>();
+  static $pb.PbList<ProposalDeleteContract> createRepeated() =>
+      $pb.PbList<ProposalDeleteContract>();
   @$core.pragma('dart2js:noInline')
-  static ProposalDeleteContract getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProposalDeleteContract>(create);
+  static ProposalDeleteContract getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProposalDeleteContract>(create);
   static ProposalDeleteContract? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get ownerAddress => $_getN(0);
   @$pb.TagNumber(1)
-  set ownerAddress($core.List<$core.int> v) { $_setBytes(0, v); }
+  set ownerAddress($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasOwnerAddress() => $_has(0);
   @$pb.TagNumber(1)
@@ -207,13 +250,15 @@ class ProposalDeleteContract extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $fixnum.Int64 get proposalId => $_getI64(1);
   @$pb.TagNumber(2)
-  set proposalId($fixnum.Int64 v) { $_setInt64(1, v); }
+  set proposalId($fixnum.Int64 v) {
+    $_setInt64(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasProposalId() => $_has(1);
   @$pb.TagNumber(2)
   void clearProposalId() => clearField(2);
 }
-
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

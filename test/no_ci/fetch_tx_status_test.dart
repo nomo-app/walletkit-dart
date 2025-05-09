@@ -8,8 +8,7 @@ void main() {
 
     print(result);
 
-    const hash =
-        "0x83c5e45216b2f135980ab57505551d486fa923f40735324e643f09405c3ee9cb";
+    const hash = "0x83c5e45216b2f135980ab57505551d486fa923f40735324e643f09405c3ee9cb";
 
     await polygonRPC.getConfirmationStatus(hash).then((value) {
       print(value);

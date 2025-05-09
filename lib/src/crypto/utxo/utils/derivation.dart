@@ -45,16 +45,14 @@ BipNode deriveMasterNodeFromSeed({
   required HDWalletPath walletPath,
   UTXONetworkType? networkType,
 }) {
-  final bipNetworkType =
-      networkType?.networkBIP.getForWalletType(walletPath.purpose);
+  final bipNetworkType = networkType?.networkBIP.getForWalletType(walletPath.purpose);
 
   final parentNode = BipNode.fromSeed(seed, bipNetworkType);
   final derivationPath = switch (walletPath.basePath) {
     "m/44'/2'" => walletPath.account0Path,
     _ => walletPath.purpose.string,
   };
-  final node =
-      parentNode.derivePath(derivationPath); // TODO: Use base Path with Account
+  final node = parentNode.derivePath(derivationPath); // TODO: Use base Path with Account
 
   return node;
 }
@@ -70,8 +68,7 @@ BipNode deriveMasterNodeFromExtendedKeyWithCheck({
     purpose: purpose,
   );
 
-  if (version != node.network.bip32.private &&
-      version != node.network.bip32.public) {
+  if (version != node.network.bip32.private && version != node.network.bip32.public) {
     throw ArgumentError(
       "Version mismatch. Extracted Version: $version. Expected: ${node.network.bip32.private} or ${node.network.bip32.public}",
     );
@@ -122,8 +119,7 @@ NodeWithAddress deriveChildNode({
   if (index < 0) {
     throw UnsupportedError("index must not be negative");
   }
-  if (chainIndex != EXTERNAL_CHAIN_INDEX &&
-      chainIndex != INTERNAL_CHAIN_INDEX) {
+  if (chainIndex != EXTERNAL_CHAIN_INDEX && chainIndex != INTERNAL_CHAIN_INDEX) {
     throw UnsupportedError("unexpected chainIndex");
   }
 
@@ -169,8 +165,7 @@ bip32.BIP32 deriveChildNodeFromPath({
 
 extension on BipNode {
   String toBase58wkCompatibility(int parentFingerprint, int depth) {
-    final version =
-        (!isNeutered()) ? network.bip32.private : network.bip32.public;
+    final version = (!isNeutered()) ? network.bip32.private : network.bip32.public;
     Uint8List buffer = new Uint8List(78);
     ByteData bytes = buffer.buffer.asByteData();
     bytes.setUint32(0, version);

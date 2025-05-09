@@ -76,8 +76,7 @@ sealed class Input {
       previousScriptPubKey[0] == 0x00 &&
       previousScriptPubKey[1] == 0x20;
 
-  bool get isP2PK =>
-      previousScriptPubKey.length == 35 && previousScriptPubKey[0] == 0x21;
+  bool get isP2PK => previousScriptPubKey.length == 35 && previousScriptPubKey[0] == 0x21;
 
   bool get isSegwit => isP2WPKH || isP2WSH || hasWitness;
 
@@ -222,11 +221,7 @@ class BTCInput extends Input {
 
   Uint8List get bytes {
     final buffer = Uint8List(
-      txid.length +
-          output_index_length +
-          scriptSig.length +
-          1 +
-          sequence_length,
+      txid.length + output_index_length + scriptSig.length + 1 + sequence_length,
     );
 
     var offset = 0;
@@ -278,12 +273,7 @@ class EC8Input extends Input {
 
   Uint8List get bytes {
     final buffer = Uint8List(
-      txid.length +
-          output_index_length +
-          value_length +
-          weight_length +
-          scriptSig.length +
-          1,
+      txid.length + output_index_length + value_length + weight_length + scriptSig.length + 1,
     );
 
     var offset = 0;
@@ -351,8 +341,7 @@ class EC8Input extends Input {
 
     // Write Weight
     if (withWeight) {
-      offset +=
-          buffer.bytes.writeUint32(offset, weight.toInt()); // Should be 146
+      offset += buffer.bytes.writeUint32(offset, weight.toInt()); // Should be 146
     }
 
     if (withScript) {

@@ -47,8 +47,7 @@ void main() {
     final targetValue = BigInt.from(10000);
 
     final inputsCopy = List.of(inputs);
-    final selectedUTXOs =
-        singleRandomDrawUTXOSelection(inputsCopy, targetValue);
+    final selectedUTXOs = singleRandomDrawUTXOSelection(inputsCopy, targetValue);
     final totalInputAmount = selectedUTXOs.totalAmount;
     final change = totalInputAmount - targetValue;
 
@@ -78,6 +77,5 @@ void main() {
 }
 
 extension on List<ElectrumOutput> {
-  BigInt get totalAmount =>
-      fold(BigInt.zero, (prev, element) => prev + element.value);
+  BigInt get totalAmount => fold(BigInt.zero, (prev, element) => prev + element.value);
 }

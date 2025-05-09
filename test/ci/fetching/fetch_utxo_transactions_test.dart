@@ -116,8 +116,7 @@ void main() {
     });
 
     test('fetch BTC Segwit Transactions xpub reject wallet', () async {
-      final (segwitTxList, segwitNodes) =
-          await fetchUTXOTransactionsFromEpubKey(
+      final (segwitTxList, segwitNodes) = await fetchUTXOTransactionsFromEpubKey(
         networkType: BitcoinNetwork,
         ePubKey: rejectXpub,
         purpose: HDWalletPurpose.NO_STRUCTURE,

@@ -40,8 +40,7 @@ void main() {
         Amount amount2 = Amount(value: BigInt.from(2000), decimals: 18);
 
         Amount result = amount1 * amount2;
-        expect(
-            result.value, BigInt.from(2000000)); // 2,000,000 with 36 decimals
+        expect(result.value, BigInt.from(2000000)); // 2,000,000 with 36 decimals
         expect(result.decimals, 36);
       });
 
@@ -65,16 +64,12 @@ void main() {
       });
 
       test('large number multiplication', () {
-        Amount amount1 =
-            Amount(value: BigInt.parse('1000000000000000000'), decimals: 18);
-        Amount amount2 =
-            Amount(value: BigInt.parse('2000000000000000000'), decimals: 18);
+        Amount amount1 = Amount(value: BigInt.parse('1000000000000000000'), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.parse('2000000000000000000'), decimals: 18);
 
         Amount result = amount1 * amount2;
-        expect(
-            result.value,
-            BigInt.parse(
-                '2000000000000000000000000000000000000')); // large number with 36 decimals
+        expect(result.value,
+            BigInt.parse('2000000000000000000000000000000000000')); // large number with 36 decimals
         expect(result.decimals, 36);
       });
 
@@ -138,16 +133,12 @@ void main() {
       });
 
       test('large number addition', () {
-        Amount amount1 = Amount(
-            value: BigInt.parse('1000000000000000000000000'), decimals: 18);
-        Amount amount2 = Amount(
-            value: BigInt.parse('1000000000000000000000000'), decimals: 18);
+        Amount amount1 = Amount(value: BigInt.parse('1000000000000000000000000'), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.parse('1000000000000000000000000'), decimals: 18);
 
         Amount result = amount1 + amount2;
         expect(
-            result.value,
-            BigInt.parse(
-                '2000000000000000000000000')); // 2,000,000 with 18 decimals
+            result.value, BigInt.parse('2000000000000000000000000')); // 2,000,000 with 18 decimals
         expect(result.decimals, 18);
       });
 
@@ -178,8 +169,7 @@ void main() {
         Amount result = amount1 - amount2;
 
         expect(result.value, BigInt.from(8000)); // 8000 with 18 decimals
-        expect(result.decimals,
-            18); // because we are normalizing to max decimals initially
+        expect(result.decimals, 18); // because we are normalizing to max decimals initially
       });
 
       test('subtraction resulting in zero', () {
@@ -216,8 +206,7 @@ void main() {
         Amount amount2 = Amount(value: BigInt.from(2000), decimals: 18);
 
         Amount result = amount1 / amount2;
-        expect(result.value,
-            BigInt.from(5) * BigInt.from(pow(10, 18))); // 5 with 18 decimals
+        expect(result.value, BigInt.from(5) * BigInt.from(pow(10, 18))); // 5 with 18 decimals
         expect(result.decimals, 18);
       });
 
@@ -237,23 +226,17 @@ void main() {
 
         Amount result = amount1 / amount2;
         expect(
-            result.value,
-            BigInt.from(10000) *
-                BigInt.from(pow(10, 18))); // 10000 with 18 decimals
+            result.value, BigInt.from(10000) * BigInt.from(pow(10, 18))); // 10000 with 18 decimals
         expect(result.decimals, 18);
       });
 
       test('large number division', () {
-        Amount amount1 = Amount(
-            value: BigInt.parse('1000000000000000000000000'), decimals: 18);
-        Amount amount2 =
-            Amount(value: BigInt.parse('1000000000000000000'), decimals: 18);
+        Amount amount1 = Amount(value: BigInt.parse('1000000000000000000000000'), decimals: 18);
+        Amount amount2 = Amount(value: BigInt.parse('1000000000000000000'), decimals: 18);
 
         Amount result = amount1 / amount2;
-        expect(
-            result.value,
-            BigInt.from(1000000) *
-                BigInt.from(pow(10, 18))); // 1,000,000 with 18 decimals
+        expect(result.value,
+            BigInt.from(1000000) * BigInt.from(pow(10, 18))); // 1,000,000 with 18 decimals
         expect(result.decimals, 18);
       });
 

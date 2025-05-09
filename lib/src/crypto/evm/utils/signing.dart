@@ -44,8 +44,7 @@ String recoverEthMessageSigner({
   final messageHash = _createEthStyleMessageHash(message);
   final sig = _parseEthSignature(signature);
   final recoveredSignerPubKey = recoverPublicKey(messageHash, sig);
-  final recoveredSignerAddress =
-      publicKeyToAddress(recoveredSignerPubKey).toHex;
+  final recoveredSignerAddress = publicKeyToAddress(recoveredSignerPubKey).toHex;
 
   return toChecksumAddress("0x" + recoveredSignerAddress);
 }

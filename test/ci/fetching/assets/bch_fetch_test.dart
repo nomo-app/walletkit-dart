@@ -52,35 +52,29 @@ void main() {
     expect(addresses, [
       {
         AddressType.legacy: '1FFk4nj4uvfTYj2GM1Cax9SGvYsC3Gp6A3',
-        AddressType.cashaddr:
-            'bitcoincash:qzw9hzykl4qjwtd5xaz5l8c53wrm4j0tasquhxwqn6'
+        AddressType.cashaddr: 'bitcoincash:qzw9hzykl4qjwtd5xaz5l8c53wrm4j0tasquhxwqn6'
       },
       {
         AddressType.legacy: '18NK7rMZ1dHfVEQNwtNYb5AWveBDYgvwAq',
-        AddressType.cashaddr:
-            'bitcoincash:qpgdp0tt7cszfhkwulyw9prv5c72573qdsln6jkwsr'
+        AddressType.cashaddr: 'bitcoincash:qpgdp0tt7cszfhkwulyw9prv5c72573qdsln6jkwsr'
       },
       {
         AddressType.legacy: '1131pDzpWpDTJCedCn7ygwqBZrmu4g6t4',
-        AddressType.cashaddr:
-            'bitcoincash:qqqqrtn9ta84ufu48ujzx5ygdlfe58caecz9ylvf0s'
+        AddressType.cashaddr: 'bitcoincash:qqqqrtn9ta84ufu48ujzx5ygdlfe58caecz9ylvf0s'
       },
       {
         AddressType.legacy: '17X9kvtJuhnrSz3yiC3nSrcNokriyFUBJ1',
-        AddressType.cashaddr:
-            'bitcoincash:qprcfze65dgee9jafprmmex876a6v442juuasgu687'
+        AddressType.cashaddr: 'bitcoincash:qprcfze65dgee9jafprmmex876a6v442juuasgu687'
       },
       {
         AddressType.legacy: '1Hn2AUKeqEbpLh7tfJWgZwiadBmorPFFwa',
-        AddressType.cashaddr:
-            'bitcoincash:qzuqtva0zzjsyapmnl9xfay9nlf45knfcge4rnkqaf'
+        AddressType.cashaddr: 'bitcoincash:qzuqtva0zzjsyapmnl9xfay9nlf45knfcge4rnkqaf'
       },
     ]);
   });
 
   test('Test CashAddress', () async {
-    const pubKey =
-        "03e6ff629277ef58ac35c6ba6b7e285960837e9b30b5dedc4c96d5e26772fb4d43";
+    const pubKey = "03e6ff629277ef58ac35c6ba6b7e285960837e9b30b5dedc4c96d5e26772fb4d43";
     final pubKeyHash = ripmed160Sha256Hash(pubKey.hexToBytes);
 
     final address = pubKeyHexToAddress(

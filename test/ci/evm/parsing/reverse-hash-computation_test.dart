@@ -24,14 +24,12 @@ void main() {
 
     final Uint8List data = (en as RLPList).value[5].value;
 
-    final functionSignature =
-        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
+    final functionSignature = ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
     expect(functionSignature.name, "mint");
     expect(functionSignature.parameters[0].type, FunctionParamAddress());
-    expect(functionSignature.parameters[0].value,
-        "0x05870f1507d820212e921e1f39f14660336231d1");
+    expect(functionSignature.parameters[0].value, "0x05870f1507d820212e921e1f39f14660336231d1");
     expect(functionSignature.parameters[1].type, FunctionParamUint256());
     expect(functionSignature.parameters[1].value, BigInt.from(15942468));
   });
@@ -42,8 +40,7 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final functionSignature =
-        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
+    final functionSignature = ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
 
@@ -87,8 +84,7 @@ void main() {
         ].toBigIntList);
   });
 
-  test('extract functionSignature mint with more params from the transaction',
-      () {
+  test('extract functionSignature mint with more params from the transaction', () {
     const String unsignedTxFromNomo = // from nomo.signEvmTransaction
         "0xf9023282075d8504a817c80083029810944a9e707fc2abf8fcf840054f250e5416a3d8608b80b90204d63a47d600000000000000000000000005870f1507d820212e921e1f39f14660336231d10000000000000000000000000000000000000000000000000000000000f3434400000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000001a00000000000000000000000000000000000000000000000000000000000000017000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000d4172726179456c656d656e743100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d4172726179456c656d656e7432000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000742d35cc6634c0532925a3b844bc454e4438f44e000000000000000000000000742d35cc6634c0532925a3b844bc454e4438f44e8559454e49518080";
 
@@ -102,8 +98,7 @@ void main() {
 
     final Uint8List data = (en[5] as RLPBytes).value;
 
-    final functionSignature =
-        ContractFunction.decodeRaw(data: data, functionMap: functionMap);
+    final functionSignature = ContractFunction.decodeRaw(data: data, functionMap: functionMap);
 
     expect(functionSignature, isNotNull);
 
@@ -111,8 +106,7 @@ void main() {
 
     expect(functionSignature.parameters[0].name, "_to");
     expect(functionSignature.parameters[0].type, FunctionParamAddress());
-    expect(functionSignature.parameters[0].value,
-        "0x05870f1507d820212e921e1f39f14660336231d1");
+    expect(functionSignature.parameters[0].value, "0x05870f1507d820212e921e1f39f14660336231d1");
 
     expect(functionSignature.parameters[1].name, "_amount");
     expect(functionSignature.parameters[1].type, FunctionParamUint256());

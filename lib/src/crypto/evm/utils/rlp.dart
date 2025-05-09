@@ -109,8 +109,7 @@ final class RLPList extends RLPItem<List<RLPItem>> {
   RLPList(super.value);
 
   @override
-  Uint8List get buffer =>
-      Uint8List.fromList([for (final item in value) ...encodeRLP(item)]);
+  Uint8List get buffer => Uint8List.fromList([for (final item in value) ...encodeRLP(item)]);
 
   int get length => value.length;
 

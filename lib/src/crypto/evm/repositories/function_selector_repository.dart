@@ -10,8 +10,7 @@ const _4byteEndpoint = "https://www.4byte.directory/api/v1";
 class FunctionSelectorRepository {
   final Map<String, Completer<ExternalContractFunction?>> functionCache = {};
 
-  static final FunctionSelectorRepository _instance =
-      FunctionSelectorRepository._();
+  static final FunctionSelectorRepository _instance = FunctionSelectorRepository._();
 
   FunctionSelectorRepository._();
 
@@ -71,8 +70,7 @@ class FunctionSelectorRepository {
   ) async {
     selector = selector.startsWith("0x") ? selector : "0x$selector";
 
-    final endpoint =
-        "$_openchainEndpoint/lookup?function=$selector&filter=true";
+    final endpoint = "$_openchainEndpoint/lookup?function=$selector&filter=true";
     final uri = Uri.parse(endpoint);
 
     if (functionCache.containsKey(endpoint)) {
@@ -118,8 +116,7 @@ class FunctionSelectorRepository {
 
         if (name == null) return null;
 
-        final function =
-            ContractFunction.fromTextSignature(textSignature: name);
+        final function = ContractFunction.fromTextSignature(textSignature: name);
 
         if (function == null) return null;
 

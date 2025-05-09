@@ -338,8 +338,7 @@ final class EvmRpcInterface {
     final maxPriorityFeePerGas = await getPriorityFee();
 
     return EvmType2GasPrice(
-      maxFeePerGas:
-          maxFeePerGas.multiplyAndCeil(type2Multiplier) + maxPriorityFeePerGas,
+      maxFeePerGas: maxFeePerGas.multiplyAndCeil(type2Multiplier) + maxPriorityFeePerGas,
       maxPriorityFeePerGas: maxPriorityFeePerGas,
     );
   }
@@ -495,9 +494,8 @@ final class EvmRpcInterface {
       maxClients: 5,
       enforceParallel: true,
       consilidate: (resultsWithErrors) {
-        final results = resultsWithErrors
-            .whereType<Value<String, EvmRpcClient>>()
-            .map((v) => v.value);
+        final results =
+            resultsWithErrors.whereType<Value<String, EvmRpcClient>>().map((v) => v.value);
 
         if (results.isEmpty) {
           throw Exception(
@@ -576,8 +574,8 @@ final class EvmRpcInterface {
     BigInt? value,
   }) async {
     final valid = switch ((function.stateMutability, value)) {
-      (StateMutability.nonpayable, BigInt? value) => value == null ||
-          value == BigInt.zero, // If nonpayable, value must be 0 or null
+      (StateMutability.nonpayable, BigInt? value) =>
+        value == null || value == BigInt.zero, // If nonpayable, value must be 0 or null
       (StateMutability.payable, BigInt? value) =>
         value != null && value != BigInt.zero, // If payable, value must be set
       _ => false,
@@ -663,8 +661,7 @@ final class EvmRpcInterface {
   }
 
   Future<ConfirmationStatus> getConfirmationStatus(String hash) async {
-    if (txStatusCache[hash] == null ||
-        txStatusCache[hash] == ConfirmationStatus.pending) {
+    if (txStatusCache[hash] == null || txStatusCache[hash] == ConfirmationStatus.pending) {
       final json = await performTask(
         (client) => client.getTransactionReceipt(hash),
       );

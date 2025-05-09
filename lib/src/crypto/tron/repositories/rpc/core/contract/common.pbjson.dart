@@ -24,7 +24,6 @@ const ResourceCode$json = {
 };
 
 /// Descriptor for `ResourceCode`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List resourceCodeDescriptor = $convert.base64Decode(
-    'CgxSZXNvdXJjZUNvZGUSDQoJQkFORFdJRFRIEAASCgoGRU5FUkdZEAESDgoKVFJPTl9QT1dFUh'
-    'AC');
-
+final $typed_data.Uint8List resourceCodeDescriptor = $convert
+    .base64Decode('CgxSZXNvdXJjZUNvZGUSDQoJQkFORFdJRFRIEAASCgoGRU5FUkdZEAESDgoKVFJPTl9QT1dFUh'
+        'AC');

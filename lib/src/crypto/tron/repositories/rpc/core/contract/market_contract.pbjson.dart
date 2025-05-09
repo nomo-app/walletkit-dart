@@ -26,12 +26,12 @@ const MarketSellAssetContract$json = {
 };
 
 /// Descriptor for `MarketSellAssetContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List marketSellAssetContractDescriptor = $convert.base64Decode(
-    'ChdNYXJrZXRTZWxsQXNzZXRDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
-    'FkZHJlc3MSIgoNc2VsbF90b2tlbl9pZBgCIAEoDFILc2VsbFRva2VuSWQSLgoTc2VsbF90b2tl'
-    'bl9xdWFudGl0eRgDIAEoA1IRc2VsbFRva2VuUXVhbnRpdHkSIAoMYnV5X3Rva2VuX2lkGAQgAS'
-    'gMUgpidXlUb2tlbklkEiwKEmJ1eV90b2tlbl9xdWFudGl0eRgFIAEoA1IQYnV5VG9rZW5RdWFu'
-    'dGl0eQ==');
+final $typed_data.Uint8List marketSellAssetContractDescriptor = $convert
+    .base64Decode('ChdNYXJrZXRTZWxsQXNzZXRDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
+        'FkZHJlc3MSIgoNc2VsbF90b2tlbl9pZBgCIAEoDFILc2VsbFRva2VuSWQSLgoTc2VsbF90b2tl'
+        'bl9xdWFudGl0eRgDIAEoA1IRc2VsbFRva2VuUXVhbnRpdHkSIAoMYnV5X3Rva2VuX2lkGAQgAS'
+        'gMUgpidXlUb2tlbklkEiwKEmJ1eV90b2tlbl9xdWFudGl0eRgFIAEoA1IQYnV5VG9rZW5RdWFu'
+        'dGl0eQ==');
 
 @$core.Deprecated('Use marketCancelOrderContractDescriptor instead')
 const MarketCancelOrderContract$json = {
@@ -43,7 +43,6 @@ const MarketCancelOrderContract$json = {
 };
 
 /// Descriptor for `MarketCancelOrderContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List marketCancelOrderContractDescriptor = $convert.base64Decode(
-    'ChlNYXJrZXRDYW5jZWxPcmRlckNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bm'
-    'VyQWRkcmVzcxIZCghvcmRlcl9pZBgCIAEoDFIHb3JkZXJJZA==');
-
+final $typed_data.Uint8List marketCancelOrderContractDescriptor = $convert
+    .base64Decode('ChlNYXJrZXRDYW5jZWxPcmRlckNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bm'
+        'VyQWRkcmVzcxIZCghvcmRlcl9pZBgCIAEoDFIHb3JkZXJJZA==');

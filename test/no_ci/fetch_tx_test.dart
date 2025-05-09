@@ -18,8 +18,7 @@ void main() {
 
     final tx = await fetchFromRandomElectrumXNode(
       (client) => client.getTransaction(
-        txHash:
-            "3bc8073dc796f3d7ee27deaee392caf8db1dd29d558f591e9a915e27dd2ae008",
+        txHash: "3bc8073dc796f3d7ee27deaee392caf8db1dd29d558f591e9a915e27dd2ae008",
         type: BitcoinNetwork,
         nodes: nodes,
         addressTypes: addressTypes,

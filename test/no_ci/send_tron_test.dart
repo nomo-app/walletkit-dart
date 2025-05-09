@@ -30,8 +30,8 @@ void main() {
       amount: Amount.convert(value: 1, decimals: 6).value,
     );
 
-    final (bandwidth: balance, energy: _) = await tronHTTP.getAccountResource(
-        address: "TDvoNesroeU7fHtwnvYn9Uw1c2hNZ8iBqX");
+    final (bandwidth: balance, energy: _) =
+        await tronHTTP.getAccountResource(address: "TDvoNesroeU7fHtwnvYn9Uw1c2hNZ8iBqX");
     final bandWidth = await calculateTransactionSize(contractData);
     final feeLimit = balance >= bandWidth ? 0 : bandWidth * bandWidthPrice;
 
@@ -73,8 +73,7 @@ void main() {
     final bandwidth = await calculateTransactionSize(contractData);
 
     final bandWidthFee = balance >= bandwidth ? 0 : bandwidth * bandWidthPrice;
-    final energyFee =
-        energyBalance >= energyUsed ? 0 : energyUsed * energyPrice;
+    final energyFee = energyBalance >= energyUsed ? 0 : energyUsed * energyPrice;
     final feeLimit = bandWidthFee + energyFee;
 
     final block = await tronHTTP.getBlock();

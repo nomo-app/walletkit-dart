@@ -23,11 +23,9 @@ class CoinEntity {
 
   String get identifier => "$name:$symbol:$decimals";
 
-  ERC20Entity? get asEthBased =>
-      this is ERC20Entity ? this as ERC20Entity : null;
+  ERC20Entity? get asEthBased => this is ERC20Entity ? this as ERC20Entity : null;
 
-  ERC1155Entity? get asERC1155 =>
-      this is ERC1155Entity ? this as ERC1155Entity : null;
+  ERC1155Entity? get asERC1155 => this is ERC1155Entity ? this as ERC1155Entity : null;
 
   bool get isEvm => this is EvmCoinEntity;
   bool get isERC20 => this is ERC20Entity;
@@ -209,8 +207,7 @@ class ERC1155Entity extends EvmCoinEntity {
   String get lowerCaseAddress => contractAddress.toLowerCase();
 
   @override
-  int get hashCode =>
-      lowerCaseAddress.hashCode ^ chainID.hashCode ^ tokenId.hashCode;
+  int get hashCode => lowerCaseAddress.hashCode ^ chainID.hashCode ^ tokenId.hashCode;
 
   @override
   bool operator ==(Object other) {
@@ -335,8 +332,7 @@ class ERC721Entity extends EvmCoinEntity {
   String get lowerCaseAddress => contractAddress.toLowerCase();
 
   @override
-  int get hashCode =>
-      lowerCaseAddress.hashCode ^ chainID.hashCode ^ tokenId.hashCode;
+  int get hashCode => lowerCaseAddress.hashCode ^ chainID.hashCode ^ tokenId.hashCode;
 
   @override
   bool operator ==(Object other) {

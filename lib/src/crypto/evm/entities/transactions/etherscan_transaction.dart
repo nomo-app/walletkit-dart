@@ -63,8 +63,7 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: token.decimals,
       );
 
-      final transferMethod =
-          TransactionTransferMethod.fromAddress(address, to, from);
+      final transferMethod = TransactionTransferMethod.fromAddress(address, to, from);
 
       final input = input_s.hexToBytesWithPrefixOrNull ?? Uint8List(0);
 
@@ -142,8 +141,7 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: token.decimals,
       );
 
-      final transferMethod =
-          TransactionTransferMethod.fromAddress(address, to, from);
+      final transferMethod = TransactionTransferMethod.fromAddress(address, to, from);
 
       final input = input_s.hexToBytesWithPrefixOrNull ?? Uint8List(0);
 
@@ -203,9 +201,8 @@ base class EtherscanTransaction extends EVMTransaction {
         tokenId: BigInt.tryParse(tokenID_s) ?? BigInt.from(-1),
       );
       final amount = Amount(
-        value: tokenValue != null
-            ? (BigInt.tryParse(tokenValue) ?? BigInt.from(0))
-            : BigInt.from(0),
+        value:
+            tokenValue != null ? (BigInt.tryParse(tokenValue) ?? BigInt.from(0)) : BigInt.from(0),
         decimals: 0,
       );
       final fee = Amount(
@@ -216,8 +213,7 @@ base class EtherscanTransaction extends EVMTransaction {
         value: gasPrice_s.toBigInt,
         decimals: currency.decimals,
       );
-      final transferMethod =
-          TransactionTransferMethod.fromAddress(address, to, from);
+      final transferMethod = TransactionTransferMethod.fromAddress(address, to, from);
 
       return EtherscanTransaction(
         hash: hash,
@@ -357,8 +353,7 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: currency.decimals,
       );
 
-      final transferMethod =
-          TransactionTransferMethod.fromAddress(address, to, from);
+      final transferMethod = TransactionTransferMethod.fromAddress(address, to, from);
 
       return EtherscanTransaction(
         hash: hash,
@@ -431,8 +426,7 @@ base class EtherscanTransaction extends EVMTransaction {
         decimals: currency.decimals,
       );
 
-      final transferMethod =
-          TransactionTransferMethod.fromAddress(address, to, from);
+      final transferMethod = TransactionTransferMethod.fromAddress(address, to, from);
 
       return EtherscanTransaction(
         hash: hash,

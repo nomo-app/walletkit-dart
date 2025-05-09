@@ -25,24 +25,28 @@ class AuthenticationPath extends $pb.GeneratedMessage {
     return $result;
   }
   AuthenticationPath._() : super();
-  factory AuthenticationPath.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AuthenticationPath.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory AuthenticationPath.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AuthenticationPath.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AuthenticationPath', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AuthenticationPath',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..p<$core.bool>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.KB)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   AuthenticationPath clone() => AuthenticationPath()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  AuthenticationPath copyWith(void Function(AuthenticationPath) updates) => super.copyWith((message) => updates(message as AuthenticationPath)) as AuthenticationPath;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  AuthenticationPath copyWith(void Function(AuthenticationPath) updates) =>
+      super.copyWith((message) => updates(message as AuthenticationPath)) as AuthenticationPath;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -51,7 +55,8 @@ class AuthenticationPath extends $pb.GeneratedMessage {
   AuthenticationPath createEmptyInstance() => create();
   static $pb.PbList<AuthenticationPath> createRepeated() => $pb.PbList<AuthenticationPath>();
   @$core.pragma('dart2js:noInline')
-  static AuthenticationPath getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AuthenticationPath>(create);
+  static AuthenticationPath getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AuthenticationPath>(create);
   static AuthenticationPath? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -77,26 +82,31 @@ class MerklePath extends $pb.GeneratedMessage {
     return $result;
   }
   MerklePath._() : super();
-  factory MerklePath.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MerklePath.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory MerklePath.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MerklePath.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MerklePath', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..pc<AuthenticationPath>(1, _omitFieldNames ? '' : 'authenticationPaths', $pb.PbFieldType.PM, subBuilder: AuthenticationPath.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MerklePath',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
+    ..pc<AuthenticationPath>(1, _omitFieldNames ? '' : 'authenticationPaths', $pb.PbFieldType.PM,
+        subBuilder: AuthenticationPath.create)
     ..p<$core.bool>(2, _omitFieldNames ? '' : 'index', $pb.PbFieldType.KB)
     ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'rt', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   MerklePath clone() => MerklePath()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MerklePath copyWith(void Function(MerklePath) updates) => super.copyWith((message) => updates(message as MerklePath)) as MerklePath;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  MerklePath copyWith(void Function(MerklePath) updates) =>
+      super.copyWith((message) => updates(message as MerklePath)) as MerklePath;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -105,7 +115,8 @@ class MerklePath extends $pb.GeneratedMessage {
   MerklePath createEmptyInstance() => create();
   static $pb.PbList<MerklePath> createRepeated() => $pb.PbList<MerklePath>();
   @$core.pragma('dart2js:noInline')
-  static MerklePath getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MerklePath>(create);
+  static MerklePath getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MerklePath>(create);
   static MerklePath? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -117,7 +128,10 @@ class MerklePath extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.List<$core.int> get rt => $_getN(2);
   @$pb.TagNumber(3)
-  set rt($core.List<$core.int> v) { $_setBytes(2, v); }
+  set rt($core.List<$core.int> v) {
+    $_setBytes(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasRt() => $_has(2);
   @$pb.TagNumber(3)
@@ -139,25 +153,29 @@ class OutputPoint extends $pb.GeneratedMessage {
     return $result;
   }
   OutputPoint._() : super();
-  factory OutputPoint.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory OutputPoint.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory OutputPoint.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory OutputPoint.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OutputPoint', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OutputPoint',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'hash', $pb.PbFieldType.OY)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'index', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   OutputPoint clone() => OutputPoint()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  OutputPoint copyWith(void Function(OutputPoint) updates) => super.copyWith((message) => updates(message as OutputPoint)) as OutputPoint;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  OutputPoint copyWith(void Function(OutputPoint) updates) =>
+      super.copyWith((message) => updates(message as OutputPoint)) as OutputPoint;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -166,13 +184,17 @@ class OutputPoint extends $pb.GeneratedMessage {
   OutputPoint createEmptyInstance() => create();
   static $pb.PbList<OutputPoint> createRepeated() => $pb.PbList<OutputPoint>();
   @$core.pragma('dart2js:noInline')
-  static OutputPoint getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OutputPoint>(create);
+  static OutputPoint getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OutputPoint>(create);
   static OutputPoint? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get hash => $_getN(0);
   @$pb.TagNumber(1)
-  set hash($core.List<$core.int> v) { $_setBytes(0, v); }
+  set hash($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasHash() => $_has(0);
   @$pb.TagNumber(1)
@@ -181,7 +203,10 @@ class OutputPoint extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get index => $_getIZ(1);
   @$pb.TagNumber(2)
-  set index($core.int v) { $_setSignedInt32(1, v); }
+  set index($core.int v) {
+    $_setSignedInt32(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasIndex() => $_has(1);
   @$pb.TagNumber(2)
@@ -203,25 +228,30 @@ class OutputPointInfo extends $pb.GeneratedMessage {
     return $result;
   }
   OutputPointInfo._() : super();
-  factory OutputPointInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory OutputPointInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory OutputPointInfo.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory OutputPointInfo.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OutputPointInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..pc<OutputPoint>(1, _omitFieldNames ? '' : 'outPoints', $pb.PbFieldType.PM, subBuilder: OutputPoint.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'OutputPointInfo',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
+    ..pc<OutputPoint>(1, _omitFieldNames ? '' : 'outPoints', $pb.PbFieldType.PM,
+        subBuilder: OutputPoint.create)
     ..a<$core.int>(2, _omitFieldNames ? '' : 'blockNum', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   OutputPointInfo clone() => OutputPointInfo()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  OutputPointInfo copyWith(void Function(OutputPointInfo) updates) => super.copyWith((message) => updates(message as OutputPointInfo)) as OutputPointInfo;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  OutputPointInfo copyWith(void Function(OutputPointInfo) updates) =>
+      super.copyWith((message) => updates(message as OutputPointInfo)) as OutputPointInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -230,7 +260,8 @@ class OutputPointInfo extends $pb.GeneratedMessage {
   OutputPointInfo createEmptyInstance() => create();
   static $pb.PbList<OutputPointInfo> createRepeated() => $pb.PbList<OutputPointInfo>();
   @$core.pragma('dart2js:noInline')
-  static OutputPointInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OutputPointInfo>(create);
+  static OutputPointInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OutputPointInfo>(create);
   static OutputPointInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -239,7 +270,10 @@ class OutputPointInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.int get blockNum => $_getIZ(1);
   @$pb.TagNumber(2)
-  set blockNum($core.int v) { $_setSignedInt32(1, v); }
+  set blockNum($core.int v) {
+    $_setSignedInt32(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasBlockNum() => $_has(1);
   @$pb.TagNumber(2)
@@ -257,24 +291,28 @@ class PedersenHash extends $pb.GeneratedMessage {
     return $result;
   }
   PedersenHash._() : super();
-  factory PedersenHash.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PedersenHash.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory PedersenHash.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory PedersenHash.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PedersenHash', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PedersenHash',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'content', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   PedersenHash clone() => PedersenHash()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  PedersenHash copyWith(void Function(PedersenHash) updates) => super.copyWith((message) => updates(message as PedersenHash)) as PedersenHash;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  PedersenHash copyWith(void Function(PedersenHash) updates) =>
+      super.copyWith((message) => updates(message as PedersenHash)) as PedersenHash;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -283,13 +321,17 @@ class PedersenHash extends $pb.GeneratedMessage {
   PedersenHash createEmptyInstance() => create();
   static $pb.PbList<PedersenHash> createRepeated() => $pb.PbList<PedersenHash>();
   @$core.pragma('dart2js:noInline')
-  static PedersenHash getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PedersenHash>(create);
+  static PedersenHash getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PedersenHash>(create);
   static PedersenHash? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get content => $_getN(0);
   @$pb.TagNumber(1)
-  set content($core.List<$core.int> v) { $_setBytes(0, v); }
+  set content($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasContent() => $_has(0);
   @$pb.TagNumber(1)
@@ -315,26 +357,33 @@ class IncrementalMerkleTree extends $pb.GeneratedMessage {
     return $result;
   }
   IncrementalMerkleTree._() : super();
-  factory IncrementalMerkleTree.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory IncrementalMerkleTree.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory IncrementalMerkleTree.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory IncrementalMerkleTree.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'IncrementalMerkleTree', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'IncrementalMerkleTree',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..aOM<PedersenHash>(1, _omitFieldNames ? '' : 'left', subBuilder: PedersenHash.create)
     ..aOM<PedersenHash>(2, _omitFieldNames ? '' : 'right', subBuilder: PedersenHash.create)
-    ..pc<PedersenHash>(3, _omitFieldNames ? '' : 'parents', $pb.PbFieldType.PM, subBuilder: PedersenHash.create)
-    ..hasRequiredFields = false
-  ;
+    ..pc<PedersenHash>(3, _omitFieldNames ? '' : 'parents', $pb.PbFieldType.PM,
+        subBuilder: PedersenHash.create)
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   IncrementalMerkleTree clone() => IncrementalMerkleTree()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  IncrementalMerkleTree copyWith(void Function(IncrementalMerkleTree) updates) => super.copyWith((message) => updates(message as IncrementalMerkleTree)) as IncrementalMerkleTree;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  IncrementalMerkleTree copyWith(void Function(IncrementalMerkleTree) updates) =>
+      super.copyWith((message) => updates(message as IncrementalMerkleTree))
+          as IncrementalMerkleTree;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -343,13 +392,17 @@ class IncrementalMerkleTree extends $pb.GeneratedMessage {
   IncrementalMerkleTree createEmptyInstance() => create();
   static $pb.PbList<IncrementalMerkleTree> createRepeated() => $pb.PbList<IncrementalMerkleTree>();
   @$core.pragma('dart2js:noInline')
-  static IncrementalMerkleTree getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IncrementalMerkleTree>(create);
+  static IncrementalMerkleTree getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IncrementalMerkleTree>(create);
   static IncrementalMerkleTree? _defaultInstance;
 
   @$pb.TagNumber(1)
   PedersenHash get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(PedersenHash v) { setField(1, v); }
+  set left(PedersenHash v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -360,7 +413,10 @@ class IncrementalMerkleTree extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   PedersenHash get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(PedersenHash v) { setField(2, v); }
+  set right(PedersenHash v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -403,44 +459,58 @@ class IncrementalMerkleVoucher extends $pb.GeneratedMessage {
     return $result;
   }
   IncrementalMerkleVoucher._() : super();
-  factory IncrementalMerkleVoucher.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory IncrementalMerkleVoucher.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory IncrementalMerkleVoucher.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory IncrementalMerkleVoucher.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'IncrementalMerkleVoucher', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..aOM<IncrementalMerkleTree>(1, _omitFieldNames ? '' : 'tree', subBuilder: IncrementalMerkleTree.create)
-    ..pc<PedersenHash>(2, _omitFieldNames ? '' : 'filled', $pb.PbFieldType.PM, subBuilder: PedersenHash.create)
-    ..aOM<IncrementalMerkleTree>(3, _omitFieldNames ? '' : 'cursor', subBuilder: IncrementalMerkleTree.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'IncrementalMerkleVoucher',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
+    ..aOM<IncrementalMerkleTree>(1, _omitFieldNames ? '' : 'tree',
+        subBuilder: IncrementalMerkleTree.create)
+    ..pc<PedersenHash>(2, _omitFieldNames ? '' : 'filled', $pb.PbFieldType.PM,
+        subBuilder: PedersenHash.create)
+    ..aOM<IncrementalMerkleTree>(3, _omitFieldNames ? '' : 'cursor',
+        subBuilder: IncrementalMerkleTree.create)
     ..aInt64(4, _omitFieldNames ? '' : 'cursorDepth')
     ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'rt', $pb.PbFieldType.OY)
     ..aOM<OutputPoint>(10, _omitFieldNames ? '' : 'outputPoint', subBuilder: OutputPoint.create)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   IncrementalMerkleVoucher clone() => IncrementalMerkleVoucher()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  IncrementalMerkleVoucher copyWith(void Function(IncrementalMerkleVoucher) updates) => super.copyWith((message) => updates(message as IncrementalMerkleVoucher)) as IncrementalMerkleVoucher;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  IncrementalMerkleVoucher copyWith(void Function(IncrementalMerkleVoucher) updates) =>
+      super.copyWith((message) => updates(message as IncrementalMerkleVoucher))
+          as IncrementalMerkleVoucher;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static IncrementalMerkleVoucher create() => IncrementalMerkleVoucher._();
   IncrementalMerkleVoucher createEmptyInstance() => create();
-  static $pb.PbList<IncrementalMerkleVoucher> createRepeated() => $pb.PbList<IncrementalMerkleVoucher>();
+  static $pb.PbList<IncrementalMerkleVoucher> createRepeated() =>
+      $pb.PbList<IncrementalMerkleVoucher>();
   @$core.pragma('dart2js:noInline')
-  static IncrementalMerkleVoucher getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IncrementalMerkleVoucher>(create);
+  static IncrementalMerkleVoucher getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IncrementalMerkleVoucher>(create);
   static IncrementalMerkleVoucher? _defaultInstance;
 
   @$pb.TagNumber(1)
   IncrementalMerkleTree get tree => $_getN(0);
   @$pb.TagNumber(1)
-  set tree(IncrementalMerkleTree v) { setField(1, v); }
+  set tree(IncrementalMerkleTree v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasTree() => $_has(0);
   @$pb.TagNumber(1)
@@ -454,7 +524,10 @@ class IncrementalMerkleVoucher extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   IncrementalMerkleTree get cursor => $_getN(2);
   @$pb.TagNumber(3)
-  set cursor(IncrementalMerkleTree v) { setField(3, v); }
+  set cursor(IncrementalMerkleTree v) {
+    setField(3, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasCursor() => $_has(2);
   @$pb.TagNumber(3)
@@ -465,7 +538,10 @@ class IncrementalMerkleVoucher extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $fixnum.Int64 get cursorDepth => $_getI64(3);
   @$pb.TagNumber(4)
-  set cursorDepth($fixnum.Int64 v) { $_setInt64(3, v); }
+  set cursorDepth($fixnum.Int64 v) {
+    $_setInt64(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasCursorDepth() => $_has(3);
   @$pb.TagNumber(4)
@@ -474,7 +550,10 @@ class IncrementalMerkleVoucher extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.List<$core.int> get rt => $_getN(4);
   @$pb.TagNumber(5)
-  set rt($core.List<$core.int> v) { $_setBytes(4, v); }
+  set rt($core.List<$core.int> v) {
+    $_setBytes(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasRt() => $_has(4);
   @$pb.TagNumber(5)
@@ -483,7 +562,10 @@ class IncrementalMerkleVoucher extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   OutputPoint get outputPoint => $_getN(5);
   @$pb.TagNumber(10)
-  set outputPoint(OutputPoint v) { setField(10, v); }
+  set outputPoint(OutputPoint v) {
+    setField(10, v);
+  }
+
   @$pb.TagNumber(10)
   $core.bool hasOutputPoint() => $_has(5);
   @$pb.TagNumber(10)
@@ -507,34 +589,43 @@ class IncrementalMerkleVoucherInfo extends $pb.GeneratedMessage {
     return $result;
   }
   IncrementalMerkleVoucherInfo._() : super();
-  factory IncrementalMerkleVoucherInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory IncrementalMerkleVoucherInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory IncrementalMerkleVoucherInfo.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory IncrementalMerkleVoucherInfo.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'IncrementalMerkleVoucherInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..pc<IncrementalMerkleVoucher>(1, _omitFieldNames ? '' : 'vouchers', $pb.PbFieldType.PM, subBuilder: IncrementalMerkleVoucher.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'IncrementalMerkleVoucherInfo',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
+    ..pc<IncrementalMerkleVoucher>(1, _omitFieldNames ? '' : 'vouchers', $pb.PbFieldType.PM,
+        subBuilder: IncrementalMerkleVoucher.create)
     ..p<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'paths', $pb.PbFieldType.PY)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   IncrementalMerkleVoucherInfo clone() => IncrementalMerkleVoucherInfo()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  IncrementalMerkleVoucherInfo copyWith(void Function(IncrementalMerkleVoucherInfo) updates) => super.copyWith((message) => updates(message as IncrementalMerkleVoucherInfo)) as IncrementalMerkleVoucherInfo;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  IncrementalMerkleVoucherInfo copyWith(void Function(IncrementalMerkleVoucherInfo) updates) =>
+      super.copyWith((message) => updates(message as IncrementalMerkleVoucherInfo))
+          as IncrementalMerkleVoucherInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static IncrementalMerkleVoucherInfo create() => IncrementalMerkleVoucherInfo._();
   IncrementalMerkleVoucherInfo createEmptyInstance() => create();
-  static $pb.PbList<IncrementalMerkleVoucherInfo> createRepeated() => $pb.PbList<IncrementalMerkleVoucherInfo>();
+  static $pb.PbList<IncrementalMerkleVoucherInfo> createRepeated() =>
+      $pb.PbList<IncrementalMerkleVoucherInfo>();
   @$core.pragma('dart2js:noInline')
-  static IncrementalMerkleVoucherInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IncrementalMerkleVoucherInfo>(create);
+  static IncrementalMerkleVoucherInfo getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IncrementalMerkleVoucherInfo>(create);
   static IncrementalMerkleVoucherInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -575,29 +666,34 @@ class SpendDescription extends $pb.GeneratedMessage {
     return $result;
   }
   SpendDescription._() : super();
-  factory SpendDescription.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SpendDescription.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory SpendDescription.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory SpendDescription.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpendDescription', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SpendDescription',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'valueCommitment', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'anchor', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'nullifier', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'rk', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'zkproof', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'spendAuthoritySignature', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
+    ..a<$core.List<$core.int>>(
+        6, _omitFieldNames ? '' : 'spendAuthoritySignature', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   SpendDescription clone() => SpendDescription()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SpendDescription copyWith(void Function(SpendDescription) updates) => super.copyWith((message) => updates(message as SpendDescription)) as SpendDescription;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  SpendDescription copyWith(void Function(SpendDescription) updates) =>
+      super.copyWith((message) => updates(message as SpendDescription)) as SpendDescription;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -606,13 +702,17 @@ class SpendDescription extends $pb.GeneratedMessage {
   SpendDescription createEmptyInstance() => create();
   static $pb.PbList<SpendDescription> createRepeated() => $pb.PbList<SpendDescription>();
   @$core.pragma('dart2js:noInline')
-  static SpendDescription getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SpendDescription>(create);
+  static SpendDescription getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SpendDescription>(create);
   static SpendDescription? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get valueCommitment => $_getN(0);
   @$pb.TagNumber(1)
-  set valueCommitment($core.List<$core.int> v) { $_setBytes(0, v); }
+  set valueCommitment($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasValueCommitment() => $_has(0);
   @$pb.TagNumber(1)
@@ -621,7 +721,10 @@ class SpendDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.List<$core.int> get anchor => $_getN(1);
   @$pb.TagNumber(2)
-  set anchor($core.List<$core.int> v) { $_setBytes(1, v); }
+  set anchor($core.List<$core.int> v) {
+    $_setBytes(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasAnchor() => $_has(1);
   @$pb.TagNumber(2)
@@ -630,7 +733,10 @@ class SpendDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.List<$core.int> get nullifier => $_getN(2);
   @$pb.TagNumber(3)
-  set nullifier($core.List<$core.int> v) { $_setBytes(2, v); }
+  set nullifier($core.List<$core.int> v) {
+    $_setBytes(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasNullifier() => $_has(2);
   @$pb.TagNumber(3)
@@ -639,7 +745,10 @@ class SpendDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.List<$core.int> get rk => $_getN(3);
   @$pb.TagNumber(4)
-  set rk($core.List<$core.int> v) { $_setBytes(3, v); }
+  set rk($core.List<$core.int> v) {
+    $_setBytes(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasRk() => $_has(3);
   @$pb.TagNumber(4)
@@ -648,7 +757,10 @@ class SpendDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.List<$core.int> get zkproof => $_getN(4);
   @$pb.TagNumber(5)
-  set zkproof($core.List<$core.int> v) { $_setBytes(4, v); }
+  set zkproof($core.List<$core.int> v) {
+    $_setBytes(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasZkproof() => $_has(4);
   @$pb.TagNumber(5)
@@ -657,7 +769,10 @@ class SpendDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.List<$core.int> get spendAuthoritySignature => $_getN(5);
   @$pb.TagNumber(6)
-  set spendAuthoritySignature($core.List<$core.int> v) { $_setBytes(5, v); }
+  set spendAuthoritySignature($core.List<$core.int> v) {
+    $_setBytes(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasSpendAuthoritySignature() => $_has(5);
   @$pb.TagNumber(6)
@@ -695,29 +810,33 @@ class ReceiveDescription extends $pb.GeneratedMessage {
     return $result;
   }
   ReceiveDescription._() : super();
-  factory ReceiveDescription.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ReceiveDescription.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ReceiveDescription.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ReceiveDescription.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReceiveDescription', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReceiveDescription',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'valueCommitment', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'noteCommitment', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'epk', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'cEnc', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'cOut', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'zkproof', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   ReceiveDescription clone() => ReceiveDescription()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ReceiveDescription copyWith(void Function(ReceiveDescription) updates) => super.copyWith((message) => updates(message as ReceiveDescription)) as ReceiveDescription;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ReceiveDescription copyWith(void Function(ReceiveDescription) updates) =>
+      super.copyWith((message) => updates(message as ReceiveDescription)) as ReceiveDescription;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -726,13 +845,17 @@ class ReceiveDescription extends $pb.GeneratedMessage {
   ReceiveDescription createEmptyInstance() => create();
   static $pb.PbList<ReceiveDescription> createRepeated() => $pb.PbList<ReceiveDescription>();
   @$core.pragma('dart2js:noInline')
-  static ReceiveDescription getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReceiveDescription>(create);
+  static ReceiveDescription getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReceiveDescription>(create);
   static ReceiveDescription? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get valueCommitment => $_getN(0);
   @$pb.TagNumber(1)
-  set valueCommitment($core.List<$core.int> v) { $_setBytes(0, v); }
+  set valueCommitment($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasValueCommitment() => $_has(0);
   @$pb.TagNumber(1)
@@ -741,7 +864,10 @@ class ReceiveDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.List<$core.int> get noteCommitment => $_getN(1);
   @$pb.TagNumber(2)
-  set noteCommitment($core.List<$core.int> v) { $_setBytes(1, v); }
+  set noteCommitment($core.List<$core.int> v) {
+    $_setBytes(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasNoteCommitment() => $_has(1);
   @$pb.TagNumber(2)
@@ -750,7 +876,10 @@ class ReceiveDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.List<$core.int> get epk => $_getN(2);
   @$pb.TagNumber(3)
-  set epk($core.List<$core.int> v) { $_setBytes(2, v); }
+  set epk($core.List<$core.int> v) {
+    $_setBytes(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasEpk() => $_has(2);
   @$pb.TagNumber(3)
@@ -759,7 +888,10 @@ class ReceiveDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.List<$core.int> get cEnc => $_getN(3);
   @$pb.TagNumber(4)
-  set cEnc($core.List<$core.int> v) { $_setBytes(3, v); }
+  set cEnc($core.List<$core.int> v) {
+    $_setBytes(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasCEnc() => $_has(3);
   @$pb.TagNumber(4)
@@ -768,7 +900,10 @@ class ReceiveDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.List<$core.int> get cOut => $_getN(4);
   @$pb.TagNumber(5)
-  set cOut($core.List<$core.int> v) { $_setBytes(4, v); }
+  set cOut($core.List<$core.int> v) {
+    $_setBytes(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasCOut() => $_has(4);
   @$pb.TagNumber(5)
@@ -777,7 +912,10 @@ class ReceiveDescription extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.List<$core.int> get zkproof => $_getN(5);
   @$pb.TagNumber(6)
-  set zkproof($core.List<$core.int> v) { $_setBytes(5, v); }
+  set zkproof($core.List<$core.int> v) {
+    $_setBytes(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasZkproof() => $_has(5);
   @$pb.TagNumber(6)
@@ -819,45 +957,59 @@ class ShieldedTransferContract extends $pb.GeneratedMessage {
     return $result;
   }
   ShieldedTransferContract._() : super();
-  factory ShieldedTransferContract.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ShieldedTransferContract.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ShieldedTransferContract.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ShieldedTransferContract.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ShieldedTransferContract', package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'), createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'transparentFromAddress', $pb.PbFieldType.OY)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ShieldedTransferContract',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'protocol'),
+      createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(
+        1, _omitFieldNames ? '' : 'transparentFromAddress', $pb.PbFieldType.OY)
     ..aInt64(2, _omitFieldNames ? '' : 'fromAmount')
-    ..pc<SpendDescription>(3, _omitFieldNames ? '' : 'spendDescription', $pb.PbFieldType.PM, subBuilder: SpendDescription.create)
-    ..pc<ReceiveDescription>(4, _omitFieldNames ? '' : 'receiveDescription', $pb.PbFieldType.PM, subBuilder: ReceiveDescription.create)
+    ..pc<SpendDescription>(3, _omitFieldNames ? '' : 'spendDescription', $pb.PbFieldType.PM,
+        subBuilder: SpendDescription.create)
+    ..pc<ReceiveDescription>(4, _omitFieldNames ? '' : 'receiveDescription', $pb.PbFieldType.PM,
+        subBuilder: ReceiveDescription.create)
     ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'bindingSignature', $pb.PbFieldType.OY)
     ..a<$core.List<$core.int>>(6, _omitFieldNames ? '' : 'transparentToAddress', $pb.PbFieldType.OY)
     ..aInt64(7, _omitFieldNames ? '' : 'toAmount')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   ShieldedTransferContract clone() => ShieldedTransferContract()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ShieldedTransferContract copyWith(void Function(ShieldedTransferContract) updates) => super.copyWith((message) => updates(message as ShieldedTransferContract)) as ShieldedTransferContract;
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ShieldedTransferContract copyWith(void Function(ShieldedTransferContract) updates) =>
+      super.copyWith((message) => updates(message as ShieldedTransferContract))
+          as ShieldedTransferContract;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ShieldedTransferContract create() => ShieldedTransferContract._();
   ShieldedTransferContract createEmptyInstance() => create();
-  static $pb.PbList<ShieldedTransferContract> createRepeated() => $pb.PbList<ShieldedTransferContract>();
+  static $pb.PbList<ShieldedTransferContract> createRepeated() =>
+      $pb.PbList<ShieldedTransferContract>();
   @$core.pragma('dart2js:noInline')
-  static ShieldedTransferContract getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShieldedTransferContract>(create);
+  static ShieldedTransferContract getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ShieldedTransferContract>(create);
   static ShieldedTransferContract? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get transparentFromAddress => $_getN(0);
   @$pb.TagNumber(1)
-  set transparentFromAddress($core.List<$core.int> v) { $_setBytes(0, v); }
+  set transparentFromAddress($core.List<$core.int> v) {
+    $_setBytes(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasTransparentFromAddress() => $_has(0);
   @$pb.TagNumber(1)
@@ -866,7 +1018,10 @@ class ShieldedTransferContract extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $fixnum.Int64 get fromAmount => $_getI64(1);
   @$pb.TagNumber(2)
-  set fromAmount($fixnum.Int64 v) { $_setInt64(1, v); }
+  set fromAmount($fixnum.Int64 v) {
+    $_setInt64(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasFromAmount() => $_has(1);
   @$pb.TagNumber(2)
@@ -881,7 +1036,10 @@ class ShieldedTransferContract extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.List<$core.int> get bindingSignature => $_getN(4);
   @$pb.TagNumber(5)
-  set bindingSignature($core.List<$core.int> v) { $_setBytes(4, v); }
+  set bindingSignature($core.List<$core.int> v) {
+    $_setBytes(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasBindingSignature() => $_has(4);
   @$pb.TagNumber(5)
@@ -890,7 +1048,10 @@ class ShieldedTransferContract extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.List<$core.int> get transparentToAddress => $_getN(5);
   @$pb.TagNumber(6)
-  set transparentToAddress($core.List<$core.int> v) { $_setBytes(5, v); }
+  set transparentToAddress($core.List<$core.int> v) {
+    $_setBytes(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasTransparentToAddress() => $_has(5);
   @$pb.TagNumber(6)
@@ -899,13 +1060,15 @@ class ShieldedTransferContract extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $fixnum.Int64 get toAmount => $_getI64(6);
   @$pb.TagNumber(7)
-  set toAmount($fixnum.Int64 v) { $_setInt64(6, v); }
+  set toAmount($fixnum.Int64 v) {
+    $_setInt64(6, v);
+  }
+
   @$pb.TagNumber(7)
   $core.bool hasToAmount() => $_has(6);
   @$pb.TagNumber(7)
   void clearToAmount() => clearField(7);
 }
-
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -130,8 +130,7 @@ sealed class FunctionParamType<T> {
 
   bool get isDynamic => switch (this) {
         TupleFunctionParamType type => type.types.any((type) => type.isDynamic),
-        ArrayFunctionParamType type =>
-          (type.isFixed && type.itemType.isDynamic == false) == false,
+        ArrayFunctionParamType type => (type.isFixed && type.itemType.isDynamic == false) == false,
         DynamicFunctionParamType _ => true,
         _ => false,
       };
@@ -149,9 +148,8 @@ sealed class FunctionParamType<T> {
 
     if (name.startsWith('(') && name.endsWith(')')) {
       final nameWithoutParentheses = name.substring(1, name.length - 1);
-      final tupleTypes = extractParams(nameWithoutParentheses)
-          .map((e) => fromString(e.$1))
-          .toList();
+      final tupleTypes =
+          extractParams(nameWithoutParentheses).map((e) => fromString(e.$1)).toList();
       return TupleFunctionParamType(name, tupleTypes);
     }
 
@@ -200,8 +198,7 @@ abstract class DynamicFunctionParamType<T> extends FunctionParamType<T> {
 final class TupleFunctionParamType extends FunctionParamType<List<dynamic>> {
   final List<FunctionParamType> types;
 
-  const TupleFunctionParamType(String name, this.types)
-      : super(name, List<dynamic>);
+  const TupleFunctionParamType(String name, this.types) : super(name, List<dynamic>);
 
   @override
   Uint8List encode(List<dynamic> value) {
@@ -260,8 +257,7 @@ final class TupleFunctionParamType extends FunctionParamType<List<dynamic>> {
 final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
   final FunctionParamType<T> itemType;
 
-  const ArrayFunctionParamType(String name, this.itemType)
-      : super(name, List<T>);
+  const ArrayFunctionParamType(String name, this.itemType) : super(name, List<T>);
 
   int? get fixed_length {
     final lastOpeningBracket = name.lastIndexOf('[');
@@ -277,8 +273,7 @@ final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
     final length = switch (fixed_length) {
       int length => length,
       _ => () {
-          final length = FunctionParamInt()
-              .decode(data.sublist(offset, offset + size_unit));
+          final length = FunctionParamInt().decode(data.sublist(offset, offset + size_unit));
           offset += size_unit;
           return length.toInt();
         }.call(),
@@ -318,8 +313,7 @@ final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
   }
 
   @override
-  valueToJson(List<T> value) =>
-      value.map((val) => itemType.valueToJson(val)).toList();
+  valueToJson(List<T> value) => value.map((val) => itemType.valueToJson(val)).toList();
 
   @override
   List<T> valueFromJson(dynamic json) {
@@ -331,13 +325,11 @@ final class ArrayFunctionParamType<T> extends FunctionParamType<List<T>> {
 }
 
 final class FunctionParamAddressArray extends ArrayFunctionParamType<String> {
-  const FunctionParamAddressArray()
-      : super('address[]', const FunctionParamAddress());
+  const FunctionParamAddressArray() : super('address[]', const FunctionParamAddress());
 }
 
 final class FunctionParamBytesArray extends ArrayFunctionParamType<Uint8List> {
-  const FunctionParamBytesArray()
-      : super('bytes[]', const FunctionParamBytes());
+  const FunctionParamBytesArray() : super('bytes[]', const FunctionParamBytes());
 }
 
 ///

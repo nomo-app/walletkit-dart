@@ -254,8 +254,7 @@ class ElectrumInput {
       return throw Exception("Cannot get public key from input");
     }
     return [
-      for (final addressType in addressTypes)
-        pubKeyToAddress(pubKey, addressType, networkType)
+      for (final addressType in addressTypes) pubKeyToAddress(pubKey, addressType, networkType)
     ];
   }
 
@@ -393,14 +392,11 @@ class ElectrumOutput {
       );
     }
 
-    final valIsSatoshi =
-        json.containsKey('value_satoshi') || json.containsKey('value_int');
+    final valIsSatoshi = json.containsKey('value_satoshi') || json.containsKey('value_int');
 
-    var value =
-        json['value_int'] ?? json['value'] ?? json['value_satoshi'] ?? 0;
+    var value = json['value_int'] ?? json['value'] ?? json['value_satoshi'] ?? 0;
 
-    value =
-        valIsSatoshi ? BigInt.from(value) : BigInt.from(toSatoshiValue(value));
+    value = valIsSatoshi ? BigInt.from(value) : BigInt.from(toSatoshiValue(value));
 
     final n = json['n'] ?? -1;
 
@@ -416,8 +412,7 @@ class ElectrumOutput {
 
   String getAddress(UTXONetworkType type, {AddressType? addressType}) {
     try {
-      return getAddressFromLockingScript(scriptPubKey, type,
-          addressType: addressType);
+      return getAddressFromLockingScript(scriptPubKey, type, addressType: addressType);
     } catch (e) {
       return ADDRESS_NOT_SUPPORTED;
     }
@@ -428,8 +423,7 @@ class ElectrumOutput {
     required Iterable<AddressType> addressTypes,
   }) {
     try {
-      final (pubKey, _) =
-          getPublicKeyFromLockingScript(scriptPubKey, networkType);
+      final (pubKey, _) = getPublicKeyFromLockingScript(scriptPubKey, networkType);
 
       return [
         for (final addressType in addressTypes)

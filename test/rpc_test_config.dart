@@ -13,8 +13,7 @@ abstract class RPCTestConfig {
   Future<void> setupEstimateGas(dynamic response);
   Future<void> setupTransactionCount(dynamic response);
   Future<void> setupPriorityFee(dynamic response);
-  Future<void> setupTransactionByHash(
-      String hash, Map<String, dynamic> response);
+  Future<void> setupTransactionByHash(String hash, Map<String, dynamic> response);
 }
 
 class RPCMockTestConfig implements RPCTestConfig {
@@ -41,20 +40,17 @@ class RPCMockTestConfig implements RPCTestConfig {
 
   @override
   Future<void> setupBalance(dynamic response) async {
-    when(mockJsonRPC.call('eth_getBalance', any))
-        .thenAnswer((_) async => RPCResponse(1, response));
+    when(mockJsonRPC.call('eth_getBalance', any)).thenAnswer((_) async => RPCResponse(1, response));
   }
 
   @override
   Future<void> setupTokenCall(dynamic response) async {
-    when(mockJsonRPC.call('eth_call', any))
-        .thenAnswer((_) async => RPCResponse(1, response));
+    when(mockJsonRPC.call('eth_call', any)).thenAnswer((_) async => RPCResponse(1, response));
   }
 
   @override
   Future<void> setupGasPrice(dynamic response) async {
-    when(mockJsonRPC.call('eth_gasPrice', any))
-        .thenAnswer((_) async => RPCResponse(1, response));
+    when(mockJsonRPC.call('eth_gasPrice', any)).thenAnswer((_) async => RPCResponse(1, response));
   }
 
   @override
@@ -76,8 +72,7 @@ class RPCMockTestConfig implements RPCTestConfig {
   }
 
   @override
-  Future<void> setupTransactionByHash(
-      String hash, Map<String, dynamic> response) async {
+  Future<void> setupTransactionByHash(String hash, Map<String, dynamic> response) async {
     when(mockJsonRPC.call('eth_getTransactionByHash', [hash]))
         .thenAnswer((_) async => RPCResponse(1, response));
   }
@@ -146,8 +141,7 @@ class RPCLiveTestConfig implements RPCTestConfig {
   @override
   Future<void> setupPriorityFee(response) async {}
   @override
-  Future<void> setupTransactionByHash(
-      String hash, Map<String, dynamic> response) async {}
+  Future<void> setupTransactionByHash(String hash, Map<String, dynamic> response) async {}
   @override
   Future<void> setupTransactionCount(response) async {}
 }

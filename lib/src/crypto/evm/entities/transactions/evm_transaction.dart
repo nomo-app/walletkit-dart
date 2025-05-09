@@ -113,9 +113,8 @@ base class EVMTransaction extends GenericTransaction {
         status: ConfirmationStatus.fromJson(status),
         input: input.hexToBytesOrNull ?? Uint8List(0),
         token: CoinEntity.fromJson(token),
-        decodedInput: decodedInput != null
-            ? ContractFunctionWithValues.fromJson(decodedInput)
-            : null,
+        decodedInput:
+            decodedInput != null ? ContractFunctionWithValues.fromJson(decodedInput) : null,
       );
     }
     throw Exception("Could not parse EVMTransaction from $json");

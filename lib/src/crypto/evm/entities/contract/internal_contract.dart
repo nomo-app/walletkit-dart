@@ -83,8 +83,7 @@ abstract class InternalContract {
   }) async {
     final _stateMutability = stateMutability ?? function.stateMutability;
 
-    if (_stateMutability != StateMutability.pure &&
-        _stateMutability != StateMutability.view) {
+    if (_stateMutability != StateMutability.pure && _stateMutability != StateMutability.view) {
       throw ArgumentError('Function is not view or pure');
     }
 
@@ -96,8 +95,7 @@ abstract class InternalContract {
 
     final data = function.buildDataField();
 
-    final String result =
-        await rpc.call(contractAddress: contractAddress, data: data);
+    final String result = await rpc.call(contractAddress: contractAddress, data: data);
 
     final resultBuffer = result.hexToBytesWithPrefix;
 
@@ -120,8 +118,7 @@ abstract class InternalContract {
 
     final data = function.buildDataField();
 
-    final String result =
-        await rpc.call(contractAddress: contractAddress, data: data);
+    final String result = await rpc.call(contractAddress: contractAddress, data: data);
 
     final resultBuffer = result.hexToBytesWithPrefix;
 

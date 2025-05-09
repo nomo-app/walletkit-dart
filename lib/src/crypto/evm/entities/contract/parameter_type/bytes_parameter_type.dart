@@ -11,9 +11,7 @@ final class FunctionParamBytes extends DynamicFunctionParamType<Uint8List> {
 
   @override
   (Uint8List, int) decode(int offset, Uint8List data) {
-    final length = FunctionParamInt()
-        .decode(data.sublist(offset, offset + size_unit))
-        .toInt();
+    final length = FunctionParamInt().decode(data.sublist(offset, offset + size_unit)).toInt();
     offset += size_unit;
 
     final value = data.sublist(offset, offset + length);

@@ -46,8 +46,7 @@ class EtherscanRepository {
     apiKeyExcludedUntil[apiKey] = DateTime.now().add(Duration(hours: 1));
   }
 
-  Map<String, String> _buildRequestHeaders() =>
-      {'Content-Type': 'application/json'};
+  Map<String, String> _buildRequestHeaders() => {'Content-Type': 'application/json'};
 
   String getBaseEtherscanEndpoint(String fullUrl) {
     Uri uri = Uri.parse(fullUrl);
@@ -59,8 +58,7 @@ class EtherscanRepository {
     Map<String, String> queryParams = uri.queryParameters;
 
     // Check if 'module' and 'action' parameters exist
-    if (queryParams.containsKey('module') &&
-        queryParams.containsKey('action')) {
+    if (queryParams.containsKey('module') && queryParams.containsKey('action')) {
       String module = queryParams['module']!;
       String action = queryParams['action']!;
 

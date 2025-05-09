@@ -69,8 +69,7 @@ class TransferIntent<T extends FeeInformation> {
     Amount? balance,
   }) {
     final newTargetValue = switch ((balance, feeInfo)) {
-      (Amount balance, EvmFeeInformation info)
-          when token.isERC20 == false && info.maxFee != null =>
+      (Amount balance, EvmFeeInformation info) when token.isERC20 == false && info.maxFee != null =>
         _calcTargetAmount(balance, info.maxFee!),
       (Amount balance, TronFeeInformation info) when token.isERC20 == false =>
         _calcTargetAmount(balance, info.feeLimit),

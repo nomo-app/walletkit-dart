@@ -34,10 +34,9 @@ void main() {
       expect(decodedFunction.parameters[0].type, FunctionParamUint256());
       expect(decodedFunction.parameters[0].value, 1.toBigInt);
       expect(decodedFunction.parameters[1].type, FunctionParamAddressArray());
-      expect(decodedFunction.parameters[1].value[0],
-          wrappedZeniqSmart.contractAddress.toLowerCase());
-      expect(decodedFunction.parameters[1].value[1],
-          avinocZSC.contractAddress.toLowerCase());
+      expect(
+          decodedFunction.parameters[1].value[0], wrappedZeniqSmart.contractAddress.toLowerCase());
+      expect(decodedFunction.parameters[1].value[1], avinocZSC.contractAddress.toLowerCase());
     },
   );
 }

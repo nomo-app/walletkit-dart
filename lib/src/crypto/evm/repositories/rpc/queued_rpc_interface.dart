@@ -178,8 +178,7 @@ abstract class RpcManager {
     final errors = <Error<T, EvmRpcClient>>[];
 
     for (int i = 0; i < maxTries; i++) {
-      final result =
-          await task(client).timeout(timeout).toValueOrError(extra: client);
+      final result = await task(client).timeout(timeout).toValueOrError(extra: client);
 
       switch (result) {
         case Value<T, EvmRpcClient> value:
@@ -251,8 +250,7 @@ final class SimpleRpcManager extends RpcManager {
     Duration timeout = const Duration(seconds: 30),
     int? maxTries,
   }) async {
-    if (refreshType == RefreshType.onTask &&
-        _refreshCompleter.isCompleted == false) {
+    if (refreshType == RefreshType.onTask && _refreshCompleter.isCompleted == false) {
       refreshClients();
     }
 
@@ -267,8 +265,7 @@ final class SimpleRpcManager extends RpcManager {
     final errors = <Error<T, EvmRpcClient>>[];
 
     for (final client in currentClients) {
-      final result =
-          await task(client).timeout(timeout).toValueOrError(extra: client);
+      final result = await task(client).timeout(timeout).toValueOrError(extra: client);
 
       switch (result) {
         case Value<T, EvmRpcClient> value:
@@ -312,8 +309,7 @@ final class QueuedRpcManager extends SimpleRpcManager {
     if (isWorking) return;
     isWorking = true;
 
-    if (refreshType == RefreshType.onTask &&
-        _refreshCompleter.isCompleted == false) {
+    if (refreshType == RefreshType.onTask && _refreshCompleter.isCompleted == false) {
       refreshClients();
     }
 

@@ -116,8 +116,7 @@ class TronScanRepository extends HTTPRepository {
     required String address,
     int asset_type = 0,
   }) {
-    final endpoint =
-        "$baseURL/account/wallet?address=${address}&asset_type=${asset_type}";
+    final endpoint = "$baseURL/account/wallet?address=${address}&asset_type=${asset_type}";
     return getCall<JSON>(endpoint);
   }
 

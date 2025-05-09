@@ -169,8 +169,7 @@ extension QueryUtil on dynamic {
 class HTTPStatusException extends HttpException {
   final int statusCode;
 
-  const HTTPStatusException(this.statusCode, super.message, Uri? uri)
-      : super(uri: uri);
+  const HTTPStatusException(this.statusCode, super.message, Uri? uri) : super(uri: uri);
 
   @override
   String toString() {

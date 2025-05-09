@@ -9,12 +9,10 @@ import '../../../utils.dart';
 void main() {
   const String unsignedTxFromNomo = // from nomo.signEvmTransaction
       "f38207488502540be4008252089405870f1507d820212e921e1f39f14660336231d188016345785d8a0000808559454e49518080";
-  final message =
-      Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
+  final message = Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
 
   final testSeed = loadFromEnv("DEV_SEED");
-  final privateKey =
-      derivePrivateKeyETH(testSeed, ethereumBip44HDPath.defaultPath);
+  final privateKey = derivePrivateKeyETH(testSeed, ethereumBip44HDPath.defaultPath);
 
   test(
     "Test Serialization and Deserialization of Signature",

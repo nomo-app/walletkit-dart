@@ -4,8 +4,7 @@ import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dar
 
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
-    as tron;
+import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart' as tron;
 
 export 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
     show Transaction_raw;
@@ -197,8 +196,7 @@ Uint8List createTxSignature({
 }) {
   final credentials = getTronCredentials(seed: seed);
 
-  final sig =
-      Signature.createSignature(txID, credentials.$1, hashPayload: false);
+  final sig = Signature.createSignature(txID, credentials.$1, hashPayload: false);
 
   final r = padUint8ListTo32(sig.r.toBytesUnsigned);
   final s = padUint8ListTo32(sig.s.toBytesUnsigned);

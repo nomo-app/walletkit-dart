@@ -51,8 +51,8 @@ List<FunctionParamWithValue> decodeDataField({
       }.call(),
     TupleFunctionParamType type => () {
         if (type.isDynamic) {
-          final headerOffset = FunctionParamInt().decode(data_field).toInt() +
-              header_offset_increment;
+          final headerOffset =
+              FunctionParamInt().decode(data_field).toInt() + header_offset_increment;
           final (value, off) = type.decode(headerOffset, data);
           max_offset = max(max_offset, off);
           offset += size_unit;
@@ -66,8 +66,8 @@ List<FunctionParamWithValue> decodeDataField({
       }.call(),
     ArrayFunctionParamType type => () {
         if (type.isDynamic) {
-          final headerOffset = FunctionParamInt().decode(data_field).toInt() +
-              header_offset_increment;
+          final headerOffset =
+              FunctionParamInt().decode(data_field).toInt() + header_offset_increment;
           final (value, off) = type.decode(headerOffset, data);
           max_offset = max(max_offset, off);
           offset += size_unit;
@@ -80,8 +80,8 @@ List<FunctionParamWithValue> decodeDataField({
         return value;
       }.call(),
     DynamicFunctionParamType type => () {
-        final headerOffset = FunctionParamInt().decode(data_field).toInt() +
-            header_offset_increment;
+        final headerOffset =
+            FunctionParamInt().decode(data_field).toInt() + header_offset_increment;
         final (value, off) = type.decode(headerOffset, data);
         max_offset = max(max_offset, off);
         offset += size_unit;

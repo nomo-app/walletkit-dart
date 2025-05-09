@@ -21,8 +21,7 @@ void main() {
   });
 
   test('rlp encode', () {
-    final message =
-        Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
+    final message = Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
 
     final decoded = decodeRLP(message).$1;
 
@@ -32,8 +31,7 @@ void main() {
   });
 
   test('serialize tx', () {
-    final RawEVMTransactionType0 tx =
-        RawEVMTransactionType0.fromHex(unsignedTxFromNomo);
+    final RawEVMTransactionType0 tx = RawEVMTransactionType0.fromHex(unsignedTxFromNomo);
 
     final messageHex = tx.serializedUnsigned(ZeniqSmartNetwork.chainId).toHex;
 

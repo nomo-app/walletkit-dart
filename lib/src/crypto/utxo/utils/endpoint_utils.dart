@@ -88,10 +88,7 @@ Future<List<(String, int)>> _getBestHealthEndpoints({
   final bockheightMap = <int, List<(String, int)>>{};
   for (final entry in sorted) {
     final blockHeight = entry.value.$2;
-    bockheightMap[blockHeight] = [
-      ...bockheightMap[blockHeight] ?? [],
-      entry.key
-    ];
+    bockheightMap[blockHeight] = [...bockheightMap[blockHeight] ?? [], entry.key];
   }
 
   /// Take the Biggest Endpoint List
@@ -190,8 +187,7 @@ Future<ElectrumXClient?> createRandomElectrumXClient({
   return null;
 }
 
-Future<(T?, ElectrumXClient?, NoWorkingHostsException?)>
-    fetchFromRandomElectrumXNode<T>(
+Future<(T?, ElectrumXClient?, NoWorkingHostsException?)> fetchFromRandomElectrumXNode<T>(
   Future<T> Function(ElectrumXClient) fetchFunction, {
   required ElectrumXClient? client,
   required Iterable<(String, int)> endpoints,

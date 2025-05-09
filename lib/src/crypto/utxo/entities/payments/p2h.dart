@@ -23,13 +23,11 @@ class P2Hash {
       return p2pkhScript;
     }
 
-    if (address.startsWith(P2SH_PREFIX) ||
-        address.startsWith(P2SH_PREFIX_LTC)) {
+    if (address.startsWith(P2SH_PREFIX) || address.startsWith(P2SH_PREFIX_LTC)) {
       return p2shScript;
     }
 
-    if (address.startsWith(P2WPKH_PREFIX_BTC) ||
-        address.startsWith(P2WPKH_PREFIX_LTC)) {
+    if (address.startsWith(P2WPKH_PREFIX_BTC) || address.startsWith(P2WPKH_PREFIX_LTC)) {
       return p2wpkhScript;
     }
 
@@ -90,8 +88,7 @@ class P2Hash {
 
     final payload = Base32().decode(_address);
 
-    final payloadData =
-        bech32.fromWords(payload.sublist(0, payload.length - 8));
+    final payloadData = bech32.fromWords(payload.sublist(0, payload.length - 8));
 
     final version = payloadData[0];
     final pubKeyHash = payloadData.sublist(1);
@@ -156,16 +153,13 @@ String getAddressFromLockingScript(
   );
 
   return switch (walletType) {
-    HDWalletPurpose.BIP44 when addressType == AddressType.cashaddr =>
-      bchAddrEncode(
+    HDWalletPurpose.BIP44 when addressType == AddressType.cashaddr => bchAddrEncode(
         hrp: type.bech32,
         data: pubKeyHash,
         witnessVersion: type.pubKeyHashPrefix,
       ),
-    HDWalletPurpose.BIP44 =>
-      pubKeyHashToLegacyAddress(pubKeyHash, type.pubKeyHashPrefix),
-    HDWalletPurpose.BIP49 =>
-      pubKeyHashToP2SHAddress(pubKeyHash, type.scriptHashPrefix),
+    HDWalletPurpose.BIP44 => pubKeyHashToLegacyAddress(pubKeyHash, type.pubKeyHashPrefix),
+    HDWalletPurpose.BIP49 => pubKeyHashToP2SHAddress(pubKeyHash, type.scriptHashPrefix),
     HDWalletPurpose.BIP84 =>
       pubKeyHashToSegwitAddress(pubKeyHash, type.bech32, type.pubKeyHashPrefix),
     _ => throw UnsupportedError("Address type not supported: $pubKeyHash")
@@ -231,8 +225,7 @@ String getAddressFromInput(
   /// Allow for overriding the address type (used for BCH)
   ///
   final _addressType = switch (addressType) {
-    AddressType.cashaddr when pubKeyAddressType == AddressType.legacy =>
-      AddressType.cashaddr,
+    AddressType.cashaddr when pubKeyAddressType == AddressType.legacy => AddressType.cashaddr,
     _ => pubKeyAddressType
   };
 

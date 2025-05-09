@@ -20,8 +20,7 @@ List<ElectrumOutput> singleRandomDrawUTXOSelection(
   Random random = Random();
 
   // try to use at least 2 UTXOs if possible
-  while (selectedAmount < targetAmount ||
-      (selectedUTXOs.length < kMinInputs && utxos.isNotEmpty)) {
+  while (selectedAmount < targetAmount || (selectedUTXOs.length < kMinInputs && utxos.isNotEmpty)) {
     if (utxos.isEmpty) {
       throw SendFailure('Insufficient UTXOs to reach the target amount');
     }
@@ -107,8 +106,7 @@ List<ElectrumOutput> fillUpToTargetAmount(
   utxos.removeWhere((element) => alreadyUsedUTXOs.contains(element));
 
   // try to use at least 2 UTXOs if possible
-  while (selectedAmount < targetAmount ||
-      (selectedUTXOs.length < kMinInputs && utxos.isNotEmpty)) {
+  while (selectedAmount < targetAmount || (selectedUTXOs.length < kMinInputs && utxos.isNotEmpty)) {
     if (utxos.isEmpty) {
       throw SendFailure(
         'Insufficient UTXOs for Fee + Target Amount ($targetAmount)',

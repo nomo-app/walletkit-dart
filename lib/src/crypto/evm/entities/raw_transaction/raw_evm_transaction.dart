@@ -418,9 +418,7 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys
-                            .map((key) => RLPString(key, isHex: true))
-                            .toList(),
+                        item.storageKeys.map((key) => RLPString(key, isHex: true)).toList(),
                       ),
                     ],
                   );
@@ -462,9 +460,7 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys
-                            .map((key) => RLPString(key, isHex: true))
-                            .toList(),
+                        item.storageKeys.map((key) => RLPString(key, isHex: true)).toList(),
                       ),
                     ],
                   );
@@ -515,8 +511,7 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
               if (subList is RLPList)
                 return (
                   address: "0x" + item[0].buffer.toHex,
-                  storageKeys:
-                      subList.value.map((key) => key.buffer.toHex).toList(),
+                  storageKeys: subList.value.map((key) => key.buffer.toHex).toList(),
                 );
               return null;
             })
@@ -560,8 +555,7 @@ class RawEVMTransactionType1 extends RawEvmTransaction {
               if (subList is RLPList)
                 return (
                   address: "0x" + item[0].buffer.toHex,
-                  storageKeys:
-                      subList.value.map((key) => key.buffer.toHex).toList(),
+                  storageKeys: subList.value.map((key) => key.buffer.toHex).toList(),
                 );
               return null;
             })
@@ -675,8 +669,7 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
               if (subList is RLPList)
                 return (
                   address: "0x" + item[0].buffer.toHex,
-                  storageKeys:
-                      subList.value.map((key) => key.buffer.toHex).toList(),
+                  storageKeys: subList.value.map((key) => key.buffer.toHex).toList(),
                 );
               return null;
             })
@@ -719,8 +712,7 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
               if (subList is RLPList)
                 return (
                   address: "0x" + item[0].buffer.toHex,
-                  storageKeys:
-                      subList.value.map((key) => key.buffer.toHex).toList(),
+                  storageKeys: subList.value.map((key) => key.buffer.toHex).toList(),
                 );
               return null;
             })
@@ -786,9 +778,7 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys
-                            .map((key) => RLPString(key, isHex: true))
-                            .toList(),
+                        item.storageKeys.map((key) => RLPString(key, isHex: true)).toList(),
                       ),
                     ],
                   );
@@ -831,9 +821,7 @@ class RawEVMTransactionType2 extends RawEvmTransaction {
                     [
                       RLPString(item.address),
                       RLPList(
-                        item.storageKeys
-                            .map((key) => RLPString(key, isHex: true))
-                            .toList(),
+                        item.storageKeys.map((key) => RLPString(key, isHex: true)).toList(),
                       ),
                     ],
                   );

@@ -26,12 +26,12 @@ const ExchangeCreateContract$json = {
 };
 
 /// Descriptor for `ExchangeCreateContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exchangeCreateContractDescriptor = $convert.base64Decode(
-    'ChZFeGNoYW5nZUNyZWF0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
-    'RkcmVzcxIkCg5maXJzdF90b2tlbl9pZBgCIAEoDFIMZmlyc3RUb2tlbklkEi4KE2ZpcnN0X3Rv'
-    'a2VuX2JhbGFuY2UYAyABKANSEWZpcnN0VG9rZW5CYWxhbmNlEiYKD3NlY29uZF90b2tlbl9pZB'
-    'gEIAEoDFINc2Vjb25kVG9rZW5JZBIwChRzZWNvbmRfdG9rZW5fYmFsYW5jZRgFIAEoA1ISc2Vj'
-    'b25kVG9rZW5CYWxhbmNl');
+final $typed_data.Uint8List exchangeCreateContractDescriptor = $convert
+    .base64Decode('ChZFeGNoYW5nZUNyZWF0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
+        'RkcmVzcxIkCg5maXJzdF90b2tlbl9pZBgCIAEoDFIMZmlyc3RUb2tlbklkEi4KE2ZpcnN0X3Rv'
+        'a2VuX2JhbGFuY2UYAyABKANSEWZpcnN0VG9rZW5CYWxhbmNlEiYKD3NlY29uZF90b2tlbl9pZB'
+        'gEIAEoDFINc2Vjb25kVG9rZW5JZBIwChRzZWNvbmRfdG9rZW5fYmFsYW5jZRgFIAEoA1ISc2Vj'
+        'b25kVG9rZW5CYWxhbmNl');
 
 @$core.Deprecated('Use exchangeInjectContractDescriptor instead')
 const ExchangeInjectContract$json = {
@@ -45,10 +45,10 @@ const ExchangeInjectContract$json = {
 };
 
 /// Descriptor for `ExchangeInjectContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exchangeInjectContractDescriptor = $convert.base64Decode(
-    'ChZFeGNoYW5nZUluamVjdENvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
-    'RkcmVzcxIfCgtleGNoYW5nZV9pZBgCIAEoA1IKZXhjaGFuZ2VJZBIZCgh0b2tlbl9pZBgDIAEo'
-    'DFIHdG9rZW5JZBIUCgVxdWFudBgEIAEoA1IFcXVhbnQ=');
+final $typed_data.Uint8List exchangeInjectContractDescriptor = $convert
+    .base64Decode('ChZFeGNoYW5nZUluamVjdENvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
+        'RkcmVzcxIfCgtleGNoYW5nZV9pZBgCIAEoA1IKZXhjaGFuZ2VJZBIZCgh0b2tlbl9pZBgDIAEo'
+        'DFIHdG9rZW5JZBIUCgVxdWFudBgEIAEoA1IFcXVhbnQ=');
 
 @$core.Deprecated('Use exchangeWithdrawContractDescriptor instead')
 const ExchangeWithdrawContract$json = {
@@ -62,10 +62,10 @@ const ExchangeWithdrawContract$json = {
 };
 
 /// Descriptor for `ExchangeWithdrawContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exchangeWithdrawContractDescriptor = $convert.base64Decode(
-    'ChhFeGNoYW5nZVdpdGhkcmF3Q29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZX'
-    'JBZGRyZXNzEh8KC2V4Y2hhbmdlX2lkGAIgASgDUgpleGNoYW5nZUlkEhkKCHRva2VuX2lkGAMg'
-    'ASgMUgd0b2tlbklkEhQKBXF1YW50GAQgASgDUgVxdWFudA==');
+final $typed_data.Uint8List exchangeWithdrawContractDescriptor = $convert
+    .base64Decode('ChhFeGNoYW5nZVdpdGhkcmF3Q29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZX'
+        'JBZGRyZXNzEh8KC2V4Y2hhbmdlX2lkGAIgASgDUgpleGNoYW5nZUlkEhkKCHRva2VuX2lkGAMg'
+        'ASgMUgd0b2tlbklkEhQKBXF1YW50GAQgASgDUgVxdWFudA==');
 
 @$core.Deprecated('Use exchangeTransactionContractDescriptor instead')
 const ExchangeTransactionContract$json = {
@@ -80,9 +80,8 @@ const ExchangeTransactionContract$json = {
 };
 
 /// Descriptor for `ExchangeTransactionContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List exchangeTransactionContractDescriptor = $convert.base64Decode(
-    'ChtFeGNoYW5nZVRyYW5zYWN0aW9uQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3'
-    'duZXJBZGRyZXNzEh8KC2V4Y2hhbmdlX2lkGAIgASgDUgpleGNoYW5nZUlkEhkKCHRva2VuX2lk'
-    'GAMgASgMUgd0b2tlbklkEhQKBXF1YW50GAQgASgDUgVxdWFudBIaCghleHBlY3RlZBgFIAEoA1'
-    'IIZXhwZWN0ZWQ=');
-
+final $typed_data.Uint8List exchangeTransactionContractDescriptor = $convert
+    .base64Decode('ChtFeGNoYW5nZVRyYW5zYWN0aW9uQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3'
+        'duZXJBZGRyZXNzEh8KC2V4Y2hhbmdlX2lkGAIgASgDUgpleGNoYW5nZUlkEhkKCHRva2VuX2lk'
+        'GAMgASgMUgd0b2tlbklkEhQKBXF1YW50GAQgASgDUgVxdWFudBIaCghleHBlY3RlZBgFIAEoA1'
+        'IIZXhwZWN0ZWQ=');

@@ -17,8 +17,7 @@ void runSharedRPCTests({
 
     setUp(() async {
       rpc = await config.setupRPC();
-      if (config is RPCMockTestConfig)
-        await config.setupBlockNumber("0x11114b3d");
+      if (config is RPCMockTestConfig) await config.setupBlockNumber("0x11114b3d");
     });
 
     test('block number', () async {
@@ -30,30 +29,27 @@ void runSharedRPCTests({
     test('fetching token balance', () async {
       if (config is RPCMockTestConfig) {
         await config.setupBalance("0x2e10ca4c6ba9bad23");
-        await config.setupTokenCall(
-            "0x000000000000000000000000000000000000000000000001908fb23b90585e0c");
+        await config
+            .setupTokenCall("0x000000000000000000000000000000000000000000000001908fb23b90585e0c");
       }
 
-      final tokenBalance =
-          await rpc.fetchTokenBalance(rejectEVM, params.token ?? avinocZSC);
+      final tokenBalance = await rpc.fetchTokenBalance(rejectEVM, params.token ?? avinocZSC);
 
-      expect(tokenBalance.displayDouble,
-          greaterThanOrEqualTo(tokenBalance.displayDouble));
+      expect(tokenBalance.displayDouble, greaterThanOrEqualTo(tokenBalance.displayDouble));
     });
 
     test('fetching balance', () async {
       if (config is RPCMockTestConfig) {
         await config.setupBalance("0x2e10ca4c6ba9bad23");
-        await config.setupTokenCall(
-            "0x000000000000000000000000000000000000000000000001908fb23b90585e0c");
+        await config
+            .setupTokenCall("0x000000000000000000000000000000000000000000000001908fb23b90585e0c");
       }
 
       final zscBalance = await rpc.fetchBalance(
         address: rejectEVM,
       );
 
-      expect(zscBalance.displayDouble,
-          greaterThanOrEqualTo(zscBalance.displayDouble));
+      expect(zscBalance.displayDouble, greaterThanOrEqualTo(zscBalance.displayDouble));
     });
 
     test('estimate Gas Limit', () async {
@@ -147,8 +143,7 @@ void runSharedRPCTests({
           gasPrice.maxFeePerGas,
           greaterThan(Amount.zero),
         );
-        expect(gasPrice.maxPriorityFeePerGas.value,
-            greaterThanOrEqualTo(BigInt.zero));
+        expect(gasPrice.maxPriorityFeePerGas.value, greaterThanOrEqualTo(BigInt.zero));
       });
       sleep(Duration(milliseconds: 500));
     }
@@ -176,8 +171,7 @@ void runSharedRPCTests({
 
         expect(netweokfees.$1, greaterThan(0));
         expect(type2GasPrice.maxFeePerGas, greaterThan(Amount.zero));
-        expect(type2GasPrice.maxPriorityFeePerGas.value,
-            greaterThanOrEqualTo(BigInt.zero));
+        expect(type2GasPrice.maxPriorityFeePerGas.value, greaterThanOrEqualTo(BigInt.zero));
       });
     }
   });

@@ -40,22 +40,25 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetAccountById',
       ($0.Account value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Account.fromBuffer(value));
-  static final _$getAccountBalance = $grpc.ClientMethod<$1.AccountBalanceRequest, $1.AccountBalanceResponse>(
-      '/protocol.Wallet/GetAccountBalance',
-      ($1.AccountBalanceRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.AccountBalanceResponse.fromBuffer(value));
-  static final _$getBlockBalanceTrace = $grpc.ClientMethod<$1.BlockBalanceTrace_BlockIdentifier, $1.BlockBalanceTrace>(
-      '/protocol.Wallet/GetBlockBalanceTrace',
-      ($1.BlockBalanceTrace_BlockIdentifier value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $1.BlockBalanceTrace.fromBuffer(value));
+  static final _$getAccountBalance =
+      $grpc.ClientMethod<$1.AccountBalanceRequest, $1.AccountBalanceResponse>(
+          '/protocol.Wallet/GetAccountBalance',
+          ($1.AccountBalanceRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.AccountBalanceResponse.fromBuffer(value));
+  static final _$getBlockBalanceTrace =
+      $grpc.ClientMethod<$1.BlockBalanceTrace_BlockIdentifier, $1.BlockBalanceTrace>(
+          '/protocol.Wallet/GetBlockBalanceTrace',
+          ($1.BlockBalanceTrace_BlockIdentifier value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.BlockBalanceTrace.fromBuffer(value));
   static final _$createTransaction = $grpc.ClientMethod<$1.TransferContract, $0.Transaction>(
       '/protocol.Wallet/CreateTransaction',
       ($1.TransferContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$createTransaction2 = $grpc.ClientMethod<$1.TransferContract, $2.TransactionExtention>(
-      '/protocol.Wallet/CreateTransaction2',
-      ($1.TransferContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$createTransaction2 =
+      $grpc.ClientMethod<$1.TransferContract, $2.TransactionExtention>(
+          '/protocol.Wallet/CreateTransaction2',
+          ($1.TransferContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$broadcastTransaction = $grpc.ClientMethod<$0.Transaction, $2.Return>(
       '/protocol.Wallet/BroadcastTransaction',
       ($0.Transaction value) => value.writeToBuffer(),
@@ -68,130 +71,151 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/SetAccountId',
       ($3.SetAccountIdContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$updateAccount2 = $grpc.ClientMethod<$3.AccountUpdateContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UpdateAccount2',
-      ($3.AccountUpdateContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$updateAccount2 =
+      $grpc.ClientMethod<$3.AccountUpdateContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UpdateAccount2',
+          ($3.AccountUpdateContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$voteWitnessAccount = $grpc.ClientMethod<$4.VoteWitnessContract, $0.Transaction>(
       '/protocol.Wallet/VoteWitnessAccount',
       ($4.VoteWitnessContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$updateSetting = $grpc.ClientMethod<$5.UpdateSettingContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UpdateSetting',
-      ($5.UpdateSettingContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$updateEnergyLimit = $grpc.ClientMethod<$5.UpdateEnergyLimitContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UpdateEnergyLimit',
-      ($5.UpdateEnergyLimitContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$voteWitnessAccount2 = $grpc.ClientMethod<$4.VoteWitnessContract, $2.TransactionExtention>(
-      '/protocol.Wallet/VoteWitnessAccount2',
-      ($4.VoteWitnessContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$updateSetting =
+      $grpc.ClientMethod<$5.UpdateSettingContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UpdateSetting',
+          ($5.UpdateSettingContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$updateEnergyLimit =
+      $grpc.ClientMethod<$5.UpdateEnergyLimitContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UpdateEnergyLimit',
+          ($5.UpdateEnergyLimitContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$voteWitnessAccount2 =
+      $grpc.ClientMethod<$4.VoteWitnessContract, $2.TransactionExtention>(
+          '/protocol.Wallet/VoteWitnessAccount2',
+          ($4.VoteWitnessContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$createAssetIssue = $grpc.ClientMethod<$6.AssetIssueContract, $0.Transaction>(
       '/protocol.Wallet/CreateAssetIssue',
       ($6.AssetIssueContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$createAssetIssue2 = $grpc.ClientMethod<$6.AssetIssueContract, $2.TransactionExtention>(
-      '/protocol.Wallet/CreateAssetIssue2',
-      ($6.AssetIssueContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$createAssetIssue2 =
+      $grpc.ClientMethod<$6.AssetIssueContract, $2.TransactionExtention>(
+          '/protocol.Wallet/CreateAssetIssue2',
+          ($6.AssetIssueContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$updateWitness = $grpc.ClientMethod<$4.WitnessUpdateContract, $0.Transaction>(
       '/protocol.Wallet/UpdateWitness',
       ($4.WitnessUpdateContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$updateWitness2 = $grpc.ClientMethod<$4.WitnessUpdateContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UpdateWitness2',
-      ($4.WitnessUpdateContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$updateWitness2 =
+      $grpc.ClientMethod<$4.WitnessUpdateContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UpdateWitness2',
+          ($4.WitnessUpdateContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$createAccount = $grpc.ClientMethod<$3.AccountCreateContract, $0.Transaction>(
       '/protocol.Wallet/CreateAccount',
       ($3.AccountCreateContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$createAccount2 = $grpc.ClientMethod<$3.AccountCreateContract, $2.TransactionExtention>(
-      '/protocol.Wallet/CreateAccount2',
-      ($3.AccountCreateContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$createAccount2 =
+      $grpc.ClientMethod<$3.AccountCreateContract, $2.TransactionExtention>(
+          '/protocol.Wallet/CreateAccount2',
+          ($3.AccountCreateContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$createWitness = $grpc.ClientMethod<$4.WitnessCreateContract, $0.Transaction>(
       '/protocol.Wallet/CreateWitness',
       ($4.WitnessCreateContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$createWitness2 = $grpc.ClientMethod<$4.WitnessCreateContract, $2.TransactionExtention>(
-      '/protocol.Wallet/CreateWitness2',
-      ($4.WitnessCreateContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$createWitness2 =
+      $grpc.ClientMethod<$4.WitnessCreateContract, $2.TransactionExtention>(
+          '/protocol.Wallet/CreateWitness2',
+          ($4.WitnessCreateContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$transferAsset = $grpc.ClientMethod<$6.TransferAssetContract, $0.Transaction>(
       '/protocol.Wallet/TransferAsset',
       ($6.TransferAssetContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$transferAsset2 = $grpc.ClientMethod<$6.TransferAssetContract, $2.TransactionExtention>(
-      '/protocol.Wallet/TransferAsset2',
-      ($6.TransferAssetContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$participateAssetIssue = $grpc.ClientMethod<$6.ParticipateAssetIssueContract, $0.Transaction>(
-      '/protocol.Wallet/ParticipateAssetIssue',
-      ($6.ParticipateAssetIssueContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$participateAssetIssue2 = $grpc.ClientMethod<$6.ParticipateAssetIssueContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ParticipateAssetIssue2',
-      ($6.ParticipateAssetIssueContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$transferAsset2 =
+      $grpc.ClientMethod<$6.TransferAssetContract, $2.TransactionExtention>(
+          '/protocol.Wallet/TransferAsset2',
+          ($6.TransferAssetContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$participateAssetIssue =
+      $grpc.ClientMethod<$6.ParticipateAssetIssueContract, $0.Transaction>(
+          '/protocol.Wallet/ParticipateAssetIssue',
+          ($6.ParticipateAssetIssueContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
+  static final _$participateAssetIssue2 =
+      $grpc.ClientMethod<$6.ParticipateAssetIssueContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ParticipateAssetIssue2',
+          ($6.ParticipateAssetIssueContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$freezeBalance = $grpc.ClientMethod<$1.FreezeBalanceContract, $0.Transaction>(
       '/protocol.Wallet/FreezeBalance',
       ($1.FreezeBalanceContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$freezeBalance2 = $grpc.ClientMethod<$1.FreezeBalanceContract, $2.TransactionExtention>(
-      '/protocol.Wallet/FreezeBalance2',
-      ($1.FreezeBalanceContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$freezeBalanceV2 = $grpc.ClientMethod<$1.FreezeBalanceV2Contract, $2.TransactionExtention>(
-      '/protocol.Wallet/FreezeBalanceV2',
-      ($1.FreezeBalanceV2Contract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$freezeBalance2 =
+      $grpc.ClientMethod<$1.FreezeBalanceContract, $2.TransactionExtention>(
+          '/protocol.Wallet/FreezeBalance2',
+          ($1.FreezeBalanceContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$freezeBalanceV2 =
+      $grpc.ClientMethod<$1.FreezeBalanceV2Contract, $2.TransactionExtention>(
+          '/protocol.Wallet/FreezeBalanceV2',
+          ($1.FreezeBalanceV2Contract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$unfreezeBalance = $grpc.ClientMethod<$1.UnfreezeBalanceContract, $0.Transaction>(
       '/protocol.Wallet/UnfreezeBalance',
       ($1.UnfreezeBalanceContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$unfreezeBalance2 = $grpc.ClientMethod<$1.UnfreezeBalanceContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UnfreezeBalance2',
-      ($1.UnfreezeBalanceContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$unfreezeBalanceV2 = $grpc.ClientMethod<$1.UnfreezeBalanceV2Contract, $2.TransactionExtention>(
-      '/protocol.Wallet/UnfreezeBalanceV2',
-      ($1.UnfreezeBalanceV2Contract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$unfreezeBalance2 =
+      $grpc.ClientMethod<$1.UnfreezeBalanceContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UnfreezeBalance2',
+          ($1.UnfreezeBalanceContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$unfreezeBalanceV2 =
+      $grpc.ClientMethod<$1.UnfreezeBalanceV2Contract, $2.TransactionExtention>(
+          '/protocol.Wallet/UnfreezeBalanceV2',
+          ($1.UnfreezeBalanceV2Contract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$unfreezeAsset = $grpc.ClientMethod<$6.UnfreezeAssetContract, $0.Transaction>(
       '/protocol.Wallet/UnfreezeAsset',
       ($6.UnfreezeAssetContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$unfreezeAsset2 = $grpc.ClientMethod<$6.UnfreezeAssetContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UnfreezeAsset2',
-      ($6.UnfreezeAssetContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$unfreezeAsset2 =
+      $grpc.ClientMethod<$6.UnfreezeAssetContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UnfreezeAsset2',
+          ($6.UnfreezeAssetContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$withdrawBalance = $grpc.ClientMethod<$1.WithdrawBalanceContract, $0.Transaction>(
       '/protocol.Wallet/WithdrawBalance',
       ($1.WithdrawBalanceContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$withdrawBalance2 = $grpc.ClientMethod<$1.WithdrawBalanceContract, $2.TransactionExtention>(
-      '/protocol.Wallet/WithdrawBalance2',
-      ($1.WithdrawBalanceContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$withdrawExpireUnfreeze = $grpc.ClientMethod<$1.WithdrawExpireUnfreezeContract, $2.TransactionExtention>(
-      '/protocol.Wallet/WithdrawExpireUnfreeze',
-      ($1.WithdrawExpireUnfreezeContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$delegateResource = $grpc.ClientMethod<$1.DelegateResourceContract, $2.TransactionExtention>(
-      '/protocol.Wallet/DelegateResource',
-      ($1.DelegateResourceContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$unDelegateResource = $grpc.ClientMethod<$1.UnDelegateResourceContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UnDelegateResource',
-      ($1.UnDelegateResourceContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$cancelAllUnfreezeV2 = $grpc.ClientMethod<$1.CancelAllUnfreezeV2Contract, $2.TransactionExtention>(
-      '/protocol.Wallet/CancelAllUnfreezeV2',
-      ($1.CancelAllUnfreezeV2Contract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$withdrawBalance2 =
+      $grpc.ClientMethod<$1.WithdrawBalanceContract, $2.TransactionExtention>(
+          '/protocol.Wallet/WithdrawBalance2',
+          ($1.WithdrawBalanceContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$withdrawExpireUnfreeze =
+      $grpc.ClientMethod<$1.WithdrawExpireUnfreezeContract, $2.TransactionExtention>(
+          '/protocol.Wallet/WithdrawExpireUnfreeze',
+          ($1.WithdrawExpireUnfreezeContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$delegateResource =
+      $grpc.ClientMethod<$1.DelegateResourceContract, $2.TransactionExtention>(
+          '/protocol.Wallet/DelegateResource',
+          ($1.DelegateResourceContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$unDelegateResource =
+      $grpc.ClientMethod<$1.UnDelegateResourceContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UnDelegateResource',
+          ($1.UnDelegateResourceContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$cancelAllUnfreezeV2 =
+      $grpc.ClientMethod<$1.CancelAllUnfreezeV2Contract, $2.TransactionExtention>(
+          '/protocol.Wallet/CancelAllUnfreezeV2',
+          ($1.CancelAllUnfreezeV2Contract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$updateAsset = $grpc.ClientMethod<$6.UpdateAssetContract, $0.Transaction>(
       '/protocol.Wallet/UpdateAsset',
       ($6.UpdateAssetContract value) => value.writeToBuffer(),
@@ -200,54 +224,64 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/UpdateAsset2',
       ($6.UpdateAssetContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$proposalCreate = $grpc.ClientMethod<$7.ProposalCreateContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ProposalCreate',
-      ($7.ProposalCreateContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$proposalApprove = $grpc.ClientMethod<$7.ProposalApproveContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ProposalApprove',
-      ($7.ProposalApproveContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$proposalDelete = $grpc.ClientMethod<$7.ProposalDeleteContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ProposalDelete',
-      ($7.ProposalDeleteContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$proposalCreate =
+      $grpc.ClientMethod<$7.ProposalCreateContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ProposalCreate',
+          ($7.ProposalCreateContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$proposalApprove =
+      $grpc.ClientMethod<$7.ProposalApproveContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ProposalApprove',
+          ($7.ProposalApproveContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$proposalDelete =
+      $grpc.ClientMethod<$7.ProposalDeleteContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ProposalDelete',
+          ($7.ProposalDeleteContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$buyStorage = $grpc.ClientMethod<$8.BuyStorageContract, $2.TransactionExtention>(
       '/protocol.Wallet/BuyStorage',
       ($8.BuyStorageContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$buyStorageBytes = $grpc.ClientMethod<$8.BuyStorageBytesContract, $2.TransactionExtention>(
-      '/protocol.Wallet/BuyStorageBytes',
-      ($8.BuyStorageBytesContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$buyStorageBytes =
+      $grpc.ClientMethod<$8.BuyStorageBytesContract, $2.TransactionExtention>(
+          '/protocol.Wallet/BuyStorageBytes',
+          ($8.BuyStorageBytesContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$sellStorage = $grpc.ClientMethod<$8.SellStorageContract, $2.TransactionExtention>(
       '/protocol.Wallet/SellStorage',
       ($8.SellStorageContract value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$exchangeCreate = $grpc.ClientMethod<$9.ExchangeCreateContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ExchangeCreate',
-      ($9.ExchangeCreateContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$exchangeInject = $grpc.ClientMethod<$9.ExchangeInjectContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ExchangeInject',
-      ($9.ExchangeInjectContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$exchangeWithdraw = $grpc.ClientMethod<$9.ExchangeWithdrawContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ExchangeWithdraw',
-      ($9.ExchangeWithdrawContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$exchangeTransaction = $grpc.ClientMethod<$9.ExchangeTransactionContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ExchangeTransaction',
-      ($9.ExchangeTransactionContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$marketSellAsset = $grpc.ClientMethod<$10.MarketSellAssetContract, $2.TransactionExtention>(
-      '/protocol.Wallet/MarketSellAsset',
-      ($10.MarketSellAssetContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$marketCancelOrder = $grpc.ClientMethod<$10.MarketCancelOrderContract, $2.TransactionExtention>(
-      '/protocol.Wallet/MarketCancelOrder',
-      ($10.MarketCancelOrderContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$exchangeCreate =
+      $grpc.ClientMethod<$9.ExchangeCreateContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ExchangeCreate',
+          ($9.ExchangeCreateContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$exchangeInject =
+      $grpc.ClientMethod<$9.ExchangeInjectContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ExchangeInject',
+          ($9.ExchangeInjectContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$exchangeWithdraw =
+      $grpc.ClientMethod<$9.ExchangeWithdrawContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ExchangeWithdraw',
+          ($9.ExchangeWithdrawContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$exchangeTransaction =
+      $grpc.ClientMethod<$9.ExchangeTransactionContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ExchangeTransaction',
+          ($9.ExchangeTransactionContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$marketSellAsset =
+      $grpc.ClientMethod<$10.MarketSellAssetContract, $2.TransactionExtention>(
+          '/protocol.Wallet/MarketSellAsset',
+          ($10.MarketSellAssetContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$marketCancelOrder =
+      $grpc.ClientMethod<$10.MarketCancelOrderContract, $2.TransactionExtention>(
+          '/protocol.Wallet/MarketCancelOrder',
+          ($10.MarketCancelOrderContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$getMarketOrderById = $grpc.ClientMethod<$2.BytesMessage, $0.MarketOrder>(
       '/protocol.Wallet/GetMarketOrderById',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -260,10 +294,11 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetMarketPriceByPair',
       ($0.MarketOrderPair value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.MarketPriceList.fromBuffer(value));
-  static final _$getMarketOrderListByPair = $grpc.ClientMethod<$0.MarketOrderPair, $0.MarketOrderList>(
-      '/protocol.Wallet/GetMarketOrderListByPair',
-      ($0.MarketOrderPair value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.MarketOrderList.fromBuffer(value));
+  static final _$getMarketOrderListByPair =
+      $grpc.ClientMethod<$0.MarketOrderPair, $0.MarketOrderList>(
+          '/protocol.Wallet/GetMarketOrderListByPair',
+          ($0.MarketOrderPair value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.MarketOrderList.fromBuffer(value));
   static final _$getMarketPairList = $grpc.ClientMethod<$2.EmptyMessage, $0.MarketOrderPairList>(
       '/protocol.Wallet/GetMarketPairList',
       ($2.EmptyMessage value) => value.writeToBuffer(),
@@ -312,10 +347,11 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetBlockByNum2',
       ($2.NumberMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.BlockExtention.fromBuffer(value));
-  static final _$getTransactionCountByBlockNum = $grpc.ClientMethod<$2.NumberMessage, $2.NumberMessage>(
-      '/protocol.Wallet/GetTransactionCountByBlockNum',
-      ($2.NumberMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.NumberMessage.fromBuffer(value));
+  static final _$getTransactionCountByBlockNum =
+      $grpc.ClientMethod<$2.NumberMessage, $2.NumberMessage>(
+          '/protocol.Wallet/GetTransactionCountByBlockNum',
+          ($2.NumberMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.NumberMessage.fromBuffer(value));
   static final _$getBlockById = $grpc.ClientMethod<$2.BytesMessage, $0.Block>(
       '/protocol.Wallet/GetBlockById',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -340,10 +376,11 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetTransactionById',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$deployContract = $grpc.ClientMethod<$5.CreateSmartContract, $2.TransactionExtention>(
-      '/protocol.Wallet/DeployContract',
-      ($5.CreateSmartContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$deployContract =
+      $grpc.ClientMethod<$5.CreateSmartContract, $2.TransactionExtention>(
+          '/protocol.Wallet/DeployContract',
+          ($5.CreateSmartContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$getContract = $grpc.ClientMethod<$2.BytesMessage, $5.SmartContract>(
       '/protocol.Wallet/GetContract',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -352,62 +389,76 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetContractInfo',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $5.SmartContractDataWrapper.fromBuffer(value));
-  static final _$triggerContract = $grpc.ClientMethod<$5.TriggerSmartContract, $2.TransactionExtention>(
-      '/protocol.Wallet/TriggerContract',
-      ($5.TriggerSmartContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$triggerConstantContract = $grpc.ClientMethod<$5.TriggerSmartContract, $2.TransactionExtention>(
-      '/protocol.Wallet/TriggerConstantContract',
-      ($5.TriggerSmartContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$estimateEnergy = $grpc.ClientMethod<$5.TriggerSmartContract, $2.EstimateEnergyMessage>(
-      '/protocol.Wallet/EstimateEnergy',
-      ($5.TriggerSmartContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.EstimateEnergyMessage.fromBuffer(value));
-  static final _$clearContractABI = $grpc.ClientMethod<$5.ClearABIContract, $2.TransactionExtention>(
-      '/protocol.Wallet/ClearContractABI',
-      ($5.ClearABIContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$triggerContract =
+      $grpc.ClientMethod<$5.TriggerSmartContract, $2.TransactionExtention>(
+          '/protocol.Wallet/TriggerContract',
+          ($5.TriggerSmartContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$triggerConstantContract =
+      $grpc.ClientMethod<$5.TriggerSmartContract, $2.TransactionExtention>(
+          '/protocol.Wallet/TriggerConstantContract',
+          ($5.TriggerSmartContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$estimateEnergy =
+      $grpc.ClientMethod<$5.TriggerSmartContract, $2.EstimateEnergyMessage>(
+          '/protocol.Wallet/EstimateEnergy',
+          ($5.TriggerSmartContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.EstimateEnergyMessage.fromBuffer(value));
+  static final _$clearContractABI =
+      $grpc.ClientMethod<$5.ClearABIContract, $2.TransactionExtention>(
+          '/protocol.Wallet/ClearContractABI',
+          ($5.ClearABIContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$listWitnesses = $grpc.ClientMethod<$2.EmptyMessage, $2.WitnessList>(
       '/protocol.Wallet/ListWitnesses',
       ($2.EmptyMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.WitnessList.fromBuffer(value));
-  static final _$getDelegatedResource = $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
-      '/protocol.Wallet/GetDelegatedResource',
-      ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
-  static final _$getDelegatedResourceV2 = $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
-      '/protocol.Wallet/GetDelegatedResourceV2',
-      ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
-  static final _$getDelegatedResourceAccountIndex = $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
-      '/protocol.Wallet/GetDelegatedResourceAccountIndex',
-      ($2.BytesMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
-  static final _$getDelegatedResourceAccountIndexV2 = $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
-      '/protocol.Wallet/GetDelegatedResourceAccountIndexV2',
-      ($2.BytesMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
-  static final _$getCanDelegatedMaxSize = $grpc.ClientMethod<$2.CanDelegatedMaxSizeRequestMessage, $2.CanDelegatedMaxSizeResponseMessage>(
+  static final _$getDelegatedResource =
+      $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
+          '/protocol.Wallet/GetDelegatedResource',
+          ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
+  static final _$getDelegatedResourceV2 =
+      $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
+          '/protocol.Wallet/GetDelegatedResourceV2',
+          ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
+  static final _$getDelegatedResourceAccountIndex =
+      $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
+          '/protocol.Wallet/GetDelegatedResourceAccountIndex',
+          ($2.BytesMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
+  static final _$getDelegatedResourceAccountIndexV2 =
+      $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
+          '/protocol.Wallet/GetDelegatedResourceAccountIndexV2',
+          ($2.BytesMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
+  static final _$getCanDelegatedMaxSize = $grpc.ClientMethod<$2.CanDelegatedMaxSizeRequestMessage,
+          $2.CanDelegatedMaxSizeResponseMessage>(
       '/protocol.Wallet/GetCanDelegatedMaxSize',
       ($2.CanDelegatedMaxSizeRequestMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.CanDelegatedMaxSizeResponseMessage.fromBuffer(value));
-  static final _$getAvailableUnfreezeCount = $grpc.ClientMethod<$2.GetAvailableUnfreezeCountRequestMessage, $2.GetAvailableUnfreezeCountResponseMessage>(
+  static final _$getAvailableUnfreezeCount = $grpc.ClientMethod<
+          $2.GetAvailableUnfreezeCountRequestMessage, $2.GetAvailableUnfreezeCountResponseMessage>(
       '/protocol.Wallet/GetAvailableUnfreezeCount',
       ($2.GetAvailableUnfreezeCountRequestMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.GetAvailableUnfreezeCountResponseMessage.fromBuffer(value));
-  static final _$getCanWithdrawUnfreezeAmount = $grpc.ClientMethod<$2.CanWithdrawUnfreezeAmountRequestMessage, $2.CanWithdrawUnfreezeAmountResponseMessage>(
+      ($core.List<$core.int> value) =>
+          $2.GetAvailableUnfreezeCountResponseMessage.fromBuffer(value));
+  static final _$getCanWithdrawUnfreezeAmount = $grpc.ClientMethod<
+          $2.CanWithdrawUnfreezeAmountRequestMessage, $2.CanWithdrawUnfreezeAmountResponseMessage>(
       '/protocol.Wallet/GetCanWithdrawUnfreezeAmount',
       ($2.CanWithdrawUnfreezeAmountRequestMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.CanWithdrawUnfreezeAmountResponseMessage.fromBuffer(value));
+      ($core.List<$core.int> value) =>
+          $2.CanWithdrawUnfreezeAmountResponseMessage.fromBuffer(value));
   static final _$listProposals = $grpc.ClientMethod<$2.EmptyMessage, $2.ProposalList>(
       '/protocol.Wallet/ListProposals',
       ($2.EmptyMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.ProposalList.fromBuffer(value));
-  static final _$getPaginatedProposalList = $grpc.ClientMethod<$2.PaginatedMessage, $2.ProposalList>(
-      '/protocol.Wallet/GetPaginatedProposalList',
-      ($2.PaginatedMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.ProposalList.fromBuffer(value));
+  static final _$getPaginatedProposalList =
+      $grpc.ClientMethod<$2.PaginatedMessage, $2.ProposalList>(
+          '/protocol.Wallet/GetPaginatedProposalList',
+          ($2.PaginatedMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.ProposalList.fromBuffer(value));
   static final _$getProposalById = $grpc.ClientMethod<$2.BytesMessage, $0.Proposal>(
       '/protocol.Wallet/GetProposalById',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -416,10 +467,11 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/ListExchanges',
       ($2.EmptyMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.ExchangeList.fromBuffer(value));
-  static final _$getPaginatedExchangeList = $grpc.ClientMethod<$2.PaginatedMessage, $2.ExchangeList>(
-      '/protocol.Wallet/GetPaginatedExchangeList',
-      ($2.PaginatedMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.ExchangeList.fromBuffer(value));
+  static final _$getPaginatedExchangeList =
+      $grpc.ClientMethod<$2.PaginatedMessage, $2.ExchangeList>(
+          '/protocol.Wallet/GetPaginatedExchangeList',
+          ($2.PaginatedMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.ExchangeList.fromBuffer(value));
   static final _$getExchangeById = $grpc.ClientMethod<$2.BytesMessage, $0.Exchange>(
       '/protocol.Wallet/GetExchangeById',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -432,10 +484,11 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetAssetIssueList',
       ($2.EmptyMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.AssetIssueList.fromBuffer(value));
-  static final _$getPaginatedAssetIssueList = $grpc.ClientMethod<$2.PaginatedMessage, $2.AssetIssueList>(
-      '/protocol.Wallet/GetPaginatedAssetIssueList',
-      ($2.PaginatedMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.AssetIssueList.fromBuffer(value));
+  static final _$getPaginatedAssetIssueList =
+      $grpc.ClientMethod<$2.PaginatedMessage, $2.AssetIssueList>(
+          '/protocol.Wallet/GetPaginatedAssetIssueList',
+          ($2.PaginatedMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.AssetIssueList.fromBuffer(value));
   static final _$totalTransaction = $grpc.ClientMethod<$2.EmptyMessage, $2.NumberMessage>(
       '/protocol.Wallet/TotalTransaction',
       ($2.EmptyMessage value) => value.writeToBuffer(),
@@ -448,18 +501,21 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetTransactionInfoById',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.TransactionInfo.fromBuffer(value));
-  static final _$accountPermissionUpdate = $grpc.ClientMethod<$3.AccountPermissionUpdateContract, $2.TransactionExtention>(
-      '/protocol.Wallet/AccountPermissionUpdate',
-      ($3.AccountPermissionUpdateContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$getTransactionSignWeight = $grpc.ClientMethod<$0.Transaction, $2.TransactionSignWeight>(
-      '/protocol.Wallet/GetTransactionSignWeight',
-      ($0.Transaction value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionSignWeight.fromBuffer(value));
-  static final _$getTransactionApprovedList = $grpc.ClientMethod<$0.Transaction, $2.TransactionApprovedList>(
-      '/protocol.Wallet/GetTransactionApprovedList',
-      ($0.Transaction value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionApprovedList.fromBuffer(value));
+  static final _$accountPermissionUpdate =
+      $grpc.ClientMethod<$3.AccountPermissionUpdateContract, $2.TransactionExtention>(
+          '/protocol.Wallet/AccountPermissionUpdate',
+          ($3.AccountPermissionUpdateContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$getTransactionSignWeight =
+      $grpc.ClientMethod<$0.Transaction, $2.TransactionSignWeight>(
+          '/protocol.Wallet/GetTransactionSignWeight',
+          ($0.Transaction value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionSignWeight.fromBuffer(value));
+  static final _$getTransactionApprovedList =
+      $grpc.ClientMethod<$0.Transaction, $2.TransactionApprovedList>(
+          '/protocol.Wallet/GetTransactionApprovedList',
+          ($0.Transaction value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionApprovedList.fromBuffer(value));
   static final _$getNodeInfo = $grpc.ClientMethod<$2.EmptyMessage, $0.NodeInfo>(
       '/protocol.Wallet/GetNodeInfo',
       ($2.EmptyMessage value) => value.writeToBuffer(),
@@ -472,26 +528,30 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetBrokerageInfo',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.NumberMessage.fromBuffer(value));
-  static final _$updateBrokerage = $grpc.ClientMethod<$8.UpdateBrokerageContract, $2.TransactionExtention>(
-      '/protocol.Wallet/UpdateBrokerage',
-      ($8.UpdateBrokerageContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$createShieldedTransaction = $grpc.ClientMethod<$2.PrivateParameters, $2.TransactionExtention>(
-      '/protocol.Wallet/CreateShieldedTransaction',
-      ($2.PrivateParameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$getMerkleTreeVoucherInfo = $grpc.ClientMethod<$11.OutputPointInfo, $11.IncrementalMerkleVoucherInfo>(
-      '/protocol.Wallet/GetMerkleTreeVoucherInfo',
-      ($11.OutputPointInfo value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $11.IncrementalMerkleVoucherInfo.fromBuffer(value));
+  static final _$updateBrokerage =
+      $grpc.ClientMethod<$8.UpdateBrokerageContract, $2.TransactionExtention>(
+          '/protocol.Wallet/UpdateBrokerage',
+          ($8.UpdateBrokerageContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$createShieldedTransaction =
+      $grpc.ClientMethod<$2.PrivateParameters, $2.TransactionExtention>(
+          '/protocol.Wallet/CreateShieldedTransaction',
+          ($2.PrivateParameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$getMerkleTreeVoucherInfo =
+      $grpc.ClientMethod<$11.OutputPointInfo, $11.IncrementalMerkleVoucherInfo>(
+          '/protocol.Wallet/GetMerkleTreeVoucherInfo',
+          ($11.OutputPointInfo value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $11.IncrementalMerkleVoucherInfo.fromBuffer(value));
   static final _$scanNoteByIvk = $grpc.ClientMethod<$2.IvkDecryptParameters, $2.DecryptNotes>(
       '/protocol.Wallet/ScanNoteByIvk',
       ($2.IvkDecryptParameters value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.DecryptNotes.fromBuffer(value));
-  static final _$scanAndMarkNoteByIvk = $grpc.ClientMethod<$2.IvkDecryptAndMarkParameters, $2.DecryptNotesMarked>(
-      '/protocol.Wallet/ScanAndMarkNoteByIvk',
-      ($2.IvkDecryptAndMarkParameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DecryptNotesMarked.fromBuffer(value));
+  static final _$scanAndMarkNoteByIvk =
+      $grpc.ClientMethod<$2.IvkDecryptAndMarkParameters, $2.DecryptNotesMarked>(
+          '/protocol.Wallet/ScanAndMarkNoteByIvk',
+          ($2.IvkDecryptAndMarkParameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DecryptNotesMarked.fromBuffer(value));
   static final _$scanNoteByOvk = $grpc.ClientMethod<$2.OvkDecryptParameters, $2.DecryptNotes>(
       '/protocol.Wallet/ScanNoteByOvk',
       ($2.OvkDecryptParameters value) => value.writeToBuffer(),
@@ -500,10 +560,11 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetSpendingKey',
       ($2.EmptyMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
-  static final _$getExpandedSpendingKey = $grpc.ClientMethod<$2.BytesMessage, $2.ExpandedSpendingKeyMessage>(
-      '/protocol.Wallet/GetExpandedSpendingKey',
-      ($2.BytesMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.ExpandedSpendingKeyMessage.fromBuffer(value));
+  static final _$getExpandedSpendingKey =
+      $grpc.ClientMethod<$2.BytesMessage, $2.ExpandedSpendingKeyMessage>(
+          '/protocol.Wallet/GetExpandedSpendingKey',
+          ($2.BytesMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.ExpandedSpendingKeyMessage.fromBuffer(value));
   static final _$getAkFromAsk = $grpc.ClientMethod<$2.BytesMessage, $2.BytesMessage>(
       '/protocol.Wallet/GetAkFromAsk',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -512,22 +573,25 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetNkFromNsk',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
-  static final _$getIncomingViewingKey = $grpc.ClientMethod<$2.ViewingKeyMessage, $2.IncomingViewingKeyMessage>(
-      '/protocol.Wallet/GetIncomingViewingKey',
-      ($2.ViewingKeyMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.IncomingViewingKeyMessage.fromBuffer(value));
+  static final _$getIncomingViewingKey =
+      $grpc.ClientMethod<$2.ViewingKeyMessage, $2.IncomingViewingKeyMessage>(
+          '/protocol.Wallet/GetIncomingViewingKey',
+          ($2.ViewingKeyMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.IncomingViewingKeyMessage.fromBuffer(value));
   static final _$getDiversifier = $grpc.ClientMethod<$2.EmptyMessage, $2.DiversifierMessage>(
       '/protocol.Wallet/GetDiversifier',
       ($2.EmptyMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.DiversifierMessage.fromBuffer(value));
-  static final _$getNewShieldedAddress = $grpc.ClientMethod<$2.EmptyMessage, $2.ShieldedAddressInfo>(
-      '/protocol.Wallet/GetNewShieldedAddress',
-      ($2.EmptyMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.ShieldedAddressInfo.fromBuffer(value));
-  static final _$getZenPaymentAddress = $grpc.ClientMethod<$2.IncomingViewingKeyDiversifierMessage, $2.PaymentAddressMessage>(
-      '/protocol.Wallet/GetZenPaymentAddress',
-      ($2.IncomingViewingKeyDiversifierMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.PaymentAddressMessage.fromBuffer(value));
+  static final _$getNewShieldedAddress =
+      $grpc.ClientMethod<$2.EmptyMessage, $2.ShieldedAddressInfo>(
+          '/protocol.Wallet/GetNewShieldedAddress',
+          ($2.EmptyMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.ShieldedAddressInfo.fromBuffer(value));
+  static final _$getZenPaymentAddress =
+      $grpc.ClientMethod<$2.IncomingViewingKeyDiversifierMessage, $2.PaymentAddressMessage>(
+          '/protocol.Wallet/GetZenPaymentAddress',
+          ($2.IncomingViewingKeyDiversifierMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.PaymentAddressMessage.fromBuffer(value));
   static final _$getRcm = $grpc.ClientMethod<$2.EmptyMessage, $2.BytesMessage>(
       '/protocol.Wallet/GetRcm',
       ($2.EmptyMessage value) => value.writeToBuffer(),
@@ -536,54 +600,64 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/IsSpend',
       ($2.NoteParameters value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.SpendResult.fromBuffer(value));
-  static final _$createShieldedTransactionWithoutSpendAuthSig = $grpc.ClientMethod<$2.PrivateParametersWithoutAsk, $2.TransactionExtention>(
-      '/protocol.Wallet/CreateShieldedTransactionWithoutSpendAuthSig',
-      ($2.PrivateParametersWithoutAsk value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$createShieldedTransactionWithoutSpendAuthSig =
+      $grpc.ClientMethod<$2.PrivateParametersWithoutAsk, $2.TransactionExtention>(
+          '/protocol.Wallet/CreateShieldedTransactionWithoutSpendAuthSig',
+          ($2.PrivateParametersWithoutAsk value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
   static final _$getShieldTransactionHash = $grpc.ClientMethod<$0.Transaction, $2.BytesMessage>(
       '/protocol.Wallet/GetShieldTransactionHash',
       ($0.Transaction value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
-  static final _$createSpendAuthSig = $grpc.ClientMethod<$2.SpendAuthSigParameters, $2.BytesMessage>(
-      '/protocol.Wallet/CreateSpendAuthSig',
-      ($2.SpendAuthSigParameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
+  static final _$createSpendAuthSig =
+      $grpc.ClientMethod<$2.SpendAuthSigParameters, $2.BytesMessage>(
+          '/protocol.Wallet/CreateSpendAuthSig',
+          ($2.SpendAuthSigParameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
   static final _$createShieldNullifier = $grpc.ClientMethod<$2.NfParameters, $2.BytesMessage>(
       '/protocol.Wallet/CreateShieldNullifier',
       ($2.NfParameters value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
-  static final _$createShieldedContractParameters = $grpc.ClientMethod<$2.PrivateShieldedTRC20Parameters, $2.ShieldedTRC20Parameters>(
-      '/protocol.Wallet/CreateShieldedContractParameters',
-      ($2.PrivateShieldedTRC20Parameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.ShieldedTRC20Parameters.fromBuffer(value));
-  static final _$createShieldedContractParametersWithoutAsk = $grpc.ClientMethod<$2.PrivateShieldedTRC20ParametersWithoutAsk, $2.ShieldedTRC20Parameters>(
-      '/protocol.Wallet/CreateShieldedContractParametersWithoutAsk',
-      ($2.PrivateShieldedTRC20ParametersWithoutAsk value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.ShieldedTRC20Parameters.fromBuffer(value));
-  static final _$scanShieldedTRC20NotesByIvk = $grpc.ClientMethod<$2.IvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
-      '/protocol.Wallet/ScanShieldedTRC20NotesByIvk',
-      ($2.IvkDecryptTRC20Parameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
-  static final _$scanShieldedTRC20NotesByOvk = $grpc.ClientMethod<$2.OvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
-      '/protocol.Wallet/ScanShieldedTRC20NotesByOvk',
-      ($2.OvkDecryptTRC20Parameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
-  static final _$isShieldedTRC20ContractNoteSpent = $grpc.ClientMethod<$2.NfTRC20Parameters, $2.NullifierResult>(
-      '/protocol.Wallet/IsShieldedTRC20ContractNoteSpent',
-      ($2.NfTRC20Parameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.NullifierResult.fromBuffer(value));
-  static final _$getTriggerInputForShieldedTRC20Contract = $grpc.ClientMethod<$2.ShieldedTRC20TriggerContractParameters, $2.BytesMessage>(
-      '/protocol.Wallet/GetTriggerInputForShieldedTRC20Contract',
-      ($2.ShieldedTRC20TriggerContractParameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
-  static final _$createCommonTransaction = $grpc.ClientMethod<$0.Transaction, $2.TransactionExtention>(
-      '/protocol.Wallet/CreateCommonTransaction',
-      ($0.Transaction value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$getTransactionInfoByBlockNum = $grpc.ClientMethod<$2.NumberMessage, $2.TransactionInfoList>(
-      '/protocol.Wallet/GetTransactionInfoByBlockNum',
-      ($2.NumberMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionInfoList.fromBuffer(value));
+  static final _$createShieldedContractParameters =
+      $grpc.ClientMethod<$2.PrivateShieldedTRC20Parameters, $2.ShieldedTRC20Parameters>(
+          '/protocol.Wallet/CreateShieldedContractParameters',
+          ($2.PrivateShieldedTRC20Parameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.ShieldedTRC20Parameters.fromBuffer(value));
+  static final _$createShieldedContractParametersWithoutAsk =
+      $grpc.ClientMethod<$2.PrivateShieldedTRC20ParametersWithoutAsk, $2.ShieldedTRC20Parameters>(
+          '/protocol.Wallet/CreateShieldedContractParametersWithoutAsk',
+          ($2.PrivateShieldedTRC20ParametersWithoutAsk value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.ShieldedTRC20Parameters.fromBuffer(value));
+  static final _$scanShieldedTRC20NotesByIvk =
+      $grpc.ClientMethod<$2.IvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
+          '/protocol.Wallet/ScanShieldedTRC20NotesByIvk',
+          ($2.IvkDecryptTRC20Parameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
+  static final _$scanShieldedTRC20NotesByOvk =
+      $grpc.ClientMethod<$2.OvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
+          '/protocol.Wallet/ScanShieldedTRC20NotesByOvk',
+          ($2.OvkDecryptTRC20Parameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
+  static final _$isShieldedTRC20ContractNoteSpent =
+      $grpc.ClientMethod<$2.NfTRC20Parameters, $2.NullifierResult>(
+          '/protocol.Wallet/IsShieldedTRC20ContractNoteSpent',
+          ($2.NfTRC20Parameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.NullifierResult.fromBuffer(value));
+  static final _$getTriggerInputForShieldedTRC20Contract =
+      $grpc.ClientMethod<$2.ShieldedTRC20TriggerContractParameters, $2.BytesMessage>(
+          '/protocol.Wallet/GetTriggerInputForShieldedTRC20Contract',
+          ($2.ShieldedTRC20TriggerContractParameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value));
+  static final _$createCommonTransaction =
+      $grpc.ClientMethod<$0.Transaction, $2.TransactionExtention>(
+          '/protocol.Wallet/CreateCommonTransaction',
+          ($0.Transaction value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$getTransactionInfoByBlockNum =
+      $grpc.ClientMethod<$2.NumberMessage, $2.TransactionInfoList>(
+          '/protocol.Wallet/GetTransactionInfoByBlockNum',
+          ($2.NumberMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionInfoList.fromBuffer(value));
   static final _$getBurnTrx = $grpc.ClientMethod<$2.EmptyMessage, $2.NumberMessage>(
       '/protocol.Wallet/GetBurnTrx',
       ($2.EmptyMessage value) => value.writeToBuffer(),
@@ -592,10 +666,11 @@ class WalletClient extends $grpc.Client {
       '/protocol.Wallet/GetTransactionFromPending',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Transaction.fromBuffer(value));
-  static final _$getTransactionListFromPending = $grpc.ClientMethod<$2.EmptyMessage, $2.TransactionIdList>(
-      '/protocol.Wallet/GetTransactionListFromPending',
-      ($2.EmptyMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionIdList.fromBuffer(value));
+  static final _$getTransactionListFromPending =
+      $grpc.ClientMethod<$2.EmptyMessage, $2.TransactionIdList>(
+          '/protocol.Wallet/GetTransactionListFromPending',
+          ($2.EmptyMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionIdList.fromBuffer(value));
   static final _$getPendingSize = $grpc.ClientMethod<$2.EmptyMessage, $2.NumberMessage>(
       '/protocol.Wallet/GetPendingSize',
       ($2.EmptyMessage value) => value.writeToBuffer(),
@@ -618,592 +693,774 @@ class WalletClient extends $grpc.Client {
       ($core.List<$core.int> value) => $2.PricesResponseMessage.fromBuffer(value));
 
   WalletClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$0.Account> getAccount($0.Account request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Account> getAccountById($0.Account request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Account> getAccountById($0.Account request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccountById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.AccountBalanceResponse> getAccountBalance($1.AccountBalanceRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.AccountBalanceResponse> getAccountBalance(
+      $1.AccountBalanceRequest request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccountBalance, request, options: options);
   }
 
-  $grpc.ResponseFuture<$1.BlockBalanceTrace> getBlockBalanceTrace($1.BlockBalanceTrace_BlockIdentifier request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.BlockBalanceTrace> getBlockBalanceTrace(
+      $1.BlockBalanceTrace_BlockIdentifier request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockBalanceTrace, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> createTransaction($1.TransferContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> createTransaction($1.TransferContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createTransaction, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> createTransaction2($1.TransferContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> createTransaction2($1.TransferContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createTransaction2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.Return> broadcastTransaction($0.Transaction request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.Return> broadcastTransaction($0.Transaction request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$broadcastTransaction, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> updateAccount($3.AccountUpdateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> updateAccount($3.AccountUpdateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> setAccountId($3.SetAccountIdContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> setAccountId($3.SetAccountIdContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$setAccountId, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> updateAccount2($3.AccountUpdateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> updateAccount2($3.AccountUpdateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateAccount2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> voteWitnessAccount($4.VoteWitnessContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> voteWitnessAccount($4.VoteWitnessContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$voteWitnessAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> updateSetting($5.UpdateSettingContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> updateSetting($5.UpdateSettingContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateSetting, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> updateEnergyLimit($5.UpdateEnergyLimitContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> updateEnergyLimit(
+      $5.UpdateEnergyLimitContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateEnergyLimit, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> voteWitnessAccount2($4.VoteWitnessContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> voteWitnessAccount2($4.VoteWitnessContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$voteWitnessAccount2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> createAssetIssue($6.AssetIssueContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> createAssetIssue($6.AssetIssueContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createAssetIssue, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> createAssetIssue2($6.AssetIssueContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> createAssetIssue2($6.AssetIssueContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createAssetIssue2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> updateWitness($4.WitnessUpdateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> updateWitness($4.WitnessUpdateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateWitness, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> updateWitness2($4.WitnessUpdateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> updateWitness2($4.WitnessUpdateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateWitness2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> createAccount($3.AccountCreateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> createAccount($3.AccountCreateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> createAccount2($3.AccountCreateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> createAccount2($3.AccountCreateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createAccount2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> createWitness($4.WitnessCreateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> createWitness($4.WitnessCreateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createWitness, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> createWitness2($4.WitnessCreateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> createWitness2($4.WitnessCreateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createWitness2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> transferAsset($6.TransferAssetContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> transferAsset($6.TransferAssetContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$transferAsset, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> transferAsset2($6.TransferAssetContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> transferAsset2($6.TransferAssetContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$transferAsset2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> participateAssetIssue($6.ParticipateAssetIssueContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> participateAssetIssue(
+      $6.ParticipateAssetIssueContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$participateAssetIssue, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> participateAssetIssue2($6.ParticipateAssetIssueContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> participateAssetIssue2(
+      $6.ParticipateAssetIssueContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$participateAssetIssue2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> freezeBalance($1.FreezeBalanceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> freezeBalance($1.FreezeBalanceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$freezeBalance, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> freezeBalance2($1.FreezeBalanceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> freezeBalance2($1.FreezeBalanceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$freezeBalance2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> freezeBalanceV2($1.FreezeBalanceV2Contract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> freezeBalanceV2($1.FreezeBalanceV2Contract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$freezeBalanceV2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> unfreezeBalance($1.UnfreezeBalanceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> unfreezeBalance($1.UnfreezeBalanceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$unfreezeBalance, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> unfreezeBalance2($1.UnfreezeBalanceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> unfreezeBalance2($1.UnfreezeBalanceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$unfreezeBalance2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> unfreezeBalanceV2($1.UnfreezeBalanceV2Contract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> unfreezeBalanceV2(
+      $1.UnfreezeBalanceV2Contract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$unfreezeBalanceV2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> unfreezeAsset($6.UnfreezeAssetContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> unfreezeAsset($6.UnfreezeAssetContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$unfreezeAsset, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> unfreezeAsset2($6.UnfreezeAssetContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> unfreezeAsset2($6.UnfreezeAssetContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$unfreezeAsset2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> withdrawBalance($1.WithdrawBalanceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> withdrawBalance($1.WithdrawBalanceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$withdrawBalance, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> withdrawBalance2($1.WithdrawBalanceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> withdrawBalance2($1.WithdrawBalanceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$withdrawBalance2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> withdrawExpireUnfreeze($1.WithdrawExpireUnfreezeContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> withdrawExpireUnfreeze(
+      $1.WithdrawExpireUnfreezeContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$withdrawExpireUnfreeze, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> delegateResource($1.DelegateResourceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> delegateResource(
+      $1.DelegateResourceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$delegateResource, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> unDelegateResource($1.UnDelegateResourceContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> unDelegateResource(
+      $1.UnDelegateResourceContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$unDelegateResource, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> cancelAllUnfreezeV2($1.CancelAllUnfreezeV2Contract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> cancelAllUnfreezeV2(
+      $1.CancelAllUnfreezeV2Contract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$cancelAllUnfreezeV2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> updateAsset($6.UpdateAssetContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> updateAsset($6.UpdateAssetContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateAsset, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> updateAsset2($6.UpdateAssetContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> updateAsset2($6.UpdateAssetContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateAsset2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> proposalCreate($7.ProposalCreateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> proposalCreate($7.ProposalCreateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$proposalCreate, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> proposalApprove($7.ProposalApproveContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> proposalApprove($7.ProposalApproveContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$proposalApprove, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> proposalDelete($7.ProposalDeleteContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> proposalDelete($7.ProposalDeleteContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$proposalDelete, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> buyStorage($8.BuyStorageContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> buyStorage($8.BuyStorageContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$buyStorage, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> buyStorageBytes($8.BuyStorageBytesContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> buyStorageBytes($8.BuyStorageBytesContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$buyStorageBytes, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> sellStorage($8.SellStorageContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> sellStorage($8.SellStorageContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$sellStorage, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> exchangeCreate($9.ExchangeCreateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> exchangeCreate($9.ExchangeCreateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$exchangeCreate, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> exchangeInject($9.ExchangeInjectContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> exchangeInject($9.ExchangeInjectContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$exchangeInject, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> exchangeWithdraw($9.ExchangeWithdrawContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> exchangeWithdraw(
+      $9.ExchangeWithdrawContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$exchangeWithdraw, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> exchangeTransaction($9.ExchangeTransactionContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> exchangeTransaction(
+      $9.ExchangeTransactionContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$exchangeTransaction, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> marketSellAsset($10.MarketSellAssetContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> marketSellAsset($10.MarketSellAssetContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$marketSellAsset, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> marketCancelOrder($10.MarketCancelOrderContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> marketCancelOrder(
+      $10.MarketCancelOrderContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$marketCancelOrder, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrder> getMarketOrderById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrder> getMarketOrderById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketOrderById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderByAccount($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderByAccount($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketOrderByAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketPriceList> getMarketPriceByPair($0.MarketOrderPair request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketPriceList> getMarketPriceByPair($0.MarketOrderPair request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketPriceByPair, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderListByPair($0.MarketOrderPair request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderListByPair($0.MarketOrderPair request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketOrderListByPair, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrderPairList> getMarketPairList($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrderPairList> getMarketPairList($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketPairList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NodeList> listNodes($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NodeList> listNodes($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listNodes, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueByAccount($0.Account request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueByAccount($0.Account request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueByAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AccountNetMessage> getAccountNet($0.Account request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AccountNetMessage> getAccountNet($0.Account request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccountNet, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AccountResourceMessage> getAccountResource($0.Account request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AccountResourceMessage> getAccountResource($0.Account request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccountResource, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueByName($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueByName($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueByName, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueListByName($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueListByName($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueListByName, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Block> getNowBlock($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Block> getNowBlock($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNowBlock, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockExtention> getNowBlock2($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockExtention> getNowBlock2($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNowBlock2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Block> getBlockByNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Block> getBlockByNum($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByNum, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockExtention> getBlockByNum2($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockExtention> getBlockByNum2($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByNum2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getTransactionCountByBlockNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getTransactionCountByBlockNum($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionCountByBlockNum, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Block> getBlockById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Block> getBlockById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockList> getBlockByLimitNext($2.BlockLimit request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockList> getBlockByLimitNext($2.BlockLimit request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByLimitNext, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockListExtention> getBlockByLimitNext2($2.BlockLimit request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockListExtention> getBlockByLimitNext2($2.BlockLimit request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByLimitNext2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockList> getBlockByLatestNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockList> getBlockByLatestNum($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByLatestNum, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockListExtention> getBlockByLatestNum2($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockListExtention> getBlockByLatestNum2($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByLatestNum2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> getTransactionById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> getTransactionById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> deployContract($5.CreateSmartContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> deployContract($5.CreateSmartContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deployContract, request, options: options);
   }
 
-  $grpc.ResponseFuture<$5.SmartContract> getContract($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$5.SmartContract> getContract($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getContract, request, options: options);
   }
 
-  $grpc.ResponseFuture<$5.SmartContractDataWrapper> getContractInfo($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$5.SmartContractDataWrapper> getContractInfo($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getContractInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> triggerContract($5.TriggerSmartContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> triggerContract($5.TriggerSmartContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$triggerContract, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> triggerConstantContract($5.TriggerSmartContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> triggerConstantContract(
+      $5.TriggerSmartContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$triggerConstantContract, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.EstimateEnergyMessage> estimateEnergy($5.TriggerSmartContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.EstimateEnergyMessage> estimateEnergy($5.TriggerSmartContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$estimateEnergy, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> clearContractABI($5.ClearABIContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> clearContractABI($5.ClearABIContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$clearContractABI, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.WitnessList> listWitnesses($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.WitnessList> listWitnesses($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listWitnesses, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResource($2.DelegatedResourceMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResource(
+      $2.DelegatedResourceMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResource, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResourceV2($2.DelegatedResourceMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResourceV2(
+      $2.DelegatedResourceMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResourceV2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex(
+      $2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResourceAccountIndex, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2(
+      $2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResourceAccountIndexV2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize($2.CanDelegatedMaxSizeRequestMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize(
+      $2.CanDelegatedMaxSizeRequestMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getCanDelegatedMaxSize, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount($2.GetAvailableUnfreezeCountRequestMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount(
+      $2.GetAvailableUnfreezeCountRequestMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAvailableUnfreezeCount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount($2.CanWithdrawUnfreezeAmountRequestMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount(
+      $2.CanWithdrawUnfreezeAmountRequestMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getCanWithdrawUnfreezeAmount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ProposalList> listProposals($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ProposalList> listProposals($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listProposals, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ProposalList> getPaginatedProposalList($2.PaginatedMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ProposalList> getPaginatedProposalList($2.PaginatedMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getPaginatedProposalList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Proposal> getProposalById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Proposal> getProposalById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getProposalById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ExchangeList> listExchanges($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ExchangeList> listExchanges($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listExchanges, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ExchangeList> getPaginatedExchangeList($2.PaginatedMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ExchangeList> getPaginatedExchangeList($2.PaginatedMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getPaginatedExchangeList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Exchange> getExchangeById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Exchange> getExchangeById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getExchangeById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.ChainParameters> getChainParameters($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.ChainParameters> getChainParameters($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getChainParameters, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueList($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueList($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AssetIssueList> getPaginatedAssetIssueList($2.PaginatedMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AssetIssueList> getPaginatedAssetIssueList($2.PaginatedMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getPaginatedAssetIssueList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> totalTransaction($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> totalTransaction($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$totalTransaction, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getNextMaintenanceTime($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getNextMaintenanceTime($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNextMaintenanceTime, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.TransactionInfo> getTransactionInfoById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.TransactionInfo> getTransactionInfoById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionInfoById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> accountPermissionUpdate($3.AccountPermissionUpdateContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> accountPermissionUpdate(
+      $3.AccountPermissionUpdateContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$accountPermissionUpdate, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionSignWeight> getTransactionSignWeight($0.Transaction request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionSignWeight> getTransactionSignWeight($0.Transaction request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionSignWeight, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionApprovedList> getTransactionApprovedList($0.Transaction request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionApprovedList> getTransactionApprovedList(
+      $0.Transaction request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionApprovedList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.NodeInfo> getNodeInfo($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.NodeInfo> getNodeInfo($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNodeInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getRewardInfo($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getRewardInfo($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getRewardInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getBrokerageInfo($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getBrokerageInfo($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBrokerageInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> updateBrokerage($8.UpdateBrokerageContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> updateBrokerage($8.UpdateBrokerageContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateBrokerage, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> createShieldedTransaction($2.PrivateParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> createShieldedTransaction(
+      $2.PrivateParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createShieldedTransaction, request, options: options);
   }
 
-  $grpc.ResponseFuture<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo($11.OutputPointInfo request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo(
+      $11.OutputPointInfo request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMerkleTreeVoucherInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByIvk($2.IvkDecryptParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByIvk($2.IvkDecryptParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanNoteByIvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotesMarked> scanAndMarkNoteByIvk($2.IvkDecryptAndMarkParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotesMarked> scanAndMarkNoteByIvk(
+      $2.IvkDecryptAndMarkParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanAndMarkNoteByIvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByOvk($2.OvkDecryptParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByOvk($2.OvkDecryptParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanNoteByOvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> getSpendingKey($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> getSpendingKey($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getSpendingKey, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ExpandedSpendingKeyMessage> getExpandedSpendingKey($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ExpandedSpendingKeyMessage> getExpandedSpendingKey(
+      $2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getExpandedSpendingKey, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> getAkFromAsk($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> getAkFromAsk($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAkFromAsk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> getNkFromNsk($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> getNkFromNsk($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNkFromNsk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.IncomingViewingKeyMessage> getIncomingViewingKey($2.ViewingKeyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.IncomingViewingKeyMessage> getIncomingViewingKey(
+      $2.ViewingKeyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getIncomingViewingKey, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DiversifierMessage> getDiversifier($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DiversifierMessage> getDiversifier($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDiversifier, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ShieldedAddressInfo> getNewShieldedAddress($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ShieldedAddressInfo> getNewShieldedAddress($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNewShieldedAddress, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.PaymentAddressMessage> getZenPaymentAddress($2.IncomingViewingKeyDiversifierMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PaymentAddressMessage> getZenPaymentAddress(
+      $2.IncomingViewingKeyDiversifierMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getZenPaymentAddress, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> getRcm($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> getRcm($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getRcm, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.SpendResult> isSpend($2.NoteParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.SpendResult> isSpend($2.NoteParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$isSpend, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> createShieldedTransactionWithoutSpendAuthSig($2.PrivateParametersWithoutAsk request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$createShieldedTransactionWithoutSpendAuthSig, request, options: options);
+  $grpc.ResponseFuture<$2.TransactionExtention> createShieldedTransactionWithoutSpendAuthSig(
+      $2.PrivateParametersWithoutAsk request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$createShieldedTransactionWithoutSpendAuthSig, request,
+        options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> getShieldTransactionHash($0.Transaction request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> getShieldTransactionHash($0.Transaction request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getShieldTransactionHash, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> createSpendAuthSig($2.SpendAuthSigParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> createSpendAuthSig($2.SpendAuthSigParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createSpendAuthSig, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> createShieldNullifier($2.NfParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> createShieldNullifier($2.NfParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createShieldNullifier, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ShieldedTRC20Parameters> createShieldedContractParameters($2.PrivateShieldedTRC20Parameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ShieldedTRC20Parameters> createShieldedContractParameters(
+      $2.PrivateShieldedTRC20Parameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createShieldedContractParameters, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ShieldedTRC20Parameters> createShieldedContractParametersWithoutAsk($2.PrivateShieldedTRC20ParametersWithoutAsk request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$createShieldedContractParametersWithoutAsk, request, options: options);
+  $grpc.ResponseFuture<$2.ShieldedTRC20Parameters> createShieldedContractParametersWithoutAsk(
+      $2.PrivateShieldedTRC20ParametersWithoutAsk request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$createShieldedContractParametersWithoutAsk, request,
+        options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk($2.IvkDecryptTRC20Parameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk(
+      $2.IvkDecryptTRC20Parameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanShieldedTRC20NotesByIvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk($2.OvkDecryptTRC20Parameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk(
+      $2.OvkDecryptTRC20Parameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanShieldedTRC20NotesByOvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NullifierResult> isShieldedTRC20ContractNoteSpent($2.NfTRC20Parameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NullifierResult> isShieldedTRC20ContractNoteSpent(
+      $2.NfTRC20Parameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$isShieldedTRC20ContractNoteSpent, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BytesMessage> getTriggerInputForShieldedTRC20Contract($2.ShieldedTRC20TriggerContractParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BytesMessage> getTriggerInputForShieldedTRC20Contract(
+      $2.ShieldedTRC20TriggerContractParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTriggerInputForShieldedTRC20Contract, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> createCommonTransaction($0.Transaction request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> createCommonTransaction($0.Transaction request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$createCommonTransaction, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionInfoList> getTransactionInfoByBlockNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionInfoList> getTransactionInfoByBlockNum(
+      $2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionInfoByBlockNum, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getBurnTrx($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getBurnTrx($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBurnTrx, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> getTransactionFromPending($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> getTransactionFromPending($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionFromPending, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionIdList> getTransactionListFromPending($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionIdList> getTransactionListFromPending($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionListFromPending, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getPendingSize($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getPendingSize($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getPendingSize, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockExtention> getBlock($2.BlockReq request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockExtention> getBlock($2.BlockReq request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlock, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.PricesResponseMessage> getBandwidthPrices($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PricesResponseMessage> getBandwidthPrices($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBandwidthPrices, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.PricesResponseMessage> getEnergyPrices($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PricesResponseMessage> getEnergyPrices($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getEnergyPrices, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.PricesResponseMessage> getMemoFee($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PricesResponseMessage> getMemoFee($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMemoFee, request, options: options);
   }
 }
@@ -1836,26 +2093,31 @@ abstract class WalletServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value),
         ($0.DelegatedResourceAccountIndex value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.CanDelegatedMaxSizeRequestMessage, $2.CanDelegatedMaxSizeResponseMessage>(
+    $addMethod($grpc.ServiceMethod<$2.CanDelegatedMaxSizeRequestMessage,
+            $2.CanDelegatedMaxSizeResponseMessage>(
         'GetCanDelegatedMaxSize',
         getCanDelegatedMaxSize_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $2.CanDelegatedMaxSizeRequestMessage.fromBuffer(value),
         ($2.CanDelegatedMaxSizeResponseMessage value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.GetAvailableUnfreezeCountRequestMessage, $2.GetAvailableUnfreezeCountResponseMessage>(
+    $addMethod($grpc.ServiceMethod<$2.GetAvailableUnfreezeCountRequestMessage,
+            $2.GetAvailableUnfreezeCountResponseMessage>(
         'GetAvailableUnfreezeCount',
         getAvailableUnfreezeCount_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $2.GetAvailableUnfreezeCountRequestMessage.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $2.GetAvailableUnfreezeCountRequestMessage.fromBuffer(value),
         ($2.GetAvailableUnfreezeCountResponseMessage value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.CanWithdrawUnfreezeAmountRequestMessage, $2.CanWithdrawUnfreezeAmountResponseMessage>(
+    $addMethod($grpc.ServiceMethod<$2.CanWithdrawUnfreezeAmountRequestMessage,
+            $2.CanWithdrawUnfreezeAmountResponseMessage>(
         'GetCanWithdrawUnfreezeAmount',
         getCanWithdrawUnfreezeAmount_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $2.CanWithdrawUnfreezeAmountRequestMessage.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $2.CanWithdrawUnfreezeAmountRequestMessage.fromBuffer(value),
         ($2.CanWithdrawUnfreezeAmountResponseMessage value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$2.EmptyMessage, $2.ProposalList>(
         'ListProposals',
@@ -2074,13 +2336,15 @@ abstract class WalletServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $2.EmptyMessage.fromBuffer(value),
         ($2.ShieldedAddressInfo value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.IncomingViewingKeyDiversifierMessage, $2.PaymentAddressMessage>(
-        'GetZenPaymentAddress',
-        getZenPaymentAddress_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $2.IncomingViewingKeyDiversifierMessage.fromBuffer(value),
-        ($2.PaymentAddressMessage value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$2.IncomingViewingKeyDiversifierMessage, $2.PaymentAddressMessage>(
+            'GetZenPaymentAddress',
+            getZenPaymentAddress_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $2.IncomingViewingKeyDiversifierMessage.fromBuffer(value),
+            ($2.PaymentAddressMessage value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$2.EmptyMessage, $2.BytesMessage>(
         'GetRcm',
         getRcm_Pre,
@@ -2130,12 +2394,14 @@ abstract class WalletServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $2.PrivateShieldedTRC20Parameters.fromBuffer(value),
         ($2.ShieldedTRC20Parameters value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.PrivateShieldedTRC20ParametersWithoutAsk, $2.ShieldedTRC20Parameters>(
+    $addMethod($grpc.ServiceMethod<$2.PrivateShieldedTRC20ParametersWithoutAsk,
+            $2.ShieldedTRC20Parameters>(
         'CreateShieldedContractParametersWithoutAsk',
         createShieldedContractParametersWithoutAsk_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $2.PrivateShieldedTRC20ParametersWithoutAsk.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $2.PrivateShieldedTRC20ParametersWithoutAsk.fromBuffer(value),
         ($2.ShieldedTRC20Parameters value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$2.IvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
         'ScanShieldedTRC20NotesByIvk',
@@ -2163,7 +2429,8 @@ abstract class WalletServiceBase extends $grpc.Service {
         getTriggerInputForShieldedTRC20Contract_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $2.ShieldedTRC20TriggerContractParameters.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $2.ShieldedTRC20TriggerContractParameters.fromBuffer(value),
         ($2.BytesMessage value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Transaction, $2.TransactionExtention>(
         'CreateCommonTransaction',
@@ -2237,737 +2504,1000 @@ abstract class WalletServiceBase extends $grpc.Service {
         ($2.PricesResponseMessage value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.Account> getAccount_Pre($grpc.ServiceCall call, $async.Future<$0.Account> request) async {
+  $async.Future<$0.Account> getAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Account> request) async {
     return getAccount(call, await request);
   }
 
-  $async.Future<$0.Account> getAccountById_Pre($grpc.ServiceCall call, $async.Future<$0.Account> request) async {
+  $async.Future<$0.Account> getAccountById_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Account> request) async {
     return getAccountById(call, await request);
   }
 
-  $async.Future<$1.AccountBalanceResponse> getAccountBalance_Pre($grpc.ServiceCall call, $async.Future<$1.AccountBalanceRequest> request) async {
+  $async.Future<$1.AccountBalanceResponse> getAccountBalance_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.AccountBalanceRequest> request) async {
     return getAccountBalance(call, await request);
   }
 
-  $async.Future<$1.BlockBalanceTrace> getBlockBalanceTrace_Pre($grpc.ServiceCall call, $async.Future<$1.BlockBalanceTrace_BlockIdentifier> request) async {
+  $async.Future<$1.BlockBalanceTrace> getBlockBalanceTrace_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.BlockBalanceTrace_BlockIdentifier> request) async {
     return getBlockBalanceTrace(call, await request);
   }
 
-  $async.Future<$0.Transaction> createTransaction_Pre($grpc.ServiceCall call, $async.Future<$1.TransferContract> request) async {
+  $async.Future<$0.Transaction> createTransaction_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.TransferContract> request) async {
     return createTransaction(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> createTransaction2_Pre($grpc.ServiceCall call, $async.Future<$1.TransferContract> request) async {
+  $async.Future<$2.TransactionExtention> createTransaction2_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.TransferContract> request) async {
     return createTransaction2(call, await request);
   }
 
-  $async.Future<$2.Return> broadcastTransaction_Pre($grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
+  $async.Future<$2.Return> broadcastTransaction_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
     return broadcastTransaction(call, await request);
   }
 
-  $async.Future<$0.Transaction> updateAccount_Pre($grpc.ServiceCall call, $async.Future<$3.AccountUpdateContract> request) async {
+  $async.Future<$0.Transaction> updateAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$3.AccountUpdateContract> request) async {
     return updateAccount(call, await request);
   }
 
-  $async.Future<$0.Transaction> setAccountId_Pre($grpc.ServiceCall call, $async.Future<$3.SetAccountIdContract> request) async {
+  $async.Future<$0.Transaction> setAccountId_Pre(
+      $grpc.ServiceCall call, $async.Future<$3.SetAccountIdContract> request) async {
     return setAccountId(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> updateAccount2_Pre($grpc.ServiceCall call, $async.Future<$3.AccountUpdateContract> request) async {
+  $async.Future<$2.TransactionExtention> updateAccount2_Pre(
+      $grpc.ServiceCall call, $async.Future<$3.AccountUpdateContract> request) async {
     return updateAccount2(call, await request);
   }
 
-  $async.Future<$0.Transaction> voteWitnessAccount_Pre($grpc.ServiceCall call, $async.Future<$4.VoteWitnessContract> request) async {
+  $async.Future<$0.Transaction> voteWitnessAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$4.VoteWitnessContract> request) async {
     return voteWitnessAccount(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> updateSetting_Pre($grpc.ServiceCall call, $async.Future<$5.UpdateSettingContract> request) async {
+  $async.Future<$2.TransactionExtention> updateSetting_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.UpdateSettingContract> request) async {
     return updateSetting(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> updateEnergyLimit_Pre($grpc.ServiceCall call, $async.Future<$5.UpdateEnergyLimitContract> request) async {
+  $async.Future<$2.TransactionExtention> updateEnergyLimit_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.UpdateEnergyLimitContract> request) async {
     return updateEnergyLimit(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> voteWitnessAccount2_Pre($grpc.ServiceCall call, $async.Future<$4.VoteWitnessContract> request) async {
+  $async.Future<$2.TransactionExtention> voteWitnessAccount2_Pre(
+      $grpc.ServiceCall call, $async.Future<$4.VoteWitnessContract> request) async {
     return voteWitnessAccount2(call, await request);
   }
 
-  $async.Future<$0.Transaction> createAssetIssue_Pre($grpc.ServiceCall call, $async.Future<$6.AssetIssueContract> request) async {
+  $async.Future<$0.Transaction> createAssetIssue_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.AssetIssueContract> request) async {
     return createAssetIssue(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> createAssetIssue2_Pre($grpc.ServiceCall call, $async.Future<$6.AssetIssueContract> request) async {
+  $async.Future<$2.TransactionExtention> createAssetIssue2_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.AssetIssueContract> request) async {
     return createAssetIssue2(call, await request);
   }
 
-  $async.Future<$0.Transaction> updateWitness_Pre($grpc.ServiceCall call, $async.Future<$4.WitnessUpdateContract> request) async {
+  $async.Future<$0.Transaction> updateWitness_Pre(
+      $grpc.ServiceCall call, $async.Future<$4.WitnessUpdateContract> request) async {
     return updateWitness(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> updateWitness2_Pre($grpc.ServiceCall call, $async.Future<$4.WitnessUpdateContract> request) async {
+  $async.Future<$2.TransactionExtention> updateWitness2_Pre(
+      $grpc.ServiceCall call, $async.Future<$4.WitnessUpdateContract> request) async {
     return updateWitness2(call, await request);
   }
 
-  $async.Future<$0.Transaction> createAccount_Pre($grpc.ServiceCall call, $async.Future<$3.AccountCreateContract> request) async {
+  $async.Future<$0.Transaction> createAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$3.AccountCreateContract> request) async {
     return createAccount(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> createAccount2_Pre($grpc.ServiceCall call, $async.Future<$3.AccountCreateContract> request) async {
+  $async.Future<$2.TransactionExtention> createAccount2_Pre(
+      $grpc.ServiceCall call, $async.Future<$3.AccountCreateContract> request) async {
     return createAccount2(call, await request);
   }
 
-  $async.Future<$0.Transaction> createWitness_Pre($grpc.ServiceCall call, $async.Future<$4.WitnessCreateContract> request) async {
+  $async.Future<$0.Transaction> createWitness_Pre(
+      $grpc.ServiceCall call, $async.Future<$4.WitnessCreateContract> request) async {
     return createWitness(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> createWitness2_Pre($grpc.ServiceCall call, $async.Future<$4.WitnessCreateContract> request) async {
+  $async.Future<$2.TransactionExtention> createWitness2_Pre(
+      $grpc.ServiceCall call, $async.Future<$4.WitnessCreateContract> request) async {
     return createWitness2(call, await request);
   }
 
-  $async.Future<$0.Transaction> transferAsset_Pre($grpc.ServiceCall call, $async.Future<$6.TransferAssetContract> request) async {
+  $async.Future<$0.Transaction> transferAsset_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.TransferAssetContract> request) async {
     return transferAsset(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> transferAsset2_Pre($grpc.ServiceCall call, $async.Future<$6.TransferAssetContract> request) async {
+  $async.Future<$2.TransactionExtention> transferAsset2_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.TransferAssetContract> request) async {
     return transferAsset2(call, await request);
   }
 
-  $async.Future<$0.Transaction> participateAssetIssue_Pre($grpc.ServiceCall call, $async.Future<$6.ParticipateAssetIssueContract> request) async {
+  $async.Future<$0.Transaction> participateAssetIssue_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.ParticipateAssetIssueContract> request) async {
     return participateAssetIssue(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> participateAssetIssue2_Pre($grpc.ServiceCall call, $async.Future<$6.ParticipateAssetIssueContract> request) async {
+  $async.Future<$2.TransactionExtention> participateAssetIssue2_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.ParticipateAssetIssueContract> request) async {
     return participateAssetIssue2(call, await request);
   }
 
-  $async.Future<$0.Transaction> freezeBalance_Pre($grpc.ServiceCall call, $async.Future<$1.FreezeBalanceContract> request) async {
+  $async.Future<$0.Transaction> freezeBalance_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.FreezeBalanceContract> request) async {
     return freezeBalance(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> freezeBalance2_Pre($grpc.ServiceCall call, $async.Future<$1.FreezeBalanceContract> request) async {
+  $async.Future<$2.TransactionExtention> freezeBalance2_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.FreezeBalanceContract> request) async {
     return freezeBalance2(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> freezeBalanceV2_Pre($grpc.ServiceCall call, $async.Future<$1.FreezeBalanceV2Contract> request) async {
+  $async.Future<$2.TransactionExtention> freezeBalanceV2_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.FreezeBalanceV2Contract> request) async {
     return freezeBalanceV2(call, await request);
   }
 
-  $async.Future<$0.Transaction> unfreezeBalance_Pre($grpc.ServiceCall call, $async.Future<$1.UnfreezeBalanceContract> request) async {
+  $async.Future<$0.Transaction> unfreezeBalance_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.UnfreezeBalanceContract> request) async {
     return unfreezeBalance(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> unfreezeBalance2_Pre($grpc.ServiceCall call, $async.Future<$1.UnfreezeBalanceContract> request) async {
+  $async.Future<$2.TransactionExtention> unfreezeBalance2_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.UnfreezeBalanceContract> request) async {
     return unfreezeBalance2(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> unfreezeBalanceV2_Pre($grpc.ServiceCall call, $async.Future<$1.UnfreezeBalanceV2Contract> request) async {
+  $async.Future<$2.TransactionExtention> unfreezeBalanceV2_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.UnfreezeBalanceV2Contract> request) async {
     return unfreezeBalanceV2(call, await request);
   }
 
-  $async.Future<$0.Transaction> unfreezeAsset_Pre($grpc.ServiceCall call, $async.Future<$6.UnfreezeAssetContract> request) async {
+  $async.Future<$0.Transaction> unfreezeAsset_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.UnfreezeAssetContract> request) async {
     return unfreezeAsset(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> unfreezeAsset2_Pre($grpc.ServiceCall call, $async.Future<$6.UnfreezeAssetContract> request) async {
+  $async.Future<$2.TransactionExtention> unfreezeAsset2_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.UnfreezeAssetContract> request) async {
     return unfreezeAsset2(call, await request);
   }
 
-  $async.Future<$0.Transaction> withdrawBalance_Pre($grpc.ServiceCall call, $async.Future<$1.WithdrawBalanceContract> request) async {
+  $async.Future<$0.Transaction> withdrawBalance_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.WithdrawBalanceContract> request) async {
     return withdrawBalance(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> withdrawBalance2_Pre($grpc.ServiceCall call, $async.Future<$1.WithdrawBalanceContract> request) async {
+  $async.Future<$2.TransactionExtention> withdrawBalance2_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.WithdrawBalanceContract> request) async {
     return withdrawBalance2(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> withdrawExpireUnfreeze_Pre($grpc.ServiceCall call, $async.Future<$1.WithdrawExpireUnfreezeContract> request) async {
+  $async.Future<$2.TransactionExtention> withdrawExpireUnfreeze_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.WithdrawExpireUnfreezeContract> request) async {
     return withdrawExpireUnfreeze(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> delegateResource_Pre($grpc.ServiceCall call, $async.Future<$1.DelegateResourceContract> request) async {
+  $async.Future<$2.TransactionExtention> delegateResource_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.DelegateResourceContract> request) async {
     return delegateResource(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> unDelegateResource_Pre($grpc.ServiceCall call, $async.Future<$1.UnDelegateResourceContract> request) async {
+  $async.Future<$2.TransactionExtention> unDelegateResource_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.UnDelegateResourceContract> request) async {
     return unDelegateResource(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> cancelAllUnfreezeV2_Pre($grpc.ServiceCall call, $async.Future<$1.CancelAllUnfreezeV2Contract> request) async {
+  $async.Future<$2.TransactionExtention> cancelAllUnfreezeV2_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.CancelAllUnfreezeV2Contract> request) async {
     return cancelAllUnfreezeV2(call, await request);
   }
 
-  $async.Future<$0.Transaction> updateAsset_Pre($grpc.ServiceCall call, $async.Future<$6.UpdateAssetContract> request) async {
+  $async.Future<$0.Transaction> updateAsset_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.UpdateAssetContract> request) async {
     return updateAsset(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> updateAsset2_Pre($grpc.ServiceCall call, $async.Future<$6.UpdateAssetContract> request) async {
+  $async.Future<$2.TransactionExtention> updateAsset2_Pre(
+      $grpc.ServiceCall call, $async.Future<$6.UpdateAssetContract> request) async {
     return updateAsset2(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> proposalCreate_Pre($grpc.ServiceCall call, $async.Future<$7.ProposalCreateContract> request) async {
+  $async.Future<$2.TransactionExtention> proposalCreate_Pre(
+      $grpc.ServiceCall call, $async.Future<$7.ProposalCreateContract> request) async {
     return proposalCreate(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> proposalApprove_Pre($grpc.ServiceCall call, $async.Future<$7.ProposalApproveContract> request) async {
+  $async.Future<$2.TransactionExtention> proposalApprove_Pre(
+      $grpc.ServiceCall call, $async.Future<$7.ProposalApproveContract> request) async {
     return proposalApprove(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> proposalDelete_Pre($grpc.ServiceCall call, $async.Future<$7.ProposalDeleteContract> request) async {
+  $async.Future<$2.TransactionExtention> proposalDelete_Pre(
+      $grpc.ServiceCall call, $async.Future<$7.ProposalDeleteContract> request) async {
     return proposalDelete(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> buyStorage_Pre($grpc.ServiceCall call, $async.Future<$8.BuyStorageContract> request) async {
+  $async.Future<$2.TransactionExtention> buyStorage_Pre(
+      $grpc.ServiceCall call, $async.Future<$8.BuyStorageContract> request) async {
     return buyStorage(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> buyStorageBytes_Pre($grpc.ServiceCall call, $async.Future<$8.BuyStorageBytesContract> request) async {
+  $async.Future<$2.TransactionExtention> buyStorageBytes_Pre(
+      $grpc.ServiceCall call, $async.Future<$8.BuyStorageBytesContract> request) async {
     return buyStorageBytes(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> sellStorage_Pre($grpc.ServiceCall call, $async.Future<$8.SellStorageContract> request) async {
+  $async.Future<$2.TransactionExtention> sellStorage_Pre(
+      $grpc.ServiceCall call, $async.Future<$8.SellStorageContract> request) async {
     return sellStorage(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> exchangeCreate_Pre($grpc.ServiceCall call, $async.Future<$9.ExchangeCreateContract> request) async {
+  $async.Future<$2.TransactionExtention> exchangeCreate_Pre(
+      $grpc.ServiceCall call, $async.Future<$9.ExchangeCreateContract> request) async {
     return exchangeCreate(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> exchangeInject_Pre($grpc.ServiceCall call, $async.Future<$9.ExchangeInjectContract> request) async {
+  $async.Future<$2.TransactionExtention> exchangeInject_Pre(
+      $grpc.ServiceCall call, $async.Future<$9.ExchangeInjectContract> request) async {
     return exchangeInject(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> exchangeWithdraw_Pre($grpc.ServiceCall call, $async.Future<$9.ExchangeWithdrawContract> request) async {
+  $async.Future<$2.TransactionExtention> exchangeWithdraw_Pre(
+      $grpc.ServiceCall call, $async.Future<$9.ExchangeWithdrawContract> request) async {
     return exchangeWithdraw(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> exchangeTransaction_Pre($grpc.ServiceCall call, $async.Future<$9.ExchangeTransactionContract> request) async {
+  $async.Future<$2.TransactionExtention> exchangeTransaction_Pre(
+      $grpc.ServiceCall call, $async.Future<$9.ExchangeTransactionContract> request) async {
     return exchangeTransaction(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> marketSellAsset_Pre($grpc.ServiceCall call, $async.Future<$10.MarketSellAssetContract> request) async {
+  $async.Future<$2.TransactionExtention> marketSellAsset_Pre(
+      $grpc.ServiceCall call, $async.Future<$10.MarketSellAssetContract> request) async {
     return marketSellAsset(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> marketCancelOrder_Pre($grpc.ServiceCall call, $async.Future<$10.MarketCancelOrderContract> request) async {
+  $async.Future<$2.TransactionExtention> marketCancelOrder_Pre(
+      $grpc.ServiceCall call, $async.Future<$10.MarketCancelOrderContract> request) async {
     return marketCancelOrder(call, await request);
   }
 
-  $async.Future<$0.MarketOrder> getMarketOrderById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.MarketOrder> getMarketOrderById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getMarketOrderById(call, await request);
   }
 
-  $async.Future<$0.MarketOrderList> getMarketOrderByAccount_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.MarketOrderList> getMarketOrderByAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getMarketOrderByAccount(call, await request);
   }
 
-  $async.Future<$0.MarketPriceList> getMarketPriceByPair_Pre($grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
+  $async.Future<$0.MarketPriceList> getMarketPriceByPair_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
     return getMarketPriceByPair(call, await request);
   }
 
-  $async.Future<$0.MarketOrderList> getMarketOrderListByPair_Pre($grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
+  $async.Future<$0.MarketOrderList> getMarketOrderListByPair_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
     return getMarketOrderListByPair(call, await request);
   }
 
-  $async.Future<$0.MarketOrderPairList> getMarketPairList_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.MarketOrderPairList> getMarketPairList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getMarketPairList(call, await request);
   }
 
-  $async.Future<$2.NodeList> listNodes_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.NodeList> listNodes_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return listNodes(call, await request);
   }
 
-  $async.Future<$2.AssetIssueList> getAssetIssueByAccount_Pre($grpc.ServiceCall call, $async.Future<$0.Account> request) async {
+  $async.Future<$2.AssetIssueList> getAssetIssueByAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Account> request) async {
     return getAssetIssueByAccount(call, await request);
   }
 
-  $async.Future<$2.AccountNetMessage> getAccountNet_Pre($grpc.ServiceCall call, $async.Future<$0.Account> request) async {
+  $async.Future<$2.AccountNetMessage> getAccountNet_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Account> request) async {
     return getAccountNet(call, await request);
   }
 
-  $async.Future<$2.AccountResourceMessage> getAccountResource_Pre($grpc.ServiceCall call, $async.Future<$0.Account> request) async {
+  $async.Future<$2.AccountResourceMessage> getAccountResource_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Account> request) async {
     return getAccountResource(call, await request);
   }
 
-  $async.Future<$6.AssetIssueContract> getAssetIssueByName_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$6.AssetIssueContract> getAssetIssueByName_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getAssetIssueByName(call, await request);
   }
 
-  $async.Future<$2.AssetIssueList> getAssetIssueListByName_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.AssetIssueList> getAssetIssueListByName_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getAssetIssueListByName(call, await request);
   }
 
-  $async.Future<$6.AssetIssueContract> getAssetIssueById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$6.AssetIssueContract> getAssetIssueById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getAssetIssueById(call, await request);
   }
 
-  $async.Future<$0.Block> getNowBlock_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.Block> getNowBlock_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNowBlock(call, await request);
   }
 
-  $async.Future<$2.BlockExtention> getNowBlock2_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.BlockExtention> getNowBlock2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNowBlock2(call, await request);
   }
 
-  $async.Future<$0.Block> getBlockByNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$0.Block> getBlockByNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getBlockByNum(call, await request);
   }
 
-  $async.Future<$2.BlockExtention> getBlockByNum2_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.BlockExtention> getBlockByNum2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getBlockByNum2(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getTransactionCountByBlockNum(call, await request);
   }
 
-  $async.Future<$0.Block> getBlockById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.Block> getBlockById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getBlockById(call, await request);
   }
 
-  $async.Future<$2.BlockList> getBlockByLimitNext_Pre($grpc.ServiceCall call, $async.Future<$2.BlockLimit> request) async {
+  $async.Future<$2.BlockList> getBlockByLimitNext_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BlockLimit> request) async {
     return getBlockByLimitNext(call, await request);
   }
 
-  $async.Future<$2.BlockListExtention> getBlockByLimitNext2_Pre($grpc.ServiceCall call, $async.Future<$2.BlockLimit> request) async {
+  $async.Future<$2.BlockListExtention> getBlockByLimitNext2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BlockLimit> request) async {
     return getBlockByLimitNext2(call, await request);
   }
 
-  $async.Future<$2.BlockList> getBlockByLatestNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.BlockList> getBlockByLatestNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getBlockByLatestNum(call, await request);
   }
 
-  $async.Future<$2.BlockListExtention> getBlockByLatestNum2_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.BlockListExtention> getBlockByLatestNum2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getBlockByLatestNum2(call, await request);
   }
 
-  $async.Future<$0.Transaction> getTransactionById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.Transaction> getTransactionById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getTransactionById(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> deployContract_Pre($grpc.ServiceCall call, $async.Future<$5.CreateSmartContract> request) async {
+  $async.Future<$2.TransactionExtention> deployContract_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.CreateSmartContract> request) async {
     return deployContract(call, await request);
   }
 
-  $async.Future<$5.SmartContract> getContract_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$5.SmartContract> getContract_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getContract(call, await request);
   }
 
-  $async.Future<$5.SmartContractDataWrapper> getContractInfo_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$5.SmartContractDataWrapper> getContractInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getContractInfo(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> triggerContract_Pre($grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
+  $async.Future<$2.TransactionExtention> triggerContract_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
     return triggerContract(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> triggerConstantContract_Pre($grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
+  $async.Future<$2.TransactionExtention> triggerConstantContract_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
     return triggerConstantContract(call, await request);
   }
 
-  $async.Future<$2.EstimateEnergyMessage> estimateEnergy_Pre($grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
+  $async.Future<$2.EstimateEnergyMessage> estimateEnergy_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
     return estimateEnergy(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> clearContractABI_Pre($grpc.ServiceCall call, $async.Future<$5.ClearABIContract> request) async {
+  $async.Future<$2.TransactionExtention> clearContractABI_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.ClearABIContract> request) async {
     return clearContractABI(call, await request);
   }
 
-  $async.Future<$2.WitnessList> listWitnesses_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.WitnessList> listWitnesses_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return listWitnesses(call, await request);
   }
 
-  $async.Future<$2.DelegatedResourceList> getDelegatedResource_Pre($grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
+  $async.Future<$2.DelegatedResourceList> getDelegatedResource_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
     return getDelegatedResource(call, await request);
   }
 
-  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2_Pre($grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
+  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
     return getDelegatedResourceV2(call, await request);
   }
 
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getDelegatedResourceAccountIndex(call, await request);
   }
 
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getDelegatedResourceAccountIndexV2(call, await request);
   }
 
-  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize_Pre($grpc.ServiceCall call, $async.Future<$2.CanDelegatedMaxSizeRequestMessage> request) async {
+  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.CanDelegatedMaxSizeRequestMessage> request) async {
     return getCanDelegatedMaxSize(call, await request);
   }
 
-  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount_Pre($grpc.ServiceCall call, $async.Future<$2.GetAvailableUnfreezeCountRequestMessage> request) async {
+  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$2.GetAvailableUnfreezeCountRequestMessage> request) async {
     return getAvailableUnfreezeCount(call, await request);
   }
 
-  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount_Pre($grpc.ServiceCall call, $async.Future<$2.CanWithdrawUnfreezeAmountRequestMessage> request) async {
+  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$2.CanWithdrawUnfreezeAmountRequestMessage> request) async {
     return getCanWithdrawUnfreezeAmount(call, await request);
   }
 
-  $async.Future<$2.ProposalList> listProposals_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.ProposalList> listProposals_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return listProposals(call, await request);
   }
 
-  $async.Future<$2.ProposalList> getPaginatedProposalList_Pre($grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
+  $async.Future<$2.ProposalList> getPaginatedProposalList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
     return getPaginatedProposalList(call, await request);
   }
 
-  $async.Future<$0.Proposal> getProposalById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.Proposal> getProposalById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getProposalById(call, await request);
   }
 
-  $async.Future<$2.ExchangeList> listExchanges_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.ExchangeList> listExchanges_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return listExchanges(call, await request);
   }
 
-  $async.Future<$2.ExchangeList> getPaginatedExchangeList_Pre($grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
+  $async.Future<$2.ExchangeList> getPaginatedExchangeList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
     return getPaginatedExchangeList(call, await request);
   }
 
-  $async.Future<$0.Exchange> getExchangeById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.Exchange> getExchangeById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getExchangeById(call, await request);
   }
 
-  $async.Future<$0.ChainParameters> getChainParameters_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.ChainParameters> getChainParameters_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getChainParameters(call, await request);
   }
 
-  $async.Future<$2.AssetIssueList> getAssetIssueList_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.AssetIssueList> getAssetIssueList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getAssetIssueList(call, await request);
   }
 
-  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList_Pre($grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
+  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
     return getPaginatedAssetIssueList(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> totalTransaction_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.NumberMessage> totalTransaction_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return totalTransaction(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getNextMaintenanceTime_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.NumberMessage> getNextMaintenanceTime_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNextMaintenanceTime(call, await request);
   }
 
-  $async.Future<$0.TransactionInfo> getTransactionInfoById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.TransactionInfo> getTransactionInfoById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getTransactionInfoById(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> accountPermissionUpdate_Pre($grpc.ServiceCall call, $async.Future<$3.AccountPermissionUpdateContract> request) async {
+  $async.Future<$2.TransactionExtention> accountPermissionUpdate_Pre(
+      $grpc.ServiceCall call, $async.Future<$3.AccountPermissionUpdateContract> request) async {
     return accountPermissionUpdate(call, await request);
   }
 
-  $async.Future<$2.TransactionSignWeight> getTransactionSignWeight_Pre($grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
+  $async.Future<$2.TransactionSignWeight> getTransactionSignWeight_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
     return getTransactionSignWeight(call, await request);
   }
 
-  $async.Future<$2.TransactionApprovedList> getTransactionApprovedList_Pre($grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
+  $async.Future<$2.TransactionApprovedList> getTransactionApprovedList_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
     return getTransactionApprovedList(call, await request);
   }
 
-  $async.Future<$0.NodeInfo> getNodeInfo_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.NodeInfo> getNodeInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNodeInfo(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getRewardInfo_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.NumberMessage> getRewardInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getRewardInfo(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getBrokerageInfo_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.NumberMessage> getBrokerageInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getBrokerageInfo(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> updateBrokerage_Pre($grpc.ServiceCall call, $async.Future<$8.UpdateBrokerageContract> request) async {
+  $async.Future<$2.TransactionExtention> updateBrokerage_Pre(
+      $grpc.ServiceCall call, $async.Future<$8.UpdateBrokerageContract> request) async {
     return updateBrokerage(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> createShieldedTransaction_Pre($grpc.ServiceCall call, $async.Future<$2.PrivateParameters> request) async {
+  $async.Future<$2.TransactionExtention> createShieldedTransaction_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.PrivateParameters> request) async {
     return createShieldedTransaction(call, await request);
   }
 
-  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo_Pre($grpc.ServiceCall call, $async.Future<$11.OutputPointInfo> request) async {
+  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$11.OutputPointInfo> request) async {
     return getMerkleTreeVoucherInfo(call, await request);
   }
 
-  $async.Future<$2.DecryptNotes> scanNoteByIvk_Pre($grpc.ServiceCall call, $async.Future<$2.IvkDecryptParameters> request) async {
+  $async.Future<$2.DecryptNotes> scanNoteByIvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.IvkDecryptParameters> request) async {
     return scanNoteByIvk(call, await request);
   }
 
-  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk_Pre($grpc.ServiceCall call, $async.Future<$2.IvkDecryptAndMarkParameters> request) async {
+  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.IvkDecryptAndMarkParameters> request) async {
     return scanAndMarkNoteByIvk(call, await request);
   }
 
-  $async.Future<$2.DecryptNotes> scanNoteByOvk_Pre($grpc.ServiceCall call, $async.Future<$2.OvkDecryptParameters> request) async {
+  $async.Future<$2.DecryptNotes> scanNoteByOvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.OvkDecryptParameters> request) async {
     return scanNoteByOvk(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> getSpendingKey_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.BytesMessage> getSpendingKey_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getSpendingKey(call, await request);
   }
 
-  $async.Future<$2.ExpandedSpendingKeyMessage> getExpandedSpendingKey_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.ExpandedSpendingKeyMessage> getExpandedSpendingKey_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getExpandedSpendingKey(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> getAkFromAsk_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.BytesMessage> getAkFromAsk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getAkFromAsk(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> getNkFromNsk_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.BytesMessage> getNkFromNsk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getNkFromNsk(call, await request);
   }
 
-  $async.Future<$2.IncomingViewingKeyMessage> getIncomingViewingKey_Pre($grpc.ServiceCall call, $async.Future<$2.ViewingKeyMessage> request) async {
+  $async.Future<$2.IncomingViewingKeyMessage> getIncomingViewingKey_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.ViewingKeyMessage> request) async {
     return getIncomingViewingKey(call, await request);
   }
 
-  $async.Future<$2.DiversifierMessage> getDiversifier_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.DiversifierMessage> getDiversifier_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getDiversifier(call, await request);
   }
 
-  $async.Future<$2.ShieldedAddressInfo> getNewShieldedAddress_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.ShieldedAddressInfo> getNewShieldedAddress_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNewShieldedAddress(call, await request);
   }
 
-  $async.Future<$2.PaymentAddressMessage> getZenPaymentAddress_Pre($grpc.ServiceCall call, $async.Future<$2.IncomingViewingKeyDiversifierMessage> request) async {
+  $async.Future<$2.PaymentAddressMessage> getZenPaymentAddress_Pre($grpc.ServiceCall call,
+      $async.Future<$2.IncomingViewingKeyDiversifierMessage> request) async {
     return getZenPaymentAddress(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> getRcm_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.BytesMessage> getRcm_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getRcm(call, await request);
   }
 
-  $async.Future<$2.SpendResult> isSpend_Pre($grpc.ServiceCall call, $async.Future<$2.NoteParameters> request) async {
+  $async.Future<$2.SpendResult> isSpend_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NoteParameters> request) async {
     return isSpend(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> createShieldedTransactionWithoutSpendAuthSig_Pre($grpc.ServiceCall call, $async.Future<$2.PrivateParametersWithoutAsk> request) async {
+  $async.Future<$2.TransactionExtention> createShieldedTransactionWithoutSpendAuthSig_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.PrivateParametersWithoutAsk> request) async {
     return createShieldedTransactionWithoutSpendAuthSig(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> getShieldTransactionHash_Pre($grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
+  $async.Future<$2.BytesMessage> getShieldTransactionHash_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
     return getShieldTransactionHash(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> createSpendAuthSig_Pre($grpc.ServiceCall call, $async.Future<$2.SpendAuthSigParameters> request) async {
+  $async.Future<$2.BytesMessage> createSpendAuthSig_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.SpendAuthSigParameters> request) async {
     return createSpendAuthSig(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> createShieldNullifier_Pre($grpc.ServiceCall call, $async.Future<$2.NfParameters> request) async {
+  $async.Future<$2.BytesMessage> createShieldNullifier_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NfParameters> request) async {
     return createShieldNullifier(call, await request);
   }
 
-  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParameters_Pre($grpc.ServiceCall call, $async.Future<$2.PrivateShieldedTRC20Parameters> request) async {
+  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParameters_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.PrivateShieldedTRC20Parameters> request) async {
     return createShieldedContractParameters(call, await request);
   }
 
-  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParametersWithoutAsk_Pre($grpc.ServiceCall call, $async.Future<$2.PrivateShieldedTRC20ParametersWithoutAsk> request) async {
+  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParametersWithoutAsk_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$2.PrivateShieldedTRC20ParametersWithoutAsk> request) async {
     return createShieldedContractParametersWithoutAsk(call, await request);
   }
 
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk_Pre($grpc.ServiceCall call, $async.Future<$2.IvkDecryptTRC20Parameters> request) async {
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.IvkDecryptTRC20Parameters> request) async {
     return scanShieldedTRC20NotesByIvk(call, await request);
   }
 
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk_Pre($grpc.ServiceCall call, $async.Future<$2.OvkDecryptTRC20Parameters> request) async {
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.OvkDecryptTRC20Parameters> request) async {
     return scanShieldedTRC20NotesByOvk(call, await request);
   }
 
-  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent_Pre($grpc.ServiceCall call, $async.Future<$2.NfTRC20Parameters> request) async {
+  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NfTRC20Parameters> request) async {
     return isShieldedTRC20ContractNoteSpent(call, await request);
   }
 
-  $async.Future<$2.BytesMessage> getTriggerInputForShieldedTRC20Contract_Pre($grpc.ServiceCall call, $async.Future<$2.ShieldedTRC20TriggerContractParameters> request) async {
+  $async.Future<$2.BytesMessage> getTriggerInputForShieldedTRC20Contract_Pre($grpc.ServiceCall call,
+      $async.Future<$2.ShieldedTRC20TriggerContractParameters> request) async {
     return getTriggerInputForShieldedTRC20Contract(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> createCommonTransaction_Pre($grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
+  $async.Future<$2.TransactionExtention> createCommonTransaction_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Transaction> request) async {
     return createCommonTransaction(call, await request);
   }
 
-  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getTransactionInfoByBlockNum(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getBurnTrx_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.NumberMessage> getBurnTrx_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getBurnTrx(call, await request);
   }
 
-  $async.Future<$0.Transaction> getTransactionFromPending_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.Transaction> getTransactionFromPending_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getTransactionFromPending(call, await request);
   }
 
-  $async.Future<$2.TransactionIdList> getTransactionListFromPending_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.TransactionIdList> getTransactionListFromPending_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getTransactionListFromPending(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getPendingSize_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.NumberMessage> getPendingSize_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getPendingSize(call, await request);
   }
 
-  $async.Future<$2.BlockExtention> getBlock_Pre($grpc.ServiceCall call, $async.Future<$2.BlockReq> request) async {
+  $async.Future<$2.BlockExtention> getBlock_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BlockReq> request) async {
     return getBlock(call, await request);
   }
 
-  $async.Future<$2.PricesResponseMessage> getBandwidthPrices_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.PricesResponseMessage> getBandwidthPrices_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getBandwidthPrices(call, await request);
   }
 
-  $async.Future<$2.PricesResponseMessage> getEnergyPrices_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.PricesResponseMessage> getEnergyPrices_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getEnergyPrices(call, await request);
   }
 
-  $async.Future<$2.PricesResponseMessage> getMemoFee_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.PricesResponseMessage> getMemoFee_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getMemoFee(call, await request);
   }
 
   $async.Future<$0.Account> getAccount($grpc.ServiceCall call, $0.Account request);
   $async.Future<$0.Account> getAccountById($grpc.ServiceCall call, $0.Account request);
-  $async.Future<$1.AccountBalanceResponse> getAccountBalance($grpc.ServiceCall call, $1.AccountBalanceRequest request);
-  $async.Future<$1.BlockBalanceTrace> getBlockBalanceTrace($grpc.ServiceCall call, $1.BlockBalanceTrace_BlockIdentifier request);
-  $async.Future<$0.Transaction> createTransaction($grpc.ServiceCall call, $1.TransferContract request);
-  $async.Future<$2.TransactionExtention> createTransaction2($grpc.ServiceCall call, $1.TransferContract request);
+  $async.Future<$1.AccountBalanceResponse> getAccountBalance(
+      $grpc.ServiceCall call, $1.AccountBalanceRequest request);
+  $async.Future<$1.BlockBalanceTrace> getBlockBalanceTrace(
+      $grpc.ServiceCall call, $1.BlockBalanceTrace_BlockIdentifier request);
+  $async.Future<$0.Transaction> createTransaction(
+      $grpc.ServiceCall call, $1.TransferContract request);
+  $async.Future<$2.TransactionExtention> createTransaction2(
+      $grpc.ServiceCall call, $1.TransferContract request);
   $async.Future<$2.Return> broadcastTransaction($grpc.ServiceCall call, $0.Transaction request);
-  $async.Future<$0.Transaction> updateAccount($grpc.ServiceCall call, $3.AccountUpdateContract request);
-  $async.Future<$0.Transaction> setAccountId($grpc.ServiceCall call, $3.SetAccountIdContract request);
-  $async.Future<$2.TransactionExtention> updateAccount2($grpc.ServiceCall call, $3.AccountUpdateContract request);
-  $async.Future<$0.Transaction> voteWitnessAccount($grpc.ServiceCall call, $4.VoteWitnessContract request);
-  $async.Future<$2.TransactionExtention> updateSetting($grpc.ServiceCall call, $5.UpdateSettingContract request);
-  $async.Future<$2.TransactionExtention> updateEnergyLimit($grpc.ServiceCall call, $5.UpdateEnergyLimitContract request);
-  $async.Future<$2.TransactionExtention> voteWitnessAccount2($grpc.ServiceCall call, $4.VoteWitnessContract request);
-  $async.Future<$0.Transaction> createAssetIssue($grpc.ServiceCall call, $6.AssetIssueContract request);
-  $async.Future<$2.TransactionExtention> createAssetIssue2($grpc.ServiceCall call, $6.AssetIssueContract request);
-  $async.Future<$0.Transaction> updateWitness($grpc.ServiceCall call, $4.WitnessUpdateContract request);
-  $async.Future<$2.TransactionExtention> updateWitness2($grpc.ServiceCall call, $4.WitnessUpdateContract request);
-  $async.Future<$0.Transaction> createAccount($grpc.ServiceCall call, $3.AccountCreateContract request);
-  $async.Future<$2.TransactionExtention> createAccount2($grpc.ServiceCall call, $3.AccountCreateContract request);
-  $async.Future<$0.Transaction> createWitness($grpc.ServiceCall call, $4.WitnessCreateContract request);
-  $async.Future<$2.TransactionExtention> createWitness2($grpc.ServiceCall call, $4.WitnessCreateContract request);
-  $async.Future<$0.Transaction> transferAsset($grpc.ServiceCall call, $6.TransferAssetContract request);
-  $async.Future<$2.TransactionExtention> transferAsset2($grpc.ServiceCall call, $6.TransferAssetContract request);
-  $async.Future<$0.Transaction> participateAssetIssue($grpc.ServiceCall call, $6.ParticipateAssetIssueContract request);
-  $async.Future<$2.TransactionExtention> participateAssetIssue2($grpc.ServiceCall call, $6.ParticipateAssetIssueContract request);
-  $async.Future<$0.Transaction> freezeBalance($grpc.ServiceCall call, $1.FreezeBalanceContract request);
-  $async.Future<$2.TransactionExtention> freezeBalance2($grpc.ServiceCall call, $1.FreezeBalanceContract request);
-  $async.Future<$2.TransactionExtention> freezeBalanceV2($grpc.ServiceCall call, $1.FreezeBalanceV2Contract request);
-  $async.Future<$0.Transaction> unfreezeBalance($grpc.ServiceCall call, $1.UnfreezeBalanceContract request);
-  $async.Future<$2.TransactionExtention> unfreezeBalance2($grpc.ServiceCall call, $1.UnfreezeBalanceContract request);
-  $async.Future<$2.TransactionExtention> unfreezeBalanceV2($grpc.ServiceCall call, $1.UnfreezeBalanceV2Contract request);
-  $async.Future<$0.Transaction> unfreezeAsset($grpc.ServiceCall call, $6.UnfreezeAssetContract request);
-  $async.Future<$2.TransactionExtention> unfreezeAsset2($grpc.ServiceCall call, $6.UnfreezeAssetContract request);
-  $async.Future<$0.Transaction> withdrawBalance($grpc.ServiceCall call, $1.WithdrawBalanceContract request);
-  $async.Future<$2.TransactionExtention> withdrawBalance2($grpc.ServiceCall call, $1.WithdrawBalanceContract request);
-  $async.Future<$2.TransactionExtention> withdrawExpireUnfreeze($grpc.ServiceCall call, $1.WithdrawExpireUnfreezeContract request);
-  $async.Future<$2.TransactionExtention> delegateResource($grpc.ServiceCall call, $1.DelegateResourceContract request);
-  $async.Future<$2.TransactionExtention> unDelegateResource($grpc.ServiceCall call, $1.UnDelegateResourceContract request);
-  $async.Future<$2.TransactionExtention> cancelAllUnfreezeV2($grpc.ServiceCall call, $1.CancelAllUnfreezeV2Contract request);
+  $async.Future<$0.Transaction> updateAccount(
+      $grpc.ServiceCall call, $3.AccountUpdateContract request);
+  $async.Future<$0.Transaction> setAccountId(
+      $grpc.ServiceCall call, $3.SetAccountIdContract request);
+  $async.Future<$2.TransactionExtention> updateAccount2(
+      $grpc.ServiceCall call, $3.AccountUpdateContract request);
+  $async.Future<$0.Transaction> voteWitnessAccount(
+      $grpc.ServiceCall call, $4.VoteWitnessContract request);
+  $async.Future<$2.TransactionExtention> updateSetting(
+      $grpc.ServiceCall call, $5.UpdateSettingContract request);
+  $async.Future<$2.TransactionExtention> updateEnergyLimit(
+      $grpc.ServiceCall call, $5.UpdateEnergyLimitContract request);
+  $async.Future<$2.TransactionExtention> voteWitnessAccount2(
+      $grpc.ServiceCall call, $4.VoteWitnessContract request);
+  $async.Future<$0.Transaction> createAssetIssue(
+      $grpc.ServiceCall call, $6.AssetIssueContract request);
+  $async.Future<$2.TransactionExtention> createAssetIssue2(
+      $grpc.ServiceCall call, $6.AssetIssueContract request);
+  $async.Future<$0.Transaction> updateWitness(
+      $grpc.ServiceCall call, $4.WitnessUpdateContract request);
+  $async.Future<$2.TransactionExtention> updateWitness2(
+      $grpc.ServiceCall call, $4.WitnessUpdateContract request);
+  $async.Future<$0.Transaction> createAccount(
+      $grpc.ServiceCall call, $3.AccountCreateContract request);
+  $async.Future<$2.TransactionExtention> createAccount2(
+      $grpc.ServiceCall call, $3.AccountCreateContract request);
+  $async.Future<$0.Transaction> createWitness(
+      $grpc.ServiceCall call, $4.WitnessCreateContract request);
+  $async.Future<$2.TransactionExtention> createWitness2(
+      $grpc.ServiceCall call, $4.WitnessCreateContract request);
+  $async.Future<$0.Transaction> transferAsset(
+      $grpc.ServiceCall call, $6.TransferAssetContract request);
+  $async.Future<$2.TransactionExtention> transferAsset2(
+      $grpc.ServiceCall call, $6.TransferAssetContract request);
+  $async.Future<$0.Transaction> participateAssetIssue(
+      $grpc.ServiceCall call, $6.ParticipateAssetIssueContract request);
+  $async.Future<$2.TransactionExtention> participateAssetIssue2(
+      $grpc.ServiceCall call, $6.ParticipateAssetIssueContract request);
+  $async.Future<$0.Transaction> freezeBalance(
+      $grpc.ServiceCall call, $1.FreezeBalanceContract request);
+  $async.Future<$2.TransactionExtention> freezeBalance2(
+      $grpc.ServiceCall call, $1.FreezeBalanceContract request);
+  $async.Future<$2.TransactionExtention> freezeBalanceV2(
+      $grpc.ServiceCall call, $1.FreezeBalanceV2Contract request);
+  $async.Future<$0.Transaction> unfreezeBalance(
+      $grpc.ServiceCall call, $1.UnfreezeBalanceContract request);
+  $async.Future<$2.TransactionExtention> unfreezeBalance2(
+      $grpc.ServiceCall call, $1.UnfreezeBalanceContract request);
+  $async.Future<$2.TransactionExtention> unfreezeBalanceV2(
+      $grpc.ServiceCall call, $1.UnfreezeBalanceV2Contract request);
+  $async.Future<$0.Transaction> unfreezeAsset(
+      $grpc.ServiceCall call, $6.UnfreezeAssetContract request);
+  $async.Future<$2.TransactionExtention> unfreezeAsset2(
+      $grpc.ServiceCall call, $6.UnfreezeAssetContract request);
+  $async.Future<$0.Transaction> withdrawBalance(
+      $grpc.ServiceCall call, $1.WithdrawBalanceContract request);
+  $async.Future<$2.TransactionExtention> withdrawBalance2(
+      $grpc.ServiceCall call, $1.WithdrawBalanceContract request);
+  $async.Future<$2.TransactionExtention> withdrawExpireUnfreeze(
+      $grpc.ServiceCall call, $1.WithdrawExpireUnfreezeContract request);
+  $async.Future<$2.TransactionExtention> delegateResource(
+      $grpc.ServiceCall call, $1.DelegateResourceContract request);
+  $async.Future<$2.TransactionExtention> unDelegateResource(
+      $grpc.ServiceCall call, $1.UnDelegateResourceContract request);
+  $async.Future<$2.TransactionExtention> cancelAllUnfreezeV2(
+      $grpc.ServiceCall call, $1.CancelAllUnfreezeV2Contract request);
   $async.Future<$0.Transaction> updateAsset($grpc.ServiceCall call, $6.UpdateAssetContract request);
-  $async.Future<$2.TransactionExtention> updateAsset2($grpc.ServiceCall call, $6.UpdateAssetContract request);
-  $async.Future<$2.TransactionExtention> proposalCreate($grpc.ServiceCall call, $7.ProposalCreateContract request);
-  $async.Future<$2.TransactionExtention> proposalApprove($grpc.ServiceCall call, $7.ProposalApproveContract request);
-  $async.Future<$2.TransactionExtention> proposalDelete($grpc.ServiceCall call, $7.ProposalDeleteContract request);
-  $async.Future<$2.TransactionExtention> buyStorage($grpc.ServiceCall call, $8.BuyStorageContract request);
-  $async.Future<$2.TransactionExtention> buyStorageBytes($grpc.ServiceCall call, $8.BuyStorageBytesContract request);
-  $async.Future<$2.TransactionExtention> sellStorage($grpc.ServiceCall call, $8.SellStorageContract request);
-  $async.Future<$2.TransactionExtention> exchangeCreate($grpc.ServiceCall call, $9.ExchangeCreateContract request);
-  $async.Future<$2.TransactionExtention> exchangeInject($grpc.ServiceCall call, $9.ExchangeInjectContract request);
-  $async.Future<$2.TransactionExtention> exchangeWithdraw($grpc.ServiceCall call, $9.ExchangeWithdrawContract request);
-  $async.Future<$2.TransactionExtention> exchangeTransaction($grpc.ServiceCall call, $9.ExchangeTransactionContract request);
-  $async.Future<$2.TransactionExtention> marketSellAsset($grpc.ServiceCall call, $10.MarketSellAssetContract request);
-  $async.Future<$2.TransactionExtention> marketCancelOrder($grpc.ServiceCall call, $10.MarketCancelOrderContract request);
+  $async.Future<$2.TransactionExtention> updateAsset2(
+      $grpc.ServiceCall call, $6.UpdateAssetContract request);
+  $async.Future<$2.TransactionExtention> proposalCreate(
+      $grpc.ServiceCall call, $7.ProposalCreateContract request);
+  $async.Future<$2.TransactionExtention> proposalApprove(
+      $grpc.ServiceCall call, $7.ProposalApproveContract request);
+  $async.Future<$2.TransactionExtention> proposalDelete(
+      $grpc.ServiceCall call, $7.ProposalDeleteContract request);
+  $async.Future<$2.TransactionExtention> buyStorage(
+      $grpc.ServiceCall call, $8.BuyStorageContract request);
+  $async.Future<$2.TransactionExtention> buyStorageBytes(
+      $grpc.ServiceCall call, $8.BuyStorageBytesContract request);
+  $async.Future<$2.TransactionExtention> sellStorage(
+      $grpc.ServiceCall call, $8.SellStorageContract request);
+  $async.Future<$2.TransactionExtention> exchangeCreate(
+      $grpc.ServiceCall call, $9.ExchangeCreateContract request);
+  $async.Future<$2.TransactionExtention> exchangeInject(
+      $grpc.ServiceCall call, $9.ExchangeInjectContract request);
+  $async.Future<$2.TransactionExtention> exchangeWithdraw(
+      $grpc.ServiceCall call, $9.ExchangeWithdrawContract request);
+  $async.Future<$2.TransactionExtention> exchangeTransaction(
+      $grpc.ServiceCall call, $9.ExchangeTransactionContract request);
+  $async.Future<$2.TransactionExtention> marketSellAsset(
+      $grpc.ServiceCall call, $10.MarketSellAssetContract request);
+  $async.Future<$2.TransactionExtention> marketCancelOrder(
+      $grpc.ServiceCall call, $10.MarketCancelOrderContract request);
   $async.Future<$0.MarketOrder> getMarketOrderById($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.MarketOrderList> getMarketOrderByAccount($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.MarketPriceList> getMarketPriceByPair($grpc.ServiceCall call, $0.MarketOrderPair request);
-  $async.Future<$0.MarketOrderList> getMarketOrderListByPair($grpc.ServiceCall call, $0.MarketOrderPair request);
-  $async.Future<$0.MarketOrderPairList> getMarketPairList($grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$0.MarketOrderList> getMarketOrderByAccount(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$0.MarketPriceList> getMarketPriceByPair(
+      $grpc.ServiceCall call, $0.MarketOrderPair request);
+  $async.Future<$0.MarketOrderList> getMarketOrderListByPair(
+      $grpc.ServiceCall call, $0.MarketOrderPair request);
+  $async.Future<$0.MarketOrderPairList> getMarketPairList(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.NodeList> listNodes($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.AssetIssueList> getAssetIssueByAccount($grpc.ServiceCall call, $0.Account request);
+  $async.Future<$2.AssetIssueList> getAssetIssueByAccount(
+      $grpc.ServiceCall call, $0.Account request);
   $async.Future<$2.AccountNetMessage> getAccountNet($grpc.ServiceCall call, $0.Account request);
-  $async.Future<$2.AccountResourceMessage> getAccountResource($grpc.ServiceCall call, $0.Account request);
-  $async.Future<$6.AssetIssueContract> getAssetIssueByName($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.AssetIssueList> getAssetIssueListByName($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$6.AssetIssueContract> getAssetIssueById($grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.AccountResourceMessage> getAccountResource(
+      $grpc.ServiceCall call, $0.Account request);
+  $async.Future<$6.AssetIssueContract> getAssetIssueByName(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.AssetIssueList> getAssetIssueListByName(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$6.AssetIssueContract> getAssetIssueById(
+      $grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$0.Block> getNowBlock($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.BlockExtention> getNowBlock2($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$0.Block> getBlockByNum($grpc.ServiceCall call, $2.NumberMessage request);
   $async.Future<$2.BlockExtention> getBlockByNum2($grpc.ServiceCall call, $2.NumberMessage request);
-  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum($grpc.ServiceCall call, $2.NumberMessage request);
+  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum(
+      $grpc.ServiceCall call, $2.NumberMessage request);
   $async.Future<$0.Block> getBlockById($grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$2.BlockList> getBlockByLimitNext($grpc.ServiceCall call, $2.BlockLimit request);
-  $async.Future<$2.BlockListExtention> getBlockByLimitNext2($grpc.ServiceCall call, $2.BlockLimit request);
+  $async.Future<$2.BlockListExtention> getBlockByLimitNext2(
+      $grpc.ServiceCall call, $2.BlockLimit request);
   $async.Future<$2.BlockList> getBlockByLatestNum($grpc.ServiceCall call, $2.NumberMessage request);
-  $async.Future<$2.BlockListExtention> getBlockByLatestNum2($grpc.ServiceCall call, $2.NumberMessage request);
+  $async.Future<$2.BlockListExtention> getBlockByLatestNum2(
+      $grpc.ServiceCall call, $2.NumberMessage request);
   $async.Future<$0.Transaction> getTransactionById($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.TransactionExtention> deployContract($grpc.ServiceCall call, $5.CreateSmartContract request);
+  $async.Future<$2.TransactionExtention> deployContract(
+      $grpc.ServiceCall call, $5.CreateSmartContract request);
   $async.Future<$5.SmartContract> getContract($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$5.SmartContractDataWrapper> getContractInfo($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.TransactionExtention> triggerContract($grpc.ServiceCall call, $5.TriggerSmartContract request);
-  $async.Future<$2.TransactionExtention> triggerConstantContract($grpc.ServiceCall call, $5.TriggerSmartContract request);
-  $async.Future<$2.EstimateEnergyMessage> estimateEnergy($grpc.ServiceCall call, $5.TriggerSmartContract request);
-  $async.Future<$2.TransactionExtention> clearContractABI($grpc.ServiceCall call, $5.ClearABIContract request);
+  $async.Future<$5.SmartContractDataWrapper> getContractInfo(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.TransactionExtention> triggerContract(
+      $grpc.ServiceCall call, $5.TriggerSmartContract request);
+  $async.Future<$2.TransactionExtention> triggerConstantContract(
+      $grpc.ServiceCall call, $5.TriggerSmartContract request);
+  $async.Future<$2.EstimateEnergyMessage> estimateEnergy(
+      $grpc.ServiceCall call, $5.TriggerSmartContract request);
+  $async.Future<$2.TransactionExtention> clearContractABI(
+      $grpc.ServiceCall call, $5.ClearABIContract request);
   $async.Future<$2.WitnessList> listWitnesses($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.DelegatedResourceList> getDelegatedResource($grpc.ServiceCall call, $2.DelegatedResourceMessage request);
-  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2($grpc.ServiceCall call, $2.DelegatedResourceMessage request);
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize($grpc.ServiceCall call, $2.CanDelegatedMaxSizeRequestMessage request);
-  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount($grpc.ServiceCall call, $2.GetAvailableUnfreezeCountRequestMessage request);
-  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount($grpc.ServiceCall call, $2.CanWithdrawUnfreezeAmountRequestMessage request);
+  $async.Future<$2.DelegatedResourceList> getDelegatedResource(
+      $grpc.ServiceCall call, $2.DelegatedResourceMessage request);
+  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2(
+      $grpc.ServiceCall call, $2.DelegatedResourceMessage request);
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize(
+      $grpc.ServiceCall call, $2.CanDelegatedMaxSizeRequestMessage request);
+  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount(
+      $grpc.ServiceCall call, $2.GetAvailableUnfreezeCountRequestMessage request);
+  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount(
+      $grpc.ServiceCall call, $2.CanWithdrawUnfreezeAmountRequestMessage request);
   $async.Future<$2.ProposalList> listProposals($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.ProposalList> getPaginatedProposalList($grpc.ServiceCall call, $2.PaginatedMessage request);
+  $async.Future<$2.ProposalList> getPaginatedProposalList(
+      $grpc.ServiceCall call, $2.PaginatedMessage request);
   $async.Future<$0.Proposal> getProposalById($grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$2.ExchangeList> listExchanges($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.ExchangeList> getPaginatedExchangeList($grpc.ServiceCall call, $2.PaginatedMessage request);
+  $async.Future<$2.ExchangeList> getPaginatedExchangeList(
+      $grpc.ServiceCall call, $2.PaginatedMessage request);
   $async.Future<$0.Exchange> getExchangeById($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.ChainParameters> getChainParameters($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.AssetIssueList> getAssetIssueList($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList($grpc.ServiceCall call, $2.PaginatedMessage request);
+  $async.Future<$0.ChainParameters> getChainParameters(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.AssetIssueList> getAssetIssueList(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList(
+      $grpc.ServiceCall call, $2.PaginatedMessage request);
   $async.Future<$2.NumberMessage> totalTransaction($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.NumberMessage> getNextMaintenanceTime($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$0.TransactionInfo> getTransactionInfoById($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.TransactionExtention> accountPermissionUpdate($grpc.ServiceCall call, $3.AccountPermissionUpdateContract request);
-  $async.Future<$2.TransactionSignWeight> getTransactionSignWeight($grpc.ServiceCall call, $0.Transaction request);
-  $async.Future<$2.TransactionApprovedList> getTransactionApprovedList($grpc.ServiceCall call, $0.Transaction request);
+  $async.Future<$2.NumberMessage> getNextMaintenanceTime(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$0.TransactionInfo> getTransactionInfoById(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.TransactionExtention> accountPermissionUpdate(
+      $grpc.ServiceCall call, $3.AccountPermissionUpdateContract request);
+  $async.Future<$2.TransactionSignWeight> getTransactionSignWeight(
+      $grpc.ServiceCall call, $0.Transaction request);
+  $async.Future<$2.TransactionApprovedList> getTransactionApprovedList(
+      $grpc.ServiceCall call, $0.Transaction request);
   $async.Future<$0.NodeInfo> getNodeInfo($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.NumberMessage> getRewardInfo($grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$2.NumberMessage> getBrokerageInfo($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.TransactionExtention> updateBrokerage($grpc.ServiceCall call, $8.UpdateBrokerageContract request);
-  $async.Future<$2.TransactionExtention> createShieldedTransaction($grpc.ServiceCall call, $2.PrivateParameters request);
-  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo($grpc.ServiceCall call, $11.OutputPointInfo request);
-  $async.Future<$2.DecryptNotes> scanNoteByIvk($grpc.ServiceCall call, $2.IvkDecryptParameters request);
-  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk($grpc.ServiceCall call, $2.IvkDecryptAndMarkParameters request);
-  $async.Future<$2.DecryptNotes> scanNoteByOvk($grpc.ServiceCall call, $2.OvkDecryptParameters request);
+  $async.Future<$2.TransactionExtention> updateBrokerage(
+      $grpc.ServiceCall call, $8.UpdateBrokerageContract request);
+  $async.Future<$2.TransactionExtention> createShieldedTransaction(
+      $grpc.ServiceCall call, $2.PrivateParameters request);
+  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo(
+      $grpc.ServiceCall call, $11.OutputPointInfo request);
+  $async.Future<$2.DecryptNotes> scanNoteByIvk(
+      $grpc.ServiceCall call, $2.IvkDecryptParameters request);
+  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk(
+      $grpc.ServiceCall call, $2.IvkDecryptAndMarkParameters request);
+  $async.Future<$2.DecryptNotes> scanNoteByOvk(
+      $grpc.ServiceCall call, $2.OvkDecryptParameters request);
   $async.Future<$2.BytesMessage> getSpendingKey($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.ExpandedSpendingKeyMessage> getExpandedSpendingKey($grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.ExpandedSpendingKeyMessage> getExpandedSpendingKey(
+      $grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$2.BytesMessage> getAkFromAsk($grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$2.BytesMessage> getNkFromNsk($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.IncomingViewingKeyMessage> getIncomingViewingKey($grpc.ServiceCall call, $2.ViewingKeyMessage request);
-  $async.Future<$2.DiversifierMessage> getDiversifier($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.ShieldedAddressInfo> getNewShieldedAddress($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.PaymentAddressMessage> getZenPaymentAddress($grpc.ServiceCall call, $2.IncomingViewingKeyDiversifierMessage request);
+  $async.Future<$2.IncomingViewingKeyMessage> getIncomingViewingKey(
+      $grpc.ServiceCall call, $2.ViewingKeyMessage request);
+  $async.Future<$2.DiversifierMessage> getDiversifier(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.ShieldedAddressInfo> getNewShieldedAddress(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.PaymentAddressMessage> getZenPaymentAddress(
+      $grpc.ServiceCall call, $2.IncomingViewingKeyDiversifierMessage request);
   $async.Future<$2.BytesMessage> getRcm($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.SpendResult> isSpend($grpc.ServiceCall call, $2.NoteParameters request);
-  $async.Future<$2.TransactionExtention> createShieldedTransactionWithoutSpendAuthSig($grpc.ServiceCall call, $2.PrivateParametersWithoutAsk request);
-  $async.Future<$2.BytesMessage> getShieldTransactionHash($grpc.ServiceCall call, $0.Transaction request);
-  $async.Future<$2.BytesMessage> createSpendAuthSig($grpc.ServiceCall call, $2.SpendAuthSigParameters request);
-  $async.Future<$2.BytesMessage> createShieldNullifier($grpc.ServiceCall call, $2.NfParameters request);
-  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParameters($grpc.ServiceCall call, $2.PrivateShieldedTRC20Parameters request);
-  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParametersWithoutAsk($grpc.ServiceCall call, $2.PrivateShieldedTRC20ParametersWithoutAsk request);
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk($grpc.ServiceCall call, $2.IvkDecryptTRC20Parameters request);
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk($grpc.ServiceCall call, $2.OvkDecryptTRC20Parameters request);
-  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent($grpc.ServiceCall call, $2.NfTRC20Parameters request);
-  $async.Future<$2.BytesMessage> getTriggerInputForShieldedTRC20Contract($grpc.ServiceCall call, $2.ShieldedTRC20TriggerContractParameters request);
-  $async.Future<$2.TransactionExtention> createCommonTransaction($grpc.ServiceCall call, $0.Transaction request);
-  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum($grpc.ServiceCall call, $2.NumberMessage request);
+  $async.Future<$2.TransactionExtention> createShieldedTransactionWithoutSpendAuthSig(
+      $grpc.ServiceCall call, $2.PrivateParametersWithoutAsk request);
+  $async.Future<$2.BytesMessage> getShieldTransactionHash(
+      $grpc.ServiceCall call, $0.Transaction request);
+  $async.Future<$2.BytesMessage> createSpendAuthSig(
+      $grpc.ServiceCall call, $2.SpendAuthSigParameters request);
+  $async.Future<$2.BytesMessage> createShieldNullifier(
+      $grpc.ServiceCall call, $2.NfParameters request);
+  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParameters(
+      $grpc.ServiceCall call, $2.PrivateShieldedTRC20Parameters request);
+  $async.Future<$2.ShieldedTRC20Parameters> createShieldedContractParametersWithoutAsk(
+      $grpc.ServiceCall call, $2.PrivateShieldedTRC20ParametersWithoutAsk request);
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk(
+      $grpc.ServiceCall call, $2.IvkDecryptTRC20Parameters request);
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk(
+      $grpc.ServiceCall call, $2.OvkDecryptTRC20Parameters request);
+  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent(
+      $grpc.ServiceCall call, $2.NfTRC20Parameters request);
+  $async.Future<$2.BytesMessage> getTriggerInputForShieldedTRC20Contract(
+      $grpc.ServiceCall call, $2.ShieldedTRC20TriggerContractParameters request);
+  $async.Future<$2.TransactionExtention> createCommonTransaction(
+      $grpc.ServiceCall call, $0.Transaction request);
+  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum(
+      $grpc.ServiceCall call, $2.NumberMessage request);
   $async.Future<$2.NumberMessage> getBurnTrx($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$0.Transaction> getTransactionFromPending($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.TransactionIdList> getTransactionListFromPending($grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$0.Transaction> getTransactionFromPending(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.TransactionIdList> getTransactionListFromPending(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.NumberMessage> getPendingSize($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.BlockExtention> getBlock($grpc.ServiceCall call, $2.BlockReq request);
-  $async.Future<$2.PricesResponseMessage> getBandwidthPrices($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.PricesResponseMessage> getEnergyPrices($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.PricesResponseMessage> getMemoFee($grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.PricesResponseMessage> getBandwidthPrices(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.PricesResponseMessage> getEnergyPrices(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.PricesResponseMessage> getMemoFee(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
 }
+
 @$pb.GrpcServiceName('protocol.WalletSolidity')
 class WalletSolidityClient extends $grpc.Client {
   static final _$getAccount = $grpc.ClientMethod<$0.Account, $0.Account>(
@@ -2986,10 +3516,11 @@ class WalletSolidityClient extends $grpc.Client {
       '/protocol.WalletSolidity/GetAssetIssueList',
       ($2.EmptyMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.AssetIssueList.fromBuffer(value));
-  static final _$getPaginatedAssetIssueList = $grpc.ClientMethod<$2.PaginatedMessage, $2.AssetIssueList>(
-      '/protocol.WalletSolidity/GetPaginatedAssetIssueList',
-      ($2.PaginatedMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.AssetIssueList.fromBuffer(value));
+  static final _$getPaginatedAssetIssueList =
+      $grpc.ClientMethod<$2.PaginatedMessage, $2.AssetIssueList>(
+          '/protocol.WalletSolidity/GetPaginatedAssetIssueList',
+          ($2.PaginatedMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.AssetIssueList.fromBuffer(value));
   static final _$getAssetIssueByName = $grpc.ClientMethod<$2.BytesMessage, $6.AssetIssueContract>(
       '/protocol.WalletSolidity/GetAssetIssueByName',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -3018,38 +3549,48 @@ class WalletSolidityClient extends $grpc.Client {
       '/protocol.WalletSolidity/GetBlockByNum2',
       ($2.NumberMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.BlockExtention.fromBuffer(value));
-  static final _$getTransactionCountByBlockNum = $grpc.ClientMethod<$2.NumberMessage, $2.NumberMessage>(
-      '/protocol.WalletSolidity/GetTransactionCountByBlockNum',
-      ($2.NumberMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.NumberMessage.fromBuffer(value));
-  static final _$getDelegatedResource = $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
-      '/protocol.WalletSolidity/GetDelegatedResource',
-      ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
-  static final _$getDelegatedResourceV2 = $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
-      '/protocol.WalletSolidity/GetDelegatedResourceV2',
-      ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
-  static final _$getDelegatedResourceAccountIndex = $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
-      '/protocol.WalletSolidity/GetDelegatedResourceAccountIndex',
-      ($2.BytesMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
-  static final _$getDelegatedResourceAccountIndexV2 = $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
-      '/protocol.WalletSolidity/GetDelegatedResourceAccountIndexV2',
-      ($2.BytesMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
-  static final _$getCanDelegatedMaxSize = $grpc.ClientMethod<$2.CanDelegatedMaxSizeRequestMessage, $2.CanDelegatedMaxSizeResponseMessage>(
+  static final _$getTransactionCountByBlockNum =
+      $grpc.ClientMethod<$2.NumberMessage, $2.NumberMessage>(
+          '/protocol.WalletSolidity/GetTransactionCountByBlockNum',
+          ($2.NumberMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.NumberMessage.fromBuffer(value));
+  static final _$getDelegatedResource =
+      $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
+          '/protocol.WalletSolidity/GetDelegatedResource',
+          ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
+  static final _$getDelegatedResourceV2 =
+      $grpc.ClientMethod<$2.DelegatedResourceMessage, $2.DelegatedResourceList>(
+          '/protocol.WalletSolidity/GetDelegatedResourceV2',
+          ($2.DelegatedResourceMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DelegatedResourceList.fromBuffer(value));
+  static final _$getDelegatedResourceAccountIndex =
+      $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
+          '/protocol.WalletSolidity/GetDelegatedResourceAccountIndex',
+          ($2.BytesMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
+  static final _$getDelegatedResourceAccountIndexV2 =
+      $grpc.ClientMethod<$2.BytesMessage, $0.DelegatedResourceAccountIndex>(
+          '/protocol.WalletSolidity/GetDelegatedResourceAccountIndexV2',
+          ($2.BytesMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.DelegatedResourceAccountIndex.fromBuffer(value));
+  static final _$getCanDelegatedMaxSize = $grpc.ClientMethod<$2.CanDelegatedMaxSizeRequestMessage,
+          $2.CanDelegatedMaxSizeResponseMessage>(
       '/protocol.WalletSolidity/GetCanDelegatedMaxSize',
       ($2.CanDelegatedMaxSizeRequestMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.CanDelegatedMaxSizeResponseMessage.fromBuffer(value));
-  static final _$getAvailableUnfreezeCount = $grpc.ClientMethod<$2.GetAvailableUnfreezeCountRequestMessage, $2.GetAvailableUnfreezeCountResponseMessage>(
+  static final _$getAvailableUnfreezeCount = $grpc.ClientMethod<
+          $2.GetAvailableUnfreezeCountRequestMessage, $2.GetAvailableUnfreezeCountResponseMessage>(
       '/protocol.WalletSolidity/GetAvailableUnfreezeCount',
       ($2.GetAvailableUnfreezeCountRequestMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.GetAvailableUnfreezeCountResponseMessage.fromBuffer(value));
-  static final _$getCanWithdrawUnfreezeAmount = $grpc.ClientMethod<$2.CanWithdrawUnfreezeAmountRequestMessage, $2.CanWithdrawUnfreezeAmountResponseMessage>(
+      ($core.List<$core.int> value) =>
+          $2.GetAvailableUnfreezeCountResponseMessage.fromBuffer(value));
+  static final _$getCanWithdrawUnfreezeAmount = $grpc.ClientMethod<
+          $2.CanWithdrawUnfreezeAmountRequestMessage, $2.CanWithdrawUnfreezeAmountResponseMessage>(
       '/protocol.WalletSolidity/GetCanWithdrawUnfreezeAmount',
       ($2.CanWithdrawUnfreezeAmountRequestMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.CanWithdrawUnfreezeAmountResponseMessage.fromBuffer(value));
+      ($core.List<$core.int> value) =>
+          $2.CanWithdrawUnfreezeAmountResponseMessage.fromBuffer(value));
   static final _$getExchangeById = $grpc.ClientMethod<$2.BytesMessage, $0.Exchange>(
       '/protocol.WalletSolidity/GetExchangeById',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -3066,18 +3607,20 @@ class WalletSolidityClient extends $grpc.Client {
       '/protocol.WalletSolidity/GetTransactionInfoById',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.TransactionInfo.fromBuffer(value));
-  static final _$getMerkleTreeVoucherInfo = $grpc.ClientMethod<$11.OutputPointInfo, $11.IncrementalMerkleVoucherInfo>(
-      '/protocol.WalletSolidity/GetMerkleTreeVoucherInfo',
-      ($11.OutputPointInfo value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $11.IncrementalMerkleVoucherInfo.fromBuffer(value));
+  static final _$getMerkleTreeVoucherInfo =
+      $grpc.ClientMethod<$11.OutputPointInfo, $11.IncrementalMerkleVoucherInfo>(
+          '/protocol.WalletSolidity/GetMerkleTreeVoucherInfo',
+          ($11.OutputPointInfo value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $11.IncrementalMerkleVoucherInfo.fromBuffer(value));
   static final _$scanNoteByIvk = $grpc.ClientMethod<$2.IvkDecryptParameters, $2.DecryptNotes>(
       '/protocol.WalletSolidity/ScanNoteByIvk',
       ($2.IvkDecryptParameters value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.DecryptNotes.fromBuffer(value));
-  static final _$scanAndMarkNoteByIvk = $grpc.ClientMethod<$2.IvkDecryptAndMarkParameters, $2.DecryptNotesMarked>(
-      '/protocol.WalletSolidity/ScanAndMarkNoteByIvk',
-      ($2.IvkDecryptAndMarkParameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DecryptNotesMarked.fromBuffer(value));
+  static final _$scanAndMarkNoteByIvk =
+      $grpc.ClientMethod<$2.IvkDecryptAndMarkParameters, $2.DecryptNotesMarked>(
+          '/protocol.WalletSolidity/ScanAndMarkNoteByIvk',
+          ($2.IvkDecryptAndMarkParameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DecryptNotesMarked.fromBuffer(value));
   static final _$scanNoteByOvk = $grpc.ClientMethod<$2.OvkDecryptParameters, $2.DecryptNotes>(
       '/protocol.WalletSolidity/ScanNoteByOvk',
       ($2.OvkDecryptParameters value) => value.writeToBuffer(),
@@ -3086,18 +3629,21 @@ class WalletSolidityClient extends $grpc.Client {
       '/protocol.WalletSolidity/IsSpend',
       ($2.NoteParameters value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.SpendResult.fromBuffer(value));
-  static final _$scanShieldedTRC20NotesByIvk = $grpc.ClientMethod<$2.IvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
-      '/protocol.WalletSolidity/ScanShieldedTRC20NotesByIvk',
-      ($2.IvkDecryptTRC20Parameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
-  static final _$scanShieldedTRC20NotesByOvk = $grpc.ClientMethod<$2.OvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
-      '/protocol.WalletSolidity/ScanShieldedTRC20NotesByOvk',
-      ($2.OvkDecryptTRC20Parameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
-  static final _$isShieldedTRC20ContractNoteSpent = $grpc.ClientMethod<$2.NfTRC20Parameters, $2.NullifierResult>(
-      '/protocol.WalletSolidity/IsShieldedTRC20ContractNoteSpent',
-      ($2.NfTRC20Parameters value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.NullifierResult.fromBuffer(value));
+  static final _$scanShieldedTRC20NotesByIvk =
+      $grpc.ClientMethod<$2.IvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
+          '/protocol.WalletSolidity/ScanShieldedTRC20NotesByIvk',
+          ($2.IvkDecryptTRC20Parameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
+  static final _$scanShieldedTRC20NotesByOvk =
+      $grpc.ClientMethod<$2.OvkDecryptTRC20Parameters, $2.DecryptNotesTRC20>(
+          '/protocol.WalletSolidity/ScanShieldedTRC20NotesByOvk',
+          ($2.OvkDecryptTRC20Parameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.DecryptNotesTRC20.fromBuffer(value));
+  static final _$isShieldedTRC20ContractNoteSpent =
+      $grpc.ClientMethod<$2.NfTRC20Parameters, $2.NullifierResult>(
+          '/protocol.WalletSolidity/IsShieldedTRC20ContractNoteSpent',
+          ($2.NfTRC20Parameters value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.NullifierResult.fromBuffer(value));
   static final _$getRewardInfo = $grpc.ClientMethod<$2.BytesMessage, $2.NumberMessage>(
       '/protocol.WalletSolidity/GetRewardInfo',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -3106,18 +3652,21 @@ class WalletSolidityClient extends $grpc.Client {
       '/protocol.WalletSolidity/GetBrokerageInfo',
       ($2.BytesMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $2.NumberMessage.fromBuffer(value));
-  static final _$triggerConstantContract = $grpc.ClientMethod<$5.TriggerSmartContract, $2.TransactionExtention>(
-      '/protocol.WalletSolidity/TriggerConstantContract',
-      ($5.TriggerSmartContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
-  static final _$estimateEnergy = $grpc.ClientMethod<$5.TriggerSmartContract, $2.EstimateEnergyMessage>(
-      '/protocol.WalletSolidity/EstimateEnergy',
-      ($5.TriggerSmartContract value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.EstimateEnergyMessage.fromBuffer(value));
-  static final _$getTransactionInfoByBlockNum = $grpc.ClientMethod<$2.NumberMessage, $2.TransactionInfoList>(
-      '/protocol.WalletSolidity/GetTransactionInfoByBlockNum',
-      ($2.NumberMessage value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionInfoList.fromBuffer(value));
+  static final _$triggerConstantContract =
+      $grpc.ClientMethod<$5.TriggerSmartContract, $2.TransactionExtention>(
+          '/protocol.WalletSolidity/TriggerConstantContract',
+          ($5.TriggerSmartContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionExtention.fromBuffer(value));
+  static final _$estimateEnergy =
+      $grpc.ClientMethod<$5.TriggerSmartContract, $2.EstimateEnergyMessage>(
+          '/protocol.WalletSolidity/EstimateEnergy',
+          ($5.TriggerSmartContract value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.EstimateEnergyMessage.fromBuffer(value));
+  static final _$getTransactionInfoByBlockNum =
+      $grpc.ClientMethod<$2.NumberMessage, $2.TransactionInfoList>(
+          '/protocol.WalletSolidity/GetTransactionInfoByBlockNum',
+          ($2.NumberMessage value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionInfoList.fromBuffer(value));
   static final _$getMarketOrderById = $grpc.ClientMethod<$2.BytesMessage, $0.MarketOrder>(
       '/protocol.WalletSolidity/GetMarketOrderById',
       ($2.BytesMessage value) => value.writeToBuffer(),
@@ -3130,10 +3679,11 @@ class WalletSolidityClient extends $grpc.Client {
       '/protocol.WalletSolidity/GetMarketPriceByPair',
       ($0.MarketOrderPair value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.MarketPriceList.fromBuffer(value));
-  static final _$getMarketOrderListByPair = $grpc.ClientMethod<$0.MarketOrderPair, $0.MarketOrderList>(
-      '/protocol.WalletSolidity/GetMarketOrderListByPair',
-      ($0.MarketOrderPair value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.MarketOrderList.fromBuffer(value));
+  static final _$getMarketOrderListByPair =
+      $grpc.ClientMethod<$0.MarketOrderPair, $0.MarketOrderList>(
+          '/protocol.WalletSolidity/GetMarketOrderListByPair',
+          ($0.MarketOrderPair value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.MarketOrderList.fromBuffer(value));
   static final _$getMarketPairList = $grpc.ClientMethod<$2.EmptyMessage, $0.MarketOrderPairList>(
       '/protocol.WalletSolidity/GetMarketPairList',
       ($2.EmptyMessage value) => value.writeToBuffer(),
@@ -3156,192 +3706,249 @@ class WalletSolidityClient extends $grpc.Client {
       ($core.List<$core.int> value) => $2.PricesResponseMessage.fromBuffer(value));
 
   WalletSolidityClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$0.Account> getAccount($0.Account request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Account> getAccountById($0.Account request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Account> getAccountById($0.Account request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAccountById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.WitnessList> listWitnesses($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.WitnessList> listWitnesses($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listWitnesses, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueList($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueList($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AssetIssueList> getPaginatedAssetIssueList($2.PaginatedMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AssetIssueList> getPaginatedAssetIssueList($2.PaginatedMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getPaginatedAssetIssueList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueByName($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueByName($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueByName, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueListByName($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.AssetIssueList> getAssetIssueListByName($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueListByName, request, options: options);
   }
 
-  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$6.AssetIssueContract> getAssetIssueById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAssetIssueById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Block> getNowBlock($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Block> getNowBlock($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNowBlock, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockExtention> getNowBlock2($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockExtention> getNowBlock2($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNowBlock2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Block> getBlockByNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Block> getBlockByNum($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByNum, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockExtention> getBlockByNum2($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockExtention> getBlockByNum2($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByNum2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getTransactionCountByBlockNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getTransactionCountByBlockNum($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionCountByBlockNum, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResource($2.DelegatedResourceMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResource(
+      $2.DelegatedResourceMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResource, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResourceV2($2.DelegatedResourceMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DelegatedResourceList> getDelegatedResourceV2(
+      $2.DelegatedResourceMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResourceV2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex(
+      $2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResourceAccountIndex, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2(
+      $2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDelegatedResourceAccountIndexV2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize($2.CanDelegatedMaxSizeRequestMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize(
+      $2.CanDelegatedMaxSizeRequestMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getCanDelegatedMaxSize, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount($2.GetAvailableUnfreezeCountRequestMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount(
+      $2.GetAvailableUnfreezeCountRequestMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getAvailableUnfreezeCount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount($2.CanWithdrawUnfreezeAmountRequestMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount(
+      $2.CanWithdrawUnfreezeAmountRequestMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getCanWithdrawUnfreezeAmount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Exchange> getExchangeById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Exchange> getExchangeById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getExchangeById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.ExchangeList> listExchanges($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.ExchangeList> listExchanges($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listExchanges, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Transaction> getTransactionById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Transaction> getTransactionById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.TransactionInfo> getTransactionInfoById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.TransactionInfo> getTransactionInfoById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionInfoById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo($11.OutputPointInfo request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo(
+      $11.OutputPointInfo request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMerkleTreeVoucherInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByIvk($2.IvkDecryptParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByIvk($2.IvkDecryptParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanNoteByIvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotesMarked> scanAndMarkNoteByIvk($2.IvkDecryptAndMarkParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotesMarked> scanAndMarkNoteByIvk(
+      $2.IvkDecryptAndMarkParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanAndMarkNoteByIvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByOvk($2.OvkDecryptParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotes> scanNoteByOvk($2.OvkDecryptParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanNoteByOvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.SpendResult> isSpend($2.NoteParameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.SpendResult> isSpend($2.NoteParameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$isSpend, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk($2.IvkDecryptTRC20Parameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk(
+      $2.IvkDecryptTRC20Parameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanShieldedTRC20NotesByIvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk($2.OvkDecryptTRC20Parameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk(
+      $2.OvkDecryptTRC20Parameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$scanShieldedTRC20NotesByOvk, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NullifierResult> isShieldedTRC20ContractNoteSpent($2.NfTRC20Parameters request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NullifierResult> isShieldedTRC20ContractNoteSpent(
+      $2.NfTRC20Parameters request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$isShieldedTRC20ContractNoteSpent, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getRewardInfo($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getRewardInfo($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getRewardInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getBrokerageInfo($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getBrokerageInfo($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBrokerageInfo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionExtention> triggerConstantContract($5.TriggerSmartContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionExtention> triggerConstantContract(
+      $5.TriggerSmartContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$triggerConstantContract, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.EstimateEnergyMessage> estimateEnergy($5.TriggerSmartContract request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.EstimateEnergyMessage> estimateEnergy($5.TriggerSmartContract request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$estimateEnergy, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionInfoList> getTransactionInfoByBlockNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionInfoList> getTransactionInfoByBlockNum(
+      $2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionInfoByBlockNum, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrder> getMarketOrderById($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrder> getMarketOrderById($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketOrderById, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderByAccount($2.BytesMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderByAccount($2.BytesMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketOrderByAccount, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketPriceList> getMarketPriceByPair($0.MarketOrderPair request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketPriceList> getMarketPriceByPair($0.MarketOrderPair request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketPriceByPair, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderListByPair($0.MarketOrderPair request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrderList> getMarketOrderListByPair($0.MarketOrderPair request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketOrderListByPair, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.MarketOrderPairList> getMarketPairList($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MarketOrderPairList> getMarketPairList($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMarketPairList, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.NumberMessage> getBurnTrx($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.NumberMessage> getBurnTrx($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBurnTrx, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.BlockExtention> getBlock($2.BlockReq request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockExtention> getBlock($2.BlockReq request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlock, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.PricesResponseMessage> getBandwidthPrices($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PricesResponseMessage> getBandwidthPrices($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBandwidthPrices, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.PricesResponseMessage> getEnergyPrices($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.PricesResponseMessage> getEnergyPrices($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getEnergyPrices, request, options: options);
   }
 }
@@ -3470,26 +4077,31 @@ abstract class WalletSolidityServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $2.BytesMessage.fromBuffer(value),
         ($0.DelegatedResourceAccountIndex value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.CanDelegatedMaxSizeRequestMessage, $2.CanDelegatedMaxSizeResponseMessage>(
+    $addMethod($grpc.ServiceMethod<$2.CanDelegatedMaxSizeRequestMessage,
+            $2.CanDelegatedMaxSizeResponseMessage>(
         'GetCanDelegatedMaxSize',
         getCanDelegatedMaxSize_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $2.CanDelegatedMaxSizeRequestMessage.fromBuffer(value),
         ($2.CanDelegatedMaxSizeResponseMessage value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.GetAvailableUnfreezeCountRequestMessage, $2.GetAvailableUnfreezeCountResponseMessage>(
+    $addMethod($grpc.ServiceMethod<$2.GetAvailableUnfreezeCountRequestMessage,
+            $2.GetAvailableUnfreezeCountResponseMessage>(
         'GetAvailableUnfreezeCount',
         getAvailableUnfreezeCount_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $2.GetAvailableUnfreezeCountRequestMessage.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $2.GetAvailableUnfreezeCountRequestMessage.fromBuffer(value),
         ($2.GetAvailableUnfreezeCountResponseMessage value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$2.CanWithdrawUnfreezeAmountRequestMessage, $2.CanWithdrawUnfreezeAmountResponseMessage>(
+    $addMethod($grpc.ServiceMethod<$2.CanWithdrawUnfreezeAmountRequestMessage,
+            $2.CanWithdrawUnfreezeAmountResponseMessage>(
         'GetCanWithdrawUnfreezeAmount',
         getCanWithdrawUnfreezeAmount_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $2.CanWithdrawUnfreezeAmountRequestMessage.fromBuffer(value),
+        ($core.List<$core.int> value) =>
+            $2.CanWithdrawUnfreezeAmountRequestMessage.fromBuffer(value),
         ($2.CanWithdrawUnfreezeAmountResponseMessage value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$2.BytesMessage, $0.Exchange>(
         'GetExchangeById',
@@ -3675,275 +4287,362 @@ abstract class WalletSolidityServiceBase extends $grpc.Service {
         ($2.PricesResponseMessage value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.Account> getAccount_Pre($grpc.ServiceCall call, $async.Future<$0.Account> request) async {
+  $async.Future<$0.Account> getAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Account> request) async {
     return getAccount(call, await request);
   }
 
-  $async.Future<$0.Account> getAccountById_Pre($grpc.ServiceCall call, $async.Future<$0.Account> request) async {
+  $async.Future<$0.Account> getAccountById_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Account> request) async {
     return getAccountById(call, await request);
   }
 
-  $async.Future<$2.WitnessList> listWitnesses_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.WitnessList> listWitnesses_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return listWitnesses(call, await request);
   }
 
-  $async.Future<$2.AssetIssueList> getAssetIssueList_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.AssetIssueList> getAssetIssueList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getAssetIssueList(call, await request);
   }
 
-  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList_Pre($grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
+  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.PaginatedMessage> request) async {
     return getPaginatedAssetIssueList(call, await request);
   }
 
-  $async.Future<$6.AssetIssueContract> getAssetIssueByName_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$6.AssetIssueContract> getAssetIssueByName_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getAssetIssueByName(call, await request);
   }
 
-  $async.Future<$2.AssetIssueList> getAssetIssueListByName_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.AssetIssueList> getAssetIssueListByName_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getAssetIssueListByName(call, await request);
   }
 
-  $async.Future<$6.AssetIssueContract> getAssetIssueById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$6.AssetIssueContract> getAssetIssueById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getAssetIssueById(call, await request);
   }
 
-  $async.Future<$0.Block> getNowBlock_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.Block> getNowBlock_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNowBlock(call, await request);
   }
 
-  $async.Future<$2.BlockExtention> getNowBlock2_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.BlockExtention> getNowBlock2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNowBlock2(call, await request);
   }
 
-  $async.Future<$0.Block> getBlockByNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$0.Block> getBlockByNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getBlockByNum(call, await request);
   }
 
-  $async.Future<$2.BlockExtention> getBlockByNum2_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.BlockExtention> getBlockByNum2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getBlockByNum2(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getTransactionCountByBlockNum(call, await request);
   }
 
-  $async.Future<$2.DelegatedResourceList> getDelegatedResource_Pre($grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
+  $async.Future<$2.DelegatedResourceList> getDelegatedResource_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
     return getDelegatedResource(call, await request);
   }
 
-  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2_Pre($grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
+  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.DelegatedResourceMessage> request) async {
     return getDelegatedResourceV2(call, await request);
   }
 
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getDelegatedResourceAccountIndex(call, await request);
   }
 
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getDelegatedResourceAccountIndexV2(call, await request);
   }
 
-  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize_Pre($grpc.ServiceCall call, $async.Future<$2.CanDelegatedMaxSizeRequestMessage> request) async {
+  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.CanDelegatedMaxSizeRequestMessage> request) async {
     return getCanDelegatedMaxSize(call, await request);
   }
 
-  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount_Pre($grpc.ServiceCall call, $async.Future<$2.GetAvailableUnfreezeCountRequestMessage> request) async {
+  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$2.GetAvailableUnfreezeCountRequestMessage> request) async {
     return getAvailableUnfreezeCount(call, await request);
   }
 
-  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount_Pre($grpc.ServiceCall call, $async.Future<$2.CanWithdrawUnfreezeAmountRequestMessage> request) async {
+  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$2.CanWithdrawUnfreezeAmountRequestMessage> request) async {
     return getCanWithdrawUnfreezeAmount(call, await request);
   }
 
-  $async.Future<$0.Exchange> getExchangeById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.Exchange> getExchangeById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getExchangeById(call, await request);
   }
 
-  $async.Future<$2.ExchangeList> listExchanges_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.ExchangeList> listExchanges_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return listExchanges(call, await request);
   }
 
-  $async.Future<$0.Transaction> getTransactionById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.Transaction> getTransactionById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getTransactionById(call, await request);
   }
 
-  $async.Future<$0.TransactionInfo> getTransactionInfoById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.TransactionInfo> getTransactionInfoById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getTransactionInfoById(call, await request);
   }
 
-  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo_Pre($grpc.ServiceCall call, $async.Future<$11.OutputPointInfo> request) async {
+  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$11.OutputPointInfo> request) async {
     return getMerkleTreeVoucherInfo(call, await request);
   }
 
-  $async.Future<$2.DecryptNotes> scanNoteByIvk_Pre($grpc.ServiceCall call, $async.Future<$2.IvkDecryptParameters> request) async {
+  $async.Future<$2.DecryptNotes> scanNoteByIvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.IvkDecryptParameters> request) async {
     return scanNoteByIvk(call, await request);
   }
 
-  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk_Pre($grpc.ServiceCall call, $async.Future<$2.IvkDecryptAndMarkParameters> request) async {
+  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.IvkDecryptAndMarkParameters> request) async {
     return scanAndMarkNoteByIvk(call, await request);
   }
 
-  $async.Future<$2.DecryptNotes> scanNoteByOvk_Pre($grpc.ServiceCall call, $async.Future<$2.OvkDecryptParameters> request) async {
+  $async.Future<$2.DecryptNotes> scanNoteByOvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.OvkDecryptParameters> request) async {
     return scanNoteByOvk(call, await request);
   }
 
-  $async.Future<$2.SpendResult> isSpend_Pre($grpc.ServiceCall call, $async.Future<$2.NoteParameters> request) async {
+  $async.Future<$2.SpendResult> isSpend_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NoteParameters> request) async {
     return isSpend(call, await request);
   }
 
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk_Pre($grpc.ServiceCall call, $async.Future<$2.IvkDecryptTRC20Parameters> request) async {
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.IvkDecryptTRC20Parameters> request) async {
     return scanShieldedTRC20NotesByIvk(call, await request);
   }
 
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk_Pre($grpc.ServiceCall call, $async.Future<$2.OvkDecryptTRC20Parameters> request) async {
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.OvkDecryptTRC20Parameters> request) async {
     return scanShieldedTRC20NotesByOvk(call, await request);
   }
 
-  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent_Pre($grpc.ServiceCall call, $async.Future<$2.NfTRC20Parameters> request) async {
+  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NfTRC20Parameters> request) async {
     return isShieldedTRC20ContractNoteSpent(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getRewardInfo_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.NumberMessage> getRewardInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getRewardInfo(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getBrokerageInfo_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$2.NumberMessage> getBrokerageInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getBrokerageInfo(call, await request);
   }
 
-  $async.Future<$2.TransactionExtention> triggerConstantContract_Pre($grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
+  $async.Future<$2.TransactionExtention> triggerConstantContract_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
     return triggerConstantContract(call, await request);
   }
 
-  $async.Future<$2.EstimateEnergyMessage> estimateEnergy_Pre($grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
+  $async.Future<$2.EstimateEnergyMessage> estimateEnergy_Pre(
+      $grpc.ServiceCall call, $async.Future<$5.TriggerSmartContract> request) async {
     return estimateEnergy(call, await request);
   }
 
-  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getTransactionInfoByBlockNum(call, await request);
   }
 
-  $async.Future<$0.MarketOrder> getMarketOrderById_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.MarketOrder> getMarketOrderById_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getMarketOrderById(call, await request);
   }
 
-  $async.Future<$0.MarketOrderList> getMarketOrderByAccount_Pre($grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
+  $async.Future<$0.MarketOrderList> getMarketOrderByAccount_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BytesMessage> request) async {
     return getMarketOrderByAccount(call, await request);
   }
 
-  $async.Future<$0.MarketPriceList> getMarketPriceByPair_Pre($grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
+  $async.Future<$0.MarketPriceList> getMarketPriceByPair_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
     return getMarketPriceByPair(call, await request);
   }
 
-  $async.Future<$0.MarketOrderList> getMarketOrderListByPair_Pre($grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
+  $async.Future<$0.MarketOrderList> getMarketOrderListByPair_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.MarketOrderPair> request) async {
     return getMarketOrderListByPair(call, await request);
   }
 
-  $async.Future<$0.MarketOrderPairList> getMarketPairList_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.MarketOrderPairList> getMarketPairList_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getMarketPairList(call, await request);
   }
 
-  $async.Future<$2.NumberMessage> getBurnTrx_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.NumberMessage> getBurnTrx_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getBurnTrx(call, await request);
   }
 
-  $async.Future<$2.BlockExtention> getBlock_Pre($grpc.ServiceCall call, $async.Future<$2.BlockReq> request) async {
+  $async.Future<$2.BlockExtention> getBlock_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.BlockReq> request) async {
     return getBlock(call, await request);
   }
 
-  $async.Future<$2.PricesResponseMessage> getBandwidthPrices_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.PricesResponseMessage> getBandwidthPrices_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getBandwidthPrices(call, await request);
   }
 
-  $async.Future<$2.PricesResponseMessage> getEnergyPrices_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.PricesResponseMessage> getEnergyPrices_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getEnergyPrices(call, await request);
   }
 
   $async.Future<$0.Account> getAccount($grpc.ServiceCall call, $0.Account request);
   $async.Future<$0.Account> getAccountById($grpc.ServiceCall call, $0.Account request);
   $async.Future<$2.WitnessList> listWitnesses($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.AssetIssueList> getAssetIssueList($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList($grpc.ServiceCall call, $2.PaginatedMessage request);
-  $async.Future<$6.AssetIssueContract> getAssetIssueByName($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.AssetIssueList> getAssetIssueListByName($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$6.AssetIssueContract> getAssetIssueById($grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.AssetIssueList> getAssetIssueList(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.AssetIssueList> getPaginatedAssetIssueList(
+      $grpc.ServiceCall call, $2.PaginatedMessage request);
+  $async.Future<$6.AssetIssueContract> getAssetIssueByName(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.AssetIssueList> getAssetIssueListByName(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$6.AssetIssueContract> getAssetIssueById(
+      $grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$0.Block> getNowBlock($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.BlockExtention> getNowBlock2($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$0.Block> getBlockByNum($grpc.ServiceCall call, $2.NumberMessage request);
   $async.Future<$2.BlockExtention> getBlockByNum2($grpc.ServiceCall call, $2.NumberMessage request);
-  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum($grpc.ServiceCall call, $2.NumberMessage request);
-  $async.Future<$2.DelegatedResourceList> getDelegatedResource($grpc.ServiceCall call, $2.DelegatedResourceMessage request);
-  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2($grpc.ServiceCall call, $2.DelegatedResourceMessage request);
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize($grpc.ServiceCall call, $2.CanDelegatedMaxSizeRequestMessage request);
-  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount($grpc.ServiceCall call, $2.GetAvailableUnfreezeCountRequestMessage request);
-  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount($grpc.ServiceCall call, $2.CanWithdrawUnfreezeAmountRequestMessage request);
+  $async.Future<$2.NumberMessage> getTransactionCountByBlockNum(
+      $grpc.ServiceCall call, $2.NumberMessage request);
+  $async.Future<$2.DelegatedResourceList> getDelegatedResource(
+      $grpc.ServiceCall call, $2.DelegatedResourceMessage request);
+  $async.Future<$2.DelegatedResourceList> getDelegatedResourceV2(
+      $grpc.ServiceCall call, $2.DelegatedResourceMessage request);
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndex(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$0.DelegatedResourceAccountIndex> getDelegatedResourceAccountIndexV2(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$2.CanDelegatedMaxSizeResponseMessage> getCanDelegatedMaxSize(
+      $grpc.ServiceCall call, $2.CanDelegatedMaxSizeRequestMessage request);
+  $async.Future<$2.GetAvailableUnfreezeCountResponseMessage> getAvailableUnfreezeCount(
+      $grpc.ServiceCall call, $2.GetAvailableUnfreezeCountRequestMessage request);
+  $async.Future<$2.CanWithdrawUnfreezeAmountResponseMessage> getCanWithdrawUnfreezeAmount(
+      $grpc.ServiceCall call, $2.CanWithdrawUnfreezeAmountRequestMessage request);
   $async.Future<$0.Exchange> getExchangeById($grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$2.ExchangeList> listExchanges($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$0.Transaction> getTransactionById($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.TransactionInfo> getTransactionInfoById($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo($grpc.ServiceCall call, $11.OutputPointInfo request);
-  $async.Future<$2.DecryptNotes> scanNoteByIvk($grpc.ServiceCall call, $2.IvkDecryptParameters request);
-  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk($grpc.ServiceCall call, $2.IvkDecryptAndMarkParameters request);
-  $async.Future<$2.DecryptNotes> scanNoteByOvk($grpc.ServiceCall call, $2.OvkDecryptParameters request);
+  $async.Future<$0.TransactionInfo> getTransactionInfoById(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$11.IncrementalMerkleVoucherInfo> getMerkleTreeVoucherInfo(
+      $grpc.ServiceCall call, $11.OutputPointInfo request);
+  $async.Future<$2.DecryptNotes> scanNoteByIvk(
+      $grpc.ServiceCall call, $2.IvkDecryptParameters request);
+  $async.Future<$2.DecryptNotesMarked> scanAndMarkNoteByIvk(
+      $grpc.ServiceCall call, $2.IvkDecryptAndMarkParameters request);
+  $async.Future<$2.DecryptNotes> scanNoteByOvk(
+      $grpc.ServiceCall call, $2.OvkDecryptParameters request);
   $async.Future<$2.SpendResult> isSpend($grpc.ServiceCall call, $2.NoteParameters request);
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk($grpc.ServiceCall call, $2.IvkDecryptTRC20Parameters request);
-  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk($grpc.ServiceCall call, $2.OvkDecryptTRC20Parameters request);
-  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent($grpc.ServiceCall call, $2.NfTRC20Parameters request);
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByIvk(
+      $grpc.ServiceCall call, $2.IvkDecryptTRC20Parameters request);
+  $async.Future<$2.DecryptNotesTRC20> scanShieldedTRC20NotesByOvk(
+      $grpc.ServiceCall call, $2.OvkDecryptTRC20Parameters request);
+  $async.Future<$2.NullifierResult> isShieldedTRC20ContractNoteSpent(
+      $grpc.ServiceCall call, $2.NfTRC20Parameters request);
   $async.Future<$2.NumberMessage> getRewardInfo($grpc.ServiceCall call, $2.BytesMessage request);
   $async.Future<$2.NumberMessage> getBrokerageInfo($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$2.TransactionExtention> triggerConstantContract($grpc.ServiceCall call, $5.TriggerSmartContract request);
-  $async.Future<$2.EstimateEnergyMessage> estimateEnergy($grpc.ServiceCall call, $5.TriggerSmartContract request);
-  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum($grpc.ServiceCall call, $2.NumberMessage request);
+  $async.Future<$2.TransactionExtention> triggerConstantContract(
+      $grpc.ServiceCall call, $5.TriggerSmartContract request);
+  $async.Future<$2.EstimateEnergyMessage> estimateEnergy(
+      $grpc.ServiceCall call, $5.TriggerSmartContract request);
+  $async.Future<$2.TransactionInfoList> getTransactionInfoByBlockNum(
+      $grpc.ServiceCall call, $2.NumberMessage request);
   $async.Future<$0.MarketOrder> getMarketOrderById($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.MarketOrderList> getMarketOrderByAccount($grpc.ServiceCall call, $2.BytesMessage request);
-  $async.Future<$0.MarketPriceList> getMarketPriceByPair($grpc.ServiceCall call, $0.MarketOrderPair request);
-  $async.Future<$0.MarketOrderList> getMarketOrderListByPair($grpc.ServiceCall call, $0.MarketOrderPair request);
-  $async.Future<$0.MarketOrderPairList> getMarketPairList($grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$0.MarketOrderList> getMarketOrderByAccount(
+      $grpc.ServiceCall call, $2.BytesMessage request);
+  $async.Future<$0.MarketPriceList> getMarketPriceByPair(
+      $grpc.ServiceCall call, $0.MarketOrderPair request);
+  $async.Future<$0.MarketOrderList> getMarketOrderListByPair(
+      $grpc.ServiceCall call, $0.MarketOrderPair request);
+  $async.Future<$0.MarketOrderPairList> getMarketPairList(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.NumberMessage> getBurnTrx($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$2.BlockExtention> getBlock($grpc.ServiceCall call, $2.BlockReq request);
-  $async.Future<$2.PricesResponseMessage> getBandwidthPrices($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$2.PricesResponseMessage> getEnergyPrices($grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.PricesResponseMessage> getBandwidthPrices(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.PricesResponseMessage> getEnergyPrices(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
 }
+
 @$pb.GrpcServiceName('protocol.WalletExtension')
 class WalletExtensionClient extends $grpc.Client {
-  static final _$getTransactionsFromThis = $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionList>(
-      '/protocol.WalletExtension/GetTransactionsFromThis',
-      ($2.AccountPaginated value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionList.fromBuffer(value));
-  static final _$getTransactionsFromThis2 = $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionListExtention>(
-      '/protocol.WalletExtension/GetTransactionsFromThis2',
-      ($2.AccountPaginated value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionListExtention.fromBuffer(value));
-  static final _$getTransactionsToThis = $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionList>(
-      '/protocol.WalletExtension/GetTransactionsToThis',
-      ($2.AccountPaginated value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionList.fromBuffer(value));
-  static final _$getTransactionsToThis2 = $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionListExtention>(
-      '/protocol.WalletExtension/GetTransactionsToThis2',
-      ($2.AccountPaginated value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $2.TransactionListExtention.fromBuffer(value));
+  static final _$getTransactionsFromThis =
+      $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionList>(
+          '/protocol.WalletExtension/GetTransactionsFromThis',
+          ($2.AccountPaginated value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionList.fromBuffer(value));
+  static final _$getTransactionsFromThis2 =
+      $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionListExtention>(
+          '/protocol.WalletExtension/GetTransactionsFromThis2',
+          ($2.AccountPaginated value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionListExtention.fromBuffer(value));
+  static final _$getTransactionsToThis =
+      $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionList>(
+          '/protocol.WalletExtension/GetTransactionsToThis',
+          ($2.AccountPaginated value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionList.fromBuffer(value));
+  static final _$getTransactionsToThis2 =
+      $grpc.ClientMethod<$2.AccountPaginated, $2.TransactionListExtention>(
+          '/protocol.WalletExtension/GetTransactionsToThis2',
+          ($2.AccountPaginated value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $2.TransactionListExtention.fromBuffer(value));
 
   WalletExtensionClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$2.TransactionList> getTransactionsFromThis($2.AccountPaginated request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionList> getTransactionsFromThis($2.AccountPaginated request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionsFromThis, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionListExtention> getTransactionsFromThis2($2.AccountPaginated request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionListExtention> getTransactionsFromThis2(
+      $2.AccountPaginated request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionsFromThis2, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionList> getTransactionsToThis($2.AccountPaginated request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionList> getTransactionsToThis($2.AccountPaginated request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionsToThis, request, options: options);
   }
 
-  $grpc.ResponseFuture<$2.TransactionListExtention> getTransactionsToThis2($2.AccountPaginated request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.TransactionListExtention> getTransactionsToThis2(
+      $2.AccountPaginated request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTransactionsToThis2, request, options: options);
   }
 }
@@ -3983,27 +4682,36 @@ abstract class WalletExtensionServiceBase extends $grpc.Service {
         ($2.TransactionListExtention value) => value.writeToBuffer()));
   }
 
-  $async.Future<$2.TransactionList> getTransactionsFromThis_Pre($grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
+  $async.Future<$2.TransactionList> getTransactionsFromThis_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
     return getTransactionsFromThis(call, await request);
   }
 
-  $async.Future<$2.TransactionListExtention> getTransactionsFromThis2_Pre($grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
+  $async.Future<$2.TransactionListExtention> getTransactionsFromThis2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
     return getTransactionsFromThis2(call, await request);
   }
 
-  $async.Future<$2.TransactionList> getTransactionsToThis_Pre($grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
+  $async.Future<$2.TransactionList> getTransactionsToThis_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
     return getTransactionsToThis(call, await request);
   }
 
-  $async.Future<$2.TransactionListExtention> getTransactionsToThis2_Pre($grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
+  $async.Future<$2.TransactionListExtention> getTransactionsToThis2_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.AccountPaginated> request) async {
     return getTransactionsToThis2(call, await request);
   }
 
-  $async.Future<$2.TransactionList> getTransactionsFromThis($grpc.ServiceCall call, $2.AccountPaginated request);
-  $async.Future<$2.TransactionListExtention> getTransactionsFromThis2($grpc.ServiceCall call, $2.AccountPaginated request);
-  $async.Future<$2.TransactionList> getTransactionsToThis($grpc.ServiceCall call, $2.AccountPaginated request);
-  $async.Future<$2.TransactionListExtention> getTransactionsToThis2($grpc.ServiceCall call, $2.AccountPaginated request);
+  $async.Future<$2.TransactionList> getTransactionsFromThis(
+      $grpc.ServiceCall call, $2.AccountPaginated request);
+  $async.Future<$2.TransactionListExtention> getTransactionsFromThis2(
+      $grpc.ServiceCall call, $2.AccountPaginated request);
+  $async.Future<$2.TransactionList> getTransactionsToThis(
+      $grpc.ServiceCall call, $2.AccountPaginated request);
+  $async.Future<$2.TransactionListExtention> getTransactionsToThis2(
+      $grpc.ServiceCall call, $2.AccountPaginated request);
 }
+
 @$pb.GrpcServiceName('protocol.Database')
 class DatabaseClient extends $grpc.Client {
   static final _$getBlockReference = $grpc.ClientMethod<$2.EmptyMessage, $2.BlockReference>(
@@ -4024,24 +4732,26 @@ class DatabaseClient extends $grpc.Client {
       ($core.List<$core.int> value) => $0.Block.fromBuffer(value));
 
   DatabaseClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$2.BlockReference> getBlockReference($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$2.BlockReference> getBlockReference($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockReference, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.DynamicProperties> getDynamicProperties($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.DynamicProperties> getDynamicProperties($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getDynamicProperties, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Block> getNowBlock($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Block> getNowBlock($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getNowBlock, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Block> getBlockByNum($2.NumberMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Block> getBlockByNum($2.NumberMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBlockByNum, request, options: options);
   }
 }
@@ -4081,27 +4791,34 @@ abstract class DatabaseServiceBase extends $grpc.Service {
         ($0.Block value) => value.writeToBuffer()));
   }
 
-  $async.Future<$2.BlockReference> getBlockReference_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$2.BlockReference> getBlockReference_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getBlockReference(call, await request);
   }
 
-  $async.Future<$0.DynamicProperties> getDynamicProperties_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.DynamicProperties> getDynamicProperties_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getDynamicProperties(call, await request);
   }
 
-  $async.Future<$0.Block> getNowBlock_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.Block> getNowBlock_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getNowBlock(call, await request);
   }
 
-  $async.Future<$0.Block> getBlockByNum_Pre($grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
+  $async.Future<$0.Block> getBlockByNum_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.NumberMessage> request) async {
     return getBlockByNum(call, await request);
   }
 
-  $async.Future<$2.BlockReference> getBlockReference($grpc.ServiceCall call, $2.EmptyMessage request);
-  $async.Future<$0.DynamicProperties> getDynamicProperties($grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$2.BlockReference> getBlockReference(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
+  $async.Future<$0.DynamicProperties> getDynamicProperties(
+      $grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$0.Block> getNowBlock($grpc.ServiceCall call, $2.EmptyMessage request);
   $async.Future<$0.Block> getBlockByNum($grpc.ServiceCall call, $2.NumberMessage request);
 }
+
 @$pb.GrpcServiceName('protocol.Monitor')
 class MonitorClient extends $grpc.Client {
   static final _$getStatsInfo = $grpc.ClientMethod<$2.EmptyMessage, $0.MetricsInfo>(
@@ -4110,12 +4827,11 @@ class MonitorClient extends $grpc.Client {
       ($core.List<$core.int> value) => $0.MetricsInfo.fromBuffer(value));
 
   MonitorClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.MetricsInfo> getStatsInfo($2.EmptyMessage request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.MetricsInfo> getStatsInfo($2.EmptyMessage request,
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getStatsInfo, request, options: options);
   }
 }
@@ -4134,27 +4850,24 @@ abstract class MonitorServiceBase extends $grpc.Service {
         ($0.MetricsInfo value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.MetricsInfo> getStatsInfo_Pre($grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
+  $async.Future<$0.MetricsInfo> getStatsInfo_Pre(
+      $grpc.ServiceCall call, $async.Future<$2.EmptyMessage> request) async {
     return getStatsInfo(call, await request);
   }
 
   $async.Future<$0.MetricsInfo> getStatsInfo($grpc.ServiceCall call, $2.EmptyMessage request);
 }
+
 @$pb.GrpcServiceName('protocol.Network')
 class NetworkClient extends $grpc.Client {
-
   NetworkClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions? options,
-      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
-      : super(channel, options: options,
-        interceptors: interceptors);
+      {$grpc.CallOptions? options, $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options, interceptors: interceptors);
 }
 
 @$pb.GrpcServiceName('protocol.Network')
 abstract class NetworkServiceBase extends $grpc.Service {
   $core.String get $name => 'protocol.Network';
 
-  NetworkServiceBase() {
-  }
-
+  NetworkServiceBase() {}
 }

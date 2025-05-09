@@ -59,8 +59,7 @@ void main() {
     );
     expect(
       tx.accessList.first.storageKeys.first,
-      "0000000000000000000000000000000000000000000000000000000000000000"
-          .toLowerCase(),
+      "0000000000000000000000000000000000000000000000000000000000000000".toLowerCase(),
     );
     expect(
       tx.txHash,

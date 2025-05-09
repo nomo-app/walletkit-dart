@@ -9,8 +9,7 @@ void main() {
   const ePubKeyBip44LTC =
       "xpub683UNKpAnv1UrPxMgQNgYqNm17KCq1CuZHHjKzxPQytUZgUii2mZnXX2ov2jbLbxVa9xH29fTChsLNyWDajCwTxxBx2DKEdd7Fan7GpGUVg";
 
-  const coinbaseTx =
-      "652a27f226ddfc74642fa4648de388985fc46bdcffd9f8d5f7ad5d4e5fd77944";
+  const coinbaseTx = "652a27f226ddfc74642fa4648de388985fc46bdcffd9f8d5f7ad5d4e5fd77944";
 
   test(
     'Fetch Zeniq Coinbase tx: $coinbaseTx',
@@ -22,8 +21,7 @@ void main() {
         [AddressType.legacy],
       );
       expect(tx.block, -1);
-      expect(tx.hash,
-          "652a27f226ddfc74642fa4648de388985fc46bdcffd9f8d5f7ad5d4e5fd77944");
+      expect(tx.hash, "652a27f226ddfc74642fa4648de388985fc46bdcffd9f8d5f7ad5d4e5fd77944");
     },
   );
 

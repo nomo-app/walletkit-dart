@@ -395,8 +395,7 @@ void main() {
     final pubKeyHash = Uint8List.fromList(
       hex.decode("1ca0677f65c99dee3a0fbdc1134608203796dd39"),
     );
-    final address =
-        pubKeyHashToLegacyAddress(pubKeyHash, ZeniqNetwork.pubKeyHashPrefix);
+    final address = pubKeyHashToLegacyAddress(pubKeyHash, ZeniqNetwork.pubKeyHashPrefix);
     expect(address, "mJniPQGWnvTbugSUUA89981bd4n21WKw6C");
   });
 

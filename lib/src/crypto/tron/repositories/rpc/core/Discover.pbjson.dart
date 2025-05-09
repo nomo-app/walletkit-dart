@@ -24,9 +24,9 @@ const Endpoint$json = {
 };
 
 /// Descriptor for `Endpoint`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List endpointDescriptor = $convert.base64Decode(
-    'CghFbmRwb2ludBIYCgdhZGRyZXNzGAEgASgMUgdhZGRyZXNzEhIKBHBvcnQYAiABKAVSBHBvcn'
-    'QSFgoGbm9kZUlkGAMgASgMUgZub2RlSWQ=');
+final $typed_data.Uint8List endpointDescriptor = $convert
+    .base64Decode('CghFbmRwb2ludBIYCgdhZGRyZXNzGAEgASgMUgdhZGRyZXNzEhIKBHBvcnQYAiABKAVSBHBvcn'
+        'QSFgoGbm9kZUlkGAMgASgMUgZub2RlSWQ=');
 
 @$core.Deprecated('Use pingMessageDescriptor instead')
 const PingMessage$json = {
@@ -40,10 +40,10 @@ const PingMessage$json = {
 };
 
 /// Descriptor for `PingMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pingMessageDescriptor = $convert.base64Decode(
-    'CgtQaW5nTWVzc2FnZRImCgRmcm9tGAEgASgLMhIucHJvdG9jb2wuRW5kcG9pbnRSBGZyb20SIg'
-    'oCdG8YAiABKAsyEi5wcm90b2NvbC5FbmRwb2ludFICdG8SGAoHdmVyc2lvbhgDIAEoBVIHdmVy'
-    'c2lvbhIcCgl0aW1lc3RhbXAYBCABKANSCXRpbWVzdGFtcA==');
+final $typed_data.Uint8List pingMessageDescriptor = $convert
+    .base64Decode('CgtQaW5nTWVzc2FnZRImCgRmcm9tGAEgASgLMhIucHJvdG9jb2wuRW5kcG9pbnRSBGZyb20SIg'
+        'oCdG8YAiABKAsyEi5wcm90b2NvbC5FbmRwb2ludFICdG8SGAoHdmVyc2lvbhgDIAEoBVIHdmVy'
+        'c2lvbhIcCgl0aW1lc3RhbXAYBCABKANSCXRpbWVzdGFtcA==');
 
 @$core.Deprecated('Use pongMessageDescriptor instead')
 const PongMessage$json = {
@@ -56,9 +56,9 @@ const PongMessage$json = {
 };
 
 /// Descriptor for `PongMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pongMessageDescriptor = $convert.base64Decode(
-    'CgtQb25nTWVzc2FnZRImCgRmcm9tGAEgASgLMhIucHJvdG9jb2wuRW5kcG9pbnRSBGZyb20SEg'
-    'oEZWNobxgCIAEoBVIEZWNobxIcCgl0aW1lc3RhbXAYAyABKANSCXRpbWVzdGFtcA==');
+final $typed_data.Uint8List pongMessageDescriptor = $convert
+    .base64Decode('CgtQb25nTWVzc2FnZRImCgRmcm9tGAEgASgLMhIucHJvdG9jb2wuRW5kcG9pbnRSBGZyb20SEg'
+        'oEZWNobxgCIAEoBVIEZWNobxIcCgl0aW1lc3RhbXAYAyABKANSCXRpbWVzdGFtcA==');
 
 @$core.Deprecated('Use findNeighboursDescriptor instead')
 const FindNeighbours$json = {
@@ -71,10 +71,10 @@ const FindNeighbours$json = {
 };
 
 /// Descriptor for `FindNeighbours`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List findNeighboursDescriptor = $convert.base64Decode(
-    'Cg5GaW5kTmVpZ2hib3VycxImCgRmcm9tGAEgASgLMhIucHJvdG9jb2wuRW5kcG9pbnRSBGZyb2'
-    '0SGgoIdGFyZ2V0SWQYAiABKAxSCHRhcmdldElkEhwKCXRpbWVzdGFtcBgDIAEoA1IJdGltZXN0'
-    'YW1w');
+final $typed_data.Uint8List findNeighboursDescriptor = $convert
+    .base64Decode('Cg5GaW5kTmVpZ2hib3VycxImCgRmcm9tGAEgASgLMhIucHJvdG9jb2wuRW5kcG9pbnRSBGZyb2'
+        '0SGgoIdGFyZ2V0SWQYAiABKAxSCHRhcmdldElkEhwKCXRpbWVzdGFtcBgDIAEoA1IJdGltZXN0'
+        'YW1w');
 
 @$core.Deprecated('Use neighboursDescriptor instead')
 const Neighbours$json = {
@@ -87,10 +87,10 @@ const Neighbours$json = {
 };
 
 /// Descriptor for `Neighbours`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List neighboursDescriptor = $convert.base64Decode(
-    'CgpOZWlnaGJvdXJzEiYKBGZyb20YASABKAsyEi5wcm90b2NvbC5FbmRwb2ludFIEZnJvbRIyCg'
-    'puZWlnaGJvdXJzGAIgAygLMhIucHJvdG9jb2wuRW5kcG9pbnRSCm5laWdoYm91cnMSHAoJdGlt'
-    'ZXN0YW1wGAMgASgDUgl0aW1lc3RhbXA=');
+final $typed_data.Uint8List neighboursDescriptor = $convert
+    .base64Decode('CgpOZWlnaGJvdXJzEiYKBGZyb20YASABKAsyEi5wcm90b2NvbC5FbmRwb2ludFIEZnJvbRIyCg'
+        'puZWlnaGJvdXJzGAIgAygLMhIucHJvdG9jb2wuRW5kcG9pbnRSCm5laWdoYm91cnMSHAoJdGlt'
+        'ZXN0YW1wGAMgASgDUgl0aW1lc3RhbXA=');
 
 @$core.Deprecated('Use backupMessageDescriptor instead')
 const BackupMessage$json = {
@@ -102,7 +102,6 @@ const BackupMessage$json = {
 };
 
 /// Descriptor for `BackupMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List backupMessageDescriptor = $convert.base64Decode(
-    'Cg1CYWNrdXBNZXNzYWdlEhIKBGZsYWcYASABKAhSBGZsYWcSGgoIcHJpb3JpdHkYAiABKAVSCH'
-    'ByaW9yaXR5');
-
+final $typed_data.Uint8List backupMessageDescriptor = $convert
+    .base64Decode('Cg1CYWNrdXBNZXNzYWdlEhIKBGZsYWcYASABKAhSBGZsYWcSGgoIcHJpb3JpdHkYAiABKAVSCH'
+        'ByaW9yaXR5');

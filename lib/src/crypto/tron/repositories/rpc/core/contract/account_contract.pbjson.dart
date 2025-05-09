@@ -24,10 +24,10 @@ const AccountCreateContract$json = {
 };
 
 /// Descriptor for `AccountCreateContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountCreateContractDescriptor = $convert.base64Decode(
-    'ChVBY2NvdW50Q3JlYXRlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
-    'RyZXNzEicKD2FjY291bnRfYWRkcmVzcxgCIAEoDFIOYWNjb3VudEFkZHJlc3MSKQoEdHlwZRgD'
-    'IAEoDjIVLnByb3RvY29sLkFjY291bnRUeXBlUgR0eXBl');
+final $typed_data.Uint8List accountCreateContractDescriptor = $convert
+    .base64Decode('ChVBY2NvdW50Q3JlYXRlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
+        'RyZXNzEicKD2FjY291bnRfYWRkcmVzcxgCIAEoDFIOYWNjb3VudEFkZHJlc3MSKQoEdHlwZRgD'
+        'IAEoDjIVLnByb3RvY29sLkFjY291bnRUeXBlUgR0eXBl');
 
 @$core.Deprecated('Use accountUpdateContractDescriptor instead')
 const AccountUpdateContract$json = {
@@ -39,9 +39,9 @@ const AccountUpdateContract$json = {
 };
 
 /// Descriptor for `AccountUpdateContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountUpdateContractDescriptor = $convert.base64Decode(
-    'ChVBY2NvdW50VXBkYXRlQ29udHJhY3QSIQoMYWNjb3VudF9uYW1lGAEgASgMUgthY2NvdW50Tm'
-    'FtZRIjCg1vd25lcl9hZGRyZXNzGAIgASgMUgxvd25lckFkZHJlc3M=');
+final $typed_data.Uint8List accountUpdateContractDescriptor = $convert
+    .base64Decode('ChVBY2NvdW50VXBkYXRlQ29udHJhY3QSIQoMYWNjb3VudF9uYW1lGAEgASgMUgthY2NvdW50Tm'
+        'FtZRIjCg1vd25lcl9hZGRyZXNzGAIgASgMUgxvd25lckFkZHJlc3M=');
 
 @$core.Deprecated('Use setAccountIdContractDescriptor instead')
 const SetAccountIdContract$json = {
@@ -53,9 +53,9 @@ const SetAccountIdContract$json = {
 };
 
 /// Descriptor for `SetAccountIdContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List setAccountIdContractDescriptor = $convert.base64Decode(
-    'ChRTZXRBY2NvdW50SWRDb250cmFjdBIdCgphY2NvdW50X2lkGAEgASgMUglhY2NvdW50SWQSIw'
-    'oNb3duZXJfYWRkcmVzcxgCIAEoDFIMb3duZXJBZGRyZXNz');
+final $typed_data.Uint8List setAccountIdContractDescriptor = $convert
+    .base64Decode('ChRTZXRBY2NvdW50SWRDb250cmFjdBIdCgphY2NvdW50X2lkGAEgASgMUglhY2NvdW50SWQSIw'
+        'oNb3duZXJfYWRkcmVzcxgCIAEoDFIMb3duZXJBZGRyZXNz');
 
 @$core.Deprecated('Use accountPermissionUpdateContractDescriptor instead')
 const AccountPermissionUpdateContract$json = {
@@ -69,9 +69,8 @@ const AccountPermissionUpdateContract$json = {
 };
 
 /// Descriptor for `AccountPermissionUpdateContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List accountPermissionUpdateContractDescriptor = $convert.base64Decode(
-    'Ch9BY2NvdW50UGVybWlzc2lvblVwZGF0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKA'
-    'xSDG93bmVyQWRkcmVzcxIqCgVvd25lchgCIAEoCzIULnByb3RvY29sLlBlcm1pc3Npb25SBW93'
-    'bmVyEi4KB3dpdG5lc3MYAyABKAsyFC5wcm90b2NvbC5QZXJtaXNzaW9uUgd3aXRuZXNzEi4KB2'
-    'FjdGl2ZXMYBCADKAsyFC5wcm90b2NvbC5QZXJtaXNzaW9uUgdhY3RpdmVz');
-
+final $typed_data.Uint8List accountPermissionUpdateContractDescriptor = $convert
+    .base64Decode('Ch9BY2NvdW50UGVybWlzc2lvblVwZGF0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKA'
+        'xSDG93bmVyQWRkcmVzcxIqCgVvd25lchgCIAEoCzIULnByb3RvY29sLlBlcm1pc3Npb25SBW93'
+        'bmVyEi4KB3dpdG5lc3MYAyABKAsyFC5wcm90b2NvbC5QZXJtaXNzaW9uUgd3aXRuZXNzEi4KB2'
+        'FjdGl2ZXMYBCADKAsyFC5wcm90b2NvbC5QZXJtaXNzaW9uUgdhY3RpdmVz');

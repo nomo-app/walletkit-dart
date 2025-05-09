@@ -7,12 +7,10 @@ import '../utils.dart';
 
 void main() {
   test('fetch ZSC txs huge wallet', () async {
+    final txList = await zeniqScan.fetchTransactions(
+      address: "0x566d65116a24ce5dF9C8ABd271588ebc662688d0",
+    );
 
-      final txList = await zeniqScan.fetchTransactions(
-        address: "0x566d65116a24ce5dF9C8ABd271588ebc662688d0",
-       
-      );
-    
     expect(txList.length, greaterThanOrEqualTo(100000));
   });
 
@@ -33,8 +31,7 @@ void main() {
 
     final tx = txList.singleWhereOrNull(
       (element) =>
-          element.hash ==
-          "0x1657dd75352314f7e1f81e6a66c51779ded751f28363ccbcfe5946c3b9b95bae",
+          element.hash == "0x1657dd75352314f7e1f81e6a66c51779ded751f28363ccbcfe5946c3b9b95bae",
     );
 
     expect(tx, isNotNull);

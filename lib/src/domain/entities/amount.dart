@@ -70,8 +70,7 @@ class Amount {
 
     if (lastNonZeroIndex == -1) return string;
 
-    final formatted =
-        string.substring(0, lastNonZeroIndex < 3 ? 3 : lastNonZeroIndex + 1);
+    final formatted = string.substring(0, lastNonZeroIndex < 3 ? 3 : lastNonZeroIndex + 1);
 
     if (formatted.endsWith('.')) {
       return formatted.substring(0, formatted.length - 1);
@@ -103,9 +102,7 @@ class Amount {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Amount &&
-        other.value == value &&
-        other.decimals == decimals;
+    return other is Amount && other.value == value && other.decimals == decimals;
   }
 
   @override
@@ -152,10 +149,8 @@ class Amount {
     int maxDecimals = max(decimals, other.decimals);
 
     // Scale both amounts to the same decimal level
-    BigInt scaledThisValue =
-        value * BigInt.from(pow(10, maxDecimals - decimals));
-    BigInt scaledOtherValue =
-        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+    BigInt scaledThisValue = value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue = other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
 
     // Perform the addition
     BigInt resultValue = scaledThisValue + scaledOtherValue;
@@ -172,10 +167,8 @@ class Amount {
     int maxDecimals = max(decimals, other.decimals);
 
     // Scale both amounts to the same decimal level
-    BigInt scaledThisValue =
-        value * BigInt.from(pow(10, maxDecimals - decimals));
-    BigInt scaledOtherValue =
-        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+    BigInt scaledThisValue = value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue = other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
 
     // Perform the subtraction
     BigInt resultValue = scaledThisValue - scaledOtherValue;
@@ -196,15 +189,11 @@ class Amount {
     int maxDecimals = max(decimals, other.decimals);
 
     // Scale both amounts to the same decimal level
-    BigInt scaledThisValue =
-        value * BigInt.from(pow(10, maxDecimals - decimals));
-    BigInt scaledOtherValue =
-        other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
+    BigInt scaledThisValue = value * BigInt.from(pow(10, maxDecimals - decimals));
+    BigInt scaledOtherValue = other.value * BigInt.from(pow(10, maxDecimals - other.decimals));
 
     // Perform the division
-    BigInt resultValue =
-        (scaledThisValue * BigInt.from(pow(10, maxDecimals))) ~/
-            scaledOtherValue;
+    BigInt resultValue = (scaledThisValue * BigInt.from(pow(10, maxDecimals))) ~/ scaledOtherValue;
 
     return Amount(
       value: resultValue,
@@ -295,18 +284,14 @@ extension AmountUtilBigInt on BigInt {
     );
   }
 
-  BigInt shiftLeft(int decimalPlaces) =>
-      this * BigInt.from(pow(10, decimalPlaces));
+  BigInt shiftLeft(int decimalPlaces) => this * BigInt.from(pow(10, decimalPlaces));
 
-  BigInt shiftRight(int decimalPlaces) =>
-      this ~/ BigInt.from(pow(10, decimalPlaces));
+  BigInt shiftRight(int decimalPlaces) => this ~/ BigInt.from(pow(10, decimalPlaces));
 }
 
-BigInt shiftLeftBigInt(num num1, int decimalPlaces) =>
-    BigInt.from(num1 * pow(10, decimalPlaces));
+BigInt shiftLeftBigInt(num num1, int decimalPlaces) => BigInt.from(num1 * pow(10, decimalPlaces));
 
 BigInt discardRightBigInt(BigInt num1, int decimalPlaces) =>
     num1 ~/ BigInt.from(pow(10, decimalPlaces));
 
-double shiftRightBigInt(BigInt num1, int decimalPlaces) =>
-    num1.toInt() / pow(10, decimalPlaces);
+double shiftRightBigInt(BigInt num1, int decimalPlaces) => num1.toInt() / pow(10, decimalPlaces);

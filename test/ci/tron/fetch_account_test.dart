@@ -11,8 +11,7 @@ void main() {
 
     print(block);
 
-    final txs =
-        await tronScan.getTransactions(address: tronAddress, token: tron);
+    final txs = await tronScan.getTransactions(address: tronAddress, token: tron);
 
     print(txs);
 
@@ -24,13 +23,11 @@ void main() {
 
     print("TPS: $tps");
 
-    final walletTokens =
-        await tronScan.getWalletTokens(address: tronAddress, asset_type: 1);
+    final walletTokens = await tronScan.getWalletTokens(address: tronAddress, asset_type: 1);
 
     print("Wallet Tokens: $walletTokens");
 
-    final trxTransferList =
-        await tronScan.getTRXTransferList(address: tronAddress, fee: true);
+    final trxTransferList = await tronScan.getTRXTransferList(address: tronAddress, fee: true);
 
     print("TRX Transfer List: $trxTransferList");
 
@@ -72,8 +69,7 @@ void main() {
 
     print("Valid: $valid");
 
-    final balance = await tronHTTP.getBalance(
-        address: "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
+    final balance = await tronHTTP.getBalance(address: "TMbyqJkw2RsSG7tT6VzJzbzDQuHEMvrGGj");
 
     print("Balance: $balance");
 
@@ -93,8 +89,8 @@ void main() {
 
     print("Node List: $nodeList");
 
-    final tx = await tronHTTP.getTransactionById(
-        "0a1c7735b6b63f656301d433e0aa3b0a3a901b4333e157a01c6ec9545706f1e8");
+    final tx = await tronHTTP
+        .getTransactionById("0a1c7735b6b63f656301d433e0aa3b0a3a901b4333e157a01c6ec9545706f1e8");
 
     print(tx["raw_data_hex"]);
 
@@ -118,8 +114,8 @@ void main() {
 
     print("USDT Balance: $usdtBalance");
 
-    final rawTx = await tronHTTP.getTransactionById(
-        "387302162b58c458434f184fa99ef5e9c9670f1c95388641fdfb15f6429e58e3");
+    final rawTx = await tronHTTP
+        .getTransactionById("387302162b58c458434f184fa99ef5e9c9670f1c95388641fdfb15f6429e58e3");
 
     print(jsonEncode(rawTx));
 
@@ -162,14 +158,12 @@ void main() {
       apiKeys: ["9b3974db-6887-41b3-bb70-39f43be242bd"],
     );
 
-    final transfers =
-        await tronHttp.getTRXTransactionList(address: tronAddress);
+    final transfers = await tronHttp.getTRXTransactionList(address: tronAddress);
 
     final data = transfers['data'];
 
-    final txs = [
-      for (final tx in data) TronTransaction.fromJson(tx, tron, tronAddress)
-    ].whereType<TronTransaction>();
+    final txs = [for (final tx in data) TronTransaction.fromJson(tx, tron, tronAddress)]
+        .whereType<TronTransaction>();
 
     print(txs.length);
   });

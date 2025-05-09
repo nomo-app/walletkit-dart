@@ -18,7 +18,7 @@ class ResourceCode extends $pb.ProtobufEnum {
   static const ResourceCode ENERGY = ResourceCode._(1, _omitEnumNames ? '' : 'ENERGY');
   static const ResourceCode TRON_POWER = ResourceCode._(2, _omitEnumNames ? '' : 'TRON_POWER');
 
-  static const $core.List<ResourceCode> values = <ResourceCode> [
+  static const $core.List<ResourceCode> values = <ResourceCode>[
     BANDWIDTH,
     ENERGY,
     TRON_POWER,
@@ -29,6 +29,5 @@ class ResourceCode extends $pb.ProtobufEnum {
 
   const ResourceCode._($core.int v, $core.String n) : super(v, n);
 }
-
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

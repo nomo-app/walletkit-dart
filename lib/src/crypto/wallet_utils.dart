@@ -77,8 +77,7 @@ Uint8List publicKeyToAddress(Uint8List publicKey) {
   }
 
   // 2. Take Keccak-256 hash of the public key
-  final hash =
-      keccak256(publicKey.sublist(1)); // Remove the 0x04 prefix before hashing
+  final hash = keccak256(publicKey.sublist(1)); // Remove the 0x04 prefix before hashing
 
   // 3. Take the last 20 bytes of the hash
   return hash.sublist(12, 32);

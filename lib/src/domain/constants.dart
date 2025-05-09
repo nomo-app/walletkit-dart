@@ -17,8 +17,7 @@ const int INTERNAL_CHAIN_INDEX = 1;
 /// Public Key Prefixes & Suffixes
 ///
 
-final p2pkhPrefix =
-    "${OPCODE.OP_DUP}${OPCODE.OP_HASH160}$PUBKEY_SCRIPT_HASH_LENGTH_HEX";
+final p2pkhPrefix = "${OPCODE.OP_DUP}${OPCODE.OP_HASH160}$PUBKEY_SCRIPT_HASH_LENGTH_HEX";
 final p2pkhPostfix = "${OPCODE.OP_EQUALVERIFY}${OPCODE.OP_CHECKSIG}";
 final p2wpkhPrefix = "${OPCODE.OP_0}$PUBKEY_SCRIPT_HASH_LENGTH_HEX";
 final p2shPrefix = "${OPCODE.OP_HASH160}$PUBKEY_SCRIPT_HASH_LENGTH_HEX";
@@ -34,10 +33,7 @@ const String P2SH_PREFIX = '3'; // Compatibility Address
 const String P2SH_PREFIX_LTC = 'M'; // Compatibility Address Litecoin
 const String P2WPKH_PREFIX_BTC = 'bc1'; // Native SegWit Bitcoin
 const String P2WPKH_PREFIX_LTC = 'ltc1'; // Native SegWit Litecoin
-const List<String> P2WPKH_PREFIXES_BCH = [
-  "1q",
-  "qq"
-]; // Native SegWit Bitcoin Cash
+const List<String> P2WPKH_PREFIXES_BCH = ["1q", "qq"]; // Native SegWit Bitcoin Cash
 const String P2PKH_PREFIX_EC8 = 'c';
 
 const BITCOIN_NETWORK_BIP = NetworkBIP(

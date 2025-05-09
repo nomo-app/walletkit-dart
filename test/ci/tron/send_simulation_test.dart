@@ -1,8 +1,7 @@
 import 'dart:typed_data';
 import 'package:fixnum/fixnum.dart';
 import 'package:test/test.dart';
-import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
-    as tron;
+import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart' as tron;
 import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/contract/balance_contract.pb.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
 import 'package:walletkit_dart/src/utils/base58.dart';
@@ -17,8 +16,7 @@ void main() {
 
     final transaction = tron.Transaction.fromBuffer(hex.hexToBytes);
 
-    final contract = transaction.rawData.contract.first.parameter
-        .unpackInto(TransferContract());
+    final contract = transaction.rawData.contract.first.parameter.unpackInto(TransferContract());
 
     expect(transaction.rawData.timestamp.toInt(), 1713955810247);
     expect(contract.amount, Int64(1E6.toInt()));
@@ -40,8 +38,7 @@ void main() {
 
     final id = sha256Hash(raw.hexToBytes);
 
-    expect(id.toHex,
-        "6e0323232e2b05d46624ac4a3fb6dd086b222a5f088b74d90620f1c9736af7ba");
+    expect(id.toHex, "6e0323232e2b05d46624ac4a3fb6dd086b222a5f088b74d90620f1c9736af7ba");
   });
 
   test('Test Transfer Contract Creation', () {
@@ -84,8 +81,7 @@ bool simulateTrxSendTransaction({
   final refBlockBytes = rawTx.refBlockBytes.toUint8List;
   final refBlockHash = rawTx.refBlockHash.toUint8List;
 
-  final contract =
-      rawTx.contract.first.parameter.unpackInto(TransferContract());
+  final contract = rawTx.contract.first.parameter.unpackInto(TransferContract());
 
   final from = base58CheckFromHex(contract.ownerAddress.toUint8List);
   final to = base58CheckFromHex(contract.toAddress.toUint8List);

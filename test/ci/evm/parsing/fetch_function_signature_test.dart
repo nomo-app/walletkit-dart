@@ -20,13 +20,11 @@ void main() {
 
     final Uint8List data = (en[5] as RLPBytes).value;
 
-    final contractFunction =
-        await ContractFunction.decodeRawWithFetch(data: data);
+    final contractFunction = await ContractFunction.decodeRawWithFetch(data: data);
 
     expect(contractFunction.name, "mint");
     expect(contractFunction.parameters.first.type, FunctionParamAddress());
-    expect(contractFunction.parameters.first.value,
-        "0x05870f1507d820212e921e1f39f14660336231d1");
+    expect(contractFunction.parameters.first.value, "0x05870f1507d820212e921e1f39f14660336231d1");
     expect(contractFunction.parameters.last.type, FunctionParamUint256());
     expect(contractFunction.parameters.last.value, BigInt.from(15942468));
   });
@@ -37,13 +35,11 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final contractFunction =
-        await ContractFunction.decodeRawWithFetch(data: data);
+    final contractFunction = await ContractFunction.decodeRawWithFetch(data: data);
 
     expect(contractFunction.name, "execute");
     expect(contractFunction.parameters.first.type, FunctionParamBytes());
-    expect(
-        (contractFunction.parameters.first.value as Uint8List).toHex, "0b08");
+    expect((contractFunction.parameters.first.value as Uint8List).toHex, "0b08");
     expect(contractFunction.parameters[1].type, FunctionParamBytesArray());
     expect((contractFunction.parameters[1].value[0] as Uint8List).toHex,
         "0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000016345785d8a0000");
@@ -79,13 +75,11 @@ void main() {
 
     final Uint8List data = Uint8List.fromList(hex.decode(dataString));
 
-    final contractFunction =
-        await ContractFunction.decodeRawWithFetch(data: data);
+    final contractFunction = await ContractFunction.decodeRawWithFetch(data: data);
 
     expect(contractFunction.name, "execute");
     expect(contractFunction.parameters.first.type, FunctionParamBytes());
-    expect((contractFunction.parameters.first.value as Uint8List).toHex,
-        "0b000604");
+    expect((contractFunction.parameters.first.value as Uint8List).toHex, "0b000604");
     expect(contractFunction.parameters[1].type, FunctionParamBytesArray());
     expect((contractFunction.parameters[1].value[0] as Uint8List).toHex,
         "00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000de0b6b3a7640000");
@@ -116,15 +110,12 @@ void main() {
     expect(contractFunction.parameters[1].value,
         "0xa96febd6c5faf7739d3149bfb43211ec6844a37c".toLowerCase());
     expect(contractFunction.parameters[2].type, FunctionParamUint256());
-    expect(
-        contractFunction.parameters[2].value, BigInt.from(443991818102986800));
+    expect(contractFunction.parameters[2].value, BigInt.from(443991818102986800));
     expect(contractFunction.parameters[3].type, FunctionParamUint256());
-    expect(
-        contractFunction.parameters[3].value, BigInt.from(234257302242160155));
+    expect(contractFunction.parameters[3].value, BigInt.from(234257302242160155));
     expect(
       contractFunction.parameters[4].type,
-      TupleFunctionParamType(
-          "(address,uint256,address,address,(uint8,address,bytes,bool))", [
+      TupleFunctionParamType("(address,uint256,address,address,(uint8,address,bytes,bool))", [
         FunctionParamAddress(),
         FunctionParamUint256(),
         FunctionParamAddress(),
@@ -195,26 +186,22 @@ void main() {
       contractFunction.parameters[0].value,
       [
         [
-          "0x58179a8c5c75673d733f714ccce11ccfcd35e22139addd9c270318fa9067500c"
-              .hexToBytesWithPrefix,
+          "0x58179a8c5c75673d733f714ccce11ccfcd35e22139addd9c270318fa9067500c".hexToBytesWithPrefix,
           BigInt.from(0),
           BigInt.from(1),
         ],
         [
-          "0xaf78260b41491153b1cca7d54b4b968db26d3e67b881abfa451f1e030b9731db"
-              .hexToBytesWithPrefix,
+          "0xaf78260b41491153b1cca7d54b4b968db26d3e67b881abfa451f1e030b9731db".hexToBytesWithPrefix,
           BigInt.from(0),
           BigInt.from(1),
         ],
         [
-          "0x7815cf042f814bba091dd59f4a9f2565d0361621ca00a8b63b050ec045f4e1a5"
-              .hexToBytesWithPrefix,
+          "0x7815cf042f814bba091dd59f4a9f2565d0361621ca00a8b63b050ec045f4e1a5".hexToBytesWithPrefix,
           BigInt.from(0),
           BigInt.from(1),
         ],
         [
-          "0x17c90af00aedee74edcb44be829ed64b3b72bdacb789e94ec88e1c3415ec35e4"
-              .hexToBytesWithPrefix,
+          "0x17c90af00aedee74edcb44be829ed64b3b72bdacb789e94ec88e1c3415ec35e4".hexToBytesWithPrefix,
           BigInt.from(0),
           BigInt.from(1),
         ],
@@ -226,8 +213,7 @@ void main() {
     // https://etherscan.io/tx/0x92632ffa61e1e846b93fa2ba9e3baf13aed68bfa75a8f66a1158d91d03d2106c
   });
 
-  test("submitInitial(tuple commitment,uint256[] bitfield,tuple proof)",
-      () async {
+  test("submitInitial(tuple commitment,uint256[] bitfield,tuple proof)", () async {
     // https://etherscan.io/tx/0x2185df99024f13bd4c8098c8d151c3453f934695f9103cc71226b773c1724772
 
     String dataString =
@@ -240,8 +226,7 @@ void main() {
     expect(contractFunction.name, "submitInitial");
   });
 
-  test(
-      'https://etherscan.io/tx/0xc8aa827fa1fcaf50a8e8945584ad16e8b1e7d3890918d62903622ae6fc886b54',
+  test('https://etherscan.io/tx/0xc8aa827fa1fcaf50a8e8945584ad16e8b1e7d3890918d62903622ae6fc886b54',
       () async {
     final contractFunction = await ContractFunction.decodeRawWithFetch(
       data:
@@ -305,8 +290,7 @@ void main() {
           BigInt.parse("174876e800", radix: 16),
           BigInt.parse("01bae1d29347fe96f2", radix: 16),
           1720112929.toBigInt,
-          "0xf4c17d12a7afdbf56c5ae1fad213ac36cf3499276e48f2ab768e9c6faa93a023"
-              .hexToBytesWithPrefix,
+          "0xf4c17d12a7afdbf56c5ae1fad213ac36cf3499276e48f2ab768e9c6faa93a023".hexToBytesWithPrefix,
           BigInt.zero,
           BigInt.zero,
           BigInt.parse("174876e800", radix: 16),
@@ -415,8 +399,7 @@ void main() {
           BigInt.parse("174876e800", radix: 16),
           BigInt.parse("01bae1d29347fe96f2", radix: 16),
           1720112929.toBigInt,
-          "0xf4c17d12a7afdbf56c5ae1fad213ac36cf3499276e48f2ab768e9c6faa93a023"
-              .hexToBytesWithPrefix,
+          "0xf4c17d12a7afdbf56c5ae1fad213ac36cf3499276e48f2ab768e9c6faa93a023".hexToBytesWithPrefix,
           BigInt.zero,
           BigInt.zero,
           BigInt.parse("174876e800", radix: 16),
@@ -504,9 +487,7 @@ void main() {
   ///
   /// uint256[][]
   ///
-  test(
-      "g(uint256[][],string[]) with values ([[1, 2], [3]], ['one', 'two', 'three'])",
-      () async {
+  test("g(uint256[][],string[]) with values ([[1, 2], [3]], ['one', 'two', 'three'])", () async {
     //  0x2289b18c                                                           - function signature
     //  0 - f                                                                - offset of [[1, 2], [3]]
     //  1 - g                                                                - offset of ["one", "two", "three"]

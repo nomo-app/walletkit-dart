@@ -10,13 +10,11 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 void main() {
   var env = DotEnv(includePlatformEnvironment: true)..load();
   final rejectSeedString = env["REJECT_SEED"]!.split(",");
-  List<int> rejectIntList = rejectSeedString
-      .map((i) => int.parse(i))
-      .toList(); // Convert to list of integers
+  List<int> rejectIntList =
+      rejectSeedString.map((i) => int.parse(i)).toList(); // Convert to list of integers
   Uint8List rejectSeed = Uint8List.fromList(rejectIntList);
 
-  test(
-      'Simulate Zeniq Tx: b6008c2bdeaf58b4e96c01018167f376991bc5a691bcb45aa874a191cf3a0410',
+  test('Simulate Zeniq Tx: b6008c2bdeaf58b4e96c01018167f376991bc5a691bcb45aa874a191cf3a0410',
       () async {
     ///
     /// https://zeniq.net/tx/b6008c2bdeaf58b4e96c01018167f376991bc5a691bcb45aa874a191cf3a0410
@@ -78,8 +76,7 @@ void main() {
     );
   });
 
-  test(
-      'Simulate BTC Tx: fd5c80f9e59fdd075be74364133064fba79b9b7c119cf7628c2050bcbeab8bf9',
+  test('Simulate BTC Tx: fd5c80f9e59fdd075be74364133064fba79b9b7c119cf7628c2050bcbeab8bf9',
       () async {
     ///
     /// https://www.blockchain.com/explorer/transactions/btc/fd5c80f9e59fdd075be74364133064fba79b9b7c119cf7628c2050bcbeab8bf9
@@ -126,8 +123,7 @@ void main() {
     );
   });
 
-  test(
-      'Simulate BCH Tx: 6b8edb84f17afc4cb50c0e5438fb511db88a7767df0466cde42c43ad005de353',
+  test('Simulate BCH Tx: 6b8edb84f17afc4cb50c0e5438fb511db88a7767df0466cde42c43ad005de353',
       () async {
     ///
     /// https://www.blockchain.com/explorer/transactions/bch/6b8edb84f17afc4cb50c0e5438fb511db88a7767df0466cde42c43ad005de353

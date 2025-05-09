@@ -17,10 +17,7 @@ typedef UTXOTxInfo = (Set<UTXOTransaction>, Iterable<NodeWithAddress>);
 
 typedef ElectrumXResult = (Set<ElectrumTransactionInfo>?, ElectrumXClient);
 
-typedef SearchTransactionResult = (
-  Set<ElectrumTransactionInfo>,
-  Set<NodeWithAddress>
-);
+typedef SearchTransactionResult = (Set<ElectrumTransactionInfo>, Set<NodeWithAddress>);
 
 Future<UTXOTxInfo> fetchMissingUTXOTransactions({
   required Set<UTXOTransaction> cachedTransactions,
@@ -87,8 +84,7 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
     if (parentTxHash == null) continue;
 
     // Check if Parent TX is already in the list
-    var parentTx = newUtxoTxs
-        .singleWhereOrNull((element) => element.id == firstInput.txid);
+    var parentTx = newUtxoTxs.singleWhereOrNull((element) => element.id == firstInput.txid);
 
     final (_tx, _, _) = await fetchFromRandomElectrumXNode(
       (client) {
@@ -156,9 +152,7 @@ Future<UTXOTxInfo> fetchMissingUTXOTransactions({
   ///
   for (final tx in utxoTXs) {
     for (final input in tx.inputs) {
-      final outputs = utxoTXs
-          .singleWhereOrNull((element) => element.id == input.txid)
-          ?.outputs;
+      final outputs = utxoTXs.singleWhereOrNull((element) => element.id == input.txid)?.outputs;
 
       if (input.isCoinbase) continue;
       final index = input.vout!;
@@ -314,8 +308,7 @@ Future<UTXOTxInfo> fetchUTXOTransactions({
   );
 }
 
-Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
-    searchTransactionsForWalletType({
+Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)> searchTransactionsForWalletType({
   required BipNode masterNode,
   required HDWalletPurpose? purpose,
   required Iterable<AddressType> addressTypes,
@@ -353,8 +346,7 @@ Future<(Set<ElectrumTransactionInfo>, Set<NodeWithAddress>)>
   return (allTxs, nodes);
 }
 
-Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
-    searchForTransactions({
+Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)> searchForTransactions({
   required bip32.BIP32 masterNode,
   required int chainIndex,
   required Iterable<AddressType> addressTypes,
@@ -420,8 +412,7 @@ Future<(Set<ElectrumTransactionInfo>, List<NodeWithAddress>)>
     final batchNodes = [
       ...newNodes,
       ...cachedNodes.where(
-        (cNode) =>
-            indexes.contains(cNode.index) && cNode.chainIndex == chainIndex,
+        (cNode) => indexes.contains(cNode.index) && cNode.chainIndex == chainIndex,
       ),
     ];
 
@@ -618,8 +609,7 @@ Future<Iterable<UTXOTransaction>> computeMissingUTXODetails({
       );
 
       if (tx == null) {
-        Logger.logWarning(
-            "Failed to fetch TX ${txInfo.hash} from ${client.host}");
+        Logger.logWarning("Failed to fetch TX ${txInfo.hash} from ${client.host}");
         txs.add(txInfo.getNotAvailableUTXOTransaction(type.coin));
         continue;
       }
@@ -697,9 +687,7 @@ Map<ElectrumOutput, UTXOTransaction> extractAllUTXOs({
 ///
 /// Returns a map of UTXOs which belong to us and are unspent and their corresponding transactions
 ///
-List<ElectrumOutput> getSpendableOutputs(
-        {required List<UTXOTransaction> txList}) =>
-    [
+List<ElectrumOutput> getSpendableOutputs({required List<UTXOTransaction> txList}) => [
       for (final tx in txList)
         for (final ElectrumOutput output in tx.outputs)
           if (output.spent == false && output.belongsToUs == true) output
@@ -781,8 +769,7 @@ TransactionTransferMethod determineSendDirection({
 
   return switch ((anyInputsAreOurs, anyOutputsAreOurs)) {
     (true, true) when outputsHaveReceive => TransactionTransferMethod.own,
-    (true, true) when outputsHaveChange && outputs.length == 1 =>
-      TransactionTransferMethod.own,
+    (true, true) when outputsHaveChange && outputs.length == 1 => TransactionTransferMethod.own,
     (true, true) => TransactionTransferMethod.send,
     (true, false) => TransactionTransferMethod.send,
     (false, true) => TransactionTransferMethod.receive,
@@ -876,11 +863,9 @@ ElectrumOutput? _findMainOutput(
 ) {
   final voutListFull = outputs;
 
-  final isMainOutputOurOwn =
-      transferMethod == TransactionTransferMethod.receive ||
-          transferMethod == TransactionTransferMethod.own;
-  final voutList =
-      voutListFull.where((v) => v.belongsToUs == isMainOutputOurOwn).toList();
+  final isMainOutputOurOwn = transferMethod == TransactionTransferMethod.receive ||
+      transferMethod == TransactionTransferMethod.own;
+  final voutList = voutListFull.where((v) => v.belongsToUs == isMainOutputOurOwn).toList();
   if (voutList.isEmpty) {
     return null;
   }

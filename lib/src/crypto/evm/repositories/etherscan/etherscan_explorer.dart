@@ -15,8 +15,7 @@ class EtherscanExplorer extends EtherscanRepository {
   String get base => "${super.baseUrl}?chainid=${currency.chainID}";
 
   String buildBalanceEndpoint(String address) =>
-      "$base&module=account&action=balance&address=$address"
-          .addOptionalParameter('tag', 'latest');
+      "$base&module=account&action=balance&address=$address".addOptionalParameter('tag', 'latest');
 
   String buildTokenBalanceEndpoint(String address, String contractAddress) =>
       "$base&module=account&action=tokenbalance&address=$address&contractaddress=$contractAddress"
@@ -250,8 +249,7 @@ class EtherscanExplorer extends EtherscanRepository {
       sorting: sorting,
     );
 
-    final result =
-        await fetchEtherscanWithRatelimitRetries(endpoint) as List<dynamic>;
+    final result = await fetchEtherscanWithRatelimitRetries(endpoint) as List<dynamic>;
 
     return [
       for (final tx in result)
@@ -279,8 +277,7 @@ class EtherscanExplorer extends EtherscanRepository {
   }
 
   Future<int?> fetchEstimatedTime(int gasPrice) async {
-    final endpoint =
-        "$base&module=gastracker&action=gasestimate&gasprice=$gasPrice";
+    final endpoint = "$base&module=gastracker&action=gasestimate&gasprice=$gasPrice";
     final result = await fetchEtherscanWithRatelimitRetries(endpoint);
     if (result is! String) {
       throw Exception("Failed to fetch gas price");
@@ -295,8 +292,7 @@ Future<List<T>> batchFutures<T>(
 }) async {
   final results = <T>[];
   final batches = [
-    for (var i = 0; i < futures.length; i += batchSize)
-      futures.skip(i).take(batchSize)
+    for (var i = 0; i < futures.length; i += batchSize) futures.skip(i).take(batchSize)
   ];
 
   for (final batch in batches) {

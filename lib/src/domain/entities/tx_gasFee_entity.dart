@@ -169,9 +169,7 @@ final class TronNetworkFees extends NetworkFees {
 
   Amount get bandWidthFee {
     return Amount.from(
-      value: bandwidthBalance >= bandWidthConsumed
-          ? 0
-          : bandWidthConsumed * bandWidthPrice,
+      value: bandwidthBalance >= bandWidthConsumed ? 0 : bandWidthConsumed * bandWidthPrice,
       decimals: 6,
     );
   }

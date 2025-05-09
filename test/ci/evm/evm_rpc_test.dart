@@ -79,13 +79,7 @@ void main() {
         arbitrumTestWallet,
         arbitrumTestWallet,
       ],
-      tokenIDs: [
-        BigInt.from(0),
-        BigInt.from(1),
-        BigInt.from(2),
-        BigInt.from(3),
-        BigInt.from(4)
-      ],
+      tokenIDs: [BigInt.from(0), BigInt.from(1), BigInt.from(2), BigInt.from(3), BigInt.from(4)],
       contractAddress: "0xB868a4d85c3f7207106145eB41444c5313C97D86",
     );
 

@@ -117,20 +117,16 @@ class Any extends $pb.GeneratedMessage with $mixin.AnyMixin {
   factory Any.fromBuffer($core.List<$core.int> i,
           [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromBuffer(i, r);
-  factory Any.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+  factory Any.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
       create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Any',
-      package:
-          const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Any',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
       toProto3Json: $mixin.AnyMixin.toProto3JsonHelper,
       fromProto3Json: $mixin.AnyMixin.fromProto3JsonHelper)
     ..aOS(1, _omitFieldNames ? '' : 'typeUrl')
-    ..a<$core.List<$core.int>>(
-        2, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('Using this can add significant overhead to your binary. '
@@ -150,8 +146,7 @@ class Any extends $pb.GeneratedMessage with $mixin.AnyMixin {
   Any createEmptyInstance() => create();
   static $pb.PbList<Any> createRepeated() => $pb.PbList<Any>();
   @$core.pragma('dart2js:noInline')
-  static Any getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Any>(create);
+  static Any getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Any>(create);
   static Any? _defaultInstance;
 
   ///  A URL/resource name that uniquely identifies the type of the serialized
@@ -220,5 +215,4 @@ class Any extends $pb.GeneratedMessage with $mixin.AnyMixin {
 }
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
-    $core.bool.fromEnvironment('protobuf.omit_message_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

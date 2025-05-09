@@ -8,8 +8,7 @@ import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/contract/sm
 import 'package:walletkit_dart/src/crypto/tron/entities/tron_parameter_type.dart';
 import 'package:walletkit_dart/src/utils/keccak.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
-import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart'
-    as tron;
+import 'package:walletkit_dart/src/crypto/tron/repositories/rpc/core/Tron.pb.dart' as tron;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 sealed class TronContractData {
@@ -26,11 +25,9 @@ sealed class TronContractData {
 
   $pb.GeneratedMessage get contract;
 
-  static TronContractData from(
-      tron.Transaction_Contract_ContractType type, Any parameter) {
+  static TronContractData from(tron.Transaction_Contract_ContractType type, Any parameter) {
     return switch (type) {
-      tron.Transaction_Contract_ContractType.TransferContract =>
-        TronTransferContractData.fromPB(
+      tron.Transaction_Contract_ContractType.TransferContract => TronTransferContractData.fromPB(
           parameter.unpackInto<TransferContract>(TransferContract()),
         ),
       tron.Transaction_Contract_ContractType.TriggerSmartContract =>
@@ -167,15 +164,13 @@ sealed class TronTriggerSmartContractData extends TronContractData {
     TriggerSmartContract contract,
   ) {
     final owner = base58CheckFromHex(contract.ownerAddress.toUint8List);
-    final contractAddress =
-        base58CheckFromHex(contract.contractAddress.toUint8List);
+    final contractAddress = base58CheckFromHex(contract.contractAddress.toUint8List);
 
     final data = contract.data.toUint8List;
     final functionSelector = getFunctionSelectorFromData(data);
 
     return switch (functionSelector) {
-      TronTRC20TransferContractData.selector =>
-        TronTRC20TransferContractData.fromPB(
+      TronTRC20TransferContractData.selector => TronTRC20TransferContractData.fromPB(
           data,
           ownerAddress: owner,
           contractAddress: contractAddress,

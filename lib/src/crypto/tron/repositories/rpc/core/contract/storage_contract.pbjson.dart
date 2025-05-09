@@ -23,9 +23,9 @@ const BuyStorageBytesContract$json = {
 };
 
 /// Descriptor for `BuyStorageBytesContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List buyStorageBytesContractDescriptor = $convert.base64Decode(
-    'ChdCdXlTdG9yYWdlQnl0ZXNDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
-    'FkZHJlc3MSFAoFYnl0ZXMYAiABKANSBWJ5dGVz');
+final $typed_data.Uint8List buyStorageBytesContractDescriptor = $convert
+    .base64Decode('ChdCdXlTdG9yYWdlQnl0ZXNDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
+        'FkZHJlc3MSFAoFYnl0ZXMYAiABKANSBWJ5dGVz');
 
 @$core.Deprecated('Use buyStorageContractDescriptor instead')
 const BuyStorageContract$json = {
@@ -37,9 +37,9 @@ const BuyStorageContract$json = {
 };
 
 /// Descriptor for `BuyStorageContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List buyStorageContractDescriptor = $convert.base64Decode(
-    'ChJCdXlTdG9yYWdlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZGRyZX'
-    'NzEhQKBXF1YW50GAIgASgDUgVxdWFudA==');
+final $typed_data.Uint8List buyStorageContractDescriptor = $convert
+    .base64Decode('ChJCdXlTdG9yYWdlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZGRyZX'
+        'NzEhQKBXF1YW50GAIgASgDUgVxdWFudA==');
 
 @$core.Deprecated('Use sellStorageContractDescriptor instead')
 const SellStorageContract$json = {
@@ -51,9 +51,9 @@ const SellStorageContract$json = {
 };
 
 /// Descriptor for `SellStorageContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sellStorageContractDescriptor = $convert.base64Decode(
-    'ChNTZWxsU3RvcmFnZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQWRkcm'
-    'VzcxIjCg1zdG9yYWdlX2J5dGVzGAIgASgDUgxzdG9yYWdlQnl0ZXM=');
+final $typed_data.Uint8List sellStorageContractDescriptor = $convert
+    .base64Decode('ChNTZWxsU3RvcmFnZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQWRkcm'
+        'VzcxIjCg1zdG9yYWdlX2J5dGVzGAIgASgDUgxzdG9yYWdlQnl0ZXM=');
 
 @$core.Deprecated('Use updateBrokerageContractDescriptor instead')
 const UpdateBrokerageContract$json = {
@@ -65,7 +65,6 @@ const UpdateBrokerageContract$json = {
 };
 
 /// Descriptor for `UpdateBrokerageContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateBrokerageContractDescriptor = $convert.base64Decode(
-    'ChdVcGRhdGVCcm9rZXJhZ2VDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
-    'FkZHJlc3MSHAoJYnJva2VyYWdlGAIgASgFUglicm9rZXJhZ2U=');
-
+final $typed_data.Uint8List updateBrokerageContractDescriptor = $convert
+    .base64Decode('ChdVcGRhdGVCcm9rZXJhZ2VDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
+        'FkZHJlc3MSHAoJYnJva2VyYWdlGAIgASgFUglicm9rZXJhZ2U=');

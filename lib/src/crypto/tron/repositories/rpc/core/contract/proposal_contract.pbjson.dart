@@ -24,17 +24,24 @@ const ProposalApproveContract$json = {
 };
 
 /// Descriptor for `ProposalApproveContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proposalApproveContractDescriptor = $convert.base64Decode(
-    'ChdQcm9wb3NhbEFwcHJvdmVDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
-    'FkZHJlc3MSHwoLcHJvcG9zYWxfaWQYAiABKANSCnByb3Bvc2FsSWQSJgoPaXNfYWRkX2FwcHJv'
-    'dmFsGAMgASgIUg1pc0FkZEFwcHJvdmFs');
+final $typed_data.Uint8List proposalApproveContractDescriptor = $convert
+    .base64Decode('ChdQcm9wb3NhbEFwcHJvdmVDb250cmFjdBIjCg1vd25lcl9hZGRyZXNzGAEgASgMUgxvd25lck'
+        'FkZHJlc3MSHwoLcHJvcG9zYWxfaWQYAiABKANSCnByb3Bvc2FsSWQSJgoPaXNfYWRkX2FwcHJv'
+        'dmFsGAMgASgIUg1pc0FkZEFwcHJvdmFs');
 
 @$core.Deprecated('Use proposalCreateContractDescriptor instead')
 const ProposalCreateContract$json = {
   '1': 'ProposalCreateContract',
   '2': [
     {'1': 'owner_address', '3': 1, '4': 1, '5': 12, '10': 'ownerAddress'},
-    {'1': 'parameters', '3': 2, '4': 3, '5': 11, '6': '.protocol.ProposalCreateContract.ParametersEntry', '10': 'parameters'},
+    {
+      '1': 'parameters',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.protocol.ProposalCreateContract.ParametersEntry',
+      '10': 'parameters'
+    },
   ],
   '3': [ProposalCreateContract_ParametersEntry$json],
 };
@@ -50,11 +57,11 @@ const ProposalCreateContract_ParametersEntry$json = {
 };
 
 /// Descriptor for `ProposalCreateContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proposalCreateContractDescriptor = $convert.base64Decode(
-    'ChZQcm9wb3NhbENyZWF0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
-    'RkcmVzcxJQCgpwYXJhbWV0ZXJzGAIgAygLMjAucHJvdG9jb2wuUHJvcG9zYWxDcmVhdGVDb250'
-    'cmFjdC5QYXJhbWV0ZXJzRW50cnlSCnBhcmFtZXRlcnMaPQoPUGFyYW1ldGVyc0VudHJ5EhAKA2'
-    'tleRgBIAEoA1IDa2V5EhQKBXZhbHVlGAIgASgDUgV2YWx1ZToCOAE=');
+final $typed_data.Uint8List proposalCreateContractDescriptor = $convert
+    .base64Decode('ChZQcm9wb3NhbENyZWF0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
+        'RkcmVzcxJQCgpwYXJhbWV0ZXJzGAIgAygLMjAucHJvdG9jb2wuUHJvcG9zYWxDcmVhdGVDb250'
+        'cmFjdC5QYXJhbWV0ZXJzRW50cnlSCnBhcmFtZXRlcnMaPQoPUGFyYW1ldGVyc0VudHJ5EhAKA2'
+        'tleRgBIAEoA1IDa2V5EhQKBXZhbHVlGAIgASgDUgV2YWx1ZToCOAE=');
 
 @$core.Deprecated('Use proposalDeleteContractDescriptor instead')
 const ProposalDeleteContract$json = {
@@ -66,7 +73,6 @@ const ProposalDeleteContract$json = {
 };
 
 /// Descriptor for `ProposalDeleteContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List proposalDeleteContractDescriptor = $convert.base64Decode(
-    'ChZQcm9wb3NhbERlbGV0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
-    'RkcmVzcxIfCgtwcm9wb3NhbF9pZBgCIAEoA1IKcHJvcG9zYWxJZA==');
-
+final $typed_data.Uint8List proposalDeleteContractDescriptor = $convert
+    .base64Decode('ChZQcm9wb3NhbERlbGV0ZUNvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQW'
+        'RkcmVzcxIfCgtwcm9wb3NhbF9pZBgCIAEoA1IKcHJvcG9zYWxJZA==');

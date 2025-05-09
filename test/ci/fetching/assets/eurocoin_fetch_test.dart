@@ -49,8 +49,7 @@ void main() {
       minEndpoints: 1,
     );
 
-    var hash =
-        "0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a";
+    var hash = "0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a";
     var result = await simulateForEC8(hash, nodes);
     expect(result.$2, isTrue);
 
@@ -72,8 +71,7 @@ void main() {
   });
 
   test('Parse Raw Tx', () async {
-    const hash =
-        "0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a";
+    const hash = "0df82ba308170f0b37b9281c1b118eadb6651be8c7ffdba2dbc9aba1b1b9820a";
 
     final (utxoTx, raw) = await fetchUTXOTXByHash(
       hash,

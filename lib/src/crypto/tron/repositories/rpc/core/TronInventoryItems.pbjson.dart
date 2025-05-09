@@ -23,7 +23,6 @@ const InventoryItems$json = {
 };
 
 /// Descriptor for `InventoryItems`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List inventoryItemsDescriptor = $convert.base64Decode(
-    'Cg5JbnZlbnRvcnlJdGVtcxISCgR0eXBlGAEgASgFUgR0eXBlEhQKBWl0ZW1zGAIgAygMUgVpdG'
-    'Vtcw==');
-
+final $typed_data.Uint8List inventoryItemsDescriptor = $convert
+    .base64Decode('Cg5JbnZlbnRvcnlJdGVtcxISCgR0eXBlGAEgASgFUgR0eXBlEhQKBWl0ZW1zGAIgAygMUgVpdG'
+        'Vtcw==');

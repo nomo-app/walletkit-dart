@@ -27,9 +27,7 @@ void main() {
         addressTypes: [AddressType.legacy, AddressType.cashaddr],
       );
       final selectedTx = txList.singleWhere(
-        (tx) =>
-            tx.hash ==
-            "cd99ffa2f22927bdfb30bc7619cba33d64db7458ff60295e66ad297bc5e99fdd",
+        (tx) => tx.hash == "cd99ffa2f22927bdfb30bc7619cba33d64db7458ff60295e66ad297bc5e99fdd",
       );
 
       final popResult = await proofOfPayment(
@@ -106,9 +104,7 @@ void main() {
         minEndpoints: 1,
       );
       final selectedTx = txList.firstWhere(
-        (tx) =>
-            tx.id ==
-            "8e5f5dfd7bd8aa37053cac5923c8d506143449520d13f7e95a987c4d12908069",
+        (tx) => tx.id == "8e5f5dfd7bd8aa37053cac5923c8d506143449520d13f7e95a987c4d12908069",
       );
 
       assert(selectedTx.transferMethod == TransactionTransferMethod.send);
@@ -308,8 +304,7 @@ void main() {
   test('Eurcoin Proof of Payment', () async {
     final devSeed = loadDevSeedFromEnv();
 
-    const toBeProvenHash =
-        "3574231d1a64760f6e42bd469bef95aa0b2c8ea6c38e043a443c3f0196cecd39";
+    const toBeProvenHash = "3574231d1a64760f6e42bd469bef95aa0b2c8ea6c38e043a443c3f0196cecd39";
 
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: EurocoinNetwork,
@@ -386,8 +381,7 @@ void main() {
   test('Zeniq Proof of Payment', () async {
     final devSeed = loadDevSeedFromEnv();
 
-    const toBeProvenHash =
-        "859bce577c74fb7057e82e84d14d29f57b5540061d7baa06ef1831a75761d5df";
+    const toBeProvenHash = "859bce577c74fb7057e82e84d14d29f57b5540061d7baa06ef1831a75761d5df";
 
     final (txList, nodes) = await fetchUTXOTransactions(
       networkType: ZeniqNetwork,

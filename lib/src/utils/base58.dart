@@ -11,14 +11,11 @@ import 'package:walletkit_dart/src/domain/extensions.dart';
 /// In order to comply with Bitcoin and Ripple standard encoding Base58Check,
 /// use [Base58CheckCodec].
 
-const bitcoinAlphabet =
-    '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+const bitcoinAlphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 
-const rippleAlphabet =
-    'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz';
+const rippleAlphabet = 'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz';
 
-const base58BitcoinCodec =
-    Base58Codec(bitcoinAlphabet); // Bitcoin alphabet without checksum
+const base58BitcoinCodec = Base58Codec(bitcoinAlphabet); // Bitcoin alphabet without checksum
 
 class Base58Codec extends Codec<List<int>, String> {
   const Base58Codec(this.alphabet);
@@ -143,9 +140,7 @@ class Base58CheckPayload {
   final List<int> payload;
   @override
   bool operator ==(Object other) =>
-      other is Base58CheckPayload &&
-      version == other.version &&
-      _areEqual(payload, other.payload);
+      other is Base58CheckPayload && version == other.version && _areEqual(payload, other.payload);
   @override
   int get hashCode => version.hashCode ^ hash(payload);
 }
@@ -170,11 +165,9 @@ class Base58CheckCodec extends Codec<Base58CheckPayload, String> {
   /// A codec that works with the Bitcoin alphabet and the SHA256 hash function.
   Base58CheckCodec.bitcoin() : this(bitcoinAlphabet);
 
-  static const bitcoinAlphabet =
-      '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+  static const bitcoinAlphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 
-  static const rippleAlphabet =
-      'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz';
+  static const rippleAlphabet = 'rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz';
 
   final String alphabet;
 
@@ -187,8 +180,7 @@ class Base58CheckCodec extends Codec<Base58CheckPayload, String> {
   @override
   Converter<String, Base58CheckPayload> get decoder => _decoder;
 
-  Base58CheckPayload decodeUnchecked(String encoded) =>
-      _decoder.convertUnchecked(encoded);
+  Base58CheckPayload decodeUnchecked(String encoded) => _decoder.convertUnchecked(encoded);
 }
 
 class Base58CheckEncoder extends Converter<Base58CheckPayload, String> {
@@ -216,19 +208,16 @@ class Base58CheckDecoder extends Converter<String, Base58CheckPayload> {
   @override
   Base58CheckPayload convert(String input) => _convert(input, true);
 
-  Base58CheckPayload convertUnchecked(String encoded) =>
-      _convert(encoded, false);
+  Base58CheckPayload convertUnchecked(String encoded) => _convert(encoded, false);
 
   Base58CheckPayload _convert(String encoded, bool validateChecksum) {
     var bytes = Base58Decoder(alphabet).convert(encoded);
     if (bytes.length < 5) {
-      throw FormatException(
-          'Invalid Base58Check encoded string: must be at least size 5');
+      throw FormatException('Invalid Base58Check encoded string: must be at least size 5');
     }
     var checksum = _hash(bytes.sublist(0, bytes.length - 4));
     var providedChecksum = bytes.sublist(bytes.length - 4, bytes.length);
-    if (validateChecksum &&
-        !_areEqual(providedChecksum, checksum.sublist(0, 4))) {
+    if (validateChecksum && !_areEqual(providedChecksum, checksum.sublist(0, 4))) {
       throw FormatException('Invalid checksum in Base58Check encoding.');
     }
     return Base58CheckPayload(bytes[0], bytes.sublist(1, bytes.length - 4));

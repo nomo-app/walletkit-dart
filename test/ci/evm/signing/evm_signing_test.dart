@@ -26,12 +26,10 @@ void main() {
 
   const String unsignedTxFromNomo = // from nomo.signEvmTransaction
       "f38207488502540be4008252089405870f1507d820212e921e1f39f14660336231d188016345785d8a0000808559454e49518080";
-  final message =
-      Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
+  final message = Uint8List.fromList(hex.decode(unsignedTxFromNomo.replaceAll("0x", "")));
 
   final testSeed = loadFromEnv("DEV_SEED");
-  final privateKey =
-      derivePrivateKeyETH(testSeed, ethereumBip44HDPath.defaultPath);
+  final privateKey = derivePrivateKeyETH(testSeed, ethereumBip44HDPath.defaultPath);
 
   test('Sign Evm TX', () {
     final signature = Signature.createSignature(message, privateKey);
@@ -72,8 +70,7 @@ void main() {
   });
 
   test('Simulate TX', () async {
-    final testTxHash =
-        "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b";
+    final testTxHash = "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b";
 
     when(mockJsonRPC.call('eth_blockNumber', any))
         .thenAnswer((_) async => RPCResponse(1, "0x11114b3d"));
@@ -82,21 +79,17 @@ void main() {
         .thenAnswer((_) async => RPCResponse(
               1,
               {
-                "blockHash":
-                    "0x442bf21bfa82c64b53a0e7ef51bd32174ad401b40e01ee3b1fc81a5c6b34716d",
+                "blockHash": "0x442bf21bfa82c64b53a0e7ef51bd32174ad401b40e01ee3b1fc81a5c6b34716d",
                 "blockNumber": "0xce2e175",
                 "chainId": "0xa4b1",
                 "from": "0xa7fa4bb0bba164f999e8c7b83c9da96a3be44616",
                 "gas": "0x186a0",
                 "gasPrice": "0x989680",
-                "hash":
-                    "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b",
+                "hash": "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b",
                 "input": "0x",
                 "nonce": "0x16",
-                "r":
-                    "0x1182f44be301418adb401ccca9c9d3236fe1f3de066ff2f425296262b9a4ce14",
-                "s":
-                    "0x2e1a9afb021a6dc36fd94c18a5e43e1fa1a6870743dd1786a9cde3f3547eefa6",
+                "r": "0x1182f44be301418adb401ccca9c9d3236fe1f3de066ff2f425296262b9a4ce14",
+                "s": "0x2e1a9afb021a6dc36fd94c18a5e43e1fa1a6870743dd1786a9cde3f3547eefa6",
                 "to": "0xa7fa4bb0bba164f999e8c7b83c9da96a3be44616",
                 "transactionIndex": "0xc",
                 "type": "0x0",

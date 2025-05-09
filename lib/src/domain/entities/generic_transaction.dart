@@ -39,8 +39,7 @@ sealed class GenericTransaction implements Comparable<GenericTransaction> {
     required this.status,
   });
 
-  EVMTransaction? get evmTx =>
-      this is EVMTransaction ? this as EVMTransaction : null;
+  EVMTransaction? get evmTx => this is EVMTransaction ? this as EVMTransaction : null;
 
   BigInt get value => amount.value;
 
@@ -178,8 +177,7 @@ enum TransactionTransferMethod {
     String sender,
   ) {
     if (address.toLowerCase() == sender.toLowerCase() &&
-        address.toLowerCase() == recipient.toLowerCase())
-      return TransactionTransferMethod.own;
+        address.toLowerCase() == recipient.toLowerCase()) return TransactionTransferMethod.own;
     if (address == recipient) return TransactionTransferMethod.receive;
     return TransactionTransferMethod.send;
   }

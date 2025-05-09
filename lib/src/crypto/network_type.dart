@@ -104,11 +104,8 @@ class NetworkBIP {
     required this.wif,
   });
 
-  bip32.NetworkType getForWalletType(HDWalletPurpose purpose) =>
-      switch (purpose) {
-        HDWalletPurpose.NO_STRUCTURE ||
-        HDWalletPurpose.BIP44 =>
-          bip32.NetworkType(
+  bip32.NetworkType getForWalletType(HDWalletPurpose purpose) => switch (purpose) {
+        HDWalletPurpose.NO_STRUCTURE || HDWalletPurpose.BIP44 => bip32.NetworkType(
             wif: wif,
             bip32: bip32.Bip32Type(
               private: bip32XprivPrefix,

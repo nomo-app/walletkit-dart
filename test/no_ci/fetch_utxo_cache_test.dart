@@ -43,8 +43,7 @@ void main() {
     expect(timeSecondFetch, lessThan(timeFirstFetch));
   });
 
-  test('fetch ZENIQ txs multiple times - test in-memory-cache performance',
-      () async {
+  test('fetch ZENIQ txs multiple times - test in-memory-cache performance', () async {
     const ePubKey = rejectXpub;
 
     for (int i = 1; i <= 4; i++) {

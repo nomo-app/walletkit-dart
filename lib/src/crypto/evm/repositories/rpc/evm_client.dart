@@ -117,8 +117,7 @@ base class EvmRpcClient {
           gasLimit: response['gas'].toString().toBigInt,
           to: response['to'],
           value: response['value'].toString().toBigInt,
-          data: response['input'].toString().hexToBytesWithPrefixOrNull ??
-              Uint8List(0),
+          data: response['input'].toString().hexToBytesWithPrefixOrNull ?? Uint8List(0),
           v: response['v'].toString().toInt,
           r: response['r'].toString().toBigInt,
           s: response['s'].toString().toBigInt,

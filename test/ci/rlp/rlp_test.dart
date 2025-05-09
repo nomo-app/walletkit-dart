@@ -24,9 +24,7 @@ void main() {
           expect(encoded[3], 0x67);
         });
 
-        test(
-            'length of string >55 should return 0xb7+len(len(data)) plus len(data) plus data',
-            () {
+        test('length of string >55 should return 0xb7+len(len(data)) plus len(data) plus data', () {
           final encoded = encodeRLP(
             RLPItem.fromValue(
                 'zoo255zoo255zzzzzzzzzzzzssssssssssssssssssssssssssssssssssssssssssssss'),
@@ -193,8 +191,7 @@ void main() {
 
       test('should decode string array', () {
         final (decoded as RLPList, _) = decodeRLP(
-          Uint8List.fromList(
-              [204, 131, 100, 111, 103, 131, 103, 111, 100, 131, 99, 97, 116]),
+          Uint8List.fromList([204, 131, 100, 111, 103, 131, 103, 111, 100, 131, 99, 97, 116]),
         );
 
         expect(
@@ -250,8 +247,7 @@ void main() {
         'a8',
         'ba9'
       ];
-      final encoded =
-          encodeRLP(RLPList(testList.map((s) => RLPString(s)).toList()));
+      final encoded = encodeRLP(RLPList(testList.map((s) => RLPString(s)).toList()));
       final decoded = decodeRLP(encoded).$1 as RLPList;
       expect(
         decoded.hexValues.map((item) => item.hexToBytes.bytesToUTF8).toList(),
@@ -412,14 +408,12 @@ void main() {
         expect(decoded1, equals(Uint8List.fromList([0x00])));
 
         // Decode multiple bytes with leading zeros
-        final decoded2 =
-            decodeRLP(Uint8List.fromList([0x82, 0x00, 0x01])).$1.buffer;
+        final decoded2 = decodeRLP(Uint8List.fromList([0x82, 0x00, 0x01])).$1.buffer;
         expect(decoded2, equals(Uint8List.fromList([0x00, 0x01])));
 
         // This is a tricky case - make sure the length prefix is handled correctly
         // when there are leading zeros in the input
-        final decoded3 =
-            decodeRLP(Uint8List.fromList([0x82, 0x00, 0x80])).$1.buffer;
+        final decoded3 = decodeRLP(Uint8List.fromList([0x82, 0x00, 0x80])).$1.buffer;
         expect(decoded3, equals(Uint8List.fromList([0x00, 0x80])));
       });
 
@@ -430,15 +424,13 @@ void main() {
           Uint8List.fromList([0x00, 0x00, 0x00]),
         ];
 
-        final encoded =
-            encodeRLP(RLPList(list.map((b) => RLPBytes(b)).toList()));
+        final encoded = encodeRLP(RLPList(list.map((b) => RLPBytes(b)).toList()));
         final decoded = decodeRLP(encoded).$1 as RLPList;
 
         expect(decoded.length, equals(3));
         expect(decoded[0].buffer, equals(Uint8List.fromList([0x00])));
         expect(decoded[1].buffer, equals(Uint8List.fromList([0x00, 0x01])));
-        expect(
-            decoded[2].buffer, equals(Uint8List.fromList([0x00, 0x00, 0x00])));
+        expect(decoded[2].buffer, equals(Uint8List.fromList([0x00, 0x00, 0x00])));
       });
     });
   });

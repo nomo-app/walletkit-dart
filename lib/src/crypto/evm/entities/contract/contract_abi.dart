@@ -71,8 +71,7 @@ class ContractABI {
   }
 
   LocalContractFunction? getFunctionFromSelector(String selector) {
-    return functions
-        .singleWhereOrNull((e) => e.functionSelectorHex == selector);
+    return functions.singleWhereOrNull((e) => e.functionSelectorHex == selector);
   }
 }
 

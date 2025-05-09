@@ -15,8 +15,7 @@ import 'package:walletkit_dart/src/crypto/evm/repositories/etherscan/etherscan_e
     as _i8;
 import 'package:walletkit_dart/src/domain/entities/amount.dart' as _i5;
 import 'package:walletkit_dart/src/domain/entities/coin_entity.dart' as _i4;
-import 'package:walletkit_dart/src/domain/entities/tx_gasFee_entity.dart'
-    as _i10;
+import 'package:walletkit_dart/src/domain/entities/tx_gasFee_entity.dart' as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -144,8 +143,7 @@ class MockJsonRPC extends _i1.Mock implements _i3.JsonRPC {
             ],
           ),
         )),
-        returnValueForMissingStub:
-            _i6.Future<_i3.RPCResponse>.value(_FakeRPCResponse_1(
+        returnValueForMissingStub: _i6.Future<_i3.RPCResponse>.value(_FakeRPCResponse_1(
           this,
           Invocation.method(
             #call,
@@ -491,11 +489,9 @@ class MockZeniqScanExplorer extends _i1.Mock implements _i8.ZeniqScanExplorer {
             #sorting: sorting,
           },
         ),
-        returnValue: _i6.Future<List<_i9.EtherscanTransaction>>.value(
-            <_i9.EtherscanTransaction>[]),
+        returnValue: _i6.Future<List<_i9.EtherscanTransaction>>.value(<_i9.EtherscanTransaction>[]),
         returnValueForMissingStub:
-            _i6.Future<List<_i9.EtherscanTransaction>>.value(
-                <_i9.EtherscanTransaction>[]),
+            _i6.Future<List<_i9.EtherscanTransaction>>.value(<_i9.EtherscanTransaction>[]),
       ) as _i6.Future<List<_i9.EtherscanTransaction>>);
 
   @override
@@ -522,16 +518,13 @@ class MockZeniqScanExplorer extends _i1.Mock implements _i8.ZeniqScanExplorer {
             #sorting: sorting,
           },
         ),
-        returnValue: _i6.Future<List<_i9.EtherscanTransaction>>.value(
-            <_i9.EtherscanTransaction>[]),
+        returnValue: _i6.Future<List<_i9.EtherscanTransaction>>.value(<_i9.EtherscanTransaction>[]),
         returnValueForMissingStub:
-            _i6.Future<List<_i9.EtherscanTransaction>>.value(
-                <_i9.EtherscanTransaction>[]),
+            _i6.Future<List<_i9.EtherscanTransaction>>.value(<_i9.EtherscanTransaction>[]),
       ) as _i6.Future<List<_i9.EtherscanTransaction>>);
 
   @override
-  _i6.Future<BigInt> fetchBalance({required String? address}) =>
-      (super.noSuchMethod(
+  _i6.Future<BigInt> fetchBalance({required String? address}) => (super.noSuchMethod(
         Invocation.method(
           #fetchBalance,
           [],
@@ -545,8 +538,7 @@ class MockZeniqScanExplorer extends _i1.Mock implements _i8.ZeniqScanExplorer {
             {#address: address},
           ),
         )),
-        returnValueForMissingStub:
-            _i6.Future<BigInt>.value(_i7.dummyValue<BigInt>(
+        returnValueForMissingStub: _i6.Future<BigInt>.value(_i7.dummyValue<BigInt>(
           this,
           Invocation.method(
             #fetchBalance,
@@ -581,8 +573,7 @@ class MockZeniqScanExplorer extends _i1.Mock implements _i8.ZeniqScanExplorer {
             },
           ),
         )),
-        returnValueForMissingStub:
-            _i6.Future<BigInt>.value(_i7.dummyValue<BigInt>(
+        returnValueForMissingStub: _i6.Future<BigInt>.value(_i7.dummyValue<BigInt>(
           this,
           Invocation.method(
             #fetchTokenBalance,
@@ -654,11 +645,9 @@ class MockZeniqScanExplorer extends _i1.Mock implements _i8.ZeniqScanExplorer {
             #sorting: sorting,
           },
         ),
-        returnValue: _i6.Future<List<_i9.EtherscanTransaction>>.value(
-            <_i9.EtherscanTransaction>[]),
+        returnValue: _i6.Future<List<_i9.EtherscanTransaction>>.value(<_i9.EtherscanTransaction>[]),
         returnValueForMissingStub:
-            _i6.Future<List<_i9.EtherscanTransaction>>.value(
-                <_i9.EtherscanTransaction>[]),
+            _i6.Future<List<_i9.EtherscanTransaction>>.value(<_i9.EtherscanTransaction>[]),
       ) as _i6.Future<List<_i9.EtherscanTransaction>>);
 
   @override
@@ -667,16 +656,15 @@ class MockZeniqScanExplorer extends _i1.Mock implements _i8.ZeniqScanExplorer {
           #fetchGasPrice,
           [],
         ),
-        returnValue: _i6.Future<_i10.EvmNetworkFees>.value(
-            _i7.dummyValue<_i10.EvmNetworkFees>(
+        returnValue: _i6.Future<_i10.EvmNetworkFees>.value(_i7.dummyValue<_i10.EvmNetworkFees>(
           this,
           Invocation.method(
             #fetchGasPrice,
             [],
           ),
         )),
-        returnValueForMissingStub: _i6.Future<_i10.EvmNetworkFees>.value(
-            _i7.dummyValue<_i10.EvmNetworkFees>(
+        returnValueForMissingStub:
+            _i6.Future<_i10.EvmNetworkFees>.value(_i7.dummyValue<_i10.EvmNetworkFees>(
           this,
           Invocation.method(
             #fetchGasPrice,

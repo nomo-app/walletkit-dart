@@ -13,8 +13,7 @@ enum FeePriority {
   final String displayName;
   final String assetName;
 
-  const FeePriority(this.displayName, [String? assetName])
-      : assetName = assetName ?? displayName;
+  const FeePriority(this.displayName, [String? assetName]) : assetName = assetName ?? displayName;
 
   static List<FeePriority> get evm {
     return [

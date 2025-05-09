@@ -29,8 +29,7 @@ class TronHTTPRepository extends HTTPRepository {
   }
 
   Future<TronBlockInfo> getBlock() async {
-    final result =
-        await postCall<JSON>("$baseURL/wallet/getnowblock", data: {});
+    final result = await postCall<JSON>("$baseURL/wallet/getnowblock", data: {});
 
     final blockId = result["blockID"] as String;
     final blockNumber = result["block_header"]["raw_data"]["number"] as int;
@@ -67,9 +66,8 @@ class TronHTTPRepository extends HTTPRepository {
 
     final energyLimit = json["EnergyLimit"] as int?;
     final energyUsed = json["EnergyUsed"] as int?;
-    final energyBalance = (energyUsed != null && energyLimit != null)
-        ? energyLimit - energyUsed
-        : 0;
+    final energyBalance =
+        (energyUsed != null && energyLimit != null) ? energyLimit - energyUsed : 0;
 
     return (
       bandwidth: remainingFreeBandwidth,

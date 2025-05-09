@@ -86,12 +86,10 @@ base class TronTransaction extends EVMTransaction {
         return null;
       }
 
-      final input =
-          (contractData['data'] as String?)?.hexToBytes ?? Uint8List(0);
+      final input = (contractData['data'] as String?)?.hexToBytes ?? Uint8List(0);
 
       final fee_bi = BigInt.tryParse(fee_s);
-      final feeAmount =
-          fee_bi != null ? Amount(value: fee_bi, decimals: 6) : null;
+      final feeAmount = fee_bi != null ? Amount(value: fee_bi, decimals: 6) : null;
 
       final amount_bi = BigInt.tryParse(amount_s) ?? BigInt.zero;
       final amount = Amount(value: amount_bi, decimals: 6);

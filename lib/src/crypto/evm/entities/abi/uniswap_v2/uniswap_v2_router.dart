@@ -1073,8 +1073,7 @@ class UniswapV2Router extends InternalContract {
     final result = await interact(
       privateKey: privateKey,
       sender: sender,
-      function: function
-          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+      function: function.addValues(values: [amountIn, amountOutMin, path, to, deadline]),
     );
 
     return result;
@@ -1092,8 +1091,7 @@ class UniswapV2Router extends InternalContract {
 
     final result = await buildTransactionForFunction(
       sender: sender,
-      function: function
-          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+      function: function.addValues(values: [amountIn, amountOutMin, path, to, deadline]),
     );
 
     return result;
@@ -1113,8 +1111,7 @@ class UniswapV2Router extends InternalContract {
     final result = await interact(
       privateKey: privateKey,
       sender: sender,
-      function: function
-          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+      function: function.addValues(values: [amountIn, amountOutMin, path, to, deadline]),
     );
 
     return result;
@@ -1132,8 +1129,7 @@ class UniswapV2Router extends InternalContract {
 
     final result = await buildTransactionForFunction(
       sender: sender,
-      function: function
-          .addValues(values: [amountIn, amountOutMin, path, to, deadline]),
+      function: function.addValues(values: [amountIn, amountOutMin, path, to, deadline]),
     );
 
     return result;
@@ -1193,8 +1189,7 @@ class UniswapV2Router extends InternalContract {
     final result = await interact(
       privateKey: privateKey,
       sender: sender,
-      function: function
-          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+      function: function.addValues(values: [amountOut, amountInMax, path, to, deadline]),
     );
 
     return result;
@@ -1212,8 +1207,7 @@ class UniswapV2Router extends InternalContract {
 
     final result = await buildTransactionForFunction(
       sender: sender,
-      function: function
-          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+      function: function.addValues(values: [amountOut, amountInMax, path, to, deadline]),
     );
 
     return result;
@@ -1233,8 +1227,7 @@ class UniswapV2Router extends InternalContract {
     final result = await interact(
       privateKey: privateKey,
       sender: sender,
-      function: function
-          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+      function: function.addValues(values: [amountOut, amountInMax, path, to, deadline]),
     );
 
     return result;
@@ -1252,8 +1245,7 @@ class UniswapV2Router extends InternalContract {
 
     final result = await buildTransactionForFunction(
       sender: sender,
-      function: function
-          .addValues(values: [amountOut, amountInMax, path, to, deadline]),
+      function: function.addValues(values: [amountOut, amountInMax, path, to, deadline]),
     );
 
     return result;

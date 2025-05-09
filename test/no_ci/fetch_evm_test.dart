@@ -9,8 +9,7 @@ void main() {
     final balance = await etherscan.fetchBalance(address: address);
     print('ETH Balance: $balance');
 
-    final smartChainBalance =
-        await zeniqSmartChainRPC.fetchBalance(address: address);
+    final smartChainBalance = await zeniqSmartChainRPC.fetchBalance(address: address);
 
     print('Smart Chain Balance: $smartChainBalance');
 

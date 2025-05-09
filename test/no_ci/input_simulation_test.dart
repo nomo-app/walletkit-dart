@@ -11,15 +11,13 @@ void main() {
   var env = DotEnv(includePlatformEnvironment: true)..load();
 
   final rejectSeedString = env["REJECT_SEED"]!.split(",");
-  List<int> rejectIntList = rejectSeedString
-      .map((i) => int.parse(i))
-      .toList(); // Convert to list of integers
+  List<int> rejectIntList =
+      rejectSeedString.map((i) => int.parse(i)).toList(); // Convert to list of integers
   Uint8List rejectSeed = Uint8List.fromList(rejectIntList);
 
   final spoilSeedString = env["SPOIL_SEED"]!.split(",");
-  List<int> spoilIntList = spoilSeedString
-      .map((i) => int.parse(i))
-      .toList(); // Convert to list of integers
+  List<int> spoilIntList =
+      spoilSeedString.map((i) => int.parse(i)).toList(); // Convert to list of integers
   Uint8List spoilSeed = Uint8List.fromList(spoilIntList);
 
   test('Simulate All Send Zeniq Tx', () async {
@@ -112,8 +110,7 @@ void main() {
 
     for (final result in invalidSimulations) {
       expect(
-        result.$1.inputs.any(
-            (element) => element.getAddress(BitcoinNetwork).startsWith("bc1")),
+        result.$1.inputs.any((element) => element.getAddress(BitcoinNetwork).startsWith("bc1")),
         isTrue,
       );
     }

@@ -44,8 +44,7 @@ final chainCode = Uint8List.fromList(
 
 void main() {
   test('Bitcoin Unlocking Script P2PKH', () {
-    const sigHashHex =
-        "5345eb4e8f7d99cb2b591909c25ec4f549db0551bfd7829af0d250823f28e007";
+    const sigHashHex = "5345eb4e8f7d99cb2b591909c25ec4f549db0551bfd7829af0d250823f28e007";
     final sigHash = Uint8List.fromList(hex.decode(sigHashHex));
 
     final privateKey = Uint8List.fromList(

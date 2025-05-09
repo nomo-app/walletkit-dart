@@ -94,29 +94,25 @@ sealed class HDWalletPath {
 final class NSHDWalletPath extends HDWalletPath {
   final String coinType;
 
-  const NSHDWalletPath(this.coinType)
-      : super(HDWalletPurpose.NO_STRUCTURE, coinType);
+  const NSHDWalletPath(this.coinType) : super(HDWalletPurpose.NO_STRUCTURE, coinType);
 }
 
 final class Bip44HDWalletPath extends HDWalletPath {
   final String coinType;
 
-  const Bip44HDWalletPath(this.coinType)
-      : super(HDWalletPurpose.BIP44, coinType);
+  const Bip44HDWalletPath(this.coinType) : super(HDWalletPurpose.BIP44, coinType);
 }
 
 final class Bip49HDWalletPath extends HDWalletPath {
   final String coinType;
 
-  const Bip49HDWalletPath(this.coinType)
-      : super(HDWalletPurpose.BIP49, coinType);
+  const Bip49HDWalletPath(this.coinType) : super(HDWalletPurpose.BIP49, coinType);
 }
 
 final class Bip84HDWalletPath extends HDWalletPath {
   final String coinType;
 
-  const Bip84HDWalletPath(this.coinType)
-      : super(HDWalletPurpose.BIP84, coinType);
+  const Bip84HDWalletPath(this.coinType) : super(HDWalletPurpose.BIP84, coinType);
 }
 
 ///

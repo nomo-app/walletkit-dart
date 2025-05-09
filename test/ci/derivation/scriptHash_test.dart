@@ -28,11 +28,9 @@ void main() {
 
     expect(publicKeyScript, "00149f490d17fd11f46e58a976d173eec3a489f62080");
 
-    var witness =
-        "03e6ff629277ef58ac35c6ba6b7e285960837e9b30b5dedc4c96d5e26772fb4d43";
+    var witness = "03e6ff629277ef58ac35c6ba6b7e285960837e9b30b5dedc4c96d5e26772fb4d43";
 
-    final address =
-        pubKeyHexToAddress(witness, AddressType.segwit, BitcoinNetwork);
+    final address = pubKeyHexToAddress(witness, AddressType.segwit, BitcoinNetwork);
 
     expect(address, "bc1qnays69laz86xuk9fwmgh8mkr5jylvgyqe30vkn");
 
@@ -134,11 +132,9 @@ void main() {
   });
 
   test('Litecoin Script Hashes', () async {
-    final scriptHash = P2Hash("ltc1q9ltm9d5mz7kl4p3hl9c2m55x448u3cvawljcyz")
-        .publicKeyScriptHash;
-    var publicKeyScript = P2Hash("ltc1q9ltm9d5mz7kl4p3hl9c2m55x448u3cvawljcyz")
-        .publicKeyScript
-        .toHex;
+    final scriptHash = P2Hash("ltc1q9ltm9d5mz7kl4p3hl9c2m55x448u3cvawljcyz").publicKeyScriptHash;
+    var publicKeyScript =
+        P2Hash("ltc1q9ltm9d5mz7kl4p3hl9c2m55x448u3cvawljcyz").publicKeyScript.toHex;
 
     expect(
       scriptHash,
@@ -159,14 +155,11 @@ void main() {
 
     expect(result, isNotEmpty);
 
-    publicKeyScript =
-        P2Hash("LSdTvMHRm8sScqwCi6x9wzYQae8JeZhx6y").publicKeyScript.toHex;
+    publicKeyScript = P2Hash("LSdTvMHRm8sScqwCi6x9wzYQae8JeZhx6y").publicKeyScript.toHex;
 
-    expect(
-        publicKeyScript, "76a914513b3458ac325869b6146b92c59b530207493c1588ac");
+    expect(publicKeyScript, "76a914513b3458ac325869b6146b92c59b530207493c1588ac");
 
-    publicKeyScript =
-        P2Hash("MTcnkd11rPmucGsZb2bfqsdcWqtntoJoAc").publicKeyScript.toHex;
+    publicKeyScript = P2Hash("MTcnkd11rPmucGsZb2bfqsdcWqtntoJoAc").publicKeyScript.toHex;
 
     expect(publicKeyScript, "a914d849ee1d7081507b2c3432dbe83a4cb8eaaeb12c87");
   });

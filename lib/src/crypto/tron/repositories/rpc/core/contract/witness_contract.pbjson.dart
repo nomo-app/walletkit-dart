@@ -23,9 +23,9 @@ const WitnessCreateContract$json = {
 };
 
 /// Descriptor for `WitnessCreateContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List witnessCreateContractDescriptor = $convert.base64Decode(
-    'ChVXaXRuZXNzQ3JlYXRlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
-    'RyZXNzEhAKA3VybBgCIAEoDFIDdXJs');
+final $typed_data.Uint8List witnessCreateContractDescriptor = $convert
+    .base64Decode('ChVXaXRuZXNzQ3JlYXRlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
+        'RyZXNzEhAKA3VybBgCIAEoDFIDdXJs');
 
 @$core.Deprecated('Use witnessUpdateContractDescriptor instead')
 const WitnessUpdateContract$json = {
@@ -37,16 +37,23 @@ const WitnessUpdateContract$json = {
 };
 
 /// Descriptor for `WitnessUpdateContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List witnessUpdateContractDescriptor = $convert.base64Decode(
-    'ChVXaXRuZXNzVXBkYXRlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
-    'RyZXNzEh0KCnVwZGF0ZV91cmwYDCABKAxSCXVwZGF0ZVVybA==');
+final $typed_data.Uint8List witnessUpdateContractDescriptor = $convert
+    .base64Decode('ChVXaXRuZXNzVXBkYXRlQ29udHJhY3QSIwoNb3duZXJfYWRkcmVzcxgBIAEoDFIMb3duZXJBZG'
+        'RyZXNzEh0KCnVwZGF0ZV91cmwYDCABKAxSCXVwZGF0ZVVybA==');
 
 @$core.Deprecated('Use voteWitnessContractDescriptor instead')
 const VoteWitnessContract$json = {
   '1': 'VoteWitnessContract',
   '2': [
     {'1': 'owner_address', '3': 1, '4': 1, '5': 12, '10': 'ownerAddress'},
-    {'1': 'votes', '3': 2, '4': 3, '5': 11, '6': '.protocol.VoteWitnessContract.Vote', '10': 'votes'},
+    {
+      '1': 'votes',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.protocol.VoteWitnessContract.Vote',
+      '10': 'votes'
+    },
     {'1': 'support', '3': 3, '4': 1, '5': 8, '10': 'support'},
   ],
   '3': [VoteWitnessContract_Vote$json],
@@ -62,9 +69,8 @@ const VoteWitnessContract_Vote$json = {
 };
 
 /// Descriptor for `VoteWitnessContract`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List voteWitnessContractDescriptor = $convert.base64Decode(
-    'ChNWb3RlV2l0bmVzc0NvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQWRkcm'
-    'VzcxI4CgV2b3RlcxgCIAMoCzIiLnByb3RvY29sLlZvdGVXaXRuZXNzQ29udHJhY3QuVm90ZVIF'
-    'dm90ZXMSGAoHc3VwcG9ydBgDIAEoCFIHc3VwcG9ydBpICgRWb3RlEiEKDHZvdGVfYWRkcmVzcx'
-    'gBIAEoDFILdm90ZUFkZHJlc3MSHQoKdm90ZV9jb3VudBgCIAEoA1IJdm90ZUNvdW50');
-
+final $typed_data.Uint8List voteWitnessContractDescriptor = $convert
+    .base64Decode('ChNWb3RlV2l0bmVzc0NvbnRyYWN0EiMKDW93bmVyX2FkZHJlc3MYASABKAxSDG93bmVyQWRkcm'
+        'VzcxI4CgV2b3RlcxgCIAMoCzIiLnByb3RvY29sLlZvdGVXaXRuZXNzQ29udHJhY3QuVm90ZVIF'
+        'dm90ZXMSGAoHc3VwcG9ydBgDIAEoCFIHc3VwcG9ydBpICgRWb3RlEiEKDHZvdGVfYWRkcmVzcx'
+        'gBIAEoDFILdm90ZUFkZHJlc3MSHQoKdm90ZV9jb3VudBgCIAEoA1IJdm90ZUNvdW50');
