@@ -4,7 +4,6 @@ import 'package:convert/convert.dart';
 import 'package:dart_bech32/dart_bech32.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
-import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/utils/base32.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 

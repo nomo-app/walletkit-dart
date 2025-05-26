@@ -2,11 +2,6 @@ library coin_selection;
 
 import 'dart:math';
 
-///
-/// https://murch.one/wp-content/uploads/2016/11/erhardt2016coinselection.pdf
-///
-
-import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 
 const kMinInputs = 2;

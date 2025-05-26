@@ -202,7 +202,7 @@ void main() {
     });
 
     group('Strings over 55 bytes', () {
-      final testString =
+      const testString =
           'This function takes in data, converts it to bytes, and adds a length for recursion';
       late Uint8List encoded;
 

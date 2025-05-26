@@ -70,7 +70,7 @@ void main() {
   });
 
   test('Simulate TX', () async {
-    final testTxHash = "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b";
+    const testTxHash = "0x08f35900fd8452eb06cb5f5ac7e7e7da20e9004af423159571d66defeb65485b";
 
     when(mockJsonRPC.call('eth_blockNumber', any))
         .thenAnswer((_) async => RPCResponse(1, "0x11114b3d"));

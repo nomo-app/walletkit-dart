@@ -18,7 +18,7 @@ base class EvmRpcClient {
   EvmRpcClient.withRPC(JsonRPC rpc)
       : _rpc = rpc,
         rateLimitTimeout = const Duration(seconds: 30),
-        this.onRpcError = null;
+        onRpcError = null;
 
   EvmRpcClient(
     String rpcUrl, {
