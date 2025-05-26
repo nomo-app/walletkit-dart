@@ -41,7 +41,9 @@ final arbitrumRPC = EvmRpcInterface(
   clients: [
     EvmRpcClient('https://arbitrum.llamarpc.com'),
     EvmRpcClient('https://endpoints.omniatech.io/v1/arbitrum/one/public'),
-    EvmRpcClient('https://arb-pokt.nodies.app')
+    EvmRpcClient('https://arbitrum.blockpi.network/v1/rpc/public'),
+    EvmRpcClient('https://arbitrum-one-rpc.publicnode.com'),
+    EvmRpcClient('https://arb-pokt.nodies.app'),
   ],
 );
 
