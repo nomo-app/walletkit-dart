@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:hex/hex.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/pubkey_to_address.dart';
-import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/walletkit_dart.dart';
 import 'package:pointycastle/src/utils.dart' as p_utils;
 import 'package:bip32/src/utils/ecurve.dart' as ecc;

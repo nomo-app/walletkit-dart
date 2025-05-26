@@ -31,12 +31,12 @@ sealed class Input {
 
   BigInt get weight {
     if (_scriptSig == null || _prevScriptPubKey == null) return -1.toBI;
-    return calculateWeight(_prevScriptPubKey!, _scriptSig!);
+    return calculateWeight(_prevScriptPubKey, _scriptSig);
   }
 
   int get intValue => value != null ? value!.toInt() : 0;
 
-  String? get scriptSigHex => _scriptSig != null ? _scriptSig!.toHex : null;
+  String? get scriptSigHex => _scriptSig != null ? _scriptSig.toHex : null;
 
   String get txIdString => hex.encode(txid);
 
@@ -84,8 +84,8 @@ sealed class Input {
 
   Uint8List get publicKeyFromSig {
     /// From ScriptSig (P2PKH, P2PK)
-    if (_scriptSig != null && _scriptSig!.isNotEmpty) {
-      final script = Script(_scriptSig!);
+    if (_scriptSig != null && _scriptSig.isNotEmpty) {
+      final script = Script(_scriptSig);
 
       final publicKey = script.chunks[1].data;
       if (publicKey == null) {
@@ -98,8 +98,8 @@ sealed class Input {
     }
 
     /// From Witness
-    if (_wittnessScript != null && _wittnessScript!.isNotEmpty) {
-      final chunks = decodeScriptWittness(wittnessScript: _wittnessScript!);
+    if (_wittnessScript != null && _wittnessScript.isNotEmpty) {
+      final chunks = decodeScriptWittness(wittnessScript: _wittnessScript);
       if (chunks.length != 2) {
         throw Exception("Invalid Witness");
       }

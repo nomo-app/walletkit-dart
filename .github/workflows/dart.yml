@@ -23,6 +23,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: "recursive"
+
+      - name: Create pubspec_overrides.yaml for current package
+        run: echo "resolution:" > pubspec_overrides.yaml
+
+      - name: Create pubspec_overrides.yaml for bip39 package
+        run: echo "resolution:" > packages/bip39/pubspec_overrides.yaml
+
       - uses: actions/cache@v3
         with:
           path: |
@@ -70,6 +77,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: "recursive"
+
+      - name: Create pubspec_overrides.yaml for current package
+        run: echo "resolution:" > pubspec_overrides.yaml
+
+      - name: Create pubspec_overrides.yaml for bip39 package
+        run: echo "resolution:" > packages/bip39/pubspec_overrides.yaml
+
       - uses: actions/cache@v3
         with:
           path: |
@@ -158,6 +172,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: "recursive"
+
+      - name: Create pubspec_overrides.yaml for current package
+        run: echo "resolution:" > pubspec_overrides.yaml
+
+      - name: Create pubspec_overrides.yaml for bip39 package
+        run: echo "resolution:" > packages/bip39/pubspec_overrides.yaml
 
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1

@@ -8,7 +8,6 @@ import 'package:walletkit_dart/src/crypto/utxo/entities/payments/input_selection
 import 'package:walletkit_dart/src/crypto/utxo/entities/payments/p2h.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/input.dart';
 import 'package:walletkit_dart/src/crypto/utxo/entities/raw_transaction/output.dart';
-import 'package:walletkit_dart/src/domain/exceptions.dart';
 import 'package:walletkit_dart/src/crypto/utxo/repositories/electrum_json_rpc_client.dart';
 import 'package:walletkit_dart/src/crypto/utxo/utils/endpoint_utils.dart';
 import 'package:walletkit_dart/src/utils/der.dart';

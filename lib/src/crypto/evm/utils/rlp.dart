@@ -87,7 +87,7 @@ final class RLPBigInt extends RLPItem<BigInt> {
     if (value == BigInt.zero) {
       return Uint8List.fromList([0x80]);
     }
-    return this.value.toBytesUnsigned;
+    return value.toBytesUnsigned;
   }
 }
 
