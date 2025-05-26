@@ -16,7 +16,21 @@ env:
   DEV_SEED: ${{ secrets.DEV_SEED }}
 
 jobs:
+  prepare-isolated-resolution:
+    name: Prepare isolated resolution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
+
+      - name: Create pubspec_overrides.yaml for current package
+        run: echo "resolution:" > pubspec_overrides.yaml
+
+      - name: Create pubspec_overrides.yaml for bip39 package
+        run: echo "resolution:" > packages/bip39/pubspec_overrides.yaml
   lint:
+    needs: prepare-isolated-resolution
     name: Static code analysis and run unit tests
     runs-on: ubuntu-latest
     steps:
