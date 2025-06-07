@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the Signature class from the walletkit_dart library, for the Dart programming language.">
+  <title>Signature class - walletkit_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart.dart</a></li>
+    <li class="self-crumb">Signature class</li>
+  </ol>
+  <div class="self-name">Signature</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="walletkit_dart&#47;walletkit_dart-library-sidebar.html"
+    data-below-sidebar="walletkit_dart&#47;Signature-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">Signature</span> class 
+ 
+</h1></div>
+
+    
+
+
+
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
+    <dl class="constructor-summary-list">
+        <dt id="Signature.new" class="callable">
+          <span class="name"><a href="../walletkit_dart/Signature/Signature.html">Signature.new</a></span><span class="signature">(<span class="parameter" id="-param-r"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">r</span>, </span><span class="parameter" id="-param-s"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">s</span>, </span><span class="parameter" id="-param-v"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">v</span></span>)</span>
+        </dt>
+        <dd>
+          
+            <div class="constructor-modifier features">const</div>
+        </dd>
+        <dt id="Signature.createSignature" class="callable">
+          <span class="name"><a href="../walletkit_dart/Signature/Signature.createSignature.html">Signature.createSignature</a></span><span class="signature">(<span class="parameter" id="createSignature-param-payload"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="createSignature-param-privateKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span>, {</span><span class="parameter" id="createSignature-param-txType"><span class="type-annotation"><a href="../walletkit_dart/TransactionType.html">TransactionType</a></span> <span class="parameter-name">txType</span> = <span class="default-value">TransactionType.Legacy</span>, </span><span class="parameter" id="createSignature-param-chainId"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">chainId</span>, </span><span class="parameter" id="createSignature-param-hashPayload"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">hashPayload</span> = <span class="default-value">true</span></span>})</span>
+        </dt>
+        <dd>
+          
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="Signature.fromBytes" class="callable">
+          <span class="name"><a href="../walletkit_dart/Signature/Signature.fromBytes.html">Signature.fromBytes</a></span><span class="signature">(<span class="parameter" id="fromBytes-param-bytes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">bytes</span></span>)</span>
+        </dt>
+        <dd>
+          
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="Signature.fromHex" class="callable">
+          <span class="name"><a href="../walletkit_dart/Signature/Signature.fromHex.html">Signature.fromHex</a></span><span class="signature">(<span class="parameter" id="fromHex-param-hex"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">hex</span></span>)</span>
+        </dt>
+        <dd>
+          
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="Signature.fromRSV" class="callable">
+          <span class="name"><a href="../walletkit_dart/Signature/Signature.fromRSV.html">Signature.fromRSV</a></span><span class="signature">(<span class="parameter" id="fromRSV-param-r"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">r</span>, </span><span class="parameter" id="fromRSV-param-s"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">s</span>, </span><span class="parameter" id="fromRSV-param-v"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">v</span></span>)</span>
+        </dt>
+        <dd>
+          
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="bytes" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/bytes.html">bytes</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="hex" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/hex.html">hex</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="r" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/r.html">r</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="rBytes" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/rBytes.html">rBytes</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="s" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/s.html">s</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="sBytes" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/sBytes.html">sBytes</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="v" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/v.html">v</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="yParity" class="property">
+  <span class="name"><a href="../walletkit_dart/Signature/yParity.html">yParity</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="isValidETHSignature" class="callable">
+  <span class="name"><a href="../walletkit_dart/Signature/isValidETHSignature.html">isValidETHSignature</a></span><span class="signature">(<wbr><span class="parameter" id="isValidETHSignature-param-payload"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="isValidETHSignature-param-publicKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">publicKey</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="toString" class="callable">
+  <span class="name"><a href="../walletkit_dart/Signature/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  A string representation of this object.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+  <section class="summary offset-anchor" id="static-methods">
+    <h2>Static Methods</h2>
+    <dl class="callables">
+        <dt id="signPersonalMessageToUint8List" class="callable">
+  <span class="name"><a href="../walletkit_dart/Signature/signPersonalMessageToUint8List.html">signPersonalMessageToUint8List</a></span><span class="signature">(<wbr><span class="parameter" id="signPersonalMessageToUint8List-param-payload"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">payload</span>, </span><span class="parameter" id="signPersonalMessageToUint8List-param-privateKey"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+    </dl>
+  </section>
+    
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart</a></li>
+    <li class="self-crumb">Signature class</li>
+</ol>
+
+    <h5>walletkit_dart library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

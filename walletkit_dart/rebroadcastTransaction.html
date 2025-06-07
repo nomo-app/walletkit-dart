@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the rebroadcastTransaction function from the walletkit_dart library, for the Dart programming language.">
+  <title>rebroadcastTransaction function - walletkit_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart.dart</a></li>
+    <li class="self-crumb">rebroadcastTransaction function</li>
+  </ol>
+  <div class="self-name">rebroadcastTransaction</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="walletkit_dart&#47;walletkit_dart-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">rebroadcastTransaction</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+<span class="name ">rebroadcastTransaction</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="rebroadcastTransaction-param-hash"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">hash</span>, </span></li>
+<li><span class="parameter" id="rebroadcastTransaction-param-serializedTx"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">serializedTx</span>, </span></li>
+<li><span class="parameter" id="rebroadcastTransaction-param-type"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/UTXONetworkType-class.html">UTXONetworkType</a></span> <span class="parameter-name">type</span>, </span></li>
+<li><span class="parameter" id="rebroadcastTransaction-param-delay"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">delay</span> = <span class="default-value">const Duration(seconds: 5)</span>, </span></li>
+</ol>})
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>For a given <code>hash</code> and <code>serializedTx</code> we check if the transaction is already in the mempool
+If not we rebroadcast the transaction until at least half of the nodes have the transaction</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;bool&gt; rebroadcastTransaction({
+  required String hash,
+  required String serializedTx,
+  required UTXONetworkType type,
+  Duration delay = const Duration(seconds: 5),
+}) async {
+  await Future.delayed(delay);
+
+  final clients = await Future.wait(
+    [
+      for (final endpoint in type.endpoints)
+        createElectrumXClient(
+          endpoint: endpoint.$1,
+          port: endpoint.$2,
+          token: type.coin,
+        ),
+    ],
+  ).then(
+    (clients) =&gt; clients.whereType&lt;ElectrumXClient&gt;(),
+  );
+
+  while (true) {
+    int rebroadcastCount = 0;
+    Set&lt;ElectrumXClient&gt; clientsForRebroadcast = {};
+
+    Future&lt;void&gt; testEndpoint(ElectrumXClient client) async {
+      final (rawTx, error) = await fetchFromNode(
+        (client) =&gt; client.getRaw(hash),
+        client: client,
+      );
+
+      if (error != null) {
+        clientsForRebroadcast.add(client);
+        return;
+      }
+
+      if (rawTx == serializedTx) {
+        rebroadcastCount++;
+      }
+    }
+
+    await Future.wait(
+      [
+        for (final client in clients) testEndpoint(client),
+      ],
+    );
+
+    if (rebroadcastCount &gt; type.endpoints.length &#47; 2) {
+      break;
+    }
+
+    Logger.log(
+      &quot;Rebroadcasting: $hash for ${clientsForRebroadcast.length} endpoints&quot;,
+    );
+
+    for (final client in clientsForRebroadcast) {
+      final (result, _) = await fetchFromNode(
+        (client) =&gt; client.broadcastTransaction(rawTxHex: serializedTx),
+        client: client,
+      );
+      if (result == null) continue;
+      final json = jsonDecode(result);
+      final hasResult = json.containsKey(&#39;result&#39;);
+      final hasError = json.containsKey(&#39;error&#39;);
+      if (hasResult) {
+        final _hash = json[&#39;result&#39;];
+        Logger.log(&quot;Rebroadcasted: $_hash&quot;);
+        assert(_hash == hash);
+      }
+      if (hasError) {
+        final error = json[&#39;error&#39;];
+        Logger.logWarning(&quot;Error rebroadcasting: $error&quot;);
+      }
+    }
+
+    await Future.delayed(delay);
+  }
+
+  await Future.wait([for (final client in clients) client.disconnect()]);
+
+  return true;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart</a></li>
+    <li class="self-crumb">rebroadcastTransaction function</li>
+</ol>
+
+    <h5>walletkit_dart library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
