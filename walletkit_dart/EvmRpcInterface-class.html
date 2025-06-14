@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the EvmRpcInterface class from the walletkit_dart library, for the Dart programming language.">
+  <title>EvmRpcInterface class - walletkit_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart.dart</a></li>
+    <li class="self-crumb">EvmRpcInterface class</li>
+  </ol>
+  <div class="self-name">EvmRpcInterface</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="walletkit_dart&#47;walletkit_dart-library-sidebar.html"
+    data-below-sidebar="walletkit_dart&#47;EvmRpcInterface-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">EvmRpcInterface</span> class 
+    <a href="https://dart.dev/language/class-modifiers#final" class="feature feature-final" title="This class can neither be extended, implemented, nor mixed in.">final</a>
+ 
+</h1></div>
+
+    
+
+
+
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
+    <dl class="constructor-summary-list">
+        <dt id="EvmRpcInterface.new" class="callable">
+          <span class="name"><a href="../walletkit_dart/EvmRpcInterface/EvmRpcInterface.html">EvmRpcInterface.new</a></span><span class="signature">({<span class="parameter" id="-param-useQueuedManager"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">useQueuedManager</span> = <span class="default-value">true</span>, </span><span class="parameter" id="-param-awaitRefresh"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">awaitRefresh</span> = <span class="default-value">true</span>, </span><span class="parameter" id="-param-refreshIntervall"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Duration-class.html">Duration</a>?</span> <span class="parameter-name">refreshIntervall</span>, </span><span class="parameter" id="-param-eagerError"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">eagerError</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-refreshType"><span class="type-annotation">RefreshType</span> <span class="parameter-name">refreshType</span> = <span class="default-value">RefreshType.onTask</span>, </span><span class="parameter" id="-param-clients"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmRpcClient-class.html">EvmRpcClient</a></span>&gt;</span></span> <span class="parameter-name">clients</span>, </span><span class="parameter" id="-param-type"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/EVMNetworkType-class.html">EVMNetworkType</a></span> <span class="parameter-name">type</span></span>})</span>
+        </dt>
+        <dd>
+          <code>clients</code> - A list of clients to use for the manager
+<code>useQueuedManager</code> - If true, the manager will use a QueuedRpcManager and requests will be queued
+<code>awaitRefresh</code> - If true, the manager will wait for the clients to be refreshed before performing a task
+<code>refreshIntervall</code> - The rate at which the clients are refreshed if null the clients will only be refreshed once
+<code>eagerError</code> - If true a task will throw the first error it encounters, if false it will try all clients before throwing an error
+        </dd>
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="blockTimestampCache" class="property">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/blockTimestampCache.html">blockTimestampCache</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="refreshFuture" class="property">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/refreshFuture.html">refreshFuture</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="txStatusCache" class="property">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/txStatusCache.html">txStatusCache</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="../walletkit_dart/ConfirmationStatus.html">ConfirmationStatus</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="type" class="property">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/type.html">type</a></span>
+  <span class="signature">&#8594; <a href="../walletkit_dart/EVMNetworkType-class.html">EVMNetworkType</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="buildAndBroadcastTransaction" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/buildAndBroadcastTransaction.html">buildAndBroadcastTransaction</a></span><span class="signature">(<wbr>{<span class="parameter" id="buildAndBroadcastTransaction-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="buildAndBroadcastTransaction-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="buildAndBroadcastTransaction-param-privateKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span>, </span><span class="parameter" id="buildAndBroadcastTransaction-param-feeInfo"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span>?</span> <span class="parameter-name">feeInfo</span>, </span><span class="parameter" id="buildAndBroadcastTransaction-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span><span class="parameter" id="buildAndBroadcastTransaction-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="buildAndBroadcastTransaction-param-accessList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/AccessListItem.html">AccessListItem</a></span>&gt;</span>?</span> <span class="parameter-name">accessList</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="buildTransaction" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/buildTransaction.html">buildTransaction</a></span><span class="signature">(<wbr>{<span class="parameter" id="buildTransaction-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="buildTransaction-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="buildTransaction-param-privateKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span>, </span><span class="parameter" id="buildTransaction-param-feeInfo"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span>?</span> <span class="parameter-name">feeInfo</span>, </span><span class="parameter" id="buildTransaction-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span><span class="parameter" id="buildTransaction-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="buildTransaction-param-accessList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/AccessListItem.html">AccessListItem</a></span>&gt;</span>?</span> <span class="parameter-name">accessList</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/RawEvmTransaction-class.html">RawEvmTransaction</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Used to create a raw Transactions
+Fetches the gasPrice and gasLimit from the network
+Fetches the nonce from the network
+Signs the transaction
+  
+
+</dd>
+
+        <dt id="buildUnsignedTransaction" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/buildUnsignedTransaction.html">buildUnsignedTransaction</a></span><span class="signature">(<wbr>{<span class="parameter" id="buildUnsignedTransaction-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-feeInfo"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span>?</span> <span class="parameter-name">feeInfo</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="buildUnsignedTransaction-param-accessList"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/AccessListItem.html">AccessListItem</a></span>&gt;</span>?</span> <span class="parameter-name">accessList</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/RawEvmTransaction-class.html">RawEvmTransaction</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Used to create a raw Transactions
+Fetches the gasPrice and gasLimit from the network
+Fetches the nonce from the network
+If Transaction Type is not provided, it will use Legacy
+  
+
+</dd>
+
+        <dt id="call" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/call.html">call</a></span><span class="signature">(<wbr>{<span class="parameter" id="call-param-sender"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="call-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="call-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">data</span>, </span><span class="parameter" id="call-param-atBlock"><span class="type-annotation">BlockNum?</span> <span class="parameter-name">atBlock</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  eth_call
+  
+
+</dd>
+
+        <dt id="estimateGasLimit" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/estimateGasLimit.html">estimateGasLimit</a></span><span class="signature">(<wbr>{<span class="parameter" id="estimateGasLimit-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="estimateGasLimit-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="estimateGasLimit-param-data"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span><span class="parameter" id="estimateGasLimit-param-value"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span>, </span><span class="parameter" id="estimateGasLimit-param-gasPrice"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">gasPrice</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="estimateNetworkFees" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/estimateNetworkFees.html">estimateNetworkFees</a></span><span class="signature">(<wbr>{<span class="parameter" id="estimateNetworkFees-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="estimateNetworkFees-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="estimateNetworkFees-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span><span class="parameter" id="estimateNetworkFees-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="../walletkit_dart/Amount-class.html">Amount</a></span>, </span><span class="field"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span></span>)</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="fetchBalance" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/fetchBalance.html">fetchBalance</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchBalance-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/Amount-class.html">Amount</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fetch Balance
+  
+
+</dd>
+
+        <dt id="fetchERC1155BalanceOfToken" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/fetchERC1155BalanceOfToken.html">fetchERC1155BalanceOfToken</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchERC1155BalanceOfToken-param-address"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchERC1155BalanceOfToken-param-tokenID"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">tokenID</span>, </span><span class="parameter" id="fetchERC1155BalanceOfToken-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/Amount-class.html">Amount</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fetch Balance of ERC1155 Token
+  
+
+</dd>
+
+        <dt id="fetchERC1155BatchBalanceOfTokens" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/fetchERC1155BatchBalanceOfTokens.html">fetchERC1155BatchBalanceOfTokens</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchERC1155BatchBalanceOfTokens-param-accounts"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">accounts</span>, </span><span class="parameter" id="fetchERC1155BatchBalanceOfTokens-param-tokenIDs"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span> <span class="parameter-name">tokenIDs</span>, </span><span class="parameter" id="fetchERC1155BatchBalanceOfTokens-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fetch Batch Balance of ERC1155 Tokens
+  
+
+</dd>
+
+        <dt id="fetchERC1155UriOfToken" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/fetchERC1155UriOfToken.html">fetchERC1155UriOfToken</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchERC1155UriOfToken-param-tokenID"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">tokenID</span>, </span><span class="parameter" id="fetchERC1155UriOfToken-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fetch Uri of ERC115 Token
+  
+
+</dd>
+
+        <dt id="fetchNetworkFees" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/fetchNetworkFees.html">fetchNetworkFees</a></span><span class="signature">(<wbr>{<span class="parameter" id="fetchNetworkFees-param-existing"><span class="type-annotation"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span>?</span> <span class="parameter-name">existing</span>, </span><span class="parameter" id="fetchNetworkFees-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="fetchNetworkFees-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="fetchNetworkFees-param-data"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a>?</span> <span class="parameter-name">data</span>, </span><span class="parameter" id="fetchNetworkFees-param-value"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>, </span><span class="field"><span class="type-annotation"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span></span>)</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="fetchTokenBalance" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/fetchTokenBalance.html">fetchTokenBalance</a></span><span class="signature">(<wbr><span class="parameter" id="fetchTokenBalance-param-address"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span>, </span><span class="parameter" id="fetchTokenBalance-param-token"><span class="type-annotation"><a href="../walletkit_dart/ERC20Entity-class.html">ERC20Entity</a></span> <span class="parameter-name">token</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/Amount-class.html">Amount</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fetch Token Balance
+  
+
+</dd>
+
+        <dt id="getBlockNumber" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getBlockNumber.html">getBlockNumber</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Get Block Number
+  
+
+</dd>
+
+        <dt id="getConfirmationStatus" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getConfirmationStatus.html">getConfirmationStatus</a></span><span class="signature">(<wbr><span class="parameter" id="getConfirmationStatus-param-hash"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">hash</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/ConfirmationStatus.html">ConfirmationStatus</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="getCurrentBlock" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getCurrentBlock.html">getCurrentBlock</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/Json.html">Json</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Get Current Block
+  
+
+</dd>
+
+        <dt id="getGasPrice" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getGasPrice.html">getGasPrice</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Get Gas Price
+  
+
+</dd>
+
+        <dt id="getGasPriceAmount" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getGasPriceAmount.html">getGasPriceAmount</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/Amount-class.html">Amount</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Get Gas Price
+  
+
+</dd>
+
+        <dt id="getPriorityFee" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getPriorityFee.html">getPriorityFee</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/Amount-class.html">Amount</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="getTransactionByHash" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getTransactionByHash.html">getTransactionByHash</a></span><span class="signature">(<wbr><span class="parameter" id="getTransactionByHash-param-hash"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">hash</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/RawEvmTransaction-class.html">RawEvmTransaction</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Get Transaction By Hash
+  
+
+</dd>
+
+        <dt id="getTransactionCount" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getTransactionCount.html">getTransactionCount</a></span><span class="signature">(<wbr><span class="parameter" id="getTransactionCount-param-address"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">address</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Get Transaction Count (Nonce)
+  
+
+</dd>
+
+        <dt id="getType2GasPrice" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/getType2GasPrice.html">getType2GasPrice</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmType2GasPrice-class.html">EvmType2GasPrice</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="interactWithContract" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/interactWithContract.html">interactWithContract</a></span><span class="signature">(<wbr>{<span class="parameter" id="interactWithContract-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="interactWithContract-param-function"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/LocalContractFunctionWithValues-class.html">LocalContractFunctionWithValues</a></span> <span class="parameter-name">function</span>, </span><span class="parameter" id="interactWithContract-param-sender"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">sender</span>, </span><span class="parameter" id="interactWithContract-param-privateKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span>, </span><span class="parameter" id="interactWithContract-param-feeInfo"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span>?</span> <span class="parameter-name">feeInfo</span>, </span><span class="parameter" id="interactWithContract-param-value"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a>?</span> <span class="parameter-name">value</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Interact with Contract
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="performTask" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/performTask.html">performTask</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="performTask-param-task"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">task</span>(<span class="parameter" id="param-client"><span class="type-annotation"><a href="../walletkit_dart/EvmRpcClient-class.html">EvmRpcClient</a></span> <span class="parameter-name">client</span></span>), {</span><span class="parameter" id="performTask-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span> = <span class="default-value">const Duration(seconds: 30)</span>, </span><span class="parameter" id="performTask-param-maxTries"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">maxTries</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="performTaskForClients" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/performTaskForClients.html">performTaskForClients</a></span><span class="signature">&lt;<wbr><span class="type-parameter">T</span>, <span class="type-parameter">R</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="performTaskForClients-param-task"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">task</span>(<span class="parameter" id="param-"><span class="type-annotation"><a href="../walletkit_dart/EvmRpcClient-class.html">EvmRpcClient</a></span></span>), {</span><span class="parameter" id="performTaskForClients-param-consilidate"><span>required</span> <span class="type-annotation">R</span> <span class="parameter-name">consilidate</span>(<span class="parameter" id="param-results"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">ValueOrError<span class="signature">&lt;<wbr><span class="type-parameter">T</span>, <span class="type-parameter"><a href="../walletkit_dart/EvmRpcClient-class.html">EvmRpcClient</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">results</span></span>), </span><span class="parameter" id="performTaskForClients-param-timeout"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">timeout</span> = <span class="default-value">const Duration(seconds: 30)</span>, </span><span class="parameter" id="performTaskForClients-param-maxTriesPerClient"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">maxTriesPerClient</span> = <span class="default-value">2</span>, </span><span class="parameter" id="performTaskForClients-param-minClients"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">minClients</span> = <span class="default-value">2</span>, </span><span class="parameter" id="performTaskForClients-param-maxClients"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">maxClients</span>, </span><span class="parameter" id="performTaskForClients-param-enforceParallel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">enforceParallel</span> = <span class="default-value">false</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">R</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="readContract" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/readContract.html">readContract</a></span><span class="signature">(<wbr>{<span class="parameter" id="readContract-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="readContract-param-function"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/LocalContractFunctionWithValues-class.html">LocalContractFunctionWithValues</a></span> <span class="parameter-name">function</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="resolveENS" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/resolveENS.html">resolveENS</a></span><span class="signature">(<wbr>{<span class="parameter" id="resolveENS-param-name"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="resolveENS-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="sendCoin" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/sendCoin.html">sendCoin</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendCoin-param-intent"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/TransferIntent-class.html">TransferIntent</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendCoin-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="sendCoin-param-privateKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Send Currency
+  
+
+</dd>
+
+        <dt id="sendERC1155Token" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/sendERC1155Token.html">sendERC1155Token</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendERC1155Token-param-intent"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/TransferIntent-class.html">TransferIntent</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendERC1155Token-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="sendERC1155Token-param-tokenID"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/BigInt-class.html">BigInt</a></span> <span class="parameter-name">tokenID</span>, </span><span class="parameter" id="sendERC1155Token-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="sendERC1155Token-param-privateKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Send ERC1155 Token
+  
+
+</dd>
+
+        <dt id="sendERC20Token" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/sendERC20Token.html">sendERC20Token</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendERC20Token-param-intent"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/TransferIntent-class.html">TransferIntent</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmFeeInformation-class.html">EvmFeeInformation</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/EvmGasPrice-class.html">EvmGasPrice</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">intent</span>, </span><span class="parameter" id="sendERC20Token-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="sendERC20Token-param-privateKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Send ERC20 Token
+  
+
+</dd>
+
+        <dt id="sendERC721Nft" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/sendERC721Nft.html">sendERC721Nft</a></span><span class="signature">(<wbr>{<span class="parameter" id="sendERC721Nft-param-recipient"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">recipient</span>, </span><span class="parameter" id="sendERC721Nft-param-from"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">from</span>, </span><span class="parameter" id="sendERC721Nft-param-tokenId"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">tokenId</span>, </span><span class="parameter" id="sendERC721Nft-param-contractAddress"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">contractAddress</span>, </span><span class="parameter" id="sendERC721Nft-param-privateKey"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span> <span class="parameter-name">privateKey</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Send ERC721
+  
+
+</dd>
+
+        <dt id="sendRawTransaction" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/sendRawTransaction.html">sendRawTransaction</a></span><span class="signature">(<wbr><span class="parameter" id="sendRawTransaction-param-serializedTransactionHex"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">serializedTransactionHex</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  A string representation of this object.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="waitForTxConfirmation" class="callable">
+  <span class="name"><a href="../walletkit_dart/EvmRpcInterface/waitForTxConfirmation.html">waitForTxConfirmation</a></span><span class="signature">(<wbr><span class="parameter" id="waitForTxConfirmation-param-hash"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">hash</span>, {</span><span class="parameter" id="waitForTxConfirmation-param-interval"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Duration-class.html">Duration</a></span> <span class="parameter-name">interval</span> = <span class="default-value">const Duration(seconds: 5)</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  
+  
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor inherited"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.8.1/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+    
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart</a></li>
+    <li class="self-crumb">EvmRpcInterface class</li>
+</ol>
+
+    <h5>walletkit_dart library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="walletkit_dart API docs, for the Dart programming language.">
+  <title>walletkit_dart - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">walletkit_dart package</li>
+  </ol>
+  <div class="self-name">walletkit_dart</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <p><a href="https://github.com/nomo-app/walletkit-dart/actions/workflows/dart.yml"><img src="https://img.shields.io/github/actions/workflow/status/nomo-app/walletkit-dart/dart.yml?branch=main&amp;style=for-the-badge&amp;logo=testing-library&amp;label=Test%20Suite" alt="TestSuite"></a>
+<a href="https://dev.nomo.app/walletkit-dart/coverage/"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdev.nomo.app%2Fwalletkit-dart%2Fbadges%2Fcoverage.json&amp;query=message&amp;style=for-the-badge&amp;logo=codecov&amp;logoSize=24&amp;label=Coverage&amp;link=https%3A%2F%2Fdev.nomo.app%2Fwalletkit-dart%2Fcoverage%2F" alt="Dynamic JSON Badge"></a></p>
+<h1 id="walletkit-dart">WalletKit-Dart</h1>
+<p>WalletKit-Dart provides features for interacting with
+Bitcoin/Ethereum/Tron/ZENIQ/ZENIQ Smartchain/Polygon/Binance
+Smartchain/Litecoin/Bitcoin Cash/Eurocoin as well as several layer 2 chains. If
+needed, it is easy to expand WalletKit-Dart with other chains.</p>
+<p>See the <a href="https://github.com/nomo-app/uniswap-webon">Uniswap WebOn</a> or the
+Unit-tests for a practical example how to use WalletKit-Dart.</p>
+<p>See the <a href="https://dev.nomo.app/walletkit-dart">api-docs</a> for a list of individual
+functions.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Sending transactions, including legacy/SegWit/P2SH/EVM</li>
+<li>Fetching transactions and balances, including xPub/zPub/ERC20</li>
+<li>Advanced parsing for making smart contract calls readable for humans (EVM)</li>
+<li>Deriving addresses from mnemonics (HD-Wallet)</li>
+<li>Performance by default: Immutable data will be cached in-memory</li>
+<li>A large suite of Unit-tests</li>
+</ul>
+<h2 id="why-walletkit-dart">Why WalletKit-Dart?</h2>
+<p>WalletKit-Dart has been inspired by the
+<a href="https://github.com/blockset-corp/walletkit">WalletKit-C</a> from blockset-corp and
+by <a href="https://github.com/dart-bitcoin/bitcoin_flutter">bitcoin_flutter</a> from the
+dart-bitcoin-project.</p>
+<p>The WalletKit-C was one of the first WalletKits that combined UTXO-chains and
+EVM-chains under a unified class hierarchy. However, the WalletKit-C was plagued
+by race conditions and memory corruptions. Also, the WalletKit-C had an "object
+oriented architecture" that was poorly supported by the C-language.</p>
+<p>bitcoin_flutter worked well, but bitcoin_flutter did not support modern
+null-safe Dart and it was difficult to expand for multiple chains.</p>
+<p>WalletKit-Dart has been developed to solve all those problems. WalletKit-Dart
+works with modern Dart-versions and is easy to expand for multiple chains.</p>
+<h2 id="how-to-integrate">How to integrate</h2>
+<p>First, add this package as a Git-submodule by using Git-commands:</p>
+<pre class="language-dart"><code>git submodule add https://github.com/nomo-app/walletkit-dart.git packages/walletkit-dart
+</code></pre>
+<p>Next, expand your pubspec.yaml accordingly:</p>
+<pre class="language-dart"><code>dependencies:
+    walletkit_dart:
+        path: packages/walletkit-dart
+</code></pre>
+<p>Afterwards, clone submodules with:</p>
+<pre class="language-dart"><code>git submodule update --init --recursive
+</code></pre>
+<p>The <code>--recursive</code> is important because WalletKit-Dart depends on other
+grandchild-submodules.</p>
+<h2 id="architecture">Architecture</h2>
+<p>WalletKit-Dart is built for both <em>UTXO-chains</em> and <em>EVM-chains</em>. WalletKit-Dart
+provides a class hierarchy where both <code>UTXOTransaction</code> and <code>EVMTransaction</code>
+inherit from a <code>GenericTransaction</code> base class.</p>
+<p>Here is a quick summary if you do not yet understand the difference between UTXO
+and EVM:</p>
+<pre class="language-dart"><code>UTXO-based chains and EVM-based chains are two different architectures for blockchain systems.
+UTXO (Unspent Transaction Output) is a concept used in Bitcoin and some other cryptocurrencies.
+In this architecture, each transaction spends one or more previously unspent outputs and creates new outputs.
+The sum of the inputs must be equal to or greater than the sum of the outputs.
+EVM (Ethereum Virtual Machine) is used in Ethereum and some other blockchain platforms that support smart contracts.
+In this architecture, each transaction is executed in the EVM as a smart contract, which can modify the state of the blockchain and create new contracts.
+The state is stored in a database, rather than as a set of unspent outputs.
+In summary, UTXO-based chains focus on tracking ownership of tokens, while EVM-based chains focus on executing arbitrary code in the form of smart contracts.
+</code></pre>
+<h2 id="api-philosophy">API Philosophy</h2>
+<p>WalletKit-Dart provides a <em>stateless API</em>. Neither does it store seed phrases,
+nor does it store transactions. It is the users responsibility to store any
+needed data.</p>
+<p>By design, WalletKit-Dart does not have any persistent databases. Instead,
+WalletKit-Dart only has a few in-memory-caches to improve performance of
+repeated calls. This design helps to simplify the API.</p>
+<p>Moreover, WalletKit-Dart provides different APIs for UTXO-chains and EVM-chains.
+Although every transaction inherits from a generic base transaction, we want to
+provide APIs that are specifically targeted for the architecture of a chain. In
+that sense, we deviate from a traditional object oriented approach.</p>
+<p>In other words, while we aim to reuse code between chains, we do not want to
+create broken abstraction layers by abstracting too much complexity away.</p>
+<h2 id="backend-apis">Backend APIs</h2>
+<p>Depending on the chain, WalletKit-Dart depends on multiple backend APIs. For
+UTXO-chains, WalletKit-Dart depends on the
+<a href="https://electrumx.readthedocs.io/en/latest/protocol-methods.html">ElectrumX Protocol</a>.</p>
+<p>For EVM-chains, WalletKit-Dart depends on several JSON-RPC-providers as well as
+etherscan-styled APIs.</p>
+<h2 id="the-following-unit-tests-show-how-to-use-walletkit-dart">The following Unit-tests show how to use WalletKit-Dart</h2>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/erc20_test.dart">Get Token Info for a ERC20 Token</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/evm_explorer_test.dart">Fetch EVM Transaction from Explorer</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/evm/evm_rcp_test.dart">Walletkit Json RPC Interface</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/assets/bitcoin_fetch_test.dart">Fetch Bitcoin Transactions</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/endpoint_test.dart">Get best health endpoints utxo</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/epubkey_test.dart">EPubKey Derivation</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/fetching/fetch_utxo_transactions_test.dart">Fetch UTXO Transaction</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/parsing/parse_hex_transaction_test.dart">Parse MessageHex into EVM Transaction</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/parsing/reverse-hash-computation_test.dart">Decode datafield from EVM Transaction</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/sending/address_validation_test.dart">Address Validation</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/ci/gasfees_test.dart">Estimate Fee</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/send_evm_test.dart">Send EVM Transaction</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/peers_test.dart">Fetch Peers from ElectrumX</a></p>
+<p><a href="https://github.com/nomo-app/walletkit-dart/blob/main/test/no_ci/wallet_test.dart">Broadcast UTXO Transaction</a></p>
+<p>protoc -I.
+--dart_out=grpc:/home/thomas/src/walletkit-dart/lib/src/crypto/tron/rpc
+core/Tron.proto core/Discover.proto core/TronInventoryItems.proto
+core/contract/common.proto core/contract/account_contract.proto
+core/contract/asset_issue_contract.proto core/contract/balance_contract.proto
+core/contract/exchange_contract.proto core/contract/market_contract.proto
+core/contract/proposal_contract.proto core/contract/shield_contract.proto
+core/contract/smart_contract.proto core/contract/storage_contract.proto
+core/contract/witness_contract.proto api/api.proto</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="walletkit_dart">
+  <span class="name"><a href="walletkit_dart/">walletkit_dart</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">walletkit_dart package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">walletkit_dart</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="walletkit_dart/">walletkit_dart</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
