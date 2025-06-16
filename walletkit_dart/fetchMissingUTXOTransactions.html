@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the fetchMissingUTXOTransactions function from the walletkit_dart library, for the Dart programming language.">
+  <title>fetchMissingUTXOTransactions function - walletkit_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart.dart</a></li>
+    <li class="self-crumb">fetchMissingUTXOTransactions function</li>
+  </ol>
+  <div class="self-name">fetchMissingUTXOTransactions</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="walletkit_dart&#47;walletkit_dart-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">fetchMissingUTXOTransactions</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/UTXOTxInfo.html">UTXOTxInfo</a></span>&gt;</span></span>
+<span class="name ">fetchMissingUTXOTransactions</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="fetchMissingUTXOTransactions-param-cachedTransactions"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/UTXOTransaction-class.html">UTXOTransaction</a></span>&gt;</span></span> <span class="parameter-name">cachedTransactions</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-cachedNodes"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/NodeWithAddress-class.html">NodeWithAddress</a></span>&gt;</span></span> <span class="parameter-name">cachedNodes</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-allTxs"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Set-class.html">Set</a><span class="signature">&lt;<wbr><span class="type-parameter">ElectrumTransactionInfo</span>&gt;</span></span> <span class="parameter-name">allTxs</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-nodes"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/NodeWithAddress-class.html">NodeWithAddress</a></span>&gt;</span></span> <span class="parameter-name">nodes</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-coin"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/CoinEntity-class.html">CoinEntity</a></span> <span class="parameter-name">coin</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-networkType"><span>required</span> <span class="type-annotation"><a href="../walletkit_dart/UTXONetworkType-class.html">UTXONetworkType</a></span> <span class="parameter-name">networkType</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-addressTypes"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../walletkit_dart/AddressType.html">AddressType</a></span>&gt;</span></span> <span class="parameter-name">addressTypes</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-endpoints"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter">(<span class="field"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span>, </span><span class="field"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/int-class.html">int</a></span></span>)</span>&gt;</span></span> <span class="parameter-name">endpoints</span>, </span></li>
+<li><span class="parameter" id="fetchMissingUTXOTransactions-param-watch"><span>required</span> <span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/Stopwatch-class.html">Stopwatch</a></span> <span class="parameter-name">watch</span>, </span></li>
+</ol>})
+
+        
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;UTXOTxInfo&gt; fetchMissingUTXOTransactions({
+  required Set&lt;UTXOTransaction&gt; cachedTransactions,
+  required List&lt;NodeWithAddress&gt; cachedNodes,
+  required Set&lt;ElectrumTransactionInfo&gt; allTxs,
+  required Iterable&lt;NodeWithAddress&gt; nodes,
+  required CoinEntity coin,
+  required UTXONetworkType networkType,
+  required Iterable&lt;AddressType&gt; addressTypes,
+  required List&lt;(String, int)&gt; endpoints,
+  required Stopwatch watch,
+}) async {
+  &#47;&#47;&#47; Filter out all transactions that are already cached
+  final newTxs = allTxs.where(
+    (tx) {
+      final isCached = cachedTransactions.any((cTx) =&gt; cTx.id == tx.hash);
+
+      return isCached == false;
+    },
+  );
+
+  final pendingTxs = allTxs.where(
+    (tx) {
+      final cTx = cachedTransactions.singleWhereOrNull(
+        (cTx) =&gt; cTx.id == tx.hash,
+      );
+      if (cTx == null) return false;
+
+      return cTx.isPending || cTx is NotAvaialableUTXOTransaction;
+    },
+  );
+  Logger.log(&quot;Found ${pendingTxs.length} pending TXs for ${coin.symbol}&quot;);
+  Logger.log(&quot;Found ${newTxs.length} new TXs for ${coin.symbol}&quot;);
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Fetch UTXO Details for all new transactions
+  &#47;&#47;&#47;
+  var newUtxoTxs = await computeMissingUTXODetails(
+    txList: newTxs,
+    nodes: nodes,
+    type: networkType,
+    endpoints: endpoints,
+    addressTypes: addressTypes,
+  );
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Fetch Parent Transactions of P2SH Inputs to get the redeem script and in hence the address
+  &#47;&#47;&#47;
+  final unsupported = newUtxoTxs.where(
+    (tx) =&gt; tx.sender == ADDRESS_NOT_SUPPORTED,
+  );
+  final updatedUTXOs = &lt;UTXOTransaction&gt;[];
+  for (final tx in unsupported) {
+    final firstInput = tx.inputs.firstOrNull;
+    if (firstInput == null) continue;
+
+    &#47;&#47;&#47; Coinbase Parent TX
+    if (firstInput.isCoinbase) {
+      continue;
+    }
+
+    final outputIndex = firstInput.vout!;
+    final parentTxHash = firstInput.txid;
+    if (parentTxHash == null) continue;
+
+    &#47;&#47; Check if Parent TX is already in the list
+    var parentTx = newUtxoTxs.singleWhereOrNull((element) =&gt; element.id == firstInput.txid);
+
+    final (_tx, _, _) = await fetchFromRandomElectrumXNode(
+      (client) {
+        return client.getTransaction(
+          addressTypes: addressTypes,
+          nodes: nodes,
+          type: networkType,
+          txHash: parentTxHash,
+        );
+      },
+      client: null,
+      endpoints: networkType.endpoints,
+      token: coin,
+    );
+
+    parentTx ??= _tx;
+
+    if (parentTx == null) {
+      Logger.logWarning(
+        &quot;Parent TX $parentTxHash not found for ${tx.hash}&quot;,
+      );
+      continue;
+    }
+
+    final output = parentTx.outputs[outputIndex];
+
+    final address = output.getAddress(networkType);
+
+    updatedUTXOs.add(tx.copyWith(sender: address));
+  }
+  &#47;&#47; Replace the unsupported transactions with the updated ones
+  newUtxoTxs = newUtxoTxs.map((tx) {
+    final updatedTx = updatedUTXOs.singleWhereOrNull(
+      (upTx) =&gt; upTx.id == tx.id,
+    );
+    return updatedTx ?? tx;
+  });
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Fetch UTXO Details for all pending transactions and replace them
+  &#47;&#47;&#47;
+  final pendingUtxoTxs = await computeMissingUTXODetails(
+    txList: pendingTxs,
+    nodes: nodes,
+    type: networkType,
+    endpoints: endpoints,
+    addressTypes: addressTypes,
+  );
+
+  var utxoTXs = {
+    ...newUtxoTxs,
+    ...cachedTransactions,
+  };
+
+  &#47;&#47;&#47; Replace the pending transactions with the updated ones
+  utxoTXs = utxoTXs.map((tx) {
+    final pendingTx = pendingUtxoTxs.singleWhereOrNull(
+      (element) =&gt; element.id == tx.id,
+    );
+    return pendingTx ?? tx;
+  }).toSet();
+
+  &#47;&#47;&#47;
+  &#47;&#47;&#47; Mark Spent Outputs
+  &#47;&#47;&#47;
+  for (final tx in utxoTXs) {
+    for (final input in tx.inputs) {
+      final outputs = utxoTXs.singleWhereOrNull((element) =&gt; element.id == input.txid)?.outputs;
+
+      if (input.isCoinbase) continue;
+      final index = input.vout!;
+      if (outputs == null || outputs.length &lt;= index) {
+        continue;
+      }
+      outputs[index] = outputs[index].copyWith(spent: true);
+    }
+  }
+
+  watch.stop();
+  Logger.logFetch(&quot;Fetched TXs in ${watch.elapsed}&quot;);
+
+  final sortedTxs = utxoTXs.sortedBy&lt;GenericTransaction&gt;((tx) =&gt; tx).toSet();
+
+  return (sortedTxs, nodes);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart</a></li>
+    <li class="self-crumb">fetchMissingUTXOTransactions function</li>
+</ol>
+
+    <h5>walletkit_dart library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
