@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - lcov.info - domain/constants.dart</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">domain</a> - constants.dart<span style="font-size: 80%;"> (source / <a href="constants.dart.func-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">lcov.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">63.6&nbsp;%</td>
+            <td class="headerCovTableEntry">11</td>
+            <td class="headerCovTableEntry">7</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2025-07-02 01:23:33</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">-</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+                  <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : // ignore_for_file: constant_identifier_names</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : import 'dart:typed_data';</span>
+<span id="L4"><span class="lineNum">       4</span>              : import 'package:walletkit_dart/src/crypto/utxo/entities/op_codes.dart';</span>
+<span id="L5"><span class="lineNum">       5</span>              : import 'package:walletkit_dart/src/crypto/network_type.dart';</span>
+<span id="L6"><span class="lineNum">       6</span>              : </span>
+<span id="L7"><span class="lineNum">       7</span>              : const MAX_PUBKEYS_PER_MULTISIG = 20;</span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span>              : const PUBKEY_SCRIPT_HASH_LENGTH_HEX = &quot;14&quot;; // 20 bytes</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : const SIG_HASH_ALL = 0x01;</span>
+<span id="L12"><span class="lineNum">      12</span>              : </span>
+<span id="L13"><span class="lineNum">      13</span>              : const int EXTERNAL_CHAIN_INDEX = 0;</span>
+<span id="L14"><span class="lineNum">      14</span>              : const int INTERNAL_CHAIN_INDEX = 1;</span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span>              : ///</span>
+<span id="L17"><span class="lineNum">      17</span>              : /// Public Key Prefixes &amp; Suffixes</span>
+<span id="L18"><span class="lineNum">      18</span>              : ///</span>
+<span id="L19"><span class="lineNum">      19</span>              : </span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC tlaBgGNC">          24 : final p2pkhPrefix = &quot;${OPCODE.OP_DUP}${OPCODE.OP_HASH160}$PUBKEY_SCRIPT_HASH_LENGTH_HEX&quot;;</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">          24 : final p2pkhPostfix = &quot;${OPCODE.OP_EQUALVERIFY}${OPCODE.OP_CHECKSIG}&quot;;</span></span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">          12 : final p2wpkhPrefix = &quot;${OPCODE.OP_0}$PUBKEY_SCRIPT_HASH_LENGTH_HEX&quot;;</span></span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">          12 : final p2shPrefix = &quot;${OPCODE.OP_HASH160}$PUBKEY_SCRIPT_HASH_LENGTH_HEX&quot;;</span></span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">          12 : final p2shPostfix = &quot;${OPCODE.OP_EQUAL}&quot;;</span></span>
+<span id="L25"><span class="lineNum">      25</span>              : </span>
+<span id="L26"><span class="lineNum">      26</span>              : ///</span>
+<span id="L27"><span class="lineNum">      27</span>              : /// Address Prefixes</span>
+<span id="L28"><span class="lineNum">      28</span>              : ///</span>
+<span id="L29"><span class="lineNum">      29</span>              : const String P2PKH_PREFIX = '1'; // Legacy</span>
+<span id="L30"><span class="lineNum">      30</span>              : const String P2PKH_PREFIX_LTC = 'L'; // Legacy Litecoin</span>
+<span id="L31"><span class="lineNum">      31</span>              : const String P2PKH_PREFIX_ZENIQ = 'm'; // Legacy ZENIQ prefix</span>
+<span id="L32"><span class="lineNum">      32</span>              : const String P2SH_PREFIX = '3'; // Compatibility Address</span>
+<span id="L33"><span class="lineNum">      33</span>              : const String P2SH_PREFIX_LTC = 'M'; // Compatibility Address Litecoin</span>
+<span id="L34"><span class="lineNum">      34</span>              : const String P2WPKH_PREFIX_BTC = 'bc1'; // Native SegWit Bitcoin</span>
+<span id="L35"><span class="lineNum">      35</span>              : const String P2WPKH_PREFIX_LTC = 'ltc1'; // Native SegWit Litecoin</span>
+<span id="L36"><span class="lineNum">      36</span>              : const List&lt;String&gt; P2WPKH_PREFIXES_BCH = [&quot;1q&quot;, &quot;qq&quot;]; // Native SegWit Bitcoin Cash</span>
+<span id="L37"><span class="lineNum">      37</span>              : const String P2PKH_PREFIX_EC8 = 'c';</span>
+<span id="L38"><span class="lineNum">      38</span>              : </span>
+<span id="L39"><span class="lineNum">      39</span>              : const BITCOIN_NETWORK_BIP = NetworkBIP(</span>
+<span id="L40"><span class="lineNum">      40</span>              :   bip32XpubPrefix: 0x0488b21e,</span>
+<span id="L41"><span class="lineNum">      41</span>              :   bip32XprivPrefix: 0x0488ade4,</span>
+<span id="L42"><span class="lineNum">      42</span>              :   bip49XpubPrefix: 0x049d7cb2,</span>
+<span id="L43"><span class="lineNum">      43</span>              :   bip49XprivPrefix: 0x049d7878,</span>
+<span id="L44"><span class="lineNum">      44</span>              :   bip84XpubPrefix: 0x04b24746,</span>
+<span id="L45"><span class="lineNum">      45</span>              :   bip84XprivPrefix: 0x04b2430c,</span>
+<span id="L46"><span class="lineNum">      46</span>              :   wif: 0x80,</span>
+<span id="L47"><span class="lineNum">      47</span>              : );</span>
+<span id="L48"><span class="lineNum">      48</span>              : </span>
+<span id="L49"><span class="lineNum">      49</span>              : const BITCOIN_SIGHASH_INFO = SighashInfo(</span>
+<span id="L50"><span class="lineNum">      50</span>              :   all: 0x01,</span>
+<span id="L51"><span class="lineNum">      51</span>              :   none: 0x02,</span>
+<span id="L52"><span class="lineNum">      52</span>              :   single: 0x03,</span>
+<span id="L53"><span class="lineNum">      53</span>              :   allAnyoneCanPay: 0x81,</span>
+<span id="L54"><span class="lineNum">      54</span>              :   noneAnyoneCanPay: 0x82,</span>
+<span id="L55"><span class="lineNum">      55</span>              :   singleAnyoneCanPay: 0x83,</span>
+<span id="L56"><span class="lineNum">      56</span>              : );</span>
+<span id="L57"><span class="lineNum">      57</span>              : </span>
+<span id="L58"><span class="lineNum">      58</span>              : const BCH_SIGHASH_INFO = SighashInfo(</span>
+<span id="L59"><span class="lineNum">      59</span>              :   all: 0x41,</span>
+<span id="L60"><span class="lineNum">      60</span>              :   none: 0x42,</span>
+<span id="L61"><span class="lineNum">      61</span>              :   single: 0x43,</span>
+<span id="L62"><span class="lineNum">      62</span>              :   allAnyoneCanPay: 0xc1,</span>
+<span id="L63"><span class="lineNum">      63</span>              :   noneAnyoneCanPay: 0xc2,</span>
+<span id="L64"><span class="lineNum">      64</span>              :   singleAnyoneCanPay: 0xc3,</span>
+<span id="L65"><span class="lineNum">      65</span>              : );</span>
+<span id="L66"><span class="lineNum">      66</span>              : </span>
+<span id="L67"><span class="lineNum">      67</span>              : ///</span>
+<span id="L68"><span class="lineNum">      68</span>              : /// Needed for compatibility with old wallets</span>
+<span id="L69"><span class="lineNum">      69</span>              : ///</span>
+<span id="L70"><span class="lineNum">      70</span>              : const LITECOIN_NETWORK_BIP_WK_COMPATIBILITY = NetworkBIP(</span>
+<span id="L71"><span class="lineNum">      71</span>              :   bip32XpubPrefix: 0x0488b21e,</span>
+<span id="L72"><span class="lineNum">      72</span>              :   bip32XprivPrefix: 0x0488ade4,</span>
+<span id="L73"><span class="lineNum">      73</span>              :   bip49XpubPrefix: 0x0488b21e,</span>
+<span id="L74"><span class="lineNum">      74</span>              :   bip49XprivPrefix: 0x0488ade4,</span>
+<span id="L75"><span class="lineNum">      75</span>              :   bip84XpubPrefix: 0x0488b21e,</span>
+<span id="L76"><span class="lineNum">      76</span>              :   bip84XprivPrefix: 0x0488ade4,</span>
+<span id="L77"><span class="lineNum">      77</span>              :   wif: 0xb0,</span>
+<span id="L78"><span class="lineNum">      78</span>              : );</span>
+<span id="L79"><span class="lineNum">      79</span>              : </span>
+<span id="L80"><span class="lineNum">      80</span>              : const LITECOIN_NETWORK_BIP = NetworkBIP(</span>
+<span id="L81"><span class="lineNum">      81</span>              :   bip32XpubPrefix: 0x019da462,</span>
+<span id="L82"><span class="lineNum">      82</span>              :   bip32XprivPrefix: 0x019d9cfe,</span>
+<span id="L83"><span class="lineNum">      83</span>              :   bip49XpubPrefix: 0x01b26ef6,</span>
+<span id="L84"><span class="lineNum">      84</span>              :   bip49XprivPrefix: 0x01b26792,</span>
+<span id="L85"><span class="lineNum">      85</span>              :   bip84XpubPrefix: 0x01b26ef6,</span>
+<span id="L86"><span class="lineNum">      86</span>              :   bip84XprivPrefix: 0x01b26792,</span>
+<span id="L87"><span class="lineNum">      87</span>              :   wif: 0xb0,</span>
+<span id="L88"><span class="lineNum">      88</span>              : );</span>
+<span id="L89"><span class="lineNum">      89</span>              : </span>
+<span id="L90"><span class="lineNum">      90</span>              : ///</span>
+<span id="L91"><span class="lineNum">      91</span>              : /// DEV</span>
+<span id="L92"><span class="lineNum">      92</span>              : ///</span>
+<span id="L93"><span class="lineNum">      93</span>              : </span>
+<span id="L94"><span class="lineNum">      94</span>              : const publicTestMnemonicHello = // this mnemonic should be never used for real funds</span>
+<span id="L95"><span class="lineNum">      95</span>              :     &quot;hello upon mirror situate cradle execute cute negative sudden city mean square&quot;;</span>
+<span id="L96"><span class="lineNum">      96</span>              : </span>
+<span id="L97"><span class="lineNum">      97</span> <span class="tlaGNC">           6 : Uint8List get helloSeed {</span></span>
+<span id="L98"><span class="lineNum">      98</span> <span class="tlaGNC">          12 :   return Uint8List.fromList([</span></span>
+<span id="L99"><span class="lineNum">      99</span>              :     93,</span>
+<span id="L100"><span class="lineNum">     100</span>              :     37,</span>
+<span id="L101"><span class="lineNum">     101</span>              :     243,</span>
+<span id="L102"><span class="lineNum">     102</span>              :     36,</span>
+<span id="L103"><span class="lineNum">     103</span>              :     240,</span>
+<span id="L104"><span class="lineNum">     104</span>              :     76,</span>
+<span id="L105"><span class="lineNum">     105</span>              :     115,</span>
+<span id="L106"><span class="lineNum">     106</span>              :     228,</span>
+<span id="L107"><span class="lineNum">     107</span>              :     64,</span>
+<span id="L108"><span class="lineNum">     108</span>              :     229,</span>
+<span id="L109"><span class="lineNum">     109</span>              :     10,</span>
+<span id="L110"><span class="lineNum">     110</span>              :     179,</span>
+<span id="L111"><span class="lineNum">     111</span>              :     172,</span>
+<span id="L112"><span class="lineNum">     112</span>              :     124,</span>
+<span id="L113"><span class="lineNum">     113</span>              :     11,</span>
+<span id="L114"><span class="lineNum">     114</span>              :     81,</span>
+<span id="L115"><span class="lineNum">     115</span>              :     118,</span>
+<span id="L116"><span class="lineNum">     116</span>              :     191,</span>
+<span id="L117"><span class="lineNum">     117</span>              :     159,</span>
+<span id="L118"><span class="lineNum">     118</span>              :     146,</span>
+<span id="L119"><span class="lineNum">     119</span>              :     181,</span>
+<span id="L120"><span class="lineNum">     120</span>              :     53,</span>
+<span id="L121"><span class="lineNum">     121</span>              :     122,</span>
+<span id="L122"><span class="lineNum">     122</span>              :     123,</span>
+<span id="L123"><span class="lineNum">     123</span>              :     79,</span>
+<span id="L124"><span class="lineNum">     124</span>              :     222,</span>
+<span id="L125"><span class="lineNum">     125</span>              :     13,</span>
+<span id="L126"><span class="lineNum">     126</span>              :     15,</span>
+<span id="L127"><span class="lineNum">     127</span>              :     123,</span>
+<span id="L128"><span class="lineNum">     128</span>              :     239,</span>
+<span id="L129"><span class="lineNum">     129</span>              :     231,</span>
+<span id="L130"><span class="lineNum">     130</span>              :     251,</span>
+<span id="L131"><span class="lineNum">     131</span>              :     113,</span>
+<span id="L132"><span class="lineNum">     132</span>              :     198,</span>
+<span id="L133"><span class="lineNum">     133</span>              :     32,</span>
+<span id="L134"><span class="lineNum">     134</span>              :     189,</span>
+<span id="L135"><span class="lineNum">     135</span>              :     145,</span>
+<span id="L136"><span class="lineNum">     136</span>              :     38,</span>
+<span id="L137"><span class="lineNum">     137</span>              :     116,</span>
+<span id="L138"><span class="lineNum">     138</span>              :     17,</span>
+<span id="L139"><span class="lineNum">     139</span>              :     138,</span>
+<span id="L140"><span class="lineNum">     140</span>              :     110,</span>
+<span id="L141"><span class="lineNum">     141</span>              :     174,</span>
+<span id="L142"><span class="lineNum">     142</span>              :     197,</span>
+<span id="L143"><span class="lineNum">     143</span>              :     113,</span>
+<span id="L144"><span class="lineNum">     144</span>              :     100,</span>
+<span id="L145"><span class="lineNum">     145</span>              :     145,</span>
+<span id="L146"><span class="lineNum">     146</span>              :     118,</span>
+<span id="L147"><span class="lineNum">     147</span>              :     205,</span>
+<span id="L148"><span class="lineNum">     148</span>              :     162,</span>
+<span id="L149"><span class="lineNum">     149</span>              :     109,</span>
+<span id="L150"><span class="lineNum">     150</span>              :     208,</span>
+<span id="L151"><span class="lineNum">     151</span>              :     161,</span>
+<span id="L152"><span class="lineNum">     152</span>              :     231,</span>
+<span id="L153"><span class="lineNum">     153</span>              :     52,</span>
+<span id="L154"><span class="lineNum">     154</span>              :     27,</span>
+<span id="L155"><span class="lineNum">     155</span>              :     203,</span>
+<span id="L156"><span class="lineNum">     156</span>              :     63,</span>
+<span id="L157"><span class="lineNum">     157</span>              :     140,</span>
+<span id="L158"><span class="lineNum">     158</span>              :     145,</span>
+<span id="L159"><span class="lineNum">     159</span>              :     228,</span>
+<span id="L160"><span class="lineNum">     160</span>              :     193,</span>
+<span id="L161"><span class="lineNum">     161</span>              :     46,</span>
+<span id="L162"><span class="lineNum">     162</span>              :     58</span>
+<span id="L163"><span class="lineNum">     163</span>              :   ]);</span>
+<span id="L164"><span class="lineNum">     164</span>              : }</span>
+<span id="L165"><span class="lineNum">     165</span>              : </span>
+<span id="L166"><span class="lineNum">     166</span>              : const helloXpub =</span>
+<span id="L167"><span class="lineNum">     167</span>              :     &quot;xpub69BsBUCquKCgn1u6cum7syZewx5J2fyJE479qzDRJtB6hSHkhLsPZZW2SBfPfJaidDtE9g6wyH7ZFv8bWTkwuLeRJx3H2Kray9AsvY8EJAP&quot;;</span>
+<span id="L168"><span class="lineNum">     168</span>              : </span>
+<span id="L169"><span class="lineNum">     169</span>              : const rejectXpubBip44 =</span>
+<span id="L170"><span class="lineNum">     170</span>              :     &quot;xpub69QjKT4D1e69hjobnhYXrjDwcMfgdnt7CtuNKrUjsqpUZEy3zRYhKcHCtwo4csQxL9jua7M43xYYkt79PtVmwBhix2QNoofzqhLUWMEJNsN&quot;;</span>
+<span id="L171"><span class="lineNum">     171</span>              : </span>
+<span id="L172"><span class="lineNum">     172</span>              : const rejectXpub =</span>
+<span id="L173"><span class="lineNum">     173</span>              :     &quot;xpub69QjKT4D1e67mdLGJDUq45wYdQZrVL7DATQ98dPPHiKwkKsrM1uyhbG4UazWemQvmi8GBV5UCpLGrFe8zUebtkw7Ew3bEKzv8bDPA2Difc8&quot;;</span>
+<span id="L174"><span class="lineNum">     174</span>              : </span>
+<span id="L175"><span class="lineNum">     175</span>              : const rejectZpub =</span>
+<span id="L176"><span class="lineNum">     176</span>              :     &quot;zpub6o5FvnQ3K1B9A2sZqBtUQ1RJ1CL6Szw8SoT1p962NqZDuFCRAKqLk5Z2GRyC5vUUksiw81Ychf5mXoWGMgfELZRMxcMWvunpQdgvhxiATdL&quot;;</span>
+<span id="L177"><span class="lineNum">     177</span>              : </span>
+<span id="L178"><span class="lineNum">     178</span>              : const devLtub = &quot;&quot;;</span>
+<span id="L179"><span class="lineNum">     179</span>              : </span>
+<span id="L180"><span class="lineNum">     180</span>              : const devMtub = &quot;&quot;;</span>
+<span id="L181"><span class="lineNum">     181</span>              : </span>
+<span id="L182"><span class="lineNum">     182</span>              : const wkDebugXPUB =</span>
+<span id="L183"><span class="lineNum">     183</span>              :     &quot;xpub69QjKT4D1e67nyLRRcA76149aJASaFBr9UPJkAW5NVqwJNRmTuzB1t1rYjsKmsFgW5B3uLEcBYe92VJHqwDm2t7zXMsTCwcyrYUGgLGTxtV&quot;;</span>
+<span id="L184"><span class="lineNum">     184</span>              : </span>
+<span id="L185"><span class="lineNum">     185</span>              : const wkDebugXPUBHello =</span>
+<span id="L186"><span class="lineNum">     186</span>              :     &quot;xpub69BsBUCquKCgooMeNw2a3hW6NBZ9Kwn4kYUxYSjygK6YTa8PRqqAEyAKEwBsNH4GiPpb4BCXZ1QiHDeYCtPJtVJoBWNeF8QFRik7MyUstiZ&quot;;</span>
+<span id="L187"><span class="lineNum">     187</span>              : </span>
+<span id="L188"><span class="lineNum">     188</span>              : const rejectLTUB =</span>
+<span id="L189"><span class="lineNum">     189</span>              :     &quot;Ltub2Vqqn6GEu5Q81zcCthUpux3miCtRF7dMHjc7xi8VfDAeUhWf12QiXEkVqTWYKApBMvXqmcU23qyexM1FuNk3jgiXY4w3u1kxd5yj4XiYZH3&quot;;</span>
+<span id="L190"><span class="lineNum">     190</span>              : </span>
+<span id="L191"><span class="lineNum">     191</span>              : const rejectEVM = &quot;0x05870f1507d820212E921e1f39f14660336231D1&quot;;</span>
+<span id="L192"><span class="lineNum">     192</span>              : const spoilEVM = &quot;0x1464935f48CA992D1a0bEAA2358471D7Cb6374E5&quot;;</span>
+<span id="L193"><span class="lineNum">     193</span>              : </span>
+<span id="L194"><span class="lineNum">     194</span>              : ///</span>
+<span id="L195"><span class="lineNum">     195</span>              : /// EVM</span>
+<span id="L196"><span class="lineNum">     196</span>              : ///</span>
+<span id="L197"><span class="lineNum">     197</span>              : const etherscanBaseEndpoint = &quot;https://api.etherscan.io/v2/api&quot;;</span>
+<span id="L198"><span class="lineNum">     198</span>              : const zeniqScanEnpoint = &quot;https://zeniqscan.com/api&quot;;</span>
+<span id="L199"><span class="lineNum">     199</span>              : const zeniqSmartRPCEndpoint = &quot;https://api.zeniq.network&quot;;</span>
+<span id="L200"><span class="lineNum">     200</span>              : </span>
+<span id="L201"><span class="lineNum">     201</span>              : ///</span>
+<span id="L202"><span class="lineNum">     202</span>              : /// Arbitrum</span>
+<span id="L203"><span class="lineNum">     203</span>              : ///</span>
+<span id="L204"><span class="lineNum">     204</span>              : const arbitrumTestWallet = &quot;0xA7Fa4bB0bba164F999E8C7B83C9da96A3bE44616&quot;;</span>
+<span id="L205"><span class="lineNum">     205</span>              : </span>
+<span id="L206"><span class="lineNum">     206</span>              : ///</span>
+<span id="L207"><span class="lineNum">     207</span>              : /// Staking</span>
+<span id="L208"><span class="lineNum">     208</span>              : ///</span>
+<span id="L209"><span class="lineNum">     209</span>              : const mainnetStakingContract = &quot;0x7561DEAf4ECf96dc9F0d50B4136046979ACdAD3e&quot;;</span>
+<span id="L210"><span class="lineNum">     210</span>              : const smartChainStakingContract = &quot;0x97F51eCDeEdecdb740DD1ff6236D013aFff0417d&quot;;</span>
+<span id="L211"><span class="lineNum">     211</span>              : const testnetStakingContract = &quot;0x7a74a51adabe43a987f7119036faea420fc470cf&quot;;</span>
+<span id="L212"><span class="lineNum">     212</span>              : const zenpassContract = &quot;0x967ce6379d65DB5d5b7027bbCfDd6f03476011ea&quot;;</span>
+<span id="L213"><span class="lineNum">     213</span>              : </span>
+<span id="L214"><span class="lineNum">     214</span>              : enum GasLimits {</span>
+<span id="L215"><span class="lineNum">     215</span>              :   toApprove(60000),</span>
+<span id="L216"><span class="lineNum">     216</span>              :   nftSend(100000),</span>
+<span id="L217"><span class="lineNum">     217</span>              :   ethSend(21000),</span>
+<span id="L218"><span class="lineNum">     218</span>              :   erc20Send(70000),</span>
+<span id="L219"><span class="lineNum">     219</span>              :   toStake(280000),</span>
+<span id="L220"><span class="lineNum">     220</span>              :   ethzkSync(187734),</span>
+<span id="L221"><span class="lineNum">     221</span>              :   ethArb(100000);</span>
+<span id="L222"><span class="lineNum">     222</span>              : </span>
+<span id="L223"><span class="lineNum">     223</span>              :   final int value;</span>
+<span id="L224"><span class="lineNum">     224</span>              : </span>
+<span id="L225"><span class="lineNum">     225</span>              :   const GasLimits(this.value);</span>
+<span id="L226"><span class="lineNum">     226</span>              : </span>
+<span id="L227"><span class="lineNum">     227</span> <span class="tlaUNC tlaBgUNC">           0 :   static BigInt toClaim(int numberOfNFTs) {</span></span>
+<span id="L228"><span class="lineNum">     228</span> <span class="tlaUNC">           0 :     var result = 150000 + (numberOfNFTs - 1) * 25000;</span></span>
+<span id="L229"><span class="lineNum">     229</span> <span class="tlaUNC">           0 :     return BigInt.from(result);</span></span>
+<span id="L230"><span class="lineNum">     230</span>              :   }</span>
+<span id="L231"><span class="lineNum">     231</span>              : </span>
+<span id="L232"><span class="lineNum">     232</span> <span class="tlaUNC">           0 :   BigInt get asBigInt =&gt; BigInt.from(value);</span></span>
+<span id="L233"><span class="lineNum">     233</span>              : }</span>
+<span id="L234"><span class="lineNum">     234</span>              : </span>
+<span id="L235"><span class="lineNum">     235</span>              : const TRON_ADDRESS_PREFIX = 0x41; // Base58 address prefix for Tron = 'T'</span>
+<span id="L236"><span class="lineNum">     236</span>              : </span>
+<span id="L237"><span class="lineNum">     237</span>              : const nullAddress = &quot;0x0000000000000000000000000000000000000000&quot;;</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

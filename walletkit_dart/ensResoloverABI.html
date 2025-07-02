@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the ensResoloverABI property from the walletkit_dart library, for the Dart programming language.">
+  <title>ensResoloverABI property - walletkit_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart.dart</a></li>
+    <li class="self-crumb">ensResoloverABI property</li>
+  </ol>
+  <div class="self-name">ensResoloverABI</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="walletkit_dart&#47;walletkit_dart-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-top-level-property">ensResoloverABI</span> top-level property 
+ 
+</h1></div>
+
+        <section class="multi-line-signature">
+          
+          <a href="../walletkit_dart/ContractABI-class.html">ContractABI</a>
+          <span class="name ">ensResoloverABI</span>
+          <div class="features"><span class="feature">final</span></div>
+
+        </section>
+        
+
+        
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">final ensResoloverABI = ContractABI.fromAbi(&#39;&#39;&#39;[
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;contract ENS&quot;, &quot;name&quot;: &quot;_ens&quot;, &quot;type&quot;: &quot;address&quot; },
+      {
+        &quot;internalType&quot;: &quot;contract INameWrapper&quot;,
+        &quot;name&quot;: &quot;wrapperAddress&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      },
+      {
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;_trustedETHController&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      },
+      {
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;_trustedReverseRegistrar&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      }
+    ],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;constructor&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;uint256&quot;,
+        &quot;name&quot;: &quot;contentType&quot;,
+        &quot;type&quot;: &quot;uint256&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;ABIChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;a&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;AddrChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;uint256&quot;,
+        &quot;name&quot;: &quot;coinType&quot;,
+        &quot;type&quot;: &quot;uint256&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes&quot;,
+        &quot;name&quot;: &quot;newAddress&quot;,
+        &quot;type&quot;: &quot;bytes&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;AddressChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;owner&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      },
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;operator&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bool&quot;,
+        &quot;name&quot;: &quot;approved&quot;,
+        &quot;type&quot;: &quot;bool&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;ApprovalForAll&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;owner&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      },
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;delegate&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      },
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bool&quot;,
+        &quot;name&quot;: &quot;approved&quot;,
+        &quot;type&quot;: &quot;bool&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;Approved&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes&quot;,
+        &quot;name&quot;: &quot;hash&quot;,
+        &quot;type&quot;: &quot;bytes&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;ContenthashChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes&quot;,
+        &quot;name&quot;: &quot;name&quot;,
+        &quot;type&quot;: &quot;bytes&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;uint16&quot;,
+        &quot;name&quot;: &quot;resource&quot;,
+        &quot;type&quot;: &quot;uint16&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes&quot;,
+        &quot;name&quot;: &quot;record&quot;,
+        &quot;type&quot;: &quot;bytes&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;DNSRecordChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes&quot;,
+        &quot;name&quot;: &quot;name&quot;,
+        &quot;type&quot;: &quot;bytes&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;uint16&quot;,
+        &quot;name&quot;: &quot;resource&quot;,
+        &quot;type&quot;: &quot;uint16&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;DNSRecordDeleted&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes&quot;,
+        &quot;name&quot;: &quot;lastzonehash&quot;,
+        &quot;type&quot;: &quot;bytes&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes&quot;,
+        &quot;name&quot;: &quot;zonehash&quot;,
+        &quot;type&quot;: &quot;bytes&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;DNSZonehashChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes4&quot;,
+        &quot;name&quot;: &quot;interfaceID&quot;,
+        &quot;type&quot;: &quot;bytes4&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;address&quot;,
+        &quot;name&quot;: &quot;implementer&quot;,
+        &quot;type&quot;: &quot;address&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;InterfaceChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;string&quot;,
+        &quot;name&quot;: &quot;name&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;NameChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;x&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;y&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;PubkeyChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;string&quot;,
+        &quot;name&quot;: &quot;indexedKey&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;string&quot;,
+        &quot;name&quot;: &quot;key&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;string&quot;,
+        &quot;name&quot;: &quot;value&quot;,
+        &quot;type&quot;: &quot;string&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;TextChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;anonymous&quot;: false,
+    &quot;inputs&quot;: [
+      {
+        &quot;indexed&quot;: true,
+        &quot;internalType&quot;: &quot;bytes32&quot;,
+        &quot;name&quot;: &quot;node&quot;,
+        &quot;type&quot;: &quot;bytes32&quot;
+      },
+      {
+        &quot;indexed&quot;: false,
+        &quot;internalType&quot;: &quot;uint64&quot;,
+        &quot;name&quot;: &quot;newVersion&quot;,
+        &quot;type&quot;: &quot;uint64&quot;
+      }
+    ],
+    &quot;name&quot;: &quot;VersionChanged&quot;,
+    &quot;type&quot;: &quot;event&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;uint256&quot;, &quot;name&quot;: &quot;contentTypes&quot;, &quot;type&quot;: &quot;uint256&quot; }
+    ],
+    &quot;name&quot;: &quot;ABI&quot;,
+    &quot;outputs&quot;: [
+      { &quot;internalType&quot;: &quot;uint256&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;uint256&quot; },
+      { &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bytes&quot; }
+    ],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;addr&quot;,
+    &quot;outputs&quot;: [
+      { &quot;internalType&quot;: &quot;address payable&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;address&quot; }
+    ],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;uint256&quot;, &quot;name&quot;: &quot;coinType&quot;, &quot;type&quot;: &quot;uint256&quot; }
+    ],
+    &quot;name&quot;: &quot;addr&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bytes&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;delegate&quot;, &quot;type&quot;: &quot;address&quot; },
+      { &quot;internalType&quot;: &quot;bool&quot;, &quot;name&quot;: &quot;approved&quot;, &quot;type&quot;: &quot;bool&quot; }
+    ],
+    &quot;name&quot;: &quot;approve&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;clearRecords&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;contenthash&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bytes&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;name&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;uint16&quot;, &quot;name&quot;: &quot;resource&quot;, &quot;type&quot;: &quot;uint16&quot; }
+    ],
+    &quot;name&quot;: &quot;dnsRecord&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bytes&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;name&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;hasDNSRecords&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bool&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bool&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes4&quot;, &quot;name&quot;: &quot;interfaceID&quot;, &quot;type&quot;: &quot;bytes4&quot; }
+    ],
+    &quot;name&quot;: &quot;interfaceImplementer&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;address&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;owner&quot;, &quot;type&quot;: &quot;address&quot; },
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;delegate&quot;, &quot;type&quot;: &quot;address&quot; }
+    ],
+    &quot;name&quot;: &quot;isApprovedFor&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bool&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bool&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;account&quot;, &quot;type&quot;: &quot;address&quot; },
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;operator&quot;, &quot;type&quot;: &quot;address&quot; }
+    ],
+    &quot;name&quot;: &quot;isApprovedForAll&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bool&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bool&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes[]&quot;, &quot;name&quot;: &quot;data&quot;, &quot;type&quot;: &quot;bytes[]&quot; }
+    ],
+    &quot;name&quot;: &quot;multicall&quot;,
+    &quot;outputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes[]&quot;, &quot;name&quot;: &quot;results&quot;, &quot;type&quot;: &quot;bytes[]&quot; }
+    ],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;nodehash&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes[]&quot;, &quot;name&quot;: &quot;data&quot;, &quot;type&quot;: &quot;bytes[]&quot; }
+    ],
+    &quot;name&quot;: &quot;multicallWithNodeCheck&quot;,
+    &quot;outputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes[]&quot;, &quot;name&quot;: &quot;results&quot;, &quot;type&quot;: &quot;bytes[]&quot; }
+    ],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;name&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;string&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;pubkey&quot;,
+    &quot;outputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;x&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;y&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [{ &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bytes32&quot; }],
+    &quot;name&quot;: &quot;recordVersions&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;uint64&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;uint64&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;uint256&quot;, &quot;name&quot;: &quot;contentType&quot;, &quot;type&quot;: &quot;uint256&quot; },
+      { &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;data&quot;, &quot;type&quot;: &quot;bytes&quot; }
+    ],
+    &quot;name&quot;: &quot;setABI&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;uint256&quot;, &quot;name&quot;: &quot;coinType&quot;, &quot;type&quot;: &quot;uint256&quot; },
+      { &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;a&quot;, &quot;type&quot;: &quot;bytes&quot; }
+    ],
+    &quot;name&quot;: &quot;setAddr&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;a&quot;, &quot;type&quot;: &quot;address&quot; }
+    ],
+    &quot;name&quot;: &quot;setAddr&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;operator&quot;, &quot;type&quot;: &quot;address&quot; },
+      { &quot;internalType&quot;: &quot;bool&quot;, &quot;name&quot;: &quot;approved&quot;, &quot;type&quot;: &quot;bool&quot; }
+    ],
+    &quot;name&quot;: &quot;setApprovalForAll&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;hash&quot;, &quot;type&quot;: &quot;bytes&quot; }
+    ],
+    &quot;name&quot;: &quot;setContenthash&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;data&quot;, &quot;type&quot;: &quot;bytes&quot; }
+    ],
+    &quot;name&quot;: &quot;setDNSRecords&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes4&quot;, &quot;name&quot;: &quot;interfaceID&quot;, &quot;type&quot;: &quot;bytes4&quot; },
+      { &quot;internalType&quot;: &quot;address&quot;, &quot;name&quot;: &quot;implementer&quot;, &quot;type&quot;: &quot;address&quot; }
+    ],
+    &quot;name&quot;: &quot;setInterface&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;newName&quot;, &quot;type&quot;: &quot;string&quot; }
+    ],
+    &quot;name&quot;: &quot;setName&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;x&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;y&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;setPubkey&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;key&quot;, &quot;type&quot;: &quot;string&quot; },
+      { &quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;value&quot;, &quot;type&quot;: &quot;string&quot; }
+    ],
+    &quot;name&quot;: &quot;setText&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;hash&quot;, &quot;type&quot;: &quot;bytes&quot; }
+    ],
+    &quot;name&quot;: &quot;setZonehash&quot;,
+    &quot;outputs&quot;: [],
+    &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes4&quot;, &quot;name&quot;: &quot;interfaceID&quot;, &quot;type&quot;: &quot;bytes4&quot; }
+    ],
+    &quot;name&quot;: &quot;supportsInterface&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bool&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bool&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; },
+      { &quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;key&quot;, &quot;type&quot;: &quot;string&quot; }
+    ],
+    &quot;name&quot;: &quot;text&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;string&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;string&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  },
+  {
+    &quot;inputs&quot;: [
+      { &quot;internalType&quot;: &quot;bytes32&quot;, &quot;name&quot;: &quot;node&quot;, &quot;type&quot;: &quot;bytes32&quot; }
+    ],
+    &quot;name&quot;: &quot;zonehash&quot;,
+    &quot;outputs&quot;: [{ &quot;internalType&quot;: &quot;bytes&quot;, &quot;name&quot;: &quot;&quot;, &quot;type&quot;: &quot;bytes&quot; }],
+    &quot;stateMutability&quot;: &quot;view&quot;,
+    &quot;type&quot;: &quot;function&quot;
+  }
+]
+&#39;&#39;&#39;);</code></pre>
+</section>
+
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart</a></li>
+    <li class="self-crumb">ensResoloverABI property</li>
+</ol>
+
+    <h5>walletkit_dart library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

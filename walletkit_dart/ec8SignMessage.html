@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the ec8SignMessage function from the walletkit_dart library, for the Dart programming language.">
+  <title>ec8SignMessage function - walletkit_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart.dart</a></li>
+    <li class="self-crumb">ec8SignMessage function</li>
+  </ol>
+  <div class="self-name">ec8SignMessage</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="walletkit_dart&#47;walletkit_dart-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">ec8SignMessage</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.dart.dev/stable/3.8.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+<span class="name ">ec8SignMessage</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="ec8SignMessage-param-message"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.8.1/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span></li>
+<li><span class="parameter" id="ec8SignMessage-param-node"><span class="type-annotation"><a href="../walletkit_dart/NodeWithAddress-class.html">NodeWithAddress</a></span> <span class="parameter-name">node</span></span></li>
+</ol>)
+
+        
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Uint8List ec8SignMessage(String message, NodeWithAddress node) {
+  final privateKey = node.bip32Node!.privateKey!;
+  &#47;&#47; message test vector: https:&#47;&#47;zeniq.id&#47;safir.com&#47;backend&#47;qrl?n=2f24bc32c0752e835e21&amp;r=&#47;backend&#47;qrll
+  final messageHash = createEurocoinMessageHash(message);
+  &#47;&#47; messageHash test vector: u8	uint8_t[32]	&quot;\xf9\x9b\xf9~\U00000015j\xf1\xd1K\U0000001a\U00000002[\U00000011\x83\U0000001ae\xeb\nH\xa0zⴞ\xa8k\xc4Tn~\x80\xe3&quot;
+  final signature = Signature.createSignature(messageHash, privateKey, hashPayload: false);
+
+  final r = padUint8ListTo32(unsignedIntToBytes(signature.r));
+  final s = padUint8ListTo32(unsignedIntToBytes(signature.s));
+  final v = unsignedIntToBytes(BigInt.from(signature.v));
+
+  &#47;&#47; https:&#47;&#47;github.com&#47;ethereumjs&#47;ethereumjs-util&#47;blob&#47;8ffe697fafb33cefc7b7ec01c11e3a7da787fe0e&#47;src&#47;signature.ts#L63
+  return uint8ListFromList(v + r + s);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart</a></li>
+    <li class="self-crumb">ec8SignMessage function</li>
+</ol>
+
+    <h5>walletkit_dart library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

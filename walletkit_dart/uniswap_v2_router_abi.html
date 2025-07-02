@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the uniswap_v2_router_abi property from the walletkit_dart library, for the Dart programming language.">
+  <title>uniswap_v2_router_abi property - walletkit_dart library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart.dart</a></li>
+    <li class="self-crumb">uniswap_v2_router_abi property</li>
+  </ol>
+  <div class="self-name">uniswap_v2_router_abi</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="walletkit_dart&#47;walletkit_dart-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-top-level-property">uniswap_v2_router_abi</span> top-level property 
+ 
+</h1></div>
+
+        <section class="multi-line-signature">
+          
+          <a href="../walletkit_dart/ContractABI-class.html">ContractABI</a>
+          <span class="name ">uniswap_v2_router_abi</span>
+          <div class="features"><span class="feature">final</span></div>
+
+        </section>
+        
+
+        
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">final uniswap_v2_router_abi = ContractABI.fromAbi(&quot;&quot;&quot;
+[
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;_factory&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;_WETH&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;constructor&quot;
+    },
+    {
+      &quot;inputs&quot;: [],
+      &quot;name&quot;: &quot;WETH&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenA&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenB&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountADesired&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountBDesired&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountAMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountBMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;addLiquidity&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountA&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountB&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;token&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountTokenDesired&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountTokenMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETHMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;addLiquidityETH&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountToken&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETH&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;payable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [],
+      &quot;name&quot;: &quot;factory&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;reserveIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;reserveOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;getAmountIn&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;pure&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;reserveIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;reserveOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;getAmountOut&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;pure&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;getAmountsIn&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;getAmountsOut&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;view&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountA&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;reserveA&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;reserveB&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;quote&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountB&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;pure&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenA&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenB&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountAMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountBMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;removeLiquidity&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountA&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountB&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;token&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountTokenMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETHMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;removeLiquidityETH&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountToken&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETH&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;token&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountTokenMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETHMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;removeLiquidityETHSupportingFeeOnTransferTokens&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETH&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;token&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountTokenMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETHMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bool&quot;,
+          &quot;name&quot;: &quot;approveMax&quot;,
+          &quot;type&quot;: &quot;bool&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint8&quot;,
+          &quot;name&quot;: &quot;v&quot;,
+          &quot;type&quot;: &quot;uint8&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bytes32&quot;,
+          &quot;name&quot;: &quot;r&quot;,
+          &quot;type&quot;: &quot;bytes32&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bytes32&quot;,
+          &quot;name&quot;: &quot;s&quot;,
+          &quot;type&quot;: &quot;bytes32&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;removeLiquidityETHWithPermit&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountToken&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETH&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;token&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountTokenMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETHMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bool&quot;,
+          &quot;name&quot;: &quot;approveMax&quot;,
+          &quot;type&quot;: &quot;bool&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint8&quot;,
+          &quot;name&quot;: &quot;v&quot;,
+          &quot;type&quot;: &quot;uint8&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bytes32&quot;,
+          &quot;name&quot;: &quot;r&quot;,
+          &quot;type&quot;: &quot;bytes32&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bytes32&quot;,
+          &quot;name&quot;: &quot;s&quot;,
+          &quot;type&quot;: &quot;bytes32&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;removeLiquidityETHWithPermitSupportingFeeOnTransferTokens&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountETH&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenA&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;tokenB&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;liquidity&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountAMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountBMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bool&quot;,
+          &quot;name&quot;: &quot;approveMax&quot;,
+          &quot;type&quot;: &quot;bool&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint8&quot;,
+          &quot;name&quot;: &quot;v&quot;,
+          &quot;type&quot;: &quot;uint8&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bytes32&quot;,
+          &quot;name&quot;: &quot;r&quot;,
+          &quot;type&quot;: &quot;bytes32&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;bytes32&quot;,
+          &quot;name&quot;: &quot;s&quot;,
+          &quot;type&quot;: &quot;bytes32&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;removeLiquidityWithPermit&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountA&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountB&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapETHForExactTokens&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;payable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOutMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapExactETHForTokens&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;payable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOutMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapExactETHForTokensSupportingFeeOnTransferTokens&quot;,
+      &quot;outputs&quot;: [],
+      &quot;stateMutability&quot;: &quot;payable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOutMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapExactTokensForETH&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOutMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapExactTokensForETHSupportingFeeOnTransferTokens&quot;,
+      &quot;outputs&quot;: [],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOutMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapExactTokensForTokens&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountIn&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOutMin&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapExactTokensForTokensSupportingFeeOnTransferTokens&quot;,
+      &quot;outputs&quot;: [],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountInMax&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapTokensForExactETH&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;inputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountOut&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;amountInMax&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address[]&quot;,
+          &quot;name&quot;: &quot;path&quot;,
+          &quot;type&quot;: &quot;address[]&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;address&quot;,
+          &quot;name&quot;: &quot;to&quot;,
+          &quot;type&quot;: &quot;address&quot;
+        },
+        {
+          &quot;internalType&quot;: &quot;uint256&quot;,
+          &quot;name&quot;: &quot;deadline&quot;,
+          &quot;type&quot;: &quot;uint256&quot;
+        }
+      ],
+      &quot;name&quot;: &quot;swapTokensForExactTokens&quot;,
+      &quot;outputs&quot;: [
+        {
+          &quot;internalType&quot;: &quot;uint256[]&quot;,
+          &quot;name&quot;: &quot;amounts&quot;,
+          &quot;type&quot;: &quot;uint256[]&quot;
+        }
+      ],
+      &quot;stateMutability&quot;: &quot;nonpayable&quot;,
+      &quot;type&quot;: &quot;function&quot;
+    },
+    {
+      &quot;stateMutability&quot;: &quot;payable&quot;,
+      &quot;type&quot;: &quot;receive&quot;
+    }
+  ]
+&quot;&quot;&quot;);</code></pre>
+</section>
+
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">walletkit_dart</a></li>
+    <li><a href="../walletkit_dart/">walletkit_dart</a></li>
+    <li class="self-crumb">uniswap_v2_router_abi property</li>
+</ol>
+
+    <h5>walletkit_dart library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    walletkit_dart
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
