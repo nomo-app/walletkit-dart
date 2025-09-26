@@ -1,5 +1,21 @@
 import 'dart:typed_data';
 
+extension VarLengthUtil on int {
+  int get varIntLength {
+    if (this < 0xfd) {
+      return 1;
+    }
+    if (this <= 0xffff) {
+      return 3;
+    }
+    if (this <= 0xffffffff) {
+      return 5;
+    }
+
+    return 9;
+  }
+}
+
 extension ByteUtil on ByteData {
   int writeUint64(int offset, int val) {
     setInt64(offset, val, Endian.little);
@@ -118,7 +134,8 @@ extension BufferUtil on Uint8List {
 
   (Uint8List, int) readVarSlice(int offset) {
     final (length, lengthByteLength) = bytes.readVarInt(offset);
-    final (slice, sliceByteLength) = readSlice(offset + lengthByteLength, length);
+    final (slice, sliceByteLength) =
+        readSlice(offset + lengthByteLength, length);
     return (slice, lengthByteLength + sliceByteLength);
   }
 }
