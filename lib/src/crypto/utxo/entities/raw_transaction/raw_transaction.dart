@@ -130,7 +130,10 @@ sealed class RawTransaction {
     final ec8Inputs = inputs.whereType<EC8Input>();
     final ec8Outputs = outputs.whereType<EC8Output>();
 
-    if (ec8Inputs.isNotEmpty && ec8Outputs.isNotEmpty && validFrom != null && validUntil != null) {
+    if (ec8Inputs.isNotEmpty &&
+        ec8Outputs.isNotEmpty &&
+        validFrom != null &&
+        validUntil != null) {
       return EC8RawTransaction(
         version: version,
         inputs: ec8Inputs.toList(),
@@ -233,14 +236,16 @@ class BTCRawTransaction extends RawTransaction {
     offset += length;
 
     /// Segwit Flag
-    final isSegwit = buffer[offset] == SEGWIT_MARKER && buffer[offset + 1] == SEGWIT_FLAG;
+    final isSegwit =
+        buffer[offset] == SEGWIT_MARKER && buffer[offset + 1] == SEGWIT_FLAG;
 
     if (isSegwit) {
       offset += 2;
     }
 
     /// Inputs
-    final (inputLength, inputLengthByteLength) = buffer.bytes.readVarInt(offset);
+    final (inputLength, inputLengthByteLength) =
+        buffer.bytes.readVarInt(offset);
     offset += inputLengthByteLength;
 
     final inputs = <BTCInput>[];
@@ -251,7 +256,8 @@ class BTCRawTransaction extends RawTransaction {
     }
 
     /// Outputs
-    final (outputLength, outputLengthByteLength) = buffer.bytes.readVarInt(offset);
+    final (outputLength, outputLengthByteLength) =
+        buffer.bytes.readVarInt(offset);
     offset += outputLengthByteLength;
 
     final outputs = <BTCOutput>[];
@@ -273,7 +279,8 @@ class BTCRawTransaction extends RawTransaction {
           continue;
         }
 
-        final (wittnessScript, length) = readScriptWittness(buffer: buffer, offset: offset);
+        final (wittnessScript, length) =
+            readScriptWittness(buffer: buffer, offset: offset);
         wittnessScripts.add((wittnessScript, input));
         offset += length;
       }
@@ -297,21 +304,25 @@ class BTCRawTransaction extends RawTransaction {
 
   Uint8List get bytes {
     final inputBuffers = inputs.map((input) => input.bytes);
-    const inputLengthByte = 1;
+    final inputLengthByte = inputs.length.varIntLength;
     final inputsByteLength = inputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
     );
 
     final outputBuffers = outputs.map((output) => output.bytes);
-    const outputLengthByte = 1;
+    final outputLengthByte = outputs.length.varIntLength;
     final outputsByteLength = outputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
     );
 
-    var txByteLength =
-        4 + inputLengthByte + inputsByteLength + outputLengthByte + outputsByteLength + 4;
+    var txByteLength = 4 +
+        inputLengthByte +
+        inputsByteLength +
+        outputLengthByte +
+        outputsByteLength +
+        4;
 
     if (hasWitness) {
       txByteLength += 1; // Segwit Flag
@@ -482,14 +493,14 @@ class EC8RawTransaction extends RawTransaction {
   @override
   Uint8List get bytes {
     final inputBuffers = inputs.map((input) => input.bytes);
-    const inputLengthByte = 1;
+    final inputLengthByte = inputs.length.varIntLength;
     final inputsByteLength = inputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
     );
 
     final outputBuffers = outputs.map((output) => output.bytes);
-    const outputLengthByte = 1;
+    final outputLengthByte = outputs.length.varIntLength;
     final outputsByteLength = outputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
@@ -647,7 +658,13 @@ class EC8RawTransaction extends RawTransaction {
     ///
     /// Construct Buffer
     ///
-    final txByteLength = 4 + hashInputs.length + hashOutputs.length + inputBytes.length + 8 + 8 + 4;
+    final txByteLength = 4 +
+        hashInputs.length +
+        hashOutputs.length +
+        inputBytes.length +
+        8 +
+        8 +
+        4;
     final buffer = Uint8List(txByteLength);
     var offset = 0;
 
@@ -712,7 +729,8 @@ class EC8RawTransaction extends RawTransaction {
     offset += length;
 
     /// Inputs
-    final (inputLength, inputLengthByteLength) = buffer.bytes.readVarInt(offset);
+    final (inputLength, inputLengthByteLength) =
+        buffer.bytes.readVarInt(offset);
     offset += inputLengthByteLength;
 
     final inputs = <EC8Input>[];
@@ -723,7 +741,8 @@ class EC8RawTransaction extends RawTransaction {
     }
 
     /// Outputs
-    final (outputLength, outputLengthByteLength) = buffer.bytes.readVarInt(offset);
+    final (outputLength, outputLengthByteLength) =
+        buffer.bytes.readVarInt(offset);
     offset += outputLengthByteLength;
 
     final outputs = <EC8Output>[];
