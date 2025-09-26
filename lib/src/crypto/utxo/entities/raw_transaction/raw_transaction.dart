@@ -322,14 +322,16 @@ class BTCRawTransaction extends RawTransaction {
 
   Uint8List get bytes {
     final inputBuffers = inputs.map((input) => input.bytes);
-    const inputLengthByte = 1;
+    final inputLengthByte = inputs.length.varIntLength;
+    ;
     final inputsByteLength = inputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
     );
 
     final outputBuffers = outputs.map((output) => output.bytes);
-    const outputLengthByte = 1;
+    final outputLengthByte = outputs.length.varIntLength;
+    ;
     final outputsByteLength = outputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
@@ -518,14 +520,15 @@ class EC8RawTransaction extends RawTransaction {
   @override
   Uint8List get bytes {
     final inputBuffers = inputs.map((input) => input.bytes);
-    const inputLengthByte = 1;
+    final inputLengthByte = inputs.length.varIntLength;
     final inputsByteLength = inputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
     );
 
     final outputBuffers = outputs.map((output) => output.bytes);
-    const outputLengthByte = 1;
+    final outputLengthByte = outputs.length.varIntLength;
+    ;
     final outputsByteLength = outputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
@@ -580,14 +583,16 @@ class EC8RawTransaction extends RawTransaction {
 
   Uint8List get bytesForTxId {
     final inputBuffers = inputs.map((input) => input.bytesForTxId);
-    const inputLengthByte = 1;
+    final inputLengthByte = inputs.length.varIntLength;
+    ;
     final inputsByteLength = inputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,
     );
 
     final outputBuffers = outputs.map((output) => output.bytesForTxId);
-    const outputLengthByte = 1;
+    final outputLengthByte = outputs.length.varIntLength;
+    ;
     final outputsByteLength = outputBuffers.fold(
       0,
       (prev, buffer) => prev + buffer.length,

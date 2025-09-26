@@ -1,5 +1,21 @@
 import 'dart:typed_data';
 
+extension VarLengthUtil on int {
+  int get varIntLength {
+    if (this < 0xfd) {
+      return 1;
+    }
+    if (this <= 0xffff) {
+      return 3;
+    }
+    if (this <= 0xffffffff) {
+      return 5;
+    }
+
+    return 9;
+  }
+}
+
 extension ByteUtil on ByteData {
   int writeUint64(int offset, int val) {
     setInt64(offset, val, Endian.little);
@@ -79,11 +95,7 @@ extension ByteUtil on ByteData {
     return (getUint64(offset + 1, Endian.little), 9);
   }
 
-  int readVarIntFromLength(
-    int offset,
-    int length,
-    Endian endian,
-  ) {
+  int readVarIntFromLength(int offset, int length, Endian endian) {
     if (length < 0xfd) {
       return getUint8(offset);
     }
@@ -118,8 +130,10 @@ extension BufferUtil on Uint8List {
 
   (Uint8List, int) readVarSlice(int offset) {
     final (length, lengthByteLength) = bytes.readVarInt(offset);
-    final (slice, sliceByteLength) =
-        readSlice(offset + lengthByteLength, length);
+    final (slice, sliceByteLength) = readSlice(
+      offset + lengthByteLength,
+      length,
+    );
     return (slice, lengthByteLength + sliceByteLength);
   }
 }
@@ -133,10 +147,10 @@ int encodingLength(int number) {
   return (number < 0xfd
       ? 1
       : number <= 0xffff
-          ? 3
-          : number <= 0xffffffff
-              ? 5
-              : 9);
+      ? 3
+      : number <= 0xffffffff
+      ? 5
+      : 9);
 }
 
 int getVarIntSize(int value) {
