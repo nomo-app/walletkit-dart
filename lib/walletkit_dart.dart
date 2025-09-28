@@ -38,3 +38,6 @@ export 'src/domain/predefined_assets.dart';
 
 /// Exceptions
 export 'src/domain/exceptions.dart';
+
+/// Wallet (structure, states, db, state manager)
+export 'src/wallet/wallet.dart';

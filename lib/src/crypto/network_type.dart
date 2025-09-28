@@ -6,6 +6,7 @@ import 'package:walletkit_dart/walletkit_dart.dart';
 sealed class NetworkType {
   final String messagePrefix;
   final CoinEntity coin;
+  final int coinType;
 
   /// Block time in seconds
   final int blockTime;
@@ -14,6 +15,7 @@ sealed class NetworkType {
     required this.messagePrefix,
     required this.coin,
     required this.blockTime,
+    required this.coinType,
   });
 }
 
@@ -26,6 +28,7 @@ sealed class EVMNetworkType extends NetworkType {
     required super.coin,
     required super.blockTime,
     required this.chainId,
+    super.coinType = 60,
     this.useEIP1559 = true,
   });
 }
@@ -41,8 +44,6 @@ sealed class UTXONetworkType extends NetworkType {
 
   /// BIP32 script hash prefix
   final int scriptHashPrefix;
-
-  final int coinType;
 
   final int txVersion;
 
@@ -61,7 +62,7 @@ sealed class UTXONetworkType extends NetworkType {
     required this.networkBIP,
     required this.pubKeyHashPrefix,
     required this.scriptHashPrefix,
-    required this.coinType,
+    required super.coinType,
     required this.bech32,
     required this.txVersion,
     required this.endpoints,
@@ -442,6 +443,7 @@ class ETHEREUM_NETWORK extends EVMNetworkType {
         coin: ethNative,
         messagePrefix: "\x19Ethereum Signed Message:\n",
         blockTime: 12,
+        coinType: 60,
       );
 }
 
@@ -455,6 +457,7 @@ class ZENIQ_SMART_NETWORK extends EVMNetworkType {
         messagePrefix: "\x19Zeniq Signed Message:\n",
         blockTime: 3,
         useEIP1559: false,
+        coinType: 60,
       );
 }
 
@@ -468,6 +471,7 @@ class BNB_NETWORK extends EVMNetworkType {
         messagePrefix: "\x19Binance Chain Signed Message:\n",
         blockTime: 3,
         useEIP1559: true,
+        coinType: 60,
       );
 }
 
@@ -480,6 +484,7 @@ class POLYGON_NETWORK extends EVMNetworkType {
         coin: polygon,
         messagePrefix: "\x19Polygon Signed Message:\n",
         blockTime: 2,
+        coinType: 60,
       );
 }
 
@@ -496,6 +501,7 @@ class TRON_NETWORK extends EVMNetworkType {
         coin: tron,
         messagePrefix: "\x19Tron Signed Message:\n",
         blockTime: 3,
+        coinType: 195,
       );
 }
 
@@ -521,6 +527,7 @@ class ARBITRUM_NETWORK extends EVMNetworkType {
         coin: arbitrum,
         messagePrefix: "\x19Arbitrum Signed Message:\n",
         blockTime: 2,
+        coinType: 60,
       );
 }
 
@@ -533,6 +540,7 @@ class BASE_NETWORK extends EVMNetworkType {
         coin: ethBase,
         messagePrefix: "\x19Base Chain Signed Message:\n",
         blockTime: 2,
+        coinType: 60,
       );
 }
 
@@ -545,6 +553,7 @@ class MOONBEAM_NETWORK extends EVMNetworkType {
         coin: moonbeam,
         messagePrefix: "\x19Moonbeam Signed Message:\n",
         blockTime: 2,
+        coinType: 60,
       );
 }
 
@@ -557,6 +566,7 @@ class AVALANCHE_NETWORK extends EVMNetworkType {
         coin: avalanche,
         messagePrefix: "\x19Avalanche Signed Message:\n",
         blockTime: 2,
+        coinType: 60,
       );
 }
 
