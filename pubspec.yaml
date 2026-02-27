@@ -13,9 +13,9 @@ resolution: workspace
 dependencies:
   crypto: ^3.0.3 # dart.dev
   http: ^1.2.2 # dart.dev
-  grpc: 3.2.4 # dart.dev
+  grpc: 5.0.0 # dart.dev
   fixnum: ^1.1.0 # dart.dev
-  protobuf: ^3.1.0 # google.dev
+  protobuf: 5.1.0 # google.dev
   bip32: ^2.0.0
   bs58check: ^1.0.2 # TODO: Replace
   dart_bech32: ^2.0.0 # TODO: Replace
@@ -28,7 +28,7 @@ dependencies:
     path: packages/bip39 # Own fork
 
 dev_dependencies:
-  lints: ^5.1.1
+  lints: ^6.1.0
   test: ^1.25.8
   dotenv: ^4.2.0
   build_runner: ^2.4.13
